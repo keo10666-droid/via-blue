@@ -172,75 +172,49 @@ function PhoneIcon() {
   );
 }
 
-function AirportToHotelIcon() {
+function PlaneIcon() {
   return (
     <svg
-      viewBox="0 0 48 48"
+      viewBox="0 0 24 24"
       fill="none"
-      className="h-7 w-7"
+      className="h-6 w-6"
       stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      strokeWidth="1.7"
     >
-      <path d="M5 17.5 20.5 12l-3.5 9.5-5.5-1.5-6.5 2.5 2-5Z" />
-      <path d="m20.5 12 6.5-2.5" />
-      <path d="m16.5 21.5 3.5 4" />
-      <path d="M25 20h10" />
-      <path d="m31 16 4 4-4 4" />
-      <path d="M36 29V17.5a2 2 0 0 1 2-2h5a2 2 0 0 1 2 2V29" />
-      <path d="M34 29h12" />
-      <path d="M38.5 20h2M38.5 23h2" />
-      <path d="M40 29v-4h2v4" />
+      <path d="m3 11 18-6-6 18-2-8-10-4Z" />
+      <path d="m13 15 5-5" />
     </svg>
   );
 }
 
-function HotelToAirportIcon() {
+function HotelIcon() {
   return (
     <svg
-      viewBox="0 0 48 48"
+      viewBox="0 0 24 24"
       fill="none"
-      className="h-7 w-7"
+      className="h-6 w-6"
       stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      strokeWidth="1.7"
     >
-      <path d="M4 29V17.5a2 2 0 0 1 2-2h5a2 2 0 0 1 2 2V29" />
-      <path d="M2 29h12" />
-      <path d="M6.5 20h2M6.5 23h2" />
-      <path d="M8 29v-4h2v4" />
-      <path d="M14 20h10" />
-      <path d="m20 16 4 4-4 4" />
-      <path d="m28 17.5 15-5.5-3.5 9.5-5.5-1.5-6.5 2.5 2-5Z" />
-      <path d="m43 12-5.5-2.5" />
-      <path d="m39.5 21.5 3.5 4" />
+      <path d="M4 20V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v14" />
+      <path d="M2 20h20M7 8h3M14 8h3M7 12h3M14 12h3M7 16h10" />
     </svg>
   );
 }
 
-function HotelToHotelIcon() {
+function CarIcon() {
   return (
     <svg
-      viewBox="0 0 48 48"
+      viewBox="0 0 24 24"
       fill="none"
-      className="h-7 w-7"
+      className="h-6 w-6"
       stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      strokeWidth="1.7"
     >
-      <path d="M3 29V17.5a2 2 0 0 1 2-2h5a2 2 0 0 1 2 2V29" />
-      <path d="M1 29h13" />
-      <path d="M5.5 20h2M5.5 23h2" />
-      <path d="M7 29v-4h2v4" />
-      <path d="M14 20h20" />
-      <path d="m29 15 5 5-5 5" />
-      <path d="M36 29V17.5a2 2 0 0 1 2-2h5a2 2 0 0 1 2 2V29" />
-      <path d="M34 29h12" />
-      <path d="M38.5 20h2M38.5 23h2" />
-      <path d="M40 29v-4h2v4" />
+      <path d="m5 11 2-5h10l2 5" />
+      <path d="M4 11h16a1 1 0 0 1 1 1v5H3v-5a1 1 0 0 1 1-1Z" />
+      <circle cx="7" cy="17" r="1.5" />
+      <circle cx="17" cy="17" r="1.5" />
     </svg>
   );
 }
@@ -944,7 +918,7 @@ ${notes.trim() || "-"}
                   }`}
                 >
                   <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-blue-900">
-                    <AirportToHotelIcon />
+                    <PlaneIcon />
                   </div>
 
                   <h3 className="mt-3 font-bold text-blue-950">
@@ -973,7 +947,7 @@ ${notes.trim() || "-"}
                   }`}
                 >
                   <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-blue-900">
-                    <HotelToAirportIcon />
+                    <HotelIcon />
                   </div>
 
                   <h3 className="mt-3 font-bold text-blue-950">
@@ -1001,7 +975,7 @@ ${notes.trim() || "-"}
                   }`}
                 >
                   <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-blue-900">
-                    <HotelToHotelIcon />
+                    <CarIcon />
                   </div>
 
                   <h3 className="mt-3 font-bold text-blue-950">
