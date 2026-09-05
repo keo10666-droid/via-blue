@@ -696,10 +696,156 @@ export default function AccountPage() {
 
   if (isLoading) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-slate-50">
-        <p className="font-bold text-blue-900">
-          Loading your account...
-        </p>
+      <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-white">
+        <div className="relative flex h-48 w-80 items-center justify-center">
+          <div className="absolute left-1/2 top-1/2 h-1 w-44 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full">
+            <div className="logo-trail absolute h-full w-20 rounded-full bg-linear-to-r from-transparent via-orange-400 to-blue-900" />
+          </div>
+
+          <div className="logo-arrow absolute left-1/2 top-1/2 z-20 -translate-y-1/2 text-orange-500">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 64 32"
+              fill="none"
+              className="h-10 w-20"
+            >
+              <path
+                d="M3 16H51"
+                stroke="currentColor"
+                strokeWidth="4"
+                strokeLinecap="round"
+              />
+              <path
+                d="M40 5L55 16L40 27"
+                stroke="currentColor"
+                strokeWidth="4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </div>
+
+          <img
+            src="/logo/logo.svg"
+            alt="Via Blue"
+            className="logo-loading relative z-10 h-20 w-auto"
+          />
+        </div>
+
+        <style jsx>{`
+          .logo-loading {
+            animation: logoReveal 2.2s
+              cubic-bezier(0.22, 1, 0.36, 1)
+              infinite;
+          }
+
+          .logo-arrow {
+            animation: arrowFly 2.2s
+              cubic-bezier(0.22, 1, 0.36, 1)
+              infinite;
+          }
+
+          .logo-trail {
+            animation: trailMove 2.2s
+              cubic-bezier(0.22, 1, 0.36, 1)
+              infinite;
+          }
+
+          @keyframes logoReveal {
+            0% {
+              opacity: 0;
+              transform: translateX(-35px) scale(0.92);
+              clip-path: inset(0 100% 0 0);
+            }
+
+            35% {
+              opacity: 1;
+              transform: translateX(0) scale(1);
+              clip-path: inset(0 0 0 0);
+            }
+
+            75% {
+              opacity: 1;
+              transform: translateX(0) scale(1);
+              clip-path: inset(0 0 0 0);
+            }
+
+            100% {
+              opacity: 0;
+              transform: translateX(15px) scale(1.02);
+              clip-path: inset(0 0 0 0);
+            }
+          }
+
+          @keyframes arrowFly {
+            0% {
+              opacity: 0;
+              transform: translate(-150px, -50%) scale(0.7);
+            }
+
+            15% {
+              opacity: 1;
+            }
+
+            45% {
+              opacity: 1;
+              transform: translate(20px, -50%) scale(1);
+            }
+
+            70% {
+              opacity: 0.8;
+              transform: translate(105px, -50%) scale(0.85);
+            }
+
+            100% {
+              opacity: 0;
+              transform: translate(180px, -50%) scale(0.6);
+            }
+          }
+
+          @keyframes trailMove {
+            0% {
+              opacity: 0;
+              transform: translateX(-100px);
+            }
+
+            15% {
+              opacity: 0.4;
+            }
+
+            45% {
+              opacity: 1;
+              transform: translateX(0);
+            }
+
+            70% {
+              opacity: 0.6;
+              transform: translateX(65px);
+            }
+
+            100% {
+              opacity: 0;
+              transform: translateX(130px);
+            }
+          }
+
+          @media (prefers-reduced-motion: reduce) {
+            .logo-loading,
+            .logo-arrow,
+            .logo-trail {
+              animation: none;
+            }
+
+            .logo-loading {
+              opacity: 1;
+            }
+
+            .logo-arrow,
+            .logo-trail {
+              display: none;
+            }
+          }
+        `}</style>
       </main>
     );
   }
@@ -711,82 +857,180 @@ export default function AccountPage() {
     ) || COUNTRY_CODES[0];
 
   return (
-    <main className="min-h-screen bg-slate-50 px-6 py-12">
-      <div className="mx-auto max-w-6xl">
+    <main className="min-h-screen bg-[#f6f8fb] px-4 py-8 sm:px-6 lg:py-12">
+      <div className="mx-auto max-w-7xl">
 
-        <div className="overflow-hidden rounded-3xl bg-linear-to-r from-blue-900 to-blue-700 p-8 text-white shadow-xl md:p-12">
-          <p className="font-bold uppercase tracking-[0.25em] text-orange-400">
-            My Account
-          </p>
+        {/* Header */}
+        <section className="relative overflow-hidden rounded-[32px] bg-[#071d49] px-7 py-9 text-white shadow-[0_20px_60px_rgba(7,29,73,0.16)] sm:px-10 sm:py-11 lg:px-12">
+          <div className="absolute -right-20 -top-24 h-72 w-72 rounded-full bg-orange-500/10 blur-3xl" />
+          <div className="absolute -bottom-28 left-1/3 h-72 w-72 rounded-full bg-blue-400/10 blur-3xl" />
 
-          <h1 className="mt-3 text-4xl font-bold md:text-5xl">
-            Welcome,{" "}
-            {profile?.full_name ||
-              "Traveler"}
-          </h1>
+          <div className="relative z-10">
+            <div className="flex items-center gap-3">
+              <div className="h-px w-8 bg-orange-400" />
+              <p className="text-xs font-bold uppercase tracking-[0.28em] text-orange-400">
+                My Account
+              </p>
+            </div>
 
-          <p className="mt-4 max-w-2xl text-blue-100">
-            Manage your profile, view your
-            bookings and save memories from
-            your Hurghada adventures.
-          </p>
-        </div>
+            <h1 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl">
+              Welcome,{" "}
+              <span className="text-orange-400">
+                {profile?.full_name ||
+                  "Traveler"}
+              </span>
+            </h1>
 
-        <div className="mt-8 grid gap-6 md:grid-cols-3">
-
-          <div className="rounded-2xl bg-white p-6 shadow-sm">
-            <p className="text-sm font-bold uppercase tracking-wider text-gray-500">
-              Reward Points
+            <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base">
+              Manage your profile, view your bookings and keep your favorite Hurghada memories in one place.
             </p>
+          </div>
+        </section>
 
-            <p className="mt-2 text-4xl font-bold text-orange-500">
-              {loyalty?.points || 0}
-            </p>
+        {/* Stats */}
+        <div className="mt-6 grid gap-4 sm:grid-cols-3">
 
-            <p className="mt-2 text-sm text-gray-500">
+          <div className="group rounded-[24px] border border-slate-200/80 bg-white p-6 shadow-[0_10px_35px_rgba(15,23,42,0.05)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(15,23,42,0.08)]">
+            <div className="flex items-start justify-between">
+              <div>
+                <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-400">
+                  Reward Points
+                </p>
+                <p className="mt-3 text-3xl font-semibold tracking-tight text-[#071d49]">
+                  {loyalty?.points || 0}
+                </p>
+              </div>
+
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-orange-50 text-orange-500">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  className="h-5 w-5"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 3.5l2.3 4.66 5.14.75-3.72 3.63.88 5.12L12 15.24l-4.6 2.42.88-5.12-3.72-3.63 5.14-.75L12 3.5Z"
+                  />
+                </svg>
+              </div>
+            </div>
+
+            <p className="mt-3 text-xs leading-5 text-slate-500">
               Keep booking to unlock future gifts.
             </p>
           </div>
 
-          <div className="rounded-2xl bg-white p-6 shadow-sm">
-            <p className="text-sm font-bold uppercase tracking-wider text-gray-500">
-              Completed Trips
-            </p>
+          <div className="group rounded-[24px] border border-slate-200/80 bg-white p-6 shadow-[0_10px_35px_rgba(15,23,42,0.05)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(15,23,42,0.08)]">
+            <div className="flex items-start justify-between">
+              <div>
+                <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-400">
+                  Completed Trips
+                </p>
+                <p className="mt-3 text-3xl font-semibold tracking-tight text-[#071d49]">
+                  {loyalty?.completed_bookings ||
+                    0}
+                </p>
+              </div>
 
-            <p className="mt-2 text-4xl font-bold text-blue-900">
-              {loyalty?.completed_bookings ||
-                0}
-            </p>
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-50 text-[#071d49]">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  className="h-5 w-5"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M3.5 7.5h17M5.5 4.5h13a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2v-11a2 2 0 0 1 2-2Z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="m8 13 2.2 2.2L16.5 9"
+                  />
+                </svg>
+              </div>
+            </div>
 
-            <p className="mt-2 text-sm text-gray-500">
+            <p className="mt-3 text-xs leading-5 text-slate-500">
               Your completed adventures with us.
             </p>
           </div>
 
-          <div className="rounded-2xl bg-white p-6 shadow-sm">
-            <p className="text-sm font-bold uppercase tracking-wider text-gray-500">
-              Travel Memories
-            </p>
+          <div className="group rounded-[24px] border border-slate-200/80 bg-white p-6 shadow-[0_10px_35px_rgba(15,23,42,0.05)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(15,23,42,0.08)]">
+            <div className="flex items-start justify-between">
+              <div>
+                <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-400">
+                  Travel Memories
+                </p>
+                <p className="mt-3 text-3xl font-semibold tracking-tight text-[#071d49]">
+                  {memories.length}
+                  <span className="ml-1 text-base font-medium text-slate-400">
+                    /25
+                  </span>
+                </p>
+              </div>
 
-            <p className="mt-2 text-4xl font-bold text-green-600">
-              {memories.length}/25
-            </p>
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-orange-50 text-orange-500">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  className="h-5 w-5"
+                >
+                  <rect
+                    x="3.5"
+                    y="4.5"
+                    width="17"
+                    height="15"
+                    rx="2.5"
+                  />
+                  <circle
+                    cx="8.5"
+                    cy="9"
+                    r="1.4"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="m5.5 16 4.2-4.2 3.2 3.2 2.1-2.1 3.5 3.5"
+                  />
+                </svg>
+              </div>
+            </div>
 
-            <p className="mt-2 text-sm text-gray-500">
+            <p className="mt-3 text-xs leading-5 text-slate-500">
               Save photos from your favorite trips.
             </p>
           </div>
 
         </div>
 
-        <div className="mt-8 grid gap-8 lg:grid-cols-3">
+        {/* Main Content */}
+        <div className="mt-6 grid gap-6 lg:grid-cols-3">
 
-          <section className="rounded-3xl bg-white p-7 shadow-sm lg:col-span-1">
+          {/* Profile */}
+          <section className="rounded-[28px] border border-slate-200/80 bg-white p-6 shadow-[0_10px_35px_rgba(15,23,42,0.05)] sm:p-7 lg:col-span-1">
 
             <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-bold text-blue-900">
-                Your Profile
-              </h2>
+              <div>
+                <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-orange-500">
+                  Personal Details
+                </p>
+
+                <h2 className="mt-1 text-xl font-semibold tracking-tight text-[#071d49]">
+                  Your Profile
+                </h2>
+              </div>
 
               {!isEditingProfile && (
                 <button
@@ -795,7 +1039,7 @@ export default function AccountPage() {
                     setIsEditingProfile(true);
                     setMessage("");
                   }}
-                  className="rounded-lg p-1 text-blue-900 transition hover:bg-blue-50 hover:text-blue-700"
+                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 text-[#071d49] transition hover:border-orange-200 hover:bg-orange-50 hover:text-orange-500"
                   title="Edit profile"
                   aria-label="Edit profile"
                 >
@@ -804,18 +1048,13 @@ export default function AccountPage() {
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
-                    strokeWidth="2"
-                    className="h-5 w-5"
+                    strokeWidth="1.8"
+                    className="h-4.5 w-4.5"
                   >
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      d="M16.862 3.487a2.25 2.25 0 0 1 3.182 3.182L7.5 19.213l-4.5 1.125 1.125-4.5L16.862 3.487Z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M15 5.25 18.75 9"
+                      d="M13.5 6.5 17.5 10.5M4 20l3.8-.9L19.2 7.7a2.8 2.8 0 0 0-4-4L3.8 15.1 3 19.5 4 20Z"
                     />
                   </svg>
                 </button>
@@ -826,32 +1065,66 @@ export default function AccountPage() {
               onSubmit={
                 handleSaveProfile
               }
-              className="mt-6"
+              className="mt-7"
             >
 
               <div className="flex flex-col items-center">
 
-                <div className="flex h-32 w-32 items-center justify-center overflow-hidden rounded-full bg-blue-100 text-5xl">
+                <div className="relative">
+                  <div className="h-28 w-28 overflow-hidden rounded-full border-4 border-white bg-slate-100 shadow-[0_10px_30px_rgba(7,29,73,0.12)] ring-1 ring-slate-200">
+                    {profile?.avatar_url ? (
+                      <img
+                        src={
+                          profile.avatar_url
+                        }
+                        alt="Profile picture"
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <div className="flex h-full w-full items-center justify-center bg-[#071d49] text-slate-300">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="1.4"
+                          className="h-12 w-12"
+                        >
+                          <circle
+                            cx="12"
+                            cy="8"
+                            r="3.5"
+                          />
+                          <path
+                            strokeLinecap="round"
+                            d="M5 20c.8-3.4 3.3-5.5 7-5.5s6.2 2.1 7 5.5"
+                          />
+                        </svg>
+                      </div>
+                    )}
+                  </div>
 
-                  {profile?.avatar_url ? (
-                    <img
-                      src={
-                        profile.avatar_url
-                      }
-                      alt="Profile picture"
-                      className="h-full w-full object-cover"
-                    />
-                  ) : (
-                    "👤"
-                  )}
-
-                </div>
-
-                {isEditingProfile && (
-                  <>
-                    <label className="mt-4 cursor-pointer rounded-xl border-2 border-blue-900 px-4 py-2 text-sm font-bold text-blue-900 transition hover:bg-blue-900 hover:text-white">
-
-                      Choose Profile Photo
+                  {isEditingProfile && (
+                    <label className="absolute bottom-0 right-0 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border-2 border-white bg-orange-500 text-white shadow-lg transition hover:bg-orange-600">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.8"
+                        className="h-4 w-4"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M4 7.5h3l1.2-2h7.6l1.2 2h3v11H4v-11Z"
+                        />
+                        <circle
+                          cx="12"
+                          cy="13"
+                          r="3.2"
+                        />
+                      </svg>
 
                       <input
                         type="file"
@@ -861,26 +1134,21 @@ export default function AccountPage() {
                         }
                         className="hidden"
                       />
-
                     </label>
+                  )}
+                </div>
 
-                    {avatarFile && (
-                      <p className="mt-2 text-center text-xs text-gray-500">
-                        New photo selected:{" "}
-                        {
-                          avatarFile.name
-                        }
-                      </p>
-                    )}
-                  </>
+                {avatarFile && (
+                  <p className="mt-3 max-w-full truncate text-center text-xs text-slate-400">
+                    {avatarFile.name}
+                  </p>
                 )}
-
               </div>
 
-              <div className="mt-6">
-
+              {/* Full Name */}
+              <div className="mt-7">
                 <div className="mb-2 flex items-center justify-between">
-                  <label className="block font-bold text-blue-900">
+                  <label className="text-xs font-bold uppercase tracking-wider text-slate-500">
                     Full Name
                   </label>
 
@@ -888,11 +1156,9 @@ export default function AccountPage() {
                     <button
                       type="button"
                       onClick={() =>
-                        setIsEditingProfile(
-                          true
-                        )
+                        setIsEditingProfile(true)
                       }
-                      className="rounded-lg p-1 text-blue-900 transition hover:bg-blue-50 hover:text-blue-700"
+                      className="text-slate-400 transition hover:text-orange-500"
                       title="Edit full name"
                       aria-label="Edit full name"
                     >
@@ -901,18 +1167,13 @@ export default function AccountPage() {
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
-                        strokeWidth="2"
+                        strokeWidth="1.8"
                         className="h-4 w-4"
                       >
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
-                          d="M16.862 3.487a2.25 2.25 0 0 1 3.182 3.182L7.5 19.213l-4.5 1.125 1.125-4.5L16.862 3.487Z"
-                        />
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M15 5.25 18.75 9"
+                          d="M13.5 6.5 17.5 10.5M4 20l3.8-.9L19.2 7.7a2.8 2.8 0 0 0-4-4L3.8 15.1 3 19.5 4 20Z"
                         />
                       </svg>
                     </button>
@@ -932,21 +1193,20 @@ export default function AccountPage() {
                       )
                     }
                     required
-                    className="w-full rounded-xl border border-gray-300 p-3 text-gray-900 outline-none focus:border-blue-500"
+                    className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-orange-400 focus:ring-4 focus:ring-orange-500/10"
                   />
                 ) : (
-                  <div className="rounded-xl bg-slate-50 p-3 text-gray-900">
+                  <div className="rounded-xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-800">
                     {fullName ||
                       "Not added yet"}
                   </div>
                 )}
-
               </div>
 
+              {/* WhatsApp */}
               <div className="mt-5">
-
                 <div className="mb-2 flex items-center justify-between">
-                  <label className="block font-bold text-blue-900">
+                  <label className="text-xs font-bold uppercase tracking-wider text-slate-500">
                     WhatsApp Number
                   </label>
 
@@ -954,11 +1214,9 @@ export default function AccountPage() {
                     <button
                       type="button"
                       onClick={() =>
-                        setIsEditingProfile(
-                          true
-                        )
+                        setIsEditingProfile(true)
                       }
-                      className="rounded-lg p-1 text-blue-900 transition hover:bg-blue-50 hover:text-blue-700"
+                      className="text-slate-400 transition hover:text-orange-500"
                       title="Edit WhatsApp number"
                       aria-label="Edit WhatsApp number"
                     >
@@ -967,18 +1225,13 @@ export default function AccountPage() {
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
-                        strokeWidth="2"
+                        strokeWidth="1.8"
                         className="h-4 w-4"
                       >
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
-                          d="M16.862 3.487a2.25 2.25 0 0 1 3.182 3.182L7.5 19.213l-4.5 1.125 1.125-4.5L16.862 3.487Z"
-                        />
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M15 5.25 18.75 9"
+                          d="M13.5 6.5 17.5 10.5M4 20l3.8-.9L19.2 7.7a2.8 2.8 0 0 0-4-4L3.8 15.1 3 19.5 4 20Z"
                         />
                       </svg>
                     </button>
@@ -986,10 +1239,8 @@ export default function AccountPage() {
                 </div>
 
                 {isEditingProfile ? (
-                  <div className="grid grid-cols-[130px_1fr] gap-2">
-
+                  <div className="grid grid-cols-[120px_1fr] gap-2">
                     <div className="relative">
-
                       <button
                         type="button"
                         onClick={() =>
@@ -998,34 +1249,44 @@ export default function AccountPage() {
                               !current
                           )
                         }
-                        className="flex h-full w-full items-center justify-between rounded-xl border border-gray-300 bg-white px-3 py-3 text-gray-900 outline-none transition focus:border-blue-500"
+                        className="flex h-full w-full items-center justify-between rounded-xl border border-slate-200 bg-white px-3 py-3 text-sm text-slate-900 outline-none transition focus:border-orange-400 focus:ring-4 focus:ring-orange-500/10"
                       >
-
                         <div className="flex items-center gap-2">
-
                           <img
                             src={`https://flagcdn.com/w40/${selectedCountry.flag}.png`}
                             alt={`${selectedCountry.name} flag`}
                             className="h-5 w-7 rounded object-cover"
                           />
 
-                          <span className="font-medium">
+                          <span className="font-semibold">
                             {
                               selectedCountry.code
                             }
                           </span>
-
                         </div>
 
-                        <span className="ml-2 text-gray-500">
-                          ▾
-                        </span>
-
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          className={`h-4 w-4 text-slate-400 transition ${
+                            isCountryOpen
+                              ? "rotate-180"
+                              : ""
+                          }`}
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="m6 9 6 6 6-6"
+                          />
+                        </svg>
                       </button>
 
                       {isCountryOpen && (
-                        <div className="absolute left-0 top-full z-50 mt-2 max-h-64 w-full overflow-y-auto rounded-xl border border-gray-200 bg-white shadow-xl">
-
+                        <div className="absolute left-0 top-full z-50 mt-2 max-h-64 w-full overflow-y-auto rounded-xl border border-slate-200 bg-white p-1 shadow-2xl">
                           {COUNTRY_CODES.map(
                             (country) => (
                               <button
@@ -1040,9 +1301,8 @@ export default function AccountPage() {
                                     false
                                   );
                                 }}
-                                className="flex w-full items-center gap-3 px-3 py-2.5 text-left text-gray-900 transition hover:bg-slate-50"
+                                className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm text-slate-800 transition hover:bg-slate-50"
                               >
-
                                 <img
                                   src={`https://flagcdn.com/w40/${country.flag}.png`}
                                   alt={`${country.name} flag`}
@@ -1054,14 +1314,11 @@ export default function AccountPage() {
                                     country.code
                                   }
                                 </span>
-
                               </button>
                             )
                           )}
-
                         </div>
                       )}
-
                     </div>
 
                     <input
@@ -1080,23 +1337,21 @@ export default function AccountPage() {
                         )
                       }
                       placeholder="1001234567"
-                      className="w-full rounded-xl border border-gray-300 p-3 text-gray-900 outline-none focus:border-blue-500"
+                      className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-orange-400 focus:ring-4 focus:ring-orange-500/10"
                     />
-
                   </div>
                 ) : (
-                  <div className="rounded-xl bg-slate-50 p-3 text-gray-900">
+                  <div className="rounded-xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-800">
                     {phone ||
                       "Not added yet"}
                   </div>
                 )}
-
               </div>
 
+              {/* Email */}
               <div className="mt-5">
-
                 <div className="mb-2 flex items-center justify-between">
-                  <label className="block font-bold text-blue-900">
+                  <label className="text-xs font-bold uppercase tracking-wider text-slate-500">
                     Email
                   </label>
 
@@ -1104,11 +1359,9 @@ export default function AccountPage() {
                     <button
                       type="button"
                       onClick={() =>
-                        setIsEditingProfile(
-                          true
-                        )
+                        setIsEditingProfile(true)
                       }
-                      className="rounded-lg p-1 text-blue-900 transition hover:bg-blue-50 hover:text-blue-700"
+                      className="text-slate-400 transition hover:text-orange-500"
                       title="Edit email"
                       aria-label="Edit email"
                     >
@@ -1117,18 +1370,13 @@ export default function AccountPage() {
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
-                        strokeWidth="2"
+                        strokeWidth="1.8"
                         className="h-4 w-4"
                       >
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
-                          d="M16.862 3.487a2.25 2.25 0 0 1 3.182 3.182L7.5 19.213l-4.5 1.125 1.125-4.5L16.862 3.487Z"
-                        />
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M15 5.25 18.75 9"
+                          d="M13.5 6.5 17.5 10.5M4 20l3.8-.9L19.2 7.7a2.8 2.8 0 0 0-4-4L3.8 15.1 3 19.5 4 20Z"
                         />
                       </svg>
                     </button>
@@ -1148,26 +1396,24 @@ export default function AccountPage() {
                       )
                     }
                     required
-                    className="w-full rounded-xl border border-gray-300 p-3 text-gray-900 outline-none focus:border-blue-500"
+                    className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-orange-400 focus:ring-4 focus:ring-orange-500/10"
                   />
                 ) : (
-                  <div className="break-all rounded-xl bg-slate-50 p-3 text-gray-900">
+                  <div className="break-all rounded-xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-800">
                     {email ||
                       "Not added yet"}
                   </div>
                 )}
-
               </div>
 
               {isEditingProfile && (
                 <div className="mt-6 flex gap-3">
-
                   <button
                     type="submit"
                     disabled={
                       isSaving
                     }
-                    className="flex-1 rounded-xl bg-orange-500 py-3 font-bold text-white transition hover:bg-orange-600 disabled:opacity-60"
+                    className="flex-1 rounded-xl bg-orange-500 py-3 text-sm font-bold text-white shadow-sm transition hover:bg-orange-600 hover:shadow-md disabled:opacity-60"
                   >
                     {isSaving
                       ? "Saving..."
@@ -1208,109 +1454,170 @@ export default function AccountPage() {
 
                       setMessage("");
                     }}
-                    className="rounded-xl border-2 border-gray-300 px-4 py-3 font-bold text-gray-700 transition hover:bg-gray-100"
+                    className="rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-bold text-slate-600 transition hover:bg-slate-50"
                   >
                     Cancel
                   </button>
-
                 </div>
               )}
 
             </form>
-
           </section>
 
-          <section className="rounded-3xl bg-white p-7 shadow-sm lg:col-span-2">
+          {/* Bookings */}
+          <section className="rounded-[28px] border border-slate-200/80 bg-white p-6 shadow-[0_10px_35px_rgba(15,23,42,0.05)] sm:p-7 lg:col-span-2">
 
-            <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
-
+            <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-center">
               <div>
-
-                <p className="font-bold uppercase tracking-[0.2em] text-orange-500">
+                <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-orange-500">
                   My Trips
                 </p>
 
-                <h2 className="mt-2 text-2xl font-bold text-blue-900">
-                  Your Booking History
+                <h2 className="mt-1 text-xl font-semibold tracking-tight text-[#071d49]">
+                  Booking History
                 </h2>
-
               </div>
 
               <Link
                 href="/tours"
-                className="rounded-xl bg-blue-900 px-5 py-3 text-center font-bold text-white transition hover:bg-blue-800"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#071d49] px-5 py-3 text-sm font-bold text-white transition hover:bg-blue-800"
               >
                 Explore Tours
-              </Link>
 
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  className="h-4 w-4"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M5 12h13M13 6l6 6-6 6"
+                  />
+                </svg>
+              </Link>
             </div>
 
             {bookings.length === 0 ? (
+              <div className="mt-7 rounded-[22px] border border-dashed border-slate-200 bg-slate-50/70 px-6 py-12 text-center">
+                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-[#071d49] shadow-sm">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                    className="h-7 w-7"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M4 7.5h16M6 4.5h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-12a2 2 0 0 1 2-2Z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M8 11.5h3M8 15h6"
+                    />
+                  </svg>
+                </div>
 
-              <div className="mt-8 rounded-2xl bg-slate-50 p-8 text-center">
-
-                <p className="text-4xl">
-                  🌴
-                </p>
-
-                <h3 className="mt-4 text-xl font-bold text-blue-900">
+                <h3 className="mt-4 text-lg font-semibold text-[#071d49]">
                   No bookings yet
                 </h3>
 
-                <p className="mt-2 text-gray-600">
-                  Your confirmed and upcoming
-                  trips will appear here.
+                <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-500">
+                  Your confirmed and upcoming trips will appear here.
                 </p>
-
               </div>
-
             ) : (
-
-              <div className="mt-8 space-y-4">
-
+              <div className="mt-7 space-y-3">
                 {bookings.map(
                   (booking) => (
-
                     <div
                       key={
                         booking.id
                       }
-                      className="rounded-2xl border border-gray-200 p-5"
+                      className="group rounded-[20px] border border-slate-200 bg-white p-5 transition hover:border-slate-300 hover:shadow-[0_8px_25px_rgba(15,23,42,0.05)]"
                     >
+                      <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+                        <div className="min-w-0">
+                          <div className="flex items-center gap-2">
+                            <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
 
-                      <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-start">
+                            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-orange-500">
+                              {
+                                booking.booking_type
+                              }
+                            </p>
+                          </div>
 
-                        <div>
-
-                          <p className="text-sm font-bold uppercase tracking-wider text-orange-500">
-                            {
-                              booking.booking_type
-                            }
-                          </p>
-
-                          <h3 className="mt-1 text-xl font-bold text-blue-900">
+                          <h3 className="mt-2 truncate text-base font-semibold text-[#071d49] sm:text-lg">
                             {
                               booking.tour_name
                             }
                           </h3>
 
-                          <p className="mt-2 text-sm text-gray-600">
+                          <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-500">
+                            <span className="flex items-center gap-1.5">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="1.7"
+                                className="h-3.5 w-3.5"
+                              >
+                                <rect
+                                  x="3.5"
+                                  y="5"
+                                  width="17"
+                                  height="15"
+                                  rx="2"
+                                />
+                                <path
+                                  strokeLinecap="round"
+                                  d="M7.5 3.5v3M16.5 3.5v3M3.5 9h17"
+                                />
+                              </svg>
 
-                            {booking.tour_date
-                              ? `Date: ${booking.tour_date}`
-                              : "Date to be confirmed"}
+                              {booking.tour_date
+                                ? booking.tour_date
+                                : "Date to be confirmed"}
+                            </span>
 
-                            {booking.guests
-                              ? ` • ${booking.guests} guests`
-                              : ""}
+                            {booking.guests && (
+                              <span className="flex items-center gap-1.5">
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  strokeWidth="1.7"
+                                  className="h-3.5 w-3.5"
+                                >
+                                  <circle
+                                    cx="9"
+                                    cy="8"
+                                    r="3"
+                                  />
+                                  <path
+                                    strokeLinecap="round"
+                                    d="M3.5 20c.6-3.2 2.4-5 5.5-5s4.9 1.8 5.5 5M16 11a2.5 2.5 0 1 0 0-5M16.5 15c2.2.2 3.6 1.8 4 5"
+                                  />
+                                </svg>
 
-                          </p>
-
+                                {booking.guests} guests
+                              </span>
+                            )}
+                          </div>
                         </div>
 
-                        <div className="text-left sm:text-right">
-
-                          <span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-bold text-blue-900">
+                        <div className="flex items-center justify-between gap-4 sm:flex-col sm:items-end">
+                          <span className="rounded-full bg-blue-50 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-[#071d49]">
                             {
                               booking.status
                             }
@@ -1318,80 +1625,120 @@ export default function AccountPage() {
 
                           {booking.total_price !==
                             null && (
-                            <p className="mt-3 text-xl font-bold text-orange-500">
-                              €
-                              {
-                                booking.total_price
-                              }
+                            <p className="text-xl font-semibold text-orange-500">
+                              €{booking.total_price}
                             </p>
                           )}
-
                         </div>
-
                       </div>
-
                     </div>
-
                   )
                 )}
-
               </div>
-
             )}
-
           </section>
-
         </div>
 
-        <section className="mt-8 rounded-3xl bg-white p-7 shadow-sm">
+        {/* Memories */}
+        <section className="mt-6 rounded-[28px] border border-slate-200/80 bg-white p-6 shadow-[0_10px_35px_rgba(15,23,42,0.05)] sm:p-7">
 
           <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
-
             <div>
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-50 text-orange-500">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.7"
+                    className="h-5 w-5"
+                  >
+                    <rect
+                      x="3.5"
+                      y="4.5"
+                      width="17"
+                      height="15"
+                      rx="2.5"
+                    />
+                    <circle
+                      cx="8.5"
+                      cy="9"
+                      r="1.4"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="m5.5 16 4.2-4.2 3.2 3.2 2.1-2.1 3.5 3.5"
+                    />
+                  </svg>
+                </div>
 
-              <p className="font-bold uppercase tracking-[0.2em] text-orange-500">
-                My Travel Memories
+                <div>
+                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-orange-500">
+                    My Travel Memories
+                  </p>
+
+                  <h2 className="mt-1 text-xl font-semibold tracking-tight text-[#071d49]">
+                    Save Your Hurghada Moments
+                  </h2>
+                </div>
+              </div>
+
+              <p className="mt-4 text-sm leading-6 text-slate-500">
+                Add up to 25 photos from your trips. Only you can see them.
               </p>
-
-              <h2 className="mt-2 text-2xl font-bold text-blue-900">
-                Save Your Hurghada Moments
-              </h2>
-
-              <p className="mt-2 text-gray-600">
-                Add up to 25 photos from your
-                trips. Only you can see them.
-              </p>
-
             </div>
 
-            <span className="font-bold text-blue-900">
+            <div className="rounded-xl bg-slate-50 px-4 py-2.5 text-sm font-semibold text-[#071d49]">
               {memories.length} / 25 photos
-            </span>
-
+            </div>
           </div>
 
           <form
             onSubmit={
               handleUploadMemory
             }
-            className="mt-6 grid gap-4 rounded-2xl bg-slate-50 p-5 md:grid-cols-[1fr_1fr_auto]"
+            className="mt-7 grid gap-3 rounded-[22px] border border-slate-200 bg-slate-50/70 p-4 md:grid-cols-[1fr_1fr_auto]"
           >
+            <label className="flex min-w-0 cursor-pointer items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-500 transition hover:border-orange-300 hover:bg-orange-50/30">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.7"
+                className="h-5 w-5 shrink-0 text-orange-500"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 16V5m0 0L8 9m4-4 4 4M5 15.5v2A2.5 2.5 0 0 0 7.5 20h9a2.5 2.5 0 0 0 2.5-2.5v-2"
+                />
+              </svg>
 
-            <input
-              key={
-                memoryInputKey
-              }
-              type="file"
-              accept="image/*"
-              onChange={
-                handleMemoryFileChange
-              }
-              disabled={
-                memories.length >=
-                25
-              }
-              className="w-full rounded-xl border border-gray-300 bg-white p-3 text-gray-700"
-            />
+              <span className="truncate">
+                {memoryFile
+                  ? memoryFile.name
+                  : "Choose a travel photo"}
+              </span>
+
+              <input
+                key={
+                  memoryInputKey
+                }
+                type="file"
+                accept="image/*"
+                onChange={
+                  handleMemoryFileChange
+                }
+                disabled={
+                  memories.length >=
+                  25
+                }
+                className="hidden"
+              />
+            </label>
 
             <input
               type="text"
@@ -1412,7 +1759,7 @@ export default function AccountPage() {
                 memories.length >=
                 25
               }
-              className="w-full rounded-xl border border-gray-300 bg-white p-3 text-gray-900 outline-none focus:border-blue-500"
+              className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-orange-400 focus:ring-4 focus:ring-orange-500/10"
             />
 
             <button
@@ -1423,68 +1770,105 @@ export default function AccountPage() {
                   25 ||
                 !memoryFile
               }
-              className="rounded-xl bg-orange-500 px-6 py-3 font-bold text-white transition hover:bg-orange-600 disabled:cursor-not-allowed disabled:opacity-60"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-orange-500 px-6 py-3 text-sm font-bold text-white transition hover:bg-orange-600 disabled:cursor-not-allowed disabled:opacity-50"
             >
-              {isUploadingMemory
-                ? "Uploading..."
-                : "Add Photo"}
-            </button>
+              {isUploadingMemory ? (
+                "Uploading..."
+              ) : (
+                <>
+                  Add Photo
 
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    className="h-4 w-4"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M12 5v14M5 12h14"
+                    />
+                  </svg>
+                </>
+              )}
+            </button>
           </form>
 
           {message && (
-            <p className="mt-5 rounded-xl bg-blue-50 p-4 text-sm font-medium text-blue-900">
+            <p className="mt-4 rounded-xl border border-blue-100 bg-blue-50 px-4 py-3 text-sm font-medium text-[#071d49]">
               {message}
             </p>
           )}
 
           {memories.length === 0 ? (
+            <div className="mt-7 rounded-[22px] border border-dashed border-slate-200 bg-slate-50/60 px-6 py-14 text-center">
+              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-slate-400 shadow-sm">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  className="h-7 w-7"
+                >
+                  <rect
+                    x="3.5"
+                    y="4.5"
+                    width="17"
+                    height="15"
+                    rx="2.5"
+                  />
+                  <circle
+                    cx="8.5"
+                    cy="9"
+                    r="1.4"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="m5.5 16 4.2-4.2 3.2 3.2 2.1-2.1 3.5 3.5"
+                  />
+                </svg>
+              </div>
 
-            <div className="mt-8 rounded-2xl border-2 border-dashed border-gray-200 p-10 text-center">
-
-              <p className="text-5xl">
-                📸
-              </p>
-
-              <h3 className="mt-4 text-xl font-bold text-blue-900">
+              <h3 className="mt-4 text-lg font-semibold text-[#071d49]">
                 No memories yet
               </h3>
 
-              <p className="mt-2 text-gray-600">
-                Upload your first Hurghada
-                memory above.
+              <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-500">
+                Upload your first Hurghada memory above.
               </p>
-
             </div>
-
           ) : (
-
-            <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-
+            <div className="mt-7 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {memories.map(
                 (memory) => (
-
                   <article
                     key={
                       memory.id
                     }
-                    className="overflow-hidden rounded-2xl border border-gray-200 bg-white"
+                    className="group overflow-hidden rounded-[22px] border border-slate-200 bg-white transition duration-300 hover:-translate-y-1 hover:shadow-[0_15px_35px_rgba(15,23,42,0.08)]"
                   >
+                    <div className="relative overflow-hidden">
+                      <img
+                        src={
+                          memory.imageUrl
+                        }
+                        alt={
+                          memory.caption ||
+                          "Travel memory"
+                        }
+                        className="h-52 w-full object-cover transition duration-500 group-hover:scale-105"
+                      />
 
-                    <img
-                      src={
-                        memory.imageUrl
-                      }
-                      alt={
-                        memory.caption ||
-                        "Travel memory"
-                      }
-                      className="h-52 w-full object-cover"
-                    />
+                      <div className="absolute inset-x-0 bottom-0 h-20 bg-linear-to-t from-black/40 to-transparent opacity-70" />
+                    </div>
 
                     <div className="p-4">
-
-                      <p className="min-h-10 text-sm leading-5 text-gray-600">
+                      <p className="min-h-10 text-sm leading-5 text-slate-600">
                         {
                           memory.caption ||
                           "A beautiful Hurghada memory"
@@ -1498,24 +1882,32 @@ export default function AccountPage() {
                             memory
                           )
                         }
-                        className="mt-4 w-full rounded-xl border-2 border-red-500 py-2 text-sm font-bold text-red-600 transition hover:bg-red-500 hover:text-white"
+                        className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl border border-red-100 bg-red-50 py-2.5 text-xs font-bold text-red-600 transition hover:border-red-500 hover:bg-red-500 hover:text-white"
                       >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="1.8"
+                          className="h-4 w-4"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M4.5 7h15M9 7V4.5h6V7M7 7l.7 12h8.6L17 7M10 11v5M14 11v5"
+                          />
+                        </svg>
+
                         Delete Photo
                       </button>
-
                     </div>
-
                   </article>
-
                 )
               )}
-
             </div>
-
           )}
-
         </section>
-
       </div>
     </main>
   );

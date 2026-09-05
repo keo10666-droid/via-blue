@@ -341,6 +341,15 @@ function TourTypeIcon({
     `${tour.name} ${tour.type} ${tour.slug}`.toLowerCase();
 
   if (
+    text.includes("spa") ||
+    text.includes("massage") ||
+    text.includes("wellness") ||
+    text.includes("relax")
+  ) {
+    return <SparklesIcon className={className} />;
+  }
+
+  if (
     text.includes("safari") ||
     text.includes("desert") ||
     text.includes("quad") ||

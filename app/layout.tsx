@@ -15,9 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Hurghada Tours",
+  title: "Via Blue | Tours & Transfers in Hurghada",
   description:
-    "Discover unforgettable tours, excursions and transfers in Hurghada and the Red Sea.",
+    "Discover unforgettable tours, excursions and professional transfers in Hurghada and the Red Sea with Via Blue.",
 };
 
 export default function RootLayout({

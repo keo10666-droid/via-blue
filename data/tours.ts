@@ -65,6 +65,7 @@ export const tourCategoryMap = {
   "sand-city": "family-attractions",
   "mini-egypt-park": "family-attractions",
   "hurghada-museum": "family-attractions",
+  "spa-massage": "family-attractions",
 } as const;
 
 export type TourSlug = keyof typeof tourCategoryMap;
@@ -4337,102 +4338,163 @@ export const tours = {
 }),
 
     "hurghada-museum": baseTour("hurghada-museum", {
-    name: "Hurghada Museum",
-    destination: "hurghada",
-    image: "/tours/hurghada-museum-hero.webp",
+  name: "Hurghada Museum",
+  destination: "hurghada",
+  image: "/tours/hurghada-museum-hero.webp",
 
-    gallery: [
-      "/tours/hurghada-museum-1.webp",
-      "/tours/hurghada-museum-2.webp",
-      "/tours/hurghada-museum-3.webp",
-      "/tours/hurghada-museum-4.webp",
-      "/tours/hurghada-museum-5.webp",
-    ],
+  gallery: [
+    "/tours/hurghada-museum-1.webp",
+    "/tours/hurghada-museum-2.webp",
+    "/tours/hurghada-museum-3.webp",
+    "/tours/hurghada-museum-4.webp",
+    "/tours/hurghada-museum-5.webp",
+  ],
 
+  description:
+    "Discover Egyptian history, art and artifacts at Hurghada Museum.",
+
+  overview:
+    "Visit Hurghada Museum and explore Egyptian artifacts from different historical periods in a comfortable, air-conditioned environment.",
+
+  duration: "2.5–3 Hours",
+
+  pickup:
+    "Hotel pickup by air-conditioned car or bus",
+
+  schedule:
+    "Daily. Morning period: 10:00 AM–2:00 PM. Evening period: 5:00 PM–11:00 PM.",
+
+  program: [
+    "Depart from the hotel by air-conditioned car or bus and travel to Hurghada Museum near the airport.",
+    "Meet the specialized archaeological guide.",
+    "Explore the main museum halls equipped with modern lighting and display systems.",
+    "Discover artifacts from the Pharaonic, Roman, Greek, Coptic and Islamic periods.",
+    "Learn about the museum's main concept: beauty, sport and entertainment throughout ancient Egyptian history.",
+    "Visit the mummy, sarcophagus, gold and ancient jewelry sections.",
+    "Enjoy free time in the commercial area with bazaars and cafés.",
+    "Finish the visit and return to the hotel.",
+  ],
+
+  highlights: [
+    "Egyptian antiquities",
+    "Pharaonic artifacts",
+    "Roman and Greek collections",
+    "Coptic and Islamic heritage",
+    "Mummies and sarcophagi",
+    "Ancient gold and jewelry",
+    "Air-conditioned museum",
+    "Professional archaeological guide",
+  ],
+
+  included: [
+    "Full museum admission tickets",
+    "Access to archaeological halls",
+    "Round-trip hotel transfer",
+    "Specialized archaeological guide",
+    "Professional explanation",
+  ],
+
+  excluded: [
+    "Personal purchases from the museum bazaars",
+    "Food and drinks at cafés",
+    "Tips",
+  ],
+
+  notes: [
+    "Hurghada Museum is one of Egypt's archaeological museums established through cooperation between the private sector and the Ministry of Tourism and Antiquities.",
+    "The museum is very suitable for history lovers, families and children.",
+    "It is an excellent option during hot weather because the museum is fully air-conditioned.",
+    "Actual museum visit time is approximately 1–2 hours, with total excursion time around 2.5–3 hours including transfers.",
+  ],
+
+  price: 0,
+  childPrice: 0,
+  infantPrice: 0,
+  rating: 0,
+  reviews: 0,
+  badge: "Culture",
+  available: true,
+  type: "Museum",
+
+  seo: {
+    title: "Hurghada Museum Tour | Egyptian Antiquities & History",
     description:
-      "Discover Egyptian history, art and artifacts at Hurghada Museum.",
-
-    overview:
-      "Visit Hurghada Museum and explore Egyptian artifacts from different historical periods in a comfortable, air-conditioned environment.",
-
-    duration: "2.5–3 Hours",
-
-    pickup:
-      "Hotel pickup by air-conditioned car or bus",
-
-    schedule:
-      "Daily. Morning period: 10:00 AM–2:00 PM. Evening period: 5:00 PM–11:00 PM.",
-
-    program: [
-      "Depart from the hotel by air-conditioned car or bus and travel to Hurghada Museum near the airport.",
-      "Meet the specialized archaeological guide.",
-      "Explore the main museum halls equipped with modern lighting and display systems.",
-      "Discover artifacts from the Pharaonic, Roman, Greek, Coptic and Islamic periods.",
-      "Learn about the museum's main concept: beauty, sport and entertainment throughout ancient Egyptian history.",
-      "Visit the mummy, sarcophagus, gold and ancient jewelry sections.",
-      "Enjoy free time in the commercial area with bazaars and cafés.",
-      "Finish the visit and return to the hotel.",
+      "Visit Hurghada Museum and discover Egyptian artifacts from the Pharaonic, Greek, Roman, Coptic and Islamic periods with hotel transfers and a professional archaeological guide.",
+    keywords: [
+      "Hurghada Museum",
+      "Hurghada Museum tour",
+      "Hurghada Museum tickets",
+      "Egyptian Museum Hurghada",
+      "Hurghada attractions",
+      "things to do in Hurghada",
+      "Hurghada excursions",
+      "Egyptian antiquities Hurghada",
+      "Pharaonic museum Hurghada",
+      "Hurghada family attractions",
     ],
+  },
+}),
 
-    highlights: [
-      "Egyptian antiquities",
-      "Pharaonic artifacts",
-      "Roman and Greek collections",
-      "Coptic and Islamic heritage",
-      "Mummies and sarcophagi",
-      "Ancient gold and jewelry",
-      "Air-conditioned museum",
-      "Professional archaeological guide",
-    ],
-
-    included: [
-      "Full museum admission tickets",
-      "Access to archaeological halls",
-      "Round-trip hotel transfer",
-      "Specialized archaeological guide",
-      "Professional explanation",
-    ],
-
-    excluded: [
-      "Personal purchases from the museum bazaars",
-      "Food and drinks at cafés",
-      "Tips",
-    ],
-
-    notes: [
-      "Hurghada Museum is one of Egypt's archaeological museums established through cooperation between the private sector and the Ministry of Tourism and Antiquities.",
-      "The museum is very suitable for history lovers, families and children.",
-      "It is an excellent option during hot weather because the museum is fully air-conditioned.",
-      "Actual museum visit time is approximately 1–2 hours, with total excursion time around 2.5–3 hours including transfers.",
-    ],
-
-    price: 0,
-    childPrice: 0,
-    infantPrice: 0,
-    rating: 0,
-    reviews: 0,
-    badge: "Culture",
-    available: true,
-    type: "Museum",
-
-    seo: {
-      title: "Hurghada Museum Tour | Egyptian Antiquities & History",
-      description:
-        "Visit Hurghada Museum and discover Egyptian artifacts from the Pharaonic, Greek, Roman, Coptic and Islamic periods with hotel transfers and a professional archaeological guide.",
-      keywords: [
-        "Hurghada Museum",
-        "Hurghada Museum tour",
-        "Hurghada Museum tickets",
-        "Egyptian Museum Hurghada",
-        "Hurghada attractions",
-        "things to do in Hurghada",
-        "Hurghada excursions",
-        "Egyptian antiquities Hurghada",
-        "Pharaonic museum Hurghada",
-        "Hurghada family attractions",
-      ],
-    },
-  }),
+"spa-massage": baseTour("spa-massage", {
+  name: "Hurghada Spa & Massage Package",
+  destination: "hurghada",
+  image: "/tours/spa-massage-hero.webp",
+  description:
+    "Enjoy a relaxing spa experience in Hurghada including sauna, steam room, jacuzzi, Turkish or Moroccan bath and a full body massage.",
+  overview:
+    "Relax and recharge with a complete Hurghada Spa & Massage experience including wellness facilities, traditional bath treatments and a full body massage.",
+  duration: "3.5–4 Hours",
+  pickup: "Hotel pickup",
+  schedule: "Daily from 09:00 AM to 06:00 PM",
+  program: [
+    "Hotel pickup by air-conditioned vehicle.",
+    "Welcome drink at the spa center.",
+    "Relax in the sauna.",
+    "Enjoy the steam room.",
+    "Relax in the jacuzzi.",
+    "Turkish / Moroccan bath with exfoliation.",
+    "Full body massage for 45–60 minutes.",
+    "Relax in the lounge and enjoy a warm drink.",
+    "Transfer back to the hotel.",
+  ],
+  highlights: [
+    "Sauna",
+    "Steam Room",
+    "Jacuzzi",
+    "Turkish / Moroccan Bath",
+    "Full Body Massage",
+    "Hotel Transfers",
+  ],
+  included: [
+    "Round-trip hotel transfer",
+    "Sauna",
+    "Steam Room",
+    "Jacuzzi",
+    "Turkish / Moroccan Bath",
+    "Body exfoliation",
+    "Full Body Massage",
+    "Welcome and warm drinks",
+  ],
+  excluded: [
+    "Additional facial treatments",
+    "Specialized massage treatments",
+    "Tips",
+  ],
+  notes: [
+    "Ideal for relaxing after a boat trip or desert safari.",
+    "Separate facilities are available for men and women.",
+    "Female sections are served by female specialists.",
+    "Bring swimwear and comfortable flip-flops.",
+  ],
+  price: 40,
+  childPrice: 0,
+  infantPrice: 0,
+  rating: 0,
+  reviews: 0,
+  badge: "Relaxation",
+  available: true,
+  type: "Spa & Massage",
+}),
 } satisfies Record<TourSlug, TourData>;
 
 /* =========================================================

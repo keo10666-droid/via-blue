@@ -1,10 +1,13 @@
 import { notFound } from "next/navigation";
 import LuxuryBookingForm from "@/app/components/LuxuryBookingForm";
 
+export const dynamic = "force-dynamic";
+
 const luxuryTours = {
   luxor: {
     name: "Luxor Private Tour",
     tourType: "Private Tour",
+    adultPrice: 150,
     included: [
       "Private transportation",
       "Professional driver",
@@ -16,6 +19,33 @@ const luxuryTours = {
   cairo: {
     name: "Cairo Private Tour",
     tourType: "Private Tour",
+    adultPrice: 180,
+    included: [
+      "Private transportation",
+      "Professional driver",
+      "Hotel pickup and drop-off",
+      "Flexible private experience",
+    ],
+  },
+
+  alexandria: {
+    name: "Alexandria Private Tour",
+    tourType: "Private Tour",
+    adultPrice: 120,
+    included: [
+      "Private modern air-conditioned transportation",
+      "Professional private tour guide",
+      "Hotel pickup and drop-off",
+      "Entrance tickets to all listed attractions",
+      "Lunch",
+      "Fully private experience",
+    ],
+  },
+
+  aswan: {
+    name: "Aswan Private Tour",
+    tourType: "Private Tour",
+    adultPrice: 250,
     included: [
       "Private transportation",
       "Professional driver",
@@ -27,6 +57,7 @@ const luxuryTours = {
   "speed-boat": {
     name: "Private Speed Boat",
     tourType: "Private Boat",
+    adultPrice: 200,
     included: [
       "Private speed boat",
       "Professional crew",
@@ -38,6 +69,7 @@ const luxuryTours = {
   "quad-safari": {
     name: "Private Quad Safari",
     tourType: "Private Safari",
+    adultPrice: 120,
     included: [
       "Private safari experience",
       "Quad bike",
@@ -49,6 +81,7 @@ const luxuryTours = {
   "buggy-safari": {
     name: "Private Buggy Safari",
     tourType: "Private Safari",
+    adultPrice: 160,
     included: [
       "Private buggy experience",
       "Professional guide",
@@ -57,20 +90,10 @@ const luxuryTours = {
     ],
   },
 
-  aswan: {
-    name: "Aswan Private Tour",
-    tourType: "Private Tour",
-    included: [
-      "Private transportation",
-      "Professional driver",
-      "Hotel pickup and drop-off",
-      "Flexible private experience",
-    ],
-  },
-
   "private-boat": {
     name: "Private Boat",
     tourType: "Private Boat",
+    adultPrice: 180,
     included: [
       "Private boat",
       "Professional crew",
@@ -88,7 +111,8 @@ export default async function LuxuryBookingPage({
 }) {
   const { slug } = await params;
 
-  const tour = luxuryTours[slug as keyof typeof luxuryTours];
+  const tour =
+    luxuryTours[slug as keyof typeof luxuryTours];
 
   if (!tour) {
     notFound();
@@ -97,6 +121,7 @@ export default async function LuxuryBookingPage({
   return (
     <LuxuryBookingForm
       tourName={tour.name}
+      adultPrice={tour.adultPrice}
       tourType={tour.tourType}
       included={tour.included}
     />

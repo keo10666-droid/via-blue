@@ -310,6 +310,22 @@ function formatDateForDisplay(dateString: string) {
   });
 }
 
+function formatTimeForDisplay(timeString: string) {
+  if (!timeString) return "";
+
+  const [hourString, minute] = timeString.split(":");
+  const hour = Number(hourString);
+
+  if (Number.isNaN(hour) || !minute) {
+    return timeString;
+  }
+
+  const period = hour >= 12 ? "PM" : "AM";
+  const displayHour = hour % 12 || 12;
+
+  return `${displayHour}:${minute} ${period}`;
+}
+
 function CustomDatePicker({
   value,
   minDate,
@@ -567,6 +583,277 @@ function CustomDatePicker({
   );
 }
 
+function CustomTimePicker({
+  value,
+  onChange,
+  invalid,
+}: {
+  value: string;
+  onChange: (value: string) => void;
+  invalid: boolean;
+}) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const getInitialTime = () => {
+    if (!value) {
+      return {
+        hour: 12,
+        minute: "00",
+        period: "AM",
+      };
+    }
+
+    const [hourString, minuteString] =
+      value.split(":");
+
+    const parsedHour = Number(hourString);
+    const parsedMinute = minuteString || "00";
+
+    if (
+      Number.isNaN(parsedHour) ||
+      parsedHour < 0 ||
+      parsedHour > 23
+    ) {
+      return {
+        hour: 12,
+        minute: "00",
+        period: "AM",
+      };
+    }
+
+    return {
+      hour: parsedHour % 12 || 12,
+      minute: parsedMinute,
+      period: parsedHour >= 12 ? "PM" : "AM",
+    };
+  };
+
+  const initialTime = getInitialTime();
+
+  const [selectedHour, setSelectedHour] =
+    useState(initialTime.hour);
+
+  const [selectedMinute, setSelectedMinute] =
+    useState(initialTime.minute);
+
+  const [selectedPeriod, setSelectedPeriod] =
+    useState<"AM" | "PM">(initialTime.period as "AM" | "PM");
+
+  const openPicker = () => {
+    const current = getInitialTime();
+
+    setSelectedHour(current.hour);
+    setSelectedMinute(current.minute);
+    setSelectedPeriod(
+      current.period as "AM" | "PM"
+    );
+    setIsOpen(true);
+  };
+
+  const handleApply = () => {
+    let hour24 = selectedHour % 12;
+
+    if (selectedPeriod === "PM") {
+      hour24 += 12;
+    }
+
+    const formattedTime = `${String(
+      hour24
+    ).padStart(2, "0")}:${selectedMinute}`;
+
+    onChange(formattedTime);
+    setIsOpen(false);
+  };
+
+  return (
+    <div className="relative">
+      <button
+        type="button"
+        onClick={() => {
+          if (isOpen) {
+            setIsOpen(false);
+          } else {
+            openPicker();
+          }
+        }}
+        className={`flex h-[54px] w-full items-center justify-between rounded-xl border bg-white px-4 text-left shadow-sm transition focus:outline-none focus:ring-4 ${
+          invalid
+            ? "border-red-400 focus:border-red-500 focus:ring-red-50"
+            : isOpen
+            ? "border-blue-600 ring-4 ring-blue-50"
+            : "border-gray-200 hover:border-blue-300"
+        }`}
+      >
+        <div className="flex items-center gap-3">
+          <span
+            className={
+              invalid
+                ? "text-red-500"
+                : "text-blue-900"
+            }
+          >
+            <ClockIcon />
+          </span>
+
+          <span
+            className={
+              value
+                ? "text-sm font-semibold text-gray-900"
+                : "text-sm text-gray-400"
+            }
+          >
+            {value
+              ? formatTimeForDisplay(value)
+              : "Select pickup time"}
+          </span>
+        </div>
+
+        <span
+          className={`text-gray-400 transition ${
+            isOpen ? "rotate-180" : ""
+          }`}
+        >
+          <ChevronDownIcon />
+        </span>
+      </button>
+
+      {isOpen && (
+        <div className="absolute left-0 top-full z-50 mt-2 w-full min-w-[300px] overflow-hidden rounded-2xl border border-gray-200 bg-white p-4 shadow-2xl">
+          <div className="flex items-center gap-3 border-b border-gray-100 pb-4">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-900">
+              <ClockIcon />
+            </div>
+
+            <div>
+              <p className="text-sm font-bold text-blue-950">
+                Select Pickup Time
+              </p>
+
+              <p className="mt-0.5 text-[11px] text-gray-400">
+                Choose your preferred pickup time
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-4 grid grid-cols-3 gap-2">
+            <div>
+              <p className="mb-2 text-[10px] font-bold uppercase tracking-wider text-gray-400">
+                Hour
+              </p>
+
+              <select
+                value={selectedHour}
+                onChange={(e) =>
+                  setSelectedHour(
+                    Number(e.target.value)
+                  )
+                }
+                className="h-12 w-full rounded-xl border border-gray-200 bg-slate-50 px-3 text-center text-base font-bold text-blue-950 outline-none transition focus:border-blue-600 focus:ring-4 focus:ring-blue-50"
+              >
+                {Array.from(
+                  { length: 12 },
+                  (_, index) => index + 1
+                ).map((hour) => (
+                  <option
+                    key={hour}
+                    value={hour}
+                  >
+                    {String(hour).padStart(2, "0")}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <p className="mb-2 text-[10px] font-bold uppercase tracking-wider text-gray-400">
+                Minute
+              </p>
+
+              <select
+                value={selectedMinute}
+                onChange={(e) =>
+                  setSelectedMinute(
+                    e.target.value
+                  )
+                }
+                className="h-12 w-full rounded-xl border border-gray-200 bg-slate-50 px-3 text-center text-base font-bold text-blue-950 outline-none transition focus:border-blue-600 focus:ring-4 focus:ring-blue-50"
+              >
+                {[
+                  "00",
+                  "05",
+                  "10",
+                  "15",
+                  "20",
+                  "25",
+                  "30",
+                  "35",
+                  "40",
+                  "45",
+                  "50",
+                  "55",
+                ].map((minute) => (
+                  <option
+                    key={minute}
+                    value={minute}
+                  >
+                    {minute}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <p className="mb-2 text-[10px] font-bold uppercase tracking-wider text-gray-400">
+                Period
+              </p>
+
+              <select
+                value={selectedPeriod}
+                onChange={(e) =>
+                  setSelectedPeriod(
+                    e.target.value as
+                      | "AM"
+                      | "PM"
+                  )
+                }
+                className="h-12 w-full rounded-xl border border-gray-200 bg-slate-50 px-3 text-center text-base font-bold text-blue-950 outline-none transition focus:border-blue-600 focus:ring-4 focus:ring-blue-50"
+              >
+                <option value="AM">
+                  AM
+                </option>
+
+                <option value="PM">
+                  PM
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div className="mt-4 rounded-xl bg-blue-50 px-4 py-3 text-center">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-blue-500">
+              Selected Time
+            </p>
+
+            <p className="mt-1 text-xl font-bold text-blue-950">
+              {selectedHour}:
+              {selectedMinute}{" "}
+              {selectedPeriod}
+            </p>
+          </div>
+
+          <button
+            type="button"
+            onClick={handleApply}
+            className="mt-4 w-full rounded-xl bg-blue-950 px-4 py-3 text-sm font-bold text-white shadow-md transition hover:bg-blue-900"
+          >
+            Set Pickup Time
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function TransferBookingPage() {
   const params = useParams();
 
@@ -807,12 +1094,16 @@ Room Number: ${
     }
 
 Transfer Date: ${date}
-Pickup Time: ${time}
-
+Pickup Time: ${formatTimeForDisplay(time)}
+${
+  transferType !== "hotel-to-hotel"
+    ? `
 Flight Number: ${
-      flightNumber || "Not specified"
-    }
-
+        flightNumber || "Not specified"
+      }
+`
+    : ""
+}
 Passengers: ${passengers}
 Luggage: ${luggage}
 
@@ -1393,23 +1684,26 @@ ${notes.trim() || "-"}
                   />
                 </div>
 
-                <div>
-                  <label className={labelClass}>
-                    Flight Number
-                  </label>
+                {transferType !==
+                  "hotel-to-hotel" && (
+                  <div>
+                    <label className={labelClass}>
+                      Flight Number
+                    </label>
 
-                  <input
-                    type="text"
-                    placeholder="Example: MS042"
-                    value={flightNumber}
-                    onChange={(e) =>
-                      setFlightNumber(
-                        e.target.value
-                      )
-                    }
-                    className={inputClass(false)}
-                  />
-                </div>
+                    <input
+                      type="text"
+                      placeholder="Example: MS042"
+                      value={flightNumber}
+                      onChange={(e) =>
+                        setFlightNumber(
+                          e.target.value
+                        )
+                      }
+                      className={inputClass(false)}
+                    />
+                  </div>
+                )}
               </div>
 
               <div className="mt-4 grid gap-4 md:grid-cols-2">
@@ -1440,23 +1734,14 @@ ${notes.trim() || "-"}
                     Pickup Time *
                   </label>
 
-                  <div className="relative">
-                    <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
-                      <ClockIcon />
-                    </span>
-
-                    <input
-                      type="time"
-                      value={time}
-                      onChange={(e) =>
-                        setTime(e.target.value)
-                      }
-                      className={`${inputClass(
-                        submitAttempted &&
-                          !isTimeValid
-                      )} pl-12`}
-                    />
-                  </div>
+                  <CustomTimePicker
+                    value={time}
+                    onChange={setTime}
+                    invalid={
+                      submitAttempted &&
+                      !isTimeValid
+                    }
+                  />
 
                   {submitAttempted &&
                     !isTimeValid &&
@@ -1759,8 +2044,11 @@ ${notes.trim() || "-"}
                         </p>
 
                         <p className="mt-1 text-sm font-bold text-blue-950">
-                          {time ||
-                            "Not selected"}
+                          {time
+                            ? formatTimeForDisplay(
+                                time
+                              )
+                            : "Not selected"}
                         </p>
                       </div>
                     </div>
