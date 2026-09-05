@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 import {
@@ -434,7 +434,7 @@ function TourTypeIcon({
    PAGE
 ========================================================= */
 
-export default function ToursPage() {
+function ToursPageContent() {
   const categoryKeys = Object.keys(tourCategories) as Array<
     keyof typeof tourCategories
   >;
@@ -1089,5 +1089,12 @@ export default function ToursPage() {
       </section>
 
     </main>
+  );
+}
+export default function ToursPage() {
+  return (
+    <Suspense fallback={null}>
+      <ToursPageContent />
+    </Suspense>
   );
 }
