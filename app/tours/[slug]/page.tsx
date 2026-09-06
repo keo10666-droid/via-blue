@@ -455,7 +455,7 @@ function DolphinIcon({ className = "h-5 w-5" }: { className?: string }) {
       />
       <path
         strokeLinecap="round"
-        d="M3 19c2-1 3.5-1 5.5 0s3.5 1 5.5 0 3.5-1 5.5 0"
+        d="M3 19c2-1 3.5-1 5.5 0s3.5-1 5.5 0 3.5-1 5.5 0"
       />
     </svg>
   );
@@ -508,7 +508,7 @@ function JetskiIcon({ className = "h-5 w-5" }: { className?: string }) {
       />
       <path
         strokeLinecap="round"
-        d="M3 21c1.5-1 3-1 4.5 0s3 1 4.5 0 3-1 4.5 0 3 1 4.5 0"
+        d="M3 21c1.5-1 3-1 4.5 0s3 1 4.5 0 3-1 4.5 0 3-1 4.5 0"
       />
     </svg>
   );
@@ -613,7 +613,6 @@ function ArrowRightIcon({ className = "h-5 w-5" }: { className?: string }) {
     </svg>
   );
 }
-
 
 /* =========================================================
    SMART HIGHLIGHT ICON
@@ -741,7 +740,6 @@ function HighlightIcon({
   return <SparklesIcon className={className} />;
 }
 
-
 /* =========================================================
    PAGE
 ========================================================= */
@@ -791,8 +789,83 @@ export default async function TourDetailsPage({
         ).toFixed(1)
       : "0.0";
 
+  /* =========================================================
+     STRUCTURED DATA / JSON-LD
+  ========================================================= */
+
+  const tourImage = tour.image.startsWith("http")
+    ? tour.image
+    : `https://viabluetours.com${tour.image}`;
+
+  const tourSchema = {
+    "@context": "https://schema.org",
+    "@type": "TouristTrip",
+
+    name: tour.name,
+
+    description: tour.description,
+
+    image: [tourImage],
+
+    url: `https://viabluetours.com/tours/${tour.slug}`,
+
+    provider: {
+      "@type": "Organization",
+      name: "Via Blue",
+      url: "https://viabluetours.com",
+    },
+
+    touristType: "Tourists",
+
+    areaServed: {
+      "@type": "Place",
+      name: "Hurghada, Red Sea, Egypt",
+    },
+
+    ...(reviewCount > 0
+      ? {
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: Number(averageRating),
+            reviewCount,
+            bestRating: 5,
+            worstRating: 1,
+          },
+        }
+      : {}),
+
+    ...(tour.price > 0
+      ? {
+          offers: {
+            "@type": "Offer",
+            url: `https://viabluetours.com/tours/${tour.slug}`,
+            priceCurrency: "EUR",
+            price: tour.price,
+            availability: tour.available
+              ? "https://schema.org/InStock"
+              : "https://schema.org/PreOrder",
+            seller: {
+              "@type": "Organization",
+              name: "Via Blue",
+            },
+          },
+        }
+      : {}),
+  };
+
   return (
     <main className="min-h-screen bg-white">
+
+      {/* =====================================================
+          STRUCTURED DATA
+      ===================================================== */}
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(tourSchema),
+        }}
+      />
 
       {/* =====================================================
           HERO
@@ -884,7 +957,6 @@ export default async function TourDetailsPage({
 
       </section>
 
-
       {/* =====================================================
           CONTENT
       ===================================================== */}
@@ -923,7 +995,6 @@ export default async function TourDetailsPage({
 
             </section>
 
-
             {/* QUICK DETAILS */}
 
             <section className="mt-10">
@@ -958,7 +1029,6 @@ export default async function TourDetailsPage({
 
                 </div>
 
-
                 {/* Pickup */}
 
                 <div className="group rounded-2xl border border-gray-100 bg-slate-50 p-5 transition hover:border-orange-100 hover:bg-orange-50/50">
@@ -986,7 +1056,6 @@ export default async function TourDetailsPage({
                   </div>
 
                 </div>
-
 
                 {/* Schedule */}
 
@@ -1020,7 +1089,6 @@ export default async function TourDetailsPage({
 
             </section>
 
-
             {/* GALLERY */}
 
             {"gallery" in tour &&
@@ -1036,7 +1104,6 @@ export default async function TourDetailsPage({
 
                 </div>
               )}
-
 
             {/* TOUR PROGRAM */}
 
@@ -1083,7 +1150,6 @@ export default async function TourDetailsPage({
 
             </section>
 
-
             {/* INCLUDED */}
 
             <section className="mt-16">
@@ -1129,7 +1195,6 @@ export default async function TourDetailsPage({
 
             </section>
 
-
             {/* NOT INCLUDED */}
 
             <section className="mt-16">
@@ -1174,7 +1239,6 @@ export default async function TourDetailsPage({
               </div>
 
             </section>
-
 
             {/* HIGHLIGHTS */}
 
@@ -1224,7 +1288,6 @@ export default async function TourDetailsPage({
 
             </section>
 
-
             {/* IMPORTANT NOTES */}
 
             <section className="mt-16">
@@ -1266,7 +1329,6 @@ export default async function TourDetailsPage({
 
             </section>
 
-
             {/* REVIEWS */}
 
             <div className="mt-16 border-t border-gray-100 pt-16">
@@ -1285,7 +1347,6 @@ export default async function TourDetailsPage({
             </div>
 
           </div>
-
 
           {/* =================================================
               BOOKING CARD
@@ -1326,7 +1387,6 @@ export default async function TourDetailsPage({
 
               </div>
 
-
               {/* Card content */}
 
               <div className="p-7">
@@ -1357,7 +1417,6 @@ export default async function TourDetailsPage({
 
                   </div>
 
-
                   {/* Reviews */}
 
                   <div className="flex items-center justify-between border-b border-gray-100 py-4">
@@ -1381,7 +1440,6 @@ export default async function TourDetailsPage({
                     </span>
 
                   </div>
-
 
                   {/* Type */}
 
@@ -1407,7 +1465,6 @@ export default async function TourDetailsPage({
 
                   </div>
 
-
                   {/* Destination */}
 
                   <div className="flex items-center justify-between gap-4 border-b border-gray-100 py-4">
@@ -1432,7 +1489,6 @@ export default async function TourDetailsPage({
 
                   </div>
 
-
                   {/* Duration */}
 
                   <div className="flex items-center justify-between gap-4 border-b border-gray-100 py-4">
@@ -1456,7 +1512,6 @@ export default async function TourDetailsPage({
                     </span>
 
                   </div>
-
 
                   {/* Pickup */}
 
@@ -1483,7 +1538,6 @@ export default async function TourDetailsPage({
                   </div>
 
                 </div>
-
 
                 {/* Book button */}
 
@@ -1514,7 +1568,6 @@ export default async function TourDetailsPage({
 
                 )}
 
-
                 {/* Back */}
 
                 <Link
@@ -1537,7 +1590,6 @@ export default async function TourDetailsPage({
         </div>
 
       </section>
-
 
       {/* =====================================================
           BOTTOM CTA
