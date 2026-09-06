@@ -15,9 +15,56 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Via Blue | Tours & Transfers in Hurghada",
+  metadataBase: new URL("https://viabluetours.com"),
+
+  title: {
+    default: "Via Blue | Tours & Transfers in Hurghada",
+    template: "%s | Via Blue",
+  },
+
   description:
-    "Discover unforgettable tours, excursions and professional transfers in Hurghada and the Red Sea with Via Blue.",
+    "Discover unforgettable tours, excursions and professional airport and hotel transfers in Hurghada and the Red Sea with Via Blue.",
+
+  keywords: [
+    "Hurghada tours",
+    "Hurghada excursions",
+    "Hurghada transfers",
+    "Hurghada airport transfer",
+    "Red Sea tours",
+    "Egypt tours",
+    "Hurghada activities",
+    "Via Blue",
+  ],
+
+  authors: [{ name: "Via Blue" }],
+  creator: "Via Blue",
+  publisher: "Via Blue",
+
+  robots: {
+    index: true,
+    follow: true,
+  },
+
+  alternates: {
+    canonical: "https://viabluetours.com",
+  },
+
+  openGraph: {
+    type: "website",
+    url: "https://viabluetours.com",
+    siteName: "Via Blue",
+    title: "Via Blue | Tours & Transfers in Hurghada",
+    description:
+      "Discover unforgettable tours, excursions and professional airport and hotel transfers in Hurghada and the Red Sea with Via Blue.",
+    locale: "en_US",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Via Blue | Tours & Transfers in Hurghada",
+    description:
+      "Discover unforgettable tours, excursions and professional airport and hotel transfers in Hurghada and the Red Sea with Via Blue.",
+  },
 };
 
 export default function RootLayout({
