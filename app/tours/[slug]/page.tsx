@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -16,6 +17,75 @@ type Props = {
   searchParams: Promise<{
     fromCategory?: string;
   }>;
+};
+
+/* =========================================================
+   SEO METADATA
+========================================================= */
+
+export async function generateMetadata({
+  params,
+}: Props): Promise<Metadata> {
+  const { slug } = await params;
+
+  const tour = Object.values(tours).find(
+    (item) => item.slug === slug
+  );
+
+  if (!tour) {
+    return {
+      title: "Tour Not Found",
+      description: "The requested tour could not be found.",
+    };
+  }
+
+  const title = tour.name;
+
+  const description =
+    tour.description ||
+    `Book ${tour.name} in Hurghada, Egypt with Via Blue.`;
+
+  return {
+    title,
+    description,
+
+    keywords: [
+      tour.name,
+      `${tour.name} Hurghada`,
+      "Hurghada tours",
+      "Hurghada excursions",
+      "Hurghada activities",
+      "Red Sea tours",
+      "Egypt tours",
+      "Via Blue",
+    ],
+
+    alternates: {
+      canonical: `https://viabluetours.com/tours/${tour.slug}`,
+    },
+
+    openGraph: {
+      title: `${tour.name} | Via Blue`,
+      description,
+      url: `https://viabluetours.com/tours/${tour.slug}`,
+      siteName: "Via Blue",
+      type: "website",
+      locale: "en_US",
+      images: [
+        {
+          url: tour.image,
+          alt: tour.name,
+        },
+      ],
+    },
+
+    twitter: {
+      card: "summary_large_image",
+      title: `${tour.name} | Via Blue`,
+      description,
+      images: [tour.image],
+    },
+  };
 };
 
 /* =========================================================
