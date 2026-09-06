@@ -815,12 +815,7 @@ export default async function TourDetailsPage({
       url: "https://viabluetours.com",
     },
 
-    touristType: "Tourists",
-
-    areaServed: {
-      "@type": "Place",
-      name: "Hurghada, Red Sea, Egypt",
-    },
+        touristType: "Tourists",
 
     ...(reviewCount > 0
       ? {
