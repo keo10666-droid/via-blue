@@ -22,6 +22,7 @@ export async function generateMetadata({
     return {
       title: "Transfer Not Found",
       description: "The requested transfer could not be found.",
+      metadataBase: new URL("https://viabluetours.com"),
     };
   }
 
@@ -29,7 +30,11 @@ export async function generateMetadata({
 
   const description = `Book a private transfer from ${transfer.from} to ${transfer.to} with Via Blue. Comfortable vehicles, professional drivers and fixed prices.`;
 
+  const canonicalUrl = `https://viabluetours.com/transfers/${slug}`;
+
   return {
+    metadataBase: new URL("https://viabluetours.com"),
+
     title,
     description,
 
@@ -44,14 +49,19 @@ export async function generateMetadata({
       "Via Blue",
     ],
 
+    robots: {
+      index: true,
+      follow: true,
+    },
+
     alternates: {
-      canonical: `https://viabluetours.com/transfers/${transfer.slug}`,
+      canonical: canonicalUrl,
     },
 
     openGraph: {
       title: `${title} | Via Blue`,
       description,
-      url: `https://viabluetours.com/transfers/${transfer.slug}`,
+      url: canonicalUrl,
       siteName: "Via Blue",
       type: "website",
       locale: "en_US",
