@@ -63,6 +63,8 @@ function ChevronDownIcon() {
       className="h-4 w-4"
       stroke="currentColor"
       strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     >
       <path d="m6 9 6 6 6-6" />
     </svg>
@@ -77,6 +79,8 @@ function ChevronLeftIcon() {
       className="h-4 w-4"
       stroke="currentColor"
       strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     >
       <path d="m15 18-6-6 6-6" />
     </svg>
@@ -91,6 +95,8 @@ function ChevronRightIcon() {
       className="h-4 w-4"
       stroke="currentColor"
       strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     >
       <path d="m9 18 6-6-6-6" />
     </svg>
@@ -104,11 +110,13 @@ function CalendarIcon() {
       fill="none"
       className="h-5 w-5"
       stroke="currentColor"
-      strokeWidth="1.8"
+      strokeWidth="1.7"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     >
-      <rect x="3" y="4.5" width="18" height="17" rx="2.5" />
-      <path d="M16 2.5v4M8 2.5v4M3 9h18" />
-      <path d="M8 13h.01M12 13h.01M16 13h.01M8 17h.01M12 17h.01M16 17h.01" />
+      <rect x="3.5" y="5" width="17" height="16" rx="3.5" />
+      <path d="M7.5 3v4M16.5 3v4M3.5 9.5h17" />
+      <path d="M8 13.5h.01M12 13.5h.01M16 13.5h.01M8 17h.01M12 17h.01M16 17h.01" />
     </svg>
   );
 }
@@ -120,10 +128,12 @@ function ClockIcon() {
       fill="none"
       className="h-5 w-5"
       stroke="currentColor"
-      strokeWidth="1.8"
+      strokeWidth="1.7"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     >
-      <circle cx="12" cy="12" r="9" />
-      <path d="M12 7v5l3.5 2" />
+      <circle cx="12" cy="12" r="8.75" />
+      <path d="M12 7.25v4.9l3.1 1.85" />
     </svg>
   );
 }
@@ -135,10 +145,12 @@ function UserIcon() {
       fill="none"
       className="h-5 w-5"
       stroke="currentColor"
-      strokeWidth="1.8"
+      strokeWidth="1.7"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     >
-      <circle cx="12" cy="8" r="3.5" />
-      <path d="M5 20c.7-3.4 3.1-5 7-5s6.3 1.6 7 5" />
+      <circle cx="12" cy="8" r="3.25" />
+      <path d="M5.25 19.75c.7-3.2 3-5 6.75-5s6.05 1.8 6.75 5" />
     </svg>
   );
 }
@@ -150,10 +162,12 @@ function MailIcon() {
       fill="none"
       className="h-5 w-5"
       stroke="currentColor"
-      strokeWidth="1.8"
+      strokeWidth="1.7"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     >
-      <rect x="3" y="5" width="18" height="14" rx="2" />
-      <path d="m4 7 8 6 8-6" />
+      <rect x="3.5" y="5.25" width="17" height="13.5" rx="3" />
+      <path d="m5 7.5 7 5 7-5" />
     </svg>
   );
 }
@@ -165,9 +179,11 @@ function PhoneIcon() {
       fill="none"
       className="h-5 w-5"
       stroke="currentColor"
-      strokeWidth="1.8"
+      strokeWidth="1.7"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     >
-      <path d="M7.5 3.5h2l1.2 4-2 1.4a15 15 0 0 0 6.4 6.4l1.4-2 4 1.2v2c0 1.1-.9 2-2 2C10.5 18.5 5.5 13.5 5.5 7.5c0-1.1.9-2 2-2Z" />
+      <path d="M7.75 3.75h2l1.1 4.05-1.9 1.35a15.1 15.1 0 0 0 5.9 5.9l1.35-1.9 4.05 1.1v2c0 1.1-.9 2-2 2A14.25 14.25 0 0 1 5.75 7.75c0-1.1.9-2 2-2Z" />
     </svg>
   );
 }
@@ -179,10 +195,12 @@ function PlaneIcon() {
       fill="none"
       className="h-6 w-6"
       stroke="currentColor"
-      strokeWidth="1.7"
+      strokeWidth="1.65"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     >
-      <path d="m3 11 18-6-6 18-2-8-10-4Z" />
-      <path d="m13 15 5-5" />
+      <path d="M21 4 3.5 10.2l6.8 2.35L13 20l2.2-6.7L21 4Z" />
+      <path d="m10.3 12.55 5.05-5.05" />
     </svg>
   );
 }
@@ -194,10 +212,14 @@ function HotelIcon() {
       fill="none"
       className="h-6 w-6"
       stroke="currentColor"
-      strokeWidth="1.7"
+      strokeWidth="1.65"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     >
-      <path d="M4 20V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v14" />
-      <path d="M2 20h20M7 8h3M14 8h3M7 12h3M14 12h3M7 16h10" />
+      <path d="M4.5 20V5.75A1.75 1.75 0 0 1 6.25 4h11.5a1.75 1.75 0 0 1 1.75 1.75V20" />
+      <path d="M3 20h18" />
+      <path d="M8 8h2M14 8h2M8 12h2M14 12h2" />
+      <path d="M10 20v-4h4v4" />
     </svg>
   );
 }
@@ -209,12 +231,15 @@ function CarIcon() {
       fill="none"
       className="h-6 w-6"
       stroke="currentColor"
-      strokeWidth="1.7"
+      strokeWidth="1.65"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     >
-      <path d="m5 11 2-5h10l2 5" />
-      <path d="M4 11h16a1 1 0 0 1 1 1v5H3v-5a1 1 0 0 1 1-1Z" />
-      <circle cx="7" cy="17" r="1.5" />
-      <circle cx="17" cy="17" r="1.5" />
+      <path d="m5 11 1.9-5.1A2.6 2.6 0 0 1 9.35 4h5.3a2.6 2.6 0 0 1 2.45 1.9L19 11" />
+      <path d="M4 11h16a1.75 1.75 0 0 1 1.75 1.75V17H2.25v-4.25A1.75 1.75 0 0 1 4 11Z" />
+      <path d="M5.5 17v1.5M18.5 17v1.5" />
+      <circle cx="6.5" cy="14.25" r=".85" />
+      <circle cx="17.5" cy="14.25" r=".85" />
     </svg>
   );
 }
@@ -226,11 +251,13 @@ function UsersIcon() {
       fill="none"
       className="h-4 w-4"
       stroke="currentColor"
-      strokeWidth="1.8"
+      strokeWidth="1.7"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     >
       <circle cx="9" cy="8" r="3" />
-      <path d="M3.5 19c.5-3 2.3-4.5 5.5-4.5S14 16 14.5 19" />
-      <path d="M16 5.5a3 3 0 0 1 0 5.8M17 14.7c2.3.4 3.5 1.8 4 4.3" />
+      <path d="M3.5 19c.55-3 2.4-4.5 5.5-4.5s4.95 1.5 5.5 4.5" />
+      <path d="M16 5.5a3 3 0 0 1 0 5.8M17 14.7c2.25.4 3.55 1.85 4 4.3" />
     </svg>
   );
 }
@@ -242,10 +269,13 @@ function LuggageIcon() {
       fill="none"
       className="h-4 w-4"
       stroke="currentColor"
-      strokeWidth="1.8"
+      strokeWidth="1.7"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     >
-      <rect x="5" y="6" width="14" height="15" rx="2" />
-      <path d="M9 6V4.5A1.5 1.5 0 0 1 10.5 3h3A1.5 1.5 0 0 1 15 4.5V6M9 10v7M15 10v7" />
+      <rect x="5" y="6" width="14" height="15" rx="2.5" />
+      <path d="M9 6V4.75A1.75 1.75 0 0 1 10.75 3h2.5A1.75 1.75 0 0 1 15 4.75V6M9 10v7M15 10v7" />
+      <path d="M3.5 21h17" />
     </svg>
   );
 }
@@ -257,10 +287,12 @@ function ShieldIcon() {
       fill="none"
       className="h-5 w-5"
       stroke="currentColor"
-      strokeWidth="1.8"
+      strokeWidth="1.7"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     >
-      <path d="M12 3 20 6v5c0 5-3.3 8.2-8 10-4.7-1.8-8-5-8-10V6l8-3Z" />
-      <path d="m8.5 12 2.3 2.3 4.7-4.7" />
+      <path d="M12 3.25 19.5 6v4.75c0 4.8-3.05 8.05-7.5 9.95-4.45-1.9-7.5-5.15-7.5-9.95V6L12 3.25Z" />
+      <path d="m8.5 12 2.25 2.25L15.5 9.5" />
     </svg>
   );
 }
@@ -273,6 +305,8 @@ function CheckIcon() {
       className="h-4 w-4"
       stroke="currentColor"
       strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     >
       <path d="m5 12 4 4L19 6" />
     </svg>
@@ -434,70 +468,90 @@ function CustomDatePicker({
       <button
         type="button"
         onClick={() => setIsOpen((open) => !open)}
-        className={`flex h-[54px] w-full items-center justify-between rounded-xl border bg-white px-4 text-left shadow-sm transition focus:outline-none focus:ring-4 ${
+        className={`group flex h-[58px] w-full items-center justify-between rounded-2xl border bg-white px-3.5 text-left shadow-sm transition-all duration-200 focus:outline-none focus:ring-4 ${
           invalid
             ? "border-red-400 focus:border-red-500 focus:ring-red-50"
             : isOpen
-            ? "border-blue-600 ring-4 ring-blue-50"
-            : "border-gray-200 hover:border-blue-300"
+            ? "border-blue-600 shadow-md ring-4 ring-blue-50"
+            : "border-gray-200 hover:border-blue-300 hover:shadow-md"
         }`}
       >
-        <div className="flex items-center gap-3">
+        <div className="flex min-w-0 items-center gap-3">
           <span
-            className={
+            className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-all ${
               invalid
-                ? "text-red-500"
-                : "text-blue-900"
-            }
+                ? "bg-red-50 text-red-500"
+                : isOpen
+                ? "bg-blue-950 text-white shadow-sm"
+                : "bg-blue-50 text-blue-900 group-hover:bg-blue-100"
+            }`}
           >
             <CalendarIcon />
           </span>
 
-          <span
-            className={
-              value
-                ? "text-sm font-semibold text-gray-900"
-                : "text-sm text-gray-400"
-            }
-          >
-            {value
-              ? formatDateForDisplay(value)
-              : "Select transfer date"}
+          <span className="min-w-0">
+            <span className="block text-[10px] font-bold uppercase tracking-[0.12em] text-gray-400">
+              Transfer Date
+            </span>
+
+            <span
+              className={
+                value
+                  ? "mt-0.5 block truncate text-sm font-bold text-gray-900"
+                  : "mt-0.5 block truncate text-sm font-medium text-gray-400"
+              }
+            >
+              {value
+                ? formatDateForDisplay(value)
+                : "Select transfer date"}
+            </span>
           </span>
         </div>
 
-        <span className="text-gray-400">
+        <span
+          className={`ml-3 flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-gray-50 text-gray-400 transition-all ${
+            isOpen
+              ? "rotate-180 bg-blue-50 text-blue-900"
+              : "group-hover:bg-blue-50 group-hover:text-blue-900"
+          }`}
+        >
           <ChevronDownIcon />
         </span>
       </button>
 
       {isOpen && (
-        <div className="absolute left-0 top-full z-50 mt-2 w-full min-w-[310px] overflow-hidden rounded-2xl border border-gray-200 bg-white p-4 shadow-2xl">
-          <div className="flex items-center justify-between border-b border-gray-100 pb-4">
+        <div className="absolute left-0 top-full z-50 mt-3 w-full min-w-[310px] overflow-hidden rounded-3xl border border-gray-200 bg-white p-5 shadow-2xl">
+          <div className="flex items-center justify-between">
             <button
               type="button"
               onClick={previousMonth}
-              className="flex h-9 w-9 items-center justify-center rounded-lg text-gray-500 transition hover:bg-blue-50 hover:text-blue-900"
+              className="flex h-10 w-10 items-center justify-center rounded-xl border border-gray-100 bg-white text-gray-500 transition-all hover:border-blue-100 hover:bg-blue-50 hover:text-blue-900"
               aria-label="Previous month"
             >
               <ChevronLeftIcon />
             </button>
 
-            <div className="text-sm font-bold text-blue-950">
-              {monthName}
+            <div className="flex items-center gap-2.5 text-sm font-bold text-blue-950">
+              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 text-blue-900">
+                <CalendarIcon />
+              </span>
+
+              <span>{monthName}</span>
             </div>
 
             <button
               type="button"
               onClick={nextMonth}
-              className="flex h-9 w-9 items-center justify-center rounded-lg text-gray-500 transition hover:bg-blue-50 hover:text-blue-900"
+              className="flex h-10 w-10 items-center justify-center rounded-xl border border-gray-100 bg-white text-gray-500 transition-all hover:border-blue-100 hover:bg-blue-50 hover:text-blue-900"
               aria-label="Next month"
             >
               <ChevronRightIcon />
             </button>
           </div>
 
-          <div className="mt-4 grid grid-cols-7 gap-1">
+          <div className="my-4 h-px bg-gray-100" />
+
+          <div className="grid grid-cols-7 gap-1.5">
             {[
               "Sun",
               "Mon",
@@ -509,7 +563,7 @@ function CustomDatePicker({
             ].map((day) => (
               <div
                 key={day}
-                className="py-2 text-center text-[10px] font-bold uppercase tracking-wide text-gray-400"
+                className="py-2 text-center text-[9px] font-bold uppercase tracking-wider text-gray-400"
               >
                 {day}
               </div>
@@ -556,7 +610,7 @@ function CustomDatePicker({
                   onClick={() =>
                     handleDateSelect(day)
                   }
-                  className={`relative flex h-10 items-center justify-center rounded-lg text-sm font-semibold transition ${
+                  className={`relative flex h-10 items-center justify-center rounded-xl text-sm font-semibold transition-all ${
                     isDisabled
                       ? "cursor-not-allowed text-gray-200"
                       : isSelected
@@ -574,8 +628,14 @@ function CustomDatePicker({
             })}
           </div>
 
-          <div className="mt-4 border-t border-gray-100 pt-3 text-center text-[11px] font-medium text-gray-400">
-            Select a date from tomorrow onwards
+          <div className="mt-5 flex items-center gap-3 rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3.5">
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white text-blue-900 shadow-sm">
+              <CalendarIcon />
+            </span>
+
+            <p className="text-[11px] font-medium leading-4 text-blue-800">
+              Select a date from tomorrow onwards
+            </p>
           </div>
         </div>
       )}
@@ -676,41 +736,51 @@ function CustomTimePicker({
             openPicker();
           }
         }}
-        className={`flex h-[54px] w-full items-center justify-between rounded-xl border bg-white px-4 text-left shadow-sm transition focus:outline-none focus:ring-4 ${
+        className={`group flex h-[58px] w-full items-center justify-between rounded-2xl border bg-white px-3.5 text-left shadow-sm transition-all duration-200 focus:outline-none focus:ring-4 ${
           invalid
             ? "border-red-400 focus:border-red-500 focus:ring-red-50"
             : isOpen
-            ? "border-blue-600 ring-4 ring-blue-50"
-            : "border-gray-200 hover:border-blue-300"
+            ? "border-blue-600 shadow-md ring-4 ring-blue-50"
+            : "border-gray-200 hover:border-blue-300 hover:shadow-md"
         }`}
       >
-        <div className="flex items-center gap-3">
+        <div className="flex min-w-0 items-center gap-3">
           <span
-            className={
+            className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-all ${
               invalid
-                ? "text-red-500"
-                : "text-blue-900"
-            }
+                ? "bg-red-50 text-red-500"
+                : isOpen
+                ? "bg-blue-950 text-white shadow-sm"
+                : "bg-blue-50 text-blue-900 group-hover:bg-blue-100"
+            }`}
           >
             <ClockIcon />
           </span>
 
-          <span
-            className={
-              value
-                ? "text-sm font-semibold text-gray-900"
-                : "text-sm text-gray-400"
-            }
-          >
-            {value
-              ? formatTimeForDisplay(value)
-              : "Select pickup time"}
+          <span className="min-w-0">
+            <span className="block text-[10px] font-bold uppercase tracking-[0.12em] text-gray-400">
+              Pickup Time
+            </span>
+
+            <span
+              className={
+                value
+                  ? "mt-0.5 block truncate text-sm font-bold text-gray-900"
+                  : "mt-0.5 block truncate text-sm font-medium text-gray-400"
+              }
+            >
+              {value
+                ? formatTimeForDisplay(value)
+                : "Select pickup time"}
+            </span>
           </span>
         </div>
 
         <span
-          className={`text-gray-400 transition ${
-            isOpen ? "rotate-180" : ""
+          className={`ml-3 flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-gray-50 text-gray-400 transition-all ${
+            isOpen
+              ? "rotate-180 bg-blue-50 text-blue-900"
+              : "group-hover:bg-blue-50 group-hover:text-blue-900"
           }`}
         >
           <ChevronDownIcon />
@@ -718,9 +788,9 @@ function CustomTimePicker({
       </button>
 
       {isOpen && (
-        <div className="absolute left-0 top-full z-50 mt-2 w-full min-w-[300px] overflow-hidden rounded-2xl border border-gray-200 bg-white p-4 shadow-2xl">
-          <div className="flex items-center gap-3 border-b border-gray-100 pb-4">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-900">
+        <div className="absolute left-0 top-full z-50 mt-3 w-full min-w-[300px] overflow-hidden rounded-3xl border border-gray-200 bg-white p-5 shadow-2xl">
+          <div className="flex items-center gap-3">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-950 text-white shadow-sm">
               <ClockIcon />
             </div>
 
@@ -735,7 +805,9 @@ function CustomTimePicker({
             </div>
           </div>
 
-          <div className="mt-4 grid grid-cols-3 gap-2">
+          <div className="my-5 h-px bg-gray-100" />
+
+          <div className="grid grid-cols-3 gap-2.5">
             <div>
               <p className="mb-2 text-[10px] font-bold uppercase tracking-wider text-gray-400">
                 Hour
@@ -748,7 +820,7 @@ function CustomTimePicker({
                     Number(e.target.value)
                   )
                 }
-                className="h-12 w-full rounded-xl border border-gray-200 bg-slate-50 px-3 text-center text-base font-bold text-blue-950 outline-none transition focus:border-blue-600 focus:ring-4 focus:ring-blue-50"
+                className="h-12 w-full cursor-pointer rounded-2xl border border-gray-200 bg-slate-50 px-3 text-center text-base font-bold text-blue-950 outline-none transition-all focus:border-blue-600 focus:bg-white focus:ring-4 focus:ring-blue-50"
               >
                 {Array.from(
                   { length: 12 },
@@ -776,7 +848,7 @@ function CustomTimePicker({
                     e.target.value
                   )
                 }
-                className="h-12 w-full rounded-xl border border-gray-200 bg-slate-50 px-3 text-center text-base font-bold text-blue-950 outline-none transition focus:border-blue-600 focus:ring-4 focus:ring-blue-50"
+                className="h-12 w-full cursor-pointer rounded-2xl border border-gray-200 bg-slate-50 px-3 text-center text-base font-bold text-blue-950 outline-none transition-all focus:border-blue-600 focus:bg-white focus:ring-4 focus:ring-blue-50"
               >
                 {[
                   "00",
@@ -816,7 +888,7 @@ function CustomTimePicker({
                       | "PM"
                   )
                 }
-                className="h-12 w-full rounded-xl border border-gray-200 bg-slate-50 px-3 text-center text-base font-bold text-blue-950 outline-none transition focus:border-blue-600 focus:ring-4 focus:ring-blue-50"
+                className="h-12 w-full cursor-pointer rounded-2xl border border-gray-200 bg-slate-50 px-3 text-center text-base font-bold text-blue-950 outline-none transition-all focus:border-blue-600 focus:bg-white focus:ring-4 focus:ring-blue-50"
               >
                 <option value="AM">
                   AM
@@ -829,22 +901,28 @@ function CustomTimePicker({
             </div>
           </div>
 
-          <div className="mt-4 rounded-xl bg-blue-50 px-4 py-3 text-center">
-            <p className="text-[10px] font-bold uppercase tracking-wider text-blue-500">
-              Selected Time
-            </p>
+          <div className="mt-5 flex items-center justify-center gap-3 rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3.5">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-blue-950 shadow-sm">
+              <ClockIcon />
+            </span>
 
-            <p className="mt-1 text-xl font-bold text-blue-950">
-              {selectedHour}:
-              {selectedMinute}{" "}
-              {selectedPeriod}
-            </p>
+            <div>
+              <p className="text-left text-[9px] font-bold uppercase tracking-[0.12em] text-blue-500">
+                Selected Time
+              </p>
+
+              <p className="mt-0.5 text-xl font-bold text-blue-950">
+                {selectedHour}:
+                {selectedMinute}{" "}
+                {selectedPeriod}
+              </p>
+            </div>
           </div>
 
           <button
             type="button"
             onClick={handleApply}
-            className="mt-4 w-full rounded-xl bg-blue-950 px-4 py-3 text-sm font-bold text-white shadow-md transition hover:bg-blue-900"
+            className="mt-4 w-full rounded-2xl bg-blue-950 px-4 py-3 text-sm font-bold text-white shadow-md transition-all hover:bg-blue-900 hover:shadow-lg"
           >
             Set Pickup Time
           </button>
