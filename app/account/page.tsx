@@ -303,7 +303,7 @@ export default function AccountPage() {
 
     if (!file.type.startsWith("image/")) {
       setMessage(
-        "Please select an image file."
+        "Please select an image file"
       );
       return;
     }
@@ -313,7 +313,7 @@ export default function AccountPage() {
       5 * 1024 * 1024
     ) {
       setMessage(
-        "Image size must be 5 MB or smaller."
+        "Image size must be 5 MB or smaller"
       );
       return;
     }
@@ -438,7 +438,7 @@ export default function AccountPage() {
         }
 
         emailMessage =
-          " Please check your email to confirm the new address.";
+          " Please check your email to confirm the new address";
       }
 
       setPhone(
@@ -459,7 +459,7 @@ export default function AccountPage() {
       setIsCountryOpen(false);
 
       setMessage(
-        `Your profile has been saved.${emailMessage}`
+        `Your profile has been saved${emailMessage}`
       );
     } finally {
       setIsSaving(false);
@@ -478,7 +478,7 @@ export default function AccountPage() {
       !file.type.startsWith("image/")
     ) {
       setMessage(
-        "Please select an image file."
+        "Please select an image file"
       );
       return;
     }
@@ -488,7 +488,7 @@ export default function AccountPage() {
       5 * 1024 * 1024
     ) {
       setMessage(
-        "Each memory image must be 5 MB or smaller."
+        "Each memory image must be 5 MB or smaller"
       );
       return;
     }
@@ -513,14 +513,14 @@ export default function AccountPage() {
 
     if (!memoryFile) {
       setMessage(
-        "Please choose a photo first."
+        "Please choose a photo first"
       );
       return;
     }
 
     if (memories.length >= 25) {
       setMessage(
-        "You have reached the maximum of 25 travel memories."
+        "You have reached the maximum of 25 travel memories"
       );
       return;
     }
@@ -587,7 +587,7 @@ export default function AccountPage() {
 
         setMessage(
           memoryError?.message ||
-            "Could not save this memory."
+            "Could not save this memory"
         );
 
         return;
@@ -630,7 +630,7 @@ export default function AccountPage() {
       );
 
       setMessage(
-        "Your travel memory has been added."
+        "Your travel memory has been added"
       );
     } finally {
       setIsUploadingMemory(
@@ -685,11 +685,11 @@ export default function AccountPage() {
       );
 
       setMessage(
-        "Travel memory deleted."
+        "Travel memory deleted"
       );
     } catch {
       setMessage(
-        "Could not delete this memory."
+        "Could not delete this memory"
       );
     }
   }
@@ -882,7 +882,7 @@ export default function AccountPage() {
             </h1>
 
             <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base">
-              Manage your profile, view your bookings and keep your favorite Hurghada memories in one place.
+              Manage your profile, view your bookings and keep your favorite Hurghada memories in one place
             </p>
           </div>
         </section>
@@ -920,7 +920,7 @@ export default function AccountPage() {
             </div>
 
             <p className="mt-3 text-xs leading-5 text-slate-500">
-              Keep booking to unlock future gifts.
+              Keep booking to unlock future gifts
             </p>
           </div>
 
@@ -960,7 +960,7 @@ export default function AccountPage() {
             </div>
 
             <p className="mt-3 text-xs leading-5 text-slate-500">
-              Your completed adventures with us.
+              Your completed adventures with us
             </p>
           </div>
 
@@ -1009,7 +1009,7 @@ export default function AccountPage() {
             </div>
 
             <p className="mt-3 text-xs leading-5 text-slate-500">
-              Save photos from your favorite trips.
+              Save photos from your favorite trips
             </p>
           </div>
 
@@ -1530,7 +1530,7 @@ export default function AccountPage() {
                 </h3>
 
                 <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-500">
-                  Your confirmed and upcoming trips will appear here.
+                  Your confirmed and upcoming trips will appear here
                 </p>
               </div>
             ) : (
@@ -1686,7 +1686,7 @@ export default function AccountPage() {
               </div>
 
               <p className="mt-4 text-sm leading-6 text-slate-500">
-                Add up to 25 photos from your trips. Only you can see them.
+                Add up to 25 photos from your trips. Only you can see them
               </p>
             </div>
 
@@ -1839,7 +1839,7 @@ export default function AccountPage() {
               </h3>
 
               <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-500">
-                Upload your first Hurghada memory above.
+                Upload your first Hurghada memory above
               </p>
             </div>
           ) : (

@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+
 import { supabase } from "@/lib/supabase";
 
 type BookingFormProps = {
@@ -148,30 +149,20 @@ export default function BookingForm({
   const [name, setName] = useState("");
   const [nationality, setNationality] = useState("");
   const [isNationalityOpen, setIsNationalityOpen] = useState(false);
-
   const [selectedCountry, setSelectedCountry] = useState(countryCodes[0]);
   const [isCountryOpen, setIsCountryOpen] = useState(false);
   const [countrySearch, setCountrySearch] = useState("");
-
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-
   const [hotel, setHotel] = useState("");
   const [roomNumber, setRoomNumber] = useState("");
   const [date, setDate] = useState("");
-
   const [adults, setAdults] = useState("1");
   const [children, setChildren] = useState("0");
   const [infants, setInfants] = useState("0");
-
   const [notes, setNotes] = useState("");
-
-  const [childrenAgeValues, setChildrenAgeValues] = useState<string[]>(
-    []
-  );
-
+  const [childrenAgeValues, setChildrenAgeValues] = useState<string[]>([]);
   const [infantAgeValues, setInfantAgeValues] = useState<string[]>([]);
-
   const [submitAttempted, setSubmitAttempted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -223,7 +214,6 @@ export default function BookingForm({
 
   const tomorrowIso = useMemo(() => {
     const d = new Date();
-
     d.setDate(d.getDate() + 1);
 
     const yyyy = d.getFullYear();
@@ -262,17 +252,17 @@ export default function BookingForm({
     allInfantAgesSet;
 
   const inputClass = (invalid: boolean) =>
-    `w-full rounded-xl border bg-white p-4 text-gray-900 placeholder:text-gray-500 focus:outline-none ${
+    `w-full rounded-2xl border bg-white px-4 py-3.5 text-gray-900 placeholder:text-gray-400 shadow-[0_4px_18px_rgba(7,26,54,0.04)] transition-all duration-200 focus:outline-none focus:ring-4 ${
       invalid
-        ? "border-red-400 focus:border-red-500"
-        : "border-gray-300 focus:border-blue-500"
+        ? "border-red-400 focus:border-red-500 focus:ring-red-100"
+        : "border-gray-200 focus:border-[#071a36] focus:ring-blue-100"
     }`;
 
   const labelClass =
-    "mb-2 block font-bold text-blue-900";
+    "mb-2.5 block text-sm font-bold tracking-wide text-[#071a36]";
 
   const errorText = (msg: string) => (
-    <p className="mt-1 text-sm font-bold text-red-600">
+    <p className="mt-2 text-sm font-semibold text-red-600">
       {msg}
     </p>
   );
@@ -313,7 +303,7 @@ export default function BookingForm({
         );
 
         alert(
-          `Unable to verify your account.\n\n${userError.message}`
+          `Unable to verify your account\n\n${userError.message}`
         );
 
         return;
@@ -346,7 +336,7 @@ export default function BookingForm({
           );
 
           alert(
-            `Unable to start your booking session.\n\n${
+            `Unable to start your booking session\n\n${
               anonError?.message ||
               "Unknown authentication error"
             }`
@@ -377,36 +367,26 @@ export default function BookingForm({
         guests: totalGuests,
         total_price: totalPrice,
         status: "pending",
-
         booking_details: {
           name: name.trim(),
           nationality:
             nationality.trim() || "Not specified",
-
           email: email.trim(),
-
           phone: fullPhone,
-
           hotel:
             hotel.trim() || "Not specified",
-
           room_number:
             roomNumber.trim() || "Not specified",
-
           adults: Number(adults),
           children: Number(children),
           infants: Number(infants),
-
           children_ages:
             childrenAgeValues.filter(Boolean),
-
           infant_ages:
             infantAgeValues.filter(Boolean),
-
           adult_price: adultPrice,
           child_price: childPrice,
           infant_price: infantPrice,
-
           notes: notes.trim(),
         },
       };
@@ -499,16 +479,21 @@ export default function BookingForm({
 🏝️ Tour: ${tourName}
 
 👤 Full Name: ${name.trim()}
+
 🌍 Nationality: ${nationality.trim() || "Not specified"}
+
 ✉️ Email: ${email.trim()}
 
 🏨 Hotel: ${hotel.trim() || "Not specified"}
+
 🚪 Room Number: ${roomNumber.trim() || "Not specified"}
 
 📅 Date: ${date}
 
 👨 Adults: ${adults}
+
 🧒 Children: ${children}
+
 👶 Infants: ${infants}
 
 👥 Total Guests: ${totalGuests}
@@ -522,7 +507,9 @@ export default function BookingForm({
       }
 
 💰 Adult Price: €${adultPrice}
+
 💰 Child Price: €${childPrice}
+
 💰 Infant Price: €${infantPrice}
 
 💰 Total Price: €${totalPrice}
@@ -530,6 +517,7 @@ export default function BookingForm({
 📱 WhatsApp: ${fullPhone}
 
 📝 Notes:
+
 ${notes.trim() || "-"}`;
 
       /*
@@ -579,7 +567,7 @@ ${notes.trim() || "-"}`;
           : "Unknown error";
 
       alert(
-        `Something went wrong.\n\n${errorMessage}`
+        `Something went wrong\n\n${errorMessage}`
       );
     } finally {
       setIsSubmitting(false);
@@ -591,39 +579,59 @@ ${notes.trim() || "-"}`;
   };
 
   return (
-    <main className="min-h-screen bg-slate-100 px-4 py-10">
+    <main className="min-h-screen bg-[#f5f7fa] px-4 py-8 sm:px-6 lg:py-12">
       <div className="mx-auto max-w-7xl">
 
         {/* Header */}
-        <div className="mb-8 overflow-hidden rounded-3xl bg-gradient-to-r from-blue-900 to-blue-700 text-white shadow-xl">
-          <div className="p-8 md:p-12">
+        <div className="relative mb-8 overflow-hidden rounded-[30px] bg-[#071a36] shadow-[0_24px_70px_rgba(7,26,54,0.18)]">
+          <div className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-orange-500/10 blur-3xl" />
+          <div className="absolute -bottom-32 left-1/3 h-80 w-80 rounded-full bg-blue-500/10 blur-3xl" />
 
-            <p className="font-bold text-orange-400">
+          <div className="relative p-7 sm:p-9 md:p-12">
+            <div className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.07] px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-orange-400 shadow-lg backdrop-blur-md">
               {tourName.toUpperCase()}
-            </p>
+            </div>
 
-            <h1 className="mt-2 text-4xl font-bold md:text-5xl">
+            <h1 className="mt-5 max-w-3xl text-4xl font-black tracking-tight text-white sm:text-5xl md:text-6xl">
               Book Your Tour
             </h1>
 
-            <p className="mt-4 max-w-2xl text-blue-100">
+            <p className="mt-5 max-w-2xl text-base leading-7 text-blue-100/80 sm:text-lg">
               Reserve your {tourName} experience quickly and securely
-              through WhatsApp.
+              through WhatsApp
             </p>
 
+            <div className="mt-7 flex flex-wrap gap-3">
+              <div className="rounded-full border border-white/10 bg-white/[0.06] px-4 py-2 text-sm font-semibold text-white/90 backdrop-blur-md">
+                {tourType}
+              </div>
+
+              <div className="rounded-full border border-orange-400/20 bg-orange-500/10 px-4 py-2 text-sm font-bold text-orange-300 backdrop-blur-md">
+                €{adultPrice} per adult
+              </div>
+            </div>
           </div>
         </div>
 
         <div className="grid gap-8 lg:grid-cols-3">
 
           {/* FORM */}
-          <div className="rounded-3xl bg-white p-8 shadow-lg lg:col-span-2">
+          <div className="rounded-[28px] border border-gray-200/80 bg-white p-6 shadow-[0_20px_60px_rgba(7,26,54,0.08)] sm:p-8 lg:col-span-2">
+            <div className="mb-8 border-b border-gray-100 pb-6">
+              <p className="mb-2 text-xs font-black uppercase tracking-[0.18em] text-orange-500">
+                Guest Details
+              </p>
 
-            <h2 className="mb-6 text-2xl font-bold text-blue-900">
-              Guest Information
-            </h2>
+              <h2 className="text-2xl font-black tracking-tight text-[#071a36] sm:text-3xl">
+                Guest Information
+              </h2>
 
-            <div className="grid gap-4 md:grid-cols-2">
+              <p className="mt-2 text-sm text-gray-500">
+                Tell us who will be joining the experience
+              </p>
+            </div>
+
+            <div className="grid gap-5 md:grid-cols-2">
 
               {/* Name */}
               <div>
@@ -646,13 +654,12 @@ ${notes.trim() || "-"}`;
                 {submitAttempted &&
                   !isNameValid &&
                   errorText(
-                    "Please enter the guest's full name."
+                    "Please enter the guest's full name"
                   )}
               </div>
 
               {/* Nationality */}
               <div className="relative">
-
                 <label className={labelClass}>
                   Nationality
                 </label>
@@ -680,8 +687,7 @@ ${notes.trim() || "-"}`;
 
                 {isNationalityOpen &&
                   filteredNationalities.length > 0 && (
-                    <div className="absolute z-20 mt-1 w-full rounded-xl border bg-white shadow-lg">
-
+                    <div className="absolute z-20 mt-2 w-full overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-[0_20px_50px_rgba(7,26,54,0.14)]">
                       {filteredNationalities.map(
                         (item) => (
                           <button
@@ -694,26 +700,22 @@ ${notes.trim() || "-"}`;
                               setNationality(item);
                               setIsNationalityOpen(false);
                             }}
-                            className="block w-full px-4 py-3 text-left text-gray-900 hover:bg-gray-100"
+                            className="block w-full px-4 py-3 text-left text-gray-900 transition hover:bg-blue-50"
                           >
                             {item}
                           </button>
                         )
                       )}
-
                     </div>
                   )}
-
               </div>
-
             </div>
 
             {/* Email + Phone */}
-            <div className="mt-4 grid gap-4 md:grid-cols-2">
+            <div className="mt-5 grid gap-5 md:grid-cols-2">
 
               {/* Email */}
               <div>
-
                 <label className={labelClass}>
                   Email *
                 </label>
@@ -734,22 +736,18 @@ ${notes.trim() || "-"}`;
                 {submitAttempted &&
                   !isEmailValid &&
                   errorText(
-                    "Please enter a valid email address."
+                    "Please enter a valid email address"
                   )}
-
               </div>
 
               {/* Phone */}
               <div>
-
                 <label className={labelClass}>
                   WhatsApp Number *
                 </label>
 
                 <div className="flex gap-2">
-
                   <div className="relative">
-
                     <button
                       type="button"
                       onClick={() =>
@@ -757,9 +755,8 @@ ${notes.trim() || "-"}`;
                           (v) => !v
                         )
                       }
-                      className="flex h-full items-center gap-2 rounded-xl border border-gray-300 bg-white px-3 py-4 text-gray-900"
+                      className="flex h-full items-center gap-2 rounded-2xl border border-gray-200 bg-white px-3 py-3.5 text-gray-900 shadow-[0_4px_18px_rgba(7,26,54,0.04)] transition hover:border-[#071a36]"
                     >
-
                       <FlagIcon
                         iso={selectedCountry.iso}
                         name={selectedCountry.name}
@@ -769,15 +766,13 @@ ${notes.trim() || "-"}`;
                         {selectedCountry.dialCode}
                       </span>
 
-                      <span className="text-xs">
+                      <span className="text-xs text-gray-400">
                         ▾
                       </span>
-
                     </button>
 
                     {isCountryOpen && (
-                      <div className="absolute z-30 mt-1 w-72 rounded-xl border bg-white shadow-lg">
-
+                      <div className="absolute z-30 mt-2 w-72 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-[0_20px_50px_rgba(7,26,54,0.14)]">
                         <input
                           type="text"
                           placeholder="Search country..."
@@ -792,7 +787,6 @@ ${notes.trim() || "-"}`;
                         />
 
                         <div className="max-h-64 overflow-y-auto">
-
                           {filteredCountryCodes.map(
                             (c) => (
                               <button
@@ -806,9 +800,8 @@ ${notes.trim() || "-"}`;
                                   setIsCountryOpen(false);
                                   setCountrySearch("");
                                 }}
-                                className="flex w-full items-center gap-3 px-4 py-3 text-left text-gray-900 hover:bg-gray-100"
+                                className="flex w-full items-center gap-3 px-4 py-3 text-left text-gray-900 transition hover:bg-blue-50"
                               >
-
                                 <FlagIcon
                                   iso={c.iso}
                                   name={c.name}
@@ -821,16 +814,12 @@ ${notes.trim() || "-"}`;
                                 <span className="font-bold text-gray-500">
                                   {c.dialCode}
                                 </span>
-
                               </button>
                             )
                           )}
-
                         </div>
-
                       </div>
                     )}
-
                   </div>
 
                   <input
@@ -847,28 +836,29 @@ ${notes.trim() || "-"}`;
                       ) + " flex-1"
                     }
                   />
-
                 </div>
 
                 {submitAttempted &&
                   !isPhoneValid &&
                   errorText(
-                    "Please enter a valid number (at least 6 digits)."
+                    "Please enter a valid number (at least 6 digits)"
                   )}
-
               </div>
-
             </div>
 
             {/* Hotel */}
-            <h2 className="mb-6 mt-10 text-2xl font-bold text-blue-900">
-              Hotel Information
-            </h2>
+            <div className="mb-8 mt-12 border-b border-gray-100 pb-8">
+              <p className="mb-2 text-xs font-black uppercase tracking-[0.18em] text-orange-500">
+                Stay Details
+              </p>
 
-            <div className="grid gap-4 md:grid-cols-2">
+              <h2 className="text-2xl font-black tracking-tight text-[#071a36]">
+                Hotel Information
+              </h2>
+            </div>
 
+            <div className="grid gap-5 md:grid-cols-2">
               <div>
-
                 <label className={labelClass}>
                   Hotel Name
                 </label>
@@ -882,11 +872,9 @@ ${notes.trim() || "-"}`;
                   }
                   className={inputClass(false)}
                 />
-
               </div>
 
               <div>
-
                 <label className={labelClass}>
                   Room Number
                 </label>
@@ -900,15 +888,19 @@ ${notes.trim() || "-"}`;
                   }
                   className={inputClass(false)}
                 />
-
               </div>
-
             </div>
 
             {/* Tour Date */}
-            <h2 className="mb-6 mt-10 text-2xl font-bold text-blue-900">
-              Tour Information
-            </h2>
+            <div className="mb-8 mt-12 border-b border-gray-100 pb-8">
+              <p className="mb-2 text-xs font-black uppercase tracking-[0.18em] text-orange-500">
+                Experience Details
+              </p>
+
+              <h2 className="text-2xl font-black tracking-tight text-[#071a36]">
+                Tour Information
+              </h2>
+            </div>
 
             <label className={labelClass}>
               Tour Date *
@@ -929,19 +921,24 @@ ${notes.trim() || "-"}`;
             {submitAttempted &&
               !isDateValid &&
               errorText(
-                "Please select a valid tour date (from tomorrow onward)."
+                "Please select a valid tour date (from tomorrow onward)"
               )}
 
             {/* Guests */}
-            <h2 className="mb-6 mt-10 text-2xl font-bold text-blue-900">
-              Guests
-            </h2>
+            <div className="mb-8 mt-12 border-b border-gray-100 pb-8">
+              <p className="mb-2 text-xs font-black uppercase tracking-[0.18em] text-orange-500">
+                Travelers
+              </p>
 
-            <div className="grid gap-4 md:grid-cols-3">
+              <h2 className="text-2xl font-black tracking-tight text-[#071a36]">
+                Guests
+              </h2>
+            </div>
+
+            <div className="grid gap-5 md:grid-cols-3">
 
               {/* Adults */}
               <div>
-
                 <label className={labelClass}>
                   Adults
                 </label>
@@ -953,7 +950,6 @@ ${notes.trim() || "-"}`;
                   }
                   className={inputClass(false)}
                 >
-
                   {Array.from(
                     { length: 20 },
                     (_, i) => (
@@ -965,14 +961,11 @@ ${notes.trim() || "-"}`;
                       </option>
                     )
                   )}
-
                 </select>
-
               </div>
 
               {/* Children */}
               <div>
-
                 <label className={labelClass}>
                   Children (5-10)
                 </label>
@@ -994,7 +987,6 @@ ${notes.trim() || "-"}`;
                   }}
                   className={inputClass(false)}
                 >
-
                   {Array.from(
                     { length: 11 },
                     (_, i) => (
@@ -1006,14 +998,11 @@ ${notes.trim() || "-"}`;
                       </option>
                     )
                   )}
-
                 </select>
-
               </div>
 
               {/* Infants */}
               <div>
-
                 <label className={labelClass}>
                   Infants (1-4)
                 </label>
@@ -1035,7 +1024,6 @@ ${notes.trim() || "-"}`;
                   }}
                   className={inputClass(false)}
                 >
-
                   {Array.from(
                     { length: 11 },
                     (_, i) => (
@@ -1047,26 +1035,20 @@ ${notes.trim() || "-"}`;
                       </option>
                     )
                   )}
-
                 </select>
-
               </div>
-
             </div>
 
             {/* Children Ages */}
             {childAges.length > 0 && (
-              <div className="mt-6">
-
-                <h3 className="mb-4 text-lg font-bold text-blue-900">
+              <div className="mt-7 rounded-2xl border border-blue-100 bg-blue-50/50 p-5">
+                <h3 className="mb-4 text-lg font-black text-[#071a36]">
                   Children Ages (5-10 years)
                 </h3>
 
                 <div className="grid gap-4 md:grid-cols-2">
-
                   {childAges.map((_, index) => (
                     <div key={index}>
-
                       <select
                         value={
                           childrenAgeValues[index] || ""
@@ -1088,7 +1070,6 @@ ${notes.trim() || "-"}`;
                           );
                         }}
                       >
-
                         <option value="">
                           Select Child {index + 1} Age
                         </option>
@@ -1116,7 +1097,6 @@ ${notes.trim() || "-"}`;
                         <option value="10">
                           10 years
                         </option>
-
                       </select>
 
                       {submitAttempted &&
@@ -1124,30 +1104,24 @@ ${notes.trim() || "-"}`;
                         errorText(
                           `Select an age for Child ${
                             index + 1
-                          }.`
+                          }`
                         )}
-
                     </div>
                   ))}
-
                 </div>
-
               </div>
             )}
 
             {/* Infant Ages */}
             {infantAges.length > 0 && (
-              <div className="mt-6">
-
-                <h3 className="mb-4 text-lg font-bold text-blue-900">
+              <div className="mt-7 rounded-2xl border border-orange-100 bg-orange-50/50 p-5">
+                <h3 className="mb-4 text-lg font-black text-[#071a36]">
                   Infant Ages (1-4 years)
                 </h3>
 
                 <div className="grid gap-4 md:grid-cols-2">
-
                   {infantAges.map((_, index) => (
                     <div key={index}>
-
                       <select
                         value={
                           infantAgeValues[index] || ""
@@ -1169,7 +1143,6 @@ ${notes.trim() || "-"}`;
                           );
                         }}
                       >
-
                         <option value="">
                           Select Infant {index + 1} Age
                         </option>
@@ -1189,7 +1162,6 @@ ${notes.trim() || "-"}`;
                         <option value="4">
                           4 years
                         </option>
-
                       </select>
 
                       {submitAttempted &&
@@ -1197,35 +1169,34 @@ ${notes.trim() || "-"}`;
                         errorText(
                           `Select an age for Infant ${
                             index + 1
-                          }.`
+                          }`
                         )}
-
                     </div>
                   ))}
-
                 </div>
-
               </div>
             )}
 
             {/* Total Guests */}
-            <div className="mt-6 rounded-2xl bg-blue-50 p-5">
-
-              <p className="text-lg font-bold text-blue-900">
+            <div className="mt-7 rounded-2xl border border-blue-100 bg-gradient-to-r from-blue-50 to-white p-5 shadow-[0_8px_25px_rgba(7,26,54,0.04)]">
+              <p className="text-lg font-black text-[#071a36]">
                 👥 Total Guests: {totalGuests}
               </p>
-
             </div>
 
             {/* Booking Summary */}
-            <div className="mt-6 rounded-2xl border border-orange-200 bg-orange-50 p-5">
+            <div className="mt-5 rounded-[24px] border border-orange-200/70 bg-gradient-to-br from-orange-50 to-white p-6 shadow-[0_8px_25px_rgba(255,122,0,0.06)]">
+              <div className="flex items-center justify-between gap-4">
+                <h3 className="text-lg font-black text-orange-600">
+                  💰 Booking Summary
+                </h3>
 
-              <h3 className="text-lg font-bold text-orange-600">
-                💰 Booking Summary
-              </h3>
+                <div className="rounded-full bg-orange-100 px-3 py-1 text-xs font-black uppercase tracking-wider text-orange-600">
+                  Live Total
+                </div>
+              </div>
 
-              <div className="mt-3 space-y-2 text-gray-700">
-
+              <div className="mt-5 space-y-3 text-gray-700">
                 <p className="font-bold">
                   Adults: {adults} × €{adultPrice} = €
                   {Number(adults) * adultPrice}
@@ -1240,19 +1211,29 @@ ${notes.trim() || "-"}`;
                   Infants: {infants} × €{infantPrice} = €
                   {Number(infants) * infantPrice}
                 </p>
-
               </div>
 
-              <div className="mt-4 border-t pt-4 text-2xl font-bold text-blue-900">
-                Total Price: €{totalPrice}
-              </div>
+              <div className="mt-5 flex items-center justify-between border-t border-orange-200 pt-5">
+                <span className="text-sm font-bold uppercase tracking-wider text-gray-500">
+                  Total Price
+                </span>
 
+                <span className="text-3xl font-black text-[#071a36]">
+                  €{totalPrice}
+                </span>
+              </div>
             </div>
 
             {/* Notes */}
-            <h2 className="mb-6 mt-10 text-2xl font-bold text-blue-900">
-              Additional Information
-            </h2>
+            <div className="mb-8 mt-12 border-b border-gray-100 pb-8">
+              <p className="mb-2 text-xs font-black uppercase tracking-[0.18em] text-orange-500">
+                Final Details
+              </p>
+
+              <h2 className="text-2xl font-black tracking-tight text-[#071a36]">
+                Additional Information
+              </h2>
+            </div>
 
             <label className={labelClass}>
               Special Requests / Notes
@@ -1270,10 +1251,10 @@ ${notes.trim() || "-"}`;
 
             {submitAttempted &&
               !isFormValid && (
-                <p className="mt-4 rounded-xl bg-red-50 p-4 font-bold text-red-700">
+                <p className="mt-4 rounded-2xl border border-red-100 bg-red-50 p-4 font-bold leading-6 text-red-700">
                   Please fill in the required fields
                   highlighted above before sending
-                  your request.
+                  your request
                 </p>
               )}
 
@@ -1282,98 +1263,118 @@ ${notes.trim() || "-"}`;
               type="button"
               onClick={handleSubmit}
               disabled={isSubmitting}
-              className="mt-8 w-full rounded-2xl bg-green-600 py-5 text-lg font-bold text-white transition hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-60"
+              className="mt-8 w-full rounded-2xl bg-[#071a36] py-5 text-lg font-black text-white shadow-[0_16px_35px_rgba(7,26,54,0.2)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#0b2548] hover:shadow-[0_20px_40px_rgba(7,26,54,0.26)] disabled:cursor-not-allowed disabled:opacity-60"
             >
               {isSubmitting
                 ? "Saving Booking..."
                 : "📱 Send Booking Request"}
             </button>
-
           </div>
 
           {/* SIDEBAR */}
           <div>
+            <div className="sticky top-8 overflow-hidden rounded-[28px] border border-gray-200/80 bg-white shadow-[0_20px_60px_rgba(7,26,54,0.09)]">
 
-            <div className="sticky top-8 rounded-3xl bg-white p-8 shadow-lg">
+              <div className="relative overflow-hidden bg-[#071a36] p-7">
+                <div className="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-orange-500/10 blur-2xl" />
 
-              <h3 className="text-2xl font-bold text-blue-900">
-                Tour Summary
-              </h3>
+                <div className="relative">
+                  <p className="mb-2 text-xs font-black uppercase tracking-[0.18em] text-orange-400">
+                    Your Experience
+                  </p>
 
-              <div className="mt-6 space-y-4">
+                  <h3 className="text-2xl font-black text-white">
+                    Tour Summary
+                  </h3>
 
-                <div className="rounded-xl bg-blue-50 p-4">
+                  <p className="mt-2 text-sm text-blue-100/70">
+                    Everything you need for your booking
+                  </p>
+                </div>
+              </div>
 
-                  <p className="text-sm font-bold text-gray-500">
+              <div className="space-y-4 p-6">
+
+                <div className="rounded-2xl border border-blue-100 bg-blue-50/60 p-5">
+                  <p className="text-xs font-black uppercase tracking-wider text-gray-500">
                     Tour
                   </p>
 
-                  <p className="font-bold text-blue-900">
+                  <p className="mt-2 font-black leading-6 text-[#071a36]">
                     {tourName}
                   </p>
-
                 </div>
 
-                <div className="rounded-xl bg-orange-50 p-4">
-
-                  <p className="text-sm font-bold text-gray-500">
+                <div className="rounded-2xl border border-orange-100 bg-orange-50/70 p-5">
+                  <p className="text-xs font-black uppercase tracking-wider text-gray-500">
                     Price
                   </p>
 
-                  <p className="text-2xl font-bold text-orange-500">
+                  <p className="mt-1 text-3xl font-black text-orange-500">
                     €{totalPrice}
                   </p>
-
                 </div>
 
-                <div className="rounded-xl bg-gray-50 p-4">
-
-                  <p className="text-sm font-bold text-gray-500">
+                <div className="rounded-2xl border border-gray-100 bg-gray-50 p-5">
+                  <p className="text-xs font-black uppercase tracking-wider text-gray-500">
                     Total Guests
                   </p>
 
-                  <p className="text-2xl font-bold text-blue-900">
+                  <p className="mt-1 text-3xl font-black text-[#071a36]">
                     {totalGuests}
                   </p>
-
                 </div>
 
-                <div className="rounded-xl bg-green-50 p-4">
-
-                  <p className="text-sm font-bold text-gray-500">
+                <div className="rounded-2xl border border-emerald-100 bg-emerald-50/60 p-5">
+                  <p className="text-xs font-black uppercase tracking-wider text-gray-500">
                     Tour Type
                   </p>
 
-                  <p className="font-bold text-green-700">
+                  <p className="mt-2 font-black text-emerald-700">
                     {tourType}
                   </p>
-
                 </div>
 
-                <div className="rounded-xl border p-4">
+                <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-[0_8px_25px_rgba(7,26,54,0.04)]">
+                  <p className="mb-4 text-xs font-black uppercase tracking-wider text-gray-500">
+                    Included
+                  </p>
 
-                  <ul className="space-y-2 font-bold text-gray-700">
-
+                  <ul className="space-y-3 font-semibold leading-6 text-gray-700">
                     {included.map(
                       (item, index) => (
-                        <li key={index}>
-                          ✅ {item}
+                        <li
+                          key={index}
+                          className="flex items-start gap-2"
+                        >
+                          <span className="mt-0.5 text-sm">
+                            ✅
+                          </span>
+
+                          <span>
+                            {item}
+                          </span>
                         </li>
                       )
                     )}
-
                   </ul>
+                </div>
 
+                <div className="rounded-2xl border border-blue-100 bg-[#071a36] p-5 text-white">
+                  <p className="text-sm font-black">
+                    Secure Booking
+                  </p>
+
+                  <p className="mt-2 text-sm leading-6 text-blue-100/70">
+                    Your booking is saved securely before your WhatsApp request is sent
+                  </p>
                 </div>
 
               </div>
-
             </div>
-
           </div>
 
         </div>
-
       </div>
     </main>
   );

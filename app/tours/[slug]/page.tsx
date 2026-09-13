@@ -849,7 +849,7 @@ export default async function TourDetailsPage({
   };
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-slate-50">
 
       {/* =====================================================
           STRUCTURED DATA
@@ -866,7 +866,7 @@ export default async function TourDetailsPage({
           HERO
       ===================================================== */}
 
-      <section className="relative h-[560px] overflow-hidden">
+      <section className="relative h-[560px] overflow-hidden bg-blue-950">
 
         <Image
           src={tour.image}
@@ -877,54 +877,70 @@ export default async function TourDetailsPage({
           className="object-cover"
         />
 
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-950/90 via-blue-950/55 to-blue-950/20" />
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-950/95 via-blue-950/65 to-blue-950/25" />
 
-        <div className="absolute inset-0 bg-gradient-to-t from-blue-950/75 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-blue-950/90 via-blue-950/20 to-transparent" />
+
+        <div className="absolute -left-32 -top-32 h-[420px] w-[420px] rounded-full bg-blue-600/20 blur-3xl" />
+
+        <div className="absolute -bottom-40 -right-32 h-[460px] w-[460px] rounded-full bg-orange-500/10 blur-3xl" />
+
+        <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-orange-400/60 to-transparent" />
 
         <div className="relative z-10 flex h-full items-center justify-center px-6 text-center text-white">
 
           <div className="max-w-5xl">
 
-            <div className="mb-5 flex items-center justify-center gap-3">
+            <div className="mx-auto mb-6 inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/[0.08] px-5 py-2.5 shadow-xl shadow-blue-950/20 backdrop-blur-xl">
 
-              <span className="h-px w-10 bg-orange-400" />
+              <span className="h-1.5 w-1.5 rounded-full bg-orange-400 shadow-[0_0_12px_rgba(251,146,60,0.8)]" />
 
-              <p className="text-sm font-bold uppercase tracking-[0.3em] text-orange-400">
+              <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-orange-300 sm:text-xs">
                 Hurghada Excursion
               </p>
 
-              <span className="h-px w-10 bg-orange-400" />
+              <span className="h-1.5 w-1.5 rounded-full bg-orange-400 shadow-[0_0_12px_rgba(251,146,60,0.8)]" />
 
             </div>
 
-            <h1 className="text-5xl font-bold leading-[1.05] tracking-tight md:text-7xl">
+            <h1 className="text-5xl font-extrabold leading-[1.05] tracking-tight drop-shadow-2xl md:text-7xl">
               {tour.name}
             </h1>
 
-            <p className="mx-auto mt-7 max-w-3xl text-lg leading-8 text-blue-50 md:text-xl">
+            <div className="mx-auto mt-6 h-px w-16 bg-orange-400/80" />
+
+            <p className="mx-auto mt-7 max-w-3xl text-base leading-8 text-blue-50/95 sm:text-lg md:text-xl">
               {tour.description}
             </p>
 
-            <div className="mt-7 flex flex-wrap justify-center gap-3">
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
 
-              <div className="flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2.5 backdrop-blur-md">
-                <StarIcon className="h-4 w-4 text-orange-400" />
+              <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.08] px-4 py-2.5 shadow-lg shadow-blue-950/10 backdrop-blur-xl">
+
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-orange-500/15">
+                  <StarIcon className="h-3.5 w-3.5 text-orange-400" />
+                </span>
 
                 <span className="font-bold">
                   {averageRating}
                 </span>
+
               </div>
 
-              <div className="flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2.5 backdrop-blur-md">
-                <UsersIcon className="h-4 w-4 text-white" />
+              <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.08] px-4 py-2.5 shadow-lg shadow-blue-950/10 backdrop-blur-xl">
+
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/10">
+                  <UsersIcon className="h-3.5 w-3.5 text-white" />
+                </span>
 
                 <span className="font-bold">
                   {reviewCount}{" "}
                   {reviewCount === 1 ? "Review" : "Reviews"}
                 </span>
+
               </div>
 
-              <div className="rounded-full bg-orange-500 px-5 py-2.5 font-bold shadow-lg">
+              <div className="rounded-full bg-orange-500 px-5 py-2.5 font-bold shadow-lg shadow-orange-950/20">
                 {tour.type}
               </div>
 
@@ -938,7 +954,7 @@ export default async function TourDetailsPage({
 
           <div className="mx-auto max-w-7xl px-6 pb-7">
 
-            <div className="flex items-center gap-3 text-sm font-medium text-white/80">
+            <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-blue-950/35 px-4 py-2 text-xs font-semibold text-white/80 backdrop-blur-md">
 
               <span className="h-2 w-2 rounded-full bg-orange-400" />
 
@@ -968,19 +984,19 @@ export default async function TourDetailsPage({
 
             {/* OVERVIEW */}
 
-            <section>
+            <section className="rounded-[28px] border border-slate-200/80 bg-white p-7 shadow-[0_10px_35px_rgba(15,23,42,0.05)] md:p-9">
 
               <div className="flex items-center gap-3">
 
                 <span className="h-px w-10 bg-orange-500" />
 
-                <p className="text-sm font-bold uppercase tracking-[0.25em] text-orange-500">
+                <p className="text-xs font-bold uppercase tracking-[0.25em] text-orange-500">
                   About The Experience
                 </p>
 
               </div>
 
-              <h2 className="mt-4 text-3xl font-bold tracking-tight text-blue-950 md:text-4xl">
+              <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-blue-950 md:text-4xl">
                 Tour Overview
               </h2>
 
@@ -998,11 +1014,11 @@ export default async function TourDetailsPage({
 
                 {/* Duration */}
 
-                <div className="group rounded-2xl border border-gray-100 bg-slate-50 p-5 transition hover:border-blue-100 hover:bg-blue-50/50">
+                <div className="group rounded-[24px] border border-slate-200/80 bg-white p-5 shadow-[0_8px_28px_rgba(15,23,42,0.05)] transition-all duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-[0_18px_40px_rgba(15,23,42,0.1)]">
 
                   <div className="flex items-start gap-4">
 
-                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-100 text-blue-700">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-50 text-blue-700 transition group-hover:bg-blue-950 group-hover:text-white">
 
                       <ClockIcon className="h-5 w-5" />
 
@@ -1026,11 +1042,11 @@ export default async function TourDetailsPage({
 
                 {/* Pickup */}
 
-                <div className="group rounded-2xl border border-gray-100 bg-slate-50 p-5 transition hover:border-orange-100 hover:bg-orange-50/50">
+                <div className="group rounded-[24px] border border-slate-200/80 bg-white p-5 shadow-[0_8px_28px_rgba(15,23,42,0.05)] transition-all duration-300 hover:-translate-y-1 hover:border-orange-200 hover:shadow-[0_18px_40px_rgba(15,23,42,0.1)]">
 
                   <div className="flex items-start gap-4">
 
-                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-orange-100 text-orange-600">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-orange-50 text-orange-600 transition group-hover:bg-orange-500 group-hover:text-white">
 
                       <CarIcon className="h-5 w-5" />
 
@@ -1054,11 +1070,11 @@ export default async function TourDetailsPage({
 
                 {/* Schedule */}
 
-                <div className="group rounded-2xl border border-gray-100 bg-slate-50 p-5 transition hover:border-blue-100 hover:bg-blue-50/50 sm:col-span-2">
+                <div className="group rounded-[24px] border border-slate-200/80 bg-white p-5 shadow-[0_8px_28px_rgba(15,23,42,0.05)] transition-all duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-[0_18px_40px_rgba(15,23,42,0.1)] sm:col-span-2">
 
                   <div className="flex items-start gap-4">
 
-                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-100 text-blue-700">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-50 text-blue-700 transition group-hover:bg-blue-950 group-hover:text-white">
 
                       <CalendarIcon className="h-5 w-5" />
 
@@ -1089,7 +1105,7 @@ export default async function TourDetailsPage({
             {"gallery" in tour &&
               Array.isArray(tour.gallery) &&
               tour.gallery.length > 0 && (
-                <div className="mt-14">
+                <div className="mt-14 overflow-hidden rounded-[28px] border border-slate-200/80 bg-white p-2 shadow-[0_12px_40px_rgba(15,23,42,0.07)]">
 
                   <TourGallery
                     images={tour.gallery}
@@ -1108,13 +1124,13 @@ export default async function TourDetailsPage({
 
                 <span className="h-px w-10 bg-orange-500" />
 
-                <p className="text-sm font-bold uppercase tracking-[0.25em] text-orange-500">
+                <p className="text-xs font-bold uppercase tracking-[0.25em] text-orange-500">
                   Your Day
                 </p>
 
               </div>
 
-              <h2 className="mt-4 text-3xl font-bold text-blue-950 md:text-4xl">
+              <h2 className="mt-4 text-3xl font-extrabold text-blue-950 md:text-4xl">
                 Tour Program
               </h2>
 
@@ -1124,10 +1140,10 @@ export default async function TourDetailsPage({
 
                   <div
                     key={`${item}-${index}`}
-                    className="group flex gap-5 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-orange-100 hover:shadow-md"
+                    className="group flex gap-5 rounded-[24px] border border-slate-200/80 bg-white p-5 shadow-[0_8px_28px_rgba(15,23,42,0.05)] transition-all duration-300 hover:-translate-y-1 hover:border-orange-200 hover:shadow-[0_18px_40px_rgba(15,23,42,0.1)]"
                   >
 
-                    <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-orange-500 text-sm font-bold text-white shadow-md shadow-orange-200">
+                    <div className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-orange-500 text-sm font-bold text-white shadow-lg shadow-orange-200">
 
                       {String(index + 1).padStart(2, "0")}
 
@@ -1153,13 +1169,13 @@ export default async function TourDetailsPage({
 
                 <span className="h-px w-10 bg-orange-500" />
 
-                <p className="text-sm font-bold uppercase tracking-[0.25em] text-orange-500">
+                <p className="text-xs font-bold uppercase tracking-[0.25em] text-orange-500">
                   Included
                 </p>
 
               </div>
 
-              <h2 className="mt-4 text-3xl font-bold text-blue-950 md:text-4xl">
+              <h2 className="mt-4 text-3xl font-extrabold text-blue-950 md:text-4xl">
                 What&apos;s Included
               </h2>
 
@@ -1169,10 +1185,10 @@ export default async function TourDetailsPage({
 
                   <div
                     key={`${item}-${index}`}
-                    className="flex items-start gap-3 rounded-2xl border border-green-100 bg-green-50/70 p-4"
+                    className="flex items-start gap-3 rounded-[22px] border border-green-100 bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
                   >
 
-                    <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-green-500 text-white">
+                    <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-green-500 text-white shadow-sm">
 
                       <CheckIcon className="h-4 w-4" />
 
@@ -1198,13 +1214,13 @@ export default async function TourDetailsPage({
 
                 <span className="h-px w-10 bg-orange-500" />
 
-                <p className="text-sm font-bold uppercase tracking-[0.25em] text-orange-500">
+                <p className="text-xs font-bold uppercase tracking-[0.25em] text-orange-500">
                   Please Note
                 </p>
 
               </div>
 
-              <h2 className="mt-4 text-3xl font-bold text-blue-950 md:text-4xl">
+              <h2 className="mt-4 text-3xl font-extrabold text-blue-950 md:text-4xl">
                 What&apos;s Not Included
               </h2>
 
@@ -1214,10 +1230,10 @@ export default async function TourDetailsPage({
 
                   <div
                     key={`${item}-${index}`}
-                    className="flex items-start gap-3 rounded-2xl border border-red-100 bg-red-50/60 p-4"
+                    className="flex items-start gap-3 rounded-[22px] border border-red-100 bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
                   >
 
-                    <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-red-500 text-white">
+                    <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-red-500 text-white shadow-sm">
 
                       <XIcon className="h-4 w-4" />
 
@@ -1243,13 +1259,13 @@ export default async function TourDetailsPage({
 
                 <span className="h-px w-10 bg-orange-500" />
 
-                <p className="text-sm font-bold uppercase tracking-[0.25em] text-orange-500">
+                <p className="text-xs font-bold uppercase tracking-[0.25em] text-orange-500">
                   Highlights
                 </p>
 
               </div>
 
-              <h2 className="mt-4 text-3xl font-bold text-blue-950 md:text-4xl">
+              <h2 className="mt-4 text-3xl font-extrabold text-blue-950 md:text-4xl">
                 Tour Highlights
               </h2>
 
@@ -1259,10 +1275,10 @@ export default async function TourDetailsPage({
 
                   <div
                     key={`${item}-${index}`}
-                    className="group flex items-center gap-4 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:border-orange-100 hover:shadow-lg"
+                    className="group flex items-center gap-4 rounded-[24px] border border-slate-200/80 bg-white p-5 shadow-[0_8px_28px_rgba(15,23,42,0.05)] transition-all duration-300 hover:-translate-y-1 hover:border-orange-200 hover:shadow-[0_18px_40px_rgba(15,23,42,0.1)]"
                   >
 
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-50 text-blue-700 transition group-hover:bg-orange-50 group-hover:text-orange-600">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-50 text-blue-700 transition-all duration-300 group-hover:bg-orange-50 group-hover:text-orange-600">
 
                       <HighlightIcon
                         text={item}
@@ -1291,13 +1307,13 @@ export default async function TourDetailsPage({
 
                 <span className="h-px w-10 bg-orange-500" />
 
-                <p className="text-sm font-bold uppercase tracking-[0.25em] text-orange-500">
+                <p className="text-xs font-bold uppercase tracking-[0.25em] text-orange-500">
                   Before You Go
                 </p>
 
               </div>
 
-              <h2 className="mt-4 text-3xl font-bold text-blue-950 md:text-4xl">
+              <h2 className="mt-4 text-3xl font-extrabold text-blue-950 md:text-4xl">
                 Important Notes
               </h2>
 
@@ -1307,7 +1323,7 @@ export default async function TourDetailsPage({
 
                   <div
                     key={`${note}-${index}`}
-                    className="flex gap-3 rounded-2xl border border-orange-100 bg-orange-50/70 p-4"
+                    className="flex gap-3 rounded-[22px] border border-orange-100 bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
                   >
 
                     <div className="mt-1 h-2 w-2 shrink-0 rounded-full bg-orange-500" />
@@ -1326,11 +1342,11 @@ export default async function TourDetailsPage({
 
             {/* REVIEWS */}
 
-            <div className="mt-16 border-t border-gray-100 pt-16">
+            <div className="mt-16 rounded-[28px] border border-slate-200/80 bg-white p-7 shadow-[0_10px_35px_rgba(15,23,42,0.05)] md:p-9">
 
               <ReviewsList tourSlug={tour.slug} />
 
-              <div className="mt-12">
+              <div className="mt-12 border-t border-slate-100 pt-12">
 
                 <ReviewForm
                   tourSlug={tour.slug}
@@ -1349,36 +1365,50 @@ export default async function TourDetailsPage({
 
           <aside>
 
-            <div className="sticky top-24 overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-xl">
+            <div className="sticky top-24 overflow-hidden rounded-[30px] border border-slate-200/80 bg-white shadow-[0_20px_60px_rgba(15,23,42,0.12)]">
 
               {/* Price header */}
 
-              <div className="bg-blue-950 p-7 text-white">
+              <div className="relative overflow-hidden bg-blue-950 p-7 text-white">
 
-                <p className="text-sm font-bold uppercase tracking-[0.2em] text-blue-200">
-                  Starting From
-                </p>
+                <div className="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-orange-500/10 blur-2xl" />
 
-                <div className="mt-2 flex items-baseline gap-2">
+                <div className="absolute -bottom-20 -left-20 h-44 w-44 rounded-full bg-blue-600/20 blur-2xl" />
 
-                  <span className="text-5xl font-bold text-orange-400">
-                    {tour.price > 0
-                      ? `€${tour.price}`
-                      : "On Request"}
-                  </span>
+                <div className="relative">
 
-                  {tour.price > 0 && (
-                    <span className="text-sm text-blue-200">
-                      / person
+                  <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.07] px-3 py-1.5">
+
+                    <span className="h-1.5 w-1.5 rounded-full bg-orange-400" />
+
+                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-blue-100">
+                      Starting From
+                    </p>
+
+                  </div>
+
+                  <div className="mt-3 flex items-baseline gap-2">
+
+                    <span className="text-5xl font-extrabold text-orange-400">
+                      {tour.price > 0
+                        ? `€${tour.price}`
+                        : "On Request"}
                     </span>
-                  )}
+
+                    {tour.price > 0 && (
+                      <span className="text-sm text-blue-200">
+                        / person
+                      </span>
+                    )}
+
+                  </div>
+
+                  <p className="mt-3 text-sm leading-6 text-blue-200">
+                    Secure your place and enjoy a professionally organized
+                    experience in Hurghada
+                  </p>
 
                 </div>
-
-                <p className="mt-3 text-sm text-blue-200">
-                  Secure your place and enjoy a professionally organized
-                  experience in Hurghada.
-                </p>
 
               </div>
 
@@ -1394,7 +1424,7 @@ export default async function TourDetailsPage({
 
                     <div className="flex items-center gap-3 text-gray-600">
 
-                      <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-orange-50 text-orange-500">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-50 text-orange-500">
 
                         <StarIcon className="h-4 w-4" />
 
@@ -1418,7 +1448,7 @@ export default async function TourDetailsPage({
 
                     <div className="flex items-center gap-3 text-gray-600">
 
-                      <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 text-blue-700">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-700">
 
                         <UsersIcon className="h-4 w-4" />
 
@@ -1442,7 +1472,7 @@ export default async function TourDetailsPage({
 
                     <div className="flex items-center gap-3 text-gray-600">
 
-                      <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-orange-50 text-orange-600">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-50 text-orange-600">
 
                         <TagIcon className="h-4 w-4" />
 
@@ -1466,7 +1496,7 @@ export default async function TourDetailsPage({
 
                     <div className="flex items-center gap-3 text-gray-600">
 
-                      <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 text-blue-700">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-700">
 
                         <MapPinIcon className="h-4 w-4" />
 
@@ -1490,7 +1520,7 @@ export default async function TourDetailsPage({
 
                     <div className="flex items-center gap-3 text-gray-600">
 
-                      <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-orange-50 text-orange-600">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-50 text-orange-600">
 
                         <ClockIcon className="h-4 w-4" />
 
@@ -1514,7 +1544,7 @@ export default async function TourDetailsPage({
 
                     <div className="flex items-center gap-3 text-gray-600">
 
-                      <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 text-blue-700">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-700">
 
                         <CarIcon className="h-4 w-4" />
 
@@ -1546,7 +1576,7 @@ export default async function TourDetailsPage({
                           )}`
                         : ""
                     }`}
-                    className="group mt-6 flex w-full items-center justify-center gap-3 rounded-xl bg-orange-500 py-4 text-center text-lg font-bold text-white shadow-lg shadow-orange-200 transition hover:bg-orange-600 hover:shadow-xl"
+                    className="group mt-6 flex w-full items-center justify-center gap-3 rounded-2xl bg-orange-500 py-4 text-center text-lg font-bold text-white shadow-lg shadow-orange-200 transition-all duration-300 hover:-translate-y-0.5 hover:bg-orange-600 hover:shadow-xl hover:shadow-orange-200"
                   >
 
                     Book Now
@@ -1557,7 +1587,7 @@ export default async function TourDetailsPage({
 
                 ) : (
 
-                  <div className="mt-6 w-full rounded-xl bg-gray-100 py-4 text-center text-lg font-bold text-gray-400">
+                  <div className="mt-6 w-full rounded-2xl bg-slate-100 py-4 text-center text-lg font-bold text-gray-400">
                     Coming Soon
                   </div>
 
@@ -1567,7 +1597,7 @@ export default async function TourDetailsPage({
 
                 <Link
                   href={backToTours}
-                  className="group mt-5 flex items-center justify-center gap-2 text-sm font-bold text-blue-900 transition hover:text-orange-500"
+                  className="group mt-5 flex items-center justify-center gap-2 rounded-2xl border border-slate-200 py-3.5 text-sm font-bold text-blue-900 transition-all duration-300 hover:border-orange-200 hover:bg-orange-50 hover:text-orange-500"
                 >
 
                   <ArrowLeftIcon className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
@@ -1596,21 +1626,23 @@ export default async function TourDetailsPage({
 
         <div className="absolute -right-32 bottom-0 h-96 w-96 rounded-full bg-orange-500/10 blur-3xl" />
 
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-orange-400/50 to-transparent" />
+
         <div className="relative mx-auto max-w-4xl text-center">
 
-          <div className="flex items-center justify-center gap-3">
+          <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/[0.07] px-5 py-2.5 shadow-lg shadow-blue-950/20 backdrop-blur-xl">
 
-            <span className="h-px w-10 bg-orange-400" />
+            <span className="h-1.5 w-1.5 rounded-full bg-orange-400" />
 
-            <p className="font-bold uppercase tracking-[0.3em] text-orange-400">
+            <p className="text-xs font-bold uppercase tracking-[0.3em] text-orange-400">
               Ready To Explore?
             </p>
 
-            <span className="h-px w-10 bg-orange-400" />
+            <span className="h-1.5 w-1.5 rounded-full bg-orange-400" />
 
           </div>
 
-          <h2 className="mt-5 text-4xl font-bold leading-tight md:text-6xl">
+          <h2 className="mt-6 text-4xl font-extrabold leading-tight md:text-6xl">
             Ready to Book Your
             <span className="block text-orange-400">
               Adventure?
@@ -1619,7 +1651,7 @@ export default async function TourDetailsPage({
 
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-blue-100">
             Reserve your {tour.name} experience and enjoy an unforgettable
-            day in Hurghada with Via Blue.
+            day in Hurghada with Via Blue
           </p>
 
           {tour.available ? (
@@ -1632,7 +1664,7 @@ export default async function TourDetailsPage({
                     )}`
                   : ""
               }`}
-              className="group mt-8 inline-flex items-center justify-center gap-3 rounded-xl bg-orange-500 px-8 py-4 font-bold text-white shadow-lg transition hover:bg-orange-600"
+              className="group mt-8 inline-flex items-center justify-center gap-3 rounded-2xl bg-orange-500 px-8 py-4 font-bold text-white shadow-lg shadow-orange-950/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-orange-600 hover:shadow-xl"
             >
 
               Book {tour.name}
@@ -1643,7 +1675,7 @@ export default async function TourDetailsPage({
 
           ) : (
 
-            <div className="mt-8 inline-block rounded-xl bg-white/10 px-8 py-4 font-bold text-gray-300">
+            <div className="mt-8 inline-block rounded-2xl border border-white/10 bg-white/10 px-8 py-4 font-bold text-gray-300 backdrop-blur">
               Coming Soon
             </div>
 

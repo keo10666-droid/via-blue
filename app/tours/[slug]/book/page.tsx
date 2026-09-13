@@ -1,7 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
+
 import { useParams, notFound } from "next/navigation";
+
 import { tours } from "@/data/tours";
 
 const nationalities = [
@@ -145,37 +147,28 @@ export default function BookingPage() {
   const [name, setName] = useState("");
   const [nationality, setNationality] = useState("");
   const [isNationalityOpen, setIsNationalityOpen] = useState(false);
-
   const [selectedCountry, setSelectedCountry] = useState(countryCodes[0]);
   const [isCountryOpen, setIsCountryOpen] = useState(false);
   const [countrySearch, setCountrySearch] = useState("");
-
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-
   const [hotel, setHotel] = useState("");
   const [roomNumber, setRoomNumber] = useState("");
   const [date, setDate] = useState("");
-
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
   const [calendarMonth, setCalendarMonth] = useState(() => {
     const d = new Date();
     d.setDate(d.getDate() + 1);
     return new Date(d.getFullYear(), d.getMonth(), 1);
   });
-
   const [adults, setAdults] = useState("1");
   const [children, setChildren] = useState("0");
   const [infants, setInfants] = useState("0");
-
   const [notes, setNotes] = useState("");
-
   const [childrenAgeValues, setChildrenAgeValues] = useState<string[]>(
     []
   );
-
   const [infantAgeValues, setInfantAgeValues] = useState<string[]>([]);
-
   const [submitAttempted, setSubmitAttempted] = useState(false);
 
   const childAges = Array.from(
@@ -220,7 +213,6 @@ export default function BookingPage() {
 
   const tomorrowIso = useMemo(() => {
     const d = new Date();
-
     d.setDate(d.getDate() + 1);
 
     const yyyy = d.getFullYear();
@@ -273,7 +265,6 @@ export default function BookingPage() {
     if (!value) return "";
 
     const [year, month, day] = value.split("-").map(Number);
-
     const d = new Date(year, month - 1, day);
 
     return d.toLocaleDateString("en-US", {
@@ -352,7 +343,7 @@ export default function BookingPage() {
     allInfantAgesSet;
 
   const inputClass = (invalid: boolean) =>
-    `w-full rounded-xl border bg-white px-4 py-3.5 text-gray-900 shadow-sm transition-all placeholder:text-gray-400 focus:outline-none focus:ring-4 ${
+    `w-full rounded-2xl border bg-white px-4 py-3.5 text-gray-900 shadow-sm transition-all duration-200 placeholder:text-gray-400 hover:border-slate-300 focus:outline-none focus:ring-4 ${
       invalid
         ? "border-red-400 focus:border-red-500 focus:ring-red-100"
         : "border-gray-200 focus:border-blue-600 focus:ring-blue-100"
@@ -381,16 +372,21 @@ NEW BOOKING REQUEST
 Tour: ${tour.name}
 
 Full Name: ${name.trim()}
+
 Nationality: ${nationality || "Not specified"}
+
 Email: ${email.trim()}
 
 Hotel: ${hotel || "Not specified"}
+
 Room Number: ${roomNumber || "Not specified"}
 
 Tour Date: ${date}
 
 Adults: ${adults}
+
 Children: ${children}
+
 Infants: ${infants}
 
 Total Guests: ${totalGuests}
@@ -408,6 +404,7 @@ Total Price: €${totalPrice}
 WhatsApp: ${fullPhone}
 
 Notes:
+
 ${notes.trim() || "-"}
 `;
 
@@ -422,18 +419,24 @@ ${notes.trim() || "-"}
       <div className="mx-auto max-w-7xl">
 
         {/* Header */}
-        <div className="mb-8 overflow-hidden rounded-3xl bg-gradient-to-br from-blue-950 via-blue-900 to-blue-800 text-white shadow-xl">
+
+        <div className="relative mb-8 overflow-hidden rounded-[28px] bg-gradient-to-br from-blue-950 via-blue-900 to-blue-800 text-white shadow-[0_25px_70px_-30px_rgba(15,23,42,0.65)]">
+
+          <div className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-orange-500/10 blur-2xl" />
+
+          <div className="absolute -bottom-28 left-16 h-64 w-64 rounded-full bg-blue-400/10 blur-2xl" />
+
+          <div className="absolute right-1/3 top-1/2 h-32 w-32 -translate-y-1/2 rounded-full bg-white/5 blur-xl" />
+
           <div className="relative p-7 md:p-10 lg:p-12">
 
-            <div className="absolute -right-20 -top-20 h-56 w-56 rounded-full bg-white/5" />
-            <div className="absolute -bottom-24 left-20 h-48 w-48 rounded-full bg-white/5" />
-
             <div className="relative">
-              <div className="mb-4 inline-flex rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-blue-100">
+
+              <div className="mb-5 inline-flex items-center rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-blue-100 backdrop-blur-md">
                 Secure Booking
               </div>
 
-              <p className="text-sm font-bold uppercase tracking-wide text-orange-400">
+              <p className="text-sm font-bold uppercase tracking-[0.14em] text-orange-400">
                 {tour.name}
               </p>
 
@@ -443,37 +446,45 @@ ${notes.trim() || "-"}
 
               <p className="mt-4 max-w-2xl text-sm leading-6 text-blue-100 md:text-base">
                 Complete your booking details below and our team
-                will confirm your reservation shortly.
+                will confirm your reservation shortly
               </p>
 
-              <div className="mt-6 flex flex-wrap gap-3 text-xs font-semibold text-blue-100">
-                <span className="rounded-full bg-white/10 px-4 py-2">
+              <div className="mt-7 flex flex-wrap gap-3 text-xs font-semibold text-blue-100">
+
+                <span className="rounded-full border border-white/10 bg-white/10 px-4 py-2 backdrop-blur-md">
                   Secure Booking
                 </span>
 
-                <span className="rounded-full bg-white/10 px-4 py-2">
+                <span className="rounded-full border border-white/10 bg-white/10 px-4 py-2 backdrop-blur-md">
                   Quick Confirmation
                 </span>
 
-                <span className="rounded-full bg-white/10 px-4 py-2">
+                <span className="rounded-full border border-orange-400/20 bg-orange-500/10 px-4 py-2 text-orange-100 backdrop-blur-md">
                   Professional Service
                 </span>
+
               </div>
+
             </div>
 
           </div>
+
         </div>
 
         <div className="grid gap-8 lg:grid-cols-3">
 
           {/* Form */}
-          <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm md:p-8 lg:col-span-2">
+
+          <div className="rounded-[28px] border border-slate-200/80 bg-white p-6 shadow-[0_25px_70px_-35px_rgba(15,23,42,0.35)] md:p-8 lg:col-span-2">
 
             {/* Guest Information */}
+
             <div className="mb-8">
+
               <div className="mb-6 flex items-center gap-3 border-b border-slate-100 pb-5">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-700">
-                  <span className="text-lg font-bold">01</span>
+
+                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-950 to-blue-800 text-white shadow-md shadow-blue-900/15">
+                  <span className="text-sm font-bold">01</span>
                 </div>
 
                 <div>
@@ -482,15 +493,18 @@ ${notes.trim() || "-"}
                   </h2>
 
                   <p className="text-sm text-slate-500">
-                    Tell us who will be joining the tour.
+                    Tell us who will be joining the tour
                   </p>
                 </div>
+
               </div>
 
               <div className="grid gap-5 md:grid-cols-2">
 
                 {/* Name */}
+
                 <div>
+
                   <label className={labelClass}>
                     Full Name <span className="text-red-500">*</span>
                   </label>
@@ -510,12 +524,15 @@ ${notes.trim() || "-"}
                   {submitAttempted &&
                     !isNameValid &&
                     errorText(
-                      "Please enter the guest's full name."
+                      "Please enter the guest's full name"
                     )}
+
                 </div>
 
                 {/* Nationality */}
+
                 <div className="relative">
+
                   <label className={labelClass}>
                     Nationality
                   </label>
@@ -543,7 +560,8 @@ ${notes.trim() || "-"}
 
                   {isNationalityOpen &&
                     filteredNationalities.length > 0 && (
-                      <div className="absolute z-30 mt-2 w-full overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl">
+                      <div className="absolute z-30 mt-2 w-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl">
+
                         {filteredNationalities.map(
                           (item) => (
                             <button
@@ -562,17 +580,22 @@ ${notes.trim() || "-"}
                             </button>
                           )
                         )}
+
                       </div>
                     )}
+
                 </div>
 
               </div>
 
               {/* Contact */}
+
               <div className="mt-5 grid gap-5 md:grid-cols-2">
 
                 {/* Email */}
+
                 <div>
+
                   <label className={labelClass}>
                     Email Address <span className="text-red-500">*</span>
                   </label>
@@ -592,12 +615,15 @@ ${notes.trim() || "-"}
                   {submitAttempted &&
                     !isEmailValid &&
                     errorText(
-                      "Please enter a valid email address."
+                      "Please enter a valid email address"
                     )}
+
                 </div>
 
                 {/* Phone */}
+
                 <div>
+
                   <label className={labelClass}>
                     WhatsApp Number <span className="text-red-500">*</span>
                   </label>
@@ -611,8 +637,9 @@ ${notes.trim() || "-"}
                         onClick={() =>
                           setIsCountryOpen((v) => !v)
                         }
-                        className="flex h-full min-w-[105px] items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-3 text-gray-900 shadow-sm transition hover:border-blue-400 focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100"
+                        className="flex h-full min-w-[105px] items-center justify-center gap-2 rounded-2xl border border-gray-200 bg-white px-3 text-gray-900 shadow-sm transition hover:border-blue-400 focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100"
                       >
+
                         <FlagIcon
                           iso={selectedCountry.iso}
                           name={selectedCountry.name}
@@ -625,12 +652,15 @@ ${notes.trim() || "-"}
                         <span className="text-xs text-gray-400">
                           ▼
                         </span>
+
                       </button>
 
                       {isCountryOpen && (
+
                         <div className="absolute left-0 top-full z-40 mt-2 w-80 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl">
 
-                          <div className="border-b border-slate-100 p-3">
+                          <div className="border-b border-slate-100 bg-slate-50/80 p-3">
+
                             <input
                               type="text"
                               placeholder="Search country..."
@@ -640,9 +670,10 @@ ${notes.trim() || "-"}
                                   e.target.value
                                 )
                               }
-                              className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm text-gray-900 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+                              className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-gray-900 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
                               autoFocus
                             />
+
                           </div>
 
                           <div className="max-h-64 overflow-y-auto">
@@ -662,6 +693,7 @@ ${notes.trim() || "-"}
                                   }}
                                   className="flex w-full items-center gap-3 border-b border-slate-50 px-4 py-3 text-left text-sm text-slate-700 transition hover:bg-blue-50"
                                 >
+
                                   <FlagIcon
                                     iso={c.iso}
                                     name={c.name}
@@ -674,12 +706,15 @@ ${notes.trim() || "-"}
                                   <span className="font-semibold text-slate-400">
                                     {c.dialCode}
                                   </span>
+
                                 </button>
                               )
                             )}
 
                           </div>
+
                         </div>
+
                       )}
 
                     </div>
@@ -704,34 +739,43 @@ ${notes.trim() || "-"}
                   {submitAttempted &&
                     !isPhoneValid &&
                     errorText(
-                      "Please enter a valid WhatsApp number."
+                      "Please enter a valid WhatsApp number"
                     )}
+
                 </div>
 
               </div>
+
             </div>
 
             {/* Hotel Information */}
+
             <div className="mb-8">
+
               <div className="mb-6 flex items-center gap-3 border-b border-slate-100 pb-5">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-700">
-                  <span className="text-lg font-bold">02</span>
+
+                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-950 to-blue-800 text-white shadow-md shadow-blue-900/15">
+                  <span className="text-sm font-bold">02</span>
                 </div>
 
                 <div>
+
                   <h2 className="text-xl font-bold text-slate-900">
                     Hotel Information
                   </h2>
 
                   <p className="text-sm text-slate-500">
-                    Where should we pick you up?
+                    Where should we pick you up
                   </p>
+
                 </div>
+
               </div>
 
               <div className="grid gap-5 md:grid-cols-2">
 
                 <div>
+
                   <label className={labelClass}>
                     Hotel Name
                   </label>
@@ -745,9 +789,11 @@ ${notes.trim() || "-"}
                     }
                     className={inputClass(false)}
                   />
+
                 </div>
 
                 <div>
+
                   <label className={labelClass}>
                     Room Number
                   </label>
@@ -761,27 +807,35 @@ ${notes.trim() || "-"}
                     }
                     className={inputClass(false)}
                   />
+
                 </div>
 
               </div>
+
             </div>
 
             {/* Tour Information */}
+
             <div className="mb-8">
+
               <div className="mb-6 flex items-center gap-3 border-b border-slate-100 pb-5">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-700">
-                  <span className="text-lg font-bold">03</span>
+
+                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-950 to-blue-800 text-white shadow-md shadow-blue-900/15">
+                  <span className="text-sm font-bold">03</span>
                 </div>
 
                 <div>
+
                   <h2 className="text-xl font-bold text-slate-900">
                     Tour Information
                   </h2>
 
                   <p className="text-sm text-slate-500">
-                    Select your preferred tour date.
+                    Select your preferred tour date
                   </p>
+
                 </div>
+
               </div>
 
               <label className={labelClass}>
@@ -789,6 +843,7 @@ ${notes.trim() || "-"}
               </label>
 
               {/* Professional Custom Date Picker */}
+
               <div className="relative">
 
                 <button
@@ -796,7 +851,7 @@ ${notes.trim() || "-"}
                   onClick={() =>
                     setIsDatePickerOpen((v) => !v)
                   }
-                  className={`flex min-h-[58px] w-full items-center justify-between rounded-xl border bg-white px-4 text-left shadow-sm transition-all focus:outline-none focus:ring-4 ${
+                  className={`flex min-h-[62px] w-full items-center justify-between rounded-2xl border bg-white px-4 text-left shadow-sm transition-all focus:outline-none focus:ring-4 ${
                     submitAttempted && !isDateValid
                       ? "border-red-400 focus:border-red-500 focus:ring-red-100"
                       : isDatePickerOpen
@@ -804,9 +859,11 @@ ${notes.trim() || "-"}
                       : "border-gray-200 hover:border-blue-400"
                   }`}
                 >
+
                   <div className="flex items-center gap-3">
 
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-700">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-950 text-orange-400">
+
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -815,15 +872,19 @@ ${notes.trim() || "-"}
                         stroke="currentColor"
                         className="h-5 w-5"
                       >
+
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
                           d="M6.75 3v2.25M17.25 3v2.25M3 9.75h18M4.5 5.25h15A1.5 1.5 0 0 1 21 6.75v12A1.5 1.5 0 0 1 19.5 20.25h-15A1.5 1.5 0 0 1 3 18.75v-12A1.5 1.5 0 0 1 4.5 5.25Z"
                         />
+
                       </svg>
+
                     </div>
 
                     <div>
+
                       <p
                         className={`text-sm font-semibold ${
                           date
@@ -839,6 +900,7 @@ ${notes.trim() || "-"}
                       <p className="text-xs text-slate-400">
                         Available from tomorrow
                       </p>
+
                     </div>
 
                   </div>
@@ -855,36 +917,49 @@ ${notes.trim() || "-"}
                         : ""
                     }`}
                   >
+
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       d="m19.5 8.25-7.5 7.5-7.5-7.5"
                     />
+
                   </svg>
+
                 </button>
 
                 {isDatePickerOpen && (
-                  <div className="absolute left-0 right-0 top-full z-50 mt-3 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl md:w-[390px]">
+
+                  <div className="absolute left-0 right-0 top-full z-50 mt-3 overflow-hidden rounded-[24px] border border-slate-200 bg-white shadow-2xl md:w-[390px]">
 
                     {/* Calendar Header */}
-                    <div className="bg-gradient-to-br from-blue-950 to-blue-800 p-5 text-white">
 
-                      <p className="text-xs font-semibold uppercase tracking-wider text-blue-200">
-                        Select Tour Date
-                      </p>
+                    <div className="relative overflow-hidden bg-gradient-to-br from-blue-950 via-blue-900 to-blue-800 p-5 text-white">
 
-                      <p className="mt-1 text-xl font-bold">
-                        {date
-                          ? formatSelectedDate(date)
-                          : "Choose a date"}
-                      </p>
+                      <div className="absolute -right-10 -top-10 h-28 w-28 rounded-full bg-orange-500/10 blur-xl" />
+
+                      <div className="relative">
+
+                        <p className="text-xs font-semibold uppercase tracking-[0.14em] text-blue-200">
+                          Select Tour Date
+                        </p>
+
+                        <p className="mt-1 text-xl font-bold">
+                          {date
+                            ? formatSelectedDate(date)
+                            : "Choose a date"}
+                        </p>
+
+                      </div>
 
                     </div>
 
                     {/* Calendar */}
+
                     <div className="p-5">
 
                       {/* Month Navigation */}
+
                       <div className="mb-5 flex items-center justify-between">
 
                         <button
@@ -896,7 +971,7 @@ ${notes.trim() || "-"}
                             calendarMonth.getMonth() ===
                               tomorrowDate.getMonth()
                           }
-                          className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-30"
+                          className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:border-blue-200 hover:bg-blue-50 disabled:cursor-not-allowed disabled:opacity-30"
                         >
                           ‹
                         </button>
@@ -908,7 +983,7 @@ ${notes.trim() || "-"}
                         <button
                           type="button"
                           onClick={goToNextMonth}
-                          className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:bg-slate-50"
+                          className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:border-blue-200 hover:bg-blue-50"
                         >
                           ›
                         </button>
@@ -916,7 +991,9 @@ ${notes.trim() || "-"}
                       </div>
 
                       {/* Week Days */}
+
                       <div className="mb-2 grid grid-cols-7">
+
                         {[
                           "Sun",
                           "Mon",
@@ -926,16 +1003,20 @@ ${notes.trim() || "-"}
                           "Fri",
                           "Sat",
                         ].map((day) => (
+
                           <div
                             key={day}
                             className="py-2 text-center text-xs font-bold text-slate-400"
                           >
                             {day}
                           </div>
+
                         ))}
+
                       </div>
 
                       {/* Days */}
+
                       <div className="grid grid-cols-7 gap-1">
 
                         {calendarDays.map(
@@ -988,10 +1069,11 @@ ${notes.trim() || "-"}
                                   disabled
                                     ? "cursor-not-allowed text-slate-200"
                                     : selected
-                                    ? "bg-blue-900 text-white shadow-md"
+                                    ? "bg-blue-950 text-white shadow-md shadow-blue-900/20"
                                     : "text-slate-700 hover:bg-blue-50 hover:text-blue-800"
                                 }`}
                               >
+
                                 {day.getDate()}
 
                                 {today &&
@@ -999,6 +1081,7 @@ ${notes.trim() || "-"}
                                   !disabled && (
                                     <span className="absolute bottom-1 h-1 w-1 rounded-full bg-orange-500" />
                                   )}
+
                               </button>
                             );
                           }
@@ -1007,57 +1090,71 @@ ${notes.trim() || "-"}
                       </div>
 
                       {/* Calendar Footer */}
+
                       <div className="mt-5 border-t border-slate-100 pt-4">
 
                         <div className="flex items-center gap-2 text-xs text-slate-500">
+
                           <span className="h-2 w-2 rounded-full bg-orange-500" />
+
                           Today
+
                         </div>
 
                         <p className="mt-2 text-xs text-slate-400">
-                          Dates before tomorrow are unavailable.
+                          Dates before tomorrow are unavailable
                         </p>
 
                       </div>
 
                     </div>
+
                   </div>
+
                 )}
 
               </div>
 
               <p className="mt-2 text-xs text-slate-400">
-                Please select a date from tomorrow onward.
+                Please select a date from tomorrow onward
               </p>
 
               {submitAttempted &&
                 !isDateValid &&
                 errorText(
-                  "Please select a valid tour date."
+                  "Please select a valid tour date"
                 )}
+
             </div>
 
             {/* Guests */}
+
             <div className="mb-8">
+
               <div className="mb-6 flex items-center gap-3 border-b border-slate-100 pb-5">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-700">
-                  <span className="text-lg font-bold">04</span>
+
+                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-950 to-blue-800 text-white shadow-md shadow-blue-900/15">
+                  <span className="text-sm font-bold">04</span>
                 </div>
 
                 <div>
+
                   <h2 className="text-xl font-bold text-slate-900">
                     Guests
                   </h2>
 
                   <p className="text-sm text-slate-500">
-                    Tell us how many guests are travelling.
+                    Tell us how many guests are travelling
                   </p>
+
                 </div>
+
               </div>
 
               <div className="grid gap-5 md:grid-cols-3">
 
                 <div>
+
                   <label className={labelClass}>
                     Adults
                   </label>
@@ -1069,6 +1166,7 @@ ${notes.trim() || "-"}
                     }
                     className={inputClass(false)}
                   >
+
                     {Array.from(
                       { length: 20 },
                       (_, i) => (
@@ -1080,10 +1178,13 @@ ${notes.trim() || "-"}
                         </option>
                       )
                     )}
+
                   </select>
+
                 </div>
 
                 <div>
+
                   <label className={labelClass}>
                     Children{" "}
                     <span className="font-normal text-slate-400">
@@ -1108,6 +1209,7 @@ ${notes.trim() || "-"}
                     }}
                     className={inputClass(false)}
                   >
+
                     {Array.from(
                       { length: 11 },
                       (_, i) => (
@@ -1119,10 +1221,13 @@ ${notes.trim() || "-"}
                         </option>
                       )
                     )}
+
                   </select>
+
                 </div>
 
                 <div>
+
                   <label className={labelClass}>
                     Infants{" "}
                     <span className="font-normal text-slate-400">
@@ -1147,6 +1252,7 @@ ${notes.trim() || "-"}
                     }}
                     className={inputClass(false)}
                   >
+
                     {Array.from(
                       { length: 11 },
                       (_, i) => (
@@ -1158,15 +1264,20 @@ ${notes.trim() || "-"}
                         </option>
                       )
                     )}
+
                   </select>
+
                 </div>
 
               </div>
+
             </div>
 
             {/* Children Ages */}
+
             {childAges.length > 0 && (
-              <div className="mb-8 rounded-2xl border border-slate-200 bg-slate-50 p-5">
+
+              <div className="mb-8 rounded-[22px] border border-blue-100 bg-gradient-to-br from-slate-50 to-blue-50/40 p-5 shadow-sm">
 
                 <h3 className="mb-4 text-base font-bold text-slate-900">
                   Children Ages
@@ -1176,6 +1287,7 @@ ${notes.trim() || "-"}
 
                   {childAges.map(
                     (_, index) => (
+
                       <div key={index}>
 
                         <select
@@ -1191,6 +1303,7 @@ ${notes.trim() || "-"}
                               ]
                           )}
                           onChange={(e) => {
+
                             const updated = [
                               ...childrenAgeValues,
                             ];
@@ -1201,8 +1314,10 @@ ${notes.trim() || "-"}
                             setChildrenAgeValues(
                               updated
                             );
+
                           }}
                         >
+
                           <option value="">
                             Select Child {index + 1} Age
                           </option>
@@ -1230,6 +1345,7 @@ ${notes.trim() || "-"}
                           <option value="10">
                             10 years
                           </option>
+
                         </select>
 
                         {submitAttempted &&
@@ -1239,20 +1355,25 @@ ${notes.trim() || "-"}
                           errorText(
                             `Please select an age for Child ${
                               index + 1
-                            }.`
+                            }`
                           )}
 
                       </div>
+
                     )
                   )}
 
                 </div>
+
               </div>
+
             )}
 
             {/* Infant Ages */}
+
             {infantAges.length > 0 && (
-              <div className="mb-8 rounded-2xl border border-slate-200 bg-slate-50 p-5">
+
+              <div className="mb-8 rounded-[22px] border border-orange-100 bg-gradient-to-br from-slate-50 to-orange-50/30 p-5 shadow-sm">
 
                 <h3 className="mb-4 text-base font-bold text-slate-900">
                   Infant Ages
@@ -1262,6 +1383,7 @@ ${notes.trim() || "-"}
 
                   {infantAges.map(
                     (_, index) => (
+
                       <div key={index}>
 
                         <select
@@ -1277,6 +1399,7 @@ ${notes.trim() || "-"}
                               ]
                           )}
                           onChange={(e) => {
+
                             const updated = [
                               ...infantAgeValues,
                             ];
@@ -1287,8 +1410,10 @@ ${notes.trim() || "-"}
                             setInfantAgeValues(
                               updated
                             );
+
                           }}
                         >
+
                           <option value="">
                             Select Infant {index + 1} Age
                           </option>
@@ -1308,6 +1433,7 @@ ${notes.trim() || "-"}
                           <option value="4">
                             4 years
                           </option>
+
                         </select>
 
                         {submitAttempted &&
@@ -1317,42 +1443,50 @@ ${notes.trim() || "-"}
                           errorText(
                             `Please select an age for Infant ${
                               index + 1
-                            }.`
+                            }`
                           )}
 
                       </div>
+
                     )
                   )}
 
                 </div>
+
               </div>
+
             )}
 
             {/* Total Guests */}
-            <div className="mb-6 flex items-center justify-between rounded-2xl border border-blue-100 bg-blue-50 px-5 py-4">
+
+            <div className="mb-6 flex items-center justify-between rounded-[22px] border border-blue-100 bg-gradient-to-r from-blue-50 to-orange-50/30 px-5 py-4 shadow-sm">
 
               <span className="text-sm font-semibold text-slate-600">
                 Total Guests
               </span>
 
-              <span className="text-xl font-bold text-blue-900">
+              <span className="text-xl font-bold text-blue-950">
                 {totalGuests}
               </span>
 
             </div>
 
             {/* Booking Summary */}
-            <div className="mb-8 overflow-hidden rounded-2xl border border-slate-200 bg-white">
 
-              <div className="border-b border-slate-200 bg-slate-50 px-5 py-4">
+            <div className="mb-8 overflow-hidden rounded-[22px] border border-slate-200 bg-white shadow-sm">
+
+              <div className="border-b border-slate-200 bg-gradient-to-r from-slate-50 to-blue-50/40 px-5 py-4">
+
                 <h3 className="text-lg font-bold text-slate-900">
                   Booking Summary
                 </h3>
+
               </div>
 
               <div className="space-y-3 p-5 text-sm">
 
                 <div className="flex items-center justify-between">
+
                   <span className="text-slate-500">
                     Adults × €{tour.price}
                   </span>
@@ -1360,9 +1494,11 @@ ${notes.trim() || "-"}
                   <span className="font-semibold text-slate-800">
                     €{Number(adults || 0) * tour.price}
                   </span>
+
                 </div>
 
                 <div className="flex items-center justify-between">
+
                   <span className="text-slate-500">
                     Children × €{tour.childPrice}
                   </span>
@@ -1370,9 +1506,11 @@ ${notes.trim() || "-"}
                   <span className="font-semibold text-slate-800">
                     €{Number(children || 0) * tour.childPrice}
                   </span>
+
                 </div>
 
                 <div className="flex items-center justify-between">
+
                   <span className="text-slate-500">
                     Infants × €{tour.infantPrice}
                   </span>
@@ -1380,37 +1518,47 @@ ${notes.trim() || "-"}
                   <span className="font-semibold text-slate-800">
                     €{Number(infants || 0) * tour.infantPrice}
                   </span>
+
                 </div>
 
                 <div className="mt-4 flex items-center justify-between border-t border-slate-200 pt-4">
+
                   <span className="text-base font-bold text-slate-900">
                     Total Price
                   </span>
 
-                  <span className="text-2xl font-bold text-blue-900">
+                  <span className="text-2xl font-bold text-orange-500">
                     €{totalPrice}
                   </span>
+
                 </div>
 
               </div>
+
             </div>
 
             {/* Additional Information */}
+
             <div className="mb-8">
+
               <div className="mb-6 flex items-center gap-3 border-b border-slate-100 pb-5">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-700">
-                  <span className="text-lg font-bold">05</span>
+
+                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-950 to-blue-800 text-white shadow-md shadow-blue-900/15">
+                  <span className="text-sm font-bold">05</span>
                 </div>
 
                 <div>
+
                   <h2 className="text-xl font-bold text-slate-900">
                     Additional Information
                   </h2>
 
                   <p className="text-sm text-slate-500">
-                    Anything else we should know?
+                    Anything else we should know
                   </p>
+
                 </div>
+
               </div>
 
               <label className={labelClass}>
@@ -1426,58 +1574,77 @@ ${notes.trim() || "-"}
                 }
                 className={inputClass(false)}
               />
+
             </div>
 
             {submitAttempted &&
               !isFormValid && (
-                <div className="mb-6 rounded-xl border border-red-100 bg-red-50 p-4 text-sm font-semibold text-red-700">
+
+                <div className="mb-6 rounded-2xl border border-red-100 bg-red-50 p-4 text-sm font-semibold text-red-700">
                   Please complete the required fields
                   highlighted above before sending your booking
-                  request.
+                  request
                 </div>
+
               )}
 
             {/* Submit Button */}
+
             <button
               type="button"
               onClick={handleSubmit}
-              className="group mt-2 flex w-full items-center justify-center gap-3 rounded-2xl bg-blue-900 px-6 py-4.5 text-base font-bold text-white shadow-lg shadow-blue-900/20 transition-all duration-200 hover:bg-blue-800 hover:shadow-xl hover:shadow-blue-900/25 active:scale-[0.99]"
+              className="group relative mt-2 flex w-full items-center justify-center gap-3 overflow-hidden rounded-2xl bg-orange-500 px-6 py-4.5 text-base font-bold text-white shadow-lg shadow-orange-500/20 transition-all duration-200 hover:bg-orange-600 hover:shadow-xl hover:shadow-orange-500/25 active:scale-[0.99]"
             >
-              <span>
+
+              <span className="absolute inset-0 bg-gradient-to-r from-orange-500 via-orange-500 to-orange-400 opacity-0 transition-opacity duration-200 group-hover:opacity-100" />
+
+              <span className="relative">
                 Confirm Booking Request
               </span>
 
-              <span className="text-lg transition-transform duration-200 group-hover:translate-x-1">
+              <span className="relative text-lg transition-transform duration-200 group-hover:translate-x-1">
                 →
               </span>
+
             </button>
 
             <p className="mt-4 text-center text-xs text-slate-400">
               Your booking request will be sent securely to our
-              reservations team for confirmation.
+              reservations team for confirmation
             </p>
 
           </div>
 
           {/* Summary */}
+
           <div>
-            <div className="sticky top-8 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
 
-              <div className="bg-gradient-to-br from-blue-950 to-blue-800 p-6 text-white">
+            <div className="sticky top-8 overflow-hidden rounded-[28px] border border-slate-200/80 bg-white shadow-[0_25px_70px_-35px_rgba(15,23,42,0.4)]">
 
-                <p className="text-xs font-semibold uppercase tracking-wider text-blue-200">
-                  Your Reservation
-                </p>
+              <div className="relative overflow-hidden bg-gradient-to-br from-blue-950 via-blue-900 to-blue-800 p-6 text-white">
 
-                <h3 className="mt-2 text-2xl font-bold">
-                  Tour Summary
-                </h3>
+                <div className="absolute -right-10 -top-10 h-28 w-28 rounded-full bg-orange-500/10 blur-xl" />
+
+                <div className="absolute -bottom-12 left-10 h-24 w-24 rounded-full bg-white/5 blur-xl" />
+
+                <div className="relative">
+
+                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-blue-200">
+                    Your Reservation
+                  </p>
+
+                  <h3 className="mt-2 text-2xl font-bold">
+                    Tour Summary
+                  </h3>
+
+                </div>
 
               </div>
 
               <div className="space-y-4 p-6">
 
-                <div className="rounded-2xl border border-slate-100 bg-slate-50 p-4">
+                <div className="rounded-[20px] border border-slate-100 bg-slate-50 p-4">
+
                   <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-400">
                     Tour
                   </p>
@@ -1485,21 +1652,31 @@ ${notes.trim() || "-"}
                   <p className="font-bold leading-6 text-slate-900">
                     {tour.name}
                   </p>
+
                 </div>
 
-                <div className="rounded-2xl border border-blue-100 bg-blue-50 p-4">
-                  <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-blue-500">
-                    Total Price
-                  </p>
+                <div className="relative overflow-hidden rounded-[20px] border border-orange-200/70 bg-gradient-to-br from-orange-50 to-blue-50/60 p-4">
 
-                  <p className="text-3xl font-bold text-blue-900">
-                    €{totalPrice}
-                  </p>
+                  <div className="absolute -right-8 -top-8 h-20 w-20 rounded-full bg-orange-400/10 blur-xl" />
+
+                  <div className="relative">
+
+                    <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-orange-500">
+                      Total Price
+                    </p>
+
+                    <p className="text-3xl font-bold text-blue-950">
+                      €{totalPrice}
+                    </p>
+
+                  </div>
+
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
 
-                  <div className="rounded-2xl border border-slate-100 bg-slate-50 p-4">
+                  <div className="rounded-[20px] border border-slate-100 bg-slate-50 p-4">
+
                     <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-400">
                       Guests
                     </p>
@@ -1507,9 +1684,11 @@ ${notes.trim() || "-"}
                     <p className="text-xl font-bold text-slate-900">
                       {totalGuests}
                     </p>
+
                   </div>
 
-                  <div className="rounded-2xl border border-slate-100 bg-slate-50 p-4">
+                  <div className="rounded-[20px] border border-slate-100 bg-slate-50 p-4">
+
                     <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-400">
                       Type
                     </p>
@@ -1517,11 +1696,12 @@ ${notes.trim() || "-"}
                     <p className="font-bold text-slate-900">
                       {tour.type}
                     </p>
+
                   </div>
 
                 </div>
 
-                <div className="rounded-2xl border border-slate-200 p-5">
+                <div className="rounded-[20px] border border-slate-200 p-5">
 
                   <p className="mb-4 text-sm font-bold text-slate-900">
                     What's Included
@@ -1531,10 +1711,12 @@ ${notes.trim() || "-"}
 
                     {tour.included.map(
                       (item) => (
+
                         <li
                           key={item}
                           className="flex items-start gap-3 text-sm text-slate-600"
                         >
+
                           <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-green-100 text-xs font-bold text-green-700">
                             ✓
                           </span>
@@ -1542,26 +1724,35 @@ ${notes.trim() || "-"}
                           <span>
                             {item}
                           </span>
+
                         </li>
+
                       )
                     )}
 
                   </ul>
+
                 </div>
 
-                <div className="rounded-2xl border border-blue-100 bg-blue-50/60 p-4">
-                  <p className="text-sm font-semibold leading-6 text-blue-900">
+                <div className="rounded-[20px] border border-blue-100 bg-gradient-to-br from-blue-50 to-orange-50/30 p-4">
+
+                  <p className="text-sm font-semibold leading-6 text-blue-950">
                     Your request will be reviewed by our team
-                    and confirmed with you shortly.
+                    and confirmed with you shortly
                   </p>
+
                 </div>
 
               </div>
+
             </div>
+
           </div>
 
         </div>
+
       </div>
+
     </main>
   );
 }

@@ -539,53 +539,72 @@ function ToursPageContent() {
           HERO
       ===================================================== */}
 
-      <section className="relative overflow-hidden bg-blue-950 px-6 py-14 text-white md:py-20">
+      <section className="relative overflow-hidden bg-blue-950 px-6 py-16 text-white md:py-24">
 
-        {/* Decorative background */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(37,99,235,0.28),_transparent_34%),radial-gradient(circle_at_bottom_right,_rgba(249,115,22,0.14),_transparent_34%)]" />
 
-        <div className="absolute -left-40 -top-40 h-[320px] w-[320px] rounded-full bg-blue-700/30 blur-3xl" />
+        <div className="absolute -left-32 -top-32 h-[360px] w-[360px] rounded-full bg-blue-700/20 blur-3xl" />
 
-        <div className="absolute -bottom-40 -right-32 h-[380px] w-[380px] rounded-full bg-orange-500/10 blur-3xl" />
+        <div className="absolute -bottom-40 -right-32 h-[420px] w-[420px] rounded-full bg-orange-500/10 blur-3xl" />
 
-        <div className="absolute left-1/2 top-1/2 h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/10 blur-3xl" />
+        <div className="absolute left-1/2 top-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-400/5 blur-3xl" />
+
+        <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-orange-400/50 to-transparent" />
 
         <div className="relative mx-auto max-w-5xl text-center">
 
-          <div className="mb-4 flex items-center justify-center gap-2.5">
+          <div className="mx-auto inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.07] px-4 py-2 shadow-lg shadow-blue-950/20 backdrop-blur-xl">
 
-            <span className="h-px w-8 bg-orange-400" />
+            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-orange-500/15 text-orange-400">
+              <SparklesIcon className="h-3.5 w-3.5" />
+            </span>
 
-            <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-orange-400 sm:text-xs">
+            <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-orange-300 sm:text-xs">
               Via Blue Experiences
             </p>
 
-            <span className="h-px w-8 bg-orange-400" />
-
           </div>
 
-          <h1 className="text-3xl font-bold leading-tight tracking-tight sm:text-4xl md:text-5xl lg:text-6xl">
-            Discover Hurghada.
-            <span className="block text-orange-400">
-              Experience the Red Sea.
+          <h1 className="mt-7 text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
+
+            <span className="block text-white">
+              Discover Hurghada
             </span>
+
+            <span className="mt-2 block text-orange-400">
+              Experience the Red Sea
+            </span>
+
           </h1>
 
-          <p className="mx-auto mt-5 max-w-3xl text-sm leading-7 text-blue-100 sm:text-base md:text-lg">
+          <div className="mx-auto mt-7 h-px w-16 bg-orange-400/70" />
+
+          <p className="mx-auto mt-6 max-w-3xl text-sm leading-7 text-blue-100 sm:text-base md:text-lg">
             Explore hand-picked boat trips, island escapes,
             snorkeling adventures, water activities, desert
-            experiences and unforgettable Egypt excursions.
+            experiences and unforgettable Egypt excursions
           </p>
 
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-2.5">
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
 
-            <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3.5 py-1.5 text-xs font-semibold text-white backdrop-blur-md">
-              <SparklesIcon className="h-3.5 w-3.5 text-orange-400" />
+            <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.08] px-4 py-2.5 text-xs font-semibold text-white shadow-lg shadow-blue-950/10 backdrop-blur-xl">
+
+              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-orange-500/15">
+                <SparklesIcon className="h-3.5 w-3.5 text-orange-400" />
+              </span>
+
               Carefully Selected Experiences
+
             </div>
 
-            <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3.5 py-1.5 text-xs font-semibold text-white backdrop-blur-md">
-              <StarIcon className="h-3.5 w-3.5 text-orange-400" />
+            <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.08] px-4 py-2.5 text-xs font-semibold text-white shadow-lg shadow-blue-950/10 backdrop-blur-xl">
+
+              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-orange-500/15">
+                <StarIcon className="h-3.5 w-3.5 text-orange-400" />
+              </span>
+
               Great Guest Experiences
+
             </div>
 
           </div>
@@ -599,11 +618,11 @@ function ToursPageContent() {
           CATEGORY NAVIGATION
       ===================================================== */}
 
-      <section className="sticky top-0 z-40 border-b border-gray-200/80 bg-white/95 px-3 py-2.5 shadow-sm backdrop-blur-xl">
+      <section className="sticky top-0 z-40 border-b border-slate-200/80 bg-white/90 px-3 py-3 shadow-[0_8px_30px_rgba(15,23,42,0.06)] backdrop-blur-xl">
 
         <div className="mx-auto max-w-7xl">
 
-          <div className="flex flex-wrap items-center justify-center gap-1.5">
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7">
 
             {categoryKeys.map((category) => {
 
@@ -617,27 +636,37 @@ function ToursPageContent() {
                   onClick={() =>
                     handleCategoryChange(category)
                   }
-                  className={`group flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-bold transition-all duration-300 ${
+                  className={`group flex min-h-[52px] w-full items-center justify-center gap-2 rounded-2xl border px-3 py-2.5 text-xs font-bold transition-all duration-300 active:scale-[0.98] ${
                     isActive
-                      ? "border-blue-950 bg-blue-950 text-white shadow-md shadow-blue-950/20"
-                      : "border-gray-200 bg-white text-blue-950 hover:border-blue-200 hover:bg-blue-50"
+                      ? "border-blue-950 bg-blue-950 text-white shadow-lg shadow-blue-950/20"
+                      : "border-slate-200 bg-white text-blue-950 shadow-sm hover:-translate-y-0.5 hover:border-orange-300 hover:bg-orange-50 hover:shadow-md"
                   }`}
                 >
 
-                  <TourTypeIcon
-                    tour={{
-                      name: tourCategories[category],
-                      type: tourCategories[category],
-                      slug: category,
-                    }}
-                    className={`h-3.5 w-3.5 ${
+                  <span
+                    className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-xl transition-all ${
                       isActive
-                        ? "text-orange-400"
-                        : "text-blue-700"
+                        ? "bg-white/10"
+                        : "bg-blue-50 group-hover:bg-orange-100"
                     }`}
-                  />
+                  >
+                    <TourTypeIcon
+                      tour={{
+                        name: tourCategories[category],
+                        type: tourCategories[category],
+                        slug: category,
+                      }}
+                      className={`h-3.5 w-3.5 ${
+                        isActive
+                          ? "text-orange-400"
+                          : "text-blue-700 group-hover:text-orange-500"
+                      }`}
+                    />
+                  </span>
 
-                  {tourCategories[category]}
+                  <span className="truncate">
+                    {tourCategories[category]}
+                  </span>
 
                 </button>
               );
@@ -679,7 +708,7 @@ function ToursPageContent() {
 
             <p className="mt-3 max-w-2xl text-base leading-7 text-gray-600">
               Find the perfect experience for your Hurghada
-              holiday and make your time in the Red Sea unforgettable.
+              holiday and make your time in the Red Sea unforgettable
             </p>
 
           </div>
@@ -720,7 +749,7 @@ function ToursPageContent() {
 
             <article
               key={tour.slug}
-              className="group flex h-full flex-col overflow-hidden rounded-[28px] border border-gray-100 bg-white shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
+              className="group flex h-full cursor-pointer flex-col overflow-hidden rounded-[30px] border border-slate-200/80 bg-white shadow-[0_10px_35px_rgba(15,23,42,0.07)] transition-all duration-500 hover:-translate-y-2 hover:border-orange-200 hover:shadow-[0_25px_60px_rgba(15,23,42,0.16)] active:scale-[0.995]"
             >
 
               {/* =================================================
@@ -743,20 +772,18 @@ function ToursPageContent() {
                     className="object-cover transition duration-700 ease-out group-hover:scale-110"
                   />
 
-                  {/* Dark cinematic overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-blue-950/90 via-blue-950/10 to-transparent" />
 
-                  <div className="absolute inset-0 bg-gradient-to-t from-blue-950/80 via-black/10 to-transparent" />
+                  <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-blue-950/30 to-transparent" />
 
-                  {/* Top shine */}
-
-                  <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black/20 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-orange-500/10 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
 
                   {/* Badge */}
 
                   <div className="absolute left-5 top-5">
 
-                    <span className="inline-flex rounded-full bg-orange-500 px-3.5 py-2 text-[11px] font-extrabold uppercase tracking-wide text-white shadow-lg shadow-orange-950/20">
+                    <span className="inline-flex items-center rounded-full border border-white/20 bg-blue-950/75 px-3.5 py-2 text-[10px] font-extrabold uppercase tracking-[0.12em] text-white shadow-lg backdrop-blur-md">
                       {tour.badge}
                     </span>
 
@@ -767,7 +794,7 @@ function ToursPageContent() {
 
                   {tour.rating > 0 && (
 
-                    <div className="absolute right-5 top-5 flex items-center gap-1.5 rounded-full border border-white/20 bg-white/95 px-3 py-1.5 text-xs font-bold text-gray-900 shadow-lg backdrop-blur-md">
+                    <div className="absolute right-5 top-5 flex items-center gap-1.5 rounded-full border border-white/30 bg-white/95 px-3 py-1.5 text-xs font-bold text-gray-900 shadow-lg backdrop-blur-md">
 
                       <StarIcon className="h-3.5 w-3.5 text-orange-500" />
 
@@ -784,7 +811,7 @@ function ToursPageContent() {
 
                     <div className="flex min-w-0 items-center gap-3 text-white">
 
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/20 bg-white/15 backdrop-blur-md">
+                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-white/20 bg-white/15 shadow-lg backdrop-blur-md transition-transform duration-300 group-hover:scale-105">
 
                         <TourTypeIcon
                           tour={tour}
@@ -799,13 +826,13 @@ function ToursPageContent() {
 
                     </div>
 
-                    <div className="shrink-0 rounded-xl border border-white/20 bg-blue-950/75 px-3 py-2 text-white backdrop-blur-md">
+                    <div className="shrink-0 rounded-2xl border border-white/20 bg-blue-950/80 px-4 py-2.5 text-white shadow-lg backdrop-blur-md">
 
                       <p className="text-[9px] font-semibold uppercase tracking-wider text-blue-200">
                         From
                       </p>
 
-                      <p className="text-base font-bold">
+                      <p className="text-base font-extrabold">
                         {tour.price > 0
                           ? `€${tour.price}`
                           : "On Request"}
@@ -836,6 +863,7 @@ function ToursPageContent() {
                     {tour.rating > 0 ? (
 
                       <>
+
                         <div className="flex items-center gap-1">
 
                           <StarIcon className="h-4 w-4 text-orange-500" />
@@ -856,11 +884,12 @@ function ToursPageContent() {
                             ? "review"
                             : "reviews"}
                         </span>
+
                       </>
 
                     ) : (
 
-                      <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-bold text-blue-700">
+                      <span className="rounded-full border border-blue-100 bg-blue-50 px-3 py-1 text-xs font-bold text-blue-700">
                         New Experience
                       </span>
 
@@ -880,9 +909,9 @@ function ToursPageContent() {
 
                   <div className="mt-6 grid grid-cols-2 gap-2">
 
-                    <div className="flex min-w-0 items-center gap-2 rounded-xl bg-slate-50 px-3 py-2.5">
+                    <div className="flex min-w-0 items-center gap-2 rounded-2xl border border-slate-100 bg-slate-50 px-3 py-2.5 transition-all duration-300 group-hover:border-blue-100">
 
-                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white text-blue-700 shadow-sm">
+                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-white text-blue-700 shadow-sm">
 
                         <ClockIcon className="h-4 w-4" />
 
@@ -903,9 +932,9 @@ function ToursPageContent() {
                     </div>
 
 
-                    <div className="flex min-w-0 items-center gap-2 rounded-xl bg-slate-50 px-3 py-2.5">
+                    <div className="flex min-w-0 items-center gap-2 rounded-2xl border border-slate-100 bg-slate-50 px-3 py-2.5 transition-all duration-300 group-hover:border-orange-100">
 
-                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white text-orange-500 shadow-sm">
+                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-white text-orange-500 shadow-sm">
 
                         <MapPinIcon className="h-4 w-4" />
 
@@ -960,7 +989,7 @@ function ToursPageContent() {
 
                       </div>
 
-                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-blue-50 text-blue-950 transition-all duration-300 group-hover:bg-orange-500 group-hover:text-white group-hover:shadow-lg">
+                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-blue-100 bg-blue-50 text-blue-950 transition-all duration-300 group-hover:border-orange-500 group-hover:bg-orange-500 group-hover:text-white group-hover:shadow-lg group-hover:shadow-orange-500/25">
 
                         <ArrowRightIcon className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
 
@@ -983,23 +1012,24 @@ function ToursPageContent() {
 
                 <Link
                   href={`/tours/${tour.slug}?fromCategory=${activeCategory}`}
-                  className="rounded-xl border-2 border-blue-950 px-3 py-3 text-center text-sm font-bold text-blue-950 transition-all duration-300 hover:bg-blue-950 hover:text-white"
+                  className="group/button flex items-center justify-center rounded-2xl border border-blue-950 bg-white px-3 py-3 text-center text-sm font-bold text-blue-950 transition-all duration-300 hover:-translate-y-0.5 hover:bg-blue-950 hover:text-white hover:shadow-lg active:scale-[0.98]"
                 >
                   View Tour
+                  <ArrowRightIcon className="ml-1.5 h-4 w-4 opacity-0 transition-all duration-300 group-hover/button:translate-x-1 group-hover/button:opacity-100" />
                 </Link>
 
                 {tour.available ? (
 
                   <Link
                     href={`/tours/${tour.slug}/book?fromCategory=${activeCategory}`}
-                    className="rounded-xl bg-orange-500 px-3 py-3 text-center text-sm font-bold text-white shadow-md shadow-orange-500/20 transition-all duration-300 hover:bg-orange-600 hover:shadow-lg"
+                    className="flex items-center justify-center rounded-2xl bg-gradient-to-r from-orange-500 to-orange-600 px-3 py-3 text-center text-sm font-bold text-white shadow-md shadow-orange-500/20 transition-all duration-300 hover:-translate-y-0.5 hover:from-orange-600 hover:to-orange-700 hover:shadow-xl hover:shadow-orange-500/25 active:scale-[0.98]"
                   >
                     Book Now
                   </Link>
 
                 ) : (
 
-                  <div className="rounded-xl bg-gray-100 px-3 py-3 text-center text-sm font-bold text-gray-400">
+                  <div className="flex items-center justify-center rounded-2xl bg-slate-100 px-3 py-3 text-center text-sm font-bold text-gray-400">
                     Coming Soon
                   </div>
 
@@ -1020,7 +1050,7 @@ function ToursPageContent() {
 
         {categoryTours.length === 0 && (
 
-          <div className="rounded-[28px] border border-gray-100 bg-white px-6 py-24 text-center shadow-sm">
+          <div className="rounded-[30px] border border-slate-200 bg-white px-6 py-24 text-center shadow-[0_10px_35px_rgba(15,23,42,0.06)]">
 
             <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl bg-blue-50 text-blue-900">
 
@@ -1033,8 +1063,8 @@ function ToursPageContent() {
             </h3>
 
             <p className="mx-auto mt-3 max-w-md text-sm leading-7 text-gray-500">
-              New experiences are being added soon.
-              Explore another category to discover more of Hurghada.
+              New experiences are being added soon
+              Explore another category to discover more of Hurghada
             </p>
 
           </div>
@@ -1046,9 +1076,13 @@ function ToursPageContent() {
             BOTTOM CTA
         ===================================================== */}
 
-        <div className="mt-16 overflow-hidden rounded-[32px] bg-blue-950 px-7 py-10 text-white shadow-xl md:px-12 md:py-12">
+        <div className="relative mt-16 overflow-hidden rounded-[32px] border border-blue-900/20 bg-blue-950 px-7 py-10 text-white shadow-[0_20px_60px_rgba(15,23,42,0.18)] md:px-12 md:py-12">
 
-          <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+          <div className="absolute -right-24 -top-24 h-64 w-64 rounded-full bg-orange-500/10 blur-3xl" />
+
+          <div className="absolute -bottom-32 -left-24 h-72 w-72 rounded-full bg-blue-500/20 blur-3xl" />
+
+          <div className="relative flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
 
             <div className="max-w-2xl">
 
@@ -1063,19 +1097,19 @@ function ToursPageContent() {
               </div>
 
               <h3 className="mt-4 text-2xl font-bold sm:text-3xl">
-                Find the perfect experience for your holiday.
+                Find the perfect experience for your holiday
               </h3>
 
               <p className="mt-3 text-sm leading-7 text-blue-200 sm:text-base">
                 Browse all our experiences and choose what fits
-                your time, budget and holiday plans.
+                your time, budget and holiday plans
               </p>
 
             </div>
 
             <Link
               href="/tours"
-              className="group flex shrink-0 items-center justify-center gap-3 rounded-xl bg-orange-500 px-7 py-4 font-bold text-white shadow-lg transition-all duration-300 hover:bg-orange-600 hover:shadow-xl"
+              className="group flex shrink-0 items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-orange-500 to-orange-600 px-7 py-4 font-bold text-white shadow-lg shadow-orange-950/20 transition-all duration-300 hover:-translate-y-0.5 hover:from-orange-600 hover:to-orange-700 hover:shadow-xl"
             >
               Explore All Tours
 
@@ -1091,6 +1125,7 @@ function ToursPageContent() {
     </main>
   );
 }
+
 export default function ToursPage() {
   return (
     <Suspense fallback={null}>

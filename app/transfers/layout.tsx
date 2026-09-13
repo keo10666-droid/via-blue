@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Hurghada Airport & Hotel Transfers",
+  title: "Hurghada Airport & Hotel Transfers | Via Blue",
   description:
-    "Book reliable airport, hotel and private transfers in Hurghada, Sahl Hasheesh, Makadi Bay, El Gouna, Soma Bay and Safaga with Via Blue.",
+    "Book premium private airport, hotel and inter-hotel transfers across Hurghada, Sahl Hasheesh, Makadi Bay, El Gouna, Soma Bay and Safaga with Via Blue",
 
   keywords: [
     "Hurghada airport transfer",
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Hurghada Airport & Hotel Transfers | Via Blue",
     description:
-      "Book reliable airport, hotel and private transfers in Hurghada and the Red Sea with Via Blue.",
+      "Enjoy reliable private airport, hotel and inter-hotel transfers across Hurghada and the Red Sea with Via Blue",
     url: "https://viabluetours.com/transfers",
     siteName: "Via Blue",
     type: "website",
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Hurghada Airport & Hotel Transfers | Via Blue",
     description:
-      "Book reliable airport, hotel and private transfers in Hurghada with Via Blue.",
+      "Book reliable private transfers across Hurghada and the Red Sea with Via Blue",
   },
 };
 

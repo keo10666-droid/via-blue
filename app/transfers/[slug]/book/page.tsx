@@ -468,37 +468,37 @@ function CustomDatePicker({
       <button
         type="button"
         onClick={() => setIsOpen((open) => !open)}
-        className={`group flex h-[58px] w-full items-center justify-between rounded-2xl border bg-white px-3.5 text-left shadow-sm transition-all duration-200 focus:outline-none focus:ring-4 ${
+        className={`group flex h-[60px] w-full items-center justify-between rounded-2xl border bg-white px-4 text-left shadow-[0_6px_24px_rgba(15,23,42,0.05)] transition-all duration-200 focus:outline-none focus:ring-4 ${
           invalid
             ? "border-red-400 focus:border-red-500 focus:ring-red-50"
             : isOpen
-            ? "border-blue-600 shadow-md ring-4 ring-blue-50"
-            : "border-gray-200 hover:border-blue-300 hover:shadow-md"
+            ? "border-orange-400 shadow-[0_10px_30px_rgba(249,115,22,0.12)] ring-4 ring-orange-50"
+            : "border-slate-200 hover:border-orange-300 hover:shadow-[0_10px_30px_rgba(15,23,42,0.08)]"
         }`}
       >
         <div className="flex min-w-0 items-center gap-3">
           <span
-            className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-all ${
+            className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-all ${
               invalid
                 ? "bg-red-50 text-red-500"
                 : isOpen
                 ? "bg-blue-950 text-white shadow-sm"
-                : "bg-blue-50 text-blue-900 group-hover:bg-blue-100"
+                : "bg-slate-100 text-blue-950 group-hover:bg-orange-50 group-hover:text-orange-600"
             }`}
           >
             <CalendarIcon />
           </span>
 
           <span className="min-w-0">
-            <span className="block text-[10px] font-bold uppercase tracking-[0.12em] text-gray-400">
+            <span className="block text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400">
               Transfer Date
             </span>
 
             <span
               className={
                 value
-                  ? "mt-0.5 block truncate text-sm font-bold text-gray-900"
-                  : "mt-0.5 block truncate text-sm font-medium text-gray-400"
+                  ? "mt-0.5 block truncate text-sm font-bold text-slate-900"
+                  : "mt-0.5 block truncate text-sm font-medium text-slate-400"
               }
             >
               {value
@@ -509,10 +509,10 @@ function CustomDatePicker({
         </div>
 
         <span
-          className={`ml-3 flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-gray-50 text-gray-400 transition-all ${
+          className={`ml-3 flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-slate-50 text-slate-400 transition-all ${
             isOpen
-              ? "rotate-180 bg-blue-50 text-blue-900"
-              : "group-hover:bg-blue-50 group-hover:text-blue-900"
+              ? "rotate-180 bg-orange-50 text-orange-600"
+              : "group-hover:bg-orange-50 group-hover:text-orange-600"
           }`}
         >
           <ChevronDownIcon />
@@ -520,19 +520,19 @@ function CustomDatePicker({
       </button>
 
       {isOpen && (
-        <div className="absolute left-0 top-full z-50 mt-3 w-full min-w-[310px] overflow-hidden rounded-3xl border border-gray-200 bg-white p-5 shadow-2xl">
+        <div className="absolute left-0 top-full z-50 mt-3 w-full min-w-[310px] overflow-hidden rounded-[28px] border border-slate-200 bg-white p-5 shadow-[0_24px_70px_rgba(15,23,42,0.18)]">
           <div className="flex items-center justify-between">
             <button
               type="button"
               onClick={previousMonth}
-              className="flex h-10 w-10 items-center justify-center rounded-xl border border-gray-100 bg-white text-gray-500 transition-all hover:border-blue-100 hover:bg-blue-50 hover:text-blue-900"
+              className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-100 bg-white text-slate-500 transition-all hover:border-orange-100 hover:bg-orange-50 hover:text-orange-600"
               aria-label="Previous month"
             >
               <ChevronLeftIcon />
             </button>
 
             <div className="flex items-center gap-2.5 text-sm font-bold text-blue-950">
-              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 text-blue-900">
+              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-orange-50 text-orange-600">
                 <CalendarIcon />
               </span>
 
@@ -542,14 +542,14 @@ function CustomDatePicker({
             <button
               type="button"
               onClick={nextMonth}
-              className="flex h-10 w-10 items-center justify-center rounded-xl border border-gray-100 bg-white text-gray-500 transition-all hover:border-blue-100 hover:bg-blue-50 hover:text-blue-900"
+              className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-100 bg-white text-slate-500 transition-all hover:border-orange-100 hover:bg-orange-50 hover:text-orange-600"
               aria-label="Next month"
             >
               <ChevronRightIcon />
             </button>
           </div>
 
-          <div className="my-4 h-px bg-gray-100" />
+          <div className="my-4 h-px bg-slate-100" />
 
           <div className="grid grid-cols-7 gap-1.5">
             {[
@@ -563,7 +563,7 @@ function CustomDatePicker({
             ].map((day) => (
               <div
                 key={day}
-                className="py-2 text-center text-[9px] font-bold uppercase tracking-wider text-gray-400"
+                className="py-2 text-center text-[9px] font-bold uppercase tracking-wider text-slate-400"
               >
                 {day}
               </div>
@@ -612,10 +612,10 @@ function CustomDatePicker({
                   }
                   className={`relative flex h-10 items-center justify-center rounded-xl text-sm font-semibold transition-all ${
                     isDisabled
-                      ? "cursor-not-allowed text-gray-200"
+                      ? "cursor-not-allowed text-slate-200"
                       : isSelected
                       ? "bg-blue-950 text-white shadow-md"
-                      : "text-gray-700 hover:bg-orange-50 hover:text-orange-600"
+                      : "text-slate-700 hover:bg-orange-50 hover:text-orange-600"
                   }`}
                 >
                   {day}
@@ -628,12 +628,12 @@ function CustomDatePicker({
             })}
           </div>
 
-          <div className="mt-5 flex items-center gap-3 rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3.5">
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white text-blue-900 shadow-sm">
+          <div className="mt-5 flex items-center gap-3 rounded-2xl border border-orange-100 bg-orange-50 px-4 py-3.5">
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white text-orange-600 shadow-sm">
               <CalendarIcon />
             </span>
 
-            <p className="text-[11px] font-medium leading-4 text-blue-800">
+            <p className="text-[11px] font-medium leading-4 text-orange-800">
               Select a date from tomorrow onwards
             </p>
           </div>
@@ -736,37 +736,37 @@ function CustomTimePicker({
             openPicker();
           }
         }}
-        className={`group flex h-[58px] w-full items-center justify-between rounded-2xl border bg-white px-3.5 text-left shadow-sm transition-all duration-200 focus:outline-none focus:ring-4 ${
+        className={`group flex h-[60px] w-full items-center justify-between rounded-2xl border bg-white px-4 text-left shadow-[0_6px_24px_rgba(15,23,42,0.05)] transition-all duration-200 focus:outline-none focus:ring-4 ${
           invalid
             ? "border-red-400 focus:border-red-500 focus:ring-red-50"
             : isOpen
-            ? "border-blue-600 shadow-md ring-4 ring-blue-50"
-            : "border-gray-200 hover:border-blue-300 hover:shadow-md"
+            ? "border-orange-400 shadow-[0_10px_30px_rgba(249,115,22,0.12)] ring-4 ring-orange-50"
+            : "border-slate-200 hover:border-orange-300 hover:shadow-[0_10px_30px_rgba(15,23,42,0.08)]"
         }`}
       >
         <div className="flex min-w-0 items-center gap-3">
           <span
-            className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-all ${
+            className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-all ${
               invalid
                 ? "bg-red-50 text-red-500"
                 : isOpen
                 ? "bg-blue-950 text-white shadow-sm"
-                : "bg-blue-50 text-blue-900 group-hover:bg-blue-100"
+                : "bg-slate-100 text-blue-950 group-hover:bg-orange-50 group-hover:text-orange-600"
             }`}
           >
             <ClockIcon />
           </span>
 
           <span className="min-w-0">
-            <span className="block text-[10px] font-bold uppercase tracking-[0.12em] text-gray-400">
+            <span className="block text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400">
               Pickup Time
             </span>
 
             <span
               className={
                 value
-                  ? "mt-0.5 block truncate text-sm font-bold text-gray-900"
-                  : "mt-0.5 block truncate text-sm font-medium text-gray-400"
+                  ? "mt-0.5 block truncate text-sm font-bold text-slate-900"
+                  : "mt-0.5 block truncate text-sm font-medium text-slate-400"
               }
             >
               {value
@@ -777,10 +777,10 @@ function CustomTimePicker({
         </div>
 
         <span
-          className={`ml-3 flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-gray-50 text-gray-400 transition-all ${
+          className={`ml-3 flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-slate-50 text-slate-400 transition-all ${
             isOpen
-              ? "rotate-180 bg-blue-50 text-blue-900"
-              : "group-hover:bg-blue-50 group-hover:text-blue-900"
+              ? "rotate-180 bg-orange-50 text-orange-600"
+              : "group-hover:bg-orange-50 group-hover:text-orange-600"
           }`}
         >
           <ChevronDownIcon />
@@ -788,7 +788,7 @@ function CustomTimePicker({
       </button>
 
       {isOpen && (
-        <div className="absolute left-0 top-full z-50 mt-3 w-full min-w-[300px] overflow-hidden rounded-3xl border border-gray-200 bg-white p-5 shadow-2xl">
+        <div className="absolute left-0 top-full z-50 mt-3 w-full min-w-[300px] overflow-hidden rounded-[28px] border border-slate-200 bg-white p-5 shadow-[0_24px_70px_rgba(15,23,42,0.18)]">
           <div className="flex items-center gap-3">
             <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-950 text-white shadow-sm">
               <ClockIcon />
@@ -799,17 +799,17 @@ function CustomTimePicker({
                 Select Pickup Time
               </p>
 
-              <p className="mt-0.5 text-[11px] text-gray-400">
+              <p className="mt-0.5 text-[11px] text-slate-400">
                 Choose your preferred pickup time
               </p>
             </div>
           </div>
 
-          <div className="my-5 h-px bg-gray-100" />
+          <div className="my-5 h-px bg-slate-100" />
 
           <div className="grid grid-cols-3 gap-2.5">
             <div>
-              <p className="mb-2 text-[10px] font-bold uppercase tracking-wider text-gray-400">
+              <p className="mb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">
                 Hour
               </p>
 
@@ -820,7 +820,7 @@ function CustomTimePicker({
                     Number(e.target.value)
                   )
                 }
-                className="h-12 w-full cursor-pointer rounded-2xl border border-gray-200 bg-slate-50 px-3 text-center text-base font-bold text-blue-950 outline-none transition-all focus:border-blue-600 focus:bg-white focus:ring-4 focus:ring-blue-50"
+                className="h-12 w-full cursor-pointer rounded-2xl border border-slate-200 bg-slate-50 px-3 text-center text-base font-bold text-blue-950 outline-none transition-all focus:border-orange-400 focus:bg-white focus:ring-4 focus:ring-orange-50"
               >
                 {Array.from(
                   { length: 12 },
@@ -837,7 +837,7 @@ function CustomTimePicker({
             </div>
 
             <div>
-              <p className="mb-2 text-[10px] font-bold uppercase tracking-wider text-gray-400">
+              <p className="mb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">
                 Minute
               </p>
 
@@ -848,7 +848,7 @@ function CustomTimePicker({
                     e.target.value
                   )
                 }
-                className="h-12 w-full cursor-pointer rounded-2xl border border-gray-200 bg-slate-50 px-3 text-center text-base font-bold text-blue-950 outline-none transition-all focus:border-blue-600 focus:bg-white focus:ring-4 focus:ring-blue-50"
+                className="h-12 w-full cursor-pointer rounded-2xl border border-slate-200 bg-slate-50 px-3 text-center text-base font-bold text-blue-950 outline-none transition-all focus:border-orange-400 focus:bg-white focus:ring-4 focus:ring-orange-50"
               >
                 {[
                   "00",
@@ -875,7 +875,7 @@ function CustomTimePicker({
             </div>
 
             <div>
-              <p className="mb-2 text-[10px] font-bold uppercase tracking-wider text-gray-400">
+              <p className="mb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">
                 Period
               </p>
 
@@ -888,7 +888,7 @@ function CustomTimePicker({
                       | "PM"
                   )
                 }
-                className="h-12 w-full cursor-pointer rounded-2xl border border-gray-200 bg-slate-50 px-3 text-center text-base font-bold text-blue-950 outline-none transition-all focus:border-blue-600 focus:bg-white focus:ring-4 focus:ring-blue-50"
+                className="h-12 w-full cursor-pointer rounded-2xl border border-slate-200 bg-slate-50 px-3 text-center text-base font-bold text-blue-950 outline-none transition-all focus:border-orange-400 focus:bg-white focus:ring-4 focus:ring-orange-50"
               >
                 <option value="AM">
                   AM
@@ -901,13 +901,13 @@ function CustomTimePicker({
             </div>
           </div>
 
-          <div className="mt-5 flex items-center justify-center gap-3 rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3.5">
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-blue-950 shadow-sm">
+          <div className="mt-5 flex items-center justify-center gap-3 rounded-2xl border border-orange-100 bg-orange-50 px-4 py-3.5">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-orange-600 shadow-sm">
               <ClockIcon />
             </span>
 
             <div>
-              <p className="text-left text-[9px] font-bold uppercase tracking-[0.12em] text-blue-500">
+              <p className="text-left text-[9px] font-bold uppercase tracking-[0.12em] text-orange-500">
                 Selected Time
               </p>
 
@@ -922,7 +922,7 @@ function CustomTimePicker({
           <button
             type="button"
             onClick={handleApply}
-            className="mt-4 w-full rounded-2xl bg-blue-950 px-4 py-3 text-sm font-bold text-white shadow-md transition-all hover:bg-blue-900 hover:shadow-lg"
+            className="mt-4 w-full rounded-2xl bg-blue-950 px-4 py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-950/15 transition-all hover:-translate-y-0.5 hover:bg-orange-500 hover:shadow-xl hover:shadow-orange-500/20"
           >
             Set Pickup Time
           </button>
@@ -998,19 +998,19 @@ export default function TransferBookingPage() {
 
   if (!transfer) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-slate-100 px-6">
-        <div className="w-full max-w-md rounded-2xl bg-white p-8 text-center shadow-xl">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-red-50 text-xl font-bold text-red-600">
+      <main className="flex min-h-screen items-center justify-center bg-slate-50 px-6">
+        <div className="w-full max-w-md overflow-hidden rounded-[28px] border border-slate-200 bg-white p-8 text-center shadow-[0_24px_70px_rgba(15,23,42,0.12)]">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-red-50 text-xl font-bold text-red-600">
             !
           </div>
 
-          <h1 className="mt-4 text-2xl font-bold text-red-600">
+          <h1 className="mt-4 text-2xl font-bold text-blue-950">
             Transfer Not Found
           </h1>
 
-          <p className="mt-2 text-sm text-gray-500">
+          <p className="mt-2 text-sm text-slate-500">
             The transfer you are looking for is not
-            available.
+            available
           </p>
         </div>
       </main>
@@ -1043,10 +1043,10 @@ export default function TransferBookingPage() {
       : hotel.trim().length >= 2;
 
   const inputClass = (invalid: boolean) =>
-    `w-full rounded-xl border bg-white px-4 py-3.5 text-sm text-gray-900 placeholder:text-gray-400 shadow-sm transition focus:outline-none focus:ring-4 ${
+    `w-full rounded-2xl border bg-white px-4 py-3.5 text-sm text-slate-900 placeholder:text-slate-400 shadow-[0_5px_20px_rgba(15,23,42,0.04)] transition-all focus:outline-none focus:ring-4 ${
       invalid
         ? "border-red-400 focus:border-red-500 focus:ring-red-50"
-        : "border-gray-200 focus:border-blue-600 focus:ring-blue-50"
+        : "border-slate-200 focus:border-orange-400 focus:ring-orange-50 hover:border-slate-300"
     }`;
 
   const labelClass =
@@ -1203,46 +1203,48 @@ ${notes.trim() || "-"}
   return (
     <main className="min-h-screen bg-slate-50">
       {/* HEADER */}
-      <section className="relative overflow-hidden bg-blue-950 px-5 py-10 text-white md:px-8 md:py-14">
-        <div className="absolute -left-32 -top-32 h-80 w-80 rounded-full bg-blue-700/30 blur-3xl" />
+      <section className="relative overflow-hidden bg-blue-950 px-5 py-12 text-white md:px-8 md:py-16">
+        <div className="absolute -left-32 -top-32 h-96 w-96 rounded-full bg-blue-600/30 blur-3xl" />
 
-        <div className="absolute -bottom-40 right-0 h-96 w-96 rounded-full bg-orange-500/10 blur-3xl" />
+        <div className="absolute right-0 top-0 h-80 w-80 rounded-full bg-orange-500/10 blur-3xl" />
+
+        <div className="absolute -bottom-48 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-blue-500/10 blur-3xl" />
 
         <div className="relative mx-auto max-w-7xl">
           <div className="flex items-center gap-3">
-            <span className="h-px w-10 bg-orange-400" />
+            <span className="h-px w-12 bg-orange-400" />
 
-            <p className="text-xs font-bold uppercase tracking-[0.3em] text-orange-400">
+            <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-orange-400">
               Secure Booking
             </p>
           </div>
 
-          <h1 className="mt-4 text-3xl font-bold tracking-tight md:text-5xl">
+          <h1 className="mt-5 text-3xl font-bold tracking-tight md:text-5xl">
             Book Your Transfer
           </h1>
 
-          <p className="mt-3 text-sm text-blue-100 md:text-base">
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-blue-100 md:text-base">
             Choose your transfer type and complete
-            your booking details.
+            your booking details
           </p>
 
-          <div className="mt-6 flex flex-wrap gap-3">
-            <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-2 text-xs font-semibold backdrop-blur-sm">
-              <span className="text-green-400">
+          <div className="mt-7 flex flex-wrap gap-3">
+            <div className="flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.08] px-4 py-2.5 text-xs font-semibold shadow-lg shadow-black/5 backdrop-blur-xl">
+              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-green-400/15 text-green-400">
                 <CheckIcon />
               </span>
               Instant WhatsApp Confirmation
             </div>
 
-            <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-2 text-xs font-semibold backdrop-blur-sm">
-              <span className="text-green-400">
+            <div className="flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.08] px-4 py-2.5 text-xs font-semibold shadow-lg shadow-black/5 backdrop-blur-xl">
+              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-green-400/15 text-green-400">
                 <CheckIcon />
               </span>
               Fixed Price
             </div>
 
-            <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-2 text-xs font-semibold backdrop-blur-sm">
-              <span className="text-green-400">
+            <div className="flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.08] px-4 py-2.5 text-xs font-semibold shadow-lg shadow-black/5 backdrop-blur-xl">
+              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-green-400/15 text-green-400">
                 <CheckIcon />
               </span>
               Professional Driver
@@ -1253,25 +1255,29 @@ ${notes.trim() || "-"}
 
       {/* MAIN */}
       <section className="mx-auto max-w-7xl px-5 py-8 md:px-8 md:py-12">
-        <div className="grid items-start gap-8 lg:grid-cols-[1fr_340px]">
-          <div className="space-y-6">
+        <div className="grid items-start gap-8 lg:grid-cols-[1fr_360px]">
+          <div className="space-y-7">
             {/* TRANSFER TYPE */}
-            <section className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm md:p-6">
-              <div className="mb-5">
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-orange-500">
-                  Step 1
-                </p>
+            <section className="overflow-hidden rounded-[28px] border border-slate-200/80 bg-white p-5 shadow-[0_8px_30px_rgba(15,23,42,0.06)] md:p-7">
+              <div className="mb-6">
+                <div className="flex items-center gap-3">
+                  <span className="flex h-8 items-center rounded-full bg-orange-50 px-3 text-[10px] font-bold uppercase tracking-[0.18em] text-orange-600">
+                    Step 1
+                  </span>
 
-                <h2 className="mt-1 text-xl font-bold text-blue-950">
+                  <span className="h-px flex-1 bg-slate-100" />
+                </div>
+
+                <h2 className="mt-4 text-xl font-bold text-blue-950 md:text-2xl">
                   Choose Transfer Type
                 </h2>
 
-                <p className="mt-1 text-sm text-gray-500">
-                  Select the type of transfer you need.
+                <p className="mt-1.5 text-sm text-slate-500">
+                  Select the type of transfer you need
                 </p>
               </div>
 
-              <div className="grid gap-3 md:grid-cols-3">
+              <div className="grid gap-4 md:grid-cols-3">
                 <button
                   type="button"
                   onClick={() =>
@@ -1279,25 +1285,39 @@ ${notes.trim() || "-"}
                       "airport-to-hotel"
                     )
                   }
-                  className={`rounded-2xl border-2 p-5 text-left transition ${
+                  className={`group relative overflow-hidden rounded-[22px] border p-5 text-left transition-all duration-300 ${
                     transferType ===
                     "airport-to-hotel"
-                      ? "border-orange-500 bg-orange-50 shadow-md"
-                      : "border-gray-100 hover:border-blue-200"
+                      ? "border-orange-400 bg-gradient-to-br from-orange-50 to-white shadow-[0_12px_30px_rgba(249,115,22,0.12)]"
+                      : "border-slate-200 bg-white hover:-translate-y-1 hover:border-orange-200 hover:shadow-[0_12px_30px_rgba(15,23,42,0.08)]"
                   }`}
                 >
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-blue-900">
+                  {transferType ===
+                    "airport-to-hotel" && (
+                    <span className="absolute right-4 top-4 flex h-6 w-6 items-center justify-center rounded-full bg-orange-500 text-white">
+                      <CheckIcon />
+                    </span>
+                  )}
+
+                  <div
+                    className={`flex h-12 w-12 items-center justify-center rounded-2xl transition-all ${
+                      transferType ===
+                      "airport-to-hotel"
+                        ? "bg-blue-950 text-white shadow-lg shadow-blue-950/15"
+                        : "bg-slate-100 text-blue-950 group-hover:bg-orange-50 group-hover:text-orange-600"
+                    }`}
+                  >
                     <PlaneIcon />
                   </div>
 
-                  <h3 className="mt-3 font-bold text-blue-950">
+                  <h3 className="mt-4 font-bold text-blue-950">
                     Airport → Hotel
                   </h3>
 
-                  <p className="mt-1 text-xs leading-5 text-gray-500">
+                  <p className="mt-1.5 text-xs leading-5 text-slate-500">
                     Pick up from Hurghada Airport
                     and take you directly to your
-                    hotel.
+                    hotel
                   </p>
                 </button>
 
@@ -1308,24 +1328,38 @@ ${notes.trim() || "-"}
                       "hotel-to-airport"
                     )
                   }
-                  className={`rounded-2xl border-2 p-5 text-left transition ${
+                  className={`group relative overflow-hidden rounded-[22px] border p-5 text-left transition-all duration-300 ${
                     transferType ===
                     "hotel-to-airport"
-                      ? "border-orange-500 bg-orange-50 shadow-md"
-                      : "border-gray-100 hover:border-blue-200"
+                      ? "border-orange-400 bg-gradient-to-br from-orange-50 to-white shadow-[0_12px_30px_rgba(249,115,22,0.12)]"
+                      : "border-slate-200 bg-white hover:-translate-y-1 hover:border-orange-200 hover:shadow-[0_12px_30px_rgba(15,23,42,0.08)]"
                   }`}
                 >
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-blue-900">
+                  {transferType ===
+                    "hotel-to-airport" && (
+                    <span className="absolute right-4 top-4 flex h-6 w-6 items-center justify-center rounded-full bg-orange-500 text-white">
+                      <CheckIcon />
+                    </span>
+                  )}
+
+                  <div
+                    className={`flex h-12 w-12 items-center justify-center rounded-2xl transition-all ${
+                      transferType ===
+                      "hotel-to-airport"
+                        ? "bg-blue-950 text-white shadow-lg shadow-blue-950/15"
+                        : "bg-slate-100 text-blue-950 group-hover:bg-orange-50 group-hover:text-orange-600"
+                    }`}
+                  >
                     <HotelIcon />
                   </div>
 
-                  <h3 className="mt-3 font-bold text-blue-950">
+                  <h3 className="mt-4 font-bold text-blue-950">
                     Hotel → Airport
                   </h3>
 
-                  <p className="mt-1 text-xs leading-5 text-gray-500">
+                  <p className="mt-1.5 text-xs leading-5 text-slate-500">
                     Pick up from your hotel and
-                    take you to Hurghada Airport.
+                    take you to Hurghada Airport
                   </p>
                 </button>
 
@@ -1336,48 +1370,66 @@ ${notes.trim() || "-"}
                       "hotel-to-hotel"
                     )
                   }
-                  className={`rounded-2xl border-2 p-5 text-left transition ${
+                  className={`group relative overflow-hidden rounded-[22px] border p-5 text-left transition-all duration-300 ${
                     transferType ===
                     "hotel-to-hotel"
-                      ? "border-orange-500 bg-orange-50 shadow-md"
-                      : "border-gray-100 hover:border-blue-200"
+                      ? "border-orange-400 bg-gradient-to-br from-orange-50 to-white shadow-[0_12px_30px_rgba(249,115,22,0.12)]"
+                      : "border-slate-200 bg-white hover:-translate-y-1 hover:border-orange-200 hover:shadow-[0_12px_30px_rgba(15,23,42,0.08)]"
                   }`}
                 >
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-blue-900">
+                  {transferType ===
+                    "hotel-to-hotel" && (
+                    <span className="absolute right-4 top-4 flex h-6 w-6 items-center justify-center rounded-full bg-orange-500 text-white">
+                      <CheckIcon />
+                    </span>
+                  )}
+
+                  <div
+                    className={`flex h-12 w-12 items-center justify-center rounded-2xl transition-all ${
+                      transferType ===
+                      "hotel-to-hotel"
+                        ? "bg-blue-950 text-white shadow-lg shadow-blue-950/15"
+                        : "bg-slate-100 text-blue-950 group-hover:bg-orange-50 group-hover:text-orange-600"
+                    }`}
+                  >
                     <CarIcon />
                   </div>
 
-                  <h3 className="mt-3 font-bold text-blue-950">
+                  <h3 className="mt-4 font-bold text-blue-950">
                     Hotel → Hotel
                   </h3>
 
-                  <p className="mt-1 text-xs leading-5 text-gray-500">
+                  <p className="mt-1.5 text-xs leading-5 text-slate-500">
                     Travel comfortably between
-                    two hotels.
+                    two hotels
                   </p>
                 </button>
               </div>
             </section>
 
             {/* VEHICLE */}
-            <section className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm md:p-6">
+            <section className="overflow-hidden rounded-[28px] border border-slate-200/80 bg-white p-5 shadow-[0_8px_30px_rgba(15,23,42,0.06)] md:p-7">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-xs font-bold uppercase tracking-[0.2em] text-orange-500">
-                    Step 2
-                  </p>
+                  <div className="flex items-center gap-3">
+                    <span className="flex h-8 items-center rounded-full bg-orange-50 px-3 text-[10px] font-bold uppercase tracking-[0.18em] text-orange-600">
+                      Step 2
+                    </span>
 
-                  <h2 className="mt-1 text-xl font-bold text-blue-950">
+                    <span className="hidden h-px w-10 bg-slate-100 sm:block" />
+                  </div>
+
+                  <h2 className="mt-4 text-xl font-bold text-blue-950 md:text-2xl">
                     Select Your Vehicle
                   </h2>
                 </div>
 
-                <span className="hidden rounded-full bg-blue-50 px-3 py-1.5 text-xs font-bold text-blue-800 sm:block">
+                <span className="hidden rounded-full border border-blue-100 bg-blue-50 px-3.5 py-2 text-xs font-bold text-blue-800 sm:block">
                   {transfer.vehicles.length} Options
                 </span>
               </div>
 
-              <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+              <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
                 {transfer.vehicles.map(
                   (item, index) => (
                     <button
@@ -1386,59 +1438,96 @@ ${notes.trim() || "-"}
                       onClick={() =>
                         handleVehicleChange(index)
                       }
-                      className={`group relative overflow-hidden rounded-xl border-2 text-left transition ${
+                      className={`group relative overflow-hidden rounded-[22px] border text-left transition-all duration-300 ${
                         selectedVehicle === index
-                          ? "border-orange-500 bg-orange-50 shadow-md"
-                          : "border-gray-100 bg-white hover:border-blue-200 hover:shadow-sm"
+                          ? "border-orange-400 bg-white shadow-[0_16px_40px_rgba(249,115,22,0.14)] ring-1 ring-orange-300"
+                          : "border-slate-200 bg-white hover:-translate-y-1 hover:border-orange-200 hover:shadow-[0_16px_40px_rgba(15,23,42,0.09)]"
                       }`}
                     >
-                      <div className="relative h-28 overflow-hidden bg-slate-50">
+                      <div className="relative h-40 overflow-hidden bg-slate-100">
                         <img
                           src={
                             vehicleImages[index] ||
                             "/vehicles/sedan.webp"
                           }
                           alt={item.type}
-                          className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                          className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
                         />
+
+                        <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-blue-950/80 to-transparent" />
+
+                        <div className="absolute left-3 top-3 rounded-full border border-white/20 bg-blue-950/70 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.15em] text-white backdrop-blur-md">
+                          Private Transfer
+                        </div>
 
                         {selectedVehicle ===
                           index && (
-                          <div className="absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-full bg-orange-500 text-white shadow">
+                          <div className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-orange-500 text-white shadow-lg shadow-orange-500/30">
                             <CheckIcon />
                           </div>
                         )}
+
+                        <div className="absolute bottom-3 left-4 right-4 flex items-end justify-between gap-2 text-white">
+                          <div>
+                            <p className="text-[9px] font-semibold uppercase tracking-[0.14em] text-white/70">
+                              Via Blue
+                            </p>
+
+                            <p className="mt-0.5 text-sm font-bold">
+                              {item.type}
+                            </p>
+                          </div>
+
+                          <p className="text-xl font-bold text-orange-300">
+                            €{item.price}
+                          </p>
+                        </div>
                       </div>
 
-                      <div className="p-3.5">
-                        <div className="flex items-start justify-between gap-2">
+                      <div className="p-4">
+                        <div className="flex items-start justify-between gap-3">
                           <div>
                             <h3 className="text-base font-bold text-blue-950">
                               {item.type}
                             </h3>
 
-                            <p className="mt-1 text-[11px] text-gray-500">
+                            <p className="mt-1 text-[11px] text-slate-500">
                               Up to{" "}
                               {item.passengers}{" "}
                               passengers
                             </p>
                           </div>
-
-                          <p className="text-lg font-bold text-orange-500">
-                            €{item.price}
-                          </p>
                         </div>
 
-                        <div className="mt-3 flex gap-4 text-[11px] font-semibold text-gray-500">
-                          <span className="flex items-center gap-1.5">
+                        <div className="mt-4 grid grid-cols-2 gap-2">
+                          <span className="flex items-center gap-1.5 rounded-xl bg-slate-50 px-2.5 py-2 text-[10px] font-bold text-slate-600">
                             <UsersIcon />
                             {item.passengers}
+                            passengers
                           </span>
 
-                          <span className="flex items-center gap-1.5">
+                          <span className="flex items-center gap-1.5 rounded-xl bg-slate-50 px-2.5 py-2 text-[10px] font-bold text-slate-600">
                             <LuggageIcon />
                             {item.luggage}
+                            bags
                           </span>
+                        </div>
+
+                        <div
+                          className={`mt-3 flex items-center justify-between rounded-xl px-3 py-2.5 text-[10px] font-bold transition ${
+                            selectedVehicle === index
+                              ? "bg-orange-50 text-orange-700"
+                              : "bg-blue-50 text-blue-800"
+                          }`}
+                        >
+                          <span>
+                            {selectedVehicle ===
+                            index
+                              ? "Selected Vehicle"
+                              : "Select Vehicle"}
+                          </span>
+
+                          <span>€{item.price}</span>
                         </div>
                       </div>
                     </button>
@@ -1448,18 +1537,22 @@ ${notes.trim() || "-"}
             </section>
 
             {/* GUEST INFORMATION */}
-            <section className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm md:p-6">
-              <div className="mb-5">
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-orange-500">
-                  Step 3
-                </p>
+            <section className="overflow-hidden rounded-[28px] border border-slate-200/80 bg-white p-5 shadow-[0_8px_30px_rgba(15,23,42,0.06)] md:p-7">
+              <div className="mb-6">
+                <div className="flex items-center gap-3">
+                  <span className="flex h-8 items-center rounded-full bg-orange-50 px-3 text-[10px] font-bold uppercase tracking-[0.18em] text-orange-600">
+                    Step 3
+                  </span>
 
-                <h2 className="mt-1 text-xl font-bold text-blue-950">
+                  <span className="h-px flex-1 bg-slate-100" />
+                </div>
+
+                <h2 className="mt-4 text-xl font-bold text-blue-950 md:text-2xl">
                   Guest Information
                 </h2>
 
-                <p className="mt-1 text-sm text-gray-500">
-                  Tell us who will be travelling.
+                <p className="mt-1.5 text-sm text-slate-500">
+                  Tell us who will be travelling
                 </p>
               </div>
 
@@ -1470,7 +1563,7 @@ ${notes.trim() || "-"}
                   </label>
 
                   <div className="relative">
-                    <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+                    <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
                       <UserIcon />
                     </span>
 
@@ -1491,7 +1584,7 @@ ${notes.trim() || "-"}
                   {submitAttempted &&
                     !isNameValid &&
                     errorText(
-                      "Please enter your full name."
+                      "Please enter your full name"
                     )}
                 </div>
 
@@ -1501,7 +1594,7 @@ ${notes.trim() || "-"}
                   </label>
 
                   <div className="relative">
-                    <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+                    <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
                       <MailIcon />
                     </span>
 
@@ -1522,12 +1615,12 @@ ${notes.trim() || "-"}
                   {submitAttempted &&
                     !isEmailValid &&
                     errorText(
-                      "Please enter a valid email."
+                      "Please enter a valid email"
                     )}
                 </div>
               </div>
 
-              <div className="mt-4">
+              <div className="mt-5">
                 <label className={labelClass}>
                   WhatsApp Number *
                 </label>
@@ -1541,7 +1634,7 @@ ${notes.trim() || "-"}
                           (value) => !value
                         )
                       }
-                      className="flex h-[52px] min-w-[105px] items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-3 text-gray-900 shadow-sm transition hover:border-blue-500 focus:outline-none"
+                      className="flex h-[56px] min-w-[108px] items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-3 text-slate-900 shadow-[0_5px_20px_rgba(15,23,42,0.04)] transition hover:border-orange-300 focus:outline-none"
                     >
                       <FlagIcon
                         iso={
@@ -1562,7 +1655,7 @@ ${notes.trim() || "-"}
                     </button>
 
                     {isCountryOpen && (
-                      <div className="absolute left-0 top-full z-50 mt-2 max-h-72 w-72 overflow-y-auto rounded-xl border border-gray-200 bg-white shadow-2xl">
+                      <div className="absolute left-0 top-full z-50 mt-2 max-h-72 w-72 overflow-y-auto rounded-2xl border border-slate-200 bg-white shadow-[0_24px_60px_rgba(15,23,42,0.18)]">
                         {countryCodes.map(
                           (country) => (
                             <button
@@ -1577,10 +1670,10 @@ ${notes.trim() || "-"}
                                   false
                                 );
                               }}
-                              className={`flex w-full items-center gap-3 px-4 py-3 text-left text-sm transition hover:bg-blue-50 ${
+                              className={`flex w-full items-center gap-3 px-4 py-3 text-left text-sm transition hover:bg-orange-50 ${
                                 selectedCountry.iso ===
                                 country.iso
-                                  ? "bg-blue-50"
+                                  ? "bg-orange-50"
                                   : ""
                               }`}
                             >
@@ -1593,13 +1686,13 @@ ${notes.trim() || "-"}
                                 }
                               />
 
-                              <span className="font-bold text-gray-900">
+                              <span className="font-bold text-slate-900">
                                 {
                                   country.dialCode
                                 }
                               </span>
 
-                              <span className="text-gray-500">
+                              <span className="text-slate-500">
                                 {
                                   country.name
                                 }
@@ -1612,7 +1705,7 @@ ${notes.trim() || "-"}
                   </div>
 
                   <div className="relative flex-1">
-                    <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+                    <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
                       <PhoneIcon />
                     </span>
 
@@ -1636,19 +1729,23 @@ ${notes.trim() || "-"}
                 {submitAttempted &&
                   !isPhoneValid &&
                   errorText(
-                    "Please enter a valid WhatsApp number."
+                    "Please enter a valid WhatsApp number"
                   )}
               </div>
             </section>
 
             {/* PICKUP INFORMATION */}
-            <section className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm md:p-6">
-              <div className="mb-5">
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-orange-500">
-                  Step 4
-                </p>
+            <section className="overflow-hidden rounded-[28px] border border-slate-200/80 bg-white p-5 shadow-[0_8px_30px_rgba(15,23,42,0.06)] md:p-7">
+              <div className="mb-6">
+                <div className="flex items-center gap-3">
+                  <span className="flex h-8 items-center rounded-full bg-orange-50 px-3 text-[10px] font-bold uppercase tracking-[0.18em] text-orange-600">
+                    Step 4
+                  </span>
 
-                <h2 className="mt-1 text-xl font-bold text-blue-950">
+                  <span className="h-px flex-1 bg-slate-100" />
+                </div>
+
+                <h2 className="mt-4 text-xl font-bold text-blue-950 md:text-2xl">
                   Transfer Information
                 </h2>
               </div>
@@ -1662,7 +1759,7 @@ ${notes.trim() || "-"}
                     </label>
 
                     <div className="relative">
-                      <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+                      <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
                         <HotelIcon />
                       </span>
 
@@ -1689,7 +1786,7 @@ ${notes.trim() || "-"}
                     </label>
 
                     <div className="relative">
-                      <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+                      <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
                         <HotelIcon />
                       </span>
 
@@ -1717,7 +1814,7 @@ ${notes.trim() || "-"}
                   </label>
 
                   <div className="relative">
-                    <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+                    <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
                       <HotelIcon />
                     </span>
 
@@ -1738,12 +1835,12 @@ ${notes.trim() || "-"}
                   {submitAttempted &&
                     !isLocationValid &&
                     errorText(
-                      "Please enter your hotel name."
+                      "Please enter your hotel name"
                     )}
                 </div>
               )}
 
-              <div className="mt-4 grid gap-4 md:grid-cols-2">
+              <div className="mt-5 grid gap-4 md:grid-cols-2">
                 <div>
                   <label className={labelClass}>
                     Room Number
@@ -1784,7 +1881,7 @@ ${notes.trim() || "-"}
                 )}
               </div>
 
-              <div className="mt-4 grid gap-4 md:grid-cols-2">
+              <div className="mt-5 grid gap-4 md:grid-cols-2">
                 <div>
                   <label className={labelClass}>
                     Transfer Date *
@@ -1803,7 +1900,7 @@ ${notes.trim() || "-"}
                   {submitAttempted &&
                     !isDateValid &&
                     errorText(
-                      "Please select a valid transfer date."
+                      "Please select a valid transfer date"
                     )}
                 </div>
 
@@ -1824,20 +1921,24 @@ ${notes.trim() || "-"}
                   {submitAttempted &&
                     !isTimeValid &&
                     errorText(
-                      "Please select the pickup time."
+                      "Please select the pickup time"
                     )}
                 </div>
               </div>
             </section>
 
             {/* TRANSFER DETAILS */}
-            <section className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm md:p-6">
-              <div className="mb-5">
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-orange-500">
-                  Step 5
-                </p>
+            <section className="overflow-hidden rounded-[28px] border border-slate-200/80 bg-white p-5 shadow-[0_8px_30px_rgba(15,23,42,0.06)] md:p-7">
+              <div className="mb-6">
+                <div className="flex items-center gap-3">
+                  <span className="flex h-8 items-center rounded-full bg-orange-50 px-3 text-[10px] font-bold uppercase tracking-[0.18em] text-orange-600">
+                    Step 5
+                  </span>
 
-                <h2 className="mt-1 text-xl font-bold text-blue-950">
+                  <span className="h-px flex-1 bg-slate-100" />
+                </div>
+
+                <h2 className="mt-4 text-xl font-bold text-blue-950 md:text-2xl">
                   Transfer Details
                 </h2>
               </div>
@@ -1876,7 +1977,7 @@ ${notes.trim() || "-"}
                     )}
                   </select>
 
-                  <p className="mt-1.5 text-xs text-gray-400">
+                  <p className="mt-1.5 text-xs text-slate-400">
                     Maximum:{" "}
                     {vehicle.passengers} passengers
                   </p>
@@ -1915,7 +2016,7 @@ ${notes.trim() || "-"}
                     )}
                   </select>
 
-                  <p className="mt-1.5 text-xs text-gray-400">
+                  <p className="mt-1.5 text-xs text-slate-400">
                     Maximum:{" "}
                     {vehicle.luggage} luggage
                   </p>
@@ -1924,13 +2025,17 @@ ${notes.trim() || "-"}
             </section>
 
             {/* ADDITIONAL */}
-            <section className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm md:p-6">
-              <div className="mb-5">
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-orange-500">
-                  Optional
-                </p>
+            <section className="overflow-hidden rounded-[28px] border border-slate-200/80 bg-white p-5 shadow-[0_8px_30px_rgba(15,23,42,0.06)] md:p-7">
+              <div className="mb-6">
+                <div className="flex items-center gap-3">
+                  <span className="flex h-8 items-center rounded-full bg-slate-100 px-3 text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">
+                    Optional
+                  </span>
 
-                <h2 className="mt-1 text-xl font-bold text-blue-950">
+                  <span className="h-px flex-1 bg-slate-100" />
+                </div>
+
+                <h2 className="mt-4 text-xl font-bold text-blue-950 md:text-2xl">
                   Additional Information
                 </h2>
               </div>
@@ -1942,15 +2047,17 @@ ${notes.trim() || "-"}
                 onChange={(e) =>
                   setNotes(e.target.value)
                 }
-                className={inputClass(false)}
+                className={`${inputClass(
+                  false
+                )} min-h-[120px] resize-none`}
               />
             </section>
 
             {submitAttempted &&
               !isFormValid && (
-                <div className="rounded-xl border border-red-100 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">
+                <div className="rounded-2xl border border-red-100 bg-red-50 px-5 py-4 text-sm font-semibold text-red-700 shadow-sm">
                   Please fill in all required
-                  fields highlighted above.
+                  fields highlighted above
                 </div>
               )}
 
@@ -1958,42 +2065,53 @@ ${notes.trim() || "-"}
             <button
               type="button"
               onClick={handleSubmit}
-              className="w-full rounded-2xl bg-green-600 px-6 py-4 text-base font-bold text-white shadow-lg shadow-green-600/20 transition duration-300 hover:-translate-y-0.5 hover:bg-green-700 hover:shadow-xl"
+              className="group relative w-full overflow-hidden rounded-2xl bg-blue-950 px-6 py-5 text-base font-bold text-white shadow-[0_16px_40px_rgba(15,23,42,0.18)] transition duration-300 hover:-translate-y-1 hover:bg-orange-500 hover:shadow-[0_18px_45px_rgba(249,115,22,0.25)]"
             >
-              Book Transfer
+              <span className="relative z-10 flex items-center justify-center gap-3">
+                <ShieldIcon />
+                Book Transfer
+              </span>
             </button>
 
-            <div className="flex items-center justify-center gap-2 text-center text-xs text-gray-500">
+            <div className="flex items-center justify-center gap-2 text-center text-xs font-medium text-slate-500">
               <span className="text-green-600">
                 <ShieldIcon />
               </span>
 
               Your information is used only to
-              process your transfer booking.
+              process your transfer booking
             </div>
           </div>
 
           {/* SUMMARY */}
           <aside>
-            <div className="sticky top-8 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg">
-              <div className="bg-blue-950 px-6 py-5 text-white">
-                <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-orange-400">
-                  Booking Summary
-                </p>
+            <div className="sticky top-8 overflow-hidden rounded-[28px] border border-slate-200/80 bg-white shadow-[0_18px_55px_rgba(15,23,42,0.11)]">
+              <div className="relative overflow-hidden bg-blue-950 px-6 py-6 text-white">
+                <div className="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-orange-500/15 blur-2xl" />
 
-                <h2 className="mt-1 text-xl font-bold">
-                  Your Transfer
-                </h2>
+                <div className="relative">
+                  <div className="flex items-center gap-2">
+                    <span className="h-px w-7 bg-orange-400" />
+
+                    <p className="text-[9px] font-bold uppercase tracking-[0.25em] text-orange-400">
+                      Booking Summary
+                    </p>
+                  </div>
+
+                  <h2 className="mt-2 text-xl font-bold">
+                    Your Transfer
+                  </h2>
+                </div>
               </div>
 
               <div className="p-5">
                 {/* TYPE */}
-                <div className="rounded-xl bg-orange-50 p-4">
-                  <p className="text-[10px] font-bold uppercase tracking-wider text-orange-600">
+                <div className="rounded-2xl border border-orange-100 bg-gradient-to-br from-orange-50 to-white p-4">
+                  <p className="text-[9px] font-bold uppercase tracking-[0.16em] text-orange-600">
                     Transfer Type
                   </p>
 
-                  <p className="mt-1 text-sm font-bold text-blue-950">
+                  <p className="mt-1.5 text-sm font-bold text-blue-950">
                     {transferType ===
                     "airport-to-hotel"
                       ? "Airport → Hotel"
@@ -2005,36 +2123,36 @@ ${notes.trim() || "-"}
                 </div>
 
                 {/* ROUTE */}
-                <div className="relative mt-4 rounded-xl bg-slate-50 p-4">
-                  <div className="absolute left-[21px] top-[42px] h-7 border-l border-dashed border-blue-300" />
+                <div className="relative mt-4 rounded-2xl border border-slate-100 bg-slate-50 p-4">
+                  <div className="absolute left-[21px] top-[42px] h-8 border-l border-dashed border-blue-300" />
 
                   <div className="flex gap-3">
-                    <div className="relative z-10 mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-blue-900 text-[9px] font-bold text-white">
+                    <div className="relative z-10 mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-950 text-[9px] font-bold text-white shadow-sm">
                       A
                     </div>
 
-                    <div>
-                      <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400">
+                    <div className="min-w-0">
+                      <p className="text-[9px] font-bold uppercase tracking-[0.14em] text-slate-400">
                         From
                       </p>
 
-                      <p className="mt-0.5 text-sm font-bold text-blue-950">
+                      <p className="mt-1 text-sm font-bold leading-5 text-blue-950">
                         {route.from}
                       </p>
                     </div>
                   </div>
 
                   <div className="mt-5 flex gap-3">
-                    <div className="relative z-10 mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-orange-500 text-[9px] font-bold text-white">
+                    <div className="relative z-10 mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-orange-500 text-[9px] font-bold text-white shadow-sm shadow-orange-500/20">
                       B
                     </div>
 
-                    <div>
-                      <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400">
+                    <div className="min-w-0">
+                      <p className="text-[9px] font-bold uppercase tracking-[0.14em] text-slate-400">
                         To
                       </p>
 
-                      <p className="mt-0.5 text-sm font-bold text-blue-950">
+                      <p className="mt-1 text-sm font-bold leading-5 text-blue-950">
                         {route.to}
                       </p>
                     </div>
@@ -2042,8 +2160,8 @@ ${notes.trim() || "-"}
                 </div>
 
                 {/* VEHICLE */}
-                <div className="mt-4 flex items-center gap-3 rounded-xl border border-gray-100 p-3">
-                  <div className="h-14 w-20 shrink-0 overflow-hidden rounded-lg bg-slate-50">
+                <div className="mt-4 overflow-hidden rounded-2xl border border-slate-200 bg-white">
+                  <div className="relative h-32 overflow-hidden bg-slate-100">
                     <img
                       src={
                         vehicleImages[
@@ -2054,44 +2172,59 @@ ${notes.trim() || "-"}
                       alt={vehicle.type}
                       className="h-full w-full object-cover"
                     />
+
+                    <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-blue-950/80 to-transparent" />
+
+                    <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between">
+                      <div>
+                        <p className="text-[9px] font-bold uppercase tracking-[0.14em] text-white/70">
+                          Selected Vehicle
+                        </p>
+
+                        <p className="mt-0.5 text-sm font-bold text-white">
+                          {vehicle.type}
+                        </p>
+                      </div>
+
+                      <p className="text-lg font-bold text-orange-300">
+                        €{vehicle.price}
+                      </p>
+                    </div>
                   </div>
 
-                  <div className="min-w-0">
-                    <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400">
-                      Vehicle
-                    </p>
+                  <div className="grid grid-cols-2 gap-2 p-3">
+                    <span className="flex items-center gap-1.5 rounded-xl bg-slate-50 px-2.5 py-2 text-[10px] font-bold text-slate-600">
+                      <UsersIcon />
+                      {vehicle.passengers}
+                      passengers
+                    </span>
 
-                    <p className="truncate text-sm font-bold text-blue-950">
-                      {vehicle.type}
-                    </p>
-
-                    <p className="text-xs text-gray-500">
-                      {vehicle.passengers}{" "}
-                      passengers ·{" "}
+                    <span className="flex items-center gap-1.5 rounded-xl bg-slate-50 px-2.5 py-2 text-[10px] font-bold text-slate-600">
+                      <LuggageIcon />
                       {vehicle.luggage} bags
-                    </p>
+                    </span>
                   </div>
                 </div>
 
                 {/* DETAILS */}
                 <div className="mt-4 grid grid-cols-2 gap-3">
-                  <div className="rounded-xl bg-blue-50 p-3">
-                    <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400">
+                  <div className="rounded-2xl border border-blue-100 bg-blue-50 p-3.5">
+                    <p className="text-[9px] font-bold uppercase tracking-[0.12em] text-slate-400">
                       Guests
                     </p>
 
-                    <p className="mt-1 flex items-center gap-1.5 text-sm font-bold text-blue-950">
+                    <p className="mt-1.5 flex items-center gap-1.5 text-sm font-bold text-blue-950">
                       <UsersIcon />
                       {passengers}
                     </p>
                   </div>
 
-                  <div className="rounded-xl bg-orange-50 p-3">
-                    <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400">
+                  <div className="rounded-2xl border border-orange-100 bg-orange-50 p-3.5">
+                    <p className="text-[9px] font-bold uppercase tracking-[0.12em] text-slate-400">
                       Luggage
                     </p>
 
-                    <p className="mt-1 flex items-center gap-1.5 text-sm font-bold text-orange-700">
+                    <p className="mt-1.5 flex items-center gap-1.5 text-sm font-bold text-orange-700">
                       <LuggageIcon />
                       {luggage}
                     </p>
@@ -2100,10 +2233,10 @@ ${notes.trim() || "-"}
 
                 {/* DATE */}
                 {(date || time) && (
-                  <div className="mt-4 rounded-xl border border-gray-100 p-3">
+                  <div className="mt-4 rounded-2xl border border-slate-200 bg-white p-3.5">
                     <div className="flex items-center justify-between gap-3">
                       <div>
-                        <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400">
+                        <p className="text-[9px] font-bold uppercase tracking-[0.12em] text-slate-400">
                           Date
                         </p>
 
@@ -2117,7 +2250,7 @@ ${notes.trim() || "-"}
                       </div>
 
                       <div className="text-right">
-                        <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400">
+                        <p className="text-[9px] font-bold uppercase tracking-[0.12em] text-slate-400">
                           Time
                         </p>
 
@@ -2134,14 +2267,14 @@ ${notes.trim() || "-"}
                 )}
 
                 {/* PRICE */}
-                <div className="mt-5 border-t border-gray-100 pt-5">
-                  <div className="flex items-end justify-between">
+                <div className="mt-5 rounded-2xl border border-slate-100 bg-slate-50 p-4">
+                  <div className="flex items-end justify-between gap-4">
                     <div>
-                      <p className="text-xs font-semibold text-gray-500">
+                      <p className="text-xs font-bold text-slate-500">
                         Total Transfer Price
                       </p>
 
-                      <p className="mt-1 text-[11px] text-gray-400">
+                      <p className="mt-1 text-[10px] text-slate-400">
                         Private vehicle · Fixed
                         price
                       </p>
@@ -2154,9 +2287,9 @@ ${notes.trim() || "-"}
                 </div>
 
                 {/* TRUST */}
-                <div className="mt-5 rounded-xl bg-green-50 p-3.5">
+                <div className="mt-4 rounded-2xl border border-green-100 bg-green-50 p-4">
                   <div className="flex gap-3">
-                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-green-100 text-green-700">
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-green-100 text-green-700">
                       <ShieldIcon />
                     </div>
 
@@ -2165,19 +2298,19 @@ ${notes.trim() || "-"}
                         Safe & Reliable Transfer
                       </p>
 
-                      <p className="mt-0.5 text-xs leading-5 text-green-700">
+                      <p className="mt-1 text-xs leading-5 text-green-700">
                         Professional driver,
                         private vehicle and fixed
-                        price.
+                        price
                       </p>
                     </div>
                   </div>
                 </div>
 
-                <p className="mt-4 text-center text-[11px] leading-5 text-gray-400">
+                <p className="mt-4 text-center text-[11px] leading-5 text-slate-400">
                   By sending your request, our
                   team will contact you on WhatsApp
-                  to confirm your booking.
+                  to confirm your booking
                 </p>
               </div>
             </div>

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import { Crown } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
 export default function Navbar() {
@@ -68,6 +69,7 @@ export default function Navbar() {
     {
       name: "Luxury Tours",
       href: "/luxury-tours",
+      premium: true,
     },
     {
       name: "AI Trip Planner",
@@ -93,34 +95,50 @@ export default function Navbar() {
   }
 
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 shadow-[0_4px_20px_rgba(15,23,42,0.06)] backdrop-blur-xl">
-      <div className="mx-auto flex h-[78px] max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+    <header className="sticky top-0 z-50 border-b border-slate-200/60 bg-white/65 shadow-[0_8px_35px_rgba(15,23,42,0.08)] backdrop-blur-2xl">
+
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-orange-400/70 to-transparent" />
+
+      <div className="mx-auto flex h-[82px] max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
 
         {/* Logo */}
         <Link
           href="/"
           onClick={() => setIsOpen(false)}
-          className="group flex shrink-0 items-center"
+          className="group relative flex shrink-0 items-center"
         >
-          <img
-            src="/logo/logo.svg"
-            alt="Via Blue"
-            className="h-[62px] w-auto object-contain transition-transform duration-300 group-hover:scale-[1.03]"
-          />
+          <div className="relative flex items-center">
 
-          <div className="ml-1 flex flex-col">
-            <p className="text-[19px] font-extrabold leading-none tracking-[-0.03em] text-blue-950">
-              Via Blue
-            </p>
+            <div className="absolute -inset-3 rounded-2xl bg-orange-500/0 blur-xl transition-all duration-500 group-hover:bg-orange-500/10" />
 
-            <p className="ml-6 mt-1 text-[8px] font-bold tracking-[0.34em] text-orange-500">
-              TOURS
-            </p>
+            <img
+              src="/logo/logo.svg"
+              alt="Via Blue"
+              className="relative h-[58px] w-auto object-contain transition-all duration-500 group-hover:scale-[1.035]"
+            />
+
+            <div className="ml-1.5 flex flex-col justify-center">
+
+              <div className="relative">
+                <p className="bg-gradient-to-r from-[#03112a] via-[#082d62] to-[#03112a] bg-clip-text text-[21px] font-black leading-[0.95] tracking-[-0.055em] text-transparent">
+                  Via Blue
+                </p>
+
+                <div className="mt-1.5 flex items-center gap-1.5">
+                  <span className="h-px w-5 bg-orange-400" />
+
+                  <p className="text-[8px] font-extrabold uppercase tracking-[0.38em] text-orange-500">
+                    Tours
+                  </p>
+                </div>
+              </div>
+
+            </div>
           </div>
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden items-center gap-1 lg:flex">
+        <nav className="hidden items-center gap-0.5 lg:flex">
 
           {navItems.map((item) => {
             const active = isActive(item.href);
@@ -130,17 +148,17 @@ export default function Navbar() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`group relative mx-1 flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-bold transition-all duration-200 ${
+                  className={`group relative mx-1 flex items-center gap-2.5 overflow-hidden rounded-2xl border px-4 py-2.5 text-[13px] font-extrabold tracking-[-0.015em] transition-all duration-300 ${
                     active
-                      ? "bg-blue-950 text-white shadow-md shadow-blue-950/20"
-                      : "text-blue-900 hover:bg-blue-50"
+                      ? "border-blue-950 bg-blue-950 text-white shadow-[0_8px_24px_rgba(3,17,42,0.22)]"
+                      : "border-orange-100/80 bg-gradient-to-r from-orange-50/80 to-white text-blue-950 shadow-sm hover:-translate-y-0.5 hover:border-orange-200 hover:shadow-md"
                   }`}
                 >
                   <span
-                    className={`flex h-6 w-6 items-center justify-center rounded-lg text-xs ${
+                    className={`flex h-7 w-7 items-center justify-center rounded-xl text-xs transition-all duration-300 ${
                       active
-                        ? "bg-white/15 text-orange-300"
-                        : "bg-orange-50 text-orange-500 group-hover:bg-orange-100"
+                        ? "bg-white/10 text-orange-300"
+                        : "bg-orange-100 text-orange-500 group-hover:rotate-12 group-hover:bg-orange-200"
                     }`}
                   >
                     ✦
@@ -149,7 +167,7 @@ export default function Navbar() {
                   <span>{item.name}</span>
 
                   {!active && (
-                    <span className="absolute -right-1 -top-1 rounded-full bg-orange-500 px-1.5 py-0.5 text-[7px] font-extrabold uppercase tracking-wide text-white shadow-sm">
+                    <span className="absolute right-1 top-1 rounded-full bg-gradient-to-r from-orange-500 to-amber-400 px-1.5 py-0.5 text-[6px] font-black uppercase tracking-[0.08em] text-white shadow-sm">
                       New
                     </span>
                   )}
@@ -161,19 +179,34 @@ export default function Navbar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`group relative rounded-xl px-3.5 py-2.5 text-sm font-bold transition-all duration-200 ${
+                className={`group relative mx-0.5 rounded-2xl px-3.5 py-3 text-[13px] font-extrabold tracking-[-0.015em] transition-all duration-300 ${
                   active
-                    ? "text-blue-950"
-                    : "text-slate-600 hover:text-blue-950"
+                    ? "bg-slate-50 text-blue-950 shadow-sm"
+                    : "text-slate-600 hover:-translate-y-0.5 hover:bg-slate-50 hover:text-blue-950"
                 }`}
               >
-                {item.name}
+                <span className="relative inline-flex items-center gap-1.5">
+
+                  {item.premium && (
+                    <Crown
+                      size={13}
+                      strokeWidth={2.5}
+                      className={`-mr-0.5 transition-all duration-300 ${
+                        active
+                          ? "text-orange-500"
+                          : "text-orange-400 group-hover:-translate-y-0.5 group-hover:rotate-[-8deg] group-hover:text-orange-500"
+                      }`}
+                    />
+                  )}
+
+                  <span>{item.name}</span>
+                </span>
 
                 <span
-                  className={`absolute bottom-1 left-1/2 h-0.5 -translate-x-1/2 rounded-full bg-orange-500 transition-all duration-300 ${
+                  className={`absolute bottom-1.5 left-1/2 h-[2px] -translate-x-1/2 rounded-full bg-gradient-to-r from-orange-400 to-amber-500 transition-all duration-300 ${
                     active
-                      ? "w-5"
-                      : "w-0 group-hover:w-5"
+                      ? "w-6 opacity-100"
+                      : "w-0 opacity-0 group-hover:w-6 group-hover:opacity-100"
                   }`}
                 />
               </Link>
@@ -183,26 +216,26 @@ export default function Navbar() {
         </nav>
 
         {/* Desktop Account */}
-        <div className="hidden lg:flex items-center">
+        <div className="hidden items-center lg:flex">
 
           {userName ? (
             <div className="flex items-center gap-2">
 
               <Link
                 href="/account"
-                className={`flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm font-bold transition ${
+                className={`group flex items-center gap-2.5 rounded-2xl border px-3 py-2 transition-all duration-300 ${
                   pathname.startsWith("/account")
-                    ? "bg-blue-50 text-blue-950"
-                    : "text-blue-900 hover:bg-blue-50"
+                    ? "border-blue-100 bg-blue-50 text-blue-950"
+                    : "border-transparent text-blue-900 hover:border-slate-200 hover:bg-slate-50"
                 }`}
               >
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-950 text-xs font-bold text-white">
+                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-blue-950 to-blue-800 text-xs font-black text-white shadow-md shadow-blue-950/15 transition-transform duration-300 group-hover:scale-105">
                   {userName
                     .charAt(0)
                     .toUpperCase()}
                 </span>
 
-                <span className="max-w-[90px] truncate">
+                <span className="max-w-[90px] truncate text-[13px] font-extrabold">
                   Hi, {userName.split(" ")[0]}
                 </span>
               </Link>
@@ -210,7 +243,7 @@ export default function Navbar() {
               <button
                 type="button"
                 onClick={handleLogout}
-                className="rounded-xl px-3 py-2.5 text-sm font-bold text-slate-500 transition hover:bg-red-50 hover:text-red-600"
+                className="rounded-2xl px-3 py-2.5 text-[13px] font-bold text-slate-500 transition-all duration-300 hover:bg-red-50 hover:text-red-600"
               >
                 Log Out
               </button>
@@ -219,11 +252,15 @@ export default function Navbar() {
           ) : (
             <Link
               href="/login"
-              className="group relative ml-3 flex items-center gap-2 overflow-hidden rounded-xl bg-orange-500 px-5 py-3 text-sm font-extrabold text-white shadow-lg shadow-orange-500/20 transition-all duration-200 hover:-translate-y-0.5 hover:bg-orange-600 hover:shadow-xl hover:shadow-orange-500/25"
+              className="group relative ml-3 flex items-center gap-2 overflow-hidden rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 px-5 py-3 text-[13px] font-black text-white shadow-[0_8px_25px_rgba(249,115,22,0.22)] transition-all duration-300 hover:-translate-y-0.5 hover:from-orange-600 hover:to-amber-500 hover:shadow-[0_12px_30px_rgba(249,115,22,0.28)]"
             >
-              <span>Log In</span>
+              <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
 
-              <span className="text-base transition-transform duration-200 group-hover:translate-x-0.5">
+              <span className="relative">
+                Log In
+              </span>
+
+              <span className="relative text-base transition-transform duration-300 group-hover:translate-x-1">
                 →
               </span>
             </Link>
@@ -235,7 +272,11 @@ export default function Navbar() {
         <button
           type="button"
           onClick={() => setIsOpen((value) => !value)}
-          className="flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white text-xl font-bold text-blue-950 shadow-sm transition hover:border-blue-200 hover:bg-blue-50 lg:hidden"
+          className={`flex h-11 w-11 items-center justify-center rounded-2xl border text-lg font-bold shadow-sm transition-all duration-300 lg:hidden ${
+            isOpen
+              ? "border-blue-950 bg-blue-950 text-white shadow-blue-950/20"
+              : "border-slate-200 bg-white text-blue-950 hover:border-orange-200 hover:bg-orange-50"
+          }`}
           aria-label="Toggle menu"
           aria-expanded={isOpen}
         >
@@ -246,9 +287,9 @@ export default function Navbar() {
 
       {/* Mobile Navigation */}
       {isOpen && (
-        <div className="border-t border-slate-100 bg-white px-4 pb-5 pt-3 shadow-lg lg:hidden">
+        <div className="border-t border-slate-100 bg-white/95 px-4 pb-5 pt-3 shadow-[0_18px_35px_rgba(15,23,42,0.08)] backdrop-blur-xl lg:hidden">
 
-          <nav className="flex flex-col gap-1">
+          <nav className="flex flex-col gap-1.5">
 
             {navItems.map((item) => {
               const active = isActive(item.href);
@@ -258,41 +299,54 @@ export default function Navbar() {
                   key={item.href}
                   href={item.href}
                   onClick={() => setIsOpen(false)}
-                  className={`flex items-center justify-between rounded-xl px-4 py-3.5 text-sm font-bold transition ${
+                  className={`flex items-center justify-between rounded-2xl border px-4 py-3.5 text-sm font-extrabold transition-all duration-300 ${
                     active
-                      ? "bg-blue-950 text-white shadow-md"
+                      ? "border-blue-950 bg-blue-950 text-white shadow-lg shadow-blue-950/15"
                       : item.special
-                      ? "bg-orange-50 text-orange-600 hover:bg-orange-100"
-                      : "text-slate-700 hover:bg-blue-50 hover:text-blue-950"
+                      ? "border-orange-100 bg-gradient-to-r from-orange-50 to-white text-orange-600 hover:border-orange-200 hover:bg-orange-50"
+                      : "border-transparent text-slate-700 hover:border-slate-100 hover:bg-slate-50 hover:text-blue-950"
                   }`}
                 >
                   <span className="flex items-center gap-3">
 
                     {item.special && (
                       <span
-                        className={`flex h-7 w-7 items-center justify-center rounded-lg text-xs ${
+                        className={`flex h-8 w-8 items-center justify-center rounded-xl text-xs ${
                           active
-                            ? "bg-white/15 text-orange-300"
-                            : "bg-white text-orange-500"
+                            ? "bg-white/10 text-orange-300"
+                            : "bg-orange-100 text-orange-500"
                         }`}
                       >
                         ✦
                       </span>
                     )}
 
-                    {item.name}
+                    <span className="flex items-center gap-1.5">
+
+                      {item.premium && (
+                        <Crown
+                          size={14}
+                          strokeWidth={2.5}
+                          className={`transition-all duration-300 ${
+                            active
+                              ? "text-orange-300"
+                              : "text-orange-500"
+                          }`}
+                        />
+                      )}
+
+                      {item.name}
+                    </span>
                   </span>
 
                   {item.special && !active && (
-                    <span className="rounded-full bg-orange-500 px-2 py-1 text-[8px] font-extrabold uppercase tracking-wide text-white">
+                    <span className="rounded-full bg-gradient-to-r from-orange-500 to-amber-400 px-2 py-1 text-[7px] font-black uppercase tracking-[0.08em] text-white shadow-sm">
                       New
                     </span>
                   )}
 
                   {active && (
-                    <span className="text-orange-300">
-                      ●
-                    </span>
+                    <span className="h-1.5 w-1.5 rounded-full bg-orange-400 shadow-[0_0_10px_rgba(251,146,60,0.8)]" />
                   )}
                 </Link>
               );
@@ -307,9 +361,9 @@ export default function Navbar() {
                   <Link
                     href="/account"
                     onClick={() => setIsOpen(false)}
-                    className="flex items-center gap-3 rounded-xl bg-blue-50 px-4 py-3.5 font-bold text-blue-950 transition hover:bg-blue-100"
+                    className="flex items-center gap-3 rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3.5 font-extrabold text-blue-950 transition-all duration-300 hover:bg-blue-100"
                   >
-                    <span className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-950 text-sm font-bold text-white">
+                    <span className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-950 text-sm font-black text-white shadow-md">
                       {userName
                         .charAt(0)
                         .toUpperCase()}
@@ -323,7 +377,7 @@ export default function Navbar() {
                   <button
                     type="button"
                     onClick={handleLogout}
-                    className="w-full rounded-xl border border-slate-200 px-4 py-3.5 text-center font-bold text-slate-700 transition hover:border-red-200 hover:bg-red-50 hover:text-red-600"
+                    className="w-full rounded-2xl border border-slate-200 px-4 py-3.5 text-center font-extrabold text-slate-700 transition-all duration-300 hover:border-red-200 hover:bg-red-50 hover:text-red-600"
                   >
                     Log Out
                   </button>
@@ -333,10 +387,13 @@ export default function Navbar() {
                 <Link
                   href="/login"
                   onClick={() => setIsOpen(false)}
-                  className="flex items-center justify-center gap-2 rounded-xl bg-orange-500 px-4 py-3.5 font-extrabold text-white shadow-lg shadow-orange-500/20 transition hover:bg-orange-600"
+                  className="group relative flex items-center justify-center gap-2 overflow-hidden rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 px-4 py-3.5 font-black text-white shadow-lg shadow-orange-500/20 transition-all duration-300 hover:from-orange-600 hover:to-amber-500"
                 >
                   <span>Log In</span>
-                  <span>→</span>
+
+                  <span className="transition-transform duration-300 group-hover:translate-x-1">
+                    →
+                  </span>
                 </Link>
               )}
 

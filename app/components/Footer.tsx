@@ -164,7 +164,7 @@ function ArrowIcon() {
   );
 }
 
-function ViaTourIcon() {
+function TripadvisorIcon() {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -172,62 +172,129 @@ function ViaTourIcon() {
       className="h-5 w-5"
       aria-hidden="true"
     >
-      <circle
-        cx="12"
-        cy="12"
-        r="8.5"
+      <path
+        d="M3.5 10.5C5.4 7.8 8.2 6.3 12 6.3s6.6 1.5 8.5 4.2"
         stroke="currentColor"
-        strokeWidth="1.6"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+      />
+      <circle
+        cx="7.8"
+        cy="13"
+        r="3.1"
+        stroke="currentColor"
+        strokeWidth="1.7"
+      />
+      <circle
+        cx="16.2"
+        cy="13"
+        r="3.1"
+        stroke="currentColor"
+        strokeWidth="1.7"
+      />
+      <circle
+        cx="7.8"
+        cy="13"
+        r="1"
+        fill="currentColor"
+      />
+      <circle
+        cx="16.2"
+        cy="13"
+        r="1"
+        fill="currentColor"
       />
       <path
-        d="m9 15 2.1-5.1L15 8.5l-2.1 5.1L9 15Z"
+        d="M10.9 13h2.2"
         stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinejoin="round"
+        strokeWidth="1.7"
+        strokeLinecap="round"
       />
-      <circle cx="12" cy="12" r="1" fill="currentColor" />
+      <path
+        d="M12 6.3V4.5"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
 
 export default function Footer() {
   return (
-    <footer className="relative overflow-hidden bg-[#04142f] text-white">
-      {/* Decorative background */}
+    <footer className="relative overflow-hidden bg-[#03112a] text-white">
+      {/* Premium background atmosphere */}
       <div
-        className="pointer-events-none absolute -left-32 -top-32 h-80 w-80 rounded-full bg-blue-500/10 blur-3xl"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,rgba(37,99,235,0.14),transparent_32%),radial-gradient(circle_at_85%_15%,rgba(14,165,233,0.08),transparent_28%),radial-gradient(circle_at_70%_90%,rgba(249,115,22,0.09),transparent_30%)]"
         aria-hidden="true"
       />
 
       <div
-        className="pointer-events-none absolute -bottom-40 right-0 h-96 w-96 rounded-full bg-orange-500/10 blur-3xl"
+        className="pointer-events-none absolute -left-40 top-20 h-96 w-96 rounded-full bg-cyan-400/[0.04] blur-3xl"
         aria-hidden="true"
       />
 
-      <div className="relative mx-auto max-w-7xl px-6 py-16 lg:px-8">
-        {/* Main Footer */}
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-[1.35fr_0.8fr_1fr_1.1fr]">
-          {/* Brand */}
+      <div
+        className="pointer-events-none absolute -right-40 bottom-0 h-[28rem] w-[28rem] rounded-full bg-orange-500/[0.05] blur-3xl"
+        aria-hidden="true"
+      />
+
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent"
+        aria-hidden="true"
+      />
+
+      <div className="relative mx-auto max-w-7xl px-6 py-20 lg:px-8">
+        {/* Premium Brand Intro */}
+        <div className="mb-16 grid gap-10 border-b border-white/[0.08] pb-14 lg:grid-cols-[1.4fr_0.6fr] lg:items-end">
           <div>
             <Link
               href="/"
-              className="inline-flex items-center transition-opacity duration-300 hover:opacity-90"
+              className="inline-flex items-center transition-all duration-300 hover:opacity-90"
             >
               <img
                 src="/logo/logo.svg"
                 alt="Via Blue"
-                className="h-11 w-auto"
+                className="h-12 w-auto"
               />
             </Link>
 
-            <p className="mt-6 max-w-sm text-[15px] leading-7 text-slate-300">
-              Discover unforgettable tours, boat trips, snorkeling
-              adventures and private transfers in Hurghada.
-            </p>
+            <div className="mt-7 max-w-2xl">
+              <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-orange-400">
+                Your Red Sea Experience
+              </p>
 
+              <h2 className="max-w-xl text-2xl font-semibold leading-tight tracking-[-0.025em] text-white sm:text-3xl">
+                Discover Hurghada beyond the ordinary
+              </h2>
+
+              <p className="mt-5 max-w-xl text-[15px] leading-7 text-slate-400">
+                Discover unforgettable tours, boat trips, snorkeling
+                adventures and private transfers in Hurghada
+              </p>
+            </div>
+          </div>
+
+          <div className="lg:justify-self-end">
+            <div className="rounded-2xl border border-white/[0.08] bg-white/[0.035] px-5 py-4 backdrop-blur-xl">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500">
+                Explore Egypt
+              </p>
+
+              <p className="mt-2 text-sm font-medium text-slate-200">
+                Tours • Sea • Desert • Transfers
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Main Footer */}
+        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-[1.35fr_0.8fr_1fr_1.1fr]">
+          {/* Brand */}
+          <div>
             {/* Social */}
-            <div className="mt-8">
-              <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
+            <div>
+              <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-500">
                 Follow Via Blue
               </p>
 
@@ -238,7 +305,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="WhatsApp"
-                  className="group flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.06] text-slate-200 shadow-lg shadow-black/10 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-green-400/40 hover:bg-green-500 hover:text-white hover:shadow-green-500/20"
+                  className="group flex h-11 w-11 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.045] text-slate-300 shadow-xl shadow-black/20 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-green-400/40 hover:bg-green-500 hover:text-white hover:shadow-green-500/20"
                 >
                   <WhatsAppIcon />
                 </a>
@@ -249,7 +316,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Facebook"
-                  className="group flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.06] text-slate-200 shadow-lg shadow-black/10 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-400/40 hover:bg-blue-600 hover:text-white hover:shadow-blue-500/20"
+                  className="group flex h-11 w-11 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.045] text-slate-300 shadow-xl shadow-black/20 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-blue-400/40 hover:bg-blue-600 hover:text-white hover:shadow-blue-500/20"
                 >
                   <FacebookIcon />
                 </a>
@@ -260,7 +327,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Instagram"
-                  className="group flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.06] text-slate-200 shadow-lg shadow-black/10 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-pink-400/40 hover:bg-pink-500 hover:text-white hover:shadow-pink-500/20"
+                  className="group flex h-11 w-11 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.045] text-slate-300 shadow-xl shadow-black/20 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-pink-400/40 hover:bg-pink-500 hover:text-white hover:shadow-pink-500/20"
                 >
                   <InstagramIcon />
                 </a>
@@ -271,7 +338,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="TikTok"
-                  className="group flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.06] text-slate-200 shadow-lg shadow-black/10 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-white/30 hover:bg-black hover:text-white hover:shadow-white/10"
+                  className="group flex h-11 w-11 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.045] text-slate-300 shadow-xl shadow-black/20 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-white/30 hover:bg-black hover:text-white hover:shadow-white/10"
                 >
                   <TikTokIcon />
                 </a>
@@ -280,30 +347,36 @@ export default function Footer() {
                 <a
                   href="mailto:viabluetours@gmail.com"
                   aria-label="Email"
-                  className="group flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.06] text-slate-200 shadow-lg shadow-black/10 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-red-400/40 hover:bg-red-500 hover:text-white hover:shadow-red-500/20"
+                  className="group flex h-11 w-11 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.045] text-slate-300 shadow-xl shadow-black/20 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-red-400/40 hover:bg-red-500 hover:text-white hover:shadow-red-500/20"
                 >
                   <GmailIcon />
                 </a>
               </div>
             </div>
 
-            {/* Via Tour */}
-            <div className="mt-8">
-              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-                Our partner
+            {/* Tripadvisor */}
+            <div className="mt-9">
+              <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500">
+                Travel reputation
               </p>
 
-              <div className="inline-flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm shadow-lg shadow-black/10 backdrop-blur-sm">
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-orange-400/20 bg-orange-500/10 text-orange-400">
-                  <ViaTourIcon />
+              <div className="group relative inline-flex items-center gap-3 overflow-hidden rounded-2xl border border-emerald-400/15 bg-gradient-to-br from-emerald-400/[0.08] via-white/[0.035] to-transparent px-4 py-3 shadow-xl shadow-black/20 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-emerald-400/30">
+                <div
+                  className="pointer-events-none absolute -right-6 -top-8 h-20 w-20 rounded-full bg-emerald-400/10 blur-2xl"
+                  aria-hidden="true"
+                />
+
+                <span className="relative flex h-10 w-10 items-center justify-center rounded-xl border border-emerald-400/20 bg-emerald-500/10 text-emerald-400 shadow-inner shadow-emerald-400/10 transition-all duration-300 group-hover:border-emerald-400/40 group-hover:bg-emerald-500/15">
+                  <TripadvisorIcon />
                 </span>
 
-                <span>
-                  <span className="block font-semibold text-white">
-                    Via Tour
+                <span className="relative">
+                  <span className="flex items-center gap-2 font-semibold text-white">
+                    Tripadvisor
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.7)]" />
                   </span>
 
-                  <span className="block text-xs text-slate-500">
+                  <span className="mt-0.5 block text-xs text-slate-500">
                     Coming soon
                   </span>
                 </span>
@@ -313,15 +386,15 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-[0.16em] text-white">
+            <h3 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">
               Quick Links
             </h3>
 
-            <ul className="mt-6 space-y-4">
+            <ul className="mt-7 space-y-4">
               <li>
                 <Link
                   href="/"
-                  className="group flex items-center gap-2 text-[15px] text-slate-300 transition hover:text-orange-400"
+                  className="group flex items-center gap-2 text-[15px] text-slate-300 transition-all duration-300 hover:translate-x-1 hover:text-orange-400"
                 >
                   <span>Home</span>
                   <ArrowIcon />
@@ -331,7 +404,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/tours"
-                  className="group flex items-center gap-2 text-[15px] text-slate-300 transition hover:text-orange-400"
+                  className="group flex items-center gap-2 text-[15px] text-slate-300 transition-all duration-300 hover:translate-x-1 hover:text-orange-400"
                 >
                   <span>Tours</span>
                   <ArrowIcon />
@@ -341,7 +414,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/transfers"
-                  className="group flex items-center gap-2 text-[15px] text-slate-300 transition hover:text-orange-400"
+                  className="group flex items-center gap-2 text-[15px] text-slate-300 transition-all duration-300 hover:translate-x-1 hover:text-orange-400"
                 >
                   <span>Airport Transfers</span>
                   <ArrowIcon />
@@ -351,7 +424,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/contact"
-                  className="group flex items-center gap-2 text-[15px] text-slate-300 transition hover:text-orange-400"
+                  className="group flex items-center gap-2 text-[15px] text-slate-300 transition-all duration-300 hover:translate-x-1 hover:text-orange-400"
                 >
                   <span>Contact Us</span>
                   <ArrowIcon />
@@ -362,15 +435,15 @@ export default function Footer() {
 
           {/* Experiences */}
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-[0.16em] text-white">
+            <h3 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">
               Popular Experiences
             </h3>
 
-            <ul className="mt-6 space-y-4">
+            <ul className="mt-7 space-y-4">
               <li>
                 <Link
                   href="/tours/paradise-island"
-                  className="group flex items-center gap-2 text-[15px] text-slate-300 transition hover:text-orange-400"
+                  className="group flex items-center gap-2 text-[15px] text-slate-300 transition-all duration-300 hover:translate-x-1 hover:text-orange-400"
                 >
                   <span>Paradise Island</span>
                   <ArrowIcon />
@@ -380,7 +453,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/tours/snorkeling"
-                  className="group flex items-center gap-2 text-[15px] text-slate-300 transition hover:text-orange-400"
+                  className="group flex items-center gap-2 text-[15px] text-slate-300 transition-all duration-300 hover:translate-x-1 hover:text-orange-400"
                 >
                   <span>Snorkeling</span>
                   <ArrowIcon />
@@ -390,7 +463,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/transfers"
-                  className="group flex items-center gap-2 text-[15px] text-slate-300 transition hover:text-orange-400"
+                  className="group flex items-center gap-2 text-[15px] text-slate-300 transition-all duration-300 hover:translate-x-1 hover:text-orange-400"
                 >
                   <span>Private Transfers</span>
                   <ArrowIcon />
@@ -401,13 +474,13 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-[0.16em] text-white">
+            <h3 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">
               Contact Us
             </h3>
 
-            <div className="mt-6 space-y-3">
+            <div className="mt-7 space-y-3">
               {/* Location Card */}
-              <div className="group rounded-2xl border border-white/10 bg-white/[0.04] p-4 shadow-lg shadow-black/10 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-white/15 hover:bg-white/[0.07]">
+              <div className="group rounded-2xl border border-white/[0.08] bg-gradient-to-br from-white/[0.055] to-white/[0.02] p-4 shadow-xl shadow-black/20 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-orange-400/20 hover:bg-white/[0.07]">
                 <div className="flex items-start gap-3">
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-orange-400/20 bg-orange-500/10 text-orange-400 transition-all duration-300 group-hover:bg-orange-500 group-hover:text-white">
                     <LocationIcon />
@@ -430,7 +503,7 @@ export default function Footer() {
                 href="https://wa.me/201505097193"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group block rounded-2xl border border-white/10 bg-white/[0.04] p-4 shadow-lg shadow-black/10 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-green-400/20 hover:bg-green-500/[0.08]"
+                className="group block rounded-2xl border border-white/[0.08] bg-gradient-to-br from-white/[0.055] to-white/[0.02] p-4 shadow-xl shadow-black/20 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-green-400/20 hover:bg-green-500/[0.08]"
               >
                 <div className="flex items-center gap-3">
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-green-400/20 bg-green-500/10 text-green-400 transition-all duration-300 group-hover:bg-green-500 group-hover:text-white">
@@ -454,7 +527,7 @@ export default function Footer() {
               {/* Gmail Card */}
               <a
                 href="mailto:viabluetours@gmail.com"
-                className="group block rounded-2xl border border-white/10 bg-white/[0.04] p-4 shadow-lg shadow-black/10 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-red-400/20 hover:bg-red-500/[0.07]"
+                className="group block rounded-2xl border border-white/[0.08] bg-gradient-to-br from-white/[0.055] to-white/[0.02] p-4 shadow-xl shadow-black/20 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-red-400/20 hover:bg-red-500/[0.07]"
               >
                 <div className="flex items-center gap-3">
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-red-400/20 bg-red-500/10 text-red-400 transition-all duration-300 group-hover:bg-red-500 group-hover:text-white">
@@ -476,30 +549,48 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Divider */}
-        <div className="mt-14 border-t border-white/10" />
+        {/* Premium Closing Section */}
+        <div className="mt-16 overflow-hidden rounded-3xl border border-white/[0.07] bg-gradient-to-r from-white/[0.045] via-white/[0.025] to-orange-500/[0.045] px-6 py-7 shadow-2xl shadow-black/20 backdrop-blur-xl sm:px-8">
+          <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+            <div>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-orange-400">
+                Via Blue
+              </p>
+
+              <p className="mt-2 text-sm font-medium text-slate-200">
+                Your journey starts by the Red Sea
+              </p>
+            </div>
+
+            <div className="h-px flex-1 bg-gradient-to-r from-white/[0.08] via-white/[0.04] to-transparent md:mx-8" />
+
+            <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-slate-500">
+              <Link
+                href="/privacy"
+                className="transition hover:text-white"
+              >
+                Privacy Policy
+              </Link>
+
+              <Link
+                href="/terms"
+                className="transition hover:text-white"
+              >
+                Terms & Conditions
+              </Link>
+            </div>
+          </div>
+        </div>
 
         {/* Bottom */}
-        <div className="flex flex-col gap-5 pt-7 text-sm text-slate-400 md:flex-row md:items-center md:justify-between">
+        <div className="flex flex-col gap-3 pt-7 text-xs text-slate-600 sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © {new Date().getFullYear()} Via Blue. All rights reserved.
+            © {new Date().getFullYear()} Via Blue All rights reserved
           </p>
 
-          <div className="flex flex-wrap gap-x-6 gap-y-2">
-            <Link
-              href="/privacy"
-              className="transition hover:text-white"
-            >
-              Privacy Policy
-            </Link>
-
-            <Link
-              href="/terms"
-              className="transition hover:text-white"
-            >
-              Terms & Conditions
-            </Link>
-          </div>
+          <p>
+            Hurghada • Red Sea • Egypt
+          </p>
         </div>
       </div>
     </footer>

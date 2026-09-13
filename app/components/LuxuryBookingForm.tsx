@@ -1,6 +1,14 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import {
+  Children,
+  cloneElement,
+  isValidElement,
+  ReactElement,
+  ReactNode,
+  useMemo,
+  useState,
+} from "react";
 
 type LuxuryBookingFormProps = {
   tourName: string;
@@ -479,6 +487,36 @@ function getCalendarDays(monthDate: Date) {
   return days;
 }
 
+function NoPeriods({ children }: { children: ReactNode }) {
+  const cleanTextNodes = (node: ReactNode): ReactNode =>
+    Children.map(node, (child) => {
+      if (typeof child === "string") {
+        return child.replace(/\./g, "");
+      }
+
+      if (!isValidElement(child)) {
+        return child;
+      }
+
+      const props = child.props as {
+        children?: ReactNode;
+      };
+
+      if (props.children === undefined) {
+        return child;
+      }
+
+      return cloneElement(
+        child as ReactElement<any>,
+        {
+          children: cleanTextNodes(props.children),
+        }
+      );
+    });
+
+  return <>{cleanTextNodes(children)}</>;
+}
+
 export default function LuxuryBookingForm({
   tourName,
   tourType = "Private Luxury",
@@ -734,1145 +772,1045 @@ ${notes.trim() || "-"}
   };
 
   return (
-    <main className="min-h-screen bg-[#f5f7fa] px-4 py-8 sm:px-6 lg:py-12">
-      <div className="mx-auto max-w-[1280px]">
+    <NoPeriods>
+      <main className="min-h-screen bg-[#f5f7fa] px-4 py-8 sm:px-6 lg:py-12">
+        <div className="mx-auto max-w-[1280px]">
 
-        {/* HERO */}
-        <section className="relative mb-8 overflow-hidden rounded-[30px] bg-[#071a36] shadow-[0_24px_70px_rgba(7,26,54,0.18)]">
-          <div className="absolute -right-24 -top-32 h-80 w-80 rounded-full bg-orange-500/20 blur-3xl" />
-          <div className="absolute -bottom-32 left-1/3 h-72 w-72 rounded-full bg-blue-400/10 blur-3xl" />
+          {/* HERO */}
+          <section className="relative mb-8 overflow-hidden rounded-[30px] bg-[#071a36] shadow-[0_24px_70px_rgba(7,26,54,0.18)]">
+            <div className="absolute -right-24 -top-32 h-80 w-80 rounded-full bg-orange-500/20 blur-3xl" />
+            <div className="absolute -bottom-32 left-1/3 h-72 w-72 rounded-full bg-blue-400/10 blur-3xl" />
 
-          <div className="relative px-6 py-9 sm:px-10 sm:py-11 lg:px-14 lg:py-12">
-            <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
-              <div className="max-w-3xl">
-                <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.07] px-4 py-2 text-[11px] font-bold uppercase tracking-[0.18em] text-orange-300">
-                  <SparklesIcon />
-                  Private Luxury Experience
-                </div>
-
-                <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-[48px] lg:leading-[1.08]">
-                  Reserve your private
-                  <span className="block text-orange-400">
-                    {tourName}
-                  </span>
-                </h1>
-
-                <p className="mt-5 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base">
-                  Complete your details below and send your
-                  booking request directly to our team. We will
-                  confirm your private experience with you.
-                </p>
-              </div>
-
-              <div className="hidden shrink-0 lg:block">
-                <div className="rounded-2xl border border-white/10 bg-white/[0.06] px-5 py-4 backdrop-blur-sm">
-                  <div className="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-400">
-                    Experience
+            <div className="relative px-6 py-9 sm:px-10 sm:py-11 lg:px-14 lg:py-12">
+              <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
+                <div className="max-w-3xl">
+                  <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.07] px-4 py-2 text-[11px] font-bold uppercase tracking-[0.18em] text-orange-300">
+                    <SparklesIcon />
+                    Private Luxury Experience
                   </div>
 
-                  <div className="mt-1 text-lg font-bold text-white">
-                    {tourType}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+                  <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-[48px] lg:leading-[1.08]">
+                    Reserve your private
+                    <span className="block text-orange-400">
+                      {tourName}
+                    </span>
+                  </h1>
 
-        <div className="grid items-start gap-7 lg:grid-cols-[minmax(0,1fr)_350px]">
-
-          {/* FORM */}
-          <div className="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-[0_18px_50px_rgba(15,23,42,0.06)]">
-
-            <div className="border-b border-slate-100 px-6 py-6 sm:px-9">
-              <div className="flex items-center justify-between gap-4">
-                <div>
-                  <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-orange-500">
-                    Step 01
+                  <p className="mt-5 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base">
+                    Complete your details below and send your
+                    booking request directly to our team. We will
+                    confirm your private experience with you.
                   </p>
-
-                  <h2 className="mt-1 text-xl font-bold text-[#071a36] sm:text-2xl">
-                    Guest details
-                  </h2>
                 </div>
 
-                <div className="hidden items-center gap-2 sm:flex">
-                  <div className="h-1.5 w-10 rounded-full bg-orange-500" />
-                  <div className="h-1.5 w-10 rounded-full bg-slate-200" />
-                  <div className="h-1.5 w-10 rounded-full bg-slate-200" />
+                <div className="hidden shrink-0 lg:block">
+                  <div className="rounded-2xl border border-white/10 bg-white/[0.06] px-5 py-4 backdrop-blur-sm">
+                    <div className="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-400">
+                      Experience
+                    </div>
+
+                    <div className="mt-1 text-lg font-bold text-white">
+                      {tourType}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
+          </section>
 
-            <div className="p-6 sm:p-9">
+          <div className="grid items-start gap-7 lg:grid-cols-[minmax(0,1fr)_350px]">
 
-              {/* PERSONAL */}
-              <div>
-                <div className="mb-5 flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-[#0b3a78]">
-                    <UserIcon />
+            {/* FORM */}
+            <div className="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-[0_18px_50px_rgba(15,23,42,0.06)]">
+
+              <div className="border-b border-slate-100 px-6 py-6 sm:px-9">
+                <div className="flex items-center justify-between gap-4">
+                  <div>
+                    <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-orange-500">
+                      Step 01
+                    </p>
+
+                    <h2 className="mt-1 text-xl font-bold text-[#071a36] sm:text-2xl">
+                      Guest details
+                    </h2>
                   </div>
 
-                  <div>
-                    <h3 className="font-bold text-[#071a36]">
-                      Personal information
-                    </h3>
-
-                    <p className="text-xs text-slate-400">
-                      Tell us who will be joining the experience
-                    </p>
+                  <div className="hidden items-center gap-2 sm:flex">
+                    <div className="h-1.5 w-10 rounded-full bg-orange-500" />
+                    <div className="h-1.5 w-10 rounded-full bg-slate-200" />
+                    <div className="h-1.5 w-10 rounded-full bg-slate-200" />
                   </div>
                 </div>
+              </div>
 
-                <div className="grid gap-5 md:grid-cols-2">
+              <div className="p-6 sm:p-9">
 
-                  <div>
-                    <label className={labelClass}>
-                      Full Name *
-                    </label>
-
-                    <div className="relative">
-                      <div className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
-                        <UserIcon />
-                      </div>
-
-                      <input
-                        type="text"
-                        placeholder="Enter full name"
-                        value={name}
-                        onChange={(e) =>
-                          setName(e.target.value)
-                        }
-                        className={`${inputClass(
-                          submitAttempted && !isNameValid
-                        )} pl-12`}
-                      />
+                {/* PERSONAL */}
+                <div>
+                  <div className="mb-5 flex items-center gap-3">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-[#0b3a78]">
+                      <UserIcon />
                     </div>
 
-                    {submitAttempted &&
-                      !isNameValid &&
-                      errorText(
-                        "Please enter the guest's full name."
-                      )}
-                  </div>
+                    <div>
+                      <h3 className="font-bold text-[#071a36]">
+                        Personal information
+                      </h3>
 
-                  <div className="relative">
-                    <label className={labelClass}>
-                      Nationality
-                    </label>
-
-                    <div className="relative">
-                      <div className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
-                        <GlobeIcon />
-                      </div>
-
-                      <input
-                        type="text"
-                        placeholder="Select nationality"
-                        value={nationality}
-                        onChange={(e) => {
-                          setNationality(e.target.value);
-                          setIsNationalityOpen(true);
-                        }}
-                        onFocus={() =>
-                          setIsNationalityOpen(true)
-                        }
-                        onBlur={() =>
-                          setTimeout(
-                            () =>
-                              setIsNationalityOpen(false),
-                            150
-                          )
-                        }
-                        className={`${inputClass(false)} pl-12`}
-                      />
+                      <p className="text-xs text-slate-400">
+                        Tell us who will be joining the experience
+                      </p>
                     </div>
-
-                    {isNationalityOpen &&
-                      filteredNationalities.length > 0 && (
-                        <div className="absolute left-0 right-0 top-[78px] z-40 overflow-hidden rounded-2xl border border-slate-200 bg-white p-1.5 shadow-[0_20px_45px_rgba(15,23,42,0.15)]">
-                          {filteredNationalities.map((item) => (
-                            <button
-                              key={item}
-                              type="button"
-                              onMouseDown={(e) =>
-                                e.preventDefault()
-                              }
-                              onClick={() => {
-                                setNationality(item);
-                                setIsNationalityOpen(false);
-                              }}
-                              className="flex w-full items-center rounded-xl px-3 py-3 text-left text-sm font-semibold text-slate-700 transition hover:bg-blue-50 hover:text-[#0b3a78]"
-                            >
-                              <GlobeIcon />
-
-                              <span className="ml-3">
-                                {item}
-                              </span>
-                            </button>
-                          ))}
-                        </div>
-                      )}
                   </div>
 
-                  <div>
-                    <label className={labelClass}>
-                      Email *
-                    </label>
+                  <div className="grid gap-5 md:grid-cols-2">
 
-                    <div className="relative">
-                      <div className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
-                        <MailIcon />
-                      </div>
+                    <div>
+                      <label className={labelClass}>
+                        Full Name *
+                      </label>
 
-                      <input
-                        type="email"
-                        placeholder="you@example.com"
-                        value={email}
-                        onChange={(e) =>
-                          setEmail(e.target.value)
-                        }
-                        className={`${inputClass(
-                          submitAttempted && !isEmailValid
-                        )} pl-12`}
-                      />
-                    </div>
-
-                    {submitAttempted &&
-                      !isEmailValid &&
-                      errorText(
-                        "Please enter a valid email address."
-                      )}
-                  </div>
-
-                  <div>
-                    <label className={labelClass}>
-                      WhatsApp Number *
-                    </label>
-
-                    <div className="flex gap-2">
-
-                      <div className="relative shrink-0">
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setIsCountryOpen((v) => !v)
-                          }
-                          className="flex h-[54px] items-center gap-2 rounded-2xl border border-slate-200 bg-white px-3 text-slate-700 transition hover:border-slate-300"
-                        >
-                          <FlagIcon
-                            iso={selectedCountry.iso}
-                            name={selectedCountry.name}
-                          />
-
-                          <span className="text-sm font-bold">
-                            {selectedCountry.dialCode}
-                          </span>
-
-                          <ChevronDownIcon
-                            open={isCountryOpen}
-                          />
-                        </button>
-
-                        {isCountryOpen && (
-                          <div className="absolute left-0 top-[62px] z-50 w-[300px] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_24px_50px_rgba(15,23,42,0.18)]">
-
-                            <div className="border-b border-slate-100 p-3">
-                              <input
-                                type="text"
-                                placeholder="Search country or code..."
-                                value={countrySearch}
-                                onChange={(e) =>
-                                  setCountrySearch(
-                                    e.target.value
-                                  )
-                                }
-                                className="h-11 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 text-sm text-slate-800 outline-none focus:border-blue-900 focus:bg-white"
-                                autoFocus
-                              />
-                            </div>
-
-                            <div className="max-h-64 overflow-y-auto p-1.5">
-                              {filteredCountryCodes.map(
-                                (country) => (
-                                  <button
-                                    key={country.name}
-                                    type="button"
-                                    onMouseDown={(e) =>
-                                      e.preventDefault()
-                                    }
-                                    onClick={() => {
-                                      setSelectedCountry(
-                                        country
-                                      );
-                                      setIsCountryOpen(false);
-                                      setCountrySearch("");
-                                    }}
-                                    className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition hover:bg-blue-50"
-                                  >
-                                    <FlagIcon
-                                      iso={country.iso}
-                                      name={country.name}
-                                    />
-
-                                    <span className="flex-1 text-sm font-semibold text-slate-700">
-                                      {country.name}
-                                    </span>
-
-                                    <span className="text-xs font-bold text-slate-400">
-                                      {country.dialCode}
-                                    </span>
-                                  </button>
-                                )
-                              )}
-                            </div>
-                          </div>
-                        )}
-                      </div>
-
-                      <div className="relative min-w-0 flex-1">
+                      <div className="relative">
                         <div className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
-                          <PhoneIcon />
+                          <UserIcon />
                         </div>
 
                         <input
-                          type="tel"
-                          placeholder="WhatsApp number"
-                          value={phone}
+                          type="text"
+                          placeholder="Enter full name"
+                          value={name}
                           onChange={(e) =>
-                            setPhone(e.target.value)
+                            setName(e.target.value)
                           }
                           className={`${inputClass(
-                            submitAttempted &&
-                              !isPhoneValid
+                            submitAttempted && !isNameValid
                           )} pl-12`}
+                        />
+                      </div>
+
+                      {submitAttempted &&
+                        !isNameValid &&
+                        errorText(
+                          "Please enter the guest's full name."
+                        )}
+                    </div>
+
+                    <div className="relative">
+                      <label className={labelClass}>
+                        Nationality
+                      </label>
+
+                      <div className="relative">
+                        <div className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+                          <GlobeIcon />
+                        </div>
+
+                        <input
+                          type="text"
+                          placeholder="Select nationality"
+                          value={nationality}
+                          onChange={(e) => {
+                            setNationality(e.target.value);
+                            setIsNationalityOpen(true);
+                          }}
+                          onFocus={() =>
+                            setIsNationalityOpen(true)
+                          }
+                          onBlur={() =>
+                            setTimeout(
+                              () =>
+                                setIsNationalityOpen(false),
+                              150
+                            )
+                          }
+                          className={`${inputClass(false)} pl-12`}
+                        />
+                      </div>
+
+                      {isNationalityOpen &&
+                        filteredNationalities.length > 0 && (
+                          <div className="absolute left-0 right-0 top-[78px] z-40 overflow-hidden rounded-2xl border border-slate-200 bg-white p-1.5 shadow-[0_20px_45px_rgba(15,23,42,0.15)]">
+                            {filteredNationalities.map((item) => (
+                              <button
+                                key={item}
+                                type="button"
+                                onMouseDown={(e) =>
+                                  e.preventDefault()
+                                }
+                                onClick={() => {
+                                  setNationality(item);
+                                  setIsNationalityOpen(false);
+                                }}
+                                className="flex w-full items-center rounded-xl px-3 py-3 text-left text-sm font-semibold text-slate-700 transition hover:bg-blue-50 hover:text-[#0b3a78]"
+                              >
+                                <GlobeIcon />
+
+                                <span className="ml-3">
+                                  {item}
+                                </span>
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                    </div>
+
+                    <div>
+                      <label className={labelClass}>
+                        Email *
+                      </label>
+
+                      <div className="relative">
+                        <div className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+                          <MailIcon />
+                        </div>
+
+                        <input
+                          type="email"
+                          placeholder="you@example.com"
+                          value={email}
+                          onChange={(e) =>
+                            setEmail(e.target.value)
+                          }
+                          className={`${inputClass(
+                            submitAttempted && !isEmailValid
+                          )} pl-12`}
+                        />
+                      </div>
+
+                      {submitAttempted &&
+                        !isEmailValid &&
+                        errorText(
+                          "Please enter a valid email address."
+                        )}
+                    </div>
+
+                    <div>
+                      <label className={labelClass}>
+                        WhatsApp Number *
+                      </label>
+
+                      <div className="flex gap-2">
+
+                        <div className="relative shrink-0">
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setIsCountryOpen((v) => !v)
+                            }
+                            className="flex h-[54px] items-center gap-2 rounded-2xl border border-slate-200 bg-white px-3 text-slate-700 transition hover:border-slate-300"
+                          >
+                            <FlagIcon
+                              iso={selectedCountry.iso}
+                              name={selectedCountry.name}
+                            />
+
+                            <span className="text-sm font-bold">
+                              {selectedCountry.dialCode}
+                            </span>
+
+                            <ChevronDownIcon
+                              open={isCountryOpen}
+                            />
+                          </button>
+
+                          {isCountryOpen && (
+                            <div className="absolute left-0 top-[62px] z-50 w-[300px] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_24px_50px_rgba(15,23,42,0.18)]">
+
+                              <div className="border-b border-slate-100 p-3">
+                                <input
+                                  type="text"
+                                  placeholder="Search country or code..."
+                                  value={countrySearch}
+                                  onChange={(e) =>
+                                    setCountrySearch(
+                                      e.target.value
+                                    )
+                                  }
+                                  className="h-11 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 text-sm text-slate-800 outline-none focus:border-blue-900 focus:bg-white"
+                                  autoFocus
+                                />
+                              </div>
+
+                              <div className="max-h-64 overflow-y-auto p-1.5">
+                                {filteredCountryCodes.map(
+                                  (country) => (
+                                    <button
+                                      key={country.name}
+                                      type="button"
+                                      onMouseDown={(e) =>
+                                        e.preventDefault()
+                                      }
+                                      onClick={() => {
+                                        setSelectedCountry(
+                                          country
+                                        );
+                                        setIsCountryOpen(false);
+                                        setCountrySearch("");
+                                      }}
+                                      className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition hover:bg-blue-50"
+                                    >
+                                      <FlagIcon
+                                        iso={country.iso}
+                                        name={country.name}
+                                      />
+
+                                      <span className="flex-1 text-sm font-semibold text-slate-700">
+                                        {country.name}
+                                      </span>
+
+                                      <span className="text-xs font-bold text-slate-400">
+                                        {country.dialCode}
+                                      </span>
+                                    </button>
+                                  )
+                                )}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="relative min-w-0 flex-1">
+                          <div className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+                            <PhoneIcon />
+                          </div>
+
+                          <input
+                            type="tel"
+                            placeholder="WhatsApp number"
+                            value={phone}
+                            onChange={(e) =>
+                              setPhone(e.target.value)
+                            }
+                            className={`${inputClass(
+                              submitAttempted &&
+                                !isPhoneValid
+                            )} pl-12`}
+                          />
+                        </div>
+                      </div>
+
+                      {submitAttempted &&
+                        !isPhoneValid &&
+                        errorText(
+                          "Please enter a valid number (at least 6 digits)."
+                        )}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="my-9 h-px bg-slate-100" />
+
+                {/* HOTEL */}
+                <div>
+                  <div className="mb-5 flex items-center gap-3">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-50 text-orange-500">
+                      <HotelIcon />
+                    </div>
+
+                    <div>
+                      <h3 className="font-bold text-[#071a36]">
+                        Hotel information
+                      </h3>
+
+                      <p className="text-xs text-slate-400">
+                        Pickup details help us arrange your transfer
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="grid gap-5 md:grid-cols-2">
+
+                    <div>
+                      <label className={labelClass}>
+                        Hotel Name
+                      </label>
+
+                      <div className="relative">
+                        <div className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+                          <HotelIcon />
+                        </div>
+
+                        <input
+                          type="text"
+                          placeholder="Your hotel name"
+                          value={hotel}
+                          onChange={(e) =>
+                            setHotel(e.target.value)
+                          }
+                          className={`${inputClass(false)} pl-12`}
                         />
                       </div>
                     </div>
 
-                    {submitAttempted &&
-                      !isPhoneValid &&
-                      errorText(
-                        "Please enter a valid number (at least 6 digits)."
-                      )}
-                  </div>
-                </div>
-              </div>
+                    <div>
+                      <label className={labelClass}>
+                        Room Number
+                      </label>
 
-              <div className="my-9 h-px bg-slate-100" />
-
-              {/* HOTEL */}
-              <div>
-                <div className="mb-5 flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-50 text-orange-500">
-                    <HotelIcon />
-                  </div>
-
-                  <div>
-                    <h3 className="font-bold text-[#071a36]">
-                      Hotel information
-                    </h3>
-
-                    <p className="text-xs text-slate-400">
-                      Pickup details help us arrange your transfer
-                    </p>
-                  </div>
-                </div>
-
-                <div className="grid gap-5 md:grid-cols-2">
-
-                  <div>
-                    <label className={labelClass}>
-                      Hotel Name
-                    </label>
-
-                    <div className="relative">
-                      <div className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
-                        <HotelIcon />
-                      </div>
-
-                      <input
-                        type="text"
-                        placeholder="Your hotel name"
-                        value={hotel}
-                        onChange={(e) =>
-                          setHotel(e.target.value)
-                        }
-                        className={`${inputClass(false)} pl-12`}
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className={labelClass}>
-                      Room Number
-                    </label>
-
-                    <div className="relative">
-                      <div className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
-                        <DoorIcon />
-                      </div>
-
-                      <input
-                        type="text"
-                        placeholder="Room number"
-                        value={roomNumber}
-                        onChange={(e) =>
-                          setRoomNumber(e.target.value)
-                        }
-                        className={`${inputClass(false)} pl-12`}
-                      />
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-
-              <div className="my-9 h-px bg-slate-100" />
-
-              {/* DATE */}
-              <div>
-                <div className="mb-5 flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-[#0b3a78]">
-                    <CalendarIcon />
-                  </div>
-
-                  <div>
-                    <h3 className="font-bold text-[#071a36]">
-                      Choose your date
-                    </h3>
-
-                    <p className="text-xs text-slate-400">
-                      Select a date from tomorrow onward
-                    </p>
-                  </div>
-                </div>
-
-                <div className="relative">
-
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setIsCalendarOpen((v) => !v)
-                    }
-                    className={`flex h-[68px] w-full items-center rounded-2xl border bg-white px-5 text-left transition-all ${
-                      submitAttempted && !isDateValid
-                        ? "border-red-400 ring-4 ring-red-50"
-                        : "border-slate-200 hover:border-slate-300"
-                    }`}
-                  >
-                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#071a36] text-white">
-                      <CalendarIcon />
-                    </div>
-
-                    <div className="ml-4 flex-1">
-                      <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">
-                        Tour date
-                      </div>
-
-                      <div
-                        className={`mt-0.5 text-sm font-bold ${
-                          date
-                            ? "text-[#071a36]"
-                            : "text-slate-400"
-                        }`}
-                      >
-                        {date
-                          ? formatDateDisplay(date)
-                          : "Select your preferred date"}
-                      </div>
-                    </div>
-
-                    <ChevronDownIcon
-                      open={isCalendarOpen}
-                    />
-                  </button>
-
-                  {isCalendarOpen && (
-                    <div className="absolute left-0 right-0 top-[76px] z-40 overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 shadow-[0_25px_60px_rgba(15,23,42,0.18)] sm:max-w-[430px]">
-
-                      <div className="mb-5 flex items-center justify-between">
-
-                        <button
-                          type="button"
-                          disabled={!canGoPreviousMonth}
-                          onClick={() =>
-                            setCalendarMonth(
-                              new Date(
-                                calendarMonth.getFullYear(),
-                                calendarMonth.getMonth() - 1,
-                                1
-                              )
-                            )
-                          }
-                          className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:border-slate-300 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-30"
-                        >
-                          <ChevronLeftIcon />
-                        </button>
-
-                        <div className="text-center">
-                          <p className="text-sm font-bold text-[#071a36]">
-                            {calendarMonthLabel}
-                          </p>
-
-                          <p className="mt-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-400">
-                            Select a date
-                          </p>
+                      <div className="relative">
+                        <div className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+                          <DoorIcon />
                         </div>
 
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setCalendarMonth(
-                              new Date(
-                                calendarMonth.getFullYear(),
-                                calendarMonth.getMonth() + 1,
-                                1
-                              )
-                            )
+                        <input
+                          type="text"
+                          placeholder="Room number"
+                          value={roomNumber}
+                          onChange={(e) =>
+                            setRoomNumber(e.target.value)
                           }
-                          className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:border-slate-300 hover:bg-slate-50"
-                        >
-                          <ChevronRightIcon />
-                        </button>
-
-                      </div>
-
-                      <div className="mb-2 grid grid-cols-7">
-                        {[
-                          "Mo",
-                          "Tu",
-                          "We",
-                          "Th",
-                          "Fr",
-                          "Sa",
-                          "Su",
-                        ].map((day) => (
-                          <div
-                            key={day}
-                            className="py-2 text-center text-[10px] font-bold uppercase tracking-wider text-slate-400"
-                          >
-                            {day}
-                          </div>
-                        ))}
-                      </div>
-
-                      <div className="grid grid-cols-7 gap-1">
-                        {calendarDays.map((day, index) => {
-                          if (!day) {
-                            return (
-                              <div
-                                key={`empty-${index}`}
-                                className="aspect-square"
-                              />
-                            );
-                          }
-
-                          const tomorrow =
-                            getLocalTomorrow();
-
-                          const disabled = day < tomorrow;
-
-                          const iso = dateToIso(day);
-
-                          const selected = date === iso;
-
-                          const today = isSameDay(
-                            day,
-                            new Date()
-                          );
-
-                          return (
-                            <button
-                              key={iso}
-                              type="button"
-                              disabled={disabled}
-                              onClick={() =>
-                                selectDate(day)
-                              }
-                              className={`relative flex aspect-square items-center justify-center rounded-xl text-sm font-bold transition ${
-                                selected
-                                  ? "bg-[#071a36] text-white shadow-lg"
-                                  : disabled
-                                    ? "cursor-not-allowed text-slate-200"
-                                    : "text-slate-700 hover:bg-blue-50 hover:text-[#0b3a78]"
-                              }`}
-                            >
-                              {day.getDate()}
-
-                              {today && !selected && (
-                                <span className="absolute bottom-1 h-1 w-1 rounded-full bg-orange-500" />
-                              )}
-                            </button>
-                          );
-                        })}
-                      </div>
-
-                      <div className="mt-5 flex items-center gap-2 border-t border-slate-100 pt-4 text-[11px] font-semibold text-slate-400">
-                        <div className="h-2 w-2 rounded-full bg-orange-500" />
-                        Available from tomorrow
+                          className={`${inputClass(false)} pl-12`}
+                        />
                       </div>
                     </div>
-                  )}
+
+                  </div>
                 </div>
 
-                {submitAttempted &&
-                  !isDateValid &&
-                  errorText(
-                    "Please select a valid tour date (from tomorrow onward)."
-                  )}
-              </div>
+                <div className="my-9 h-px bg-slate-100" />
 
-              <div className="my-9 h-px bg-slate-100" />
-
-              {/* GUESTS */}
-              <div>
-                <div className="mb-5 flex items-center justify-between gap-4">
-
-                  <div className="flex items-center gap-3">
+                {/* DATE */}
+                <div>
+                  <div className="mb-5 flex items-center gap-3">
                     <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-[#0b3a78]">
-                      <UsersIcon />
+                      <CalendarIcon />
                     </div>
 
                     <div>
                       <h3 className="font-bold text-[#071a36]">
-                        Guests
+                        Choose your date
                       </h3>
 
                       <p className="text-xs text-slate-400">
-                        Private experience for your group
+                        Select a date from tomorrow onward
                       </p>
                     </div>
                   </div>
 
-                  <div className="hidden rounded-full bg-slate-100 px-3 py-1.5 text-xs font-bold text-slate-600 sm:block">
-                    {totalGuests} guests
+                  <div className="relative">
+
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setIsCalendarOpen((v) => !v)
+                      }
+                      className={`flex h-[68px] w-full items-center rounded-2xl border bg-white px-5 text-left transition-all ${
+                        submitAttempted && !isDateValid
+                          ? "border-red-400 ring-4 ring-red-50"
+                          : "border-slate-200 hover:border-slate-300"
+                      }`}
+                    >
+                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#071a36] text-white">
+                        <CalendarIcon />
+                      </div>
+
+                      <div className="ml-4 flex-1">
+                        <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">
+                          Tour date
+                        </div>
+
+                        <div
+                          className={`mt-0.5 text-sm font-bold ${
+                            date
+                              ? "text-[#071a36]"
+                              : "text-slate-400"
+                          }`}
+                        >
+                          {date
+                            ? formatDateDisplay(date)
+                            : "Select your preferred date"}
+                        </div>
+                      </div>
+
+                      <ChevronDownIcon
+                        open={isCalendarOpen}
+                      />
+                    </button>
+
+                    {isCalendarOpen && (
+                      <div className="absolute left-0 right-0 top-[76px] z-40 overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 shadow-[0_25px_60px_rgba(15,23,42,0.18)] sm:max-w-[430px]">
+
+                        <div className="mb-5 flex items-center justify-between">
+
+                          <button
+                            type="button"
+                            disabled={!canGoPreviousMonth}
+                            onClick={() =>
+                              setCalendarMonth(
+                                new Date(
+                                  calendarMonth.getFullYear(),
+                                  calendarMonth.getMonth() - 1,
+                                  1
+                                )
+                              )
+                            }
+                            className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:border-slate-300 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-30"
+                          >
+                            <ChevronLeftIcon />
+                          </button>
+
+                          <div className="text-center">
+                            <p className="text-sm font-bold text-[#071a36]">
+                              {calendarMonthLabel}
+                            </p>
+
+                            <p className="mt-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-400">
+                              Select a date
+                            </p>
+                          </div>
+
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setCalendarMonth(
+                                new Date(
+                                  calendarMonth.getFullYear(),
+                                  calendarMonth.getMonth() + 1,
+                                  1
+                                )
+                              )
+                            }
+                            className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:border-slate-300 hover:bg-slate-50"
+                          >
+                            <ChevronRightIcon />
+                          </button>
+
+                        </div>
+
+                        <div className="mb-2 grid grid-cols-7">
+                          {[
+                            "Mo",
+                            "Tu",
+                            "We",
+                            "Th",
+                            "Fr",
+                            "Sa",
+                            "Su",
+                          ].map((day) => (
+                            <div
+                              key={day}
+                              className="py-2 text-center text-[10px] font-bold uppercase tracking-wider text-slate-400"
+                            >
+                              {day}
+                            </div>
+                          ))}
+                        </div>
+
+                        <div className="grid grid-cols-7 gap-1">
+                          {calendarDays.map((day, index) => {
+                            if (!day) {
+                              return (
+                                <div
+                                  key={`empty-${index}`}
+                                  className="aspect-square"
+                                />
+                              );
+                            }
+
+                            const tomorrow =
+                              getLocalTomorrow();
+
+                            const disabled = day < tomorrow;
+
+                            const iso = dateToIso(day);
+
+                            const selected = date === iso;
+
+                            const today = isSameDay(
+                              day,
+                              new Date()
+                            );
+
+                            return (
+                              <button
+                                key={iso}
+                                type="button"
+                                disabled={disabled}
+                                onClick={() =>
+                                  selectDate(day)
+                                }
+                                className={`relative flex aspect-square items-center justify-center rounded-xl text-sm font-bold transition ${
+                                  selected
+                                    ? "bg-[#071a36] text-white shadow-lg"
+                                    : disabled
+                                      ? "cursor-not-allowed text-slate-200"
+                                      : "text-slate-700 hover:bg-blue-50 hover:text-[#0b3a78]"
+                                }`}
+                              >
+                                {day.getDate()}
+
+                                {today && !selected && (
+                                  <span className="absolute bottom-1 h-1 w-1 rounded-full bg-orange-500" />
+                                )}
+                              </button>
+                            );
+                          })}
+                        </div>
+
+                        <div className="mt-5 flex items-center gap-2 border-t border-slate-100 pt-4 text-[11px] font-semibold text-slate-400">
+                          <div className="h-2 w-2 rounded-full bg-orange-500" />
+                          Available from tomorrow
+                        </div>
+                      </div>
+                    )}
                   </div>
 
+                  {submitAttempted &&
+                    !isDateValid &&
+                    errorText(
+                      "Please select a valid tour date (from tomorrow onward)."
+                    )}
                 </div>
 
-                <div className="overflow-hidden rounded-2xl border border-slate-200">
+                <div className="my-9 h-px bg-slate-100" />
 
-                  {/* ADULTS */}
-                  <div className="flex items-center justify-between gap-4 border-b border-slate-100 px-4 py-4 sm:px-5">
+                {/* GUESTS */}
+                <div>
+                  <div className="mb-5 flex items-center justify-between gap-4">
 
                     <div className="flex items-center gap-3">
                       <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-[#0b3a78]">
-                        <UserIcon />
+                        <UsersIcon />
                       </div>
 
                       <div>
-                        <p className="text-sm font-bold text-slate-800">
-                          Adults
-                        </p>
+                        <h3 className="font-bold text-[#071a36]">
+                          Guests
+                        </h3>
 
                         <p className="text-xs text-slate-400">
-                          Age 11+
+                          Private experience for your group
                         </p>
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-3">
-
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setGuestCount(
-                            "adults",
-                            Number(adults) - 1
-                          )
-                        }
-                        disabled={Number(adults) <= 1}
-                        className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:border-[#0b3a78] hover:text-[#0b3a78] disabled:cursor-not-allowed disabled:opacity-30"
-                      >
-                        <MinusIcon />
-                      </button>
-
-                      <span className="w-7 text-center text-base font-bold text-[#071a36]">
-                        {adults}
-                      </span>
-
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setGuestCount(
-                            "adults",
-                            Number(adults) + 1
-                          )
-                        }
-                        disabled={
-                          Number(adults) >= 25 ||
-                          totalGuests >= 25
-                        }
-                        className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:border-[#0b3a78] hover:text-[#0b3a78] disabled:cursor-not-allowed disabled:opacity-30"
-                      >
-                        <PlusIcon />
-                      </button>
-
+                    <div className="hidden rounded-full bg-slate-100 px-3 py-1.5 text-xs font-bold text-slate-600 sm:block">
+                      {totalGuests} guests
                     </div>
+
                   </div>
 
-                  {/* CHILDREN */}
-                  <div className="flex items-center justify-between gap-4 border-b border-slate-100 px-4 py-4 sm:px-5">
+                  <div className="overflow-hidden rounded-2xl border border-slate-200">
 
-                    <div className="flex items-center gap-3">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-50 text-orange-500">
-                        <UserIcon />
+                    {/* ADULTS */}
+                    <div className="flex items-center justify-between gap-4 border-b border-slate-100 px-4 py-4 sm:px-5">
+
+                      <div className="flex items-center gap-3">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-[#0b3a78]">
+                          <UserIcon />
+                        </div>
+
+                        <div>
+                          <p className="text-sm font-bold text-slate-800">
+                            Adults
+                          </p>
+
+                          <p className="text-xs text-slate-400">
+                            Age 11+
+                          </p>
+                        </div>
                       </div>
 
-                      <div>
-                        <p className="text-sm font-bold text-slate-800">
-                          Children
-                        </p>
+                      <div className="flex items-center gap-3">
 
-                        <p className="text-xs text-slate-400">
-                          Ages 5–10
-                        </p>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setGuestCount(
+                              "adults",
+                              Number(adults) - 1
+                            )
+                          }
+                          disabled={Number(adults) <= 1}
+                          className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:border-[#0b3a78] hover:text-[#0b3a78] disabled:cursor-not-allowed disabled:opacity-30"
+                        >
+                          <MinusIcon />
+                        </button>
+
+                        <span className="w-7 text-center text-base font-bold text-[#071a36]">
+                          {adults}
+                        </span>
+
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setGuestCount(
+                              "adults",
+                              Number(adults) + 1
+                            )
+                          }
+                          disabled={
+                            Number(adults) >= 25 ||
+                            totalGuests >= 25
+                          }
+                          className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:border-[#0b3a78] hover:text-[#0b3a78] disabled:cursor-not-allowed disabled:opacity-30"
+                        >
+                          <PlusIcon />
+                        </button>
+
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-3">
+                    {/* CHILDREN */}
+                    <div className="flex items-center justify-between gap-4 border-b border-slate-100 px-4 py-4 sm:px-5">
 
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setGuestCount(
-                            "children",
-                            Number(children) - 1
-                          )
-                        }
-                        disabled={Number(children) <= 0}
-                        className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:border-[#0b3a78] hover:text-[#0b3a78] disabled:cursor-not-allowed disabled:opacity-30"
-                      >
-                        <MinusIcon />
-                      </button>
+                      <div className="flex items-center gap-3">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-50 text-orange-500">
+                          <UserIcon />
+                        </div>
 
-                      <span className="w-7 text-center text-base font-bold text-[#071a36]">
-                        {children}
-                      </span>
+                        <div>
+                          <p className="text-sm font-bold text-slate-800">
+                            Children
+                          </p>
 
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setGuestCount(
-                            "children",
-                            Number(children) + 1
-                          )
-                        }
-                        disabled={
-                          Number(children) >= 10 ||
-                          totalGuests >= 25
-                        }
-                        className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:border-[#0b3a78] hover:text-[#0b3a78] disabled:cursor-not-allowed disabled:opacity-30"
-                      >
-                        <PlusIcon />
-                      </button>
+                          <p className="text-xs text-slate-400">
+                            Ages 5–10
+                          </p>
+                        </div>
+                      </div>
 
+                      <div className="flex items-center gap-3">
+
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setGuestCount(
+                              "children",
+                              Number(children) - 1
+                            )
+                          }
+                          disabled={Number(children) <= 0}
+                          className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:border-[#0b3a78] hover:text-[#0b3a78] disabled:cursor-not-allowed disabled:opacity-30"
+                        >
+                          <MinusIcon />
+                        </button>
+
+                        <span className="w-7 text-center text-base font-bold text-[#071a36]">
+                          {children}
+                        </span>
+
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setGuestCount(
+                              "children",
+                              Number(children) + 1
+                            )
+                          }
+                          disabled={
+                            Number(children) >= 10 ||
+                            totalGuests >= 25
+                          }
+                          className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:border-[#0b3a78] hover:text-[#0b3a78] disabled:cursor-not-allowed disabled:opacity-30"
+                        >
+                          <PlusIcon />
+                        </button>
+
+                      </div>
                     </div>
+
+                    {/* INFANTS */}
+                    <div className="flex items-center justify-between gap-4 px-4 py-4 sm:px-5">
+
+                      <div className="flex items-center gap-3">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 text-slate-500">
+                          <UserIcon />
+                        </div>
+
+                        <div>
+                          <p className="text-sm font-bold text-slate-800">
+                            Infants
+                          </p>
+
+                          <p className="text-xs text-slate-400">
+                            Ages 1–4
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-3">
+
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setGuestCount(
+                              "infants",
+                              Number(infants) - 1
+                            )
+                          }
+                          disabled={Number(infants) <= 0}
+                          className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:border-[#0b3a78] hover:text-[#0b3a78] disabled:cursor-not-allowed disabled:opacity-30"
+                        >
+                          <MinusIcon />
+                        </button>
+
+                        <span className="w-7 text-center text-base font-bold text-[#071a36]">
+                          {infants}
+                        </span>
+
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setGuestCount(
+                              "infants",
+                              Number(infants) + 1
+                            )
+                          }
+                          disabled={
+                            Number(infants) >= 10 ||
+                            totalGuests >= 25
+                          }
+                          className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:border-[#0b3a78] hover:text-[#0b3a78] disabled:cursor-not-allowed disabled:opacity-30"
+                        >
+                          <PlusIcon />
+                        </button>
+
+                      </div>
+                    </div>
+
                   </div>
 
-                  {/* INFANTS */}
-                  <div className="flex items-center justify-between gap-4 px-4 py-4 sm:px-5">
+                  {submitAttempted &&
+                    !isGuestsValid &&
+                    errorText(
+                      "Private tours require a minimum of 2 guests and a maximum of 25 guests."
+                    )}
+
+                  <div className="mt-4 flex items-center justify-between rounded-2xl bg-[#071a36] px-5 py-4 text-white">
 
                     <div className="flex items-center gap-3">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 text-slate-500">
-                        <UserIcon />
-                      </div>
+                      <UsersIcon />
 
-                      <div>
-                        <p className="text-sm font-bold text-slate-800">
-                          Infants
-                        </p>
-
-                        <p className="text-xs text-slate-400">
-                          Ages 1–4
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-3">
-
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setGuestCount(
-                            "infants",
-                            Number(infants) - 1
-                          )
-                        }
-                        disabled={Number(infants) <= 0}
-                        className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:border-[#0b3a78] hover:text-[#0b3a78] disabled:cursor-not-allowed disabled:opacity-30"
-                      >
-                        <MinusIcon />
-                      </button>
-
-                      <span className="w-7 text-center text-base font-bold text-[#071a36]">
-                        {infants}
+                      <span className="text-sm font-semibold text-slate-300">
+                        Total guests
                       </span>
-
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setGuestCount(
-                            "infants",
-                            Number(infants) + 1
-                          )
-                        }
-                        disabled={
-                          Number(infants) >= 10 ||
-                          totalGuests >= 25
-                        }
-                        className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:border-[#0b3a78] hover:text-[#0b3a78] disabled:cursor-not-allowed disabled:opacity-30"
-                      >
-                        <PlusIcon />
-                      </button>
-
                     </div>
-                  </div>
 
-                </div>
-
-                {submitAttempted &&
-                  !isGuestsValid &&
-                  errorText(
-                    "Private tours require a minimum of 2 guests and a maximum of 25 guests."
-                  )}
-
-                <div className="mt-4 flex items-center justify-between rounded-2xl bg-[#071a36] px-5 py-4 text-white">
-
-                  <div className="flex items-center gap-3">
-                    <UsersIcon />
-
-                    <span className="text-sm font-semibold text-slate-300">
-                      Total guests
+                    <span className="text-xl font-bold">
+                      {totalGuests}
                     </span>
+
                   </div>
-
-                  <span className="text-xl font-bold">
-                    {totalGuests}
-                  </span>
-
                 </div>
-              </div>
 
-              {/* CHILD AGES */}
-              {childAges.length > 0 && (
-                <>
-                  <div className="my-8 h-px bg-slate-100" />
+                {/* CHILD AGES */}
+                {childAges.length > 0 && (
+                  <>
+                    <div className="my-8 h-px bg-slate-100" />
 
-                  <div>
-                    <div className="mb-4">
-                      <h3 className="font-bold text-[#071a36]">
-                        Children ages
-                      </h3>
+                    <div>
+                      <div className="mb-4">
+                        <h3 className="font-bold text-[#071a36]">
+                          Children ages
+                        </h3>
 
-                      <p className="mt-1 text-xs text-slate-400">
-                        Please provide the age of each child.
-                      </p>
+                        <p className="mt-1 text-xs text-slate-400">
+                          Please provide the age of each child.
+                        </p>
+                      </div>
+
+                      <div className="grid gap-3 sm:grid-cols-2">
+
+                        {childAges.map((_, index) => (
+                          <div key={index}>
+                            <div className="relative">
+
+                              <select
+                                value={
+                                  childrenAgeValues[index] || ""
+                                }
+                                className={`${inputClass(
+                                  submitAttempted &&
+                                    !childrenAgeValues[index]
+                                )} appearance-none pr-10`}
+                                onChange={(e) => {
+                                  const updated = [
+                                    ...childrenAgeValues,
+                                  ];
+
+                                  updated[index] =
+                                    e.target.value;
+
+                                  setChildrenAgeValues(updated);
+                                }}
+                              >
+                                <option value="">
+                                  Select Child {index + 1} age
+                                </option>
+
+                                {[5, 6, 7, 8, 9, 10].map(
+                                  (age) => (
+                                    <option
+                                      key={age}
+                                      value={age}
+                                    >
+                                      {age} years
+                                    </option>
+                                  )
+                                )}
+                              </select>
+
+                              <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-400">
+                                <ChevronDownIcon />
+                              </div>
+
+                            </div>
+
+                            {submitAttempted &&
+                              !childrenAgeValues[index] &&
+                              errorText(
+                                `Select an age for Child ${
+                                  index + 1
+                                }.`
+                              )}
+                          </div>
+                        ))}
+
+                      </div>
                     </div>
+                  </>
+                )}
 
-                    <div className="grid gap-3 sm:grid-cols-2">
+                {/* INFANT AGES */}
+                {infantAges.length > 0 && (
+                  <>
+                    <div className="my-8 h-px bg-slate-100" />
 
-                      {childAges.map((_, index) => (
-                        <div key={index}>
-                          <div className="relative">
+                    <div>
+                      <div className="mb-4">
+                        <h3 className="font-bold text-[#071a36]">
+                          Infant ages
+                        </h3>
 
-                            <select
-                              value={
-                                childrenAgeValues[index] || ""
-                              }
-                              className={`${inputClass(
-                                submitAttempted &&
-                                  !childrenAgeValues[index]
-                              )} appearance-none pr-10`}
-                              onChange={(e) => {
-                                const updated = [
-                                  ...childrenAgeValues,
-                                ];
+                        <p className="mt-1 text-xs text-slate-400">
+                          Please provide the age of each infant.
+                        </p>
+                      </div>
 
-                                updated[index] =
-                                  e.target.value;
+                      <div className="grid gap-3 sm:grid-cols-2">
 
-                                setChildrenAgeValues(updated);
-                              }}
-                            >
-                              <option value="">
-                                Select Child {index + 1} age
-                              </option>
+                        {infantAges.map((_, index) => (
+                          <div key={index}>
+                            <div className="relative">
 
-                              {[5, 6, 7, 8, 9, 10].map(
-                                (age) => (
+                              <select
+                                value={
+                                  infantAgeValues[index] || ""
+                                }
+                                className={`${inputClass(
+                                  submitAttempted &&
+                                    !infantAgeValues[index]
+                                )} appearance-none pr-10`}
+                                onChange={(e) => {
+                                  const updated = [
+                                    ...infantAgeValues,
+                                  ];
+
+                                  updated[index] =
+                                    e.target.value;
+
+                                  setInfantAgeValues(updated);
+                                }}
+                              >
+                                <option value="">
+                                  Select Infant {index + 1} age
+                                </option>
+
+                                {[1, 2, 3, 4].map((age) => (
                                   <option
                                     key={age}
                                     value={age}
                                   >
-                                    {age} years
+                                    {age}{" "}
+                                    {age === 1
+                                      ? "year"
+                                      : "years"}
                                   </option>
-                                )
-                              )}
-                            </select>
+                                ))}
+                              </select>
 
-                            <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-400">
-                              <ChevronDownIcon />
+                              <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-400">
+                                <ChevronDownIcon />
+                              </div>
+
                             </div>
 
+                            {submitAttempted &&
+                              !infantAgeValues[index] &&
+                              errorText(
+                                `Select an age for Infant ${
+                                  index + 1
+                                }.`
+                              )}
                           </div>
+                        ))}
 
-                          {submitAttempted &&
-                            !childrenAgeValues[index] &&
-                            errorText(
-                              `Select an age for Child ${
-                                index + 1
-                              }.`
-                            )}
-                        </div>
-                      ))}
-
+                      </div>
                     </div>
-                  </div>
-                </>
-              )}
+                  </>
+                )}
 
-              {/* INFANT AGES */}
-              {infantAges.length > 0 && (
-                <>
-                  <div className="my-8 h-px bg-slate-100" />
+                <div className="my-9 h-px bg-slate-100" />
 
-                  <div>
-                    <div className="mb-4">
+                {/* NOTES */}
+                <div>
+                  <div className="mb-5 flex items-center gap-3">
+
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 text-slate-600">
+                      <MessageIcon />
+                    </div>
+
+                    <div>
                       <h3 className="font-bold text-[#071a36]">
-                        Infant ages
+                        Additional information
                       </h3>
 
-                      <p className="mt-1 text-xs text-slate-400">
-                        Please provide the age of each infant.
+                      <p className="text-xs text-slate-400">
+                        Anything else we should know?
                       </p>
                     </div>
 
-                    <div className="grid gap-3 sm:grid-cols-2">
-
-                      {infantAges.map((_, index) => (
-                        <div key={index}>
-                          <div className="relative">
-
-                            <select
-                              value={
-                                infantAgeValues[index] || ""
-                              }
-                              className={`${inputClass(
-                                submitAttempted &&
-                                  !infantAgeValues[index]
-                              )} appearance-none pr-10`}
-                              onChange={(e) => {
-                                const updated = [
-                                  ...infantAgeValues,
-                                ];
-
-                                updated[index] =
-                                  e.target.value;
-
-                                setInfantAgeValues(updated);
-                              }}
-                            >
-                              <option value="">
-                                Select Infant {index + 1} age
-                              </option>
-
-                              {[1, 2, 3, 4].map((age) => (
-                                <option
-                                  key={age}
-                                  value={age}
-                                >
-                                  {age}{" "}
-                                  {age === 1
-                                    ? "year"
-                                    : "years"}
-                                </option>
-                              ))}
-                            </select>
-
-                            <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-400">
-                              <ChevronDownIcon />
-                            </div>
-
-                          </div>
-
-                          {submitAttempted &&
-                            !infantAgeValues[index] &&
-                            errorText(
-                              `Select an age for Infant ${
-                                index + 1
-                              }.`
-                            )}
-                        </div>
-                      ))}
-
-                    </div>
-                  </div>
-                </>
-              )}
-
-              <div className="my-9 h-px bg-slate-100" />
-
-              {/* NOTES */}
-              <div>
-                <div className="mb-5 flex items-center gap-3">
-
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 text-slate-600">
-                    <MessageIcon />
                   </div>
 
-                  <div>
-                    <h3 className="font-bold text-[#071a36]">
-                      Additional information
-                    </h3>
+                  <label className={labelClass}>
+                    Special Requests / Notes
+                  </label>
 
-                    <p className="text-xs text-slate-400">
-                      Anything else we should know?
-                    </p>
-                  </div>
-
+                  <textarea
+                    rows={5}
+                    placeholder="Tell us about any special requests, preferences or important details..."
+                    value={notes}
+                    onChange={(e) =>
+                      setNotes(e.target.value)
+                    }
+                    className="w-full resize-none rounded-2xl border border-slate-200 bg-white p-4 text-sm font-medium leading-6 text-slate-800 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-blue-900 focus:ring-4 focus:ring-blue-900/5"
+                  />
                 </div>
 
-                <label className={labelClass}>
-                  Special Requests / Notes
-                </label>
+                {submitAttempted && !isFormValid && (
+                  <div className="mt-6 flex items-start gap-3 rounded-2xl border border-red-100 bg-red-50 p-4">
+                    <div className="mt-0.5 h-2 w-2 shrink-0 rounded-full bg-red-500" />
 
-                <textarea
-                  rows={5}
-                  placeholder="Tell us about any special requests, preferences or important details..."
-                  value={notes}
-                  onChange={(e) =>
-                    setNotes(e.target.value)
-                  }
-                  className="w-full resize-none rounded-2xl border border-slate-200 bg-white p-4 text-sm font-medium leading-6 text-slate-800 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-blue-900 focus:ring-4 focus:ring-blue-900/5"
-                />
-              </div>
-
-              {submitAttempted && !isFormValid && (
-                <div className="mt-6 flex items-start gap-3 rounded-2xl border border-red-100 bg-red-50 p-4">
-                  <div className="mt-0.5 h-2 w-2 shrink-0 rounded-full bg-red-500" />
-
-                  <p className="text-sm font-semibold leading-6 text-red-700">
-                    Please complete the required fields
-                    highlighted above before sending your
-                    booking request.
-                  </p>
-                </div>
-              )}
-
-              {/* MOBILE PRICE */}
-              <div className="mt-7 rounded-2xl border border-orange-100 bg-orange-50 p-5 lg:hidden">
-                <div className="flex items-end justify-between gap-4">
-
-                  <div>
-                    <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-orange-600">
-                      Private tour
-                    </p>
-
-                    <p className="mt-1 text-sm font-semibold text-slate-600">
-                      {totalGuests} guests
+                    <p className="text-sm font-semibold leading-6 text-red-700">
+                      Please complete the required fields
+                      highlighted above before sending your
+                      booking request.
                     </p>
                   </div>
+                )}
 
-                  <div className="text-right">
-                    <p className="text-3xl font-black text-[#071a36]">
-                      €{totalPrice}
-                    </p>
-
-                    <p className="text-[10px] font-semibold text-slate-400">
-                      total experience
-                    </p>
-                  </div>
-
-                </div>
-              </div>
-
-              {/* SUBMIT */}
-              <button
-                type="button"
-                onClick={handleSubmit}
-                className="group mt-6 flex h-[62px] w-full items-center justify-center gap-3 rounded-2xl bg-[#071a36] px-6 text-sm font-bold text-white shadow-[0_14px_30px_rgba(7,26,54,0.18)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#0b2b55] hover:shadow-[0_18px_38px_rgba(7,26,54,0.24)]"
-              >
-              
-
-                <span>
-                  Send Booking Request
-                </span>
-
-                <span className="text-slate-400 transition-transform duration-300 group-hover:translate-x-1">
-                  →
-                </span>
-              </button>
-
-              <div className="mt-4 flex items-center justify-center gap-2 text-center text-[11px] font-semibold text-slate-400">
-                <LockIcon />
-
-                <span>
-                  Your booking request is sent securely via
-                  WhatsApp
-                </span>
-              </div>
-
-            </div>
-          </div>
-
-          {/* SIDEBAR */}
-          <aside className="lg:sticky lg:top-6">
-
-            <div className="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-[0_18px_50px_rgba(15,23,42,0.07)]">
-
-              <div className="relative overflow-hidden bg-[#071a36] px-6 py-7 text-white">
-
-                <div className="absolute -right-12 -top-16 h-40 w-40 rounded-full bg-orange-500/20 blur-2xl" />
-
-                <div className="relative">
-
-                  <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-orange-300">
-                    Your reservation
-                  </p>
-
-                  <h3 className="mt-2 text-xl font-bold">
-                    Private Tour Summary
-                  </h3>
-
-                  <p className="mt-2 text-xs leading-5 text-slate-300">
-                    Everything is private and arranged
-                    exclusively for your group.
-                  </p>
-
-                </div>
-              </div>
-
-              <div className="p-5 sm:p-6">
-
-                <div className="rounded-2xl bg-slate-50 p-4">
-
-                  <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">
-                    Tour
-                  </p>
-
-                  <p className="mt-2 text-sm font-bold leading-6 text-[#071a36]">
-                    {tourName}
-                  </p>
-
-                  <div className="mt-3 inline-flex items-center rounded-full bg-blue-50 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-[#0b3a78]">
-                    {tourType}
-                  </div>
-
-                </div>
-
-                <div className="mt-3 overflow-hidden rounded-2xl border border-orange-100 bg-orange-50">
-
-                  <div className="flex items-end justify-between p-5">
+                {/* MOBILE PRICE */}
+                <div className="mt-7 rounded-2xl border border-orange-100 bg-orange-50 p-5 lg:hidden">
+                  <div className="flex items-end justify-between gap-4">
 
                     <div>
                       <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-orange-600">
-                        Total price
+                        Private tour
                       </p>
 
-                      <p className="mt-1 text-xs font-semibold text-slate-500">
-                        Private experience
+                      <p className="mt-1 text-sm font-semibold text-slate-600">
+                        {totalGuests} guests
                       </p>
                     </div>
 
@@ -1880,140 +1818,241 @@ ${notes.trim() || "-"}
                       <p className="text-3xl font-black text-[#071a36]">
                         €{totalPrice}
                       </p>
-                    </div>
 
-                  </div>
-
-                  <div className="border-t border-orange-100 px-5 py-3 text-[10px] font-semibold text-orange-700">
-                    Price updates automatically with guest
-                    count
-                  </div>
-
-                </div>
-
-                <div className="mt-3 overflow-hidden rounded-2xl border border-slate-100">
-
-                  <div className="flex items-center justify-between border-b border-slate-100 px-4 py-4">
-
-                    <div className="flex items-center gap-3">
-                      <div className="text-slate-400">
-                        <CalendarIcon />
-                      </div>
-
-                      <span className="text-xs font-bold text-slate-500">
-                        Date
-                      </span>
-                    </div>
-
-                    <span className="max-w-[150px] text-right text-xs font-bold text-[#071a36]">
-                      {date
-                        ? formatDateDisplay(date)
-                        : "Not selected"}
-                    </span>
-
-                  </div>
-
-                  <div className="flex items-center justify-between border-b border-slate-100 px-4 py-4">
-
-                    <div className="flex items-center gap-3">
-                      <div className="text-slate-400">
-                        <UsersIcon />
-                      </div>
-
-                      <span className="text-xs font-bold text-slate-500">
-                        Guests
-                      </span>
-                    </div>
-
-                    <span className="text-xs font-bold text-[#071a36]">
-                      {totalGuests}
-                    </span>
-
-                  </div>
-
-                  <div className="flex items-center justify-between px-4 py-4">
-
-                    <div className="flex items-center gap-3">
-                      <div className="text-slate-400">
-                        <HotelIcon />
-                      </div>
-
-                      <span className="text-xs font-bold text-slate-500">
-                        Pickup
-                      </span>
-                    </div>
-
-                    <span className="max-w-[150px] truncate text-right text-xs font-bold text-[#071a36]">
-                      {hotel || "Hotel"}
-                    </span>
-
-                  </div>
-
-                </div>
-
-                {included.length > 0 && (
-                  <div className="mt-6">
-
-                    <div className="mb-4 flex items-center justify-between">
-                      <h4 className="text-sm font-bold text-[#071a36]">
-                        Included in your experience
-                      </h4>
-
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                        Included
-                      </span>
-                    </div>
-
-                    <div className="space-y-3">
-
-                      {included.map((item, index) => (
-                        <div
-                          key={index}
-                          className="flex items-start gap-3"
-                        >
-                          <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-green-50 text-green-600">
-                            <CheckIcon />
-                          </span>
-
-                          <span className="text-xs font-semibold leading-5 text-slate-600">
-                            {item}
-                          </span>
-                        </div>
-                      ))}
-
-                    </div>
-                  </div>
-                )}
-
-                <div className="mt-6 rounded-2xl border border-slate-100 bg-slate-50 p-4">
-
-                  <div className="flex items-start gap-3">
-
-                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white text-[#0b3a78] shadow-sm">
-                      <LockIcon />
-                    </div>
-
-                    <div>
-                      <p className="text-xs font-bold text-[#071a36]">
-                        Simple & direct booking
-                      </p>
-
-                      <p className="mt-1 text-[11px] leading-5 text-slate-400">
-                        Send your request and our team will
-                        contact you directly to confirm the
-                        details.
+                      <p className="text-[10px] font-semibold text-slate-400">
+                        total experience
                       </p>
                     </div>
 
                   </div>
+                </div>
+
+                {/* SUBMIT */}
+                <button
+                  type="button"
+                  onClick={handleSubmit}
+                  className="group mt-6 flex h-[62px] w-full items-center justify-center gap-3 rounded-2xl bg-[#071a36] px-6 text-sm font-bold text-white shadow-[0_14px_30px_rgba(7,26,54,0.18)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#0b2b55] hover:shadow-[0_18px_38px_rgba(7,26,54,0.24)]"
+                >
+
+                  <span>
+                    Send Booking Request
+                  </span>
+
+                  <span className="text-slate-400 transition-transform duration-300 group-hover:translate-x-1">
+                    →
+                  </span>
+                </button>
+
+                <div className="mt-4 flex items-center justify-center gap-2 text-center text-[11px] font-semibold text-slate-400">
+                  <LockIcon />
+
+                  <span>
+                    Your booking request is sent securely via
+                    WhatsApp
+                  </span>
                 </div>
 
               </div>
             </div>
-          </aside>
 
+            {/* SIDEBAR */}
+            <aside className="lg:sticky lg:top-6">
+
+              <div className="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-[0_18px_50px_rgba(15,23,42,0.07)]">
+
+                <div className="relative overflow-hidden bg-[#071a36] px-6 py-7 text-white">
+
+                  <div className="absolute -right-12 -top-16 h-40 w-40 rounded-full bg-orange-500/20 blur-2xl" />
+
+                  <div className="relative">
+
+                    <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-orange-300">
+                      Your reservation
+                    </p>
+
+                    <h3 className="mt-2 text-xl font-bold">
+                      Private Tour Summary
+                    </h3>
+
+                    <p className="mt-2 text-xs leading-5 text-slate-300">
+                      Everything is private and arranged
+                      exclusively for your group.
+                    </p>
+
+                  </div>
+                </div>
+
+                <div className="p-5 sm:p-6">
+
+                  <div className="rounded-2xl bg-slate-50 p-4">
+
+                    <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">
+                      Tour
+                    </p>
+
+                    <p className="mt-2 text-sm font-bold leading-6 text-[#071a36]">
+                      {tourName}
+                    </p>
+
+                    <div className="mt-3 inline-flex items-center rounded-full bg-blue-50 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-[#0b3a78]">
+                      {tourType}
+                    </div>
+
+                  </div>
+
+                  <div className="mt-3 overflow-hidden rounded-2xl border border-orange-100 bg-orange-50">
+
+                    <div className="flex items-end justify-between p-5">
+
+                      <div>
+                        <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-orange-600">
+                          Total price
+                        </p>
+
+                        <p className="mt-1 text-xs font-semibold text-slate-500">
+                          Private experience
+                        </p>
+                      </div>
+
+                      <div className="text-right">
+                        <p className="text-3xl font-black text-[#071a36]">
+                          €{totalPrice}
+                        </p>
+                      </div>
+
+                    </div>
+
+                    <div className="border-t border-orange-100 px-5 py-3 text-[10px] font-semibold text-orange-700">
+                      Price updates automatically with guest
+                      count
+                    </div>
+
+                  </div>
+
+                  <div className="mt-3 overflow-hidden rounded-2xl border border-slate-100">
+
+                    <div className="flex items-center justify-between border-b border-slate-100 px-4 py-4">
+
+                      <div className="flex items-center gap-3">
+                        <div className="text-slate-400">
+                          <CalendarIcon />
+                        </div>
+
+                        <span className="text-xs font-bold text-slate-500">
+                          Date
+                        </span>
+                      </div>
+
+                      <span className="max-w-[150px] text-right text-xs font-bold text-[#071a36]">
+                        {date
+                          ? formatDateDisplay(date)
+                          : "Not selected"}
+                      </span>
+
+                    </div>
+
+                    <div className="flex items-center justify-between border-b border-slate-100 px-4 py-4">
+
+                      <div className="flex items-center gap-3">
+                        <div className="text-slate-400">
+                          <UsersIcon />
+                        </div>
+
+                        <span className="text-xs font-bold text-slate-500">
+                          Guests
+                        </span>
+                      </div>
+
+                      <span className="text-xs font-bold text-[#071a36]">
+                        {totalGuests}
+                      </span>
+
+                    </div>
+
+                    <div className="flex items-center justify-between px-4 py-4">
+
+                      <div className="flex items-center gap-3">
+                        <div className="text-slate-400">
+                          <HotelIcon />
+                        </div>
+
+                        <span className="text-xs font-bold text-slate-500">
+                          Pickup
+                        </span>
+                      </div>
+
+                      <span className="max-w-[150px] truncate text-right text-xs font-bold text-[#071a36]">
+                        {hotel || "Hotel"}
+                      </span>
+
+                    </div>
+
+                  </div>
+
+                  {included.length > 0 && (
+                    <div className="mt-6">
+
+                      <div className="mb-4 flex items-center justify-between">
+                        <h4 className="text-sm font-bold text-[#071a36]">
+                          Included in your experience
+                        </h4>
+
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                          Included
+                        </span>
+                      </div>
+
+                      <div className="space-y-3">
+
+                        {included.map((item, index) => (
+                          <div
+                            key={index}
+                            className="flex items-start gap-3"
+                          >
+                            <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-green-50 text-green-600">
+                              <CheckIcon />
+                            </span>
+
+                            <span className="text-xs font-semibold leading-5 text-slate-600">
+                              {item}
+                            </span>
+                          </div>
+                        ))}
+
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="mt-6 rounded-2xl border border-slate-100 bg-slate-50 p-4">
+
+                    <div className="flex items-start gap-3">
+
+                      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white text-[#0b3a78] shadow-sm">
+                        <LockIcon />
+                      </div>
+
+                      <div>
+                        <p className="text-xs font-bold text-[#071a36]">
+                          Simple & direct booking
+                        </p>
+
+                        <p className="mt-1 text-[11px] leading-5 text-slate-400">
+                          Send your request and our team will
+                          contact you directly to confirm the
+                          details.
+                        </p>
+                      </div>
+
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </aside>
+
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </NoPeriods>
   );
 }

@@ -93,16 +93,22 @@ export default function TourGallery({
       {/* Gallery */}
       {/* ============================= */}
 
-      <div className="mt-12">
+      <div className="relative mt-12">
+        <div className="mb-7">
+          <div className="inline-flex items-center rounded-full border border-orange-200 bg-orange-50 px-4 py-2 shadow-sm">
+            <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-orange-500">
+              Gallery
+            </p>
+          </div>
 
-        <h2 className="mb-6 text-3xl font-bold text-blue-900">
-          Gallery
-        </h2>
+          <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-blue-950 md:text-4xl">
+            Explore {tourName}
+          </h2>
+        </div>
 
         {/* Gallery Grid */}
 
         <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
-
           {galleryImages.map((image, index) => (
             <button
               key={`${image}-${index}`}
@@ -111,7 +117,7 @@ export default function TourGallery({
                 setCurrentIndex(index);
                 setIsFullscreen(true);
               }}
-              className={`group relative overflow-hidden rounded-2xl bg-gray-100 ${
+              className={`group relative overflow-hidden rounded-[22px] bg-slate-100 shadow-[0_12px_35px_rgba(7,26,54,0.08)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_45px_rgba(7,26,54,0.14)] ${
                 index === 0
                   ? "col-span-2 row-span-2 h-[360px] md:h-[430px]"
                   : "h-[175px] md:h-[205px]"
@@ -127,25 +133,24 @@ export default function TourGallery({
                     ? "(max-width: 768px) 100vw, 50vw"
                     : "(max-width: 768px) 50vw, 25vw"
                 }
-                className="object-cover transition duration-500 group-hover:scale-105"
+                className="object-cover transition duration-700 group-hover:scale-105"
                 loading={index === 0 ? "eager" : "lazy"}
               />
 
               {/* Hover Overlay */}
 
-              <div className="absolute inset-0 bg-black/0 transition duration-300 group-hover:bg-black/20" />
+              <div className="absolute inset-0 bg-gradient-to-t from-blue-950/35 via-transparent to-transparent opacity-0 transition duration-300 group-hover:opacity-100" />
+
+              <div className="absolute inset-0 bg-black/0 transition duration-300 group-hover:bg-black/10" />
 
               {/* Zoom Icon */}
 
-              <div className="absolute right-3 top-3 rounded-full bg-black/60 px-3 py-2 text-sm text-white opacity-0 backdrop-blur transition duration-300 group-hover:opacity-100">
+              <div className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-blue-950/70 text-sm text-white opacity-0 shadow-lg backdrop-blur-md transition duration-300 group-hover:opacity-100">
                 🔍
               </div>
-
             </button>
           ))}
-
         </div>
-
       </div>
 
       {/* ============================= */}
@@ -153,14 +158,13 @@ export default function TourGallery({
       {/* ============================= */}
 
       {isFullscreen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 p-4">
-
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-blue-950/95 p-4 backdrop-blur-sm">
           {/* Close */}
 
           <button
             type="button"
             onClick={() => setIsFullscreen(false)}
-            className="absolute right-5 top-5 z-20 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-2xl text-white transition hover:bg-white/20"
+            className="absolute right-5 top-5 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/10 text-2xl text-white shadow-lg backdrop-blur-md transition duration-300 hover:bg-orange-500"
             aria-label="Close gallery"
           >
             ✕
@@ -178,7 +182,7 @@ export default function TourGallery({
                     galleryImages.length
                 )
               }
-              className="absolute left-4 z-20 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-3xl text-white transition hover:bg-white/20 md:left-8"
+              className="absolute left-4 z-20 flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/10 text-3xl text-white shadow-lg backdrop-blur-md transition duration-300 hover:bg-orange-500 md:left-8"
               aria-label="Previous image"
             >
               ‹
@@ -187,7 +191,7 @@ export default function TourGallery({
 
           {/* Fullscreen Image */}
 
-          <div className="relative h-[80vh] w-full max-w-6xl">
+          <div className="relative h-[80vh] w-full max-w-6xl overflow-hidden rounded-2xl">
             <Image
               src={galleryImages[currentIndex]}
               alt={`${tourName} - image ${currentIndex + 1}`}
@@ -209,7 +213,7 @@ export default function TourGallery({
                     (current + 1) % galleryImages.length
                 )
               }
-              className="absolute right-4 z-20 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-3xl text-white transition hover:bg-white/20 md:right-8"
+              className="absolute right-4 z-20 flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/10 text-3xl text-white shadow-lg backdrop-blur-md transition duration-300 hover:bg-orange-500 md:right-8"
               aria-label="Next image"
             >
               ›
@@ -218,10 +222,9 @@ export default function TourGallery({
 
           {/* Counter */}
 
-          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 rounded-full bg-white/10 px-5 py-2 font-bold text-white backdrop-blur">
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 rounded-full border border-white/10 bg-white/10 px-5 py-2 font-bold text-white shadow-lg backdrop-blur-md">
             {currentIndex + 1} / {galleryImages.length}
           </div>
-
         </div>
       )}
     </>

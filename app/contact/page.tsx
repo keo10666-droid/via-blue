@@ -79,6 +79,102 @@ function LocationIcon() {
   );
 }
 
+function FacebookIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className="h-6 w-6"
+      aria-hidden="true"
+    >
+      <path d="M13.5 21v-8h2.7l.4-3h-3.1V8.1c0-.9.3-1.5 1.6-1.5h1.7V4a22 22 0 0 0-2.4-.1c-2.4 0-4 1.5-4 4.1V10H8v3h2.4v8h3.1Z" />
+    </svg>
+  );
+}
+
+function InstagramIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      className="h-6 w-6"
+      aria-hidden="true"
+    >
+      <rect
+        x="3.5"
+        y="3.5"
+        width="17"
+        height="17"
+        rx="5"
+        stroke="currentColor"
+        strokeWidth="1.7"
+      />
+      <circle
+        cx="12"
+        cy="12"
+        r="4"
+        stroke="currentColor"
+        strokeWidth="1.7"
+      />
+      <circle
+        cx="17.5"
+        cy="6.7"
+        r="1"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
+function TikTokIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      className="h-6 w-6"
+      aria-hidden="true"
+    >
+      <path
+        d="M14.2 4c.2 1.7 1.1 3 2.7 3.8.7.3 1.4.5 2.1.5v3a8 8 0 0 1-4.8-1.6v5.7a5.1 5.1 0 1 1-4.4-5.1v3a2.1 2.1 0 1 0 1.3 2v-11.3h3.1Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
+function TripadvisorIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      className="h-6 w-6"
+      aria-hidden="true"
+    >
+      <circle
+        cx="8"
+        cy="13"
+        r="3.2"
+        stroke="currentColor"
+        strokeWidth="1.7"
+      />
+      <circle
+        cx="16"
+        cy="13"
+        r="3.2"
+        stroke="currentColor"
+        strokeWidth="1.7"
+      />
+      <path
+        d="M4.8 9.5h14.4M12 9.5v6.2M9.8 9.5 12 6l2.2 3.5"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 function ArrowIcon() {
   return (
     <svg
@@ -141,13 +237,13 @@ export default function ContactPage() {
 
             <h1 className="text-4xl font-semibold tracking-[-0.03em] text-white sm:text-5xl lg:text-6xl">
               Let&apos;s talk about
-              <span className="block text-orange-400">your next journey.</span>
+              <span className="block text-orange-400">your next journey</span>
             </h1>
 
             <p className="mt-6 max-w-2xl text-base leading-7 text-slate-300 sm:text-lg">
               Have a question about a tour, transfer or private experience?
               Get in touch with Via Blue and our team will be happy to help
-              you plan your trip in Hurghada.
+              you plan your trip in Hurghada
             </p>
           </div>
         </div>
@@ -164,20 +260,20 @@ export default function ContactPage() {
               </p>
 
               <h2 className="mt-3 text-3xl font-semibold tracking-[-0.025em] text-[#071d49] sm:text-4xl">
-                We&apos;re just a message away.
+                We&apos;re just a message away
               </h2>
 
               <p className="mt-4 max-w-lg text-[15px] leading-7 text-[#667085]">
                 Whether you need help choosing an excursion, arranging an
                 airport transfer or simply have a question, feel free to
-                contact us.
+                contact us
               </p>
             </div>
 
             {/* Contact cards */}
             <div className="mt-8 space-y-4">
               <a
-                href="https://wa.me/201091920706"
+                href="https://wa.me/201505097193"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group flex items-center gap-4 rounded-2xl border border-[#e6e9ef] bg-white p-5 shadow-[0_10px_30px_rgba(7,29,73,0.04)] transition-all duration-300 hover:-translate-y-1 hover:border-[#f59a23]/40 hover:shadow-[0_16px_40px_rgba(7,29,73,0.08)]"
@@ -192,7 +288,7 @@ export default function ContactPage() {
                   </p>
 
                   <p className="mt-1 font-semibold text-[#071d49]">
-                    +20 109 192 0706
+                    +20 150 509 7193
                   </p>
 
                   <p className="mt-0.5 text-sm text-[#667085]">
@@ -204,7 +300,7 @@ export default function ContactPage() {
               </a>
 
               <a
-                href="mailto:info@holiwaytour.com"
+                href="mailto:viabluetours@gmail.com"
                 className="group flex items-center gap-4 rounded-2xl border border-[#e6e9ef] bg-white p-5 shadow-[0_10px_30px_rgba(7,29,73,0.04)] transition-all duration-300 hover:-translate-y-1 hover:border-[#f59a23]/40 hover:shadow-[0_16px_40px_rgba(7,29,73,0.08)]"
               >
                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#fff5e7] text-[#f59a23] transition-colors group-hover:bg-[#f59a23] group-hover:text-white">
@@ -217,7 +313,7 @@ export default function ContactPage() {
                   </p>
 
                   <p className="mt-1 break-all font-semibold text-[#071d49]">
-                    info@holiwaytour.com
+                    viabluetours@gmail.com
                   </p>
 
                   <p className="mt-0.5 text-sm text-[#667085]">
@@ -245,6 +341,100 @@ export default function ContactPage() {
                   <p className="mt-0.5 text-sm text-[#667085]">
                     Serving Hurghada and the Red Sea
                   </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Social media */}
+            <div className="mt-6">
+              <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[#f59a23]">
+                Connect with us
+              </p>
+
+              <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                <a
+                  href="https://www.facebook.com/share/1RwrmKAEmH/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center gap-3 rounded-2xl border border-[#e6e9ef] bg-white p-4 shadow-[0_10px_30px_rgba(7,29,73,0.04)] transition-all duration-300 hover:-translate-y-1 hover:border-[#f59a23]/40 hover:shadow-[0_16px_40px_rgba(7,29,73,0.08)]"
+                >
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#fff5e7] text-[#f59a23] transition-colors group-hover:bg-[#f59a23] group-hover:text-white">
+                    <FacebookIcon />
+                  </div>
+
+                  <div className="min-w-0 flex-1">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-[#98a2b3]">
+                      Facebook
+                    </p>
+
+                    <p className="mt-1 font-semibold text-[#071d49]">
+                      Via Blue
+                    </p>
+                  </div>
+
+                  <ArrowIcon />
+                </a>
+
+                <a
+                  href="https://www.instagram.com/viabluetours?stkn=MTY5czlwYXp1djJxNA=="
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center gap-3 rounded-2xl border border-[#e6e9ef] bg-white p-4 shadow-[0_10px_30px_rgba(7,29,73,0.04)] transition-all duration-300 hover:-translate-y-1 hover:border-[#f59a23]/40 hover:shadow-[0_16px_40px_rgba(7,29,73,0.08)]"
+                >
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#fff5e7] text-[#f59a23] transition-colors group-hover:bg-[#f59a23] group-hover:text-white">
+                    <InstagramIcon />
+                  </div>
+
+                  <div className="min-w-0 flex-1">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-[#98a2b3]">
+                      Instagram
+                    </p>
+
+                    <p className="mt-1 font-semibold text-[#071d49]">
+                      @viabluetours
+                    </p>
+                  </div>
+
+                  <ArrowIcon />
+                </a>
+
+                <a
+                  href="https://www.tiktok.com/@viabluetours?_r=1&_t=ZS-99ZcqaQn4QT"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center gap-3 rounded-2xl border border-[#e6e9ef] bg-white p-4 shadow-[0_10px_30px_rgba(7,29,73,0.04)] transition-all duration-300 hover:-translate-y-1 hover:border-[#f59a23]/40 hover:shadow-[0_16px_40px_rgba(7,29,73,0.08)]"
+                >
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#fff5e7] text-[#f59a23] transition-colors group-hover:bg-[#f59a23] group-hover:text-white">
+                    <TikTokIcon />
+                  </div>
+
+                  <div className="min-w-0 flex-1">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-[#98a2b3]">
+                      TikTok
+                    </p>
+
+                    <p className="mt-1 font-semibold text-[#071d49]">
+                      @viabluetours
+                    </p>
+                  </div>
+
+                  <ArrowIcon />
+                </a>
+
+                <div className="flex items-center gap-3 rounded-2xl border border-[#e6e9ef] bg-white p-4 shadow-[0_10px_30px_rgba(7,29,73,0.04)]">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#fff5e7] text-[#f59a23]">
+                    <TripadvisorIcon />
+                  </div>
+
+                  <div className="min-w-0 flex-1">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-[#98a2b3]">
+                      Tripadvisor
+                    </p>
+
+                    <p className="mt-1 font-semibold text-[#071d49]">
+                      Coming soon
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -294,7 +484,7 @@ export default function ContactPage() {
                   </h2>
 
                   <p className="mt-3 text-sm leading-6 text-[#667085]">
-                    Fill in the form below and our team will get back to you.
+                    Fill in the form below and our team will get back to you
                   </p>
                 </div>
 
@@ -401,7 +591,7 @@ export default function ContactPage() {
 
                   <p className="text-center text-xs leading-5 text-[#98a2b3]">
                     We&apos;ll use your details only to respond to your
-                    enquiry.
+                    enquiry
                   </p>
                 </form>
               </>
@@ -418,7 +608,7 @@ export default function ContactPage() {
                 <p className="mt-4 max-w-md text-[15px] leading-7 text-[#667085]">
                   Thank you for contacting Via Blue. Your message has been
                   received and our team will get back to you as soon as
-                  possible.
+                  possible
                 </p>
 
                 <button
@@ -446,17 +636,17 @@ export default function ContactPage() {
               </p>
 
               <h2 className="mt-2 text-2xl font-semibold tracking-[-0.02em] text-white sm:text-3xl">
-                Talk to our team directly.
+                Talk to our team directly
               </h2>
 
               <p className="mt-3 text-sm leading-6 text-slate-300">
                 For quick questions and bookings, WhatsApp is the fastest way
-                to reach us.
+                to reach us
               </p>
             </div>
 
             <a
-              href="https://wa.me/201091920706"
+              href="https://wa.me/201505097193"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex shrink-0 items-center justify-center gap-3 rounded-xl bg-[#f59a23] px-6 py-3.5 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#df8413] hover:shadow-lg hover:shadow-[#f59a23]/20"

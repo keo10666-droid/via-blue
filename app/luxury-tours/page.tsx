@@ -8,7 +8,7 @@ const luxuryTours = [
     slug: "luxor",
     name: "Luxor Private Tour",
     description:
-      "Discover the ancient temples, monuments and history of Luxor on a premium private experience.",
+      "Discover the ancient temples, monuments and history of Luxor on a premium private experience",
     price: 150,
     duration: "Full Day",
     image: "/luxury-tours/luxor-private-hero.webp",
@@ -19,7 +19,7 @@ const luxuryTours = [
     slug: "cairo",
     name: "Cairo Private Tour",
     description:
-      "Explore the Pyramids, Sphinx and the highlights of Cairo with a completely private experience.",
+      "Explore the Pyramids, Sphinx and the highlights of Cairo with a completely private experience",
     price: 180,
     duration: "Full Day",
     image: "/luxury-tours/cairo-private-hero.webp",
@@ -30,7 +30,7 @@ const luxuryTours = [
     slug: "alexandria",
     name: "Alexandria Private Tour",
     description:
-      "Discover the historic city of Alexandria on a premium private experience, exploring its iconic landmarks, Mediterranean atmosphere and fascinating history.",
+      "Discover the historic city of Alexandria on a premium private experience, exploring its iconic landmarks, Mediterranean atmosphere and fascinating history",
     price: 120,
     duration: "Full Day",
     image: "/luxury-tours/alexandria-over-day-hero.webp",
@@ -41,7 +41,7 @@ const luxuryTours = [
     slug: "aswan",
     name: "Aswan Private Tour",
     description:
-      "Discover the beauty and history of Aswan with a premium private tour from Hurghada.",
+      "Discover the beauty and history of Aswan with a premium private tour from Hurghada",
     price: 250,
     duration: "Full Day",
     image: "/luxury-tours/aswan-private-hero.webp",
@@ -52,7 +52,7 @@ const luxuryTours = [
     slug: "speed-boat",
     name: "Private Speed Boat",
     description:
-      "Enjoy an exclusive private speed boat experience across the beautiful Red Sea.",
+      "Enjoy an exclusive private speed boat experience across the beautiful Red Sea",
     price: 200,
     duration: "Half Day",
     image: "/luxury-tours/private-speed-boat-hero.webp",
@@ -63,7 +63,7 @@ const luxuryTours = [
     slug: "quad-safari",
     name: "Private Quad Safari",
     description:
-      "Experience the Egyptian desert with a premium private quad safari adventure.",
+      "Experience the Egyptian desert with a premium private quad safari adventure",
     price: 120,
     duration: "Half Day",
     image: "/luxury-tours/private-quad-safari-hero.webp",
@@ -74,7 +74,7 @@ const luxuryTours = [
     slug: "buggy-safari",
     name: "Private Buggy Safari",
     description:
-      "Enjoy an exciting private buggy adventure through the Egyptian desert.",
+      "Enjoy an exciting private buggy adventure through the Egyptian desert",
     price: 160,
     duration: "Half Day",
     image: "/luxury-tours/private-buggy-safari-hero.webp",
@@ -85,7 +85,7 @@ const luxuryTours = [
     slug: "private-boat",
     name: "Private Boat",
     description:
-      "Enjoy an exclusive private boat experience on the Red Sea with complete privacy, comfort and flexibility.",
+      "Enjoy an exclusive private boat experience on the Red Sea with complete privacy, comfort and flexibility",
     price: 180,
     duration: "Half Day",
     image: "/luxury-tours/private-boat-hero.webp",
@@ -169,52 +169,58 @@ function CrownIcon() {
 
 export default function LuxuryToursPage() {
   return (
-    <main className="min-h-screen bg-[#f7f7f5]">
+    <main className="min-h-screen bg-slate-50">
       {/* HERO */}
-      <section className="relative overflow-hidden bg-blue-950 px-6 py-20 text-white md:px-8 md:py-28">
-        <div className="absolute -left-40 -top-40 h-96 w-96 rounded-full bg-blue-700/20 blur-3xl" />
+      <section className="relative overflow-hidden bg-blue-950 px-6 py-16 text-white md:px-8 md:py-24 lg:py-28">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-950 via-blue-950/95 to-blue-900" />
 
-        <div className="absolute -bottom-48 -right-32 h-[500px] w-[500px] rounded-full bg-orange-500/10 blur-3xl" />
+        <div className="absolute -left-40 -top-40 h-[420px] w-[420px] rounded-full bg-blue-700/20 blur-3xl" />
+
+        <div className="absolute -bottom-52 -right-40 h-[520px] w-[520px] rounded-full bg-orange-500/10 blur-3xl" />
+
+        <div className="absolute right-[15%] top-16 h-32 w-32 rounded-full border border-white/5" />
+
+        <div className="absolute bottom-10 left-[35%] h-20 w-20 rounded-full border border-orange-400/10" />
 
         <div className="relative mx-auto max-w-7xl">
           <div className="max-w-4xl">
-            <div className="flex items-center gap-3">
-              <span className="h-px w-12 bg-orange-400" />
+            <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-4 py-2 backdrop-blur-md">
+              <span className="h-1.5 w-1.5 rounded-full bg-orange-400 shadow-[0_0_12px_rgba(251,146,60,0.8)]" />
 
-              <p className="text-xs font-bold uppercase tracking-[0.35em] text-orange-400">
+              <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-orange-300">
                 Private Collection
               </p>
             </div>
 
-            <h1 className="mt-5 text-4xl font-semibold tracking-tight md:text-6xl lg:text-7xl">
+            <h1 className="mt-7 max-w-4xl text-4xl font-semibold leading-[1.05] tracking-tight md:text-6xl lg:text-7xl">
               Luxury Experiences
               <span className="block text-orange-400">
                 Designed Around You
               </span>
             </h1>
 
-            <p className="mt-6 max-w-2xl text-base leading-8 text-blue-100 md:text-lg">
+            <p className="mt-7 max-w-2xl text-base leading-8 text-blue-100 md:text-lg">
               Discover Egypt through a collection of exclusive private
               experiences, premium transportation and complete flexibility —
-              created for guests who expect more.
+              created for guests who expect more
             </p>
 
-            <div className="mt-8 flex flex-wrap gap-3">
-              <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-2.5 text-xs font-semibold backdrop-blur-sm">
+            <div className="mt-9 flex flex-wrap gap-3">
+              <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-2.5 text-xs font-semibold backdrop-blur-md">
                 <span className="text-orange-400">
                   <CrownIcon />
                 </span>
                 Private Experiences
               </div>
 
-              <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-2.5 text-xs font-semibold backdrop-blur-sm">
+              <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-2.5 text-xs font-semibold backdrop-blur-md">
                 <span className="text-orange-400">
                   <ShieldIcon />
                 </span>
                 Premium Service
               </div>
 
-              <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-2.5 text-xs font-semibold backdrop-blur-sm">
+              <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-2.5 text-xs font-semibold backdrop-blur-md">
                 <span className="text-orange-400">
                   <UsersIcon />
                 </span>
@@ -226,25 +232,29 @@ export default function LuxuryToursPage() {
       </section>
 
       {/* INTRO */}
-      <section className="mx-auto max-w-7xl px-6 pb-4 pt-16 md:px-8 md:pt-20">
-        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+      <section className="mx-auto max-w-7xl px-6 pb-4 pt-14 md:px-8 md:pt-20">
+        <div className="flex flex-col gap-7 md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl">
-            <p className="text-xs font-bold uppercase tracking-[0.3em] text-orange-500">
-              The Private Collection
-            </p>
+            <div className="flex items-center gap-3">
+              <span className="h-px w-9 bg-orange-500" />
 
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-blue-950 md:text-4xl">
+              <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-orange-500">
+                The Private Collection
+              </p>
+            </div>
+
+            <h2 className="mt-4 text-3xl font-semibold tracking-tight text-blue-950 md:text-4xl">
               Experiences Worth Travelling For
             </h2>
 
             <p className="mt-4 text-sm leading-7 text-gray-600 md:text-base">
               From ancient wonders to private Red Sea adventures, every
               experience is designed around privacy, comfort and personal
-              attention.
+              attention
             </p>
           </div>
 
-          <div className="hidden rounded-2xl border border-gray-200 bg-white px-5 py-4 shadow-sm md:block">
+          <div className="hidden rounded-[22px] border border-slate-200 bg-white px-6 py-4 shadow-sm md:block">
             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400">
               Collection
             </p>
@@ -265,14 +275,14 @@ export default function LuxuryToursPage() {
           {luxuryTours.map((tour) => (
             <article
               key={tour.slug}
-              className="group flex h-full flex-col overflow-hidden rounded-[26px] border border-gray-200/80 bg-white shadow-sm transition duration-500 hover:-translate-y-1.5 hover:border-gray-300 hover:shadow-2xl"
+              className="group flex h-full flex-col overflow-hidden rounded-[28px] border border-slate-200/80 bg-white shadow-sm transition duration-500 hover:-translate-y-1.5 hover:border-slate-300 hover:shadow-2xl"
             >
               {/* IMAGE */}
               <Link
                 href={`/luxury-tours/${tour.slug}`}
                 className="block"
               >
-                <div className="relative h-64 overflow-hidden bg-slate-100">
+                <div className="relative h-64 overflow-hidden bg-slate-100 md:h-68">
                   <Image
                     src={tour.image}
                     alt={tour.name}
@@ -281,10 +291,12 @@ export default function LuxuryToursPage() {
                     sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
 
-                  <div className="absolute inset-0 bg-gradient-to-t from-blue-950/75 via-transparent to-transparent opacity-90" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-blue-950/85 via-blue-950/10 to-transparent" />
+
+                  <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-blue-950/40 to-transparent" />
 
                   {/* BADGE */}
-                  <div className="absolute left-4 top-4 flex items-center gap-2 rounded-full border border-white/20 bg-blue-950/80 px-3.5 py-2 text-[10px] font-bold uppercase tracking-[0.15em] text-white shadow-lg backdrop-blur-md">
+                  <div className="absolute left-4 top-4 flex items-center gap-2 rounded-full border border-white/15 bg-blue-950/80 px-3.5 py-2 text-[10px] font-bold uppercase tracking-[0.15em] text-white shadow-lg backdrop-blur-md">
                     <span className="text-orange-400">
                       <CrownIcon />
                     </span>
@@ -292,23 +304,23 @@ export default function LuxuryToursPage() {
                   </div>
 
                   {/* DURATION */}
-                  <div className="absolute right-4 top-4 rounded-full border border-white/20 bg-white/90 px-3.5 py-2 text-[10px] font-bold uppercase tracking-wider text-blue-950 shadow-lg backdrop-blur-md">
+                  <div className="absolute right-4 top-4 rounded-full border border-white/30 bg-white/90 px-3.5 py-2 text-[10px] font-bold uppercase tracking-wider text-blue-950 shadow-lg backdrop-blur-md">
                     {tour.duration}
                   </div>
 
                   {/* IMAGE BOTTOM */}
-                  <div className="absolute bottom-4 left-5 right-5 flex items-end justify-between">
+                  <div className="absolute bottom-4 left-5 right-5 flex items-end justify-between gap-4">
                     <div>
                       <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-orange-300">
                         Exclusive Experience
                       </p>
 
-                      <p className="mt-1 text-lg font-bold text-white">
+                      <p className="mt-1 text-lg font-bold leading-tight text-white">
                         {tour.name}
                       </p>
                     </div>
 
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-blue-950 shadow-lg transition duration-300 group-hover:bg-orange-500 group-hover:text-white">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/20 bg-white text-blue-950 shadow-lg transition duration-300 group-hover:bg-orange-500 group-hover:text-white">
                       <ArrowRightIcon />
                     </div>
                   </div>
@@ -348,35 +360,39 @@ export default function LuxuryToursPage() {
 
                 {/* FEATURES */}
                 <div className="mt-5 grid grid-cols-2 gap-2">
-                  <div className="flex items-center gap-2 rounded-xl bg-slate-50 px-3 py-2.5">
-                    <span className="text-blue-900">
-                      <UsersIcon />
-                    </span>
+                  <div className="rounded-2xl border border-slate-100 bg-slate-50 px-3 py-3">
+                    <div className="flex items-center gap-2">
+                      <span className="text-blue-900">
+                        <UsersIcon />
+                      </span>
 
-                    <div>
-                      <p className="text-[9px] font-bold uppercase tracking-wider text-gray-400">
-                        Guests
-                      </p>
+                      <div>
+                        <p className="text-[9px] font-bold uppercase tracking-wider text-gray-400">
+                          Guests
+                        </p>
 
-                      <p className="text-xs font-bold text-blue-950">
-                        From 2 Guests
-                      </p>
+                        <p className="text-xs font-bold text-blue-950">
+                          From 2 Guests
+                        </p>
+                      </div>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2 rounded-xl bg-slate-50 px-3 py-2.5">
-                    <span className="text-orange-500">
-                      <ShieldIcon />
-                    </span>
+                  <div className="rounded-2xl border border-orange-100 bg-orange-50/50 px-3 py-3">
+                    <div className="flex items-center gap-2">
+                      <span className="text-orange-500">
+                        <ShieldIcon />
+                      </span>
 
-                    <div>
-                      <p className="text-[9px] font-bold uppercase tracking-wider text-gray-400">
-                        Service
-                      </p>
+                      <div>
+                        <p className="text-[9px] font-bold uppercase tracking-wider text-gray-400">
+                          Service
+                        </p>
 
-                      <p className="text-xs font-bold text-blue-950">
-                        Fully Private
-                      </p>
+                        <p className="text-xs font-bold text-blue-950">
+                          Fully Private
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -430,7 +446,9 @@ export default function LuxuryToursPage() {
 
       {/* PREMIUM MESSAGE */}
       <section className="mx-auto max-w-7xl px-6 pb-16 md:px-8 md:pb-24">
-        <div className="relative overflow-hidden rounded-[30px] bg-blue-950 px-6 py-12 text-center text-white shadow-xl md:px-12 md:py-16">
+        <div className="relative overflow-hidden rounded-[32px] bg-blue-950 px-6 py-12 text-center text-white shadow-xl md:px-12 md:py-16">
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-950 via-blue-950 to-blue-900" />
+
           <div className="absolute -left-24 -top-24 h-64 w-64 rounded-full bg-blue-700/20 blur-3xl" />
 
           <div className="absolute -bottom-32 -right-20 h-72 w-72 rounded-full bg-orange-500/10 blur-3xl" />
@@ -440,7 +458,7 @@ export default function LuxuryToursPage() {
               <CrownIcon />
             </div>
 
-            <p className="mt-5 text-xs font-bold uppercase tracking-[0.3em] text-orange-400">
+            <p className="mt-5 text-[10px] font-bold uppercase tracking-[0.3em] text-orange-400">
               Made For Exceptional Journeys
             </p>
 
@@ -454,13 +472,13 @@ export default function LuxuryToursPage() {
             <p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-blue-100 md:text-base">
               Prefer complete flexibility or have a special request? Our
               private experiences can be tailored around your schedule and
-              preferences.
+              preferences
             </p>
 
-            <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
+            <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
               <Link
                 href="/luxury-tours/luxor"
-                className="rounded-xl bg-orange-500 px-7 py-3.5 text-sm font-bold text-white transition hover:bg-orange-600"
+                className="rounded-xl bg-orange-500 px-7 py-3.5 text-sm font-bold text-white shadow-lg shadow-orange-500/20 transition duration-300 hover:-translate-y-0.5 hover:bg-orange-600 hover:shadow-xl"
               >
                 Explore Private Experiences
               </Link>

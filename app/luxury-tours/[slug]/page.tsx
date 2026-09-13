@@ -71,13 +71,13 @@ const luxuryTours = {
       "Valley of the Kings – 3 tombs",
       "Entrance ticket to Hatshepsut Temple",
       "Lunch at a local restaurant",
+      "Drinks during lunch",
       "Hotel pickup & drop-off",
       "Fully private experience with no shared transportation",
     ],
     excluded: [
       "Tutankhamun, Ramses VI or Nefertari tomb tickets",
       "Nile felucca ride or Banana Island visit",
-      "Drinks during lunch",
       "Tips and personal expenses",
     ],
     notes: [
@@ -560,107 +560,107 @@ const luxuryTours = {
   },
 
   alexandria: {
-  name: "Alexandria Private Tour",
-  description:
-    "Discover the historic Mediterranean city of Alexandria on a completely private full-day journey from Hurghada, exploring ancient Roman and Greek heritage, museums, royal gardens and the city's iconic Mediterranean landmarks with your private guide.",
-  price: 120,
-  duration: "Full Day",
-  emoji: "🏛️",
-  subtitle: "A Private Journey Through Alexandria",
-  departure: "02:00 – 03:00 AM",
-  returnTime: "10:30 – 11:30 PM",
+    name: "Alexandria Private Tour",
+    description:
+      "Discover the historic Mediterranean city of Alexandria on a completely private full-day journey from Hurghada, exploring ancient Roman and Greek heritage, museums, royal gardens and the city's iconic Mediterranean landmarks with your private guide.",
+    price: 120,
+    duration: "Full Day",
+    emoji: "🏛️",
+    subtitle: "A Private Journey Through Alexandria",
+    departure: "02:00 – 03:00 AM",
+    returnTime: "10:30 – 11:30 PM",
 
-  highlights: [
-    "Private round-trip transportation",
-    "Modern air-conditioned vehicle",
-    "Private professional tour guide",
-    "Pompey's Pillar",
-    "Catacombs of Kom El Shoqafa",
-    "Alexandria National Museum",
-    "Bibliotheca Alexandrina",
-    "Stanley Bridge",
-    "Montaza Palace & Gardens",
-    "Lunch included",
-    "Fully private experience",
-  ],
+    highlights: [
+      "Private round-trip transportation",
+      "Modern air-conditioned vehicle",
+      "Private professional tour guide",
+      "Pompey's Pillar",
+      "Catacombs of Kom El Shoqafa",
+      "Alexandria National Museum",
+      "Bibliotheca Alexandrina",
+      "Stanley Bridge",
+      "Montaza Palace & Gardens",
+      "Lunch included",
+      "Fully private experience",
+    ],
 
-  itinerary: [
-    {
-      title: "Private Early-Morning Departure",
-      description:
-        "Your private Alexandria journey begins with pickup from your hotel in Hurghada between 02:00 and 03:00 AM. Travel comfortably in a modern air-conditioned private vehicle towards Alexandria.",
-    },
-    {
-      title: "Pompey's Pillar",
-      description:
-        "Visit Pompey's Pillar and admire one of Alexandria's most important Roman monuments.",
-    },
-    {
-      title: "Catacombs of Kom El Shoqafa",
-      description:
-        "Explore the underground tunnels, chambers and fascinating Roman and Greek funerary architecture.",
-    },
-    {
-      title: "Alexandria National Museum",
-      description:
-        "Visit the Alexandria National Museum and discover its remarkable collection representing Pharaonic, Greek, Coptic and Islamic history.",
-    },
-    {
-      title: "Bibliotheca Alexandrina",
-      description:
-        "Continue to the Bibliotheca Alexandrina, one of Alexandria's most important cultural landmarks overlooking the Mediterranean Sea.",
-    },
-    {
-      title: "Lunch at a Local Restaurant",
-      description:
-        "Enjoy lunch at a carefully selected local restaurant in Alexandria.",
-    },
-    {
-      title: "Stanley Bridge",
-      description:
-        "Visit the famous Stanley Bridge and enjoy time for photographs overlooking the Mediterranean coastline.",
-    },
-    {
-      title: "Montaza Palace & Gardens",
-      description:
-        "Explore Montaza Palace and Gardens, enjoying the landscaped gardens, Mediterranean views and royal architecture.",
-    },
-    {
-      title: "Return to Hurghada",
-      description:
-        "After a full day of private exploration, return comfortably to your hotel in Hurghada.",
-    },
-  ],
+    itinerary: [
+      {
+        title: "Private Early-Morning Departure",
+        description:
+          "Your private Alexandria journey begins with pickup from your hotel in Hurghada between 02:00 and 03:00 AM. Travel comfortably in a modern air-conditioned private vehicle towards Alexandria.",
+      },
+      {
+        title: "Pompey's Pillar",
+        description:
+          "Visit Pompey's Pillar and admire one of Alexandria's most important Roman monuments.",
+      },
+      {
+        title: "Catacombs of Kom El Shoqafa",
+        description:
+          "Explore the underground tunnels, chambers and fascinating Roman and Greek funerary architecture.",
+      },
+      {
+        title: "Alexandria National Museum",
+        description:
+          "Visit the Alexandria National Museum and discover its remarkable collection representing Pharaonic, Greek, Coptic and Islamic history.",
+      },
+      {
+        title: "Bibliotheca Alexandrina",
+        description:
+          "Continue to the Bibliotheca Alexandrina, one of Alexandria's most important cultural landmarks overlooking the Mediterranean Sea.",
+      },
+      {
+        title: "Lunch at a Local Restaurant",
+        description:
+          "Enjoy lunch at a carefully selected local restaurant in Alexandria.",
+      },
+      {
+        title: "Stanley Bridge",
+        description:
+          "Visit the famous Stanley Bridge and enjoy time for photographs overlooking the Mediterranean coastline.",
+      },
+      {
+        title: "Montaza Palace & Gardens",
+        description:
+          "Explore Montaza Palace and Gardens, enjoying the landscaped gardens, Mediterranean views and royal architecture.",
+      },
+      {
+        title: "Return to Hurghada",
+        description:
+          "After a full day of private exploration, return comfortably to your hotel in Hurghada.",
+      },
+    ],
 
-  included: [
-    "Private round-trip transportation from your hotel",
-    "Modern air-conditioned private vehicle",
-    "Professional private tour guide",
-    "Guide available in multiple languages",
-    "Entrance tickets to all listed attractions and museums",
-    "Lunch during the tour",
-    "Hotel pickup & drop-off",
-    "All taxes and tour fees",
-    "Fully private experience",
-  ],
+    included: [
+      "Private round-trip transportation from your hotel",
+      "Modern air-conditioned private vehicle",
+      "Professional private tour guide",
+      "Guide available in multiple languages",
+      "Entrance tickets to all listed attractions and museums",
+      "Lunch during the tour",
+      "Hotel pickup & drop-off",
+      "All taxes and tour fees",
+      "Fully private experience",
+    ],
 
-  excluded: [
-    "Additional drinks during lunch",
-    "Special food requests or extra meals",
-    "Personal purchases",
-    "Additional activities not mentioned in the program",
-    "Tips and personal expenses",
-  ],
+    excluded: [
+      "Additional drinks during lunch",
+      "Special food requests or extra meals",
+      "Personal purchases",
+      "Additional activities not mentioned in the program",
+      "Tips and personal expenses",
+    ],
 
-  notes: [
-    "Fully private tour designed for maximum comfort and privacy.",
-    "Free cancellation up to 24 hours before departure.",
-    "A breakfast box from your hotel is recommended.",
-    "Comfortable clothing and walking shoes are recommended.",
-    "Bring sunglasses, a hat and sunscreen.",
-    "The total journey takes approximately 16–18 hours.",
-  ],
-},
+    notes: [
+      "Fully private tour designed for maximum comfort and privacy.",
+      "Free cancellation up to 24 hours before departure.",
+      "A breakfast box from your hotel is recommended.",
+      "Comfortable clothing and walking shoes are recommended.",
+      "Bring sunglasses, a hat and sunscreen.",
+      "The total journey takes approximately 16–18 hours.",
+    ],
+  },
 
   aswan: {
     name: "Aswan Private Tour",
@@ -859,6 +859,10 @@ type PageProps = {
   }>;
 };
 
+function cleanText(text: string) {
+  return text.replace(/\.+$/, "");
+}
+
 function CrownIcon() {
   return (
     <svg
@@ -927,9 +931,9 @@ export default async function LuxuryTourPage({
 
   if (!tour) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-[#f7f7f5] px-6">
+      <main className="flex min-h-screen items-center justify-center bg-slate-50 px-6">
         <div className="text-center">
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-blue-950 text-orange-400">
+          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-blue-950 text-orange-400 shadow-xl shadow-blue-950/20">
             <CrownIcon />
           </div>
 
@@ -937,17 +941,17 @@ export default async function LuxuryTourPage({
             Private Collection
           </p>
 
-          <h1 className="mt-3 text-4xl font-semibold text-blue-950">
+          <h1 className="mt-3 text-4xl font-semibold tracking-tight text-blue-950">
             Tour Not Found
           </h1>
 
           <p className="mx-auto mt-4 max-w-md text-gray-600">
-            Sorry, this luxury experience is not available.
+            Sorry, this luxury experience is not available
           </p>
 
           <Link
             href="/luxury-tours"
-            className="mt-7 inline-flex items-center gap-2 rounded-xl bg-blue-950 px-6 py-3.5 text-sm font-bold text-white transition hover:bg-blue-900"
+            className="mt-7 inline-flex items-center gap-2 rounded-2xl bg-blue-950 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-950/20 transition duration-300 hover:-translate-y-0.5 hover:bg-blue-900"
           >
             Back to Luxury Tours
             <ArrowRightIcon />
@@ -958,51 +962,55 @@ export default async function LuxuryTourPage({
   }
 
   return (
-    <main className="min-h-screen bg-[#f7f7f5]">
+    <main className="min-h-screen bg-slate-50">
       {/* HERO */}
       <section className="relative overflow-hidden bg-blue-950 px-6 py-20 text-white md:px-8 md:py-28">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-950 via-blue-950/95 to-blue-900" />
+
         <div className="absolute -left-40 -top-40 h-96 w-96 rounded-full bg-blue-700/20 blur-3xl" />
 
         <div className="absolute -bottom-48 -right-32 h-[500px] w-[500px] rounded-full bg-orange-500/10 blur-3xl" />
 
+        <div className="absolute bottom-10 left-[35%] h-20 w-20 rounded-full border border-orange-400/10" />
+
         <div className="relative mx-auto max-w-7xl">
           <div className="max-w-4xl">
-            <div className="flex items-center gap-3">
-              <span className="h-px w-12 bg-orange-400" />
+            <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/[0.07] px-4 py-2.5 shadow-lg shadow-blue-950/10 backdrop-blur-xl">
+              <span className="h-1.5 w-1.5 rounded-full bg-orange-400 shadow-[0_0_12px_rgba(251,146,60,0.8)]" />
 
-              <p className="text-xs font-bold uppercase tracking-[0.35em] text-orange-400">
+              <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-orange-300">
                 Private Collection
               </p>
             </div>
 
-            <h1 className="mt-5 text-4xl font-semibold tracking-tight md:text-6xl lg:text-7xl">
-              {tour.name}
+            <h1 className="mt-7 text-4xl font-semibold leading-[1.05] tracking-tight md:text-6xl lg:text-7xl">
+              {cleanText(tour.name)}
             </h1>
 
-            <p className="mt-4 text-lg font-medium text-orange-300 md:text-xl">
-              {tour.subtitle}
+            <p className="mt-5 text-lg font-medium text-orange-300 md:text-xl">
+              {cleanText(tour.subtitle)}
             </p>
 
             <p className="mt-6 max-w-3xl text-base leading-8 text-blue-100 md:text-lg">
-              {tour.description}
+              {cleanText(tour.description)}
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
-              <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-2.5 text-xs font-semibold backdrop-blur-sm">
+              <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.08] px-4 py-2.5 text-xs font-semibold shadow-lg shadow-blue-950/10 backdrop-blur-xl">
                 <span className="text-orange-400">
                   <CrownIcon />
                 </span>
                 Private Experience
               </div>
 
-              <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-2.5 text-xs font-semibold backdrop-blur-sm">
+              <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.08] px-4 py-2.5 text-xs font-semibold shadow-lg shadow-blue-950/10 backdrop-blur-xl">
                 <span className="text-orange-400">
                   <ClockIcon />
                 </span>
-                {tour.duration}
+                {cleanText(tour.duration)}
               </div>
 
-              <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-2.5 text-xs font-semibold backdrop-blur-sm">
+              <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.08] px-4 py-2.5 text-xs font-semibold shadow-lg shadow-blue-950/10 backdrop-blur-xl">
                 <span className="text-orange-400">
                   <CheckIcon />
                 </span>
@@ -1019,9 +1027,9 @@ export default async function LuxuryTourPage({
           {/* LEFT */}
           <div className="space-y-8">
             {/* EXPERIENCE OVERVIEW */}
-            <section className="rounded-[28px] border border-gray-200/80 bg-white p-7 shadow-sm md:p-9">
+            <section className="rounded-[28px] border border-slate-200/80 bg-white p-7 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:shadow-lg md:p-9">
               <div className="flex items-start gap-4">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-950 text-orange-400">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-950 text-orange-400 shadow-lg shadow-blue-950/10">
                   <CrownIcon />
                 </div>
 
@@ -1037,24 +1045,24 @@ export default async function LuxuryTourPage({
               </div>
 
               <p className="mt-6 text-base leading-8 text-gray-600">
-                Enjoy a premium private experience created for guests who
-                value comfort, privacy and personal attention. From the moment
-                you leave your hotel until your return, your journey is
-                designed to feel effortless, exclusive and flexible.
+                Enjoy a premium private experience created for guests who value
+                comfort, privacy and personal attention. From the moment you
+                leave your hotel until your return, your journey is designed to
+                feel effortless, exclusive and flexible
               </p>
 
               <div className="mt-8 grid gap-3 sm:grid-cols-2">
                 {tour.highlights.map((item) => (
                   <div
                     key={item}
-                    className="flex items-center gap-3 rounded-2xl border border-gray-100 bg-[#fafaf8] px-4 py-3.5"
+                    className="group flex items-center gap-3 rounded-2xl border border-slate-100 bg-slate-50 px-4 py-3.5 transition duration-300 hover:border-orange-100 hover:bg-orange-50/50 hover:shadow-sm"
                   >
-                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-orange-50 text-orange-500">
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-orange-50 text-orange-500 transition duration-300 group-hover:bg-orange-500 group-hover:text-white">
                       <CheckIcon />
                     </span>
 
                     <span className="text-sm font-semibold text-blue-950">
-                      {item}
+                      {cleanText(item)}
                     </span>
                   </div>
                 ))}
@@ -1062,7 +1070,7 @@ export default async function LuxuryTourPage({
             </section>
 
             {/* ITINERARY */}
-            <section className="rounded-[28px] border border-gray-200/80 bg-white p-7 shadow-sm md:p-9">
+            <section className="rounded-[28px] border border-slate-200/80 bg-white p-7 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:shadow-lg md:p-9">
               <div>
                 <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-orange-500">
                   Your Journey
@@ -1074,7 +1082,7 @@ export default async function LuxuryTourPage({
 
                 <p className="mt-3 max-w-2xl text-sm leading-7 text-gray-500">
                   A carefully planned experience with the flexibility and
-                  privacy of a dedicated private tour.
+                  privacy of a dedicated private tour
                 </p>
               </div>
 
@@ -1082,23 +1090,23 @@ export default async function LuxuryTourPage({
                 {tour.itinerary.map((item, index) => (
                   <div
                     key={item.title}
-                    className="relative flex gap-5 pb-8 last:pb-0"
+                    className="group relative flex gap-5 pb-8 last:pb-0"
                   >
                     {index !== tour.itinerary.length - 1 && (
-                      <span className="absolute left-[19px] top-10 h-[calc(100%-18px)] w-px bg-gray-200" />
+                      <span className="absolute left-[19px] top-10 h-[calc(100%-18px)] w-px bg-slate-200 transition duration-300 group-hover:bg-orange-200" />
                     )}
 
-                    <div className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-950 text-sm font-bold text-orange-400 shadow-sm">
+                    <div className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-950 text-sm font-bold text-orange-400 shadow-md shadow-blue-950/10 transition duration-300 group-hover:bg-orange-500 group-hover:text-white">
                       {String(index + 1).padStart(2, "0")}
                     </div>
 
                     <div className="pt-0.5">
-                      <h3 className="text-lg font-bold text-blue-950">
-                        {item.title}
+                      <h3 className="text-lg font-bold text-blue-950 transition duration-300 group-hover:text-orange-500">
+                        {cleanText(item.title)}
                       </h3>
 
                       <p className="mt-2 text-sm leading-7 text-gray-600">
-                        {item.description}
+                        {cleanText(item.description)}
                       </p>
                     </div>
                   </div>
@@ -1108,12 +1116,12 @@ export default async function LuxuryTourPage({
 
             {/* INCLUDED / EXCLUDED */}
             <section className="grid gap-6 md:grid-cols-2">
-              <div className="rounded-[28px] border border-gray-200/80 bg-white p-7 shadow-sm">
+              <div className="rounded-[28px] border border-slate-200/80 bg-white p-7 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:shadow-lg">
                 <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-orange-500">
                   Included
                 </p>
 
-                <h2 className="mt-2 text-2xl font-semibold text-blue-950">
+                <h2 className="mt-2 text-2xl font-semibold tracking-tight text-blue-950">
                   Everything Prepared For You
                 </h2>
 
@@ -1121,26 +1129,26 @@ export default async function LuxuryTourPage({
                   {tour.included.map((item) => (
                     <div
                       key={item}
-                      className="flex items-start gap-3"
+                      className="group flex items-start gap-3 rounded-xl px-2 py-1.5 transition duration-300 hover:bg-slate-50"
                     >
                       <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-green-50 text-green-600">
                         <CheckIcon />
                       </span>
 
                       <span className="text-sm leading-6 text-gray-600">
-                        {item}
+                        {cleanText(item)}
                       </span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="rounded-[28px] border border-gray-200/80 bg-white p-7 shadow-sm">
+              <div className="rounded-[28px] border border-slate-200/80 bg-white p-7 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:shadow-lg">
                 <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-orange-500">
                   Not Included
                 </p>
 
-                <h2 className="mt-2 text-2xl font-semibold text-blue-950">
+                <h2 className="mt-2 text-2xl font-semibold tracking-tight text-blue-950">
                   Optional Extras
                 </h2>
 
@@ -1148,14 +1156,14 @@ export default async function LuxuryTourPage({
                   {tour.excluded.map((item) => (
                     <div
                       key={item}
-                      className="flex items-start gap-3"
+                      className="group flex items-start gap-3 rounded-xl px-2 py-1.5 transition duration-300 hover:bg-slate-50"
                     >
                       <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gray-100 text-gray-400">
                         <span className="text-sm font-bold">–</span>
                       </span>
 
                       <span className="text-sm leading-6 text-gray-600">
-                        {item}
+                        {cleanText(item)}
                       </span>
                     </div>
                   ))}
@@ -1164,12 +1172,12 @@ export default async function LuxuryTourPage({
             </section>
 
             {/* NOTES */}
-            <section className="rounded-[28px] border border-orange-100 bg-orange-50/60 p-7 md:p-9">
+            <section className="rounded-[28px] border border-orange-100 bg-orange-50/60 p-7 shadow-sm md:p-9">
               <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-orange-500">
                 Good To Know
               </p>
 
-              <h2 className="mt-2 text-2xl font-semibold text-blue-950">
+              <h2 className="mt-2 text-2xl font-semibold tracking-tight text-blue-950">
                 Before Your Experience
               </h2>
 
@@ -1177,12 +1185,12 @@ export default async function LuxuryTourPage({
                 {tour.notes.map((note) => (
                   <div
                     key={note}
-                    className="flex items-start gap-3"
+                    className="flex items-start gap-3 rounded-xl px-2 py-1.5 transition duration-300 hover:bg-white/50"
                   >
                     <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-orange-500" />
 
                     <p className="text-sm leading-7 text-gray-700">
-                      {note}
+                      {cleanText(note)}
                     </p>
                   </div>
                 ))}
@@ -1192,43 +1200,49 @@ export default async function LuxuryTourPage({
 
           {/* SIDEBAR */}
           <aside>
-            <div className="sticky top-28 overflow-hidden rounded-[28px] border border-gray-200/80 bg-white shadow-xl">
-              <div className="bg-blue-950 p-7 text-white">
-                <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-orange-400">
-                  Private Collection
-                </p>
+            <div className="sticky top-28 overflow-hidden rounded-[28px] border border-slate-200/80 bg-white shadow-xl shadow-blue-950/10">
+              <div className="relative overflow-hidden bg-gradient-to-br from-blue-950 via-blue-950 to-blue-900 p-7 text-white">
+                <div className="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-orange-500/10 blur-2xl" />
 
-                <h2 className="mt-2 text-2xl font-semibold">
-                  Reserve Your Experience
-                </h2>
+                <div className="relative">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-orange-400">
+                    Private Collection
+                  </p>
 
-                <p className="mt-2 text-sm leading-6 text-blue-200">
-                  Premium service, private transportation and a journey
-                  designed around you.
-                </p>
+                  <h2 className="mt-2 text-2xl font-semibold">
+                    Reserve Your Experience
+                  </h2>
+
+                  <p className="mt-2 text-sm leading-6 text-blue-200">
+                    Premium service, private transportation and a journey
+                    designed around you
+                  </p>
+                </div>
               </div>
 
               <div className="p-7">
                 {/* PRICE */}
-                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400">
-                  Starting From
-                </p>
+                <div className="rounded-2xl border border-orange-100 bg-orange-50/60 p-5 shadow-sm">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400">
+                    Starting From
+                  </p>
 
-                <div className="mt-1 flex items-end gap-2">
-                  <span className="text-4xl font-bold tracking-tight text-orange-500">
-                    €{tour.price}
-                  </span>
+                  <div className="mt-1 flex items-end gap-2">
+                    <span className="text-4xl font-bold tracking-tight text-orange-500">
+                      €{tour.price}
+                    </span>
 
-                  <span className="pb-1 text-xs text-gray-400">
-                    / private experience
-                  </span>
+                    <span className="pb-1 text-xs text-gray-400">
+                      / private experience
+                    </span>
+                  </div>
                 </div>
 
                 <div className="my-6 h-px bg-gray-100" />
 
                 {/* DETAILS */}
                 <div className="space-y-3">
-                  <div className="rounded-2xl bg-slate-50 p-4">
+                  <div className="rounded-2xl border border-slate-100 bg-slate-50 p-4 transition duration-300 hover:border-slate-200 hover:bg-white hover:shadow-sm">
                     <div className="flex items-center justify-between gap-4">
                       <div>
                         <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400">
@@ -1236,7 +1250,7 @@ export default async function LuxuryTourPage({
                         </p>
 
                         <p className="mt-1 text-sm font-bold text-blue-950">
-                          {tour.duration}
+                          {cleanText(tour.duration)}
                         </p>
                       </div>
 
@@ -1246,23 +1260,23 @@ export default async function LuxuryTourPage({
                     </div>
                   </div>
 
-                  <div className="rounded-2xl bg-slate-50 p-4">
+                  <div className="rounded-2xl border border-slate-100 bg-slate-50 p-4 transition duration-300 hover:border-slate-200 hover:bg-white hover:shadow-sm">
                     <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400">
                       Departure
                     </p>
 
                     <p className="mt-1 text-sm font-bold text-blue-950">
-                      {tour.departure}
+                      {cleanText(tour.departure)}
                     </p>
                   </div>
 
-                  <div className="rounded-2xl bg-slate-50 p-4">
+                  <div className="rounded-2xl border border-slate-100 bg-slate-50 p-4 transition duration-300 hover:border-slate-200 hover:bg-white hover:shadow-sm">
                     <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400">
                       Return
                     </p>
 
                     <p className="mt-1 text-sm font-bold text-blue-950">
-                      {tour.returnTime}
+                      {cleanText(tour.returnTime)}
                     </p>
                   </div>
 
@@ -1280,7 +1294,7 @@ export default async function LuxuryTourPage({
                 {/* CTA */}
                 <Link
                   href={`/luxury-tours/${slug}/book`}
-                  className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-orange-500 py-4 text-sm font-bold text-white shadow-lg shadow-orange-500/20 transition duration-300 hover:-translate-y-0.5 hover:bg-orange-600 hover:shadow-xl"
+                  className="mt-6 flex w-full items-center justify-center gap-2 rounded-2xl bg-orange-500 py-4 text-sm font-bold text-white shadow-lg shadow-orange-500/20 transition duration-300 hover:-translate-y-0.5 hover:bg-orange-600 hover:shadow-xl"
                 >
                   Reserve Your Experience
                   <ArrowRightIcon />
@@ -1288,7 +1302,7 @@ export default async function LuxuryTourPage({
 
                 <Link
                   href="/luxury-tours"
-                  className="mt-3 flex w-full items-center justify-center rounded-xl border border-blue-950 py-3.5 text-sm font-bold text-blue-950 transition hover:bg-blue-950 hover:text-white"
+                  className="mt-3 flex w-full items-center justify-center rounded-2xl border border-blue-950 py-3.5 text-sm font-bold text-blue-950 transition duration-300 hover:bg-blue-950 hover:text-white"
                 >
                   Back to Luxury Tours
                 </Link>
@@ -1309,7 +1323,9 @@ export default async function LuxuryTourPage({
 
       {/* BOTTOM CTA */}
       <section className="mx-auto max-w-7xl px-6 pb-16 md:px-8 md:pb-24">
-        <div className="relative overflow-hidden rounded-[30px] bg-blue-950 px-6 py-12 text-center text-white shadow-xl md:px-12 md:py-16">
+        <div className="relative overflow-hidden rounded-[30px] bg-blue-950 px-6 py-12 text-center text-white shadow-xl shadow-blue-950/10 md:px-12 md:py-16">
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-950 via-blue-950 to-blue-900" />
+
           <div className="absolute -left-24 -top-24 h-64 w-64 rounded-full bg-blue-700/20 blur-3xl" />
 
           <div className="absolute -bottom-32 -right-20 h-72 w-72 rounded-full bg-orange-500/10 blur-3xl" />
@@ -1324,21 +1340,21 @@ export default async function LuxuryTourPage({
             </p>
 
             <h2 className="mt-3 text-3xl font-semibold tracking-tight md:text-4xl">
-              Travel Privately.
+              Travel Privately
               <span className="block text-orange-400">
-                Experience More.
+                Experience More
               </span>
             </h2>
 
             <p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-blue-100 md:text-base">
               Looking for something more personalized? Our private experiences
-              can be arranged around your preferences and schedule.
+              can be arranged around your preferences and schedule
             </p>
 
             <div className="mt-7">
               <Link
                 href={`/luxury-tours/${slug}/book`}
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-orange-500 px-8 py-3.5 text-sm font-bold text-white transition hover:bg-orange-600"
+                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-orange-500 px-8 py-3.5 text-sm font-bold text-white shadow-lg shadow-orange-500/20 transition duration-300 hover:-translate-y-0.5 hover:bg-orange-600"
               >
                 Reserve This Experience
                 <ArrowRightIcon />
