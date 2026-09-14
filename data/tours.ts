@@ -229,9 +229,9 @@ export const tours = {
     "The program may vary slightly depending on sea and weather conditions.",
   ],
 
-  price: 50,
+  price: 55,
 
-  childPrice: 25,
+  childPrice: 30,
 
   infantPrice: 0,
 
@@ -312,12 +312,12 @@ export const tours = {
     "The program may change slightly depending on sea and weather conditions.",
   ],
 
-  price: 0,
-  childPrice: 0,
+  price: 30,
+  childPrice: 15,
   infantPrice: 0,
 
-  rating: 0,
-  reviews: 0,
+  rating: 4.7,
+  reviews: 154,
 
   badge: "Popular",
 
@@ -374,11 +374,11 @@ export const tours = {
     "Snorkeling Stop",
     "Open-Buffet Lunch",
     "Drinks on the Island",
+    "Hotel-to-marina transfers",
+    "Marina-to-hotel transfers",
   ],
 
   excluded: [
-    "Hotel-to-marina transfers",
-    "Marina-to-hotel transfers",
     "Personal expenses",
     "Tips",
   ],
@@ -390,12 +390,12 @@ export const tours = {
     "The program may change slightly depending on sea and weather conditions.",
   ],
 
-  price: 0,
-  childPrice: 0,
+  price: 90,
+  childPrice: 45,
   infantPrice: 0,
 
-  rating: 0,
-  reviews: 0,
+  rating: 4.9,
+  reviews: 181,
 
   badge: "Island",
 
@@ -471,11 +471,11 @@ export const tours = {
     "Total excursion duration is approximately 7–8 hours including transfers.",
   ],
 
-  price: 0,
-  childPrice: 0,
+  price: 70,
+  childPrice: 35,
   infantPrice: 0,
-  rating: 0,
-  reviews: 0,
+  rating: 4.8,
+  reviews: 123,
   badge: "Popular",
   available: true,
   type: "Island Boat Trip",
@@ -570,11 +570,11 @@ export const tours = {
     "Total excursion duration is approximately 7–8 hours including transfers.",
   ],
 
-  price: 0,
-  childPrice: 0,
+  price: 30,
+  childPrice: 15,
   infantPrice: 0,
-  rating: 0,
-  reviews: 0,
+  rating: 4.3,
+  reviews: 24,
   badge: "Popular",
   available: true,
   type: "Island Boat Trip",
@@ -664,15 +664,15 @@ export const tours = {
     "Bring swimwear, a personal towel, sunglasses, sunscreen and beach shoes.",
   ],
 
-  price: 0,
+  price: 30,
 
-  childPrice: 0,
+  childPrice: 15,
 
   infantPrice: 0,
 
-  rating: 0,
+  rating: 4.5,
 
-  reviews: 0,
+  reviews: 25,
 
   badge: "Popular",
 
@@ -749,15 +749,15 @@ export const tours = {
     "Bring swimwear, a personal towel, sunglasses, sunscreen and beach shoes.",
   ],
 
-  price: 0,
+  price: 30,
 
-  childPrice: 0,
+  childPrice: 15,
 
   infantPrice: 0,
 
-  rating: 0,
+  rating: 4.6,
 
-  reviews: 0,
+  reviews: 36,
 
   badge: "Popular",
 
@@ -836,12 +836,12 @@ export const tours = {
     "Departure is usually between 8:30 and 9:00 AM, with return between 4:30 and 5:00 PM.",
   ],
 
-  price: 0,
-  childPrice: 0,
+  price: 75,
+  childPrice: 40,
   infantPrice: 0,
 
-  rating: 0,
-  reviews: 0,
+  rating: 4.9,
+  reviews: 174,
 
   badge: "Popular",
   available: true,
@@ -921,15 +921,15 @@ export const tours = {
     "Departure is usually between 8:00 and 8:30 AM, with return around 5:00 PM.",
   ],
 
-  price: 0,
+  price: 75,
 
-  childPrice: 0,
+  childPrice: 40,
 
   infantPrice: 0,
 
-  rating: 0,
+  rating: 4.8,
 
-  reviews: 0,
+  reviews: 85,
 
   badge: "Popular",
 
@@ -1088,12 +1088,12 @@ export const tours = {
     "The program may change slightly depending on sea and weather conditions.",
   ],
 
-  price: 0,
-  childPrice: 0,
+  price: 30,
+  childPrice: 15,
   infantPrice: 0,
 
-  rating: 0,
-  reviews: 0,
+  rating: 4.5,
+  reviews: 61,
 
   badge: "Adventure",
 
@@ -1172,15 +1172,15 @@ export const tours = {
     "Transfer is not included.",
   ],
 
-  price: 50,
+  price: 70,
 
-  childPrice: 25,
+  childPrice: 35,
 
   infantPrice: 0,
 
-  rating: 0,
+  rating: 4.8,
 
-  reviews: 0,
+  reviews: 67,
 
   badge: "Popular",
 
@@ -1262,15 +1262,15 @@ export const tours = {
     "Schedule may vary according to the operating schedule.",
   ],
 
-  price: 0,
+  price: 75,
 
-  childPrice: 0,
+  childPrice: 40,
 
   infantPrice: 0,
 
-  rating: 0,
+  rating: 4.8,
 
-  reviews: 0,
+  reviews: 102,
 
   badge: "Popular",
 
@@ -1358,15 +1358,15 @@ export const tours = {
     "Bring your ID or passport and towels.",
   ],
 
-  price: 0,
+  price: 70,
 
-  childPrice: 0,
+  childPrice: 35,
 
   infantPrice: 0,
 
-  rating: 0,
+  rating: 4.8,
 
-  reviews: 0,
+  reviews: 122,
 
   badge: "VIP",
 
@@ -1445,12 +1445,12 @@ export const tours = {
     "Bring comfortable walking shoes, swimwear, sunscreen and sunglasses.",
   ],
 
-  price: 0,
-  childPrice: 0,
+  price: 65,
+  childPrice: 35,
   infantPrice: 0,
 
-  rating: 0,
-  reviews: 0,
+  rating: 4.7,
+  reviews: 31,
 
   badge: "Plus",
 
@@ -1529,8 +1529,8 @@ export const tours = {
     "The exact schedule may vary depending on sea and weather conditions.",
   ],
 
-  price: 35,
-  childPrice: 25,
+  price: 25,
+  childPrice: 15,
   infantPrice: 0,
 
   rating: 4.8,
@@ -1611,12 +1611,12 @@ export const tours = {
     "The itinerary may change depending on sea and weather conditions.",
   ],
 
-  price: 0,
-  childPrice: 0,
+  price: 25,
+  childPrice: 15,
   infantPrice: 0,
 
-  rating: 0,
-  reviews: 0,
+  rating: 4.7,
+  reviews: 44,
 
   badge: "Popular",
 
@@ -1697,12 +1697,12 @@ export const tours = {
     "The diving sites and itinerary may change depending on sea and weather conditions.",
   ],
 
-  price: 0,
-  childPrice: 0,
+  price: 40,
+  childPrice: 20,
   infantPrice: 0,
 
-  rating: 0,
-  reviews: 0,
+  rating: 4.9,
+  reviews: 201,
 
   badge: "Adventure",
 
@@ -1780,12 +1780,12 @@ export const tours = {
     "The program may change slightly depending on weather and local conditions.",
   ],
 
-  price: 0,
-  childPrice: 0,
+  price: 65,
+  childPrice: 35,
   infantPrice: 0,
 
-  rating: 0,
-  reviews: 0,
+  rating: 4.5,
+  reviews: 50,
 
   badge: "Popular",
 
@@ -1872,12 +1872,12 @@ export const tours = {
     "The program may change slightly depending on sea and weather conditions.",
   ],
 
-  price: 0,
-  childPrice: 0,
+  price: 20,
+  childPrice: 10,
   infantPrice: 0,
 
-  rating: 0,
-  reviews: 0,
+  rating: 4.6,
+  reviews: 157,
 
   badge: "Popular",
 
@@ -1957,12 +1957,12 @@ export const tours = {
     "The program may change slightly depending on sea and weather conditions.",
   ],
 
-  price: 0,
-  childPrice: 0,
+  price: 20,
+  childPrice: 10,
   infantPrice: 0,
 
-  rating: 0,
-  reviews: 0,
+  rating: 4.4,
+  reviews: 64,
 
   badge: "Popular",
 
@@ -2042,12 +2042,12 @@ export const tours = {
     "The program may change slightly depending on sea and weather conditions.",
   ],
 
-  price: 0,
-  childPrice: 0,
+  price: 20,
+  childPrice: 10,
   infantPrice: 0,
 
-  rating: 0,
-  reviews: 0,
+  rating: 4.5,
+  reviews: 54,
 
   badge: "Popular",
 
@@ -2125,12 +2125,12 @@ export const tours = {
     "The submarine operates under the supervision of professional captains with safety standards in place.",
   ],
 
-  price: 0,
-  childPrice: 0,
+  price: 70,
+  childPrice: 35,
   infantPrice: 0,
 
   rating: 4.8,
-  reviews: 0,
+  reviews: 120,
 
   badge: "Popular",
 
@@ -2215,12 +2215,12 @@ export const tours = {
     "Photography services and tips are optional.",
   ],
 
-  price: 0,
-  childPrice: 0,
+  price: 75,
+  childPrice: 40,
   infantPrice: 0,
 
-  rating: 0,
-  reviews: 0,
+  rating: 4.9,
+  reviews: 165,
 
   badge: "Adventure",
 
@@ -2300,12 +2300,12 @@ export const tours = {
     "Safety equipment and instructions must be followed throughout the activity.",
   ],
 
-  price: 0,
-  childPrice: 0,
+  price: 25,
+  childPrice: 25,
   infantPrice: 0,
 
-  rating: 0,
-  reviews: 0,
+  rating: 4.8,
+  reviews: 87,
 
   badge: "Adventure",
 
@@ -2381,12 +2381,12 @@ export const tours = {
     "The activity can be booked as part of a combo package with Parasailing or other water activities such as Crazy Tube.",
   ],
 
-  price: 0,
-  childPrice: 0,
+  price: 20,
+  childPrice: 20,
   infantPrice: 0,
 
-  rating: 0,
-  reviews: 0,
+  rating: 4.7,
+  reviews: 84,
 
   badge: "Adventure",
 
@@ -2460,12 +2460,12 @@ export const tours = {
     "The activity is subject to weather and sea conditions.",
   ],
 
-  price: 0,
-  childPrice: 0,
+  price: 20,
+  childPrice: 20,
   infantPrice: 0,
 
-  rating: 0,
-  reviews: 0,
+  rating: 4.7,
+  reviews: 94,
 
   badge: "Adventure",
 
@@ -2542,12 +2542,12 @@ export const tours = {
     "The activity is subject to sea and weather conditions.",
   ],
 
-  price: 0,
-  childPrice: 0,
+  price: 25,
+  childPrice: 25,
   infantPrice: 0,
 
-  rating: 0,
-  reviews: 0,
+  rating: 4.9,
+  reviews: 84,
 
   badge: "Adventure",
 
@@ -2627,12 +2627,12 @@ export const tours = {
     "A perfect family experience suitable for children and guests of all ages.",
   ],
 
-  price: 0,
-  childPrice: 0,
+  price: 20,
+  childPrice: 10,
   infantPrice: 0,
 
-  rating: 0,
-  reviews: 0,
+  rating: 4.8,
+  reviews: 87,
 
   badge: "Family",
 
@@ -2713,12 +2713,12 @@ export const tours = {
     "Professional photos and videos are available for purchase separately.",
   ],
 
-  price: 0,
-  childPrice: 0,
+  price: 55,
+  childPrice: 55,
   infantPrice: 0,
 
-  rating: 0,
-  reviews: 0,
+  rating: 4.8,
+  reviews: 49,
 
   badge: "Family",
 
@@ -2800,11 +2800,11 @@ export const tours = {
     "Professional photos and videos can be viewed and purchased separately from the center photographer.",
   ],
 
-  price: 0,
-  childPrice: 0,
+  price: 45,
+  childPrice: 45,
   infantPrice: 0,
 
-  rating: 0,
+  rating: 95,
   reviews: 0,
 
   badge: "Popular",
@@ -2894,9 +2894,9 @@ export const tours = {
     "Wear comfortable clothes, closed shoes and suitable clothing for the desert.",
   ],
 
-  price: 30,
+  price: 25,
 
-  childPrice: 20,
+  childPrice: 15,
 
   infantPrice: 0,
 
@@ -2983,12 +2983,12 @@ export const tours = {
     "The route and timing may vary depending on weather and desert conditions.",
   ],
 
-  price: 0,
-  childPrice: 0,
+  price: 25,
+  childPrice: 15,
   infantPrice: 0,
 
-  rating: 0,
-  reviews: 0,
+  rating: 4.8,
+  reviews: 66,
 
   badge: "Adventure",
 
@@ -3090,12 +3090,12 @@ export const tours = {
     "The itinerary may vary slightly depending on weather and desert conditions.",
   ],
 
-  price: 0,
-  childPrice: 0,
+  price: 30,
+  childPrice: 15,
   infantPrice: 0,
 
-  rating: 0,
-  reviews: 0,
+  rating: 4.9,
+  reviews: 352,
 
   badge: "Adventure",
 
@@ -3184,12 +3184,12 @@ export const tours = {
     "The route and horseback swimming experience may vary depending on weather and sea conditions.",
   ],
 
-  price: 0,
-  childPrice: 0,
+  price: 35,
+  childPrice: 35,
   infantPrice: 0,
 
-  rating: 0,
-  reviews: 0,
+  rating: 4.9,
+  reviews: 106,
 
   badge: "Adventure",
 
@@ -3275,15 +3275,15 @@ export const tours = {
     "Wear comfortable closed shoes.",
   ],
 
-  price: 0,
+  price: 40,
 
-  childPrice: 0,
+  childPrice: 20,
 
   infantPrice: 0,
 
-  rating: 0,
+  rating: 4.9,
 
-  reviews: 0,
+  reviews: 300,
 
   badge: "Romantic",
 
@@ -3364,15 +3364,15 @@ export const tours = {
     "The exact number of professionally retouched photos depends on the selected package.",
   ],
 
-  price: 0,
+  price: 40,
 
-  childPrice: 0,
+  childPrice: 40,
 
   infantPrice: 0,
 
-  rating: 0,
+  rating: 4.9,
 
-  reviews: 0,
+  reviews: 19,
 
   badge: "Private",
 
@@ -3458,15 +3458,15 @@ export const tours = {
     "Please dress respectfully when visiting religious sites.",
   ],
 
-  price: 0,
+  price: 10,
 
-  childPrice: 0,
+  childPrice: 10,
 
   infantPrice: 0,
 
-  rating: 0,
+  rating: 4.8,
 
-  reviews: 0,
+  reviews: 91,
 
   badge: "Popular",
 
@@ -4045,15 +4045,15 @@ export const tours = {
     "Some facilities or services may require additional payment.",
   ],
 
-  price: 0,
+  price: 70,
 
-  childPrice: 0,
+  childPrice: 35,
 
   infantPrice: 0,
 
-  rating: 0,
+  rating: 4.9,
 
-  reviews: 0,
+  reviews: 77,
 
   badge: "Family",
 
@@ -4136,15 +4136,15 @@ export const tours = {
     "Opening hours and presentation schedules may change according to the venue's operating schedule.",
   ],
 
-  price: 0,
+  price: 40,
 
-  childPrice: 0,
+  childPrice: 20,
 
   infantPrice: 0,
 
-  rating: 0,
+  rating: 4.6,
 
-  reviews: 0,
+  reviews: 45,
 
   badge: "Family",
 
@@ -4487,10 +4487,10 @@ export const tours = {
     "Bring swimwear and comfortable flip-flops.",
   ],
   price: 40,
-  childPrice: 0,
+  childPrice: 40,
   infantPrice: 0,
-  rating: 0,
-  reviews: 0,
+  rating: 4.9,
+  reviews: 39,
   badge: "Relaxation",
   available: true,
   type: "Spa & Massage",
