@@ -940,24 +940,16 @@ export const tours = {
 
   "speed-boat": baseTour("speed-boat", {
   name: "Speedboat Tour",
-
   destination: "hurghada",
-
   image: "/tours/speed-boat-hero.webp",
-
   description:
     "Enjoy an exciting speedboat tour in the Red Sea with snorkeling, a visit to White Island and fresh fruit served during the trip.",
-
   overview:
     "A four-hour Red Sea speedboat experience combining a thrilling boat ride, a snorkeling stop, a visit to White Island and fresh fruit during the tour.",
-
   duration: "4 hours",
-
   pickup: "Hotel pickup and transfer",
-
   schedule:
     "Daily — Morning: 8:00 AM–12:00 PM or Afternoon: 1:00 PM–5:00 PM",
-
   program: [
     "Hotel pickup and transfer.",
     "Depart by speedboat for a Red Sea sea tour.",
@@ -967,7 +959,6 @@ export const tours = {
     "Return at the end of the scheduled tour.",
     "Transfer back to the hotel.",
   ],
-
   highlights: [
     "Speedboat tour",
     "Red Sea snorkeling",
@@ -976,7 +967,6 @@ export const tours = {
     "Fresh fruit",
     "Morning or afternoon departure",
   ],
-
   included: [
     "Hotel Transfer",
     "Speedboat Tour",
@@ -985,13 +975,11 @@ export const tours = {
     "White Island Visit",
     "Fresh Fruit",
   ],
-
   excluded: [
     "Personal expenses",
     "Photography services",
     "Tips",
   ],
-
   notes: [
     "The tour is available daily.",
     "Guests can choose between the morning or afternoon departure.",
@@ -1000,18 +988,13 @@ export const tours = {
     "Bring swimwear, towel, sunscreen and sunglasses.",
     "The program may change slightly depending on sea and weather conditions.",
   ],
-
-  price: 0,
-  childPrice: 0,
+  price: 140,
+  childPrice: 140,
   infantPrice: 0,
-
   rating: 0,
   reviews: 0,
-
   badge: "Adventure",
-
   available: true,
-
   type: "Speedboat Tour",
 }),
 

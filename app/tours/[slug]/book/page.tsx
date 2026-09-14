@@ -147,29 +147,45 @@ export default function BookingPage() {
   const [name, setName] = useState("");
   const [nationality, setNationality] = useState("");
   const [isNationalityOpen, setIsNationalityOpen] = useState(false);
+
   const [selectedCountry, setSelectedCountry] = useState(countryCodes[0]);
   const [isCountryOpen, setIsCountryOpen] = useState(false);
   const [countrySearch, setCountrySearch] = useState("");
+
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
+
   const [hotel, setHotel] = useState("");
   const [roomNumber, setRoomNumber] = useState("");
   const [date, setDate] = useState("");
+
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
+
   const [calendarMonth, setCalendarMonth] = useState(() => {
     const d = new Date();
     d.setDate(d.getDate() + 1);
-    return new Date(d.getFullYear(), d.getMonth(), 1);
+
+    return new Date(
+      d.getFullYear(),
+      d.getMonth(),
+      1
+    );
   });
+
   const [adults, setAdults] = useState("1");
   const [children, setChildren] = useState("0");
   const [infants, setInfants] = useState("0");
+
   const [notes, setNotes] = useState("");
-  const [childrenAgeValues, setChildrenAgeValues] = useState<string[]>(
-    []
-  );
-  const [infantAgeValues, setInfantAgeValues] = useState<string[]>([]);
-  const [submitAttempted, setSubmitAttempted] = useState(false);
+
+  const [childrenAgeValues, setChildrenAgeValues] =
+    useState<string[]>([]);
+
+  const [infantAgeValues, setInfantAgeValues] =
+    useState<string[]>([]);
+
+  const [submitAttempted, setSubmitAttempted] =
+    useState(false);
 
   const childAges = Array.from(
     { length: Number(children || 0) },
@@ -186,17 +202,26 @@ export default function BookingPage() {
     Number(children || 0) +
     Number(infants || 0);
 
+  const chargeableGuests =
+    Number(adults || 0) +
+    Number(children || 0);
+
   const totalPrice =
-    Number(adults || 0) * tour.price +
-    Number(children || 0) * tour.childPrice +
-    Number(infants || 0) * tour.infantPrice;
+    slug === "speed-boat"
+      ? 140 +
+        Math.max(chargeableGuests - 4, 0) * 15
+      : Number(adults || 0) * tour.price +
+        Number(children || 0) * tour.childPrice +
+        Number(infants || 0) * tour.infantPrice;
 
   const filteredNationalities = useMemo(() => {
     if (!nationality) return [];
 
     return nationalities
       .filter((n) =>
-        n.toLowerCase().includes(nationality.toLowerCase())
+        n
+          .toLowerCase()
+          .includes(nationality.toLowerCase())
       )
       .slice(0, 6);
   }, [nationality]);
@@ -206,17 +231,23 @@ export default function BookingPage() {
 
     return countryCodes.filter(
       (c) =>
-        c.name.toLowerCase().includes(countrySearch.toLowerCase()) ||
+        c.name
+          .toLowerCase()
+          .includes(countrySearch.toLowerCase()) ||
         c.dialCode.includes(countrySearch)
     );
   }, [countrySearch]);
 
   const tomorrowIso = useMemo(() => {
     const d = new Date();
+
     d.setDate(d.getDate() + 1);
 
     const yyyy = d.getFullYear();
-    const mm = String(d.getMonth() + 1).padStart(2, "0");
+    const mm = String(d.getMonth() + 1).padStart(
+      2,
+      "0"
+    );
     const dd = String(d.getDate()).padStart(2, "0");
 
     return `${yyyy}-${mm}-${dd}`;
@@ -224,8 +255,10 @@ export default function BookingPage() {
 
   const tomorrowDate = useMemo(() => {
     const d = new Date();
+
     d.setHours(0, 0, 0, 0);
     d.setDate(d.getDate() + 1);
+
     return d;
   }, []);
 
@@ -234,7 +267,11 @@ export default function BookingPage() {
     const month = calendarMonth.getMonth();
 
     const firstDay = new Date(year, month, 1);
-    const lastDay = new Date(year, month + 1, 0);
+    const lastDay = new Date(
+      year,
+      month + 1,
+      0
+    );
 
     const startDay = firstDay.getDay();
 
@@ -244,45 +281,82 @@ export default function BookingPage() {
       days.push(null);
     }
 
-    for (let day = 1; day <= lastDay.getDate(); day++) {
-      days.push(new Date(year, month, day));
+    for (
+      let day = 1;
+      day <= lastDay.getDate();
+      day++
+    ) {
+      days.push(
+        new Date(year, month, day)
+      );
     }
 
     return days;
   }, [calendarMonth]);
 
-  const monthTitle = calendarMonth.toLocaleDateString("en-US", {
-    month: "long",
-    year: "numeric",
-  });
+  const monthTitle =
+    calendarMonth.toLocaleDateString(
+      "en-US",
+      {
+        month: "long",
+        year: "numeric",
+      }
+    );
 
-  const isSameDate = (a: Date, b: Date) =>
+  const isSameDate = (
+    a: Date,
+    b: Date
+  ) =>
     a.getFullYear() === b.getFullYear() &&
     a.getMonth() === b.getMonth() &&
     a.getDate() === b.getDate();
 
-  const formatSelectedDate = (value: string) => {
+  const formatSelectedDate = (
+    value: string
+  ) => {
     if (!value) return "";
 
-    const [year, month, day] = value.split("-").map(Number);
-    const d = new Date(year, month - 1, day);
+    const [year, month, day] = value
+      .split("-")
+      .map(Number);
 
-    return d.toLocaleDateString("en-US", {
-      weekday: "short",
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    });
+    const d = new Date(
+      year,
+      month - 1,
+      day
+    );
+
+    return d.toLocaleDateString(
+      "en-US",
+      {
+        weekday: "short",
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      }
+    );
   };
 
-  const handleDateSelect = (selectedDate: Date) => {
+  const handleDateSelect = (
+    selectedDate: Date
+  ) => {
     if (selectedDate < tomorrowDate) return;
 
-    const yyyy = selectedDate.getFullYear();
-    const mm = String(selectedDate.getMonth() + 1).padStart(2, "0");
-    const dd = String(selectedDate.getDate()).padStart(2, "0");
+    const yyyy =
+      selectedDate.getFullYear();
 
-    setDate(`${yyyy}-${mm}-${dd}`);
+    const mm = String(
+      selectedDate.getMonth() + 1
+    ).padStart(2, "0");
+
+    const dd = String(
+      selectedDate.getDate()
+    ).padStart(2, "0");
+
+    setDate(
+      `${yyyy}-${mm}-${dd}`
+    );
+
     setIsDatePickerOpen(false);
   };
 
@@ -299,7 +373,8 @@ export default function BookingPage() {
       1
     );
 
-    if (previous < currentMonthStart) return;
+    if (previous < currentMonthStart)
+      return;
 
     setCalendarMonth(previous);
   };
@@ -324,15 +399,20 @@ export default function BookingPage() {
     name.trim().length >= 2;
 
   const isDateValid =
-    date.length > 0 && date >= tomorrowIso;
+    date.length > 0 &&
+    date >= tomorrowIso;
 
-  const allChildAgesSet = childAges.every(
-    (_, i) => Boolean(childrenAgeValues[i])
-  );
+  const allChildAgesSet =
+    childAges.every(
+      (_, i) =>
+        Boolean(childrenAgeValues[i])
+    );
 
-  const allInfantAgesSet = infantAges.every(
-    (_, i) => Boolean(infantAgeValues[i])
-  );
+  const allInfantAgesSet =
+    infantAges.every(
+      (_, i) =>
+        Boolean(infantAgeValues[i])
+    );
 
   const isFormValid =
     isNameValid &&
@@ -342,7 +422,9 @@ export default function BookingPage() {
     allChildAgesSet &&
     allInfantAgesSet;
 
-  const inputClass = (invalid: boolean) =>
+  const inputClass = (
+    invalid: boolean
+  ) =>
     `w-full rounded-2xl border bg-white px-4 py-3.5 text-gray-900 shadow-sm transition-all duration-200 placeholder:text-gray-400 hover:border-slate-300 focus:outline-none focus:ring-4 ${
       invalid
         ? "border-red-400 focus:border-red-500 focus:ring-red-100"
@@ -392,11 +474,15 @@ Infants: ${infants}
 Total Guests: ${totalGuests}
 
 Children Ages: ${
-      childrenAgeValues.filter(Boolean).join(", ") || "-"
+      childrenAgeValues
+        .filter(Boolean)
+        .join(", ") || "-"
     }
 
 Infant Ages: ${
-      infantAgeValues.filter(Boolean).join(", ") || "-"
+      infantAgeValues
+        .filter(Boolean)
+        .join(", ") || "-"
     }
 
 Total Price: €${totalPrice}
@@ -409,9 +495,14 @@ ${notes.trim() || "-"}
 `;
 
     const whatsappUrl =
-      `https://wa.me/201091920706?text=${encodeURIComponent(message)}`;
+      `https://wa.me/201091920706?text=${encodeURIComponent(
+        message
+      )}`;
 
-    window.open(whatsappUrl, "_blank");
+    window.open(
+      whatsappUrl,
+      "_blank"
+    );
   };
 
   return (
@@ -484,10 +575,13 @@ ${notes.trim() || "-"}
               <div className="mb-6 flex items-center gap-3 border-b border-slate-100 pb-5">
 
                 <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-950 to-blue-800 text-white shadow-md shadow-blue-900/15">
-                  <span className="text-sm font-bold">01</span>
+                  <span className="text-sm font-bold">
+                    01
+                  </span>
                 </div>
 
                 <div>
+
                   <h2 className="text-xl font-bold text-slate-900">
                     Guest Information
                   </h2>
@@ -495,6 +589,7 @@ ${notes.trim() || "-"}
                   <p className="text-sm text-slate-500">
                     Tell us who will be joining the tour
                   </p>
+
                 </div>
 
               </div>
@@ -506,7 +601,10 @@ ${notes.trim() || "-"}
                 <div>
 
                   <label className={labelClass}>
-                    Full Name <span className="text-red-500">*</span>
+                    Full Name{" "}
+                    <span className="text-red-500">
+                      *
+                    </span>
                   </label>
 
                   <input
@@ -517,7 +615,8 @@ ${notes.trim() || "-"}
                       setName(e.target.value)
                     }
                     className={inputClass(
-                      submitAttempted && !isNameValid
+                      submitAttempted &&
+                        !isNameValid
                     )}
                   />
 
@@ -542,16 +641,24 @@ ${notes.trim() || "-"}
                     placeholder="Select your nationality"
                     value={nationality}
                     onChange={(e) => {
-                      setNationality(e.target.value);
-                      setIsNationalityOpen(true);
+                      setNationality(
+                        e.target.value
+                      );
+                      setIsNationalityOpen(
+                        true
+                      );
                     }}
                     onFocus={() =>
-                      setIsNationalityOpen(true)
+                      setIsNationalityOpen(
+                        true
+                      )
                     }
                     onBlur={() =>
                       setTimeout(
                         () =>
-                          setIsNationalityOpen(false),
+                          setIsNationalityOpen(
+                            false
+                          ),
                         150
                       )
                     }
@@ -559,7 +666,8 @@ ${notes.trim() || "-"}
                   />
 
                   {isNationalityOpen &&
-                    filteredNationalities.length > 0 && (
+                    filteredNationalities.length >
+                      0 && (
                       <div className="absolute z-30 mt-2 w-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl">
 
                         {filteredNationalities.map(
@@ -571,8 +679,12 @@ ${notes.trim() || "-"}
                                 e.preventDefault()
                               }
                               onClick={() => {
-                                setNationality(item);
-                                setIsNationalityOpen(false);
+                                setNationality(
+                                  item
+                                );
+                                setIsNationalityOpen(
+                                  false
+                                );
                               }}
                               className="block w-full border-b border-slate-100 px-4 py-3 text-left text-sm text-slate-700 transition hover:bg-blue-50 hover:text-blue-800 last:border-b-0"
                             >
@@ -597,7 +709,10 @@ ${notes.trim() || "-"}
                 <div>
 
                   <label className={labelClass}>
-                    Email Address <span className="text-red-500">*</span>
+                    Email Address{" "}
+                    <span className="text-red-500">
+                      *
+                    </span>
                   </label>
 
                   <input
@@ -608,7 +723,8 @@ ${notes.trim() || "-"}
                       setEmail(e.target.value)
                     }
                     className={inputClass(
-                      submitAttempted && !isEmailValid
+                      submitAttempted &&
+                        !isEmailValid
                     )}
                   />
 
@@ -625,7 +741,10 @@ ${notes.trim() || "-"}
                 <div>
 
                   <label className={labelClass}>
-                    WhatsApp Number <span className="text-red-500">*</span>
+                    WhatsApp Number{" "}
+                    <span className="text-red-500">
+                      *
+                    </span>
                   </label>
 
                   <div className="flex gap-2">
@@ -635,18 +754,26 @@ ${notes.trim() || "-"}
                       <button
                         type="button"
                         onClick={() =>
-                          setIsCountryOpen((v) => !v)
+                          setIsCountryOpen(
+                            (v) => !v
+                          )
                         }
                         className="flex h-full min-w-[105px] items-center justify-center gap-2 rounded-2xl border border-gray-200 bg-white px-3 text-gray-900 shadow-sm transition hover:border-blue-400 focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100"
                       >
 
                         <FlagIcon
-                          iso={selectedCountry.iso}
-                          name={selectedCountry.name}
+                          iso={
+                            selectedCountry.iso
+                          }
+                          name={
+                            selectedCountry.name
+                          }
                         />
 
                         <span className="text-sm font-semibold">
-                          {selectedCountry.dialCode}
+                          {
+                            selectedCountry.dialCode
+                          }
                         </span>
 
                         <span className="text-xs text-gray-400">
@@ -656,7 +783,6 @@ ${notes.trim() || "-"}
                       </button>
 
                       {isCountryOpen && (
-
                         <div className="absolute left-0 top-full z-40 mt-2 w-80 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl">
 
                           <div className="border-b border-slate-100 bg-slate-50/80 p-3">
@@ -687,9 +813,15 @@ ${notes.trim() || "-"}
                                     e.preventDefault()
                                   }
                                   onClick={() => {
-                                    setSelectedCountry(c);
-                                    setIsCountryOpen(false);
-                                    setCountrySearch("");
+                                    setSelectedCountry(
+                                      c
+                                    );
+                                    setIsCountryOpen(
+                                      false
+                                    );
+                                    setCountrySearch(
+                                      ""
+                                    );
                                   }}
                                   className="flex w-full items-center gap-3 border-b border-slate-50 px-4 py-3 text-left text-sm text-slate-700 transition hover:bg-blue-50"
                                 >
@@ -714,7 +846,6 @@ ${notes.trim() || "-"}
                           </div>
 
                         </div>
-
                       )}
 
                     </div>
@@ -724,13 +855,16 @@ ${notes.trim() || "-"}
                       placeholder="Phone number"
                       value={phone}
                       onChange={(e) =>
-                        setPhone(e.target.value)
+                        setPhone(
+                          e.target.value
+                        )
                       }
                       className={
                         inputClass(
                           submitAttempted &&
                             !isPhoneValid
-                        ) + " flex-1"
+                        ) +
+                        " flex-1"
                       }
                     />
 
@@ -755,7 +889,9 @@ ${notes.trim() || "-"}
               <div className="mb-6 flex items-center gap-3 border-b border-slate-100 pb-5">
 
                 <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-950 to-blue-800 text-white shadow-md shadow-blue-900/15">
-                  <span className="text-sm font-bold">02</span>
+                  <span className="text-sm font-bold">
+                    02
+                  </span>
                 </div>
 
                 <div>
@@ -803,7 +939,9 @@ ${notes.trim() || "-"}
                     placeholder="Room number"
                     value={roomNumber}
                     onChange={(e) =>
-                      setRoomNumber(e.target.value)
+                      setRoomNumber(
+                        e.target.value
+                      )
                     }
                     className={inputClass(false)}
                   />
@@ -821,7 +959,9 @@ ${notes.trim() || "-"}
               <div className="mb-6 flex items-center gap-3 border-b border-slate-100 pb-5">
 
                 <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-950 to-blue-800 text-white shadow-md shadow-blue-900/15">
-                  <span className="text-sm font-bold">03</span>
+                  <span className="text-sm font-bold">
+                    03
+                  </span>
                 </div>
 
                 <div>
@@ -839,7 +979,10 @@ ${notes.trim() || "-"}
               </div>
 
               <label className={labelClass}>
-                Tour Date <span className="text-red-500">*</span>
+                Tour Date{" "}
+                <span className="text-red-500">
+                  *
+                </span>
               </label>
 
               {/* Professional Custom Date Picker */}
@@ -849,10 +992,13 @@ ${notes.trim() || "-"}
                 <button
                   type="button"
                   onClick={() =>
-                    setIsDatePickerOpen((v) => !v)
+                    setIsDatePickerOpen(
+                      (v) => !v
+                    )
                   }
                   className={`flex min-h-[62px] w-full items-center justify-between rounded-2xl border bg-white px-4 text-left shadow-sm transition-all focus:outline-none focus:ring-4 ${
-                    submitAttempted && !isDateValid
+                    submitAttempted &&
+                    !isDateValid
                       ? "border-red-400 focus:border-red-500 focus:ring-red-100"
                       : isDatePickerOpen
                       ? "border-blue-600 ring-4 ring-blue-100"
@@ -893,7 +1039,9 @@ ${notes.trim() || "-"}
                         }`}
                       >
                         {date
-                          ? formatSelectedDate(date)
+                          ? formatSelectedDate(
+                              date
+                            )
                           : "Select your tour date"}
                       </p>
 
@@ -946,7 +1094,9 @@ ${notes.trim() || "-"}
 
                         <p className="mt-1 text-xl font-bold">
                           {date
-                            ? formatSelectedDate(date)
+                            ? formatSelectedDate(
+                                date
+                              )
                             : "Choose a date"}
                         </p>
 
@@ -964,7 +1114,9 @@ ${notes.trim() || "-"}
 
                         <button
                           type="button"
-                          onClick={goToPreviousMonth}
+                          onClick={
+                            goToPreviousMonth
+                          }
                           disabled={
                             calendarMonth.getFullYear() ===
                               tomorrowDate.getFullYear() &&
@@ -982,7 +1134,9 @@ ${notes.trim() || "-"}
 
                         <button
                           type="button"
-                          onClick={goToNextMonth}
+                          onClick={
+                            goToNextMonth
+                          }
                           className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:border-blue-200 hover:bg-blue-50"
                         >
                           ›
@@ -1023,16 +1177,19 @@ ${notes.trim() || "-"}
                           (day, index) => {
 
                             if (!day) {
+
                               return (
                                 <div
                                   key={`empty-${index}`}
                                   className="h-10"
                                 />
                               );
+
                             }
 
                             const disabled =
-                              day < tomorrowDate;
+                              day <
+                              tomorrowDate;
 
                             const selected =
                               date &&
@@ -1040,13 +1197,19 @@ ${notes.trim() || "-"}
                                 day,
                                 new Date(
                                   Number(
-                                    date.split("-")[0]
+                                    date.split(
+                                      "-"
+                                    )[0]
                                   ),
                                   Number(
-                                    date.split("-")[1]
+                                    date.split(
+                                      "-"
+                                    )[1]
                                   ) - 1,
                                   Number(
-                                    date.split("-")[2]
+                                    date.split(
+                                      "-"
+                                    )[2]
                                   )
                                 )
                               );
@@ -1058,12 +1221,15 @@ ${notes.trim() || "-"}
                               );
 
                             return (
+
                               <button
                                 key={day.toISOString()}
                                 type="button"
                                 disabled={disabled}
                                 onClick={() =>
-                                  handleDateSelect(day)
+                                  handleDateSelect(
+                                    day
+                                  )
                                 }
                                 className={`relative flex h-10 items-center justify-center rounded-xl text-sm font-semibold transition-all ${
                                   disabled
@@ -1079,11 +1245,15 @@ ${notes.trim() || "-"}
                                 {today &&
                                   !selected &&
                                   !disabled && (
+
                                     <span className="absolute bottom-1 h-1 w-1 rounded-full bg-orange-500" />
+
                                   )}
 
                               </button>
+
                             );
+
                           }
                         )}
 
@@ -1134,7 +1304,9 @@ ${notes.trim() || "-"}
               <div className="mb-6 flex items-center gap-3 border-b border-slate-100 pb-5">
 
                 <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-950 to-blue-800 text-white shadow-md shadow-blue-900/15">
-                  <span className="text-sm font-bold">04</span>
+                  <span className="text-sm font-bold">
+                    04
+                  </span>
                 </div>
 
                 <div>
@@ -1162,7 +1334,9 @@ ${notes.trim() || "-"}
                   <select
                     value={adults}
                     onChange={(e) =>
-                      setAdults(e.target.value)
+                      setAdults(
+                        e.target.value
+                      )
                     }
                     className={inputClass(false)}
                   >
@@ -1170,12 +1344,14 @@ ${notes.trim() || "-"}
                     {Array.from(
                       { length: 20 },
                       (_, i) => (
+
                         <option
                           key={i + 1}
                           value={i + 1}
                         >
                           {i + 1}
                         </option>
+
                       )
                     )}
 
@@ -1195,7 +1371,9 @@ ${notes.trim() || "-"}
                   <select
                     value={children}
                     onChange={(e) => {
-                      const value = e.target.value;
+
+                      const value =
+                        e.target.value;
 
                       setChildren(value);
 
@@ -1206,6 +1384,7 @@ ${notes.trim() || "-"}
                             Number(value)
                           )
                       );
+
                     }}
                     className={inputClass(false)}
                   >
@@ -1213,12 +1392,14 @@ ${notes.trim() || "-"}
                     {Array.from(
                       { length: 11 },
                       (_, i) => (
+
                         <option
                           key={i}
                           value={i}
                         >
                           {i}
                         </option>
+
                       )
                     )}
 
@@ -1238,7 +1419,9 @@ ${notes.trim() || "-"}
                   <select
                     value={infants}
                     onChange={(e) => {
-                      const value = e.target.value;
+
+                      const value =
+                        e.target.value;
 
                       setInfants(value);
 
@@ -1249,6 +1432,7 @@ ${notes.trim() || "-"}
                             Number(value)
                           )
                       );
+
                     }}
                     className={inputClass(false)}
                   >
@@ -1256,12 +1440,14 @@ ${notes.trim() || "-"}
                     {Array.from(
                       { length: 11 },
                       (_, i) => (
+
                         <option
                           key={i}
                           value={i}
                         >
                           {i}
                         </option>
+
                       )
                     )}
 
@@ -1485,41 +1671,69 @@ ${notes.trim() || "-"}
 
               <div className="space-y-3 p-5 text-sm">
 
-                <div className="flex items-center justify-between">
+                {slug === "speed-boat" ? (
 
-                  <span className="text-slate-500">
-                    Adults × €{tour.price}
-                  </span>
+                  <div className="flex items-center justify-between">
 
-                  <span className="font-semibold text-slate-800">
-                    €{Number(adults || 0) * tour.price}
-                  </span>
+                    <span className="text-slate-500">
+                      Speedboat: {chargeableGuests} chargeable guests
+                    </span>
 
-                </div>
+                    <span className="font-semibold text-slate-800">
+                      €{totalPrice}
+                    </span>
 
-                <div className="flex items-center justify-between">
+                  </div>
 
-                  <span className="text-slate-500">
-                    Children × €{tour.childPrice}
-                  </span>
+                ) : (
 
-                  <span className="font-semibold text-slate-800">
-                    €{Number(children || 0) * tour.childPrice}
-                  </span>
+                  <>
 
-                </div>
+                    <div className="flex items-center justify-between">
 
-                <div className="flex items-center justify-between">
+                      <span className="text-slate-500">
+                        Adults × €{tour.price}
+                      </span>
 
-                  <span className="text-slate-500">
-                    Infants × €{tour.infantPrice}
-                  </span>
+                      <span className="font-semibold text-slate-800">
+                        €
+                        {Number(adults || 0) *
+                          tour.price}
+                      </span>
 
-                  <span className="font-semibold text-slate-800">
-                    €{Number(infants || 0) * tour.infantPrice}
-                  </span>
+                    </div>
 
-                </div>
+                    <div className="flex items-center justify-between">
+
+                      <span className="text-slate-500">
+                        Children × €{tour.childPrice}
+                      </span>
+
+                      <span className="font-semibold text-slate-800">
+                        €
+                        {Number(children || 0) *
+                          tour.childPrice}
+                      </span>
+
+                    </div>
+
+                    <div className="flex items-center justify-between">
+
+                      <span className="text-slate-500">
+                        Infants × €{tour.infantPrice}
+                      </span>
+
+                      <span className="font-semibold text-slate-800">
+                        €
+                        {Number(infants || 0) *
+                          tour.infantPrice}
+                      </span>
+
+                    </div>
+
+                  </>
+
+                )}
 
                 <div className="mt-4 flex items-center justify-between border-t border-slate-200 pt-4">
 
@@ -1544,7 +1758,11 @@ ${notes.trim() || "-"}
               <div className="mb-6 flex items-center gap-3 border-b border-slate-100 pb-5">
 
                 <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-950 to-blue-800 text-white shadow-md shadow-blue-900/15">
-                  <span className="text-sm font-bold">05</span>
+
+                  <span className="text-sm font-bold">
+                    05
+                  </span>
+
                 </div>
 
                 <div>
@@ -1570,7 +1788,9 @@ ${notes.trim() || "-"}
                 placeholder="Let us know if you have any special requests..."
                 value={notes}
                 onChange={(e) =>
-                  setNotes(e.target.value)
+                  setNotes(
+                    e.target.value
+                  )
                 }
                 className={inputClass(false)}
               />
@@ -1581,9 +1801,11 @@ ${notes.trim() || "-"}
               !isFormValid && (
 
                 <div className="mb-6 rounded-2xl border border-red-100 bg-red-50 p-4 text-sm font-semibold text-red-700">
+
                   Please complete the required fields
                   highlighted above before sending your booking
                   request
+
                 </div>
 
               )}
@@ -1752,7 +1974,6 @@ ${notes.trim() || "-"}
         </div>
 
       </div>
-
     </main>
   );
 }
