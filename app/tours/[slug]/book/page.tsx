@@ -176,6 +176,9 @@ export default function BookingPage() {
   const [children, setChildren] = useState("0");
   const [infants, setInfants] = useState("0");
 
+  const [selectedVehicle, setSelectedVehicle] =
+    useState<"bus" | "van">("bus");
+
   const [notes, setNotes] = useState("");
 
   const [childrenAgeValues, setChildrenAgeValues] =
@@ -206,10 +209,19 @@ export default function BookingPage() {
     Number(adults || 0) +
     Number(children || 0);
 
+  const selectedVehicleOption =
+    slug === "luxor-over-day" && tour.vehicleOptions
+      ? tour.vehicleOptions[selectedVehicle]
+      : null;
+
   const totalPrice =
     slug === "speed-boat"
       ? 140 +
         Math.max(chargeableGuests - 4, 0) * 15
+      : slug === "luxor-over-day" && selectedVehicleOption
+      ? Number(adults || 0) * selectedVehicleOption.adultPrice +
+        Number(children || 0) * selectedVehicleOption.childPrice +
+        Number(infants || 0) * selectedVehicleOption.infantPrice
       : Number(adults || 0) * tour.price +
         Number(children || 0) * tour.childPrice +
         Number(infants || 0) * tour.infantPrice;
@@ -452,6 +464,12 @@ export default function BookingPage() {
 NEW BOOKING REQUEST
 
 Tour: ${tour.name}
+
+Vehicle: ${
+      slug === "luxor-over-day" && selectedVehicleOption
+        ? selectedVehicleOption.name
+        : "Not specified"
+    }
 
 Full Name: ${name.trim()}
 
@@ -1188,8 +1206,7 @@ ${notes.trim() || "-"}
                             }
 
                             const disabled =
-                              day <
-                              tomorrowDate;
+  day < tomorrowDate;
 
                             const selected =
                               date &&
@@ -1324,6 +1341,32 @@ ${notes.trim() || "-"}
               </div>
 
               <div className="grid gap-5 md:grid-cols-3">
+
+                {slug === "luxor-over-day" && tour.vehicleOptions && (
+                  <div className="mb-5 md:col-span-3">
+                    <label className={labelClass}>
+                      Vehicle Type
+                    </label>
+
+                    <select
+                      value={selectedVehicle}
+                      onChange={(e) =>
+                        setSelectedVehicle(
+                          e.target.value as "bus" | "van"
+                        )
+                      }
+                      className={inputClass(false)}
+                    >
+                      <option value="bus">
+                        Bus
+                      </option>
+
+                      <option value="van">
+                        Van
+                      </option>
+                    </select>
+                  </div>
+                )}
 
                 <div>
 
@@ -1685,6 +1728,44 @@ ${notes.trim() || "-"}
 
                   </div>
 
+                ) : slug === "luxor-over-day" && selectedVehicleOption ? (
+                  <>
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-500">
+                        Vehicle
+                      </span>
+                      <span className="font-semibold text-slate-800">
+                        {selectedVehicleOption.name}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-500">
+                        Adults × €{selectedVehicleOption.adultPrice}
+                      </span>
+                      <span className="font-semibold text-slate-800">
+                        €{Number(adults || 0) * selectedVehicleOption.adultPrice}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-500">
+                        Children × €{selectedVehicleOption.childPrice}
+                      </span>
+                      <span className="font-semibold text-slate-800">
+                        €{Number(children || 0) * selectedVehicleOption.childPrice}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-500">
+                        Infants × €{selectedVehicleOption.infantPrice}
+                      </span>
+                      <span className="font-semibold text-slate-800">
+                        €{Number(infants || 0) * selectedVehicleOption.infantPrice}
+                      </span>
+                    </div>
+                  </>
                 ) : (
 
                   <>

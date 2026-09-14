@@ -100,6 +100,21 @@ type TourData = {
 
   notes: string[];
 
+  vehicleOptions?: {
+    bus: {
+      name: string;
+      adultPrice: number;
+      childPrice: number;
+      infantPrice: number;
+    };
+    van: {
+      name: string;
+      adultPrice: number;
+      childPrice: number;
+      infantPrice: number;
+    };
+  };
+
   price: number;
   childPrice: number;
   infantPrice: number;
@@ -3633,15 +3648,30 @@ export const tours = {
     "Wear comfortable walking shoes and bring a hat and sunscreen.",
   ],
 
-  price: 0,
+  vehicleOptions: {
+    bus: {
+      name: "Bus",
+      adultPrice: 80,
+      childPrice: 40,
+      infantPrice: 20,
+    },
+    van: {
+      name: "Van",
+      adultPrice: 90,
+      childPrice: 50,
+      infantPrice: 25,
+    },
+  },
 
-  childPrice: 0,
+  price: 80,
 
-  infantPrice: 0,
+  childPrice: 40,
 
-  rating: 0,
+  infantPrice: 20,
 
-  reviews: 0,
+  rating: 4.9,
+
+  reviews: 178,
 
   badge: "Excursion",
 
