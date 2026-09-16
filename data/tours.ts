@@ -100,7 +100,7 @@ type TourData = {
 
   notes: string[];
 
-  vehicleOptions?: {
+    vehicleOptions?: {
     bus: {
       name: string;
       adultPrice: number;
@@ -112,6 +112,35 @@ type TourData = {
       adultPrice: number;
       childPrice: number;
       infantPrice: number;
+    };
+  };
+
+  cairoOptions?: {
+    oldMuseum: {
+      name: string;
+      bus: {
+        adultPrice: number;
+        childPrice: number;
+        infantPrice: number;
+      };
+      van: {
+        adultPrice: number;
+        childPrice: number;
+        infantPrice: number;
+      };
+    };
+    newMuseum: {
+      name: string;
+      bus: {
+        adultPrice: number;
+        childPrice: number;
+        infantPrice: number;
+      };
+      van: {
+        adultPrice: number;
+        childPrice: number;
+        infantPrice: number;
+      };
     };
   };
 
@@ -3551,22 +3580,43 @@ export const tours = {
     "Wear comfortable clothes and closed shoes suitable for walking.",
   ],
 
-  price: 0,
+  price: 70,
+childPrice: 40,
+infantPrice: 20,
+rating: 4.9,
+reviews: 209,
+badge: "Excursion",
+available: true,
+type: "Cairo Overday Tour",
 
-  childPrice: 0,
-
-  infantPrice: 0,
-
-  rating: 0,
-
-  reviews: 0,
-
-  badge: "Excursion",
-
-  available: true,
-
-  type: "Cairo Overday Tour",
-
+cairoOptions: {
+  oldMuseum: {
+    name: "Old Museum",
+    bus: {
+      adultPrice: 70,
+      childPrice: 40,
+      infantPrice: 20,
+    },
+    van: {
+      adultPrice: 80,
+      childPrice: 50,
+      infantPrice: 25,
+    },
+  },
+  newMuseum: {
+    name: "New Museum",
+    bus: {
+      adultPrice: 90,
+      childPrice: 45,
+      infantPrice: 25,
+    },
+    van: {
+      adultPrice: 100,
+      childPrice: 50,
+      infantPrice: 25,
+    },
+  },
+},
 }),
 
   "luxor-over-day": baseTour("luxor-over-day", {
@@ -4240,15 +4290,15 @@ export const tours = {
     "Opening hours and available activities may vary according to the venue's operating schedule.",
   ],
 
-  price: 0,
+  price: 30,
 
-  childPrice: 0,
+  childPrice: 15,
 
   infantPrice: 0,
 
-  rating: 0,
+  rating: 4.3,
 
-  reviews: 0,
+  reviews: 39,
 
   badge: "Family",
 
@@ -4332,15 +4382,15 @@ export const tours = {
     "Opening hours and available activities may vary according to the park's operating schedule.",
   ],
 
-  price: 0,
+  price: 30,
 
-  childPrice: 0,
+  childPrice: 15,
 
   infantPrice: 0,
 
-  rating: 0,
+  rating: 4.5,
 
-  reviews: 0,
+  reviews: 27,
 
   badge: "Family",
 
@@ -4420,11 +4470,11 @@ export const tours = {
     "Actual museum visit time is approximately 1–2 hours, with total excursion time around 2.5–3 hours including transfers.",
   ],
 
-  price: 0,
-  childPrice: 0,
+  price: 40,
+  childPrice: 20,
   infantPrice: 0,
-  rating: 0,
-  reviews: 0,
+  rating: 4.8,
+  reviews: 1,
   badge: "Culture",
   available: true,
   type: "Museum",

@@ -177,7 +177,10 @@ export default function BookingPage() {
   const [infants, setInfants] = useState("0");
 
   const [selectedVehicle, setSelectedVehicle] =
-    useState<"bus" | "van">("bus");
+  useState<"bus" | "van">("bus");
+
+const [selectedMuseum, setSelectedMuseum] =
+  useState<"oldMuseum" | "newMuseum">("oldMuseum");
 
   const [notes, setNotes] = useState("");
 
@@ -210,21 +213,42 @@ export default function BookingPage() {
     Number(children || 0);
 
   const selectedVehicleOption =
-    slug === "luxor-over-day" && tour.vehicleOptions
-      ? tour.vehicleOptions[selectedVehicle]
-      : null;
+  slug === "luxor-over-day" && tour.vehicleOptions
+    ? tour.vehicleOptions[selectedVehicle]
+    : null;
+
+const selectedCairoOption =
+  slug === "cairo-over-day" && tour.cairoOptions
+    ? tour.cairoOptions[selectedMuseum]
+    : null;
+
+const selectedCairoVehicleOption =
+  selectedCairoOption
+    ? selectedCairoOption[selectedVehicle]
+    : null;
 
   const totalPrice =
-    slug === "speed-boat"
-      ? 140 +
-        Math.max(chargeableGuests - 4, 0) * 15
-      : slug === "luxor-over-day" && selectedVehicleOption
-      ? Number(adults || 0) * selectedVehicleOption.adultPrice +
-        Number(children || 0) * selectedVehicleOption.childPrice +
-        Number(infants || 0) * selectedVehicleOption.infantPrice
-      : Number(adults || 0) * tour.price +
-        Number(children || 0) * tour.childPrice +
-        Number(infants || 0) * tour.infantPrice;
+  slug === "speed-boat"
+    ? 140 +
+      Math.max(chargeableGuests - 4, 0) * 15
+    : slug === "luxor-over-day" && selectedVehicleOption
+    ? Number(adults || 0) *
+        selectedVehicleOption.adultPrice +
+      Number(children || 0) *
+        selectedVehicleOption.childPrice +
+      Number(infants || 0) *
+        selectedVehicleOption.infantPrice
+    : slug === "cairo-over-day" &&
+      selectedCairoVehicleOption
+    ? Number(adults || 0) *
+        selectedCairoVehicleOption.adultPrice +
+      Number(children || 0) *
+        selectedCairoVehicleOption.childPrice +
+      Number(infants || 0) *
+        selectedCairoVehicleOption.infantPrice
+    : Number(adults || 0) * tour.price +
+      Number(children || 0) * tour.childPrice +
+      Number(infants || 0) * tour.infantPrice;
 
   const filteredNationalities = useMemo(() => {
     if (!nationality) return [];
@@ -465,9 +489,19 @@ NEW BOOKING REQUEST
 
 Tour: ${tour.name}
 
+Museum: ${
+      slug === "cairo-over-day" && selectedCairoOption
+        ? selectedCairoOption.name
+        : "Not specified"
+    }
+
 Vehicle: ${
       slug === "luxor-over-day" && selectedVehicleOption
         ? selectedVehicleOption.name
+        : slug === "cairo-over-day" && selectedCairoVehicleOption
+        ? selectedVehicle === "bus"
+          ? "Bus"
+          : "Van"
         : "Not specified"
     }
 
@@ -1342,12 +1376,36 @@ ${notes.trim() || "-"}
 
               <div className="grid gap-5 md:grid-cols-3">
 
-                {slug === "luxor-over-day" && tour.vehicleOptions && (
-                  <div className="mb-5 md:col-span-3">
-                    <label className={labelClass}>
-                      Vehicle Type
-                    </label>
+                {slug === "cairo-over-day" && tour.cairoOptions && (
+  <div className="mb-5 md:col-span-3">
+    <label className={labelClass}>
+      Museum
+    </label>
+    <select
+      value={selectedMuseum}
+      onChange={(e) =>
+        setSelectedMuseum(
+          e.target.value as "oldMuseum" | "newMuseum"
+        )
+      }
+      className={inputClass(false)}
+    >
+      <option value="oldMuseum">
+        Old Museum
+      </option>
+      <option value="newMuseum">
+        New Museum
+      </option>
+    </select>
+  </div>
+)}
 
+{((slug === "luxor-over-day" && tour.vehicleOptions) ||
+  (slug === "cairo-over-day" && tour.cairoOptions)) && (
+  <div className="mb-5 md:col-span-3">
+    <label className={labelClass}>
+      Vehicle Type
+    </label>
                     <select
                       value={selectedVehicle}
                       onChange={(e) =>
@@ -1728,7 +1786,7 @@ ${notes.trim() || "-"}
 
                   </div>
 
-                ) : slug === "luxor-over-day" && selectedVehicleOption ? (
+                                ) : slug === "luxor-over-day" && selectedVehicleOption ? (
                   <>
                     <div className="flex items-center justify-between">
                       <span className="text-slate-500">
@@ -1763,6 +1821,53 @@ ${notes.trim() || "-"}
                       </span>
                       <span className="font-semibold text-slate-800">
                         €{Number(infants || 0) * selectedVehicleOption.infantPrice}
+                      </span>
+                    </div>
+                  </>
+                                ) : slug === "cairo-over-day" && selectedCairoVehicleOption ? (
+                  <>
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-500">
+                        Museum
+                      </span>
+                      <span className="font-semibold text-slate-800">
+                        {selectedCairoOption?.name}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-500">
+                        Vehicle
+                      </span>
+                      <span className="font-semibold text-slate-800">
+                        {selectedVehicle === "bus" ? "Bus" : "Van"}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-500">
+                        Adults × €{selectedCairoVehicleOption.adultPrice}
+                      </span>
+                      <span className="font-semibold text-slate-800">
+                        €{Number(adults || 0) * selectedCairoVehicleOption.adultPrice}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-500">
+                        Children × €{selectedCairoVehicleOption.childPrice}
+                      </span>
+                      <span className="font-semibold text-slate-800">
+                        €{Number(children || 0) * selectedCairoVehicleOption.childPrice}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-500">
+                        Infants × €{selectedCairoVehicleOption.infantPrice}
+                      </span>
+                      <span className="font-semibold text-slate-800">
+                        €{Number(infants || 0) * selectedCairoVehicleOption.infantPrice}
                       </span>
                     </div>
                   </>
