@@ -3817,15 +3817,15 @@ cairoOptions: {
     "Wear comfortable clothes and closed shoes suitable for walking.",
   ],
 
-  price: 0,
+  price: 285,
 
-  childPrice: 0,
+  childPrice: 170,
 
-  infantPrice: 0,
+  infantPrice: 50,
 
-  rating: 0,
+  rating: 4.9,
 
-  reviews: 0,
+  reviews: 101,
 
   badge: "Excursion",
 
@@ -3928,15 +3928,15 @@ cairoOptions: {
     "Wear comfortable walking shoes and bring a hat and sunscreen.",
   ],
 
-  price: 0,
+  price: 295,
 
-  childPrice: 0,
+  childPrice: 170,
 
-  infantPrice: 0,
+  infantPrice: 60,
 
-  rating: 0,
+  rating: 4.9,
 
-  reviews: 0,
+  reviews: 197,
 
   badge: "Excursion",
 
