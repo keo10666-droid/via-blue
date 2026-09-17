@@ -3817,11 +3817,40 @@ cairoOptions: {
     "Wear comfortable clothes and closed shoes suitable for walking.",
   ],
 
-  price: 285,
+  price: 255,
 
-  childPrice: 170,
+childPrice: 140,
 
-  infantPrice: 50,
+infantPrice: 40,
+
+cairoOptions: {
+  oldMuseum: {
+    name: "Old Museum",
+    bus: {
+      adultPrice: 255,
+      childPrice: 140,
+      infantPrice: 40,
+    },
+    van: {
+      adultPrice: 270,
+      childPrice: 150,
+      infantPrice: 50,
+    },
+  },
+  newMuseum: {
+    name: "New Museum",
+    bus: {
+      adultPrice: 295,
+      childPrice: 170,
+      infantPrice: 70,
+    },
+    van: {
+      adultPrice: 310,
+      childPrice: 180,
+      infantPrice: 80,
+    },
+  },
+},
 
   rating: 4.9,
 
@@ -3928,11 +3957,26 @@ cairoOptions: {
     "Wear comfortable walking shoes and bring a hat and sunscreen.",
   ],
 
-  price: 295,
+    price: 265,
 
-  childPrice: 170,
+  childPrice: 150,
 
-  infantPrice: 60,
+  infantPrice: 50,
+
+  vehicleOptions: {
+    bus: {
+      name: "Bus",
+      adultPrice: 265,
+      childPrice: 150,
+      infantPrice: 50,
+    },
+    van: {
+      name: "Van",
+      adultPrice: 285,
+      childPrice: 165,
+      infantPrice: 65,
+    },
+  },
 
   rating: 4.9,
 

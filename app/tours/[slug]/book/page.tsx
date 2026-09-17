@@ -213,12 +213,16 @@ const [selectedMuseum, setSelectedMuseum] =
     Number(children || 0);
 
   const selectedVehicleOption =
-  slug === "luxor-over-day" && tour.vehicleOptions
+  (slug === "luxor-over-day" ||
+    slug === "luxor-over-night") &&
+  tour.vehicleOptions
     ? tour.vehicleOptions[selectedVehicle]
     : null;
 
 const selectedCairoOption =
-  slug === "cairo-over-day" && tour.cairoOptions
+  (slug === "cairo-over-day" ||
+    slug === "cairo-over-night") &&
+  tour.cairoOptions
     ? tour.cairoOptions[selectedMuseum]
     : null;
 
@@ -231,15 +235,18 @@ const selectedCairoVehicleOption =
   slug === "speed-boat"
     ? 140 +
       Math.max(chargeableGuests - 4, 0) * 15
-    : slug === "luxor-over-day" && selectedVehicleOption
+    : (slug === "luxor-over-day" ||
+   slug === "luxor-over-night") &&
+  selectedVehicleOption
     ? Number(adults || 0) *
         selectedVehicleOption.adultPrice +
       Number(children || 0) *
         selectedVehicleOption.childPrice +
       Number(infants || 0) *
         selectedVehicleOption.infantPrice
-    : slug === "cairo-over-day" &&
-      selectedCairoVehicleOption
+    : (slug === "cairo-over-day" ||
+   slug === "cairo-over-night") &&
+  selectedCairoVehicleOption
     ? Number(adults || 0) *
         selectedCairoVehicleOption.adultPrice +
       Number(children || 0) *
@@ -490,15 +497,21 @@ NEW BOOKING REQUEST
 Tour: ${tour.name}
 
 Museum: ${
-    slug === "cairo-over-day" && selectedCairoOption
+    (slug === "cairo-over-day" ||
+  slug === "cairo-over-night") &&
+selectedCairoOption
       ? selectedCairoOption.name
       : "Not specified"
   }
 
 Vehicle: ${
-    slug === "luxor-over-day" && selectedVehicleOption
+    (slug === "luxor-over-day" ||
+  slug === "luxor-over-night") &&
+selectedVehicleOption
       ? selectedVehicleOption.name
-      : slug === "cairo-over-day" && selectedCairoVehicleOption
+      : (slug === "cairo-over-day" ||
+   slug === "cairo-over-night") &&
+  selectedCairoVehicleOption
       ? selectedVehicle === "bus"
         ? "Bus"
         : "Van"
@@ -1416,7 +1429,9 @@ ${notes.trim() || "-"}
 
               <div className="grid gap-5 md:grid-cols-3">
 
-                {slug === "cairo-over-day" && tour.cairoOptions && (
+                {(slug === "cairo-over-day" ||
+  slug === "cairo-over-night") &&
+  tour.cairoOptions && (
   <div className="mb-5 md:col-span-3">
     <label className={labelClass}>
       Museum
@@ -1440,8 +1455,12 @@ ${notes.trim() || "-"}
   </div>
 )}
 
-{((slug === "luxor-over-day" && tour.vehicleOptions) ||
-  (slug === "cairo-over-day" && tour.cairoOptions)) && (
+{(((slug === "luxor-over-day" ||
+   slug === "luxor-over-night") &&
+  tour.vehicleOptions) ||
+  ((slug === "cairo-over-day" ||
+  slug === "cairo-over-night") &&
+  tour.cairoOptions)) && (
   <div className="mb-5 md:col-span-3">
     <label className={labelClass}>
       Vehicle Type
@@ -1826,7 +1845,9 @@ ${notes.trim() || "-"}
 
                   </div>
 
-                                ) : slug === "luxor-over-day" && selectedVehicleOption ? (
+                                ) : (slug === "luxor-over-day" ||
+     slug === "luxor-over-night") &&
+     selectedVehicleOption ? (
                   <>
                     <div className="flex items-center justify-between">
                       <span className="text-slate-500">
@@ -1864,7 +1885,9 @@ ${notes.trim() || "-"}
                       </span>
                     </div>
                   </>
-                                ) : slug === "cairo-over-day" && selectedCairoVehicleOption ? (
+                                ) : (slug === "cairo-over-day" ||
+     slug === "cairo-over-night") &&
+     selectedCairoVehicleOption ? (
                   <>
                     <div className="flex items-center justify-between">
                       <span className="text-slate-500">
