@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
+import { getSampleReviews } from "@/data/sampleReviews";
 
 type Review = {
   id: string;
@@ -13,14 +14,17 @@ type Review = {
 
 type ReviewsListProps = {
   tourSlug: string;
+  tourName?: string;
 };
 
 export default function ReviewsList({
   tourSlug,
+  tourName = tourSlug,
 }: ReviewsListProps) {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isSample, setIsSample] = useState(false);
 
   useEffect(() => {
     async function loadReviews() {
@@ -35,18 +39,29 @@ export default function ReviewsList({
 
       if (error) {
         console.error("REVIEWS LOAD ERROR:", error);
-        setReviews([]);
+
+        const sampleReviews = getSampleReviews(tourSlug, tourName);
+        setReviews(sampleReviews);
+        setIsSample(true);
+      } else if (data && data.length > 0) {
+        setReviews(data);
+        setIsSample(false);
       } else {
-        setReviews(data || []);
+        const sampleReviews = getSampleReviews(tourSlug, tourName);
+        setReviews(sampleReviews);
+        setIsSample(true);
       }
 
       setLoading(false);
     }
 
     loadReviews();
+  }, [tourSlug, tourName]);
+
+  useEffect(() => {
+    setCurrentIndex(0);
   }, [tourSlug]);
 
-  // Automatic slider
   useEffect(() => {
     if (reviews.length <= 1) return;
 
@@ -86,15 +101,31 @@ export default function ReviewsList({
     <div className="relative mt-12">
       {/* HEADER */}
       <div className="mb-7">
-        <div className="inline-flex items-center rounded-full border border-orange-200 bg-orange-50 px-4 py-2 shadow-sm">
-          <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-orange-500">
-            Guest Reviews
-          </p>
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="inline-flex items-center rounded-full border border-orange-200 bg-orange-50 px-4 py-2 shadow-sm">
+            <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-orange-500">
+              Guest Reviews
+            </p>
+          </div>
+
+          {isSample && (
+            <div className="inline-flex items-center rounded-full border border-blue-100 bg-blue-50 px-4 py-2 shadow-sm">
+              <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-blue-700">
+                Sample Reviews
+              </p>
+            </div>
+          )}
         </div>
 
         <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-blue-950 md:text-4xl">
           What Our Guests Say
         </h2>
+
+        {isSample && (
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-500">
+            Temporary sample content shown until real customer reviews are available for this tour
+          </p>
+        )}
       </div>
 
       {/* EMPTY STATE */}

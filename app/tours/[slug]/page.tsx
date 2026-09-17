@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { tours } from "@/data/tours";
+import { getSampleReviews } from "@/data/sampleReviews";
 import { supabase } from "@/lib/supabase";
 
 import TourGallery from "@/app/components/TourGallery";
@@ -777,17 +778,41 @@ export default async function TourDetailsPage({
     console.error("TOUR REVIEWS ERROR:", reviewsError);
   }
 
-  const reviewCount = reviews?.length ?? 0;
+  const hasLiveReviews = Boolean(
+    reviews && reviews.length > 0
+  );
 
-  const averageRating =
-    reviewCount > 0
+  const sampleReviews = getSampleReviews(
+    tour.slug,
+    tour.name
+  );
+
+  const sampleAverageRating =
+    sampleReviews.length > 0
       ? (
-          reviews!.reduce(
+          sampleReviews.reduce(
             (total, review) => total + Number(review.rating),
             0
-          ) / reviewCount
+          ) / sampleReviews.length
         ).toFixed(1)
       : "0.0";
+
+  const displayReviewCount = hasLiveReviews
+    ? reviews!.length
+    : tour.reviews > 0
+      ? tour.reviews
+      : sampleReviews.length;
+
+  const displayAverageRating = hasLiveReviews
+    ? (
+        reviews!.reduce(
+          (total, review) => total + Number(review.rating),
+          0
+        ) / reviews!.length
+      ).toFixed(1)
+    : tour.rating > 0
+      ? tour.rating.toFixed(1)
+      : sampleAverageRating;
 
   /* =========================================================
      STRUCTURED DATA / JSON-LD
@@ -815,14 +840,14 @@ export default async function TourDetailsPage({
       url: "https://viabluetours.com",
     },
 
-        touristType: "Tourists",
+    touristType: "Tourists",
 
-    ...(reviewCount > 0
+    ...(hasLiveReviews
       ? {
           aggregateRating: {
             "@type": "AggregateRating",
-            ratingValue: Number(averageRating),
-            reviewCount,
+            ratingValue: Number(displayAverageRating),
+            reviewCount: reviews!.length,
             bestRating: 5,
             worstRating: 1,
           },
@@ -922,7 +947,7 @@ export default async function TourDetailsPage({
                 </span>
 
                 <span className="font-bold">
-                  {averageRating}
+                  {displayAverageRating}
                 </span>
 
               </div>
@@ -934,8 +959,8 @@ export default async function TourDetailsPage({
                 </span>
 
                 <span className="font-bold">
-                  {reviewCount}{" "}
-                  {reviewCount === 1 ? "Review" : "Reviews"}
+                  {displayReviewCount}{" "}
+                  {displayReviewCount === 1 ? "Review" : "Reviews"}
                 </span>
 
               </div>
@@ -1150,7 +1175,9 @@ export default async function TourDetailsPage({
                     </div>
 
                     <p className="pt-1 leading-7 text-gray-700">
+
                       {item}
+
                     </p>
 
                   </div>
@@ -1195,7 +1222,9 @@ export default async function TourDetailsPage({
                     </div>
 
                     <p className="text-sm font-semibold leading-6 text-gray-700">
+
                       {item}
+
                     </p>
 
                   </div>
@@ -1240,7 +1269,9 @@ export default async function TourDetailsPage({
                     </div>
 
                     <p className="text-sm font-semibold leading-6 text-gray-700">
+
                       {item}
+
                     </p>
 
                   </div>
@@ -1288,7 +1319,9 @@ export default async function TourDetailsPage({
                     </div>
 
                     <h3 className="font-bold leading-6 text-blue-950">
+
                       {item}
+
                     </h3>
 
                   </div>
@@ -1329,7 +1362,9 @@ export default async function TourDetailsPage({
                     <div className="mt-1 h-2 w-2 shrink-0 rounded-full bg-orange-500" />
 
                     <p className="text-sm leading-7 text-gray-700">
+
                       {note}
+
                     </p>
 
                   </div>
@@ -1344,7 +1379,10 @@ export default async function TourDetailsPage({
 
             <div className="mt-16 rounded-[28px] border border-slate-200/80 bg-white p-7 shadow-[0_10px_35px_rgba(15,23,42,0.05)] md:p-9">
 
-              <ReviewsList tourSlug={tour.slug} />
+              <ReviewsList
+                tourSlug={tour.slug}
+                tourName={tour.name}
+              />
 
               <div className="mt-12 border-t border-slate-100 pt-12">
 
@@ -1390,22 +1428,30 @@ export default async function TourDetailsPage({
                   <div className="mt-3 flex items-baseline gap-2">
 
                     <span className="text-5xl font-extrabold text-orange-400">
+
                       {tour.price > 0
                         ? `€${tour.price}`
                         : "On Request"}
+
                     </span>
 
                     {tour.price > 0 && (
+
                       <span className="text-sm text-blue-200">
+
                         / person
+
                       </span>
+
                     )}
 
                   </div>
 
                   <p className="mt-3 text-sm leading-6 text-blue-200">
+
                     Secure your place and enjoy a professionally organized
                     experience in Hurghada
+
                   </p>
 
                 </div>
@@ -1431,13 +1477,17 @@ export default async function TourDetailsPage({
                       </div>
 
                       <span className="text-sm font-medium">
+
                         Rating
+
                       </span>
 
                     </div>
 
                     <span className="font-bold text-blue-950">
-                      {averageRating}
+
+                      {displayAverageRating}
+
                     </span>
 
                   </div>
@@ -1455,13 +1505,17 @@ export default async function TourDetailsPage({
                       </div>
 
                       <span className="text-sm font-medium">
+
                         Reviews
+
                       </span>
 
                     </div>
 
                     <span className="font-bold text-blue-950">
-                      {reviewCount}
+
+                      {displayReviewCount}
+
                     </span>
 
                   </div>
@@ -1479,13 +1533,17 @@ export default async function TourDetailsPage({
                       </div>
 
                       <span className="text-sm font-medium">
+
                         Type
+
                       </span>
 
                     </div>
 
                     <span className="max-w-[170px] text-right text-sm font-bold text-blue-950">
+
                       {tour.type}
+
                     </span>
 
                   </div>
@@ -1503,13 +1561,17 @@ export default async function TourDetailsPage({
                       </div>
 
                       <span className="text-sm font-medium">
+
                         Destination
+
                       </span>
 
                     </div>
 
                     <span className="text-right text-sm font-bold capitalize text-blue-950">
+
                       {tour.destination}
+
                     </span>
 
                   </div>
@@ -1527,13 +1589,17 @@ export default async function TourDetailsPage({
                       </div>
 
                       <span className="text-sm font-medium">
+
                         Duration
+
                       </span>
 
                     </div>
 
                     <span className="max-w-[170px] text-right text-sm font-bold text-blue-950">
+
                       {tour.duration}
+
                     </span>
 
                   </div>
@@ -1551,13 +1617,17 @@ export default async function TourDetailsPage({
                       </div>
 
                       <span className="text-sm font-medium">
+
                         Pickup
+
                       </span>
 
                     </div>
 
                     <span className="max-w-[170px] text-right text-sm font-bold text-blue-950">
+
                       {tour.pickup}
+
                     </span>
 
                   </div>
@@ -1588,7 +1658,9 @@ export default async function TourDetailsPage({
                 ) : (
 
                   <div className="mt-6 w-full rounded-2xl bg-slate-100 py-4 text-center text-lg font-bold text-gray-400">
+
                     Coming Soon
+
                   </div>
 
                 )}
@@ -1635,7 +1707,9 @@ export default async function TourDetailsPage({
             <span className="h-1.5 w-1.5 rounded-full bg-orange-400" />
 
             <p className="text-xs font-bold uppercase tracking-[0.3em] text-orange-400">
+
               Ready To Explore?
+
             </p>
 
             <span className="h-1.5 w-1.5 rounded-full bg-orange-400" />
@@ -1643,15 +1717,22 @@ export default async function TourDetailsPage({
           </div>
 
           <h2 className="mt-6 text-4xl font-extrabold leading-tight md:text-6xl">
+
             Ready to Book Your
+
             <span className="block text-orange-400">
+
               Adventure?
+
             </span>
+
           </h2>
 
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-blue-100">
+
             Reserve your {tour.name} experience and enjoy an unforgettable
             day in Hurghada with Via Blue
+
           </p>
 
           {tour.available ? (
@@ -1676,7 +1757,9 @@ export default async function TourDetailsPage({
           ) : (
 
             <div className="mt-8 inline-block rounded-2xl border border-white/10 bg-white/10 px-8 py-4 font-bold text-gray-300 backdrop-blur">
+
               Coming Soon
+
             </div>
 
           )}
