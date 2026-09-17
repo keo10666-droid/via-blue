@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useMemo, useState } from "react";
 
@@ -599,15 +599,17 @@ ${notes.trim() || "-"}
       "Your booking request has been submitted successfully"
     );
   } catch (error) {
-    console.error(
-      "Booking submission error:",
-      error
-    );
+  console.error(
+    "Booking submission error:",
+    error
+  );
 
-    alert(
-      "Something went wrong while submitting your booking. Please try again"
-    );
-  }
+  alert(
+    error instanceof Error
+      ? error.message
+      : "Something went wrong while submitting your booking"
+  );
+}
 };
 
   return (
