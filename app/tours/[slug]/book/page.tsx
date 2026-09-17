@@ -476,34 +476,34 @@ const selectedCairoVehicleOption =
     </p>
   );
 
-  const handleSubmit = () => {
-    setSubmitAttempted(true);
+  const handleSubmit = async () => {
+  setSubmitAttempted(true);
 
-    if (!isFormValid) return;
+  if (!isFormValid) return;
 
-    const fullPhone =
-      `${selectedCountry.dialCode} ${phone.trim()}`;
+  const fullPhone =
+    `${selectedCountry.dialCode} ${phone.trim()}`;
 
-    const message = `
+  const message = `
 NEW BOOKING REQUEST
 
 Tour: ${tour.name}
 
 Museum: ${
-      slug === "cairo-over-day" && selectedCairoOption
-        ? selectedCairoOption.name
-        : "Not specified"
-    }
+    slug === "cairo-over-day" && selectedCairoOption
+      ? selectedCairoOption.name
+      : "Not specified"
+  }
 
 Vehicle: ${
-      slug === "luxor-over-day" && selectedVehicleOption
-        ? selectedVehicleOption.name
-        : slug === "cairo-over-day" && selectedCairoVehicleOption
-        ? selectedVehicle === "bus"
-          ? "Bus"
-          : "Van"
-        : "Not specified"
-    }
+    slug === "luxor-over-day" && selectedVehicleOption
+      ? selectedVehicleOption.name
+      : slug === "cairo-over-day" && selectedCairoVehicleOption
+      ? selectedVehicle === "bus"
+        ? "Bus"
+        : "Van"
+      : "Not specified"
+  }
 
 Full Name: ${name.trim()}
 
@@ -526,16 +526,16 @@ Infants: ${infants}
 Total Guests: ${totalGuests}
 
 Children Ages: ${
-      childrenAgeValues
-        .filter(Boolean)
-        .join(", ") || "-"
-    }
+    childrenAgeValues
+      .filter(Boolean)
+      .join(", ") || "-"
+  }
 
 Infant Ages: ${
-      infantAgeValues
-        .filter(Boolean)
-        .join(", ") || "-"
-    }
+    infantAgeValues
+      .filter(Boolean)
+      .join(", ") || "-"
+  }
 
 Total Price: €${totalPrice}
 
@@ -546,16 +546,56 @@ Notes:
 ${notes.trim() || "-"}
 `;
 
-    const whatsappUrl =
-      `https://wa.me/201091920706?text=${encodeURIComponent(
-        message
-      )}`;
+  const html = message
+    .trim()
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/\n/g, "<br />");
 
-    window.open(
-      whatsappUrl,
-      "_blank"
+  try {
+    const response = await fetch(
+      "/api/send-booking",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          subject: `New Tour Booking - ${tour.name}`,
+          html: `
+            <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #1e293b;">
+              <h2 style="color: #0f172a;">New Tour Booking Request</h2>
+              <div>${html}</div>
+            </div>
+          `,
+          replyTo: email.trim(),
+        }),
+      }
     );
-  };
+
+    const result = await response.json();
+
+    if (!response.ok || !result.success) {
+      throw new Error(
+        result.error || "Failed to send booking"
+      );
+    }
+
+    alert(
+      "Your booking request has been submitted successfully"
+    );
+  } catch (error) {
+    console.error(
+      "Booking submission error:",
+      error
+    );
+
+    alert(
+      "Something went wrong while submitting your booking. Please try again"
+    );
+  }
+};
 
   return (
     <main className="min-h-screen bg-slate-50 px-4 py-8 md:py-12">

@@ -4019,15 +4019,15 @@ cairoOptions: {
     "Guests should wear comfortable clothes and bring a light jacket as early morning temperatures can be cool.",
   ],
 
-  price: 0,
+  price: 65,
 
-  childPrice: 0,
+  childPrice: 40,
 
   infantPrice: 0,
 
-  rating: 0,
+  rating: 4.9,
 
-  reviews: 0,
+  reviews: 345,
 
   badge: "Experience",
 

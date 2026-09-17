@@ -716,60 +716,104 @@ export default function LuxuryBookingForm({
     );
   };
 
-  const handleSubmit = () => {
-    setSubmitAttempted(true);
+  const handleSubmit = async () => {
+  setSubmitAttempted(true);
 
-    if (!isFormValid) return;
+  if (!isFormValid) return;
 
-    const fullPhone = `${selectedCountry.dialCode} ${phone.trim()}`;
+  const fullPhone = `${selectedCountry.dialCode} ${phone.trim()}`;
 
-    const message = `
-🌴 NEW LUXURY BOOKING REQUEST
+  const message = `
+NEW LUXURY BOOKING REQUEST
 
-🏝️ Tour: ${tourName}
+Tour: ${tourName}
 
-⭐ Type: ${tourType}
+Type: ${tourType}
 
-👤 Full Name: ${name.trim()}
+Full Name: ${name.trim()}
 
-🌍 Nationality: ${nationality || "Not specified"}
+Nationality: ${nationality || "Not specified"}
 
-✉️ Email: ${email.trim()}
+Email: ${email.trim()}
 
-🏨 Hotel: ${hotel || "Not specified"}
+Hotel: ${hotel || "Not specified"}
 
-🚪 Room Number: ${roomNumber || "Not specified"}
+Room Number: ${roomNumber || "Not specified"}
 
-📅 Date: ${date}
+Date: ${date}
 
-👨 Adults: ${adults}
+Adults: ${adults}
 
-🧒 Children: ${children}
+Children: ${children}
 
-👶 Infants: ${infants}
+Infants: ${infants}
 
-👥 Total Guests: ${totalGuests}
+Total Guests: ${totalGuests}
 
-🧒 Children Ages:
+Children Ages:
 ${childrenAgeValues.filter(Boolean).join(", ") || "-"}
 
-👶 Infant Ages:
+Infant Ages:
 ${infantAgeValues.filter(Boolean).join(", ") || "-"}
 
-💰 PRIVATE TOUR PRICE: €${totalPrice}
+PRIVATE TOUR PRICE: €${totalPrice}
 
-📱 WhatsApp: ${fullPhone}
+WhatsApp: ${fullPhone}
 
-📝 Notes:
+Notes:
 ${notes.trim() || "-"}
 `;
 
-    const whatsappUrl =
-      `https://wa.me/201091920706?text=` +
-      encodeURIComponent(message);
+  const html = message
+    .trim()
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/\n/g, "<br />");
 
-    window.open(whatsappUrl, "_blank");
-  };
+  try {
+    const response = await fetch(
+      "/api/send-booking",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          subject: `New Luxury Tour Booking - ${tourName}`,
+          html: `
+            <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #1e293b;">
+              <h2 style="color: #0f172a;">New Luxury Tour Booking Request</h2>
+              <div>${html}</div>
+            </div>
+          `,
+          replyTo: email.trim(),
+        }),
+      }
+    );
+
+    const result = await response.json();
+
+    if (!response.ok || !result.success) {
+      throw new Error(
+        result.error || "Failed to send booking"
+      );
+    }
+
+    alert(
+      "Your booking request has been submitted successfully"
+    );
+  } catch (error) {
+    console.error(
+      "Luxury booking submission error:",
+      error
+    );
+
+    alert(
+      "Something went wrong while submitting your booking. Please try again"
+    );
+  }
+};
 
   return (
     <NoPeriods>

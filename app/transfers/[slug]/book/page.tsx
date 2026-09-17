@@ -520,7 +520,7 @@ function CustomDatePicker({
       </button>
 
       {isOpen && (
-        <div className="absolute left-0 top-full z-50 mt-3 w-full min-w-[310px] overflow-hidden rounded-[28px] border border-slate-200 bg-white p-5 shadow-[0_24px_70px_rgba(15,23,42,0.18)]">
+        <div className="absolute bottom-full left-0 z-50 mb-3 w-full min-w-[310px] overflow-hidden rounded-[28px] border border-slate-200 bg-white p-5 shadow-[0_24px_70px_rgba(15,23,42,0.18)]">
           <div className="flex items-center justify-between">
             <button
               type="button"
@@ -788,7 +788,7 @@ function CustomTimePicker({
       </button>
 
       {isOpen && (
-        <div className="absolute left-0 top-full z-50 mt-3 w-full min-w-[300px] overflow-hidden rounded-[28px] border border-slate-200 bg-white p-5 shadow-[0_24px_70px_rgba(15,23,42,0.18)]">
+        <div className="absolute bottom-full left-0 z-50 mb-3 w-full min-w-[300px] overflow-hidden rounded-[28px] border border-slate-200 bg-white p-5 shadow-[0_24px_70px_rgba(15,23,42,0.18)]">
           <div className="flex items-center gap-3">
             <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-950 text-white shadow-sm">
               <ClockIcon />
@@ -1134,24 +1134,24 @@ export default function TransferBookingPage() {
     }
   };
 
-  const handleSubmit = () => {
-    setSubmitAttempted(true);
+  const handleSubmit = async () => {
+  setSubmitAttempted(true);
 
-    if (!isFormValid) return;
+  if (!isFormValid) return;
 
-    const fullPhone =
-      `${selectedCountry.dialCode} ${phone.trim()}`;
+  const fullPhone =
+    `${selectedCountry.dialCode} ${phone.trim()}`;
 
-    const message = `
+  const message = `
 NEW TRANSFER BOOKING
 
 Transfer Type: ${
-      transferType === "airport-to-hotel"
-        ? "Airport -> Hotel"
-        : transferType === "hotel-to-airport"
-        ? "Hotel -> Airport"
-        : "Hotel -> Hotel"
-    }
+    transferType === "airport-to-hotel"
+      ? "Airport -> Hotel"
+      : transferType === "hotel-to-airport"
+      ? "Hotel -> Airport"
+      : "Hotel -> Hotel"
+  }
 
 From: ${route.from}
 To: ${route.to}
@@ -1168,8 +1168,8 @@ From Hotel: ${fromHotel || "Not specified"}
 To Hotel: ${toHotel || "Not specified"}
 
 Room Number: ${
-      roomNumber || "Not specified"
-    }
+    roomNumber || "Not specified"
+  }
 
 Transfer Date: ${date}
 Pickup Time: ${formatTimeForDisplay(time)}
@@ -1189,16 +1189,56 @@ Notes:
 ${notes.trim() || "-"}
 `;
 
-    const whatsappUrl =
-      `https://wa.me/201091920706?text=${encodeURIComponent(
-        message
-      )}`;
+  const html = message
+    .trim()
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/\n/g, "<br />");
 
-    window.open(
-      whatsappUrl,
-      "_blank"
+  try {
+    const response = await fetch(
+      "/api/send-booking",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          subject: `New Transfer Booking - ${route.from} to ${route.to}`,
+          html: `
+            <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #1e293b;">
+              <h2 style="color: #0f172a;">New Transfer Booking Request</h2>
+              <div>${html}</div>
+            </div>
+          `,
+          replyTo: email.trim(),
+        }),
+      }
     );
-  };
+
+    const result = await response.json();
+
+    if (!response.ok || !result.success) {
+      throw new Error(
+        result.error || "Failed to send booking"
+      );
+    }
+
+    alert(
+      "Your transfer booking request has been submitted successfully"
+    );
+  } catch (error) {
+    console.error(
+      "Transfer booking submission error:",
+      error
+    );
+
+    alert(
+      "Something went wrong while submitting your transfer booking. Please try again"
+    );
+  }
+};
 
   return (
     <main className="min-h-screen bg-slate-50">
