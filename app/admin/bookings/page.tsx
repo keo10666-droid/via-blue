@@ -234,7 +234,7 @@ export default async function AdminBookingsPage() {
         </div>
       </section>
 
-      <section className="mx-auto -mt-6 max-w-[1500px] px-4 pb-10 md:px-8">
+      <section className="mx-auto mt-6 max-w-[1500px] px-4 pb-10 md:px-8">
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           <div className="rounded-[24px] border border-slate-200 bg-white p-5 shadow-[0_14px_40px_rgba(15,23,42,0.06)]">
             <p className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-400">
