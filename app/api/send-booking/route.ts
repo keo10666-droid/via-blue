@@ -1,4 +1,5 @@
 import { Resend } from "resend";
+import { createSupabaseAdminClient } from "@/lib/supabaseAdmin";
 
 const resend = new Resend(
   process.env.RESEND_API_KEY
@@ -405,6 +406,35 @@ export async function POST(request: Request) {
         )
         .trim() ||
       "Booking Request";
+
+    const bookingType =
+      subject.match(
+        /^New\s+(Tour|Luxury Tour|Transfer)\s+Booking/i
+      )?.[1] || "Booking";
+
+    const customerWhatsApp = getField(
+      fields,
+      "WhatsApp",
+      "Phone",
+      "Mobile"
+    );
+
+    const tripDate = getField(
+      fields,
+      "Tour Date",
+      "Transfer Date",
+      "Date"
+    );
+
+    const pickupTime = getField(
+      fields,
+      "Pickup Time"
+    );
+
+    const notesValue = getField(
+      fields,
+      "Notes"
+    );
 
     const emailHtml = `
       <!DOCTYPE html>
@@ -1009,6 +1039,66 @@ export async function POST(request: Request) {
       );
     }
 
+    let bookingSaved = false;
+
+    const bookingReference =
+      `VB-${new Date().getFullYear()}-${crypto
+        .randomUUID()
+        .slice(0, 8)
+        .toUpperCase()}`;
+
+    const supabaseAdmin =
+      createSupabaseAdminClient();
+
+    if (supabaseAdmin) {
+      const { error: bookingSaveError } =
+        await supabaseAdmin
+          .from("booking_requests")
+          .insert({
+            reference_code:
+              bookingReference,
+            booking_type:
+              bookingType,
+            booking_name:
+              bookingName,
+            customer_name:
+              customerName || null,
+            customer_email:
+              customerEmail ||
+              replyTo ||
+              null,
+            customer_whatsapp:
+              customerWhatsApp ||
+              null,
+            trip_date:
+              tripDate || null,
+            pickup_time:
+              pickupTime || null,
+            total_price:
+              priceValue || null,
+            notes:
+              notesValue || null,
+            status:
+              "received",
+            fields,
+            source_subject:
+              subject,
+          });
+
+      if (bookingSaveError) {
+        console.error(
+          "Booking database save error:",
+          bookingSaveError
+        );
+      } else {
+        bookingSaved = true;
+      }
+    } else {
+      console.warn(
+        "Booking database save skipped because SUPABASE_SERVICE_ROLE_KEY is not configured"
+      );
+    }
+
     let customerEmailSent = false;
 
     if (replyTo) {
@@ -1077,6 +1167,8 @@ export async function POST(request: Request) {
       success: true,
       data,
       customerEmailSent,
+      bookingSaved,
+      bookingReference,
     });
   } catch (error) {
     console.error(
