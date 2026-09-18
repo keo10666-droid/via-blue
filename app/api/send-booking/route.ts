@@ -396,6 +396,16 @@ export async function POST(request: Request) {
         )
         .trim() || "Booking";
 
+    const bookingName =
+      getField(fields, "Tour", "Service") ||
+      subject
+        .replace(
+          /^New\s+(?:Tour|Luxury Tour|Transfer)\s+Booking\s*-\s*/i,
+          ""
+        )
+        .trim() ||
+      "Booking Request";
+
     const emailHtml = `
       <!DOCTYPE html>
       <html lang="en">
@@ -999,9 +1009,74 @@ export async function POST(request: Request) {
       );
     }
 
+    let customerEmailSent = false;
+
+    if (replyTo) {
+      const customerEmailHtml =
+        "<!DOCTYPE html>" +
+        "<html lang=\"en\">" +
+        "<head>" +
+        "<meta charset=\"UTF-8\" />" +
+        "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />" +
+        "<title>We Received Your Booking Request - Via Blue</title>" +
+        "</head>" +
+        "<body style=\"margin:0;padding:0;background:#eef3f8;font-family:Arial,Helvetica,sans-serif;color:#0f172a;\">" +
+        "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:100%;background:#eef3f8;\"><tr>" +
+        "<td align=\"center\" style=\"padding:34px 14px;\">" +
+        "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:100%;max-width:680px;background:#ffffff;border-radius:26px;overflow:hidden;box-shadow:0 20px 60px rgba(15,23,42,0.10);\">" +
+        "<tr><td style=\"background:linear-gradient(135deg,#071b3d 0%,#0b2b5c 100%);padding:34px 32px 30px 32px;color:#ffffff;\">" +
+        "<div style=\"font-size:10px;line-height:14px;font-weight:800;letter-spacing:2.8px;text-transform:uppercase;color:#fb923c;\">VIA BLUE</div>" +
+        "<div style=\"margin-top:4px;font-size:11px;line-height:15px;color:#cbd5e1;\">Tours &amp; Transfers in Egypt</div>" +
+        "<div style=\"margin-top:28px;font-size:30px;line-height:36px;font-weight:800;color:#ffffff;\">Booking Request Received</div>" +
+        "<div style=\"margin-top:7px;font-size:13px;line-height:20px;color:#bfdbfe;\">Thank you for choosing Via Blue</div>" +
+        "</td></tr>" +
+        "<tr><td style=\"height:5px;background:#f97316;font-size:0;line-height:0;\">&nbsp;</td></tr>" +
+        "<tr><td style=\"padding:28px;background:#f8fafc;\">" +
+        "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"border:1px solid #dbe4ef;border-radius:20px;background:#ffffff;\"><tr><td style=\"padding:22px;\">" +
+        "<div style=\"font-size:11px;line-height:16px;font-weight:800;text-transform:uppercase;letter-spacing:1.3px;color:#f97316;\">Hello " +
+        escapeHtml(customerName || "Guest") +
+        "</div>" +
+        "<div style=\"margin-top:9px;font-size:15px;line-height:24px;color:#334155;\">We have successfully received your booking request for <strong style=\"color:#0b1f44;\">" +
+        escapeHtml(bookingName) +
+        "</strong></div>" +
+        "</td></tr></table>" +
+        "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"margin-top:18px;border:1px solid #e2e8f0;border-radius:20px;background:#ffffff;\"><tr><td style=\"padding:20px 22px;\">" +
+        "<div style=\"font-size:10px;line-height:14px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:#0b2b5c;\">What happens next</div>" +
+        "<div style=\"margin-top:10px;font-size:13px;line-height:24px;color:#475569;\">Our team will review your request and availability<br />We will contact you shortly to confirm the details<br />If we need anything else, we will contact you using the information you provided</div>" +
+        "</td></tr></table>" +
+        "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"margin-top:18px;border:1px solid #fed7aa;border-radius:20px;background:#fffaf5;\"><tr><td style=\"padding:20px 22px;\">" +
+        "<div style=\"font-size:10px;line-height:14px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:#ea580c;\">Important</div>" +
+        "<div style=\"margin-top:8px;font-size:12px;line-height:20px;color:#7c2d12;\">This email confirms that we received your request. It is not the final booking confirmation yet</div>" +
+        "</td></tr></table>" +
+        "<div style=\"margin-top:26px;text-align:center;font-size:13px;line-height:21px;color:#64748b;\">Thank you for choosing <strong style=\"color:#0b1f44;\">Via Blue</strong><br />We look forward to welcoming you in Egypt</div>" +
+        "<div style=\"margin-top:22px;text-align:center;font-size:10px;line-height:15px;color:#94a3b8;\">viabluetours.com</div>" +
+        "</td></tr></table></td></tr></table></body></html>";
+
+      const { error: customerError } =
+        await resend.emails.send({
+          from:
+            "Via Blue <booking@viabluetours.com>",
+          to: [replyTo],
+          subject:
+            "We Received Your Booking Request - Via Blue",
+          html: customerEmailHtml,
+          replyTo: "viabluetours@gmail.com",
+        });
+
+      if (customerError) {
+        console.error(
+          "Customer confirmation email error:",
+          customerError
+        );
+      } else {
+        customerEmailSent = true;
+      }
+    }
+
     return Response.json({
       success: true,
       data,
+      customerEmailSent,
     });
   } catch (error) {
     console.error(

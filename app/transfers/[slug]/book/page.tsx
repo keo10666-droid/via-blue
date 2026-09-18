@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { useParams } from "next/navigation";
 
 import { transfers } from "@/data/transfers";
+import BookingSuccessModal from "@/app/components/BookingSuccessModal";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -980,6 +981,10 @@ export default function TransferBookingPage() {
   const [submitAttempted, setSubmitAttempted] =
     useState(false);
 
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [confirmationEmailSent, setConfirmationEmailSent] =
+    useState(false);
+
   const tomorrowIso = useMemo(() => {
     const d = new Date();
 
@@ -1225,9 +1230,8 @@ ${notes.trim() || "-"}
       );
     }
 
-    alert(
-      "Your transfer booking request has been submitted successfully"
-    );
+    setConfirmationEmailSent(result.customerEmailSent !== false);
+    setShowSuccess(true);
   } catch (error) {
     console.error(
       "Transfer booking submission error:",
@@ -1242,6 +1246,16 @@ ${notes.trim() || "-"}
 
   return (
     <main className="min-h-screen bg-slate-50">
+      <BookingSuccessModal
+        open={showSuccess}
+        guestName={name.trim()}
+        bookingName={transfer?.name || "Private Transfer"}
+        email={email.trim()}
+        emailSent={confirmationEmailSent}
+        backHref="/transfers"
+        backLabel="Back to Transfers"
+        onClose={() => setShowSuccess(false)}
+      />
       {/* HEADER */}
       <section className="relative overflow-hidden bg-blue-950 px-5 py-12 text-white md:px-8 md:py-16">
         <div className="absolute -left-32 -top-32 h-96 w-96 rounded-full bg-blue-600/30 blur-3xl" />

@@ -10,6 +10,8 @@ import {
   useState,
 } from "react";
 
+import BookingSuccessModal from "@/app/components/BookingSuccessModal";
+
 type LuxuryBookingFormProps = {
   tourName: string;
   adultPrice?: number;
@@ -559,6 +561,10 @@ export default function LuxuryBookingForm({
   const [submitAttempted, setSubmitAttempted] =
     useState(false);
 
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [confirmationEmailSent, setConfirmationEmailSent] =
+    useState(false);
+
   const childAges = Array.from(
     { length: Number(children || 0) },
     (_, i) => i
@@ -800,9 +806,8 @@ ${notes.trim() || "-"}
       );
     }
 
-    alert(
-      "Your booking request has been submitted successfully"
-    );
+    setConfirmationEmailSent(result.customerEmailSent !== false);
+    setShowSuccess(true);
   } catch (error) {
     console.error(
       "Luxury booking submission error:",
@@ -817,6 +822,16 @@ ${notes.trim() || "-"}
 
   return (
     <NoPeriods>
+      <BookingSuccessModal
+        open={showSuccess}
+        guestName={name.trim()}
+        bookingName={tourName}
+        email={email.trim()}
+        emailSent={confirmationEmailSent}
+        backHref="/luxury-tours"
+        backLabel="Back to Luxury Tours"
+        onClose={() => setShowSuccess(false)}
+      />
       <main className="min-h-screen bg-[#f5f7fa] px-4 py-8 sm:px-6 lg:py-12">
         <div className="mx-auto max-w-[1280px]">
 

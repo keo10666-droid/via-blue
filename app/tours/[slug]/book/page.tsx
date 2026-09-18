@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { useParams, notFound } from "next/navigation";
 
 import { tours } from "@/data/tours";
+import BookingSuccessModal from "@/app/components/BookingSuccessModal";
 
 const nationalities = [
   "Egyptian",
@@ -191,6 +192,10 @@ const [selectedMuseum, setSelectedMuseum] =
     useState<string[]>([]);
 
   const [submitAttempted, setSubmitAttempted] =
+    useState(false);
+
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [confirmationEmailSent, setConfirmationEmailSent] =
     useState(false);
 
   const childAges = Array.from(
@@ -595,9 +600,8 @@ ${notes.trim() || "-"}
       );
     }
 
-    alert(
-      "Your booking request has been submitted successfully"
-    );
+    setConfirmationEmailSent(result.customerEmailSent !== false);
+    setShowSuccess(true);
   } catch (error) {
   console.error(
     "Booking submission error:",
@@ -614,6 +618,16 @@ ${notes.trim() || "-"}
 
   return (
     <main className="min-h-screen bg-slate-50 px-4 py-8 md:py-12">
+      <BookingSuccessModal
+        open={showSuccess}
+        guestName={name.trim()}
+        bookingName={tour.name}
+        email={email.trim()}
+        emailSent={confirmationEmailSent}
+        backHref="/tours"
+        backLabel="Back to Tours"
+        onClose={() => setShowSuccess(false)}
+      />
       <div className="mx-auto max-w-7xl">
 
         {/* Header */}
