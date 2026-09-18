@@ -32,6 +32,90 @@ type Booking = {
   created_at: string;
 };
 
+type BookingRequestField = {
+  label: string;
+  value: string;
+};
+
+function getBookingRequestField(
+  fields: BookingRequestField[],
+  ...labels: string[]
+) {
+  const normalizedLabels =
+    labels.map((label) =>
+      label.toLowerCase()
+    );
+
+  return (
+    fields.find((field) =>
+      normalizedLabels.includes(
+        field.label.toLowerCase()
+      )
+    )?.value || ""
+  );
+}
+
+function getBookingRequestGuests(
+  fields: BookingRequestField[]
+) {
+  const totalGuests = Number(
+    getBookingRequestField(
+      fields,
+      "Total Guests",
+      "Guests"
+    )
+  );
+
+  if (
+    Number.isFinite(totalGuests) &&
+    totalGuests > 0
+  ) {
+    return totalGuests;
+  }
+
+  const adults = Number(
+    getBookingRequestField(
+      fields,
+      "Adults"
+    )
+  ) || 0;
+
+  const children = Number(
+    getBookingRequestField(
+      fields,
+      "Children"
+    )
+  ) || 0;
+
+  const infants = Number(
+    getBookingRequestField(
+      fields,
+      "Infants"
+    )
+  ) || 0;
+
+  const passengers = Number(
+    getBookingRequestField(
+      fields,
+      "Passengers"
+    )
+  );
+
+  if (
+    Number.isFinite(passengers) &&
+    passengers > 0
+  ) {
+    return passengers;
+  }
+
+  const total =
+    adults +
+    children +
+    infants;
+
+  return total > 0 ? total : null;
+}
+
 type Memory = {
   id: string;
   image_path: string;
@@ -213,6 +297,7 @@ export default function AccountPage() {
         profileResult,
         loyaltyResult,
         bookingsResult,
+        bookingRequestsResult,
       ] = await Promise.all([
         supabase
           .from("profiles")
@@ -239,6 +324,19 @@ export default function AccountPage() {
           .order("created_at", {
             ascending: false,
           }),
+
+        supabase
+          .from("booking_requests")
+          .select(
+            "id, booking_type, booking_name, customer_email, trip_date, total_price, status, fields, created_at"
+          )
+          .ilike(
+            "customer_email",
+            user.email || ""
+          )
+          .order("created_at", {
+            ascending: false,
+          }),
       ]);
 
       const loadedProfile =
@@ -258,14 +356,83 @@ export default function AccountPage() {
         );
       }
 
-      if (bookingsResult.error) {
-        setBookings([]);
-      } else {
-        setBookings(
-          (bookingsResult.data ||
-            []) as Booking[]
-        );
-      }
+      const existingBookings =
+        bookingsResult.error
+          ? []
+          : (bookingsResult.data ||
+              []) as Booking[];
+
+      const bookingRequestBookings =
+        bookingRequestsResult.error
+          ? []
+          : (
+              bookingRequestsResult.data ||
+              []
+            ).map((booking) => {
+              const fields =
+                Array.isArray(
+                  booking.fields
+                )
+                  ? (booking.fields as BookingRequestField[])
+                  : [];
+
+              const numericPrice = Number(
+                String(
+                  booking.total_price ||
+                    ""
+                ).replace(
+                  /[^0-9.-]/g,
+                  ""
+                )
+              );
+
+              return {
+                id:
+                  "request-" +
+                  booking.id,
+                booking_type:
+                  booking.booking_type ||
+                  "Booking",
+                tour_name:
+                  booking.booking_name ||
+                  "Booking Request",
+                tour_date:
+                  booking.trip_date ||
+                  null,
+                guests:
+                  getBookingRequestGuests(
+                    fields
+                  ),
+                total_price:
+                  Number.isFinite(
+                    numericPrice
+                  )
+                    ? numericPrice
+                    : null,
+                status:
+                  booking.status ||
+                  "received",
+                created_at:
+                  booking.created_at,
+              } as Booking;
+            });
+
+      const mergedBookings = [
+        ...existingBookings,
+        ...bookingRequestBookings,
+      ].sort(
+        (a, b) =>
+          new Date(
+            b.created_at
+          ).getTime() -
+          new Date(
+            a.created_at
+          ).getTime()
+      );
+
+      setBookings(
+        mergedBookings
+      );
 
       setFullName(
         loadedProfile?.full_name ||
