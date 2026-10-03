@@ -1,15 +1,11 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
 import { Eye, EyeOff } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
 export default function ResetPasswordPage() {
-  const searchParams = useSearchParams();
-  const emailFromUrl = searchParams.get("email") ?? "";
-
-  const [email, setEmail] = useState(emailFromUrl);
+  const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -21,8 +17,9 @@ export default function ResetPasswordPage() {
   const [isSuccess, setIsSuccess] = useState(false);
 
   useEffect(() => {
+    const emailFromUrl = new URLSearchParams(window.location.search).get("email") ?? "";
     if (emailFromUrl) setEmail(emailFromUrl);
-  }, [emailFromUrl]);
+  }, []);
 
   async function handleVerifyCode(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
