@@ -16,6 +16,29 @@ export default function LoginPage() {
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [isResettingPassword, setIsResettingPassword] = useState(false);
+  async function handleForgotPassword() {
+    if (!email.trim()) {
+      setMessage("Please enter your email address first.");
+      return;
+    }
+
+    setMessage("");
+    setIsResettingPassword(true);
+
+    const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
+
+    if (error) {
+      setMessage(error.message);
+    } else {
+      setMessage("If an account exists for this email, a password reset email has been sent. Please check your inbox.");
+    }
+
+    setIsResettingPassword(false);
+  }
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -270,6 +293,17 @@ export default function LoginPage() {
                       ? "Create Account"
                       : "Log In"}
                 </button>
+
+                {!isSignUp && (
+                  <button
+                    type="button"
+                    onClick={handleForgotPassword}
+                    disabled={isLoading || isResettingPassword}
+                    className="mt-4 w-full text-center text-xs font-bold text-gray-500 transition hover:text-[#f28c28] disabled:opacity-60"
+                  >
+                    {isResettingPassword ? "Sending reset email..." : "Forgot your password?"}
+                  </button>
+                )}
 
                 {!isSignUp && (
                   <button
