@@ -16,9 +16,6 @@ export default function LoginPage() {
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [isResettingPassword, setIsResettingPassword] =
-    useState(false);
-
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -85,35 +82,6 @@ export default function LoginPage() {
     }
 
     setIsLoading(false);
-  }
-
-  async function handleForgotPassword() {
-    if (!email.trim()) {
-      setMessage("Please enter your email address first.");
-      return;
-    }
-
-    setMessage("");
-    setIsResettingPassword(true);
-
-    const { error } =
-      await supabase.auth.resetPasswordForEmail(
-        email.trim(),
-        {
-          redirectTo:
-            `${window.location.origin}/reset-password`,
-        }
-      );
-
-    if (error) {
-      setMessage(error.message);
-    } else {
-      setMessage(
-        "Password reset instructions have been sent to your email."
-      );
-    }
-
-    setIsResettingPassword(false);
   }
 
   return (
@@ -255,21 +223,6 @@ export default function LoginPage() {
                       Password
                     </label>
 
-                    {!isSignUp && (
-                      <button
-                        type="button"
-                        onClick={handleForgotPassword}
-                        disabled={
-                          isLoading ||
-                          isResettingPassword
-                        }
-                        className="text-xs font-bold text-gray-400 transition hover:text-[#f28c28] disabled:cursor-not-allowed disabled:opacity-60"
-                      >
-                        {isResettingPassword
-                          ? "Sending..."
-                          : "Forgot your password?"}
-                      </button>
-                    )}
                   </div>
 
                   <div className="relative">
