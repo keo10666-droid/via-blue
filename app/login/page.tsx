@@ -253,6 +253,15 @@ export default function LoginPage() {
                   </div>
                 </div>
 
+                {!isSignUp && (
+                  <Link
+                    href="/forgot-password"
+                    className="mt-4 block text-right text-xs font-bold text-gray-500 transition hover:text-[#f28c28]"
+                  >
+                    Forgot your password?
+                  </Link>
+                )}
+
                 {message && (
                   <div className="mt-5 rounded-2xl border border-[#0b3a78]/10 bg-[#0b3a78]/5 px-4 py-4 text-sm font-medium leading-6 text-[#0b3a78]">
                     {message}
