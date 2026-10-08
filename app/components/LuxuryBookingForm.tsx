@@ -1,5 +1,7 @@
 "use client";
 
+import { supabase } from "@/lib/supabase";
+
 import {
   Children,
   cloneElement,
@@ -777,6 +779,8 @@ ${notes.trim() || "-"}
     .replace(/>/g, "&gt;")
     .replace(/\n/g, "<br />");
 
+  const { data: { session } } = await supabase.auth.getSession();
+
   try {
     const response = await fetch(
       "/api/send-booking",
@@ -794,6 +798,7 @@ ${notes.trim() || "-"}
             </div>
           `,
           replyTo: email.trim(),
+          accessToken: session?.access_token || null,
         }),
       }
     );
