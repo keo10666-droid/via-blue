@@ -38,7 +38,7 @@ export default function LoginPage() {
         setMessage(error.message);
       } else {
         setMessage(
-          "Account created. Please check your email to confirm your account."
+          "Account created. Please check your email to confirm your account"
         );
       }
     } else {
@@ -126,16 +126,16 @@ export default function LoginPage() {
                   </p>
 
                   <h2 className="mt-5 text-5xl font-black leading-[1.05] tracking-tight">
-                    Discover Egypt.
+                    Discover Egypt
                     <br />
                     <span className="text-white/65">
-                      Travel beautifully.
+                      Travel beautifully
                     </span>
                   </h2>
 
                   <p className="mt-7 max-w-sm text-base leading-7 text-white/65">
                     Manage your bookings, keep your trips organized and enjoy
-                    a smoother travel experience with Via Blue.
+                    a smoother travel experience with Via Blue
                   </p>
                 </div>
               </div>
@@ -179,7 +179,7 @@ export default function LoginPage() {
 
                 <p className="mt-3 text-sm leading-6 text-gray-500">
                   {isSignUp
-                    ? "Create your account and manage your bookings with ease."
+                    ? "Create your account and manage your bookings with ease"
                     : "Sign in to access your bookings and travel details."}
                 </p>
               </div>
