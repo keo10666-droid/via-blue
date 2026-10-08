@@ -297,7 +297,8 @@ export default function AccountPage() {
         profileResult,
         loyaltyResult,
         bookingsResult,
-        bookingRequestsResult,
+        bookingRequestsByUserResult,
+        bookingRequestsByEmailResult,
       ] = await Promise.all([
         supabase
           .from("profiles")
@@ -319,6 +320,16 @@ export default function AccountPage() {
           .from("bookings")
           .select(
             "id, booking_type, tour_name, tour_date, guests, total_price, status, created_at"
+          )
+          .eq("user_id", user.id)
+          .order("created_at", {
+            ascending: false,
+          }),
+
+        supabase
+          .from("booking_requests")
+          .select(
+            "id, booking_type, booking_name, customer_email, trip_date, total_price, status, fields, created_at"
           )
           .eq("user_id", user.id)
           .order("created_at", {
@@ -362,13 +373,26 @@ export default function AccountPage() {
           : (bookingsResult.data ||
               []) as Booking[];
 
-      const bookingRequestBookings =
-        bookingRequestsResult.error
+      const bookingRequestRows = [
+        ...(bookingRequestsByUserResult.error
           ? []
-          : (
-              bookingRequestsResult.data ||
-              []
-            ).map((booking) => {
+          : bookingRequestsByUserResult.data || []),
+        ...(bookingRequestsByEmailResult.error
+          ? []
+          : bookingRequestsByEmailResult.data || []),
+      ];
+
+      const uniqueBookingRequestRows = Array.from(
+        new Map(
+          bookingRequestRows.map((booking) => [
+            booking.id,
+            booking,
+          ])
+        ).values()
+      );
+
+      const bookingRequestBookings =
+        uniqueBookingRequestRows.map((booking) => {
               const fields =
                 Array.isArray(
                   booking.fields
