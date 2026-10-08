@@ -1,4 +1,5 @@
 import { Resend } from "resend";
+import { supabase } from "@/lib/supabase";
 import { createSupabaseAdminClient } from "@/lib/supabaseAdmin";
 
 const resend = new Resend(
@@ -288,7 +289,23 @@ export async function POST(request: Request) {
       subject,
       html,
       replyTo,
+      accessToken,
     } = body;
+
+    let authenticatedUserId: string | null = null;
+
+    if (
+      typeof accessToken === "string" &&
+      accessToken.trim()
+    ) {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser(
+        accessToken.trim()
+      );
+
+      authenticatedUserId = user?.id || null;
+    }
 
     if (!subject || !html) {
       return Response.json(
@@ -1063,6 +1080,8 @@ export async function POST(request: Request) {
               bookingName,
             customer_name:
               customerName || null,
+            user_id:
+              authenticatedUserId,
             customer_email:
               customerEmail ||
               replyTo ||
