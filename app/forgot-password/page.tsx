@@ -140,7 +140,7 @@ export default function ForgotPasswordPage() {
                     Back to your<br /><span className="text-white/65">journey.</span>
                   </h2>
                   <p className="mt-7 max-w-sm text-base leading-7 text-white/65">
-                    Securely verify your email and create a new password for your Via Blue account.
+                    Securely verify your email and create a new password for your Via Blue account
                   </p>
                 </div>
               </div>
