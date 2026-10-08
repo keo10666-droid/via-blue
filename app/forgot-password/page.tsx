@@ -172,7 +172,7 @@ export default function ForgotPasswordPage() {
 
                 <p className="mt-3 text-sm leading-6 text-gray-500">
                   {step === "email" && "Enter the email address registered to your Via Blue account."}
-                  {step === "code" && "Enter the 6-digit code we sent to " + email + "."}
+                  {step === "code" && "Enter the 8-digit code we sent to " + email + "."}
                   {step === "password" && "Choose a strong new password for your account."}
                   {step === "success" && "Your password has been changed successfully. You can now sign in with your new password."}
                 </p>
@@ -218,15 +218,15 @@ export default function ForgotPasswordPage() {
                     type="text"
                     inputMode="numeric"
                     pattern="[0-9]*"
-                    maxLength={6}
+                    maxLength={8}
                     value={code}
-                    onChange={(event) => setCode(event.target.value.replace(/\D/g, "").slice(0, 6))}
+                    onChange={(event) => setCode(event.target.value.replace(/\D/g, "").slice(0, 8))}
                     required
                     autoComplete="one-time-code"
-                    placeholder="000000"
+                    placeholder="00000000"
                     className="w-full rounded-2xl border border-gray-200 bg-gray-50/70 px-5 py-4 text-center text-xl font-bold tracking-[0.4em] text-gray-900 outline-none transition placeholder:text-gray-300 focus:border-[#0b3a78] focus:bg-white focus:ring-4 focus:ring-[#0b3a78]/5"
                   />
-                  <button type="submit" disabled={isLoading || code.length !== 6} className="mt-7 flex w-full items-center justify-center rounded-2xl bg-[#0b3a78] px-6 py-4 text-sm font-bold text-white shadow-lg shadow-[#0b3a78]/20 transition hover:-translate-y-0.5 hover:bg-[#082d5d] disabled:cursor-not-allowed disabled:opacity-60">
+                  <button type="submit" disabled={isLoading || code.length !== 8} className="mt-7 flex w-full items-center justify-center rounded-2xl bg-[#0b3a78] px-6 py-4 text-sm font-bold text-white shadow-lg shadow-[#0b3a78]/20 transition hover:-translate-y-0.5 hover:bg-[#082d5d] disabled:cursor-not-allowed disabled:opacity-60">
                     {isLoading ? "Verifying..." : "Verify code"}
                   </button>
                   <button type="button" disabled={isLoading} onClick={() => { setStep("email"); setCode(""); setMessage(""); setIsError(false); }} className="mt-4 w-full text-center text-xs font-bold text-gray-500 transition hover:text-[#f28c28]">
