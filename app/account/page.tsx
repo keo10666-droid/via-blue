@@ -492,9 +492,9 @@ export default function AccountPage() {
 
     if (!file) return;
 
-    if (!file.type.startsWith("image/")) {
+    if (!["image/jpeg", "image/png", "image/webp", "image/gif"].includes(file.type)) {
       setMessage(
-        "Please select an image file"
+        "Please select a JPG, PNG, WebP or GIF image"
       );
       return;
     }
@@ -666,10 +666,10 @@ export default function AccountPage() {
     if (!file) return;
 
     if (
-      !file.type.startsWith("image/")
+      !["image/jpeg", "image/png", "image/webp", "image/gif"].includes(file.type)
     ) {
       setMessage(
-        "Please select an image file"
+        "Please select a JPG, PNG, WebP or GIF image"
       );
       return;
     }
@@ -1319,7 +1319,7 @@ export default function AccountPage() {
 
                       <input
                         type="file"
-                        accept="image/*"
+                        accept="image/jpeg,image/png,image/webp,image/gif"
                         onChange={
                           handleAvatarChange
                         }
@@ -1919,7 +1919,7 @@ export default function AccountPage() {
                   memoryInputKey
                 }
                 type="file"
-                accept="image/*"
+                accept="image/jpeg,image/png,image/webp,image/gif"
                 onChange={
                   handleMemoryFileChange
                 }
