@@ -6,7 +6,7 @@ export async function isIdentifierRateLimited(
   limit: number,
   windowSeconds: number,
 ): Promise<boolean> {
-  const { data, error } = await supabase.rpc(
+  const { data, error } = await (supabase as any).rpc(
     "consume_api_rate_limit",
     {
       p_identifier: `${scope}:${identifier}`,
