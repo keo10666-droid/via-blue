@@ -1,7 +1,8 @@
 "use server";
 
 import { createHash, timingSafeEqual } from "node:crypto";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
+import { isIdentifierRateLimited } from "@/lib/apiRateLimit";
 import { redirect } from "next/navigation";
 
 function hashSecret(value: string) {
@@ -13,6 +14,17 @@ function hashSecret(value: string) {
 export async function loginAdmin(
   formData: FormData
 ) {
+  const requestHeaders = await headers();
+  const forwardedFor = requestHeaders.get("x-forwarded-for");
+  const ip =
+    requestHeaders.get("x-real-ip")?.trim() ||
+    forwardedFor?.split(",").at(-1)?.trim() ||
+    "unknown";
+
+  if (await isIdentifierRateLimited(ip, "admin-login", 5, 900)) {
+    redirect("/admin/login?error=1");
+  }
+
   const password = String(
     formData.get("password") || ""
   );
