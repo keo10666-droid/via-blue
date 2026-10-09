@@ -1,8 +1,15 @@
 import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
+import { isRateLimited } from "@/lib/apiRateLimit";
 
 export async function POST(request: Request) {
   try {
+    if (await isRateLimited(request, "review-submit", 5, 3600)) {
+      return NextResponse.json(
+        { error: "Too many review attempts. Please try again later." },
+        { status: 429 },
+      );
+    }
     const contentLength = Number(
       request.headers.get("content-length") || 0,
     );
@@ -56,7 +63,7 @@ export async function POST(request: Request) {
         guest_name: guestName,
         rating: rating,
         comment: comment,
-        is_visible: true,
+        is_visible: false,
       })
       .select()
       .single();
@@ -66,7 +73,7 @@ export async function POST(request: Request) {
 
       return NextResponse.json(
         {
-          error: error.message || "Could not publish your review.",
+          error: "Could not submit your review. Please try again later.",
         },
         { status: 500 }
       );
@@ -84,10 +91,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json(
       {
-        error:
-          error instanceof Error
-            ? error.message
-            : "Something went wrong.",
+        error: "Something went wrong. Please try again later.",
       },
       { status: 500 }
     );
