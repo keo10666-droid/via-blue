@@ -1,6 +1,6 @@
 "use server";
 
-import { createHash } from "node:crypto";
+import { createHash, timingSafeEqual } from "node:crypto";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -20,10 +20,14 @@ export async function loginAdmin(
   const expectedPassword =
     process.env.ADMIN_DASHBOARD_PASSWORD;
 
-  if (
-    !expectedPassword ||
-    password !== expectedPassword
-  ) {
+  const passwordBuffer = Buffer.from(password);
+  const expectedBuffer = Buffer.from(expectedPassword || "");
+  const passwordMatches =
+    Boolean(expectedPassword) &&
+    passwordBuffer.length === expectedBuffer.length &&
+    timingSafeEqual(passwordBuffer, expectedBuffer);
+
+  if (!passwordMatches) {
     redirect("/admin/login?error=1");
   }
 
