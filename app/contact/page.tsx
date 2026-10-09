@@ -215,10 +215,47 @@ function CheckIcon() {
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setSubmitted(true);
+    if (isSending) return;
+
+    setIsSending(true);
+    setErrorMessage("");
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const payload = Object.fromEntries(formData.entries());
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const result = await response.json().catch(() => null);
+
+      if (!response.ok || !result?.success) {
+        throw new Error(
+          typeof result?.error === "string"
+            ? result.error
+            : "We couldn't send your message. Please try again.",
+        );
+      }
+
+      setSubmitted(true);
+      form.reset();
+    } catch (error) {
+      setErrorMessage(
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again or contact us on WhatsApp.",
+      );
+    } finally {
+      setIsSending(false);
+    }
   }
 
   return (
@@ -489,6 +526,16 @@ export default function ContactPage() {
                 </div>
 
                 <form onSubmit={handleSubmit} className="mt-8 space-y-5">
+                  <div className="absolute -left-[9999px]" aria-hidden="true">
+                    <label htmlFor="website">Leave this field empty</label>
+                    <input
+                      id="website"
+                      name="website"
+                      type="text"
+                      tabIndex={-1}
+                      autoComplete="off"
+                    />
+                  </div>
                   <div className="grid gap-5 sm:grid-cols-2">
                     <div>
                       <label
@@ -581,12 +628,22 @@ export default function ContactPage() {
                     />
                   </div>
 
+                  {errorMessage ? (
+                    <p
+                      role="alert"
+                      className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm leading-6 text-red-700"
+                    >
+                      {errorMessage}
+                    </p>
+                  ) : null}
+
                   <button
                     type="submit"
-                    className="group flex h-13 w-full items-center justify-center gap-3 rounded-xl bg-[#071d49] px-6 text-sm font-semibold text-white shadow-lg shadow-[#071d49]/15 transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#04142f] hover:shadow-xl hover:shadow-[#071d49]/20"
+                    disabled={isSending}
+                    className="group flex h-13 w-full items-center justify-center gap-3 rounded-xl bg-[#071d49] px-6 text-sm font-semibold text-white shadow-lg shadow-[#071d49]/15 transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#04142f] hover:shadow-xl hover:shadow-[#071d49]/20 disabled:cursor-not-allowed disabled:opacity-60"
                   >
-                    Send Message
-                    <ArrowIcon />
+                    {isSending ? "Sending..." : "Send Message"}
+                    {!isSending ? <ArrowIcon /> : null}
                   </button>
 
                   <p className="text-center text-xs leading-5 text-[#98a2b3]">
