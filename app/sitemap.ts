@@ -1,50 +1,96 @@
 import type { MetadataRoute } from "next";
+import { tourList } from "@/data/tours";
+import { transfers } from "@/data/transfers";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://viabluetours.com";
+  const lastModified = new Date();
 
-  return [
+  const staticPages: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
-      lastModified: new Date(),
+      lastModified,
       changeFrequency: "weekly",
       priority: 1,
     },
     {
       url: `${baseUrl}/tours`,
-      lastModified: new Date(),
+      lastModified,
       changeFrequency: "weekly",
       priority: 0.9,
     },
     {
       url: `${baseUrl}/transfers`,
-      lastModified: new Date(),
+      lastModified,
       changeFrequency: "weekly",
       priority: 0.9,
     },
     {
       url: `${baseUrl}/about`,
-      lastModified: new Date(),
+      lastModified,
       changeFrequency: "monthly",
       priority: 0.6,
     },
     {
       url: `${baseUrl}/contact`,
-      lastModified: new Date(),
+      lastModified,
       changeFrequency: "monthly",
       priority: 0.6,
     },
     {
       url: `${baseUrl}/luxury-tours`,
-      lastModified: new Date(),
+      lastModified,
       changeFrequency: "weekly",
       priority: 0.7,
     },
     {
       url: `${baseUrl}/ai-trip-planner`,
-      lastModified: new Date(),
+      lastModified,
       changeFrequency: "monthly",
       priority: 0.7,
     },
+  ];
+
+  const tourPages: MetadataRoute.Sitemap = tourList
+    .filter((tour) => tour.available)
+    .map((tour) => ({
+      url: `${baseUrl}/tours/${tour.slug}`,
+      lastModified,
+      changeFrequency: "weekly",
+      priority: 0.8,
+    }));
+
+  const transferPages: MetadataRoute.Sitemap = Object.values(transfers)
+    .filter((transfer) => transfer.available)
+    .map((transfer) => ({
+      url: `${baseUrl}/transfers/${transfer.slug}`,
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    }));
+
+  const luxurySlugs = [
+    "luxor",
+    "cairo",
+    "alexandria",
+    "aswan",
+    "speed-boat",
+    "quad-safari",
+    "buggy-safari",
+    "private-boat",
+  ];
+
+  const luxuryPages: MetadataRoute.Sitemap = luxurySlugs.map((slug) => ({
+    url: `${baseUrl}/luxury-tours/${slug}`,
+    lastModified,
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
+
+  return [
+    ...staticPages,
+    ...tourPages,
+    ...transferPages,
+    ...luxuryPages,
   ];
 }
