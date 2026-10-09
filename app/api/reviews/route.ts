@@ -3,6 +3,17 @@ import { supabase } from "@/lib/supabase";
 
 export async function POST(request: Request) {
   try {
+    const contentLength = Number(
+      request.headers.get("content-length") || 0,
+    );
+
+    if (contentLength > 12 * 1024) {
+      return NextResponse.json(
+        { error: "Review request is too large." },
+        { status: 413 },
+      );
+    }
+
     const body = await request.json();
 
     const tourSlug = String(body.tourSlug || "").trim();
@@ -14,6 +25,18 @@ export async function POST(request: Request) {
     if (!tourSlug || !tourName || !guestName || !comment) {
       return NextResponse.json(
         { error: "Please fill in all fields." },
+        { status: 400 }
+      );
+    }
+
+    if (
+      tourSlug.length > 120 ||
+      tourName.length > 160 ||
+      guestName.length > 80 ||
+      comment.length > 2000
+    ) {
+      return NextResponse.json(
+        { error: "Please shorten your review and try again." },
         { status: 400 }
       );
     }
