@@ -551,11 +551,23 @@ function validateRequest(
 
   if (
     !Number.isFinite(budget) ||
-    budget <= 0
+    budget <= 0 ||
+    budget > 100000
   ) {
     throw new Error(
-      "Budget must be greater than zero.",
+      "Budget must be between 1 and 100,000.",
     );
+  }
+
+  const validCategories = new Set(
+    tourList.map((tour) => tour.category),
+  );
+
+  if (
+    selectedCategories.length > 20 ||
+    selectedCategories.some((category) => !validCategories.has(category as Tour["category"]))
+  ) {
+    throw new Error("One or more selected categories are invalid.");
   }
 
   if (
@@ -605,6 +617,17 @@ export async function POST(
   request: Request,
 ) {
   try {
+    const contentLength = Number(
+      request.headers.get("content-length") || 0,
+    );
+
+    if (contentLength > 16_384) {
+      return NextResponse.json(
+        { success: false, error: "Request is too large." },
+        { status: 413 },
+      );
+    }
+
     const body =
       await request.json();
 
@@ -1009,14 +1032,19 @@ Each package must contain a list of exact tour slugs from the catalog.
     const message =
       error instanceof Error
         ? error.message
-        : "Unable to create your trip plan.";
+        : "";
+
+    const isValidationError =
+      /Invalid request body|Adults must|Children must|Area is required|Unsupported area|Days must|Budget must|selected categories|Select at least one experience category/i.test(message);
 
     return NextResponse.json(
       {
         success: false,
-        error: message,
+        error: isValidationError
+          ? message
+          : "Unable to create your trip plan right now. Please try again shortly.",
       },
-      { status: 400 },
+      { status: isValidationError ? 400 : 500 },
     );
   }
 }
