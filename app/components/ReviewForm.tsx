@@ -55,7 +55,7 @@ export default function ReviewForm({
       setName("");
       setRating(5);
       setComment("");
-      setMessage("Thank you! Your review has been published");
+      setMessage("Thank you! Your review has been submitted and is awaiting moderation");
 
       router.refresh();
     } catch (error) {
