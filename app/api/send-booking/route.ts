@@ -1,6 +1,7 @@
 import { Resend } from "resend";
 import { supabase } from "@/lib/supabase";
 import { createSupabaseAdminClient } from "@/lib/supabaseAdmin";
+import { isRateLimited } from "@/lib/apiRateLimit";
 
 const resend = new Resend(
   process.env.RESEND_API_KEY
@@ -283,6 +284,13 @@ function renderSection(
 
 export async function POST(request: Request) {
   try {
+    if (await isRateLimited(request, "booking-submit", 10, 3600)) {
+      return Response.json(
+        { success: false, error: "Too many booking attempts. Please try again later." },
+        { status: 429 },
+      );
+    }
+
     const body = await request.json();
 
     const {
@@ -1198,10 +1206,7 @@ export async function POST(request: Request) {
     return Response.json(
       {
         success: false,
-        error:
-          error instanceof Error
-            ? error.message
-            : "Failed to send booking email",
+        error: "Failed to process your booking request. Please try again later.",
       },
       {
         status: 500,
