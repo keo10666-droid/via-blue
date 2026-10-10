@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { transfers } from "@/data/transfers";
+import { createSupabaseAdminClient } from "@/lib/supabaseAdmin";
 
 type Props = {
   params: Promise<{
@@ -86,13 +87,21 @@ const vehicleImages: Record<string, string> = {
 export default async function TransferPage({ params }: Props) {
   const { slug } = await params;
 
-  const transfer =
-    transfers[slug as keyof typeof transfers];
-
-  if (!transfer) {
-    notFound();
-  }
-
+  const baseTransfer = transfers[slug as keyof typeof transfers];
+  if (!baseTransfer) notFound();
+  const adminClient = createSupabaseAdminClient();
+  const { data: transferOverride } = adminClient
+    ? await adminClient.from("transfer_catalog_overrides")
+        .select("from_location,to_location,available,vehicles").eq("slug", slug).maybeSingle()
+    : { data: null };
+  const transfer = transferOverride ? {
+    ...baseTransfer,
+    from: transferOverride.from_location,
+    to: transferOverride.to_location,
+    available: transferOverride.available,
+    vehicles: transferOverride.vehicles as typeof baseTransfer.vehicles,
+  } : baseTransfer;
+  if (!transfer.available) notFound();
   const lowestPrice = Math.min(
     ...transfer.vehicles.map((vehicle) => vehicle.price)
   );
