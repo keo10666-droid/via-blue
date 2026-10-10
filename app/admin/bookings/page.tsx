@@ -215,6 +215,13 @@ export default async function AdminBookingsPage() {
 
             <div className="flex flex-wrap gap-3">
               <a
+                href="/admin"
+                className="rounded-2xl border border-white/15 bg-white/10 px-4 py-3 text-sm font-bold text-white transition hover:bg-white/15"
+              >
+                Dashboard
+              </a>
+
+              <a
                 href="/admin/bookings"
                 className="rounded-2xl border border-white/15 bg-white/10 px-4 py-3 text-sm font-bold text-white transition hover:bg-white/15"
               >
