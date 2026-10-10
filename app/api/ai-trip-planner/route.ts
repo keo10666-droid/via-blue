@@ -632,21 +632,56 @@ export async function POST(
       );
     }
 
+    const maxBodyBytes = 16_384;
     const contentLength = Number(
       request.headers.get("content-length") || 0,
     );
 
-    if (contentLength > 16_384) {
+    if (contentLength > maxBodyBytes) {
       return NextResponse.json(
         { success: false, error: "Request is too large." },
         { status: 413 },
       );
     }
 
+    if (!request.body) {
+      return NextResponse.json(
+        { success: false, error: "Invalid JSON request." },
+        { status: 400 },
+      );
+    }
+
+    const reader = request.body.getReader();
+    const chunks: Uint8Array[] = [];
+    let totalBytes = 0;
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+
+      totalBytes += value.byteLength;
+      if (totalBytes > maxBodyBytes) {
+        await reader.cancel();
+        return NextResponse.json(
+          { success: false, error: "Request is too large." },
+          { status: 413 },
+        );
+      }
+
+      chunks.push(value);
+    }
+
+    const bytes = new Uint8Array(totalBytes);
+    let offset = 0;
+    for (const chunk of chunks) {
+      bytes.set(chunk, offset);
+      offset += chunk.byteLength;
+    }
+
     let body: unknown;
 
     try {
-      body = await request.json();
+      body = JSON.parse(new TextDecoder().decode(bytes));
     } catch {
       return NextResponse.json(
         { success: false, error: "Invalid JSON request." },
