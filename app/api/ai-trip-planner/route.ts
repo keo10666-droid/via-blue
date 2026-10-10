@@ -478,10 +478,14 @@ function validateRequest(
   const data =
     body as Record<string, unknown>;
 
-  const adults = Number(data.adults);
-  const children = Number(data.children);
-  const days = Number(data.days);
-  const budget = Number(data.budget);
+  const adults =
+    typeof data.adults === "number" ? data.adults : Number.NaN;
+  const children =
+    typeof data.children === "number" ? data.children : Number.NaN;
+  const days =
+    typeof data.days === "number" ? data.days : Number.NaN;
+  const budget =
+    typeof data.budget === "number" ? data.budget : Number.NaN;
 
   const area =
     typeof data.area === "string"
@@ -494,16 +498,19 @@ function validateRequest(
 
   const currency = data.currency;
 
+  if (
+    data.selectedCategories !== undefined &&
+    (!Array.isArray(data.selectedCategories) ||
+      data.selectedCategories.some(
+        (value) => typeof value !== "string",
+      ))
+  ) {
+    throw new Error("Selected categories must be a list of valid categories.");
+  }
+
   const selectedCategories =
-    Array.isArray(
-      data.selectedCategories,
-    )
-      ? data.selectedCategories.filter(
-          (
-            value,
-          ): value is string =>
-            typeof value === "string",
-        )
+    Array.isArray(data.selectedCategories)
+      ? data.selectedCategories
       : [];
 
   if (
