@@ -3,12 +3,29 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 import { transfers } from "@/data/transfers";
 
+type TransferOverride = {
+  from?: string; to?: string; available?: boolean;
+  vehicles?: { type: string; price: number; passengers: number; luggage: number }[];
+};
+
 export default function TransfersPage() {
   const router = useRouter();
-  const items = Object.values(transfers);
+  const [overrides, setOverrides] = useState<Record<string, TransferOverride>>({});
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/transfer-catalog", { cache: "no-store" })
+      .then((response) => response.ok ? response.json() : null)
+      .then((payload) => { if (!cancelled && payload?.overrides) setOverrides(payload.overrides); })
+      .catch(() => undefined);
+    return () => { cancelled = true; };
+  }, []);
+  const items = Object.values(transfers)
+    .map((transfer) => ({ ...transfer, ...(overrides[transfer.slug] ?? {}) }))
+    .filter((transfer) => transfer.available !== false);
 
   const destinationImages: Record<string, string> = {
     "hurghada-city": "/transfers/hurghada-city.webp",
