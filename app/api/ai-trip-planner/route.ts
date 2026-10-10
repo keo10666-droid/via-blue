@@ -488,10 +488,11 @@ function validateRequest(
       ? data.area.trim()
       : "";
 
-  const currency =
-    data.currency === "USD"
-      ? "USD"
-      : "EUR";
+  if (data.currency !== "USD" && data.currency !== "EUR") {
+    throw new Error("Currency must be EUR or USD.");
+  }
+
+  const currency = data.currency;
 
   const selectedCategories =
     Array.isArray(
@@ -505,8 +506,14 @@ function validateRequest(
         )
       : [];
 
-  const surpriseMe =
-    Boolean(data.surpriseMe);
+  if (
+    data.surpriseMe !== undefined &&
+    typeof data.surpriseMe !== "boolean"
+  ) {
+    throw new Error("Surprise Me must be true or false.");
+  }
+
+  const surpriseMe = data.surpriseMe === true;
 
   if (
     !Number.isInteger(adults) ||
@@ -636,8 +643,16 @@ export async function POST(
       );
     }
 
-    const body =
-      await request.json();
+    let body: unknown;
+
+    try {
+      body = await request.json();
+    } catch {
+      return NextResponse.json(
+        { success: false, error: "Invalid JSON request." },
+        { status: 400 },
+      );
+    }
 
     const plannerRequest =
       validateRequest(body);
