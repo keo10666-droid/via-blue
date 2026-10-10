@@ -29,6 +29,10 @@ export async function loginAdmin(
     formData.get("password") || ""
   );
 
+  if (password.length > 256) {
+    redirect("/admin/login?error=1");
+  }
+
   const expectedPassword =
     process.env.ADMIN_DASHBOARD_PASSWORD;
 
