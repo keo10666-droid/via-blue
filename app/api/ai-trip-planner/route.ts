@@ -860,7 +860,7 @@ Each package must contain a list of exact tour slugs from the catalog.
      */
     const response =
       await openai.responses.create({
-        model: "gpt-5.6-luna",
+        model: "gpt-6-luna",
 
         instructions:
           systemPrompt,
@@ -1093,7 +1093,7 @@ Each package must contain a list of exact tour slugs from the catalog.
           EUR_TO_USD,
 
         aiModel:
-          "gpt-5.6-luna",
+          "gpt-6-luna",
       },
     });
   } catch (error) {
