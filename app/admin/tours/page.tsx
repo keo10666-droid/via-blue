@@ -26,7 +26,7 @@ export default async function AdminToursPage({ searchParams }: { searchParams: S
     return <main className="min-h-screen bg-slate-50 p-6 text-slate-900"><div className="mx-auto max-w-4xl rounded-2xl bg-white p-8"><h1 className="text-2xl font-bold">Tours & Experiences</h1><p className="mt-3 text-red-600">Database connection is not configured. Check the server-side Supabase admin key in Vercel.</p><Link className="mt-5 inline-block text-blue-700 underline" href="/admin">Back to dashboard</Link></div></main>;
   }
 
-  const { data, error } = await supabase.from("tour_catalog_overrides").select("slug,price,child_price,infant_price,available");
+  const { data, error } = await supabase.from("tour_catalog_overrides").select("slug,name,description,image,price,child_price,infant_price,available");
   const overrides = new Map((data ?? []).map((item) => [item.slug, item]));
   const tourList = Object.values(tours).sort((a,b) => a.name.localeCompare(b.name));
 
@@ -49,13 +49,16 @@ export default async function AdminToursPage({ searchParams }: { searchParams: S
             const child = saved?.child_price ?? tour.childPrice;
             const infant = saved?.infant_price ?? tour.infantPrice;
             const available = saved?.available ?? tour.available;
+            const name = saved?.name ?? tour.name;
+            const description = saved?.description ?? tour.description;
+            const image = saved?.image ?? tour.image;
             return (
               <form key={tour.slug} action={updateTourPricing} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
                 <input type="hidden" name="slug" value={tour.slug} />
                 <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-                  <div className="min-w-0"><p className="text-xs font-bold uppercase tracking-wider text-slate-400">{tourCategories[tour.category]}</p><h2 className="mt-1 text-lg font-extrabold text-blue-950">{tour.name}</h2><p className="mt-1 text-xs text-slate-400">/{tour.slug}</p></div>
-                  <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:min-w-[610px]">
-                    <label className="text-xs font-bold text-slate-500">Adult (€)<input name="price" type="number" min="0" max="100000" step="0.01" required defaultValue={adult} className="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm font-semibold text-slate-900 outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100" /></label>
+                  <div className="min-w-0 lg:max-w-[280px]"><p className="text-xs font-bold uppercase tracking-wider text-slate-400">{tourCategories[tour.category]}</p><h2 className="mt-1 text-lg font-extrabold text-blue-950">{name}</h2><p className="mt-1 text-xs text-slate-400">/{tour.slug}</p></div>
+                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:min-w-[610px]">
+                    <label className="text-xs font-bold text-slate-500">Tour name<input name="name" type="text" maxLength={120} required defaultValue={name} className="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm font-semibold text-slate-900 outline-none focus:border-orange-400" /></label>\n                    <label className="text-xs font-bold text-slate-500">Image path or URL<input name="image" type="text" maxLength={500} required defaultValue={image} className="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm font-semibold text-slate-900 outline-none focus:border-orange-400" /></label>\n                    <label className="col-span-full text-xs font-bold text-slate-500">Short description<textarea name="description" maxLength={1500} required defaultValue={description} rows={3} className="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm font-medium text-slate-900 outline-none focus:border-orange-400" /></label>\n                    <label className="text-xs font-bold text-slate-500">Adult (€)<input name="price" type="number" min="0" max="100000" step="0.01" required defaultValue={adult} className="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm font-semibold text-slate-900 outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100" /></label>
                     <label className="text-xs font-bold text-slate-500">Child (€)<input name="child_price" type="number" min="0" max="100000" step="0.01" required defaultValue={child} className="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm font-semibold text-slate-900 outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100" /></label>
                     <label className="text-xs font-bold text-slate-500">Infant (€)<input name="infant_price" type="number" min="0" max="100000" step="0.01" required defaultValue={infant} className="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm font-semibold text-slate-900 outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100" /></label>
                     <label className="text-xs font-bold text-slate-500">Availability<select name="available" defaultValue={String(available)} className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm font-semibold text-slate-900 outline-none focus:border-orange-400"><option value="true">Available</option><option value="false">Unavailable</option></select></label>
@@ -66,7 +69,7 @@ export default async function AdminToursPage({ searchParams }: { searchParams: S
             );
           })}
         </div>
-        <p className="mt-6 text-xs leading-5 text-slate-400">Prices are stored separately from the code catalog so future price changes do not require a redeployment.</p>
+        <p className="mt-6 text-xs leading-5 text-slate-400">Tour name, description, image path/URL and prices are saved in the database and update the live catalog without a redeployment.</p>
       </div>
     </main>
   );
