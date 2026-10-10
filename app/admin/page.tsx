@@ -181,7 +181,11 @@ export default async function AdminDashboardPage() {
           <div className="mt-8">
             <p className="px-3 text-[10px] font-extrabold uppercase tracking-[0.2em] text-slate-400">Manage website</p>
             <div className="mt-3 space-y-1">
-              {modules.slice(1).map((module) => (
+              {modules.slice(1).map((module) => module.available ? (
+                <a key={module.title} href={module.href} className="mt-1 flex items-center gap-3 rounded-2xl px-3 py-3 text-sm font-semibold text-slate-600 transition hover:bg-slate-50 hover:text-blue-950">
+                  <module.icon size={18} /> <span className="flex-1">{module.title}</span>
+                </a>
+              ) : (
                 <div key={module.title} title="This editing section is planned for the next build phase" className="flex items-center gap-3 rounded-2xl px-3 py-3 text-sm font-medium text-slate-400">
                   <module.icon size={18} /> <span className="flex-1">{module.title}</span>
                   <span className="h-1.5 w-1.5 rounded-full bg-slate-300" />
