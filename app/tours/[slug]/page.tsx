@@ -41,11 +41,20 @@ export async function generateMetadata({
     };
   }
 
-  const title = tour.name;
+  const adminClient = createSupabaseAdminClient();
+  const { data: contentOverride } = adminClient
+    ? await adminClient
+        .from("tour_catalog_overrides")
+        .select("name,description")
+        .eq("slug", slug)
+        .maybeSingle()
+    : { data: null };
 
+  const title = contentOverride?.name || tour.name;
   const description =
+    contentOverride?.description ||
     tour.description ||
-    `Book ${tour.name} in Hurghada, Egypt with Via Blue.`;
+    `Book ${title} in Hurghada, Egypt with Via Blue.`;
 
   return {
     title,
