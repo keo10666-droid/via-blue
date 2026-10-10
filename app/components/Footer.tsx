@@ -452,7 +452,7 @@ export default function Footer() {
 
               <li>
                 <Link
-                  href="/tours"
+                  href="/luxury-tours"
                   className="group flex items-center gap-2 text-[15px] text-slate-300 transition-all duration-300 hover:translate-x-1 hover:text-orange-400"
                 >
                   <span>Luxury Tours</span>
