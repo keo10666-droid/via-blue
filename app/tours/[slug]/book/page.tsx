@@ -186,6 +186,8 @@ export default function BookingPage() {
           included: [],
           excluded: [],
           notes: [],
+          cairoOptions: [],
+          vehicleOptions: [],
           price: tourOverride.price ?? 0,
           childPrice: tourOverride.childPrice ?? 0,
           infantPrice: tourOverride.infantPrice ?? 0,
