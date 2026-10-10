@@ -817,7 +817,7 @@ export default async function TourDetailsPage({
       }
     : customTour;
 
-  if (!tour.available) {
+  if (!tour || !tour.available) {
     notFound();
   }
 
