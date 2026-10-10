@@ -94,7 +94,8 @@ export default function ForgotPasswordPage() {
     const { error } = await supabase.auth.updateUser({ password });
 
     if (error) {
-      showError(error.message);
+      console.error("Password reset update failed.");
+      showError("We couldn't update your password. Please verify your reset code is still valid and try again.");
       setIsLoading(false);
       return;
     }
