@@ -136,7 +136,7 @@ export default async function TransferPage({ params }: Props) {
           </h1>
 
           <p className="mt-5 max-w-2xl text-lg leading-8 text-blue-100">
-            Comfortable private transfer from Hurghada International Airport
+            Comfortable private transfer from {transfer.from}
             to your destination
           </p>
 
