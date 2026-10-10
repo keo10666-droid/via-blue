@@ -104,10 +104,10 @@ const modules = [
   {
     title: "Reviews",
     description: "Review customer feedback and manage which reviews are visible.",
-    href: "",
+    href: "/admin/reviews",
     icon: MessageSquareText,
-    tag: "Next module",
-    available: false,
+    tag: "Available now",
+    available: true,
     iconClass: "bg-emerald-50 text-emerald-700",
   },
   {
