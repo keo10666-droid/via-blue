@@ -11,6 +11,14 @@ export async function POST(request: Request) {
         { status: 429 },
       );
     }
+    const contentType = request.headers.get("content-type") || "";
+    if (!/^application\/json(?:\s*;|$)/i.test(contentType)) {
+      return NextResponse.json(
+        { error: "Invalid review request format." },
+        { status: 415 },
+      );
+    }
+
     const maxBodyBytes = 12 * 1024;
     const contentLength = Number(
       request.headers.get("content-length") || 0,
