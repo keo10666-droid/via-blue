@@ -24,6 +24,14 @@ export async function POST(request: Request) {
       );
     }
 
+    const contentType = request.headers.get("content-type") || "";
+    if (!/^application\/json(?:\s*;|$)/i.test(contentType)) {
+      return NextResponse.json(
+        { error: "Invalid request format. Please refresh the page and try again." },
+        { status: 415 },
+      );
+    }
+
     const maxBodyBytes = 16 * 1024;
     const contentLength = Number(request.headers.get("content-length") || 0);
 
