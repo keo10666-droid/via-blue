@@ -121,11 +121,11 @@ const modules = [
   },
   {
     title: "Site settings",
-    description: "SEO, language content and other website-wide settings.",
-    href: "",
+    description: "Manage website-wide SEO title, description and keywords.",
+    href: "/admin/site-settings",
     icon: Settings2,
-    tag: "Next module",
-    available: false,
+    tag: "Available now",
+    available: true,
     iconClass: "bg-slate-100 text-slate-700",
   },
 ];
