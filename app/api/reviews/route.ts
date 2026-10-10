@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { supabase } from "@/lib/supabase";
+import { createSupabaseAdminClient } from "@/lib/supabaseAdmin";
 import { isRateLimited } from "@/lib/apiRateLimit";
 import { getTourBySlug } from "@/data/tours";
 
@@ -116,7 +116,17 @@ export async function POST(request: Request) {
       );
     }
 
-    const { error } = await supabase
+    const supabaseAdmin = createSupabaseAdminClient();
+
+    if (!supabaseAdmin) {
+      console.error("Review submission failed because the server database client is unavailable.");
+      return NextResponse.json(
+        { error: "Could not submit your review. Please try again later." },
+        { status: 500 }
+      );
+    }
+
+    const { error } = await supabaseAdmin
       .from("reviews")
       .insert({
         tour_slug: tourSlug,
