@@ -277,18 +277,14 @@ const [selectedMuseum, setSelectedMuseum] =
     Number(children || 0);
 
   const selectedVehicleOption =
-  (slug === "luxor-over-day" ||
-    slug === "luxor-over-night") &&
-  tour.vehicleOptions
-    ? tour.vehicleOptions[selectedVehicle]
-    : null;
+    (slug === "luxor-over-day" || slug === "luxor-over-night") && tour.vehicleOptions
+      ? (tour.vehicleOptions as Record<"bus" | "van", { name: string; adultPrice: number; childPrice: number; infantPrice: number }>)[selectedVehicle]
+      : null;
 
-const selectedCairoOption =
-  (slug === "cairo-over-day" ||
-    slug === "cairo-over-night") &&
-  tour.cairoOptions
-    ? tour.cairoOptions[selectedMuseum]
-    : null;
+  const selectedCairoOption =
+    (slug === "cairo-over-day" || slug === "cairo-over-night") && tour.cairoOptions
+      ? (tour.cairoOptions as Record<"oldMuseum" | "newMuseum", { name: string; bus: { adultPrice: number; childPrice: number; infantPrice: number }; van: { adultPrice: number; childPrice: number; infantPrice: number } }>)[selectedMuseum]
+      : null;
 
 const selectedCairoVehicleOption =
   selectedCairoOption
