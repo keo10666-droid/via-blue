@@ -361,6 +361,7 @@ export async function POST(request: Request) {
     if (
       typeof subject !== "string" ||
       !subject.trim() ||
+      /[\r\n]/.test(subject) ||
       subject.length > 180 ||
       typeof html !== "string" ||
       !html.trim() ||
