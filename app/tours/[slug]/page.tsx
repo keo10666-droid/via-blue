@@ -765,7 +765,7 @@ export default async function TourDetailsPage({
   const { data: pricingOverride } = adminClient
     ? await adminClient
         .from("tour_catalog_overrides")
-        .select("price,child_price,infant_price,available")
+        .select("name,description,image,price,child_price,infant_price,available")
         .eq("slug", slug)
         .maybeSingle()
     : { data: null };
@@ -773,6 +773,9 @@ export default async function TourDetailsPage({
   const tour = pricingOverride
     ? {
         ...baseTour,
+        ...(pricingOverride.name ? { name: pricingOverride.name } : {}),
+        ...(pricingOverride.description ? { description: pricingOverride.description } : {}),
+        ...(pricingOverride.image ? { image: pricingOverride.image } : {}),
         price: Number(pricingOverride.price),
         childPrice: Number(pricingOverride.child_price),
         infantPrice: Number(pricingOverride.infant_price),
