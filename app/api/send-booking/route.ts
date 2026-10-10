@@ -366,7 +366,9 @@ export async function POST(request: Request) {
       typeof html !== "string" ||
       !html.trim() ||
       html.length > 48 * 1024 ||
-      (accessToken !== undefined && typeof accessToken !== "string")
+      (accessToken !== undefined &&
+        (typeof accessToken !== "string" ||
+          accessToken.length > 4096))
     ) {
       return Response.json(
         { success: false, error: "Invalid booking email data." },
