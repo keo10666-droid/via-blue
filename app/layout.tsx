@@ -46,13 +46,8 @@ export const metadata: Metadata = {
     follow: true,
   },
 
-  alternates: {
-    canonical: "https://viabluetours.com",
-  },
-
   openGraph: {
     type: "website",
-    url: "https://viabluetours.com",
     siteName: "Via Blue",
     title: "Via Blue | Tours & Transfers in Hurghada",
     description:
