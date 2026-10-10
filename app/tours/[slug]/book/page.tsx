@@ -204,7 +204,7 @@ export default function BookingPage() {
         }
       : undefined;
 
-  if (!tour || tour.available === false) {
+  if (!tour) {
     notFound();
   }
 
