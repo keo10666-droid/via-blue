@@ -142,7 +142,6 @@ export default function BookingPage() {
     : params.slug;
 
   const baseTour = tours[slug as keyof typeof tours];
-  const [catalogLoaded, setCatalogLoaded] = useState(false);
   const [tourOverride, setTourOverride] = useState<{
     name?: string;
     description?: string;
@@ -163,7 +162,7 @@ export default function BookingPage() {
           setTourOverride(payload.overrides[slug]);
         }
       })
-      .catch(() => { if (!cancelled) setCatalogLoaded(true); });
+      .catch(() => undefined);
     return () => { cancelled = true; };
   }, [slug]);
 
@@ -186,11 +185,9 @@ export default function BookingPage() {
           highlights: [],
           included: [],
           excluded: [],
-          vehicleOptions: undefined,
-          cairoOptions: undefined,
           notes: [],
-          cairoOptions: [],
           vehicleOptions: [],
+          cairoOptions: [],
           price: tourOverride.price ?? 0,
           childPrice: tourOverride.childPrice ?? 0,
           infantPrice: tourOverride.infantPrice ?? 0,
