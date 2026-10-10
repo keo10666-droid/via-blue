@@ -442,30 +442,20 @@ export default function Footer() {
             <ul className="mt-7 space-y-4">
               <li>
                 <Link
-                  href="/tours/paradise-island"
-                  className="group flex items-center gap-2 text-[15px] text-slate-300 transition-all duration-300 hover:translate-x-1 hover:text-orange-400"
-                >
-                  <span>Paradise Island</span>
-                  <ArrowIcon />
-                </Link>
-              </li>
-
-              <li>
-                <Link
-                  href="/tours/snorkeling"
-                  className="group flex items-center gap-2 text-[15px] text-slate-300 transition-all duration-300 hover:translate-x-1 hover:text-orange-400"
-                >
-                  <span>Snorkeling</span>
-                  <ArrowIcon />
-                </Link>
-              </li>
-
-              <li>
-                <Link
                   href="/transfers"
                   className="group flex items-center gap-2 text-[15px] text-slate-300 transition-all duration-300 hover:translate-x-1 hover:text-orange-400"
                 >
-                  <span>Private Transfers</span>
+                  <span>Private Transfer</span>
+                  <ArrowIcon />
+                </Link>
+              </li>
+
+              <li>
+                <Link
+                  href="/tours"
+                  className="group flex items-center gap-2 text-[15px] text-slate-300 transition-all duration-300 hover:translate-x-1 hover:text-orange-400"
+                >
+                  <span>Luxury Tours</span>
                   <ArrowIcon />
                 </Link>
               </li>
