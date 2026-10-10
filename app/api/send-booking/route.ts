@@ -358,21 +358,6 @@ export async function POST(request: Request) {
       accessToken,
     } = body as Record<string, unknown>;
 
-    let authenticatedUserId: string | null = null;
-
-    if (
-      typeof accessToken === "string" &&
-      accessToken.trim()
-    ) {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser(
-        accessToken.trim()
-      );
-
-      authenticatedUserId = user?.id || null;
-    }
-
     if (
       typeof subject !== "string" ||
       !subject.trim() ||
@@ -386,6 +371,21 @@ export async function POST(request: Request) {
         { success: false, error: "Invalid booking email data." },
         { status: 400 },
       );
+    }
+
+    let authenticatedUserId: string | null = null;
+
+    if (
+      typeof accessToken === "string" &&
+      accessToken.trim()
+    ) {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser(
+        accessToken.trim()
+      );
+
+      authenticatedUserId = user?.id || null;
     }
 
     const {
