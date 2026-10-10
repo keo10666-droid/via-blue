@@ -2,7 +2,7 @@
 
 import { supabase } from "@/lib/supabase";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { useParams, notFound } from "next/navigation";
 
@@ -141,7 +141,28 @@ export default function BookingPage() {
     ? params.slug[0]
     : params.slug;
 
-  const tour = tours[slug as keyof typeof tours];
+  const baseTour = tours[slug as keyof typeof tours];
+  const [tourOverride, setTourOverride] = useState<{
+    price?: number;
+    childPrice?: number;
+    infantPrice?: number;
+    available?: boolean;
+  }>({});
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/tour-catalog", { cache: "no-store" })
+      .then((response) => response.ok ? response.json() : null)
+      .then((payload) => {
+        if (!cancelled && payload?.overrides?.[slug]) {
+          setTourOverride(payload.overrides[slug]);
+        }
+      })
+      .catch(() => undefined);
+    return () => { cancelled = true; };
+  }, [slug]);
+
+  const tour = baseTour ? { ...baseTour, ...tourOverride } : undefined;
 
   if (!tour) {
     notFound();
