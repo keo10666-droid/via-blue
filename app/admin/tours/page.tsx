@@ -38,8 +38,8 @@ export default async function AdminToursPage({ searchParams }: { searchParams: S
           <a href="/tours" target="_blank" rel="noreferrer" className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-bold">View tour catalog ↗</a>
         </div>
 
-        {params.saved && <div className="mb-5 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm font-semibold text-emerald-800">Tour pricing saved. The updated values are stored in the database.</div>}
-        {params.error && <div className="mb-5 rounded-xl border border-red-200 bg-red-50 p-4 text-sm font-semibold text-red-700">{params.error === "connection" ? "Supabase admin connection is unavailable." : params.error === "invalid" ? "Please enter valid prices (0 or more)." : "Could not save changes. Check the database table and server logs."}</div>}
+        {params.saved && <div className="mb-5 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm font-semibold text-emerald-800">Tour changes saved. The updated content, prices, and availability are stored in the database.</div>}
+        {params.error && <div className="mb-5 rounded-xl border border-red-200 bg-red-50 p-4 text-sm font-semibold text-red-700">{params.error === "connection" ? "Supabase admin connection is unavailable." : params.error === "invalid" ? "Please enter valid prices (0 or more)." : params.error === "content" ? "Please enter a name, description, and image path or HTTPS image URL. Check the maximum lengths." : "Could not save changes. Check the database table and server logs."}</div>}
         {error && <div className="mb-5 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">Could not load saved tour prices. Showing the default catalog values. {error.message}</div>}
 
         <div className="space-y-4">
