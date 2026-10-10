@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { createSupabaseAdminClient } from "@/lib/supabaseAdmin";
 import { tours, tourCategories } from "@/data/tours";
-import { updateTourPricing } from "./actions";
+import { createCustomTour, updateTourPricing } from "./actions";
 
 type SearchParams = Promise<{ saved?: string; error?: string }>;
 
@@ -26,7 +26,7 @@ export default async function AdminToursPage({ searchParams }: { searchParams: S
     return <main className="min-h-screen bg-slate-50 p-6 text-slate-900"><div className="mx-auto max-w-4xl rounded-2xl bg-white p-8"><h1 className="text-2xl font-bold">Tours & Experiences</h1><p className="mt-3 text-red-600">Database connection is not configured. Check the server-side Supabase admin key in Vercel.</p><Link className="mt-5 inline-block text-blue-700 underline" href="/admin">Back to dashboard</Link></div></main>;
   }
 
-  const { data, error } = await supabase.from("tour_catalog_overrides").select("slug,name,description,image,price,child_price,infant_price,available");
+  const { data, error } = await supabase.from("tour_catalog_overrides").select("slug,category,name,description,image,price,child_price,infant_price,available");
   const overrides = new Map((data ?? []).map((item) => [item.slug, item]));
   const tourList = Object.values(tours).sort((a,b) => a.name.localeCompare(b.name));
 
@@ -41,6 +41,22 @@ export default async function AdminToursPage({ searchParams }: { searchParams: S
         {params.saved && <div className="mb-5 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm font-semibold text-emerald-800">Tour changes saved. The updated content, prices, and availability are stored in the database.</div>}
         {params.error && <div className="mb-5 rounded-xl border border-red-200 bg-red-50 p-4 text-sm font-semibold text-red-700">{params.error === "connection" ? "Supabase admin connection is unavailable." : params.error === "invalid" ? "Please enter valid prices (0 or more)." : params.error === "content" ? "Please enter a name, description, and image path or HTTPS image URL. Check the maximum lengths." : "Could not save changes. Check the database table and server logs."}</div>}
         {error && <div className="mb-5 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">Could not load saved tour prices. Showing the default catalog values. {error.message}</div>}
+
+        <section className="mb-7 rounded-2xl border border-blue-100 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-extrabold text-blue-950">Add a new tour</h2>
+          <p className="mt-1 text-sm text-slate-500">Create a new experience with its category, image, description, and prices.</p>
+          <form action={createCustomTour} className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            <label className="text-xs font-bold text-slate-500">Tour name<input name="name" required maxLength={120} className="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm text-slate-900" placeholder="e.g. Sunset Boat Trip" /></label>
+            <label className="text-xs font-bold text-slate-500">URL slug<input name="slug" required maxLength={120} pattern="[a-z0-9]+(-[a-z0-9]+)*" className="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm text-slate-900" placeholder="sunset-boat-trip" /></label>
+            <label className="text-xs font-bold text-slate-500">Category<select name="category" required defaultValue="islands-boat-trips" className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900">{Object.entries(tourCategories).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label>
+            <label className="text-xs font-bold text-slate-500">Image path or HTTPS URL<input name="image" required maxLength={500} className="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm text-slate-900" placeholder="/tours/my-tour.webp" /></label>
+            <label className="text-xs font-bold text-slate-500">Adult (€)<input name="price" type="number" min="0" max="100000" step="0.01" required className="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm text-slate-900" /></label>
+            <label className="text-xs font-bold text-slate-500">Child (€)<input name="child_price" type="number" min="0" max="100000" step="0.01" required className="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm text-slate-900" /></label>
+            <label className="text-xs font-bold text-slate-500">Infant (€)<input name="infant_price" type="number" min="0" max="100000" step="0.01" required className="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm text-slate-900" /></label>
+            <label className="col-span-full text-xs font-bold text-slate-500">Short description<textarea name="description" required maxLength={1500} rows={3} className="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm text-slate-900" /></label>
+            <div className="col-span-full"><button type="submit" className="rounded-xl bg-orange-500 px-5 py-3 text-sm font-extrabold text-white hover:bg-orange-600">Create tour</button></div>
+          </form>
+        </section>
 
         <div className="space-y-4">
           {tourList.map((tour) => {
@@ -71,6 +87,22 @@ export default async function AdminToursPage({ searchParams }: { searchParams: S
               </form>
             );
           })}
+          {((data ?? []).filter((item) => !Object.prototype.hasOwnProperty.call(tours, item.slug) && item.category)).map((tour) => (
+            <form key={tour.slug} action={updateTourPricing} className="rounded-2xl border border-orange-200 bg-white p-5 shadow-sm sm:p-6">
+              <input type="hidden" name="slug" value={tour.slug} />
+              <p className="mb-3 text-xs font-bold uppercase tracking-wider text-orange-600">Custom tour · {tourCategories[tour.category as keyof typeof tourCategories] ?? tour.category} · /{tour.slug}</p>
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                <label className="text-xs font-bold text-slate-500">Tour name<input name="name" required maxLength={120} defaultValue={tour.name ?? ""} className="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm text-slate-900" /></label>
+                <label className="text-xs font-bold text-slate-500">Image path or HTTPS URL<input name="image" required maxLength={500} defaultValue={tour.image ?? ""} className="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm text-slate-900" /></label>
+                <label className="text-xs font-bold text-slate-500">Adult (€)<input name="price" type="number" min="0" max="100000" step="0.01" required defaultValue={tour.price} className="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm text-slate-900" /></label>
+                <label className="text-xs font-bold text-slate-500">Child (€)<input name="child_price" type="number" min="0" max="100000" step="0.01" required defaultValue={tour.child_price} className="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm text-slate-900" /></label>
+                <label className="text-xs font-bold text-slate-500">Infant (€)<input name="infant_price" type="number" min="0" max="100000" step="0.01" required defaultValue={tour.infant_price} className="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm text-slate-900" /></label>
+                <label className="text-xs font-bold text-slate-500">Availability<select name="available" defaultValue={String(tour.available)} className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900"><option value="true">Available</option><option value="false">Unavailable</option></select></label>
+                <label className="col-span-full text-xs font-bold text-slate-500">Short description<textarea name="description" required maxLength={1500} rows={3} defaultValue={tour.description ?? ""} className="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm text-slate-900" /></label>
+              </div>
+              <div className="mt-4 flex justify-end"><button type="submit" className="rounded-xl bg-blue-950 px-5 py-2.5 text-sm font-bold text-white">Save custom tour</button></div>
+            </form>
+          ))}
         </div>
         <p className="mt-6 text-xs leading-5 text-slate-400">Tour name, description, image path/URL and prices are saved in the database and update the live catalog without a redeployment.</p>
       </div>
