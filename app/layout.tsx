@@ -4,6 +4,8 @@ import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
+import { createSupabaseAdminClient } from "@/lib/supabaseAdmin";
+import { mergeSiteSettings } from "@/lib/siteSettings";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,53 +17,43 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL("https://viabluetours.com"),
+export async function generateMetadata(): Promise<Metadata> {
+  const supabase = createSupabaseAdminClient();
+  const { data } = supabase
+    ? await supabase.from("website_content_overrides").select("content").eq("section", "site-settings").maybeSingle()
+    : { data: null };
+  const settings = mergeSiteSettings(data?.content);
+  const keywords = settings.seo_keywords.split(",").map((keyword) => keyword.trim()).filter(Boolean);
 
-  title: {
-    default: "Via Blue | Tours & Transfers in Hurghada",
-    template: "%s | Via Blue",
-  },
-
-  description:
-    "Discover unforgettable tours, excursions and professional airport and hotel transfers in Hurghada and the Red Sea with Via Blue.",
-
-  keywords: [
-    "Hurghada tours",
-    "Hurghada excursions",
-    "Hurghada transfers",
-    "Hurghada airport transfer",
-    "Red Sea tours",
-    "Egypt tours",
-    "Hurghada activities",
-    "Via Blue",
-  ],
-
-  authors: [{ name: "Via Blue" }],
-  creator: "Via Blue",
-  publisher: "Via Blue",
-
-  robots: {
-    index: true,
-    follow: true,
-  },
-
-  openGraph: {
-    type: "website",
-    siteName: "Via Blue",
-    title: "Via Blue | Tours & Transfers in Hurghada",
-    description:
-      "Discover unforgettable tours, excursions and professional airport and hotel transfers in Hurghada and the Red Sea with Via Blue.",
-    locale: "en_US",
-  },
-
-  twitter: {
-    card: "summary_large_image",
-    title: "Via Blue | Tours & Transfers in Hurghada",
-    description:
-      "Discover unforgettable tours, excursions and professional airport and hotel transfers in Hurghada and the Red Sea with Via Blue.",
-  },
-};
+  return {
+    metadataBase: new URL("https://viabluetours.com"),
+    title: {
+      default: settings.seo_title,
+      template: "%s | Via Blue",
+    },
+    description: settings.seo_description,
+    keywords,
+    authors: [{ name: "Via Blue" }],
+    creator: "Via Blue",
+    publisher: "Via Blue",
+    robots: {
+      index: true,
+      follow: true,
+    },
+    openGraph: {
+      type: "website",
+      siteName: "Via Blue",
+      title: settings.seo_title,
+      description: settings.seo_description,
+      locale: "en_US",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: settings.seo_title,
+      description: settings.seo_description,
+    },
+  };
+}
 
 export default function RootLayout({
   children,
