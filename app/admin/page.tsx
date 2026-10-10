@@ -112,11 +112,11 @@ const modules = [
   },
   {
     title: "Website content",
-    description: "Update homepage text, contact details, FAQs and important sections.",
-    href: "",
+    description: "Edit key promotional text on the homepage.",
+    href: "/admin/website-content",
     icon: Globe2,
-    tag: "Next module",
-    available: false,
+    tag: "Available now",
+    available: true,
     iconClass: "bg-sky-50 text-sky-700",
   },
   {
