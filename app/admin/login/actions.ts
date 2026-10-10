@@ -62,7 +62,7 @@ export async function loginAdmin(
     }
   );
 
-  redirect("/admin/bookings");
+  redirect("/admin");
 }
 
 export async function logoutAdmin() {
