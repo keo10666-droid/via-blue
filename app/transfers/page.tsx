@@ -368,7 +368,7 @@ export default function TransfersPage() {
                   <div className="absolute bottom-5 left-5 right-5">
 
                     <p className="mb-1.5 text-xs font-bold uppercase tracking-[0.14em] text-orange-300">
-                      Hurghada Airport
+                      {transfer.from}
                     </p>
 
                     <div className="flex items-center gap-2">
@@ -406,7 +406,7 @@ export default function TransfersPage() {
                       <div className="mt-1 flex items-center gap-2 text-sm font-bold text-slate-800">
 
                         <span className="truncate">
-                          Hurghada Airport
+                          {transfer.from}
                         </span>
 
                         <span className="shrink-0 text-base font-bold text-orange-500">
