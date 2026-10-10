@@ -356,7 +356,7 @@ export async function POST(request: Request) {
       subject,
       html,
       accessToken,
-    } = body;
+    } = body as Record<string, unknown>;
 
     let authenticatedUserId: string | null = null;
 
