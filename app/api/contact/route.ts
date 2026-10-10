@@ -17,6 +17,13 @@ function escapeHtml(value: string) {
 
 export async function POST(request: Request) {
   try {
+    if (await isRateLimited(request, "contact-form", 5, 900)) {
+      return NextResponse.json(
+        { error: "Too many messages were sent from this connection. Please try again in 15 minutes." },
+        { status: 429 },
+      );
+    }
+
     const maxBodyBytes = 16 * 1024;
     const contentLength = Number(request.headers.get("content-length") || 0);
 
@@ -112,13 +119,6 @@ export async function POST(request: Request) {
       return NextResponse.json(
         { error: "Please enter a valid email address." },
         { status: 400 },
-      );
-    }
-
-    if (await isRateLimited(request, "contact-form", 5, 900)) {
-      return NextResponse.json(
-        { error: "Too many messages were sent from this connection. Please try again in 15 minutes." },
-        { status: 429 },
       );
     }
 
