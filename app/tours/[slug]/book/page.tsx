@@ -132,7 +132,7 @@ const FlagIcon = ({
   />
 );
 
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const EMAIL_REGEX = /^(?!.*\.\.)[a-zA-Z0-9](?:[a-zA-Z0-9.]{4,28}[a-zA-Z0-9])@gmail\.com$/i;
 
 export default function BookingPage() {
   const params = useParams();
@@ -218,6 +218,8 @@ export default function BookingPage() {
 
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
+  const [phoneTouched, setPhoneTouched] = useState(false);
+  const [emailTouched, setEmailTouched] = useState(false);
 
   const [hotel, setHotel] = useState("");
   const [roomNumber, setRoomNumber] = useState("");
@@ -496,8 +498,13 @@ const selectedCairoVehicleOption =
     );
   };
 
+  const phoneDigits = phone.replace(/\D/g, "");
+  const fullPhoneDigits = `${selectedCountry.dialCode}${phone}`.replace(/\D/g, "");
   const isPhoneValid =
-    phone.replace(/\D/g, "").length >= 6;
+    phoneDigits.length >= 6 &&
+    fullPhoneDigits.length >= 8 &&
+    fullPhoneDigits.length <= 15 &&
+    !/^([0-9])\1+$/.test(fullPhoneDigits);
 
   const isEmailValid =
     EMAIL_REGEX.test(email.trim());
@@ -896,7 +903,7 @@ ${notes.trim() || "-"}
                 <div>
 
                   <label className={labelClass}>
-                    Email Address{" "}
+                    Email Address (Gmail only){" "}
                     <span className="text-red-500">
                       *
                     </span>
@@ -904,21 +911,25 @@ ${notes.trim() || "-"}
 
                   <input
                     type="email"
-                    placeholder="you@example.com"
+                    placeholder="yourname@gmail.com"
                     value={email}
                     onChange={(e) =>
                       setEmail(e.target.value)
                     }
+                    onBlur={() => setEmailTouched(true)}
+                    aria-invalid={(emailTouched || submitAttempted) && !isEmailValid}
                     className={inputClass(
-                      submitAttempted &&
+                      (emailTouched || submitAttempted) &&
                         !isEmailValid
                     )}
                   />
 
-                  {submitAttempted &&
+                  <p className="mt-1.5 text-xs text-slate-500">Use a Gmail address ending in @gmail.com</p>
+
+                  {(emailTouched || submitAttempted) &&
                     !isEmailValid &&
                     errorText(
-                      "Please enter a valid email address"
+                      "Enter a valid Gmail address (example@gmail.com)"
                     )}
 
                 </div>
@@ -1046,9 +1057,11 @@ ${notes.trim() || "-"}
                           e.target.value
                         )
                       }
+                      onBlur={() => setPhoneTouched(true)}
+                      aria-invalid={(phoneTouched || submitAttempted) && !isPhoneValid}
                       className={
                         inputClass(
-                          submitAttempted &&
+                          (phoneTouched || submitAttempted) &&
                             !isPhoneValid
                         ) +
                         " flex-1"
@@ -1057,10 +1070,10 @@ ${notes.trim() || "-"}
 
                   </div>
 
-                  {submitAttempted &&
+                  {(phoneTouched || submitAttempted) &&
                     !isPhoneValid &&
                     errorText(
-                      "Please enter a valid WhatsApp number"
+                      "Enter a valid WhatsApp number with 6+ local digits (7–15 digits including country code)"
                     )}
 
                 </div>
