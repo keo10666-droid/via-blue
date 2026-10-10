@@ -11,20 +11,55 @@ export async function POST(request: Request) {
         { status: 429 },
       );
     }
+    const maxBodyBytes = 12 * 1024;
     const contentLength = Number(
       request.headers.get("content-length") || 0,
     );
 
-    if (contentLength > 12 * 1024) {
+    if (contentLength > maxBodyBytes) {
       return NextResponse.json(
         { error: "Review request is too large." },
         { status: 413 },
       );
     }
 
+    if (!request.body) {
+      return NextResponse.json(
+        { error: "Invalid review request." },
+        { status: 400 },
+      );
+    }
+
+    const reader = request.body.getReader();
+    const chunks: Uint8Array[] = [];
+    let totalBytes = 0;
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+
+      totalBytes += value.byteLength;
+      if (totalBytes > maxBodyBytes) {
+        await reader.cancel();
+        return NextResponse.json(
+          { error: "Review request is too large." },
+          { status: 413 },
+        );
+      }
+
+      chunks.push(value);
+    }
+
+    const bytes = new Uint8Array(totalBytes);
+    let offset = 0;
+    for (const chunk of chunks) {
+      bytes.set(chunk, offset);
+      offset += chunk.byteLength;
+    }
+
     let body: Record<string, unknown>;
     try {
-      const parsed: unknown = await request.json();
+      const parsed: unknown = JSON.parse(new TextDecoder().decode(bytes));
       if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
         return NextResponse.json(
           { error: "Invalid review request." },
