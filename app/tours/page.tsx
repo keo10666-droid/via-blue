@@ -654,7 +654,7 @@ function ToursPageContent() {
 
         <div className="mx-auto max-w-7xl">
 
-          <div className="flex gap-2 overflow-x-auto pb-1 sm:grid sm:grid-cols-3 sm:overflow-visible sm:pb-0 md:grid-cols-4 lg:grid-cols-7">
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7">
 
             {categoryKeys.map((category) => {
 
@@ -668,7 +668,7 @@ function ToursPageContent() {
                   onClick={() =>
                     handleCategoryChange(category)
                   }
-                  className={`group flex min-h-[46px] w-max shrink-0 items-center justify-center gap-2 rounded-2xl border px-3 py-2.5 text-xs font-bold transition-all duration-300 active:scale-[0.98] sm:min-h-[52px] sm:w-full sm:shrink ${
+                  className={`group flex min-h-[46px] w-full items-center justify-center gap-2 rounded-2xl border px-3 py-2.5 text-xs font-bold transition-all duration-300 active:scale-[0.98] sm:min-h-[52px] ${
                     isActive
                       ? "border-blue-950 bg-blue-950 text-white shadow-lg shadow-blue-950/20"
                       : "border-slate-200 bg-white text-blue-950 shadow-sm hover:-translate-y-0.5 hover:border-orange-300 hover:bg-orange-50 hover:shadow-md"
