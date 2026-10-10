@@ -142,6 +142,7 @@ export default function BookingPage() {
     : params.slug;
 
   const baseTour = tours[slug as keyof typeof tours];
+  const [catalogLoaded, setCatalogLoaded] = useState(false);
   const [tourOverride, setTourOverride] = useState<{
     name?: string;
     description?: string;
@@ -162,7 +163,7 @@ export default function BookingPage() {
           setTourOverride(payload.overrides[slug]);
         }
       })
-      .catch(() => undefined);
+      .catch(() => { if (!cancelled) setCatalogLoaded(true); });
     return () => { cancelled = true; };
   }, [slug]);
 
@@ -679,6 +680,10 @@ ${notes.trim() || "-"}
   );
 }
 };
+
+  if (!baseTour && !tourOverride.category && catalogLoaded) notFound();
+  if (!baseTour && !tourOverride.category) return <main className="min-h-screen p-8 text-center text-blue-950">Loading tour details…</main>;
+  if (tour.available === false) notFound();
 
   return (
     <main className="min-h-screen bg-slate-50 px-4 py-8 md:py-12">
