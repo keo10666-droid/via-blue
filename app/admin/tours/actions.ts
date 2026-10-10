@@ -39,6 +39,13 @@ export async function updateTourPricing(formData: FormData) {
     redirect("/admin/tours?error=invalid");
   }
 
+  const name = String(formData.get("name") ?? "").trim();
+  const description = String(formData.get("description") ?? "").trim();
+  const image = String(formData.get("image") ?? "").trim();
+  if (!name || name.length > 120 || !description || description.length > 1500 || !image || image.length > 500 || !(image.startsWith("/") || /^https:\/\//i.test(image))) {
+    redirect("/admin/tours?error=content");
+  }
+
   const available = String(formData.get("available")) === "true";
   const supabase = createSupabaseAdminClient();
   if (!supabase) redirect("/admin/tours?error=connection");
@@ -59,7 +66,7 @@ export async function updateTourPricing(formData: FormData) {
 
   revalidatePath("/admin/tours");
   revalidatePath("/tours");
-  revalidatePath(`/tours/${slug}`);
+  revalidatePath(`/tours/${slug}`);\n  revalidatePath(`/tours/${slug}/book`);
   revalidatePath(`/tours/${slug}/book`);
   redirect("/admin/tours?saved=1");
 }
