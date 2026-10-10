@@ -24,7 +24,7 @@ export async function isIdentifierRateLimited(
   );
 
   if (error) {
-    console.error("Rate-limit check failed:", error.code);
+    console.error("Rate-limit check failed: database request unsuccessful.");
     return true;
   }
 
