@@ -1160,9 +1160,7 @@ export async function POST(request: Request) {
             user_id:
               authenticatedUserId,
             customer_email:
-              customerEmail ||
-              replyTo ||
-              null,
+              validCustomerEmail || null,
             customer_whatsapp:
               customerWhatsApp ||
               null,
