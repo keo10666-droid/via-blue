@@ -2106,13 +2106,14 @@ ${notes.trim() || "-"}
             <button
               type="button"
               onClick={handleSubmit}
-              className="group relative mt-2 flex w-full items-center justify-center gap-3 overflow-hidden rounded-2xl bg-orange-500 px-6 py-4.5 text-base font-bold text-white shadow-lg shadow-orange-500/20 transition-all duration-200 hover:bg-orange-600 hover:shadow-xl hover:shadow-orange-500/25 active:scale-[0.99]"
+              disabled={tour.available === false}
+              className="group relative mt-2 flex w-full items-center justify-center gap-3 overflow-hidden rounded-2xl bg-orange-500 px-6 py-4.5 text-base font-bold text-white shadow-lg shadow-orange-500/20 transition-all duration-200 hover:bg-orange-600 hover:shadow-xl hover:shadow-orange-500/25 active:scale-[0.99] disabled:cursor-not-allowed disabled:bg-slate-400"
             >
 
               <span className="absolute inset-0 bg-gradient-to-r from-orange-500 via-orange-500 to-orange-400 opacity-0 transition-opacity duration-200 group-hover:opacity-100" />
 
               <span className="relative">
-                Confirm Booking Request
+                {tour.available === false ? "This tour is currently unavailable" : "Confirm Booking Request"}
               </span>
 
               <span className="relative text-lg transition-transform duration-200 group-hover:translate-x-1">
