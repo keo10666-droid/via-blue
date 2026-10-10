@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 import { isRateLimited } from "@/lib/apiRateLimit";
+import { getTourBySlug } from "@/data/tours";
 
 export async function POST(request: Request) {
   try {
@@ -21,15 +22,30 @@ export async function POST(request: Request) {
       );
     }
 
-    const body = await request.json();
+    let body: Record<string, unknown>;
+    try {
+      const parsed: unknown = await request.json();
+      if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+        return NextResponse.json(
+          { error: "Invalid review request." },
+          { status: 400 },
+        );
+      }
+      body = parsed as Record<string, unknown>;
+    } catch {
+      return NextResponse.json(
+        { error: "Invalid JSON request." },
+        { status: 400 },
+      );
+    }
 
     const tourSlug = String(body.tourSlug || "").trim();
-    const tourName = String(body.tourName || "").trim();
+    const tour = getTourBySlug(tourSlug);
     const guestName = String(body.guestName || "").trim();
     const comment = String(body.comment || "").trim();
     const rating = Number(body.rating);
 
-    if (!tourSlug || !tourName || !guestName || !comment) {
+    if (!tour || !guestName || !comment) {
       return NextResponse.json(
         { error: "Please fill in all fields." },
         { status: 400 }
@@ -38,7 +54,6 @@ export async function POST(request: Request) {
 
     if (
       tourSlug.length > 120 ||
-      tourName.length > 160 ||
       guestName.length > 80 ||
       comment.length > 2000
     ) {
@@ -59,7 +74,7 @@ export async function POST(request: Request) {
       .from("reviews")
       .insert({
         tour_slug: tourSlug,
-        tour_name: tourName,
+        tour_name: tour.name,
         guest_name: guestName,
         rating: rating,
         comment: comment,
