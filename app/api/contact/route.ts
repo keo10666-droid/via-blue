@@ -1,14 +1,11 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { isRateLimited } from "@/lib/apiRateLimit";
 
 export const runtime = "nodejs";
 
 const recipient = "viabluetours@gmail.com";
 const sender = "Via Blue Website <website@viabluetours.com>";
-const WINDOW_MS = 15 * 60 * 1000;
-const MAX_REQUESTS = 5;
-const requestsByIp = new Map<string, number[]>();
-
 function escapeHtml(value: string) {
   return value
     .replace(/&/g, "&amp;")
@@ -16,31 +13,6 @@ function escapeHtml(value: string) {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
-}
-
-function limitRequests(ip: string) {
-  const now = Date.now();
-  const recent = (requestsByIp.get(ip) ?? []).filter(
-    (timestamp) => now - timestamp < WINDOW_MS,
-  );
-
-  if (recent.length >= MAX_REQUESTS) {
-    requestsByIp.set(ip, recent);
-    return false;
-  }
-
-  recent.push(now);
-  requestsByIp.set(ip, recent);
-
-  if (requestsByIp.size > 1000) {
-    for (const [key, timestamps] of requestsByIp) {
-      if (timestamps.every((timestamp) => now - timestamp >= WINDOW_MS)) {
-        requestsByIp.delete(key);
-      }
-    }
-  }
-
-  return true;
 }
 
 export async function POST(request: Request) {
@@ -101,13 +73,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const forwardedFor = request.headers.get("x-forwarded-for");
-    const ip =
-      request.headers.get("x-real-ip")?.trim() ||
-      forwardedFor?.split(",")[0]?.trim() ||
-      "unknown";
-
-    if (!limitRequests(ip)) {
+    if (await isRateLimited(request, "contact-form", 5, 900)) {
       return NextResponse.json(
         { error: "Too many messages were sent from this connection. Please try again in 15 minutes." },
         { status: 429 },
