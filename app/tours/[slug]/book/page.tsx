@@ -150,6 +150,7 @@ export default function BookingPage() {
     childPrice?: number;
     infantPrice?: number;
     available?: boolean;
+    category?: string;
   }>({});
 
   useEffect(() => {
