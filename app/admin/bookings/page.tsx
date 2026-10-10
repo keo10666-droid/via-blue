@@ -158,7 +158,7 @@ export default async function AdminBookingsPage() {
           <p className="mt-4 text-sm leading-7 text-slate-600">
             {tableMissing
               ? "Run the booking_requests migration in the Supabase SQL Editor, then refresh this page"
-              : error.message}
+              : "An unexpected error occurred. Please check the server logs."}
           </p>
         </div>
       </main>
