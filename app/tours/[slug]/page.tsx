@@ -780,6 +780,10 @@ export default async function TourDetailsPage({
       }
     : baseTour;
 
+  if (!tour.available) {
+    notFound();
+  }
+
   const backToTours = fromCategory
     ? `/tours?category=${encodeURIComponent(fromCategory)}`
     : "/tours";
