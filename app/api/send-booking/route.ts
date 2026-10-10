@@ -1117,10 +1117,7 @@ export async function POST(request: Request) {
       });
 
     if (error) {
-      console.error(
-        "Resend error:",
-        error
-      );
+      console.error("Booking notification email failed to send.");
 
       return Response.json(
         {
@@ -1182,10 +1179,7 @@ export async function POST(request: Request) {
           });
 
       if (bookingSaveError) {
-        console.error(
-          "Booking database save error:",
-          bookingSaveError
-        );
+        console.error("Booking request could not be saved to the database.");
       } else {
         bookingSaved = true;
       }
@@ -1250,10 +1244,7 @@ export async function POST(request: Request) {
         });
 
       if (customerError) {
-        console.error(
-          "Customer confirmation email error:",
-          customerError
-        );
+        console.error("Customer booking confirmation email failed to send.");
       } else {
         customerEmailSent = true;
       }
@@ -1267,10 +1258,7 @@ export async function POST(request: Request) {
       bookingReference,
     });
   } catch (error) {
-    console.error(
-      "Send booking error:",
-      error
-    );
+    console.error("Unexpected booking API failure.");
 
     return Response.json(
       {
