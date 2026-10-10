@@ -105,7 +105,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from("reviews")
       .insert({
         tour_slug: tourSlug,
@@ -114,9 +114,7 @@ export async function POST(request: Request) {
         rating: rating,
         comment: comment,
         is_visible: false,
-      })
-      .select()
-      .single();
+      });
 
     if (error) {
       console.error("Review submission failed in Supabase.");
@@ -130,10 +128,7 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json(
-      {
-        success: true,
-        review: data,
-      },
+      { success: true },
       { status: 201 }
     );
   } catch (error) {
