@@ -650,7 +650,7 @@ function ToursPageContent() {
           CATEGORY NAVIGATION
       ===================================================== */}
 
-      <section className="sticky top-0 z-40 border-b border-slate-200/80 bg-white/90 px-3 py-2 shadow-[0_8px_30px_rgba(15,23,42,0.06)] backdrop-blur-xl">
+      <section className="border-b border-slate-200/80 bg-white/90 px-3 py-2 shadow-[0_8px_30px_rgba(15,23,42,0.06)] backdrop-blur-xl">
 
         <div className="mx-auto max-w-7xl">
 
