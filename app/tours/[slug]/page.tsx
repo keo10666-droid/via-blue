@@ -34,14 +34,25 @@ export async function generateMetadata({
     (item) => item.slug === slug
   );
 
+  const adminClient = createSupabaseAdminClient();
   if (!tour) {
+    const { data: custom } = adminClient
+      ? await adminClient.from("tour_catalog_overrides").select("slug,category,name,description,image,price,child_price,infant_price,available").eq("slug", slug).maybeSingle()
+      : { data: null };
+    if (!custom?.category || !custom.available) {
+      return { title: "Tour Not Found", description: "The requested tour could not be found." };
+    }
+    const customTitle = custom.name || slug;
+    const customDescription = custom.description || `Book ${customTitle} in Hurghada, Egypt with Via Blue.`;
     return {
-      title: "Tour Not Found",
-      description: "The requested tour could not be found.",
+      title: customTitle,
+      description: customDescription,
+      alternates: { canonical: `https://viabluetours.com/tours/${slug}` },
+      openGraph: { title: `${customTitle} | Via Blue`, description: customDescription, url: `https://viabluetours.com/tours/${slug}`, siteName: "Via Blue", type: "website", images: [{ url: custom.image || "/images/via-blue-hero.webp", alt: customTitle }] },
     };
   }
 
-  const adminClient = createSupabaseAdminClient();
+
   const { data: contentOverride } = adminClient
     ? await adminClient
         .from("tour_catalog_overrides")
@@ -762,35 +773,49 @@ export default async function TourDetailsPage({
   const { slug } = await params;
   const { fromCategory } = await searchParams;
 
-  const baseTour = Object.values(tours).find(
-    (item) => item.slug === slug
-  );
-
-  if (!baseTour) {
-    notFound();
-  }
-
+  const baseTour = Object.values(tours).find((item) => item.slug === slug);
   const adminClient = createSupabaseAdminClient();
   const { data: pricingOverride } = adminClient
-    ? await adminClient
-        .from("tour_catalog_overrides")
-        .select("name,description,image,price,child_price,infant_price,available")
-        .eq("slug", slug)
-        .maybeSingle()
+    ? await adminClient.from("tour_catalog_overrides").select("slug,category,name,description,image,price,child_price,infant_price,available").eq("slug", slug).maybeSingle()
     : { data: null };
 
-  const tour = pricingOverride
+  if (!baseTour && !pricingOverride?.category) notFound();
+  const customTour = !baseTour && pricingOverride ? {
+    slug,
+    name: pricingOverride.name || slug,
+    destination: "hurghada" as const,
+    category: "islands-boat-trips" as const,
+    image: pricingOverride.image || "/images/via-blue-hero.webp",
+    gallery: [pricingOverride.image || "/images/via-blue-hero.webp"],
+    description: pricingOverride.description || "",
+    overview: pricingOverride.description || "",
+    duration: "To be confirmed",
+    pickup: "Hotel pickup",
+    schedule: "To be confirmed",
+    program: [],
+    highlights: [],
+    included: [],
+    excluded: [],
+    notes: [],
+    price: Number(pricingOverride.price),
+    childPrice: Number(pricingOverride.child_price),
+    infantPrice: Number(pricingOverride.infant_price),
+    rating: 0,
+    reviews: 0,
+    badge: "New Experience",
+    available: pricingOverride.available,
+    type: pricingOverride.category || "Tour",
+    seo: { title: pricingOverride.name || slug, description: pricingOverride.description || "", keywords: [] },
+  } : null;
+  const tour = baseTour
     ? {
         ...baseTour,
-        ...(pricingOverride.name ? { name: pricingOverride.name } : {}),
-        ...(pricingOverride.description ? { description: pricingOverride.description, overview: pricingOverride.description } : {}),
-        ...(pricingOverride.image ? { image: pricingOverride.image, gallery: [pricingOverride.image, ...baseTour.gallery.slice(1)] } : {}),
-        price: Number(pricingOverride.price),
-        childPrice: Number(pricingOverride.child_price),
-        infantPrice: Number(pricingOverride.infant_price),
-        available: pricingOverride.available,
+        ...(pricingOverride?.name ? { name: pricingOverride.name } : {}),
+        ...(pricingOverride?.description ? { description: pricingOverride.description, overview: pricingOverride.description } : {}),
+        ...(pricingOverride?.image ? { image: pricingOverride.image, gallery: [pricingOverride.image, ...baseTour.gallery.slice(1)] } : {}),
+        ...(pricingOverride ? { price: Number(pricingOverride.price), childPrice: Number(pricingOverride.child_price), infantPrice: Number(pricingOverride.infant_price), available: pricingOverride.available } : {}),
       }
-    : baseTour;
+    : customTour;
 
   if (!tour.available) {
     notFound();
