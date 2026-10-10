@@ -85,11 +85,11 @@ const modules = [
   },
   {
     title: "Tours & experiences",
-    description: "Manage tour descriptions, prices, availability and gallery images.",
-    href: "",
+    description: "Manage tour prices and booking availability.",
+    href: "/admin/tours",
     icon: Ship,
-    tag: "Next module",
-    available: false,
+    tag: "Available now",
+    available: true,
     iconClass: "bg-blue-50 text-blue-700",
   },
   {
