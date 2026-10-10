@@ -168,7 +168,7 @@ export default function BookingPage() {
 
   const tour = baseTour
     ? { ...baseTour, ...tourOverride }
-    : tourOverride.category
+    : !baseTour
       ? {
           slug: String(slug),
           name: tourOverride.name || String(slug),
