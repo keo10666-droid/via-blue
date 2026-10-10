@@ -284,6 +284,14 @@ function renderSection(
 
 export async function POST(request: Request) {
   try {
+    const contentType = request.headers.get("content-type") || "";
+    if (!/^application\/json(?:\s*;|$)/i.test(contentType)) {
+      return Response.json(
+        { success: false, error: "Invalid booking request format." },
+        { status: 415 },
+      );
+    }
+
     const maxBodyBytes = 64 * 1024;
     const contentLength = Number(request.headers.get("content-length") || 0);
     if (contentLength > maxBodyBytes) {
