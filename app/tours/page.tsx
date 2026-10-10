@@ -551,7 +551,8 @@ function ToursPageContent() {
       .map((tour) => ({
         ...tour,
         ...(tourOverrides[tour.slug] ?? {}),
-      }));
+      }))
+      .filter((tour) => tour.available !== false);
   }, [activeCategory, tourOverrides]);
 
 
