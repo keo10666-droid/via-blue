@@ -73,3 +73,42 @@ export async function updateTourPricing(formData: FormData) {
   revalidatePath(`/tours/${slug}/book`);
   redirect("/admin/tours?saved=1");
 }
+
+
+export async function createCustomTour(formData: FormData) {
+  await requireAdmin();
+
+  const name = String(formData.get("name") ?? "").trim();
+  const slug = String(formData.get("slug") ?? "").trim().toLowerCase();
+  const category = String(formData.get("category") ?? "");
+  const description = String(formData.get("description") ?? "").trim();
+  const image = String(formData.get("image") ?? "").trim();
+  const parsePrice = (key: string) => {
+    const raw = String(formData.get(key) ?? "");
+    const value = Number(raw);
+    return raw.trim() !== "" && Number.isFinite(value) && value >= 0 && value <= 100000 ? value : null;
+  };
+  const price = parsePrice("price");
+  const childPrice = parsePrice("child_price");
+  const infantPrice = parsePrice("infant_price");
+  const validCategories = ["islands-boat-trips", "snorkeling-diving", "sea-water-activities", "dolphin-experiences", "desert-adventures", "egypt-tours-excursions", "family-attractions"];
+  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug) || !name || name.length > 120 || !description || description.length > 1500 || !image || image.length > 500 || !(image.startsWith("/") || /^https:\/\//i.test(image)) || !validCategories.includes(category) || price === null || childPrice === null || infantPrice === null) {
+    redirect("/admin/tours?error=content");
+  }
+  if (Object.prototype.hasOwnProperty.call(tours, slug)) redirect("/admin/tours?error=duplicate");
+
+  const supabase = createSupabaseAdminClient();
+  if (!supabase) redirect("/admin/tours?error=connection");
+  const { error } = await supabase.from("tour_catalog_overrides").insert({
+    slug, category, name, description, image, price, child_price: childPrice, infant_price: infantPrice, available: true, updated_at: new Date().toISOString(),
+  });
+  if (error) {
+    console.error("Custom tour creation failed:", error.message);
+    redirect("/admin/tours?error=save");
+  }
+  revalidatePath("/admin/tours");
+  revalidatePath("/api/tour-catalog");
+  revalidatePath("/tours");
+  revalidatePath(`/tours/${slug}`);
+  redirect("/admin/tours?saved=1");
+}
