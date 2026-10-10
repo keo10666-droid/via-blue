@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { tours } from "@/data/tours";
 import { getSampleReviews } from "@/data/sampleReviews";
 import { supabase } from "@/lib/supabase";
+import { createSupabaseAdminClient } from "@/lib/supabaseAdmin";
 
 import TourGallery from "@/app/components/TourGallery";
 import ReviewForm from "@/app/components/ReviewForm";
@@ -752,13 +753,32 @@ export default async function TourDetailsPage({
   const { slug } = await params;
   const { fromCategory } = await searchParams;
 
-  const tour = Object.values(tours).find(
+  const baseTour = Object.values(tours).find(
     (item) => item.slug === slug
   );
 
-  if (!tour) {
+  if (!baseTour) {
     notFound();
   }
+
+  const adminClient = createSupabaseAdminClient();
+  const { data: pricingOverride } = adminClient
+    ? await adminClient
+        .from("tour_catalog_overrides")
+        .select("price,child_price,infant_price,available")
+        .eq("slug", slug)
+        .maybeSingle()
+    : { data: null };
+
+  const tour = pricingOverride
+    ? {
+        ...baseTour,
+        price: Number(pricingOverride.price),
+        childPrice: Number(pricingOverride.child_price),
+        infantPrice: Number(pricingOverride.infant_price),
+        available: pricingOverride.available,
+      }
+    : baseTour;
 
   const backToTours = fromCategory
     ? `/tours?category=${encodeURIComponent(fromCategory)}`
