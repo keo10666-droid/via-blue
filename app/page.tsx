@@ -4,6 +4,8 @@ import Link from "next/link";
 
 import { tourList } from "@/data/tours";
 import { supabase } from "@/lib/supabase";
+import { createSupabaseAdminClient } from "@/lib/supabaseAdmin";
+import { mergeHomepageContent } from "@/lib/websiteContent";
 
 export const metadata: Metadata = {
   alternates: {
@@ -157,6 +159,12 @@ function BoatIcon({ className = "h-6 w-6" }: { className?: string }) {
 }
 
 export default async function Home() {
+  const contentClient = createSupabaseAdminClient();
+  const { data: homepageOverride } = contentClient
+    ? await contentClient.from("website_content_overrides").select("content").eq("section", "homepage").maybeSingle()
+    : { data: null };
+  const homepageContent = mergeHomepageContent(homepageOverride?.content);
+
   const { data: reviews } = await supabase
     .from("reviews")
     .select(
@@ -1032,29 +1040,27 @@ export default async function Home() {
               <span className="h-px w-10 bg-orange-400" />
 
               <p className="text-xs font-bold uppercase tracking-[0.3em] text-orange-400">
-                The Red Sea Is Waiting
+                {homepageContent.experience_badge}
               </p>
 
             </div>
 
             <h2 className="mt-5 max-w-3xl text-4xl font-bold leading-tight sm:text-5xl md:text-6xl">
-              Swim
-              <span className="text-orange-400"> Explore</span>
+              {homepageContent.experience_title_first}
+              <span className="text-orange-400"> {homepageContent.experience_title_highlight}</span>
               <br />
-              Make Memories
+              {homepageContent.experience_title_last}
             </h2>
 
             <p className="mt-6 max-w-2xl text-lg leading-8 text-blue-100">
-              From crystal-clear waters and beautiful islands to
-              unforgettable desert landscapes, Hurghada has an
-              experience waiting for you
+              {homepageContent.experience_description}
             </p>
 
             <Link
               href="/tours"
               className="group mt-8 inline-flex items-center gap-3 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 px-7 py-4 font-bold text-white shadow-xl shadow-orange-950/30 transition hover:-translate-y-1 hover:from-orange-400 hover:to-amber-400"
             >
-              Find Your Experience
+              {homepageContent.experience_button}
 
               <ArrowRightIcon className="h-5 w-5 transition-transform group-hover:translate-x-1" />
             </Link>
@@ -1250,7 +1256,7 @@ export default async function Home() {
             <span className="h-px w-10 bg-orange-500" />
 
             <p className="text-xs font-bold uppercase tracking-[0.3em] text-orange-500">
-              Your Hurghada Adventure Starts Here
+              {homepageContent.cta_badge}
             </p>
 
             <span className="h-px w-10 bg-orange-500" />
@@ -1259,17 +1265,16 @@ export default async function Home() {
 
           <h2 className="mt-6 text-4xl font-bold leading-tight text-blue-950 sm:text-5xl md:text-6xl">
 
-            Don't Just Visit Hurghada
+            {homepageContent.cta_title_first}
 
             <span className="block bg-gradient-to-r from-orange-500 to-amber-500 bg-clip-text text-transparent">
-              Experience It
+              {homepageContent.cta_title_highlight}
             </span>
 
           </h2>
 
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-gray-600">
-            Choose your next adventure, book with confidence and
-            get ready for an unforgettable Red Sea experience
+            {homepageContent.cta_description}
           </p>
 
           <div className="mt-9 flex flex-col justify-center gap-4 sm:flex-row">
@@ -1278,7 +1283,7 @@ export default async function Home() {
               href="#top"
               className="group flex items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 px-8 py-4 font-bold text-white shadow-xl shadow-orange-200 transition hover:-translate-y-1 hover:from-orange-400 hover:to-amber-400"
             >
-              Explore Tours
+              {homepageContent.cta_primary_button}
 
               <ArrowRightIcon className="h-5 w-5 transition-transform group-hover:translate-x-1" />
             </Link>
@@ -1287,7 +1292,7 @@ export default async function Home() {
               href="/transfers"
               className="flex items-center justify-center rounded-2xl border-2 border-blue-950 px-8 py-4 font-bold text-blue-950 transition hover:-translate-y-1 hover:bg-blue-950 hover:text-white hover:shadow-xl"
             >
-              View Transfers
+              {homepageContent.cta_secondary_button}
             </Link>
 
           </div>
