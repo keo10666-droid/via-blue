@@ -95,10 +95,10 @@ const modules = [
   {
     title: "Transfers & vehicles",
     description: "Edit routes, vehicle types, passenger capacity and prices.",
-    href: "",
+    href: "/admin/transfers",
     icon: CarFront,
-    tag: "Next module",
-    available: false,
+    tag: "Available now",
+    available: true,
     iconClass: "bg-violet-50 text-violet-700",
   },
   {
