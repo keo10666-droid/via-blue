@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
+import { isRateLimited } from "@/lib/apiRateLimit";
 
 import { tourList } from "@/data/tours";
 
@@ -617,6 +618,13 @@ export async function POST(
   request: Request,
 ) {
   try {
+    if (await isRateLimited(request, "ai-trip-planner", 5, 3600)) {
+      return NextResponse.json(
+        { success: false, error: "Too many trip-planning requests. Please try again later." },
+        { status: 429 },
+      );
+    }
+
     const contentLength = Number(
       request.headers.get("content-length") || 0,
     );
