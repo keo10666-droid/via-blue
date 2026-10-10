@@ -1082,10 +1082,7 @@ Each package must contain a list of exact tour slugs from the catalog.
       },
     });
   } catch (error) {
-    console.error(
-      "AI Trip Planner error:",
-      error,
-    );
+    console.error("AI Trip Planner request failed.");
 
     const message =
       error instanceof Error
