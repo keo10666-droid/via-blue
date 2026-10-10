@@ -89,6 +89,17 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: true }, { status: 200 });
     }
 
+    if (
+      ["name", "email", "whatsapp", "subject", "message"].some(
+        (key) => data[key] !== undefined && typeof data[key] !== "string",
+      )
+    ) {
+      return NextResponse.json(
+        { error: "Invalid form data. Please check your entries and try again." },
+        { status: 400 },
+      );
+    }
+
     const name = typeof data.name === "string" ? data.name.trim() : "";
     const email = typeof data.email === "string" ? data.email.trim() : "";
     const whatsapp = typeof data.whatsapp === "string" ? data.whatsapp.trim() : "";
