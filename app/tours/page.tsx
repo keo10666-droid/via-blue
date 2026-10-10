@@ -471,7 +471,8 @@ function ToursPageContent() {
     fetch("/api/tour-catalog", { cache: "no-store" })
       .then((response) => response.ok ? response.json() : null)
       .then((payload) => {
-        if (!cancelled && payload?.overrides) setTourOverrides(payload.overrides);\n        if (!cancelled && Array.isArray(payload?.customTours)) setCustomTours(payload.customTours);
+        if (!cancelled && payload?.overrides) setTourOverrides(payload.overrides);
+        if (!cancelled && Array.isArray(payload?.customTours)) setCustomTours(payload.customTours);
       })
       .catch(() => undefined);
     return () => { cancelled = true; };
