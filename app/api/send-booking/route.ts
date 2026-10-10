@@ -1105,7 +1105,7 @@ export async function POST(request: Request) {
       </html>
     `;
 
-    const { data, error } =
+    const { error } =
       await resend.emails.send({
         from:
           "Via Blue Bookings <booking@viabluetours.com>",
