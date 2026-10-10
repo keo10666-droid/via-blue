@@ -32,11 +32,11 @@ export default async function AdminLoginPage({
               </p>
 
               <h1 className="mt-2 text-3xl font-extrabold tracking-tight">
-                Booking Dashboard
+                Admin Dashboard
               </h1>
 
               <p className="mt-3 text-sm leading-6 text-blue-100">
-                Secure access for Via Blue booking management
+                Secure access to your Via Blue management workspace
               </p>
             </div>
           </div>
