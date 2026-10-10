@@ -143,6 +143,9 @@ export default function BookingPage() {
 
   const baseTour = tours[slug as keyof typeof tours];
   const [tourOverride, setTourOverride] = useState<{
+    name?: string;
+    description?: string;
+    image?: string;
     price?: number;
     childPrice?: number;
     infantPrice?: number;
