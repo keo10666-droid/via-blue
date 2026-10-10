@@ -284,6 +284,14 @@ function renderSection(
 
 export async function POST(request: Request) {
   try {
+    const contentLength = Number(request.headers.get("content-length") || 0);
+    if (contentLength > 64 * 1024) {
+      return Response.json(
+        { success: false, error: "Booking request is too large." },
+        { status: 413 },
+      );
+    }
+
     if (await isRateLimited(request, "booking-submit", 10, 3600)) {
       return Response.json(
         { success: false, error: "Too many booking attempts. Please try again later." },
@@ -291,12 +299,17 @@ export async function POST(request: Request) {
       );
     }
 
-    const body = await request.json();
+    const body = await request.json().catch(() => null);
+    if (!body || typeof body !== "object" || Array.isArray(body)) {
+      return Response.json(
+        { success: false, error: "Invalid booking request." },
+        { status: 400 },
+      );
+    }
 
     const {
       subject,
       html,
-      replyTo,
       accessToken,
     } = body;
 
@@ -315,15 +328,18 @@ export async function POST(request: Request) {
       authenticatedUserId = user?.id || null;
     }
 
-    if (!subject || !html) {
+    if (
+      typeof subject !== "string" ||
+      !subject.trim() ||
+      subject.length > 180 ||
+      typeof html !== "string" ||
+      !html.trim() ||
+      html.length > 48 * 1024 ||
+      (accessToken !== undefined && typeof accessToken !== "string")
+    ) {
       return Response.json(
-        {
-          success: false,
-          error: "Missing booking email data",
-        },
-        {
-          status: 400,
-        }
+        { success: false, error: "Invalid booking email data." },
+        { status: 400 },
       );
     }
 
@@ -400,7 +416,15 @@ export async function POST(request: Request) {
     const customerEmail = getField(
       fields,
       "Email"
-    );
+    ).trim();
+
+    const validCustomerEmail =
+      customerEmail.length <= 254 &&
+      /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(customerEmail)
+        ? customerEmail
+        : "";
+
+    const replyTo = validCustomerEmail;
 
     const priceValue =
       getField(
@@ -1040,9 +1064,9 @@ export async function POST(request: Request) {
         to: ["viabluetours@gmail.com"],
         subject,
         html: emailHtml,
-        ...(replyTo
+        ...(validCustomerEmail
           ? {
-              replyTo,
+              replyTo: validCustomerEmail,
             }
           : {}),
       });
@@ -1128,7 +1152,7 @@ export async function POST(request: Request) {
 
     let customerEmailSent = false;
 
-    if (replyTo) {
+    if (validCustomerEmail) {
       const customerEmailHtml =
         "<!DOCTYPE html>" +
         "<html lang=\"en\">" +
@@ -1173,7 +1197,7 @@ export async function POST(request: Request) {
         await resend.emails.send({
           from:
             "Via Blue <booking@viabluetours.com>",
-          to: [replyTo],
+          to: [validCustomerEmail],
           subject:
             "We Received Your Booking Request - Via Blue",
           html: customerEmailHtml,
