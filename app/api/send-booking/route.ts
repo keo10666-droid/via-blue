@@ -465,7 +465,7 @@ export async function POST(request: Request) {
 
     const validCustomerEmail =
       customerEmail.length <= 254 &&
-      /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(customerEmail)
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customerEmail)
         ? customerEmail
         : "";
 
