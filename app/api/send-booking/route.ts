@@ -1125,7 +1125,7 @@ export async function POST(request: Request) {
       return Response.json(
         {
           success: false,
-          error: error.message,
+          error: "Failed to send booking notification. Please try again later.",
         },
         {
           status: 500,
