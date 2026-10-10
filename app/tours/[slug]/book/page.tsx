@@ -185,6 +185,8 @@ export default function BookingPage() {
           highlights: [],
           included: [],
           excluded: [],
+          vehicleOptions: undefined,
+          cairoOptions: undefined,
           notes: [],
           cairoOptions: [],
           vehicleOptions: [],
