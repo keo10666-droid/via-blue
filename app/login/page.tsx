@@ -35,7 +35,7 @@ export default function LoginPage() {
       });
 
       if (error) {
-        setMessage(error.message);
+        setMessage("We couldn’t complete this request. Please check your details and try again.");
       } else {
         setMessage(
           "Account created. Please check your email to confirm your account"
@@ -76,7 +76,7 @@ export default function LoginPage() {
     });
 
     if (error) {
-      setMessage(error.message);
+      setMessage("We couldn’t complete this request. Please check your details and try again.");
     } else {
       setMessage("A new confirmation email has been sent.");
     }
