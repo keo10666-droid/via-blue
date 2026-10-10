@@ -47,7 +47,7 @@ export async function loginAdmin(
 
   cookieStore.set(
     "via_blue_admin",
-    hashSecret(expectedPassword),
+    hashSecret(expectedPassword || ""),
     {
       httpOnly: true,
       secure:
