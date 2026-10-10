@@ -1252,7 +1252,6 @@ export async function POST(request: Request) {
 
     return Response.json({
       success: true,
-      data,
       customerEmailSent,
       bookingSaved,
       bookingReference,
