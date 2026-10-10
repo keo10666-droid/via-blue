@@ -200,6 +200,8 @@ export default function BookingPage() {
           badge: "New Experience",
           available: tourOverride.available ?? true,
           type: tourOverride.category,
+          vehicleOptions: undefined,
+          cairoOptions: undefined,
           seo: { title: tourOverride.name || String(slug), description: tourOverride.description || "", keywords: [] },
         }
       : undefined;
