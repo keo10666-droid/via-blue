@@ -75,16 +75,18 @@ export async function POST(request: Request) {
       );
     }
 
+    const data = body as Record<string, unknown>;
+
     // Hidden honeypot field: normal visitors leave this empty.
-    if (typeof body.website === "string" && body.website.trim()) {
+    if (typeof data.website === "string" && data.website.trim()) {
       return NextResponse.json({ success: true }, { status: 200 });
     }
 
-    const name = typeof body.name === "string" ? body.name.trim() : "";
-    const email = typeof body.email === "string" ? body.email.trim() : "";
-    const whatsapp = typeof body.whatsapp === "string" ? body.whatsapp.trim() : "";
-    const subject = typeof body.subject === "string" ? body.subject.trim().replace(/[\r\n]+/g, " ") : "";
-    const message = typeof body.message === "string" ? body.message.trim() : "";
+    const name = typeof data.name === "string" ? data.name.trim() : "";
+    const email = typeof data.email === "string" ? data.email.trim() : "";
+    const whatsapp = typeof data.whatsapp === "string" ? data.whatsapp.trim() : "";
+    const subject = typeof data.subject === "string" ? data.subject.trim().replace(/[\r\n]+/g, " ") : "";
+    const message = typeof data.message === "string" ? data.message.trim() : "";
 
     if (!name || !email || !message) {
       return NextResponse.json(
