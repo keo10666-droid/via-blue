@@ -457,21 +457,21 @@ function ToursPageContent() {
     );
 
   const [tourOverrides, setTourOverrides] = useState<Record<string, {
-    name?: string;
-    description?: string;
-    image?: string;
-    price?: number;
-    childPrice?: number;
-    infantPrice?: number;
-    available?: boolean;
+    name?: string; description?: string; image?: string; price?: number;
+    childPrice?: number; infantPrice?: number; available?: boolean;
   }>>({});
+  const [customTours, setCustomTours] = useState<Array<{
+    slug: string; category: string; name: string; description: string; image: string;
+    price: number; childPrice: number; infantPrice: number; available: boolean;
+    badge: string; rating: number; reviews: number; type: string;
+  }>>([]);
 
   useEffect(() => {
     let cancelled = false;
     fetch("/api/tour-catalog", { cache: "no-store" })
       .then((response) => response.ok ? response.json() : null)
       .then((payload) => {
-        if (!cancelled && payload?.overrides) setTourOverrides(payload.overrides);
+        if (!cancelled && payload?.overrides) setTourOverrides(payload.overrides);\n        if (!cancelled && Array.isArray(payload?.customTours)) setCustomTours(payload.customTours);
       })
       .catch(() => undefined);
     return () => { cancelled = true; };
@@ -544,20 +544,24 @@ function ToursPageContent() {
   ========================================================= */
 
   const categoryTours = useMemo(() => {
-    return Object.values(tours)
-      .filter(
-        (tour) =>
-          tourCategoryMap[
-            tour.slug as keyof typeof tourCategoryMap
-          ] === activeCategory
-      )
+    const builtIn = Object.values(tours)
+      .filter((tour) => tourCategoryMap[tour.slug as keyof typeof tourCategoryMap] === activeCategory)
+      .map((tour) => ({ ...tour, ...(tourOverrides[tour.slug] ?? {}) }));
+    const custom = customTours
+      .filter((tour) => tour.category === activeCategory && tour.available !== false)
       .map((tour) => ({
         ...tour,
-        ...(tourOverrides[tour.slug] ?? {}),
-      }))
-      .filter((tour) => tour.available !== false);
-  }, [activeCategory, tourOverrides]);
-
+        destination: "hurghada" as const,
+        gallery: [tour.image],
+        overview: tour.description,
+        duration: "To be confirmed",
+        pickup: "Hotel pickup",
+        schedule: "To be confirmed",
+        program: [], highlights: [], included: [], excluded: [], notes: [],
+        seo: { title: `${tour.name} | Via Blue`, description: tour.description, keywords: [] },
+      } as unknown as (typeof tours)[keyof typeof tours]));
+    return [...builtIn, ...custom].filter((tour) => tour.available !== false);
+  }, [activeCategory, tourOverrides, customTours]);
 
   return (
     <main className="min-h-screen bg-slate-50">
