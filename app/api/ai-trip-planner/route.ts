@@ -625,6 +625,14 @@ export async function POST(
   request: Request,
 ) {
   try {
+    const contentType = request.headers.get("content-type") || "";
+    if (!/^application\/json(?:\s*;|$)/i.test(contentType)) {
+      return NextResponse.json(
+        { success: false, error: "Invalid trip-planning request format." },
+        { status: 415 },
+      );
+    }
+
     if (await isRateLimited(request, "ai-trip-planner", 5, 3600)) {
       return NextResponse.json(
         { success: false, error: "Too many trip-planning requests. Please try again later." },
