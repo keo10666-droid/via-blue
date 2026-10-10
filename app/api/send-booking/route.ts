@@ -3,9 +3,10 @@ import { supabase } from "@/lib/supabase";
 import { createSupabaseAdminClient } from "@/lib/supabaseAdmin";
 import { isIdentifierRateLimited, isRateLimited } from "@/lib/apiRateLimit";
 
-const resend = new Resend(
-  process.env.RESEND_API_KEY
-);
+function getResendClient() {
+  const apiKey = process.env.RESEND_API_KEY?.trim();
+  return apiKey ? new Resend(apiKey) : null;
+}
 
 type BookingField = {
   label: string;
@@ -1129,6 +1130,15 @@ export async function POST(request: Request) {
         </body>
       </html>
     `;
+
+    const resend = getResendClient();
+    if (!resend) {
+      console.error("Booking email service is not configured.");
+      return Response.json(
+        { success: false, error: "Booking email service is temporarily unavailable." },
+        { status: 503 },
+      );
+    }
 
     const { error } =
       await resend.emails.send({
