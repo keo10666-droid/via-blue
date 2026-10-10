@@ -22,7 +22,7 @@ export async function updateTourPricing(formData: FormData) {
 
   const slug = String(formData.get("slug") || "");
   const tour = tours[slug as keyof typeof tours];
-  if (!tour) redirect("/admin/tours?error=invalid");
+  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) redirect("/admin/tours?error=invalid");
 
   const parsePrice = (key: string) => {
     const raw = String(formData.get(key) ?? "");
@@ -49,6 +49,11 @@ export async function updateTourPricing(formData: FormData) {
   const available = String(formData.get("available")) === "true";
   const supabase = createSupabaseAdminClient();
   if (!supabase) redirect("/admin/tours?error=connection");
+
+  if (!tour) {
+    const { data: existingCustom } = await supabase.from("tour_catalog_overrides").select("category").eq("slug", slug).maybeSingle();
+    if (!existingCustom?.category) redirect("/admin/tours?error=invalid");
+  }
 
   const { error } = await supabase.from("tour_catalog_overrides").upsert({
     slug,
