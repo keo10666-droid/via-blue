@@ -1,8 +1,18 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
 import { tourList } from "@/data/tours";
 import { supabase } from "@/lib/supabase";
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: "https://viabluetours.com",
+  },
+  openGraph: {
+    url: "https://viabluetours.com",
+  },
+};
 
 function StarIcon({ className = "h-5 w-5" }: { className?: string }) {
   return (
