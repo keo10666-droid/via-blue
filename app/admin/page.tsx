@@ -1,5 +1,6 @@
 import { createHash } from "node:crypto";
 import { cookies } from "next/headers";
+import type { ComponentType } from "react";
 import { redirect } from "next/navigation";
 import {
   Activity,
@@ -46,7 +47,7 @@ function MetricCard({
   label: string;
   value: string | number;
   note: string;
-  icon: React.ComponentType<{ className?: string; size?: number }>;
+  icon: ComponentType<{ className?: string; size?: number }>;
   tone?: "blue" | "orange" | "green" | "purple";
 }) {
   const tones = {
