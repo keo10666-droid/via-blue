@@ -37,11 +37,9 @@ export async function isRateLimited(
   limit: number,
   windowSeconds: number,
 ): Promise<boolean> {
-  const forwardedFor = request.headers.get("x-forwarded-for");
-  const ip =
-    request.headers.get("x-real-ip")?.trim() ||
-    forwardedFor?.split(",").at(-1)?.trim() ||
-    "unknown";
+  // Only trust the platform-provided client IP header. X-Forwarded-For can
+  // contain client-controlled values and must not be used as a rate-limit key.
+  const ip = request.headers.get("x-real-ip")?.trim() || "unknown";
 
   return isIdentifierRateLimited(ip, scope, limit, windowSeconds);
 }
