@@ -142,6 +142,7 @@ export default function BookingPage() {
     : params.slug;
 
   const baseTour = tours[slug as keyof typeof tours];
+  const [catalogLoaded, setCatalogLoaded] = useState(false);
   const [tourOverride, setTourOverride] = useState<{
     name?: string;
     description?: string;
@@ -162,7 +163,10 @@ export default function BookingPage() {
           setTourOverride(payload.overrides[slug]);
         }
       })
-      .catch(() => undefined);
+      .catch(() => undefined)
+      .finally(() => {
+        if (!cancelled) setCatalogLoaded(true);
+      });
     return () => { cancelled = true; };
   }, [slug]);
 
