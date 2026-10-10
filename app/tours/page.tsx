@@ -457,6 +457,9 @@ function ToursPageContent() {
     );
 
   const [tourOverrides, setTourOverrides] = useState<Record<string, {
+    name?: string;
+    description?: string;
+    image?: string;
     price?: number;
     childPrice?: number;
     infantPrice?: number;
