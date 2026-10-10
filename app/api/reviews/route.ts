@@ -74,11 +74,14 @@ export async function POST(request: Request) {
       );
     }
 
-    const tourSlug = String(body.tourSlug || "").trim();
+    const tourSlug =
+      typeof body.tourSlug === "string" ? body.tourSlug.trim() : "";
+    const guestName =
+      typeof body.guestName === "string" ? body.guestName.trim() : "";
+    const comment =
+      typeof body.comment === "string" ? body.comment.trim() : "";
+    const rating = typeof body.rating === "number" ? body.rating : Number.NaN;
     const tour = getTourBySlug(tourSlug);
-    const guestName = String(body.guestName || "").trim();
-    const comment = String(body.comment || "").trim();
-    const rating = Number(body.rating);
 
     if (!tour || !guestName || !comment) {
       return NextResponse.json(
@@ -111,8 +114,8 @@ export async function POST(request: Request) {
         tour_slug: tourSlug,
         tour_name: tour.name,
         guest_name: guestName,
-        rating: rating,
-        comment: comment,
+        rating,
+        comment,
         is_visible: false,
       });
 
