@@ -17,16 +17,56 @@ function escapeHtml(value: string) {
 
 export async function POST(request: Request) {
   try {
+    const maxBodyBytes = 16 * 1024;
     const contentLength = Number(request.headers.get("content-length") || 0);
 
-    if (contentLength > 16 * 1024) {
+    if (contentLength > maxBodyBytes) {
       return NextResponse.json(
         { error: "Your message is too large. Please shorten it and try again." },
         { status: 413 },
       );
     }
 
-    const body = await request.json().catch(() => null);
+    if (!request.body) {
+      return NextResponse.json(
+        { error: "Invalid request. Please refresh the page and try again." },
+        { status: 400 },
+      );
+    }
+
+    const reader = request.body.getReader();
+    const chunks: Uint8Array[] = [];
+    let totalBytes = 0;
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+
+      totalBytes += value.byteLength;
+      if (totalBytes > maxBodyBytes) {
+        await reader.cancel();
+        return NextResponse.json(
+          { error: "Your message is too large. Please shorten it and try again." },
+          { status: 413 },
+        );
+      }
+
+      chunks.push(value);
+    }
+
+    const bytes = new Uint8Array(totalBytes);
+    let offset = 0;
+    for (const chunk of chunks) {
+      bytes.set(chunk, offset);
+      offset += chunk.byteLength;
+    }
+
+    let body: unknown;
+    try {
+      body = JSON.parse(new TextDecoder().decode(bytes));
+    } catch {
+      body = null;
+    }
 
     if (!body || typeof body !== "object" || Array.isArray(body)) {
       return NextResponse.json(
