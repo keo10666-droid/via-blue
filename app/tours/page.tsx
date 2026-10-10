@@ -456,6 +456,24 @@ function ToursPageContent() {
       validUrlCategory ?? "islands-boat-trips"
     );
 
+  const [tourOverrides, setTourOverrides] = useState<Record<string, {
+    price?: number;
+    childPrice?: number;
+    infantPrice?: number;
+    available?: boolean;
+  }>>({});
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/tour-catalog", { cache: "no-store" })
+      .then((response) => response.ok ? response.json() : null)
+      .then((payload) => {
+        if (!cancelled && payload?.overrides) setTourOverrides(payload.overrides);
+      })
+      .catch(() => undefined);
+    return () => { cancelled = true; };
+  }, []);
+
   /* =========================================================
      SYNC CATEGORY WITH URL
   ========================================================= */
@@ -523,13 +541,18 @@ function ToursPageContent() {
   ========================================================= */
 
   const categoryTours = useMemo(() => {
-    return Object.values(tours).filter(
-      (tour) =>
-        tourCategoryMap[
-          tour.slug as keyof typeof tourCategoryMap
-        ] === activeCategory
-    );
-  }, [activeCategory]);
+    return Object.values(tours)
+      .filter(
+        (tour) =>
+          tourCategoryMap[
+            tour.slug as keyof typeof tourCategoryMap
+          ] === activeCategory
+      )
+      .map((tour) => ({
+        ...tour,
+        ...(tourOverrides[tour.slug] ?? {}),
+      }));
+  }, [activeCategory, tourOverrides]);
 
 
   return (
