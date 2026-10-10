@@ -45,7 +45,7 @@ export async function generateMetadata({
   const { data: contentOverride } = adminClient
     ? await adminClient
         .from("tour_catalog_overrides")
-        .select("name,description")
+        .select("name,description,image")
         .eq("slug", slug)
         .maybeSingle()
     : { data: null };
@@ -61,8 +61,8 @@ export async function generateMetadata({
     description,
 
     keywords: [
-      tour.name,
-      `${tour.name} Hurghada`,
+      title,
+      `${title} Hurghada`,
       "Hurghada tours",
       "Hurghada excursions",
       "Hurghada activities",
@@ -76,7 +76,7 @@ export async function generateMetadata({
     },
 
     openGraph: {
-      title: `${tour.name} | Via Blue`,
+      title: `${title} | Via Blue`,
       description,
       url: `https://viabluetours.com/tours/${tour.slug}`,
       siteName: "Via Blue",
@@ -84,17 +84,17 @@ export async function generateMetadata({
       locale: "en_US",
       images: [
         {
-          url: tour.image,
-          alt: tour.name,
+          url: contentOverride?.image || tour.image,
+          alt: title,
         },
       ],
     },
 
     twitter: {
       card: "summary_large_image",
-      title: `${tour.name} | Via Blue`,
+      title: `${title} | Via Blue`,
       description,
-      images: [tour.image],
+      images: [contentOverride?.image || tour.image],
     },
   };
 };
@@ -783,8 +783,8 @@ export default async function TourDetailsPage({
     ? {
         ...baseTour,
         ...(pricingOverride.name ? { name: pricingOverride.name } : {}),
-        ...(pricingOverride.description ? { description: pricingOverride.description } : {}),
-        ...(pricingOverride.image ? { image: pricingOverride.image } : {}),
+        ...(pricingOverride.description ? { description: pricingOverride.description, overview: pricingOverride.description } : {}),
+        ...(pricingOverride.image ? { image: pricingOverride.image, gallery: [pricingOverride.image, ...baseTour.gallery.slice(1)] } : {}),
         price: Number(pricingOverride.price),
         childPrice: Number(pricingOverride.child_price),
         infantPrice: Number(pricingOverride.infant_price),
