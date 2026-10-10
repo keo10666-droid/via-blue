@@ -154,7 +154,7 @@ export default function BookingPage() {
     fetch("/api/tour-catalog", { cache: "no-store" })
       .then((response) => response.ok ? response.json() : null)
       .then((payload) => {
-        if (!cancelled && payload?.overrides?.[slug]) {
+        if (!cancelled && slug && payload?.overrides?.[slug]) {
           setTourOverride(payload.overrides[slug]);
         }
       })
