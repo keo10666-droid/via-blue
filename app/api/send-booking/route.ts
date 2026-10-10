@@ -1,7 +1,7 @@
 import { Resend } from "resend";
 import { supabase } from "@/lib/supabase";
 import { createSupabaseAdminClient } from "@/lib/supabaseAdmin";
-import { isRateLimited } from "@/lib/apiRateLimit";
+import { isIdentifierRateLimited, isRateLimited } from "@/lib/apiRateLimit";
 
 const resend = new Resend(
   process.env.RESEND_API_KEY
@@ -479,6 +479,23 @@ export async function POST(request: Request) {
       /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customerEmail)
         ? customerEmail
         : "";
+
+    // Prevent repeated booking requests from sending repeated confirmations
+    // to the same recipient, even when requests come from different clients.
+    if (
+      validCustomerEmail &&
+      await isIdentifierRateLimited(
+        validCustomerEmail.toLowerCase(),
+        "booking-confirmation-email",
+        3,
+        3600,
+      )
+    ) {
+      return Response.json(
+        { success: false, error: "Too many booking requests for this email address. Please try again later." },
+        { status: 429 },
+      );
+    }
 
     const replyTo = validCustomerEmail;
 
