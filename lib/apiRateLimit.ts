@@ -1,4 +1,4 @@
-import { supabase } from "@/lib/supabase";
+import { createSupabaseAdminClient } from "@/lib/supabaseAdmin";
 
 export async function isIdentifierRateLimited(
   identifier: string,
@@ -6,7 +6,15 @@ export async function isIdentifierRateLimited(
   limit: number,
   windowSeconds: number,
 ): Promise<boolean> {
-  const { data, error } = await (supabase as any).rpc(
+  const admin = createSupabaseAdminClient();
+
+  // Fail closed if the private server-side key is not configured.
+  if (!admin) {
+    console.error("Rate-limit check failed: admin client unavailable");
+    return true;
+  }
+
+  const { data, error } = await admin.rpc(
     "consume_api_rate_limit",
     {
       p_identifier: `${scope}:${identifier}`,
