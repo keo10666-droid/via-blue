@@ -2,7 +2,7 @@
 
 import { supabase } from "@/lib/supabase";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useParams } from "next/navigation";
 
 import { transfers } from "@/data/transfers";
@@ -942,8 +942,30 @@ export default function TransferBookingPage() {
     ? params.slug[0]
     : params.slug;
 
-  const transfer =
-    transfers[slug as keyof typeof transfers];
+  const baseTransfer = transfers[slug as keyof typeof transfers];
+  const [transferOverride, setTransferOverride] = useState<{
+    from?: string;
+    to?: string;
+    available?: boolean;
+    vehicles?: { type: string; price: number; passengers: number; luggage: number }[];
+  }>({});
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/transfer-catalog", { cache: "no-store" })
+      .then((response) => response.ok ? response.json() : null)
+      .then((payload) => {
+        if (!cancelled && payload?.overrides?.[slug]) {
+          setTransferOverride(payload.overrides[slug]);
+        }
+      })
+      .catch(() => undefined);
+    return () => { cancelled = true; };
+  }, [slug]);
+
+  const transfer = baseTransfer
+    ? { ...baseTransfer, ...transferOverride }
+    : undefined;
 
   const [transferType, setTransferType] =
     useState<TransferType>("airport-to-hotel");
@@ -1003,7 +1025,7 @@ export default function TransferBookingPage() {
     return `${yyyy}-${mm}-${dd}`;
   }, []);
 
-  if (!transfer) {
+  if (!transfer || transfer.available === false) {
     return (
       <main className="flex min-h-screen items-center justify-center bg-slate-50 px-6">
         <div className="w-full max-w-md overflow-hidden rounded-[28px] border border-slate-200 bg-white p-8 text-center shadow-[0_24px_70px_rgba(15,23,42,0.12)]">
