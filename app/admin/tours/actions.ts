@@ -52,6 +52,9 @@ export async function updateTourPricing(formData: FormData) {
 
   const { error } = await supabase.from("tour_catalog_overrides").upsert({
     slug,
+    name,
+    description,
+    image,
     price,
     child_price: childPrice,
     infant_price: infantPrice,
@@ -66,7 +69,7 @@ export async function updateTourPricing(formData: FormData) {
 
   revalidatePath("/admin/tours");
   revalidatePath("/tours");
-  revalidatePath(`/tours/${slug}`);\n  revalidatePath(`/tours/${slug}/book`);
+  revalidatePath(`/tours/${slug}`);
   revalidatePath(`/tours/${slug}/book`);
   redirect("/admin/tours?saved=1");
 }
