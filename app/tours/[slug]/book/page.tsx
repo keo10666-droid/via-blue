@@ -165,9 +165,39 @@ export default function BookingPage() {
     return () => { cancelled = true; };
   }, [slug]);
 
-  const tour = baseTour ? { ...baseTour, ...tourOverride } : undefined;
+  const tour = baseTour
+    ? { ...baseTour, ...tourOverride }
+    : tourOverride.category
+      ? {
+          slug: String(slug),
+          name: tourOverride.name || String(slug),
+          destination: "hurghada" as const,
+          category: "islands-boat-trips" as const,
+          image: tourOverride.image || "/images/via-blue-hero.webp",
+          gallery: [tourOverride.image || "/images/via-blue-hero.webp"],
+          description: tourOverride.description || "",
+          overview: tourOverride.description || "",
+          duration: "To be confirmed",
+          pickup: "Hotel pickup",
+          schedule: "To be confirmed",
+          program: [],
+          highlights: [],
+          included: [],
+          excluded: [],
+          notes: [],
+          price: tourOverride.price ?? 0,
+          childPrice: tourOverride.childPrice ?? 0,
+          infantPrice: tourOverride.infantPrice ?? 0,
+          rating: 0,
+          reviews: 0,
+          badge: "New Experience",
+          available: tourOverride.available ?? true,
+          type: tourOverride.category,
+          seo: { title: tourOverride.name || String(slug), description: tourOverride.description || "", keywords: [] },
+        }
+      : undefined;
 
-  if (!tour) {
+  if (!tour || tour.available === false) {
     notFound();
   }
 
