@@ -119,7 +119,7 @@ export async function POST(request: Request) {
       .single();
 
     if (error) {
-      console.error("SUPABASE REVIEW ERROR:", error);
+      console.error("Review submission failed in Supabase.");
 
       return NextResponse.json(
         {
@@ -137,7 +137,7 @@ export async function POST(request: Request) {
       { status: 201 }
     );
   } catch (error) {
-    console.error("REVIEW API ERROR:", error);
+    console.error("Unexpected review API failure.");
 
     return NextResponse.json(
       {
