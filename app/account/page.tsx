@@ -1248,8 +1248,8 @@ export default function AccountPage() {
                     setMessage("");
                   }}
                   className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 text-[#071d49] transition hover:border-orange-200 hover:bg-orange-50 hover:text-orange-500"
-                  title="Edit profile"
-                  aria-label="Edit profile"
+                  title="Profil bearbeiten"
+                  aria-label="Profil bearbeiten"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -1367,8 +1367,8 @@ export default function AccountPage() {
                         setIsEditingProfile(true)
                       }
                       className="text-slate-400 transition hover:text-orange-500"
-                      title="Edit full name"
-                      aria-label="Edit full name"
+                      title="Vollständigen Namen bearbeiten"
+                      aria-label="Vollständigen Namen bearbeiten"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -1425,8 +1425,8 @@ export default function AccountPage() {
                         setIsEditingProfile(true)
                       }
                       className="text-slate-400 transition hover:text-orange-500"
-                      title="Edit WhatsApp number"
-                      aria-label="Edit WhatsApp number"
+                      title="WhatsApp-Nummer bearbeiten"
+                      aria-label="WhatsApp-Nummer bearbeiten"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -1570,8 +1570,8 @@ export default function AccountPage() {
                         setIsEditingProfile(true)
                       }
                       className="text-slate-400 transition hover:text-orange-500"
-                      title="Edit email"
-                      aria-label="Edit email"
+                      title="E-Mail bearbeiten"
+                      aria-label="E-Mail bearbeiten"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -1962,7 +1962,7 @@ export default function AccountPage() {
                 )
               }
               maxLength={120}
-              placeholder="Add a caption (optional)"
+              placeholder="Bildbeschreibung hinzufügen (optional)"
               disabled={
                 memories.length >=
                 25
