@@ -409,6 +409,10 @@ export async function POST(request: Request) {
       );
     }
 
+    // The validation above guarantees these values are strings.
+    const validSubject = subject as string;
+    const validHtml = html as string;
+
     let authenticatedUserId: string | null = null;
 
     if (
@@ -427,7 +431,7 @@ export async function POST(request: Request) {
     const {
       title,
       fields,
-    } = parseBookingHtml(html);
+    } = parseBookingHtml(validHtml);
 
     const guestFields = getFields(
       fields,
@@ -555,7 +559,7 @@ export async function POST(request: Request) {
       "Booking Request";
 
     const bookingType =
-      subject.match(
+      validSubject.match(
         /^New\s+(Tour|Luxury Tour|Transfer)\s+Booking/i
       )?.[1] || "Booking";
 
@@ -594,7 +598,7 @@ export async function POST(request: Request) {
             content="width=device-width, initial-scale=1.0"
           />
 
-          <title>${escapeHtml(subject)}</title>
+          <title>${escapeHtml(validSubject)}</title>
         </head>
 
         <body
@@ -779,7 +783,7 @@ export async function POST(request: Request) {
                           color: #bfdbfe;
                         "
                       >
-                        ${escapeHtml(subject)}
+                        ${escapeHtml(validSubject)}
                       </div>
                     </td>
                   </tr>
@@ -1169,7 +1173,7 @@ export async function POST(request: Request) {
         from:
           "Via Blue Bookings <booking@viabluetours.com>",
         to: ["viabluetours@gmail.com"],
-        subject,
+        subject: validSubject,
         html: emailHtml,
         ...(validCustomerEmail
           ? {
@@ -1234,8 +1238,7 @@ export async function POST(request: Request) {
             status:
               "received",
             fields,
-            source_subject:
-              subject,
+            source_subject: validSubject,
           });
 
       if (bookingSaveError) {
