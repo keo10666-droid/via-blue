@@ -267,7 +267,7 @@ export default function AITripPlannerPage() {
 
   const [days, setDays] = useState(5);
 
-  const [currency, setCurrency] =
+  const [currency, set<HomeText en="Currency" de="Währung" />] =
     useState<(typeof currencies)[number]>("EUR");
   const [budget, setBudget] = useState("");
 
@@ -508,20 +508,19 @@ export default function AITripPlannerPage() {
               <span className="h-px w-12 bg-orange-400" />
 
               <p className="text-xs font-bold uppercase tracking-[0.35em] text-orange-400 sm:text-sm">
-                Via Blue Smart Trip Planner
+                <HomeText en="Via Blue Smart Trip Planner" de="Via Blue Smart Trip Planner" />
               </p>
             </div>
 
             <h1 className="text-5xl font-bold leading-[0.98] tracking-tight sm:text-6xl md:text-7xl">
-              Your Holiday.
+              <HomeText en="Your Holiday." de="Ihr Urlaub." />
               <span className="block text-orange-400">
-                Designed Around You.
+                <HomeText en="Designed Around You." de="Ganz auf Sie zugeschnitten." />
               </span>
             </h1>
 
             <p className="mt-7 max-w-2xl text-lg leading-8 text-blue-100 sm:text-xl">
-              Tell us what you&apos;re looking for and let our planner build a
-              personalized Red Sea experience around you.
+              <HomeText en="Tell us what you’re looking for and let our planner build a personalized Red Sea experience around you." de="Sagen Sie uns, was Sie suchen, und unser Planer gestaltet ein persönliches Erlebnis am Roten Meer für Sie." />
             </p>
 
             <div className="mt-10 inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/10 px-4 py-2.5 backdrop-blur-md">
@@ -530,7 +529,7 @@ export default function AITripPlannerPage() {
               </span>
 
               <span className="text-sm font-semibold text-white">
-                Smart planning · Real Via Blue experiences
+                <HomeText en="Smart planning · <HomeText en="Real Via Blue experiences" de="Echte Via-Blue-Erlebnisse" />" de="Intelligente Planung · Echte Via-Blue-Erlebnisse" />
               </span>
             </div>
           </div>
@@ -618,28 +617,28 @@ export default function AITripPlannerPage() {
               </div>
 
               <h2 className="mt-5 text-3xl font-bold tracking-tight text-blue-950 sm:text-4xl">
-                {step === 1 && "Who are you travelling with?"}
-                {step === 2 && "Where are you staying?"}
-                {step === 3 && "How long are you staying?"}
-                {step === 4 && "What's your budget?"}
-                {step === 5 && "What would you love to experience?"}
+                {step === 1 && <HomeText en="Who are you travelling with?" de="Mit wem reisen Sie?" />}
+                {step === 2 && <HomeText en="Where are you staying?" de="Wo wohnen Sie?" />}
+                {step === 3 && <HomeText en="How long are you staying?" de="Wie lange bleiben Sie?" />}
+                {step === 4 && <HomeText en="What’s your budget?" de="Wie hoch ist Ihr Budget?" />}
+                {step === 5 && <HomeText en="What would you love to experience?" de="Was möchten Sie erleben?" />}
               </h2>
 
               <p className="mt-3 max-w-2xl text-base leading-7 text-gray-600">
                 {step === 1 &&
-                  "Tell us who is joining you so we can build experiences that fit your group."}
+                  <HomeText en="Tell us who is joining you so we can build experiences that fit your group." de="Geben Sie an, wer mitreist, damit wir passende Erlebnisse für Ihre Gruppe planen können." />}
 
                 {step === 2 &&
-                  "Choose your main area and we'll focus on experiences that work naturally from there."}
+                  <HomeText en="Choose your main area and we’ll focus on experiences that work naturally from there." de="Wählen Sie Ihre Urlaubsregion, damit wir passende Erlebnisse in der Umgebung finden." />}
 
                 {step === 3 &&
-                  "Your trip length helps our planner decide how many experiences can comfortably fit."}
+                  <HomeText en="Your trip length helps our planner decide how many experiences can comfortably fit." de="Anhand Ihrer Reisedauer planen wir, wie viele Erlebnisse gut hineinpassen." />}
 
                 {step === 4 &&
-                  "Set your spending limit and we'll keep your recommendations within it."}
+                  <HomeText en="Set your spending limit and we’ll keep your recommendations within it." de="Legen Sie Ihr Budget fest, damit unsere Empfehlungen dazu passen." />}
 
                 {step === 5 &&
-                  "Choose your favorite experiences, or let the planner surprise you with the best combination."}
+                  <HomeText en="Choose your favorite experiences, or let the planner surprise you with the best combination." de="Wählen Sie Ihre Lieblingsaktivitäten oder lassen Sie sich von der besten Kombination überraschen." />}
               </p>
             </div>
           )}
@@ -675,13 +674,11 @@ export default function AITripPlannerPage() {
                   </div>
 
                   <h2 className="text-4xl font-bold tracking-tight text-blue-950 sm:text-5xl">
-                    Designing your perfect trip
+                    <HomeText en="Designing your perfect trip" de="Wir gestalten Ihre perfekte Reise" />
                   </h2>
 
                   <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-gray-500">
-                    We&apos;re combining your preferences with real Via Blue
-                    experiences to create three different ways to enjoy your
-                    holiday.
+                    <HomeText en="We’re combining your preferences with real Via Blue experiences to create three different ways to enjoy your holiday." de="Wir kombinieren Ihre Wünsche mit echten Via-Blue-Erlebnissen und erstellen drei verschiedene Urlaubspakete." />
                   </p>
                 </div>
 
@@ -689,7 +686,7 @@ export default function AITripPlannerPage() {
                   {error ? (
                     <div className="rounded-2xl border border-red-100 bg-red-50 p-5">
                       <p className="font-bold text-red-700">
-                        We couldn&apos;t create your trip.
+                        <HomeText en="We couldn’t create your trip." de="Ihre Reise konnte nicht erstellt werden." />
                       </p>
 
                       <p className="mt-2 text-sm leading-6 text-red-600">
@@ -802,7 +799,7 @@ export default function AITripPlannerPage() {
 
                     <span className="flex items-center gap-2">
                       <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
-                      Real prices
+                      <HomeText en="Real prices" de="Echte Preise" />
                     </span>
 
                     <span className="flex items-center gap-2">
@@ -893,7 +890,7 @@ export default function AITripPlannerPage() {
 
                         {index === 0 && (
                           <span className="absolute right-5 top-5 rounded-full bg-white px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.15em] text-blue-950 shadow-lg">
-                            Recommended
+                            <HomeText en="Recommended" de="Empfohlen" />
                           </span>
                         )}
 
@@ -919,7 +916,7 @@ export default function AITripPlannerPage() {
                         <div className="mt-6 flex items-end justify-between border-b border-gray-100 pb-5">
                           <div>
                             <p className="text-xs font-bold uppercase tracking-[0.15em] text-gray-400">
-                              Estimated total
+                              <HomeText en="Estimated total" de="Geschätzter Gesamtpreis" />
                             </p>
 
                             <p className="mt-1 text-3xl font-bold text-blue-950">
@@ -930,7 +927,7 @@ export default function AITripPlannerPage() {
 
                           <div className="text-right">
                             <p className="text-xs font-semibold text-gray-400">
-                              Remaining
+                              <HomeText en="Remaining" de="Übrig" />
                             </p>
 
                             <p className="mt-1 text-sm font-bold text-orange-500">
@@ -948,7 +945,7 @@ export default function AITripPlannerPage() {
                               <div key={day.day}>
                                 <div className="mb-2 flex items-center gap-2">
                                   <span className="rounded-full bg-blue-950 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white">
-                                    Day {day.day}
+                                    <HomeText en={`Day ${day.day}`} de={`Tag ${day.day}`} />
                                   </span>
                                 </div>
 
@@ -997,7 +994,7 @@ export default function AITripPlannerPage() {
                                           className="max-w-full rounded-lg border border-gray-200 bg-white px-2.5 py-2 text-xs font-bold text-blue-950 outline-none focus:border-orange-500"
                                         >
                                           <option value="" disabled>
-                                            Replace experience…
+                                            <HomeText en="Replace experience…" de="Erlebnis ersetzen…" />
                                           </option>
                                           {availableTours
                                             .filter((option) =>
@@ -1036,7 +1033,7 @@ export default function AITripPlannerPage() {
                               : "bg-blue-950 text-white hover:bg-orange-500"
                           }`}
                         >
-                          {selected ? "Package Selected" : "Choose This Package"}
+                          {selected ? <HomeText en="Package Selected" de="Paket ausgewählt" /> : <HomeText en="Choose This Package" de="Dieses Paket auswählen" />}
 
                           {selected ? (
                             <span>✓</span>
@@ -1055,7 +1052,7 @@ export default function AITripPlannerPage() {
                   <div className="mx-auto flex max-w-4xl flex-col gap-4 rounded-3xl border border-blue-900/10 bg-blue-950 p-5 text-white shadow-2xl shadow-blue-950/20 sm:flex-row sm:items-center sm:justify-between sm:p-6">
                     <div>
                       <p className="text-xs font-bold uppercase tracking-[0.2em] text-blue-300">
-                        Selected package
+                        <HomeText en="Selected package" de="Ausgewähltes Paket" />
                       </p>
 
                       <p className="mt-1 text-lg font-bold">
@@ -1063,7 +1060,7 @@ export default function AITripPlannerPage() {
                       </p>
 
                       <p className="mt-1 text-sm text-blue-200">
-                        {selectedPackage.activities} experiences ·{" "}
+                        {selectedPackage.activities} <HomeText en="experiences" de="Erlebnisse" /> ·{" "}
                         {selectedPackage.currency === "EUR" ? "€" : "$"}
                         {selectedPackage.totalCost.toFixed(2)}
                       </p>
@@ -1091,7 +1088,7 @@ export default function AITripPlannerPage() {
 }}
                       className="flex shrink-0 items-center justify-center gap-3 rounded-xl bg-orange-500 px-7 py-4 font-bold text-white transition hover:bg-orange-600"
                     >
-                      Book This Package
+                      <HomeText en="Book This Package" de="Dieses Paket buchen" />
                       <ArrowRightIcon className="h-5 w-5" />
                     </button>
                   </div>
@@ -1105,7 +1102,7 @@ export default function AITripPlannerPage() {
                   className="flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-6 py-3.5 text-sm font-bold text-blue-950 transition hover:border-blue-950"
                 >
                   <ArrowLeftIcon className="h-4 w-4" />
-                  Adjust My Preferences
+                  <HomeText en="Adjust My Preferences" de="Meine Angaben anpassen" />
                 </button>
               </div>
             </div>
@@ -1232,7 +1229,7 @@ export default function AITripPlannerPage() {
                                     : "text-gray-400"
                                 }`}
                               >
-                                Red Sea area
+                                <HomeText en="Red Sea area" de="Region am Roten Meer" />
                               </p>
                             </div>
 
@@ -1263,7 +1260,7 @@ export default function AITripPlannerPage() {
 
                   <div className="rounded-3xl border border-gray-100 p-7 md:p-10">
                     <p className="text-center text-sm font-semibold text-gray-400">
-                      I&apos;m staying for
+                      <HomeText en="I’m staying for" de="Ich bleibe" />
                     </p>
 
                     <div className="mt-7 flex items-center justify-center gap-6">
@@ -1281,7 +1278,7 @@ export default function AITripPlannerPage() {
                         </p>
 
                         <p className="mt-2 text-sm font-semibold text-gray-400">
-                          {days === 1 ? "day" : "days"}
+                          {days === 1 ? <HomeText en="day" de="Tag" /> : <HomeText en="days" de="Tage" />}
                         </p>
                       </div>
 
@@ -1314,11 +1311,11 @@ export default function AITripPlannerPage() {
 
                   <div className="mt-6 rounded-2xl bg-blue-950 p-5 text-white">
                     <p className="text-xs font-bold uppercase tracking-[0.2em] text-blue-300">
-                      Trip overview
+                      <HomeText en="Trip overview" de="Reiseübersicht" />
                     </p>
 
                     <p className="mt-2 text-lg font-bold">
-                      {days} days in {area}
+                      {days} <HomeText en="days in" de="Tage in" /> {area}
                     </p>
                   </div>
                 </div>
@@ -1361,7 +1358,7 @@ export default function AITripPlannerPage() {
                                   : "text-gray-400"
                               }`}
                             >
-                              {item === "EUR" ? "Euro" : "US Dollar"}
+                              {item === "EUR" ? <HomeText en="Euro" de="Euro" /> : <HomeText en="US Dollar" de="US-Dollar" />}
                             </p>
                           </button>
                         );
@@ -1413,16 +1410,16 @@ export default function AITripPlannerPage() {
 
                   <div className="mt-7 rounded-2xl bg-blue-950 p-5 text-white">
                     <p className="text-xs font-bold uppercase tracking-[0.2em] text-blue-300">
-                      Current plan
+                      <HomeText en="Current plan" de="Aktueller Plan" />
                     </p>
 
                     <p className="mt-2 text-lg font-bold">
-                      {days} days · {totalTravelers} travelers · {area}
+                      {days} <HomeText en="days" de="Tage" /> · {totalTravelers} <HomeText en="travelers" de="Reisende" /> · {area}
                     </p>
 
                     {budget && (
                       <p className="mt-1 text-sm text-blue-200">
-                        Budget: {currencySymbol}
+                        <HomeText en="Budget:" de="Budget:" /> {currencySymbol}
                         {budget}
                       </p>
                     )}
@@ -1463,12 +1460,11 @@ export default function AITripPlannerPage() {
 
                         <div>
                           <p className="text-lg font-bold text-blue-950">
-                            Surprise Me
+                            <HomeText en="Surprise Me" de="Überraschen Sie mich" />
                           </p>
 
                           <p className="mt-1 text-sm leading-6 text-gray-500">
-                            Let the planner choose the perfect mix of experiences
-                            for your trip.
+                            <HomeText en="Let the planner choose the perfect mix of experiences for your trip." de="Lassen Sie den Planer die perfekte Mischung an Erlebnissen für Ihre Reise auswählen." />
                           </p>
                         </div>
                       </div>
@@ -1490,17 +1486,17 @@ export default function AITripPlannerPage() {
                   <div className="mb-4 flex items-center justify-between">
                     <div>
                       <p className="text-sm font-bold text-blue-950">
-                        Or choose your favorites
+                        <HomeText en="Or choose your favorites" de="Oder wählen Sie Ihre Favoriten" />
                       </p>
 
                       <p className="mt-1 text-xs text-gray-400">
-                        You can select more than one.
+                        <HomeText en="You can select more than one." de="Sie können mehrere auswählen." />
                       </p>
                     </div>
 
                     {selectedCategories.length > 0 && (
                       <span className="rounded-full bg-blue-50 px-3 py-1.5 text-xs font-bold text-blue-700">
-                        {selectedCategories.length} selected
+                        {selectedCategories.length} <HomeText en="selected" de="ausgewählt" />
                       </span>
                     )}
                   </div>
@@ -1570,19 +1566,19 @@ export default function AITripPlannerPage() {
 
                   <div className="mt-7 rounded-2xl bg-blue-950 p-5 text-white">
                     <p className="text-xs font-bold uppercase tracking-[0.2em] text-blue-300">
-                      Your preferences
+                      <HomeText en="Your preferences" de="Ihre Wünsche" />
                     </p>
 
                     <p className="mt-2 text-lg font-bold">
                       {surpriseMe
-                        ? "Surprise me with the best experiences"
+                        ? <HomeText en="Surprise me with the best experiences" de="Überraschen Sie mich mit den besten Erlebnissen" />
                         : selectedCategories.length > 0
                         ? `${selectedCategories.length} experience ${
                             selectedCategories.length === 1
-                              ? "category"
-                              : "categories"
-                          } selected`
-                        : "Choose at least one category"}
+                              ? "Kategorie"
+                              : "Kategorien"
+                          } ausgewählt`
+                        : <HomeText en="Choose at least one category" de="Wählen Sie mindestens eine Kategorie aus" />}
                     </p>
 
                     {!surpriseMe && selectedCategories.length > 0 && (
@@ -1609,7 +1605,7 @@ export default function AITripPlannerPage() {
                   }`}
                 >
                   <ArrowLeftIcon className="h-5 w-5" />
-                  Back
+                  <HomeText en="Back" de="Zurück" />
                 </button>
 
                 {step < 5 ? (
@@ -1623,7 +1619,7 @@ export default function AITripPlannerPage() {
                         : "cursor-not-allowed bg-gray-300 shadow-none"
                     }`}
                   >
-                    Next
+                    <HomeText en="Next" de="Weiter" />
 
                     <ArrowRightIcon className="h-5 w-5 transition-transform group-hover:translate-x-1" />
                   </button>
@@ -1638,7 +1634,7 @@ export default function AITripPlannerPage() {
                         : "cursor-not-allowed bg-gray-300 shadow-none"
                     }`}
                   >
-                    {isGenerating ? "Creating Your Trip..." : "Create My Trip"}
+                    {isGenerating ? <HomeText en="Creating Your Trip..." de="Ihre Reise wird erstellt..." /> : <HomeText en="Create My Trip" de="Meine Reise erstellen" />}
 
                     {!isGenerating && (
                       <ArrowRightIcon className="h-5 w-5 transition-transform group-hover:translate-x-1" />
@@ -1665,7 +1661,7 @@ export default function AITripPlannerPage() {
 
               <span className="flex items-center gap-2">
                 <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
-                Personalized planning
+                <HomeText en="Personalized planning" de="Individuelle Planung" />
               </span>
             </div>
           )}
