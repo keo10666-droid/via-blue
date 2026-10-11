@@ -269,28 +269,28 @@ export default function Footer() {
         rights: "Alle Rechte vorbehalten",
       }
     : {
-        intro: "{text.intro}",
-        headline: "{text.headline}",
+        intro: "Your Red Sea Experience",
+        headline: "Discover Hurghada beyond the ordinary",
         description: "Discover unforgettable tours, boat trips, snorkeling adventures and private transfers in Hurghada",
-        exploreEgypt: "{text.exploreEgypt}",
-        follow: "{text.follow}",
-        reputation: "{text.reputation}",
-        comingSoon: "{text.comingSoon}",
-        quickLinks: "{text.quickLinks}",
+        exploreEgypt: "Explore Egypt",
+        follow: "Follow Via Blue",
+        reputation: "Travel reputation",
+        comingSoon: "Coming soon",
+        quickLinks: "Quick Links",
         home: "Home",
         tours: "Tours",
-        airportTransfers: "{text.airportTransfers}",
+        airportTransfers: "Airport Transfers",
         contact: "Contact",
-        experiences: "{text.experiences}",
-        privateTransfer: "{text.privateTransfer}",
-        luxuryTours: "{text.luxuryTours}",
-        contactUs: "{text.contactUs}",
+        experiences: "Popular Experiences",
+        privateTransfer: "Private Transfer",
+        luxuryTours: "Luxury Tours",
+        contactUs: "Contact Us",
         location: "Location",
-        email: "{text.email}",
-        closing: "{text.closing}",
-        privacy: "{text.privacy}",
-        terms: "{text.terms}",
-        rights: "{text.rights}",
+        email: "Email",
+        closing: "Your journey starts by the Red Sea",
+        privacy: "Privacy Policy",
+        terms: "Terms & Conditions",
+        rights: "All rights reserved",
       };
 
   return (
@@ -333,11 +333,11 @@ export default function Footer() {
 
             <div className="mt-7 max-w-2xl">
               <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-orange-400">
-                Your Red Sea Experience
+                {text.intro}
               </p>
 
               <h2 className="max-w-xl text-2xl font-semibold leading-tight tracking-[-0.025em] text-white sm:text-3xl">
-                Discover Hurghada beyond the ordinary
+                {text.headline}
               </h2>
 
               <p className="mt-5 max-w-xl text-[15px] leading-7 text-slate-400">
@@ -349,7 +349,7 @@ export default function Footer() {
           <div className="lg:justify-self-end">
             <div className="rounded-2xl border border-white/[0.08] bg-white/[0.035] px-5 py-4 backdrop-blur-xl">
               <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500">
-                Explore Egypt
+                {text.exploreEgypt}
               </p>
 
               <p className="mt-2 text-sm font-medium text-slate-200">
@@ -366,7 +366,7 @@ export default function Footer() {
             {/* Social */}
             <div>
               <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-500">
-                Follow Via Blue
+                {text.follow}
               </p>
 
               <div className="flex flex-wrap items-center gap-3">
@@ -428,7 +428,7 @@ export default function Footer() {
             {/* Tripadvisor */}
             <div className="mt-9">
               <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500">
-                Travel reputation
+                {text.reputation}
               </p>
 
               <div className="group relative inline-flex items-center gap-3 overflow-hidden rounded-2xl border border-emerald-400/15 bg-gradient-to-br from-emerald-400/[0.08] via-white/[0.035] to-transparent px-4 py-3 shadow-xl shadow-black/20 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-emerald-400/30">
@@ -448,14 +448,14 @@ export default function Footer() {
                   </span>
 
                   <span className="mt-0.5 block text-xs text-slate-500">
-                    Coming soon
+                    {text.comingSoon}
                   </span>
                 </span>
               </div>
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* {text.quickLinks} */}
           <div>
             <h3 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">
               Quick Links
@@ -467,7 +467,7 @@ export default function Footer() {
                   href="/"
                   className="group flex items-center gap-2 text-[15px] text-slate-300 transition-all duration-300 hover:translate-x-1 hover:text-orange-400"
                 >
-                  <span>Home</span>
+                  <span>{text.home}</span>
                   <ArrowIcon />
                 </Link>
               </li>
@@ -477,7 +477,7 @@ export default function Footer() {
                   href="/tours"
                   className="group flex items-center gap-2 text-[15px] text-slate-300 transition-all duration-300 hover:translate-x-1 hover:text-orange-400"
                 >
-                  <span>Tours</span>
+                  <span>{text.tours}</span>
                   <ArrowIcon />
                 </Link>
               </li>
@@ -487,7 +487,7 @@ export default function Footer() {
                   href="/transfers"
                   className="group flex items-center gap-2 text-[15px] text-slate-300 transition-all duration-300 hover:translate-x-1 hover:text-orange-400"
                 >
-                  <span>Airport Transfers</span>
+                  <span>{text.airportTransfers}</span>
                   <ArrowIcon />
                 </Link>
               </li>
@@ -507,7 +507,7 @@ export default function Footer() {
           {/* Experiences */}
           <div>
             <h3 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">
-              Popular Experiences
+              {text.experiences}
             </h3>
 
             <ul className="mt-7 space-y-4">
@@ -516,7 +516,7 @@ export default function Footer() {
                   href="/transfers"
                   className="group flex items-center gap-2 text-[15px] text-slate-300 transition-all duration-300 hover:translate-x-1 hover:text-orange-400"
                 >
-                  <span>Private Transfer</span>
+                  <span>{text.privateTransfer}</span>
                   <ArrowIcon />
                 </Link>
               </li>
@@ -526,7 +526,7 @@ export default function Footer() {
                   href="/luxury-tours"
                   className="group flex items-center gap-2 text-[15px] text-slate-300 transition-all duration-300 hover:translate-x-1 hover:text-orange-400"
                 >
-                  <span>Luxury Tours</span>
+                  <span>{text.luxuryTours}</span>
                   <ArrowIcon />
                 </Link>
               </li>
@@ -619,7 +619,7 @@ export default function Footer() {
               </p>
 
               <p className="mt-2 text-sm font-medium text-slate-200">
-                Your journey starts by the Red Sea
+                {text.closing}
               </p>
             </div>
 
@@ -630,14 +630,14 @@ export default function Footer() {
                 href="/privacy"
                 className="transition hover:text-white"
               >
-                Privacy Policy
+                {text.privacy}
               </Link>
 
               <Link
                 href="/terms"
                 className="transition hover:text-white"
               >
-                Terms & Conditions
+                {text.terms}
               </Link>
             </div>
           </div>
@@ -646,7 +646,7 @@ export default function Footer() {
         {/* Bottom */}
         <div className="flex flex-col gap-3 pt-7 text-xs text-slate-600 sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © {new Date().getFullYear()} Via Blue All rights reserved
+            © {new Date().getFullYear()} Via Blue {text.rights}
           </p>
 
           <p>
