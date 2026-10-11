@@ -980,7 +980,7 @@ export default async function LuxuryTourPage({
               <span className="h-1.5 w-1.5 rounded-full bg-orange-400 shadow-[0_0_12px_rgba(251,146,60,0.8)]" />
 
               <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-orange-300">
-                Private Collection
+                <HomeText en="Private Collection" de="Private Auswahl" />
               </p>
             </div>
 
@@ -1001,7 +1001,7 @@ export default async function LuxuryTourPage({
                 <span className="text-orange-400">
                   <CrownIcon />
                 </span>
-                Private Experience
+                <HomeText en="Private Experience" de="Privates Erlebnis" />
               </div>
 
               <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.08] px-4 py-2.5 text-xs font-semibold shadow-lg shadow-blue-950/10 backdrop-blur-xl">
@@ -1015,7 +1015,7 @@ export default async function LuxuryTourPage({
                 <span className="text-orange-400">
                   <CheckIcon />
                 </span>
-                Premium Service
+                <HomeText en="Premium Service" de="Premium-Service" />
               </div>
             </div>
           </div>
@@ -1046,10 +1046,10 @@ export default async function LuxuryTourPage({
               </div>
 
               <p className="mt-6 text-base leading-8 text-gray-600">
-                Enjoy a premium private experience created for guests who value
-                comfort, privacy and personal attention. From the moment you
-                leave your hotel until your return, your journey is designed to
-                feel effortless, exclusive and flexible
+                <HomeText
+                  en="Enjoy a premium private experience created for guests who value comfort, privacy and personal attention. From the moment you leave your hotel until your return, your journey is designed to feel effortless, exclusive and flexible."
+                  de="Genießen Sie ein exklusives Privaterlebnis für Gäste, die Komfort, Privatsphäre und persönliche Betreuung schätzen. Vom Verlassen Ihres Hotels bis zu Ihrer Rückkehr ist Ihre Reise entspannt, exklusiv und flexibel gestaltet."
+                />
               </p>
 
               <div className="mt-8 grid gap-3 sm:grid-cols-2">
