@@ -223,7 +223,7 @@ export default function AITripBookingPage() {
   const [loading, setLoading] = useState(true);
   const [name, setName] = useState("");
   const [nationality, set<HomeText en="Nationality" de="Nationalität" />] = useState("");
-  const [is<HomeText en="Nationality" de="Nationalität" />Open, setIs<HomeText en="Nationality" de="Nationalität" />Open] = useState(false);
+  const [isNationalityOpen, setIsNationalityOpen] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState(countryCodes[0]);
   const [isCountryOpen, setIsCountryOpen] = useState(false);
   const [countrySearch, setCountrySearch] = useState("");
@@ -232,7 +232,7 @@ export default function AITripBookingPage() {
   const [hotel, setHotel] = useState("");
   const [roomNumber, setRoomNumber] = useState("");
   const [date, setDate] = useState("");
-  const [childrenAgeValues, set<HomeText en="Children" de="Kinder" />AgeValues] = useState<string[]>([]);
+  const [childrenAgeValues, setChildrenAgeValues] = useState<string[]>([]);
   const [submitAttempted, setSubmitAttempted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
