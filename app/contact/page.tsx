@@ -601,7 +601,7 @@ export default function ContactPage() {
                         id="subject"
                         name="subject"
                         type="text"
-                        placeholder="How can we help?"
+                        placeholder="Betreff Ihrer Nachricht"
                         className="h-12 w-full rounded-xl border border-[#dfe3ea] bg-[#fbfcfd] px-4 text-sm text-[#172033] outline-none transition placeholder:text-[#98a2b3] focus:border-[#f59a23] focus:bg-white focus:ring-4 focus:ring-[#f59a23]/10"
                       />
                     </div>
