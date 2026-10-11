@@ -11,6 +11,7 @@ import { createSupabaseAdminClient } from "@/lib/supabaseAdmin";
 import TourGallery from "@/app/components/TourGallery";
 import ReviewForm from "@/app/components/ReviewForm";
 import ReviewsList from "@/app/components/ReviewsList";
+import HomeText from "@/app/components/HomeText";
 
 type Props = {
   params: Promise<{
@@ -982,7 +983,7 @@ export default async function TourDetailsPage({
               <span className="h-1.5 w-1.5 rounded-full bg-orange-400 shadow-[0_0_12px_rgba(251,146,60,0.8)]" />
 
               <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-orange-300 sm:text-xs">
-                Hurghada Excursion
+                <HomeText en="Hurghada Excursion" de="Ausflug in Hurghada" />
               </p>
 
               <span className="h-1.5 w-1.5 rounded-full bg-orange-400 shadow-[0_0_12px_rgba(251,146,60,0.8)]" />
@@ -1077,13 +1078,13 @@ export default async function TourDetailsPage({
                 <span className="h-px w-10 bg-orange-500" />
 
                 <p className="text-xs font-bold uppercase tracking-[0.25em] text-orange-500">
-                  About The Experience
+                  <HomeText en="About The Experience" de="Über dieses Erlebnis" />
                 </p>
 
               </div>
 
               <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-blue-950 md:text-4xl">
-                Tour Overview
+                <HomeText en="Tour Overview" de="Tourübersicht" />
               </h2>
 
               <p className="mt-5 text-lg leading-8 text-gray-600">
@@ -1113,7 +1114,7 @@ export default async function TourDetailsPage({
                     <div>
 
                       <p className="text-xs font-bold uppercase tracking-wider text-gray-500">
-                        Duration
+                        <HomeText en="Duration" de="Dauer" />
                       </p>
 
                       <p className="mt-1 font-bold text-blue-950">
@@ -1141,7 +1142,7 @@ export default async function TourDetailsPage({
                     <div>
 
                       <p className="text-xs font-bold uppercase tracking-wider text-gray-500">
-                        Pickup
+                        <HomeText en="Pickup" de="Abholung" />
                       </p>
 
                       <p className="mt-1 font-bold text-blue-950">
@@ -1169,7 +1170,7 @@ export default async function TourDetailsPage({
                     <div>
 
                       <p className="text-xs font-bold uppercase tracking-wider text-gray-500">
-                        Schedule
+                        <HomeText en="Schedule" de="Zeitplan" />
                       </p>
 
                       <p className="mt-1 font-bold text-blue-950">
@@ -1211,13 +1212,13 @@ export default async function TourDetailsPage({
                 <span className="h-px w-10 bg-orange-500" />
 
                 <p className="text-xs font-bold uppercase tracking-[0.25em] text-orange-500">
-                  Your Day
+                  <HomeText en="Your Day" de="Ihr Ausflugstag" />
                 </p>
 
               </div>
 
               <h2 className="mt-4 text-3xl font-extrabold text-blue-950 md:text-4xl">
-                Tour Program
+                <HomeText en="Tour Program" de="Ablauf der Tour" />
               </h2>
 
               <div className="mt-7 space-y-4">
@@ -1264,7 +1265,7 @@ export default async function TourDetailsPage({
               </div>
 
               <h2 className="mt-4 text-3xl font-extrabold text-blue-950 md:text-4xl">
-                What&apos;s Included
+                <HomeText en="What&apos;s Included" de="Was ist inklusive?" />
               </h2>
 
               <div className="mt-7 grid gap-3 sm:grid-cols-2">
@@ -1311,7 +1312,7 @@ export default async function TourDetailsPage({
               </div>
 
               <h2 className="mt-4 text-3xl font-extrabold text-blue-950 md:text-4xl">
-                What&apos;s Not Included
+                <HomeText en="What&apos;s Not Included" de="Nicht inklusive" />
               </h2>
 
               <div className="mt-7 grid gap-3 sm:grid-cols-2">
@@ -1358,7 +1359,7 @@ export default async function TourDetailsPage({
               </div>
 
               <h2 className="mt-4 text-3xl font-extrabold text-blue-950 md:text-4xl">
-                Tour Highlights
+                <HomeText en="Tour Highlights" de="Höhepunkte der Tour" />
               </h2>
 
               <div className="mt-7 grid gap-4 sm:grid-cols-2">
@@ -1402,13 +1403,13 @@ export default async function TourDetailsPage({
                 <span className="h-px w-10 bg-orange-500" />
 
                 <p className="text-xs font-bold uppercase tracking-[0.25em] text-orange-500">
-                  Before You Go
+                  <HomeText en="Before You Go" de="Vor der Abreise" />
                 </p>
 
               </div>
 
               <h2 className="mt-4 text-3xl font-extrabold text-blue-950 md:text-4xl">
-                Important Notes
+                <HomeText en="Important Notes" de="Wichtige Hinweise" />
               </h2>
 
               <div className="mt-7 space-y-3">
@@ -1481,7 +1482,7 @@ export default async function TourDetailsPage({
                     <span className="h-1.5 w-1.5 rounded-full bg-orange-400" />
 
                     <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-blue-100">
-                      Starting From
+                      <HomeText en="Starting From" de="Ab" />
                     </p>
 
                   </div>
@@ -1500,7 +1501,7 @@ export default async function TourDetailsPage({
 
                       <span className="text-sm text-blue-200">
 
-                        / person
+                        / <HomeText en="person" de="Person" />
 
                       </span>
 
@@ -1510,8 +1511,7 @@ export default async function TourDetailsPage({
 
                   <p className="mt-3 text-sm leading-6 text-blue-200">
 
-                    Secure your place and enjoy a professionally organized
-                    experience in Hurghada
+                    <HomeText en="Secure your place and enjoy a professionally organized experience in Hurghada" de="Sichern Sie sich Ihren Platz und genießen Sie ein professionell organisiertes Erlebnis in Hurghada." />
 
                   </p>
 
@@ -1651,7 +1651,7 @@ export default async function TourDetailsPage({
 
                       <span className="text-sm font-medium">
 
-                        Duration
+                        <HomeText en="Duration" de="Dauer" />
 
                       </span>
 
@@ -1679,7 +1679,7 @@ export default async function TourDetailsPage({
 
                       <span className="text-sm font-medium">
 
-                        Pickup
+                        <HomeText en="Pickup" de="Abholung" />
 
                       </span>
 
@@ -1710,7 +1710,7 @@ export default async function TourDetailsPage({
                     className="group mt-6 flex w-full items-center justify-center gap-3 rounded-2xl bg-orange-500 py-4 text-center text-lg font-bold text-white shadow-lg shadow-orange-200 transition-all duration-300 hover:-translate-y-0.5 hover:bg-orange-600 hover:shadow-xl hover:shadow-orange-200"
                   >
 
-                    Book Now
+                    <HomeText en="Book Now" de="Jetzt buchen" />
 
                     <ArrowRightIcon className="h-5 w-5 transition-transform group-hover:translate-x-1" />
 
@@ -1720,7 +1720,7 @@ export default async function TourDetailsPage({
 
                   <div className="mt-6 w-full rounded-2xl bg-slate-100 py-4 text-center text-lg font-bold text-gray-400">
 
-                    Coming Soon
+                    <HomeText en="Coming Soon" de="Demnächst verfügbar" />
 
                   </div>
 
@@ -1735,7 +1735,7 @@ export default async function TourDetailsPage({
 
                   <ArrowLeftIcon className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
 
-                  Back to Tours
+                  <HomeText en="Back to Tours" de="Zurück zu den Touren" />
 
                 </Link>
 
@@ -1769,7 +1769,7 @@ export default async function TourDetailsPage({
 
             <p className="text-xs font-bold uppercase tracking-[0.3em] text-orange-400">
 
-              Ready To Explore?
+              <HomeText en="Ready To Explore?" de="Bereit zum Entdecken?" />
 
             </p>
 
@@ -1779,11 +1779,11 @@ export default async function TourDetailsPage({
 
           <h2 className="mt-6 text-4xl font-extrabold leading-tight md:text-6xl">
 
-            Ready to Book Your
+            <HomeText en="Ready to Book Your" de="Bereit, Ihr nächstes" />
 
             <span className="block text-orange-400">
 
-              Adventure?
+              <HomeText en="Adventure?" de="Abenteuer zu buchen?" />
 
             </span>
 
@@ -1791,8 +1791,7 @@ export default async function TourDetailsPage({
 
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-blue-100">
 
-            Reserve your {tour.name} experience and enjoy an unforgettable
-            day in Hurghada with Via Blue
+            <HomeText en={`Reserve your ${tour.name} experience and enjoy an unforgettable day in Hurghada with Via Blue`} de={`Buchen Sie Ihr Erlebnis „${tour.name}“ und genießen Sie einen unvergesslichen Tag in Hurghada mit Via Blue.`} />
 
           </p>
 
@@ -1819,7 +1818,7 @@ export default async function TourDetailsPage({
 
             <div className="mt-8 inline-block rounded-2xl border border-white/10 bg-white/10 px-8 py-4 font-bold text-gray-300 backdrop-blur">
 
-              Coming Soon
+              <HomeText en="Coming Soon" de="Demnächst verfügbar" />
 
             </div>
 
