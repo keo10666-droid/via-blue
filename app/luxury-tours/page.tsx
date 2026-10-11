@@ -200,7 +200,7 @@ export default function LuxuryToursPage() {
               <span className="h-1.5 w-1.5 rounded-full bg-orange-400 shadow-[0_0_12px_rgba(251,146,60,0.8)]" />
 
               <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-orange-300">
-                Private Collection
+                <HomeText en="Private Collection" de="Private Auswahl" />
               </p>
             </div>
 
@@ -212,9 +212,7 @@ export default function LuxuryToursPage() {
             </h1>
 
             <p className="mt-7 max-w-2xl text-base leading-8 text-blue-100 md:text-lg">
-              Discover Egypt through a collection of exclusive private
-              experiences, premium transportation and complete flexibility —
-              created for guests who expect more
+              <HomeText en="Discover Egypt through a collection of exclusive private experiences, premium transportation and complete flexibility — created for guests who expect more" de="Entdecken Sie Ägypten mit exklusiven privaten Erlebnissen, erstklassigen Transfers und voller Flexibilität – für Gäste mit besonderen Ansprüchen." />
             </p>
 
             <div className="mt-9 flex flex-wrap gap-3">
@@ -222,7 +220,7 @@ export default function LuxuryToursPage() {
                 <span className="text-orange-400">
                   <CrownIcon />
                 </span>
-                Private Experiences
+                <HomeText en="Private Experiences" de="Private Erlebnisse" />
               </div>
 
               <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-2.5 text-xs font-semibold backdrop-blur-md">
@@ -236,7 +234,7 @@ export default function LuxuryToursPage() {
                 <span className="text-orange-400">
                   <UsersIcon />
                 </span>
-                Fully Private
+                <HomeText en="Fully Private" de="Vollständig privat" />
               </div>
             </div>
           </div>
@@ -251,7 +249,7 @@ export default function LuxuryToursPage() {
               <span className="h-px w-9 bg-orange-500" />
 
               <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-orange-500">
-                The Private Collection
+                <HomeText en="The Private Collection" de="Die private Auswahl" />
               </p>
             </div>
 
@@ -260,21 +258,19 @@ export default function LuxuryToursPage() {
             </h2>
 
             <p className="mt-4 text-sm leading-7 text-gray-600 md:text-base">
-              From ancient wonders to private Red Sea adventures, every
-              experience is designed around privacy, comfort and personal
-              attention
+              <HomeText en="From ancient wonders to private Red Sea adventures, every experience is designed around privacy, comfort and personal attention" de="Von antiken Wundern bis zu privaten Abenteuern am Roten Meer – jedes Erlebnis bietet Privatsphäre, Komfort und persönliche Betreuung." />
             </p>
           </div>
 
           <div className="hidden rounded-[22px] border border-slate-200 bg-white px-6 py-4 shadow-sm md:block">
             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400">
-              Collection
+              <HomeText en="Collection" de="Auswahl" />
             </p>
 
             <p className="mt-1 text-2xl font-bold text-blue-950">
               {luxuryTours.length}
               <span className="ml-1 text-sm font-medium text-gray-400">
-                exclusive experiences
+                <HomeText en="exclusive experiences" de="exklusive Erlebnisse" />
               </span>
             </p>
           </div>
@@ -313,7 +309,7 @@ export default function LuxuryToursPage() {
                     <span className="text-orange-400">
                       <CrownIcon />
                     </span>
-                    Private Collection
+                    <HomeText en="Private Collection" de="Private Auswahl" />
                   </div>
 
                   {/* DURATION */}
@@ -403,7 +399,7 @@ export default function LuxuryToursPage() {
                         </p>
 
                         <p className="text-xs font-bold text-blue-950">
-                          Fully Private
+                          <HomeText en="Fully Private" de="Vollständig privat" />
                         </p>
                       </div>
                     </div>
@@ -429,7 +425,7 @@ export default function LuxuryToursPage() {
                       </span>
 
                       <span className="ml-1 text-[10px] font-medium text-gray-400">
-                        / experience
+                        <HomeText en="/ experience" de="/ Erlebnis" />
                       </span>
                     </div>
                   </div>
