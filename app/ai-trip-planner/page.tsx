@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const areas = [
   "Hurghada",
@@ -257,6 +257,7 @@ function ClockIcon({ className = "h-4 w-4" }: { className?: string }) {
 
 export default function AITripPlannerPage() {
   const [step, setStep] = useState(1);
+  const processingSectionRef = useRef<HTMLDivElement>(null);
 
   const [adults, setAdults] = useState(2);
   const [children, setChildren] = useState(0);
@@ -458,7 +459,10 @@ export default function AITripPlannerPage() {
 
   useEffect(() => {
     if (step !== 6) return;
-    window.scrollTo(0, 0);
+    processingSectionRef.current?.scrollIntoView({
+      behavior: "auto",
+      block: "start",
+    });
   }, [step]);
 
   useEffect(() => {
@@ -642,7 +646,11 @@ export default function AITripPlannerPage() {
           {/* AI PROCESSING */}
 
           {step === 6 && (
-            <div className="flex min-h-[560px] items-center justify-center">
+            <div
+              ref={processingSectionRef}
+              id="trip-planner-processing"
+              className="scroll-mt-6 flex min-h-[560px] items-center justify-center"
+            >
               <div className="w-full max-w-2xl text-center">
                 <div className="relative mx-auto mb-10 flex h-28 w-28 items-center justify-center">
                   <div className="absolute inset-0 animate-ping rounded-full bg-orange-500/10" />
