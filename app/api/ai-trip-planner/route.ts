@@ -1,22 +1,19 @@
 import { NextResponse } from "next/server";
-import OpenAI from "openai";
 import { isRateLimited } from "@/lib/apiRateLimit";
-
 import { tourList } from "@/data/tours";
 
+type Currency = "EUR" | "USD";
 type PlannerRequest = {
   adults: number;
   children: number;
   area: string;
   days: number;
-  currency: "EUR" | "USD";
+  currency: Currency;
   budget: number;
-  selectedCategories?: string[];
-  surpriseMe?: boolean;
+  selectedCategories: string[];
+  surpriseMe: boolean;
 };
-
 type Tour = (typeof tourList)[number];
-
 type PackageTour = {
   slug: string;
   name: string;
@@ -30,7 +27,6 @@ type PackageTour = {
   estimatedTotal: number;
   day: number;
 };
-
 type PackageOption = {
   id: string;
   title: string;
@@ -38,82 +34,35 @@ type PackageOption = {
   totalCost: number;
   budget: number;
   remainingBudget: number;
-  currency: "EUR" | "USD";
+  currency: Currency;
   activities: number;
-  itinerary: {
-    day: number;
-    tours: PackageTour[];
-  }[];
-};
-
-type AIPackage = {
-  id: string;
-  title: string;
-  summary: string;
-  tourSlugs: string[];
-};
-
-type AIPlannerResponse = {
-  packages: AIPackage[];
+  itinerary: { day: number; tours: PackageTour[] }[];
 };
 
 const EUR_TO_USD = 1.17;
-
 const AREA_KEYWORDS: Record<string, string[]> = {
-  Hurghada: [
-    "hurghada",
-    "dahar",
-    "magawish",
-    "makadi",
-    "sahl hasheesh",
-    "red sea",
-  ],
-  "Sahl Hasheesh": [
-    "sahl hasheesh",
-    "hurghada",
-    "red sea",
-  ],
-  "Makadi Bay": [
-    "makadi",
-    "hurghada",
-    "red sea",
-  ],
-  "El Gouna": [
-    "el gouna",
-    "hurghada",
-    "red sea",
-  ],
-  Safaga: [
-    "safaga",
-    "hurghada",
-    "red sea",
-  ],
-  "Soma Bay": [
-    "soma bay",
-    "safaga",
-    "hurghada",
-    "red sea",
-  ],
+  Hurghada: ["hurghada", "dahar", "magawish", "makadi", "sahl hasheesh", "red sea"],
+  "Sahl Hasheesh": ["sahl hasheesh", "hurghada", "red sea"],
+  "Makadi Bay": ["makadi", "hurghada", "red sea"],
+  "El Gouna": ["el gouna", "hurghada", "red sea"],
+  Safaga: ["safaga", "hurghada", "red sea"],
+  "Soma Bay": ["soma bay", "safaga", "hurghada", "red sea"],
 };
-
 const PACKAGE_STYLES = [
   {
+    id: "budget",
+    title: "The Smart Saver",
+    summary: "A budget-conscious selection of real Via Blue experiences, leaving room in your holiday budget.",
+  },
+  {
     id: "balanced",
-    fallbackTitle: "The Balanced Escape",
-    fallbackSummary:
-      "A well-balanced mix of sea, adventure and culture with comfortable pacing.",
+    title: "The Balanced Escape",
+    summary: "A thoughtful mix of highly rated experiences, variety and value for your stay.",
   },
   {
-    id: "adventure",
-    fallbackTitle: "The Adventure Edition",
-    fallbackSummary:
-      "A more energetic holiday built around memorable sea and desert experiences.",
-  },
-  {
-    id: "signature",
-    fallbackTitle: "The Signature Experience",
-    fallbackSummary:
-      "A refined selection of highly rated experiences with a relaxed premium feel.",
+    id: "premium",
+    title: "The Signature Experience",
+    summary: "A more premium selection of memorable experiences, while staying within your budget.",
   },
 ] as const;
 
@@ -121,1087 +70,238 @@ function normalize(value: string) {
   return value.trim().toLowerCase();
 }
 
-function convertFromEUR(amount: number, currency: "EUR" | "USD") {
-  if (currency === "USD") {
-    return Math.round(amount * EUR_TO_USD * 100) / 100;
-  }
-
-  return Math.round(amount * 100) / 100;
-}
-
-function getTourText(tour: Tour) {
+function tourText(tour: Tour) {
   return [
-    tour.name,
-    tour.description,
-    tour.overview,
-    tour.pickup,
-    tour.schedule,
-    tour.type,
-    ...tour.highlights,
-    ...tour.notes,
-  ]
-    .join(" ")
-    .toLowerCase();
+    tour.name, tour.description, tour.overview, tour.pickup, tour.schedule,
+    tour.type, ...tour.highlights, ...tour.notes,
+  ].join(" ").toLowerCase();
 }
 
 function matchesArea(tour: Tour, area: string) {
-  const normalizedArea = normalize(area);
-
-  if (normalizedArea === "hurghada") {
-    return tour.destination === "hurghada";
-  }
-
-  const keywords = AREA_KEYWORDS[area] ?? [normalizedArea];
-  const text = getTourText(tour);
-
-  return (
-    tour.destination === "hurghada" &&
-    keywords.some((keyword) =>
-      text.includes(normalize(keyword)),
-    )
-  );
+  if (area === "Hurghada") return tour.destination === "hurghada";
+  const keywords = AREA_KEYWORDS[area] ?? [normalize(area)];
+  const text = tourText(tour);
+  return tour.destination === "hurghada" &&
+    keywords.some((keyword) => text.includes(normalize(keyword)));
 }
 
-function parseDurationHours(duration: string) {
+function durationHours(duration: string) {
   const values = duration.match(/\d+(?:\.\d+)?/g);
-
-  if (!values || values.length === 0) {
-    return 3;
-  }
-
-  const numbers = values.map(Number);
-
-  if (numbers.length === 1) {
-    return numbers[0];
-  }
-
-  return (numbers[0] + numbers[1]) / 2;
+  if (!values?.length) return 3;
+  const nums = values.map(Number);
+  return nums.length === 1 ? nums[0] : (nums[0] + nums[1]) / 2;
 }
 
-function isFullDayTour(tour: Tour) {
-  const hours = parseDurationHours(tour.duration);
-
-  return (
-    hours >= 6 ||
-    tour.duration.toLowerCase().includes("over") ||
-    tour.duration.toLowerCase().includes("2 days")
-  );
+function isFullDay(tour: Tour) {
+  const duration = tour.duration.toLowerCase();
+  return durationHours(tour.duration) >= 6 ||
+    duration.includes("over") || duration.includes("2 days") ||
+    duration.includes("overnight");
 }
 
-function calculateTourTotal(
-  tour: Tour,
-  adults: number,
-  children: number,
-) {
-  return (
-    tour.price * adults +
-    tour.childPrice * children
-  );
+function tourCost(tour: Tour, request: PlannerRequest) {
+  return tour.price * request.adults + tour.childPrice * request.children;
 }
 
-function buildItinerary(
-  selectedTours: Tour[],
-  days: number,
-): { day: number; tours: PackageTour[] }[] {
-  const itinerary: {
-    day: number;
-    tours: PackageTour[];
-  }[] = Array.from(
-    { length: days },
-    (_, index) => ({
-      day: index + 1,
-      tours: [],
-    }),
-  );
+function convertCurrency(amount: number, currency: Currency) {
+  const converted = currency === "USD" ? amount * EUR_TO_USD : amount;
+  return Math.round(converted * 100) / 100;
+}
 
-  let currentDay = 0;
+function buildItinerary(tours: Tour[], days: number, request: PlannerRequest) {
+  const itinerary = Array.from({ length: days }, (_, index) => ({
+    day: index + 1,
+    tours: [] as PackageTour[],
+    hours: 0,
+    fullDay: false,
+  }));
 
-  for (const tour of selectedTours) {
-    let placed = false;
-
-    for (
-      let offset = 0;
-      offset < days;
-      offset++
-    ) {
-      const dayIndex =
-        (currentDay + offset) % days;
-
-      const day = itinerary[dayIndex];
-
-      const currentTours = day.tours;
-
-      if (currentTours.length >= 2) {
-        continue;
-      }
-
-      if (
-        isFullDayTour(tour) &&
-        currentTours.length > 0
-      ) {
-        continue;
-      }
-
-      if (
-  currentTours.some((item) => {
-    return (
-      parseDurationHours(item.duration) >= 6 ||
-      item.duration
-        .toLowerCase()
-        .includes("over") ||
-      item.duration
-        .toLowerCase()
-        .includes("2 days")
+  for (const tour of tours) {
+    const hours = durationHours(tour.duration);
+    const fullDay = isFullDay(tour);
+    const day = itinerary.find((candidate) =>
+      candidate.tours.length < 2 &&
+      !candidate.fullDay &&
+      !(fullDay && candidate.tours.length > 0) &&
+      candidate.hours + hours <= 8
     );
-  })
-) {
-  continue;
-}
-
-      const currentHours =
-        currentTours.reduce(
-          (total, item) =>
-            total +
-            parseDurationHours(item.duration),
-          0,
-        );
-
-      const nextHours =
-        currentHours +
-        parseDurationHours(tour.duration);
-
-      if (nextHours > 8) {
-        continue;
-      }
-
-      day.tours.push({
-        slug: tour.slug,
-        name: tour.name,
-        category: tour.category,
-        image: tour.image,
-        duration: tour.duration,
-        rating: tour.rating,
-        reviews: tour.reviews,
-        price: tour.price,
-        childPrice: tour.childPrice,
-        estimatedTotal: 0,
-        day: day.day,
-      });
-
-      placed = true;
-      currentDay = (dayIndex + 1) % days;
-
-      break;
-    }
-
-    if (!placed) {
-      continue;
-    }
+    if (!day) return null;
+    day.tours.push({
+      slug: tour.slug,
+      name: tour.name,
+      category: tour.category,
+      image: tour.image,
+      duration: tour.duration,
+      rating: tour.rating,
+      reviews: tour.reviews,
+      price: tour.price,
+      childPrice: tour.childPrice,
+      estimatedTotal: convertCurrency(tourCost(tour, request), request.currency),
+      day: day.day,
+    });
+    day.hours += hours;
+    day.fullDay = fullDay;
   }
 
-  return itinerary;
+  return itinerary.map(({ day, tours }) => ({ day, tours }));
 }
 
-function buildPackageFromAI(
-  aiPackage: AIPackage,
-  catalogTours: Tour[],
+function createPackage(
+  availableTours: Tour[],
   request: PlannerRequest,
-  packageIndex: number,
-): PackageOption {
-  const budgetEUR =
-    request.currency === "USD"
-      ? request.budget / EUR_TO_USD
-      : request.budget;
-
-  const catalogBySlug = new Map(
-    catalogTours.map((tour) => [
-      tour.slug,
-      tour,
-    ]),
-  );
-
+  styleIndex: number,
+): PackageOption | null {
+  const style = PACKAGE_STYLES[styleIndex];
+  const budgetEUR = request.currency === "USD" ? request.budget / EUR_TO_USD : request.budget;
   const maxActivities = Math.min(5, request.days);
-  const targetSpendEUR = budgetEUR * 0.95;
-  const selectedTours: Tour[] = [];
-  const usedSlugs = new Set<string>();
+  const targetSpend = budgetEUR * (styleIndex === 0 ? 0.7 : styleIndex === 1 ? 0.88 : 0.97);
+  const selected: Tour[] = [];
+  let total = 0;
+  const categoryCounts = new Map<string, number>();
+  const candidates = [...availableTours];
 
-  // Start with the AI's concepts, but never let the AI underspend the
-  // customer's budget simply because it selected a few inexpensive tours.
-  for (const slug of aiPackage.tourSlugs) {
-    const tour = catalogBySlug.get(slug);
-    if (!tour || usedSlugs.has(tour.slug)) continue;
+  // Vary tie-breaking between packages so the three recommendations are distinct.
+  const rotated = candidates.map((tour, index) => ({ tour, index })).sort((a, b) => {
+    const aCost = tourCost(a.tour, request);
+    const bCost = tourCost(b.tour, request);
+    const aRating = a.tour.rating ?? 0;
+    const bRating = b.tour.rating ?? 0;
+    if (styleIndex === 0) return aCost - bCost || bRating - aRating || a.index - b.index;
+    if (styleIndex === 2) return bCost - aCost || bRating - aRating || a.index - b.index;
+    return bRating - aRating || aCost - bCost || a.index - b.index;
+  }).map((item) => item.tour);
 
-    const nextTotal = [...selectedTours, tour].reduce(
-      (total, item) =>
-        total + calculateTourTotal(item, request.adults, request.children),
-      0,
-    );
+  while (selected.length < maxActivities) {
+    let best: { tour: Tour; score: number; newTotal: number } | null = null;
+    for (const tour of rotated) {
+      if (selected.some((item) => item.slug === tour.slug)) continue;
+      const cost = tourCost(tour, request);
+      const newTotal = total + cost;
+      if (cost <= 0 || newTotal > budgetEUR) continue;
+      if (!buildItinerary([...selected, tour], request.days, request)) continue;
 
-    if (nextTotal > budgetEUR) continue;
-    selectedTours.push(tour);
-    usedSlugs.add(tour.slug);
-    if (selectedTours.length >= Math.min(3, maxActivities)) break;
-  }
-
-  // Keep only tours that can actually fit into the day-by-day itinerary.
-  const initiallyPlaced = buildItinerary(selectedTours, request.days)
-    .flatMap((day) => day.tours)
-    .map((item) => catalogBySlug.get(item.slug))
-    .filter((tour): tour is Tour => Boolean(tour));
-
-  selectedTours.splice(0, selectedTours.length, ...initiallyPlaced);
-  usedSlugs.clear();
-  selectedTours.forEach((tour) => usedSlugs.add(tour.slug));
-
-  const getPlacedTours = (candidateTours: Tour[]) =>
-    buildItinerary(candidateTours, request.days)
-      .flatMap((day) => day.tours)
-      .map((item) => catalogBySlug.get(item.slug))
-      .filter((tour): tour is Tour => Boolean(tour));
-
-  const getTotalEUR = (candidateTours: Tour[]) =>
-    candidateTours.reduce(
-      (total, tour) =>
-        total + calculateTourTotal(tour, request.adults, request.children),
-      0,
-    );
-
-  // Fill toward 95% of the budget (without ever exceeding it). When all
-  // slots are occupied, replace cheaper selections if that makes a better
-  // use of the customer's budget while keeping the schedule realistic.
-  for (let pass = 0; pass < maxActivities; pass++) {
-    const currentPlaced = getPlacedTours(selectedTours);
-    const currentTotal = getTotalEUR(currentPlaced);
-    if (currentTotal >= targetSpendEUR) break;
-    const currentCategories = new Set(currentPlaced.map((tour) => tour.category));
-    let best:
-      | { tours: Tour[]; candidate: Tour; score: number; total: number }
-      | undefined;
-
-    for (const candidate of catalogTours) {
-      if (currentPlaced.some((tour) => tour.slug === candidate.slug)) continue;
-
-      const replacements =
-        currentPlaced.length < maxActivities
-          ? [undefined]
-          : currentPlaced;
-
-      for (const replaceTour of replacements) {
-        const proposed = replaceTour
-          ? currentPlaced.filter((tour) => tour.slug !== replaceTour.slug).concat(candidate)
-          : currentPlaced.concat(candidate);
-        const placed = getPlacedTours(proposed);
-
-        if (!placed.some((tour) => tour.slug === candidate.slug)) continue;
-        if (placed.length > maxActivities) continue;
-
-        const total = getTotalEUR(placed);
-        if (total > budgetEUR || total <= currentTotal) continue;
-
-        const addsCategory = !currentCategories.has(candidate.category);
-        const score =
-          Math.abs(targetSpendEUR - total) -
-          (addsCategory ? 8 : 0) -
-          candidate.rating * 0.25 +
-          ((catalogTours.indexOf(candidate) + packageIndex) % 3) * 0.01;
-
-        if (!best || score < best.score) {
-          best = { tours: placed, candidate, score, total };
-        }
+      const categoryCount = categoryCounts.get(tour.category) ?? 0;
+      const rating = tour.rating ?? 0;
+      const remainingAfter = budgetEUR - newTotal;
+      let score: number;
+      if (styleIndex === 0) {
+        score = -cost + rating * 4 - categoryCount * 12;
+      } else if (styleIndex === 1) {
+        score = rating * 10 - Math.abs(targetSpend - newTotal) * 0.04 - categoryCount * 10;
+      } else {
+        score = cost * 0.55 + rating * 5 - Math.max(0, newTotal - targetSpend) * 0.12 - categoryCount * 8;
       }
+      // Avoid spending everything on one activity if it prevents a useful itinerary.
+      score -= remainingAfter < budgetEUR * 0.03 ? 3 : 0;
+      if (!best || score > best.score) best = { tour, score, newTotal };
     }
-
     if (!best) break;
-
-    selectedTours.splice(0, selectedTours.length, ...best.tours);
-    usedSlugs.clear();
-    selectedTours.forEach((tour) => usedSlugs.add(tour.slug));
-
-    if (best.total >= targetSpendEUR) break;
+    selected.push(best.tour);
+    total = best.newTotal;
+    categoryCounts.set(best.tour.category, (categoryCounts.get(best.tour.category) ?? 0) + 1);
+    if (total >= targetSpend && styleIndex !== 0) break;
   }
 
-  const itinerary = buildItinerary(
-    selectedTours,
-    request.days,
-  );
-
-  for (const day of itinerary) {
-    for (const item of day.tours) {
-      const sourceTour = tourList.find(
-        (tour) => tour.slug === item.slug,
-      );
-
-      if (!sourceTour) {
-        continue;
-      }
-
-      item.estimatedTotal =
-        convertFromEUR(
-          calculateTourTotal(
-            sourceTour,
-            request.adults,
-            request.children,
-          ),
-          request.currency,
-        );
-    }
-  }
-
-  const actualTours =
-    itinerary.flatMap(
-      (day) => day.tours,
-    );
-
-  const totalEUR =
-    actualTours.reduce(
-      (total, item) => {
-        const sourceTour = tourList.find(
-          (tour) =>
-            tour.slug === item.slug,
-        );
-
-        if (!sourceTour) {
-          return total;
-        }
-
-        return (
-          total +
-          calculateTourTotal(
-            sourceTour,
-            request.adults,
-            request.children,
-          )
-        );
-      },
-      0,
-    );
-
-  const totalCost =
-    convertFromEUR(
-      totalEUR,
-      request.currency,
-    );
-
-  const style =
-    PACKAGE_STYLES[packageIndex];
+  const itinerary = buildItinerary(selected, request.days, request);
+  if (!itinerary || selected.length === 0) return null;
+  const actualEUR = itinerary.reduce((sum, day) =>
+    sum + day.tours.reduce((daySum, item) =>
+      daySum + tourCost(selected.find((tour) => tour.slug === item.slug)!, request), 0), 0);
+  const totalCost = convertCurrency(actualEUR, request.currency);
 
   return {
-    id:
-      aiPackage.id ||
-      style.id,
-
-    title:
-      aiPackage.title ||
-      style.fallbackTitle,
-
-    summary:
-      aiPackage.summary ||
-      style.fallbackSummary,
-
+    id: style.id,
+    title: style.title,
+    summary: style.summary,
     totalCost,
-
     budget: request.budget,
-
-    remainingBudget:
-      Math.round(
-        (request.budget - totalCost) *
-          100,
-      ) / 100,
-
+    remainingBudget: Math.round((request.budget - totalCost) * 100) / 100,
     currency: request.currency,
-
-    activities:
-      actualTours.length,
-
+    activities: itinerary.reduce((sum, day) => sum + day.tours.length, 0),
     itinerary,
   };
 }
 
-function validateRequest(
-  body: unknown,
-): PlannerRequest {
-  if (
-    !body ||
-    typeof body !== "object"
-  ) {
-    throw new Error(
-      "Invalid request body.",
-    );
-  }
-
-  const data =
-    body as Record<string, unknown>;
-
-  const adults =
-    typeof data.adults === "number" ? data.adults : Number.NaN;
-  const children =
-    typeof data.children === "number" ? data.children : Number.NaN;
-  const days =
-    typeof data.days === "number" ? data.days : Number.NaN;
-  const budget =
-    typeof data.budget === "number" ? data.budget : Number.NaN;
-
-  const area =
-    typeof data.area === "string"
-      ? data.area.trim()
-      : "";
-
-  if (data.currency !== "USD" && data.currency !== "EUR") {
-    throw new Error("Currency must be EUR or USD.");
-  }
-
-  const currency = data.currency;
-
-  if (
-    data.selectedCategories !== undefined &&
-    (!Array.isArray(data.selectedCategories) ||
-      data.selectedCategories.some(
-        (value) => typeof value !== "string",
-      ))
-  ) {
+function validateRequest(body: unknown): PlannerRequest {
+  if (!body || typeof body !== "object") throw new Error("Invalid request body.");
+  const data = body as Record<string, unknown>;
+  const adults = typeof data.adults === "number" ? data.adults : NaN;
+  const children = typeof data.children === "number" ? data.children : NaN;
+  const days = typeof data.days === "number" ? data.days : NaN;
+  const budget = typeof data.budget === "number" ? data.budget : NaN;
+  const area = typeof data.area === "string" ? data.area.trim() : "";
+  if (data.currency !== "EUR" && data.currency !== "USD") throw new Error("Currency must be EUR or USD.");
+  if (!Number.isInteger(adults) || adults < 1 || adults > 20) throw new Error("Adults must be between 1 and 20.");
+  if (!Number.isInteger(children) || children < 0 || children > 20) throw new Error("Children must be between 0 and 20.");
+  if (!AREA_KEYWORDS[area]) throw new Error("Please select a supported destination.");
+  if (!Number.isInteger(days) || days < 1 || days > 30) throw new Error("Days must be between 1 and 30.");
+  if (!Number.isFinite(budget) || budget <= 0 || budget > 100000) throw new Error("Budget must be between 1 and 100,000.");
+  if (data.selectedCategories !== undefined &&
+      (!Array.isArray(data.selectedCategories) || data.selectedCategories.some((value) => typeof value !== "string"))) {
     throw new Error("Selected categories must be a list of valid categories.");
   }
-
-  const selectedCategories =
-    Array.isArray(data.selectedCategories)
-      ? data.selectedCategories
-      : [];
-
-  if (
-    data.surpriseMe !== undefined &&
-    typeof data.surpriseMe !== "boolean"
-  ) {
-    throw new Error("Surprise Me must be true or false.");
-  }
-
+  const selectedCategories = Array.isArray(data.selectedCategories) ? data.selectedCategories as string[] : [];
   const surpriseMe = data.surpriseMe === true;
-
-  if (
-    !Number.isInteger(adults) ||
-    adults < 1 ||
-    adults > 20
-  ) {
-    throw new Error(
-      "Adults must be between 1 and 20.",
-    );
-  }
-
-  if (
-    !Number.isInteger(children) ||
-    children < 0 ||
-    children > 20
-  ) {
-    throw new Error(
-      "Children must be between 0 and 20.",
-    );
-  }
-
-  if (!area) {
-    throw new Error(
-      "Area is required.",
-    );
-  }
-
-  if (!AREA_KEYWORDS[area]) {
-    throw new Error(
-      "Unsupported area.",
-    );
-  }
-
-  if (
-    !Number.isInteger(days) ||
-    days < 1 ||
-    days > 30
-  ) {
-    throw new Error(
-      "Days must be between 1 and 30.",
-    );
-  }
-
-  if (
-    !Number.isFinite(budget) ||
-    budget <= 0 ||
-    budget > 100000
-  ) {
-    throw new Error(
-      "Budget must be between 1 and 100,000.",
-    );
-  }
-
-  const validCategories = new Set(
-    tourList.map((tour) => tour.category),
-  );
-
-  if (
-    selectedCategories.length > 20 ||
-    selectedCategories.some((category) => !validCategories.has(category as Tour["category"]))
-  ) {
+  const validCategories = new Set(tourList.map((tour) => tour.category as string));
+  if (selectedCategories.length > 20 || selectedCategories.some((category) => !validCategories.has(category))) {
     throw new Error("One or more selected categories are invalid.");
   }
-
-  if (
-    !surpriseMe &&
-    selectedCategories.length === 0
-  ) {
-    throw new Error(
-      "Select at least one experience category or choose Surprise Me.",
-    );
+  if (!surpriseMe && selectedCategories.length === 0) {
+    throw new Error("Select at least one experience category or choose Surprise Me.");
   }
-
-  return {
-    adults,
-    children,
-    area,
-    days,
-    currency,
-    budget,
-    selectedCategories,
-    surpriseMe,
-  };
+  return { adults, children, area, days, currency: data.currency, budget, selectedCategories, surpriseMe };
 }
 
-function buildTourCatalog(
-  tours: Tour[],
-) {
-  return tours.map((tour) => ({
-    slug: tour.slug,
-    name: tour.name,
-    category: tour.category,
-    description: tour.description,
-    overview: tour.overview,
-    duration: tour.duration,
-    pickup: tour.pickup,
-    schedule: tour.schedule,
-    type: tour.type,
-    highlights: tour.highlights,
-    notes: tour.notes,
-    rating: tour.rating,
-    reviews: tour.reviews,
-    priceEUR: tour.price,
-    childPriceEUR: tour.childPrice,
-  }));
-}
-
-export async function POST(
-  request: Request,
-) {
+export async function POST(request: Request) {
   try {
     const contentType = request.headers.get("content-type") || "";
     if (!/^application\/json(?:\s*;|$)/i.test(contentType)) {
-      return NextResponse.json(
-        { success: false, error: "Invalid trip-planning request format." },
-        { status: 415 },
-      );
+      return NextResponse.json({ success: false, error: "Invalid trip-planning request format." }, { status: 415 });
     }
-
     if (await isRateLimited(request, "ai-trip-planner", 5, 3600)) {
-      return NextResponse.json(
-        { success: false, error: "Too many trip-planning requests. Please try again later." },
-        { status: 429 },
-      );
+      return NextResponse.json({ success: false, error: "Too many trip-planning requests. Please try again later." }, { status: 429 });
     }
-
-    const maxBodyBytes = 16_384;
-    const contentLength = Number(
-      request.headers.get("content-length") || 0,
-    );
-
-    if (contentLength > maxBodyBytes) {
-      return NextResponse.json(
-        { success: false, error: "Request is too large." },
-        { status: 413 },
-      );
+    const contentLength = Number(request.headers.get("content-length") || 0);
+    if (contentLength > 16_384) {
+      return NextResponse.json({ success: false, error: "Request is too large." }, { status: 413 });
     }
-
-    if (!request.body) {
-      return NextResponse.json(
-        { success: false, error: "Invalid JSON request." },
-        { status: 400 },
-      );
-    }
-
-    const reader = request.body.getReader();
-    const chunks: Uint8Array[] = [];
-    let totalBytes = 0;
-
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-
-      totalBytes += value.byteLength;
-      if (totalBytes > maxBodyBytes) {
-        await reader.cancel();
-        return NextResponse.json(
-          { success: false, error: "Request is too large." },
-          { status: 413 },
-        );
-      }
-
-      chunks.push(value);
-    }
-
-    const bytes = new Uint8Array(totalBytes);
-    let offset = 0;
-    for (const chunk of chunks) {
-      bytes.set(chunk, offset);
-      offset += chunk.byteLength;
-    }
-
     let body: unknown;
-
     try {
-      body = JSON.parse(new TextDecoder().decode(bytes));
+      body = await request.json();
     } catch {
-      return NextResponse.json(
-        { success: false, error: "Invalid JSON request." },
-        { status: 400 },
-      );
+      return NextResponse.json({ success: false, error: "Invalid JSON request." }, { status: 400 });
     }
 
-    const plannerRequest =
-      validateRequest(body);
-
-    /*
-     * SERVER-SIDE SOURCE OF TRUTH
-     *
-     * Only tours that:
-     * - exist in data/tours.ts
-     * - are available
-     * - have a real adult price
-     * can be sent to the AI.
-     */
-    const sellableTours =
-      tourList.filter(
-        (tour) =>
-          tour.available === true &&
-          Number.isFinite(tour.price) &&
-          tour.price > 0,
-      );
-
-    /*
-     * Area filtering happens BEFORE OpenAI.
-     */
-    const areaTours =
-      sellableTours.filter(
-        (tour) =>
-          matchesArea(
-            tour,
-            plannerRequest.area,
-          ),
-      );
-
-    /*
-     * Category filtering.
-     *
-     * Surprise Me = all valid categories.
-     */
-    const categoryTours =
-      plannerRequest.surpriseMe
-        ? areaTours
-        : areaTours.filter(
-            (tour) =>
-              plannerRequest.selectedCategories?.includes(
-                tour.category,
-              ),
-          );
+    const plannerRequest = validateRequest(body);
+    const sellableTours = tourList.filter((tour) =>
+      tour.available === true && Number.isFinite(tour.price) && tour.price > 0 &&
+      Number.isFinite(tour.childPrice) && tour.childPrice >= 0);
+    const areaTours = sellableTours.filter((tour) => matchesArea(tour, plannerRequest.area));
+    const categoryTours = plannerRequest.surpriseMe
+      ? areaTours
+      : areaTours.filter((tour) => plannerRequest.selectedCategories.includes(tour.category));
 
     if (categoryTours.length === 0) {
-      return NextResponse.json(
-        {
-          success: false,
-          error:
-            "We couldn't find enough priced experiences matching your current preferences.",
-        },
-        { status: 422 },
-      );
-    }
-
-    /*
-     * Send ONLY real tours from data/tours.ts
-     * to OpenAI.
-     */
-    const tourCatalog =
-      buildTourCatalog(
-        categoryTours,
-      );
-
-    const budgetEUR =
-      plannerRequest.currency === "USD"
-        ? plannerRequest.budget /
-          EUR_TO_USD
-        : plannerRequest.budget;
-
-    const systemPrompt = `
-You are the AI Trip Planner for Via Blue, a tourism company in Hurghada, Egypt.
-
-Your job is to create exactly 3 distinct trip package options.
-
-IMPORTANT RULES:
-
-1. You may ONLY select tours using the exact "slug" values from the supplied tour catalog.
-2. NEVER invent a tour.
-3. NEVER invent a price.
-4. NEVER modify a tour slug.
-5. NEVER use tours outside the supplied catalog.
-6. Every package must be meaningfully different from the others.
-7. Respect the customer's selected experience categories.
-8. If Surprise Me is true, you may use any supplied category.
-9. Respect the customer's destination/area.
-10. Respect the customer's budget.
-11. Consider the number of adults and children when choosing experiences.
-12. Prefer highly rated tours when reasonable.
-13. Avoid repeating the same tour inside one package.
-14. Keep the itinerary realistic and comfortable.
-15. Do not overload a trip with too many activities.
-16. Prefer approximately one main experience per day, with a maximum of five selected tours per package.
-17. Full-day experiences should not be combined with another heavy/full-day experience on the same day.
-18. Do not return more than 5 tour slugs in a package.
-19. Return EXACTLY 3 packages.
-20. The three packages should have different concepts:
-   - Balanced
-   - Adventure
-   - Signature / Premium
-21. Package titles and summaries should be attractive and natural for customers.
-22. Do not mention internal IDs, implementation details, or the tour catalog.
-
-The server will calculate all prices itself, so you only select tour slugs.
-`;
-
-    const userPrompt = `
-Create 3 Via Blue trip packages for this customer.
-
-Travelers:
-- Adults: ${plannerRequest.adults}
-- Children: ${plannerRequest.children}
-
-Area:
-- ${plannerRequest.area}
-
-Trip duration:
-- ${plannerRequest.days} days
-
-Currency:
-- ${plannerRequest.currency}
-
-Customer budget:
-- ${plannerRequest.budget} ${plannerRequest.currency}
-
-Equivalent budget in EUR:
-- ${Math.round(budgetEUR * 100) / 100} EUR
-
-Selected categories:
-- ${
-      plannerRequest.surpriseMe
-        ? "Surprise Me — choose freely from the supplied tours."
-        : plannerRequest.selectedCategories?.join(
-            ", ",
-          )
-    }
-
-Tour catalog:
-${JSON.stringify(
-  tourCatalog,
-  null,
-  2,
-)}
-
-Return exactly 3 package options.
-Each package must contain a list of exact tour slugs from the catalog.
-`;
-
-    /*
-     * REAL OPENAI CALL
-     * Keep the API key server-side and fail clearly if Production is missing it.
-     */
-    const apiKey = process.env.OPENAI_API_KEY?.trim();
-    if (!apiKey) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: "AI Trip Planner is not configured. Add OPENAI_API_KEY to the Vercel Production environment and redeploy.",
-        },
-        { status: 503 },
-      );
-    }
-
-    const openai = new OpenAI({ apiKey });
-    const response =
-      await openai.responses.create({
-        model: "gpt-4.1-mini",
-
-        instructions:
-          systemPrompt,
-
-        input: userPrompt,
-
-        text: {
-          format: {
-            type: "json_schema",
-
-            name:
-              "via_blue_trip_planner",
-
-            strict: true,
-
-            schema: {
-              type: "object",
-
-              properties: {
-                packages: {
-                  type: "array",
-
-                  items: {
-                    type: "object",
-
-                    properties: {
-                      id: {
-                        type: "string",
-                      },
-
-                      title: {
-                        type: "string",
-                      },
-
-                      summary: {
-                        type: "string",
-                      },
-
-                      tourSlugs: {
-                        type: "array",
-
-                        items: {
-                          type: "string",
-                        },
-                      },
-                    },
-
-                    required: [
-                      "id",
-                      "title",
-                      "summary",
-                      "tourSlugs",
-                    ],
-
-                    additionalProperties:
-                      false,
-                  },
-                },
-              },
-
-              required: [
-                "packages",
-              ],
-
-              additionalProperties:
-                false,
-            },
-          },
-        },
-      });
-
-    /*
-     * Parse OpenAI structured output.
-     */
-    if (!response.output_text) {
-      throw new Error(
-        "AI returned an empty response.",
-      );
-    }
-
-    const aiResult =
-      JSON.parse(
-        response.output_text,
-      ) as AIPlannerResponse;
-
-    if (
-      !Array.isArray(
-        aiResult.packages,
-      ) ||
-      aiResult.packages.length !== 3
-    ) {
-      throw new Error(
-        "AI did not return exactly 3 packages.",
-      );
-    }
-
-    /*
-     * SERVER-SIDE VALIDATION
-     *
-     * AI suggestions are NEVER trusted directly.
-     */
-    const packages =
-      aiResult.packages.map(
-        (aiPackage, index) =>
-          buildPackageFromAI(
-            aiPackage,
-            categoryTours,
-            plannerRequest,
-            index,
-          ),
-      );
-
-    /*
-     * Make sure every package contains
-     * at least one real activity.
-     */
-    if (
-      packages.some(
-        (pkg) =>
-          pkg.activities === 0,
-      )
-    ) {
-      throw new Error(
-        "The AI could not create three valid packages within the selected budget and preferences.",
-      );
-    }
-
-    /*
-     * Final authoritative validation.
-     *
-     * Re-check every tour directly against
-     * data/tours.ts.
-     */
-    const validatedPackages =
-      packages.map((pkg) => {
-        const validItinerary =
-          pkg.itinerary
-            .map((day) => ({
-              ...day,
-
-              tours:
-                day.tours.filter(
-                  (item) => {
-                    const sourceTour =
-                      tourList.find(
-                        (tour) =>
-                          tour.slug ===
-                          item.slug,
-                      );
-
-                    return Boolean(
-                      sourceTour &&
-                        sourceTour.available &&
-                        sourceTour.price >
-                          0,
-                    );
-                  },
-                ),
-            }))
-            .filter(
-              (day) =>
-                day.tours.length > 0,
-            );
-
-        const validTours =
-          validItinerary.flatMap(
-            (day) => day.tours,
-          );
-
-        const recalculatedTotal =
-          validTours.reduce(
-            (total, item) =>
-              total +
-              item.estimatedTotal,
-            0,
-          );
-
-        return {
-          ...pkg,
-
-          itinerary:
-            validItinerary,
-
-          activities:
-            validTours.length,
-
-          totalCost:
-            Math.round(
-              recalculatedTotal *
-                100,
-            ) / 100,
-
-          remainingBudget:
-            Math.round(
-              (plannerRequest.budget -
-                recalculatedTotal) *
-                100,
-            ) / 100,
-        };
-      });
-
-    /*
-     * Exactly 3 packages.
-     */
-    return NextResponse.json({
-      success: true,
-
-      packages:
-        validatedPackages,
-
-      meta: {
-        source:
-          "OpenAI + data/tours.ts",
-
-        totalAvailableTours:
-          sellableTours.length,
-
-        matchedTours:
-          categoryTours.length,
-
-        packagesGenerated: 3,
-
-        currency:
-          plannerRequest.currency,
-
-        exchangeRateEURtoUSD:
-          EUR_TO_USD,
-
-        aiModel:
-          "gpt-4.1-mini",
-      },
-    });
-  } catch (error) {
-    console.error("AI Trip Planner request failed:", {
-      name: error instanceof Error ? error.name : "UnknownError",
-      message: error instanceof Error ? error.message : "Unknown error",
-    });
-
-    const message =
-      error instanceof Error
-        ? error.message
-        : "";
-
-    // Keep a safe diagnostic code in the response so failures can be identified
-    // without exposing API keys, request payloads, prompts, or stack traces.
-    const apiError = error && typeof error === "object"
-      ? error as { status?: unknown; code?: unknown; type?: unknown; name?: unknown }
-      : {};
-    const safeDiagnostic = [
-      typeof apiError.status === "number" || typeof apiError.status === "string"
-        ? `status=${apiError.status}`
-        : "",
-      typeof apiError.code === "string" ? `code=${apiError.code}` : "",
-      typeof apiError.type === "string" ? `type=${apiError.type}` : "",
-      typeof apiError.name === "string" ? `name=${apiError.name}` : "",
-    ].filter(Boolean).join(", ");
-
-    const isValidationError =
-      /Invalid request body|Adults must|Children must|Area is required|Unsupported area|Days must|Budget must|selected categories|Select at least one experience category/i.test(message);
-    const isAuthError = /api key|authentication|unauthorized|invalid.*key/i.test(message);
-    const isModelError = /model.*not found|does not exist|unsupported model/i.test(message);
-
-    return NextResponse.json(
-      {
+      return NextResponse.json({
         success: false,
-        error: isValidationError
-          ? message
-          : isAuthError
-            ? "The AI service rejected its API key. Check OPENAI_API_KEY in Vercel Production."
-            : isModelError
-              ? "The AI model configuration is invalid. Check the configured model in the trip planner."
-              : `Unable to create your trip plan right now. Please try again shortly.${safeDiagnostic ? ` (diagnostic: ${safeDiagnostic})` : ""}`,
-      },
-      { status: isValidationError ? 400 : isAuthError || isModelError ? 503 : 500 },
-    );
+        error: "We couldn't find priced experiences matching this destination and your selected categories. Try another category or choose Surprise Me.",
+      }, { status: 422 });
+    }
+
+    const packages = PACKAGE_STYLES.map((_, index) =>
+      createPackage(categoryTours, plannerRequest, index)
+    ).filter((item): item is PackageOption => Boolean(item));
+
+    if (packages.length !== 3) {
+      return NextResponse.json({
+        success: false,
+        error: "Your budget may be too low for the selected activities and number of travelers. Try increasing it or selecting different categories.",
+      }, { status: 422 });
+    }
+
+    return NextResponse.json({ success: true, packages });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Unable to create your trip plan.";
+    return NextResponse.json({ success: false, error: message }, { status: 400 });
   }
 }
