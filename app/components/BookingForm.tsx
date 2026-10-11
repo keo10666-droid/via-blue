@@ -892,7 +892,7 @@ ${notes.trim() || "-"}`;
               </div>
             </div>
 
-            {/* <HomeText en="Tour Date *" de="Reisedatum *" />/}
+            {/* Tour Date */}
             <div className="mb-8 mt-12 border-b border-gray-100 pb-8">
               <p className="mb-2 text-xs font-black uppercase tracking-[0.18em] text-orange-500">
                 <HomeText en="Experience Details" de="Erlebnisdetails" />
