@@ -302,7 +302,7 @@ export async function POST(request: Request) {
       );
     }
 
-    if (await isRateLimited(request, "booking-submit", 10, 3600)) {
+    if (await isRateLimited(request, "booking-submit", 25, 3600)) {
       return Response.json(
         { success: false, error: "Too many booking attempts. Please try again later." },
         { status: 429 },
