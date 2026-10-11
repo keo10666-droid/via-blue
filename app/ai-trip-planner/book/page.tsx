@@ -219,6 +219,7 @@ const formatDateLabel = (value: string) => {
 
 export default function AITripBookingPage() {
   const [booking, setBooking] = useState<BookingData | null>(null);
+  const [isGerman, setIsGerman] = useState(false);
   const [loading, setLoading] = useState(true);
   const [name, setName] = useState("");
   const [nationality, set<HomeText en="Nationality" de="Nationalität" />] = useState("");
@@ -250,6 +251,13 @@ export default function AITripBookingPage() {
       1,
     );
   });
+
+  useEffect(() => {
+    const syncLanguage = () => setIsGerman(localStorage.getItem("via-blue-language") === "de");
+    syncLanguage();
+    window.addEventListener("via-blue-language-change", syncLanguage);
+    return () => window.removeEventListener("via-blue-language-change", syncLanguage);
+  }, []);
 
   useEffect(() => {
     try {
@@ -956,7 +964,7 @@ Via Blue AI Trip Planner
 
                 <input
                   type="text"
-                  placeholder="<HomeText en="Full Name *" de="Vollständiger Name *" />"
+                  placeholder={isGerman ? "Vollständiger Name *" : "Full Name *"}
                   value={name}
                   onChange={(event) =>
                     setName(event.target.value)
@@ -981,7 +989,7 @@ Via Blue AI Trip Planner
 
                 <input
                   type="text"
-                  placeholder="<HomeText en="Nationality" de="Nationalität" />"
+                  placeholder={isGerman ? "Nationalität" : "Nationality"}
                   value={nationality}
                   onChange={(event) => {
                     set<HomeText en="Nationality" de="Nationalität" />(
@@ -1042,7 +1050,7 @@ Via Blue AI Trip Planner
 
                 <input
                   type="email"
-                  placeholder="<HomeText en="Email *" de="E-Mail *" />"
+                  placeholder={isGerman ? "E-Mail *" : "Email *"}
                   value={email}
                   onChange={(event) =>
                     setEmail(event.target.value)
@@ -1094,7 +1102,7 @@ Via Blue AI Trip Planner
                       <div className="absolute left-0 top-full z-40 mt-1 w-72 rounded-xl border bg-white shadow-xl">
                         <input
                           type="text"
-                          placeholder="Search country..."
+                          placeholder={isGerman ? "Land suchen..." : "Search country..."}
                           value={countrySearch}
                           onChange={(event) =>
                             setCountrySearch(
@@ -1155,7 +1163,7 @@ Via Blue AI Trip Planner
 
                   <input
                     type="tel"
-                    placeholder="Number"
+                    placeholder={isGerman ? "Telefonnummer" : "Number"}
                     value={phone}
                     onChange={(event) =>
                       setPhone(
@@ -1193,7 +1201,7 @@ Via Blue AI Trip Planner
 
                 <input
                   type="text"
-                  placeholder="<HomeText en="Hotel Name" de="Hotelname" />"
+                  placeholder={isGerman ? "Hotelname" : "Hotel Name"}
                   value={hotel}
                   onChange={(event) =>
                     setHotel(
@@ -1211,7 +1219,7 @@ Via Blue AI Trip Planner
 
                 <input
                   type="text"
-                  placeholder="<HomeText en="Room Number" de="Zimmernummer" />"
+                  placeholder={isGerman ? "Zimmernummer" : "Room Number"}
                   value={roomNumber}
                   onChange={(event) =>
                     setRoomNumber(
@@ -1379,7 +1387,7 @@ Via Blue AI Trip Planner
                               goToPreviousMonth
                             }
                             disabled={!canGoPrev}
-                            aria-label="Previous month"
+                            aria-label={isGerman ? "Vorheriger Monat" : "Previous month"}
                             className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white transition-all duration-200 hover:border-orange-400/50 hover:bg-orange-500 disabled:cursor-not-allowed disabled:opacity-30"
                           >
                             <svg
@@ -1402,7 +1410,7 @@ Via Blue AI Trip Planner
                             onClick={
                               goToNextMonth
                             }
-                            aria-label="Next month"
+                            aria-label={isGerman ? "Nächster Monat" : "Next month"}
                             className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white transition-all duration-200 hover:border-orange-400/50 hover:bg-orange-500"
                           >
                             <svg
@@ -1708,7 +1716,7 @@ Via Blue AI Trip Planner
 
             <textarea
               rows={3}
-              placeholder="<HomeText en="Special Requests / Notes" de="Besondere Wünsche / Hinweise" />"
+              placeholder={isGerman ? "Besondere Wünsche / Hinweise" : "Special Requests / Notes"}
               className={inputClass(false)}
             />
 
