@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { transfers } from "@/data/transfers";
+import HomeText from "@/app/components/HomeText";
 
 type TransferOverride = {
   from?: string; to?: string; available?: boolean;
@@ -70,23 +71,23 @@ export default function TransfersPage() {
               <span className="h-2 w-2 rounded-full bg-green-400 shadow-[0_0_12px_rgba(74,222,128,0.7)]" />
 
               <span className="text-xs font-bold uppercase tracking-[0.12em] text-slate-200">
-                Reliable Private Transfers
+                <HomeText en="Reliable Private Transfers" de="Zuverlässige private Transfers" />
               </span>
 
             </div>
 
             <h1 className="text-4xl font-black leading-[1.05] tracking-[-0.04em] sm:text-5xl md:text-6xl">
 
-              Comfortable Transfers
+              <HomeText en="Comfortable Transfers" de="Komfortable Transfers" />
 
               <span className="mt-2 block bg-gradient-to-r from-orange-300 via-orange-400 to-amber-300 bg-clip-text text-transparent">
-                No Stress
+                <HomeText en="No Stress" de="Ganz ohne Stress" />
               </span>
 
             </h1>
 
             <p className="mt-7 max-w-2xl text-base leading-8 text-slate-300 md:text-lg">
-              Book a private transfer between Hurghada Airport and your hotel, or travel comfortably from one hotel to another
+              <HomeText en="Book a private transfer between Hurghada Airport and your hotel, or travel comfortably from one hotel to another" de="Buchen Sie einen privaten Transfer zwischen dem Flughafen Hurghada und Ihrem Hotel oder reisen Sie bequem von Hotel zu Hotel." />
             </p>
 
             <div className="mt-9 flex flex-wrap gap-x-7 gap-y-4 text-sm font-semibold text-slate-200">
@@ -97,7 +98,7 @@ export default function TransfersPage() {
                   ✓
                 </span>
 
-                Fixed Prices
+                <HomeText en="Fixed Prices" de="Festpreise" />
 
               </div>
 
@@ -107,7 +108,7 @@ export default function TransfersPage() {
                   ✓
                 </span>
 
-                Private Vehicles
+                <HomeText en="Private Vehicles" de="Private Fahrzeuge" />
 
               </div>
 
@@ -117,7 +118,7 @@ export default function TransfersPage() {
                   ✓
                 </span>
 
-                Professional Drivers
+                <HomeText en="Professional Drivers" de="Professionelle Fahrer" />
 
               </div>
 
@@ -175,7 +176,7 @@ export default function TransfersPage() {
               </p>
 
               <p className="mt-1 text-sm text-slate-500">
-                Directly to your destination
+                <HomeText en="Directly to your destination" de="Direkt zu Ihrem Ziel" />
               </p>
 
             </div>
@@ -215,7 +216,7 @@ export default function TransfersPage() {
             <div>
 
               <p className="font-extrabold tracking-[-0.01em] text-slate-900">
-                Fixed Prices
+                <HomeText en="Fixed Prices" de="Festpreise" />
               </p>
 
               <p className="mt-1 text-sm text-slate-500">
