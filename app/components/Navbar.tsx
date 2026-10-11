@@ -19,6 +19,7 @@ export default function Navbar() {
       const savedLanguage = window.localStorage.getItem("via-blue-language");
       if (savedLanguage === "de" || savedLanguage === "en") {
         setLanguage(savedLanguage);
+        document.documentElement.lang = savedLanguage;
       }
     } catch {
       // Keep English as the safe default if browser storage is unavailable.
@@ -28,6 +29,7 @@ export default function Navbar() {
   function toggleLanguage() {
     const nextLanguage = language === "en" ? "de" : "en";
     setLanguage(nextLanguage);
+    document.documentElement.lang = nextLanguage;
     try {
       window.localStorage.setItem("via-blue-language", nextLanguage);
     } catch {
