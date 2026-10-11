@@ -764,7 +764,7 @@ export default function AITripPlannerPage() {
                   <span className="h-px w-10 bg-orange-500" />
 
                   <p className="text-xs font-bold uppercase tracking-[0.3em] text-orange-500">
-                    Your Via Blue Smart Planner Plan
+                    Your Via Blue Trip Plan
                   </p>
 
                   <span className="h-px w-10 bg-orange-500" />
