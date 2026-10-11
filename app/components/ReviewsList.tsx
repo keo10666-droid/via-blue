@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { getSampleReviews } from "@/data/sampleReviews";
+import HomeText from "@/app/components/HomeText";
 
 type Review = {
   id: string;
@@ -104,26 +105,26 @@ export default function ReviewsList({
         <div className="flex flex-wrap items-center gap-3">
           <div className="inline-flex items-center rounded-full border border-orange-200 bg-orange-50 px-4 py-2 shadow-sm">
             <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-orange-500">
-              Guest Reviews
+              <HomeText en="Guest Reviews" de="Gästebewertungen" />
             </p>
           </div>
 
           {isSample && (
             <div className="inline-flex items-center rounded-full border border-blue-100 bg-blue-50 px-4 py-2 shadow-sm">
               <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-blue-700">
-                Sample Reviews
+                <HomeText en="Sample Reviews" de="Beispielbewertungen" />
               </p>
             </div>
           )}
         </div>
 
         <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-blue-950 md:text-4xl">
-          What Our Guests Say
+          <HomeText en="What Our Guests Say" de="Das sagen unsere Gäste" />
         </h2>
 
         {isSample && (
           <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-500">
-            Temporary sample content shown until real customer reviews are available for this tour
+            <HomeText en="Temporary sample content shown until real customer reviews are available for this tour" de="Vorübergehende Beispielbewertungen, bis echte Kundenbewertungen für diese Tour verfügbar sind" />
           </p>
         )}
       </div>
@@ -139,7 +140,7 @@ export default function ReviewsList({
             </div>
 
             <p className="mt-5 font-semibold text-slate-500">
-              No reviews yet. Be the first to review this tour!
+              <HomeText en="No reviews yet. Be the first to review this tour!" de="Noch keine Bewertungen. Sei der Erste, der diese Tour bewertet!" />
             </p>
           </div>
         </div>
@@ -209,7 +210,7 @@ export default function ReviewsList({
               <button
                 type="button"
                 onClick={goToPrevious}
-                aria-label="Previous review"
+                aria-label="Previous review" title="Vorherige Bewertung"
                 className="absolute left-1 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white text-xl font-bold text-blue-950 shadow-[0_10px_30px_rgba(7,26,54,0.12)] transition duration-300 hover:-translate-x-0.5 hover:bg-blue-950 hover:text-white hover:shadow-[0_14px_35px_rgba(7,26,54,0.2)] sm:left-2"
               >
                 ←
@@ -218,7 +219,7 @@ export default function ReviewsList({
               <button
                 type="button"
                 onClick={goToNext}
-                aria-label="Next review"
+                aria-label="Next review" title="Nächste Bewertung"
                 className="absolute right-1 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white text-xl font-bold text-blue-950 shadow-[0_10px_30px_rgba(7,26,54,0.12)] transition duration-300 hover:translate-x-0.5 hover:bg-blue-950 hover:text-white hover:shadow-[0_14px_35px_rgba(7,26,54,0.2)] sm:right-2"
               >
                 →
