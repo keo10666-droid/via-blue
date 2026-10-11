@@ -297,7 +297,7 @@ export default function LuxuryToursPage() {
                 <div className="relative h-64 overflow-hidden bg-slate-100 md:h-68">
                   <Image
                     src={tour.image}
-                    alt=<HomeText en={tour.name} de={germanTourContent[tour.slug]?.name ?? tour.name} />
+                    alt={tour.name}
                     fill
                     className="object-cover transition duration-700 group-hover:scale-110"
                     sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
