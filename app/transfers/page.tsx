@@ -172,7 +172,7 @@ export default function TransfersPage() {
             <div>
 
               <p className="font-extrabold tracking-[-0.01em] text-slate-900">
-                Private Transfer
+                <HomeText en="Private Transfer" de="Privater Transfer" />
               </p>
 
               <p className="mt-1 text-sm text-slate-500">
@@ -220,7 +220,7 @@ export default function TransfersPage() {
               </p>
 
               <p className="mt-1 text-sm text-slate-500">
-                No hidden charges
+                <HomeText en="No hidden charges" de="Keine versteckten Kosten" />
               </p>
 
             </div>
@@ -258,11 +258,11 @@ export default function TransfersPage() {
             <div>
 
               <p className="font-extrabold tracking-[-0.01em] text-slate-900">
-                Reliable Service
+                <HomeText en="Reliable Service" de="Zuverlässiger Service" />
               </p>
 
               <p className="mt-1 text-sm text-slate-500">
-                Safe & comfortable journey
+                <HomeText en="Safe & comfortable journey" de="Sichere und komfortable Fahrt" />
               </p>
 
             </div>
@@ -284,21 +284,21 @@ export default function TransfersPage() {
           <div>
 
             <p className="mb-2 text-xs font-extrabold uppercase tracking-[0.28em] text-orange-500">
-              Airport Transfers
+              <HomeText en="Airport Transfers" de="Flughafentransfers" />
             </p>
 
             <h2 className="text-3xl font-black tracking-[-0.035em] text-slate-900 md:text-4xl">
-              Choose Your Destination
+              <HomeText en="Choose Your Destination" de="Wählen Sie Ihr Reiseziel" />
             </h2>
 
             <p className="mt-4 max-w-2xl leading-7 text-slate-600">
-              Select your destination and book a private transfer from Hurghada Airport to your hotel
+              <HomeText en="Select your destination and book a private transfer from Hurghada Airport to your hotel" de="Wählen Sie Ihr Reiseziel und buchen Sie einen privaten Transfer vom Flughafen Hurghada zu Ihrem Hotel." />
             </p>
 
           </div>
 
           <div className="hidden rounded-full border border-slate-200/80 bg-white/80 px-4 py-2.5 text-sm font-bold text-slate-500 shadow-sm backdrop-blur-md md:block">
-            {items.length} destinations available
+            {items.length} <HomeText en="destinations available" de="Reiseziele verfügbar" />
           </div>
 
         </div>
@@ -357,11 +357,11 @@ export default function TransfersPage() {
                   <div className="absolute inset-x-0 top-0 flex items-start justify-between p-5">
 
                     <span className="rounded-full border border-white/20 bg-slate-950/35 px-3 py-1.5 text-[10px] font-extrabold tracking-[0.12em] text-white shadow-lg backdrop-blur-xl">
-                      PRIVATE TRANSFER
+                      <HomeText en="PRIVATE TRANSFER" de="PRIVATER TRANSFER" />
                     </span>
 
                     <span className="rounded-full border border-white/70 bg-white/90 px-3 py-1.5 text-xs font-extrabold text-slate-900 shadow-lg backdrop-blur-md">
-                      Fixed Price
+                      <HomeText en="Fixed Price" de="Festpreis" />
                     </span>
 
                   </div>
@@ -401,7 +401,7 @@ export default function TransfersPage() {
                     <div className="min-w-0 flex-1">
 
                       <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-slate-400">
-                        Route
+                        <HomeText en="Route" de="Strecke" />
                       </p>
 
                       <div className="mt-1 flex items-center gap-2 text-sm font-bold text-slate-800">
@@ -430,7 +430,7 @@ export default function TransfersPage() {
                     <div>
 
                       <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-slate-400">
-                        Starting from
+                        <HomeText en="Starting from" de="Ab" />
                       </p>
 
                       <div className="mt-1 flex items-baseline gap-1">
@@ -440,7 +440,7 @@ export default function TransfersPage() {
                         </span>
 
                         <span className="text-sm font-medium text-slate-500">
-                          / vehicle
+                          / <HomeText en="vehicle" de="Fahrzeug" />
                         </span>
 
                       </div>
@@ -450,11 +450,11 @@ export default function TransfersPage() {
                     <div className="text-right">
 
                       <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-slate-400">
-                        Available
+                        <HomeText en="Available" de="Verfügbar" />
                       </p>
 
                       <p className="mt-1 text-sm font-extrabold text-green-600">
-                        Multiple vehicles
+                        <HomeText en="Multiple vehicles" de="Mehrere Fahrzeuge" />
                       </p>
 
                     </div>
@@ -465,7 +465,7 @@ export default function TransfersPage() {
                   <div className="mt-5">
 
                     <p className="mb-2 text-[10px] font-extrabold uppercase tracking-[0.14em] text-slate-400">
-                      Vehicle options
+                      <HomeText en="Vehicle options" de="Fahrzeugoptionen" />
                     </p>
 
                     <div className="flex flex-wrap gap-2">
@@ -497,7 +497,7 @@ export default function TransfersPage() {
                       }
                       className="flex items-center justify-center rounded-2xl border border-slate-200 bg-white px-4 py-3.5 text-sm font-extrabold text-slate-800 transition-all duration-300 hover:-translate-y-0.5 hover:border-blue-200 hover:bg-blue-50 hover:shadow-md"
                     >
-                      View Details
+                      <HomeText en="View Details" de="Details ansehen" />
                     </Link>
 
                     <Link
@@ -507,7 +507,7 @@ export default function TransfersPage() {
                       }
                       className="flex items-center justify-center rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 px-4 py-3.5 text-sm font-extrabold text-white shadow-lg shadow-orange-500/20 transition-all duration-300 hover:-translate-y-0.5 hover:from-orange-600 hover:to-amber-600 hover:shadow-xl hover:shadow-orange-500/25"
                     >
-                      Book Now
+                      <HomeText en="Book Now" de="Jetzt buchen" />
                     </Link>
 
                   </div>
@@ -531,15 +531,15 @@ export default function TransfersPage() {
           <div className="mx-auto max-w-2xl text-center">
 
             <p className="mb-2 text-xs font-extrabold uppercase tracking-[0.28em] text-orange-500">
-              Travel With Confidence
+              <HomeText en="Travel With Confidence" de="Reisen Sie mit Vertrauen" />
             </p>
 
             <h2 className="text-3xl font-black tracking-[-0.035em] text-slate-900 md:text-4xl">
-              A smoother start to your holiday
+              <HomeText en="A smoother start to your holiday" de="Ein entspannter Start in Ihren Urlaub" />
             </h2>
 
             <p className="mt-4 leading-7 text-slate-600">
-              From the moment you land in Hurghada, we make getting to your hotel simple, comfortable and stress-free
+              <HomeText en="From the moment you land in Hurghada, we make getting to your hotel simple, comfortable and stress-free" de="Von Ihrer Ankunft in Hurghada an gestalten wir den Weg zu Ihrem Hotel einfach, bequem und stressfrei." />
             </p>
 
           </div>
@@ -553,11 +553,11 @@ export default function TransfersPage() {
               </div>
 
               <h3 className="mt-5 text-xl font-black tracking-[-0.02em] text-slate-900">
-                Safe & Reliable
+                <HomeText en="Safe & Reliable" de="Sicher und zuverlässig" />
               </h3>
 
               <p className="mt-3 leading-7 text-slate-600">
-                Enjoy a comfortable private journey with professional service from pickup to destination
+                <HomeText en="Enjoy a comfortable private journey with professional service from pickup to destination" de="Genießen Sie eine komfortable private Fahrt mit professionellem Service vom Abholort bis zum Ziel." />
               </p>
 
             </div>
@@ -569,11 +569,11 @@ export default function TransfersPage() {
               </div>
 
               <h3 className="mt-5 text-xl font-black tracking-[-0.02em] text-slate-900">
-                Transparent Pricing
+                <HomeText en="Transparent Pricing" de="Transparente Preise" />
               </h3>
 
               <p className="mt-3 leading-7 text-slate-600">
-                See the price before you book. Our transfer rates are fixed and easy to understand
+                <HomeText en="See the price before you book. Our transfer rates are fixed and easy to understand" de="Sehen Sie den Preis vor der Buchung. Unsere Transferpreise sind fest und leicht verständlich." />
               </p>
 
             </div>
@@ -585,11 +585,11 @@ export default function TransfersPage() {
               </div>
 
               <h3 className="mt-5 text-xl font-black tracking-[-0.02em] text-slate-900">
-                Hassle-Free Travel
+                <HomeText en="Hassle-Free Travel" de="Stressfreies Reisen" />
               </h3>
 
               <p className="mt-3 leading-7 text-slate-600">
-                Airport to hotel, hotel to airport or hotel to hotel — choose the service you need
+                <HomeText en="Airport to hotel, hotel to airport or hotel to hotel — choose the service you need" de="Flughafen zum Hotel, Hotel zum Flughafen oder von Hotel zu Hotel – wählen Sie den passenden Service." />
               </p>
 
             </div>
@@ -612,15 +612,15 @@ export default function TransfersPage() {
           <div>
 
             <p className="text-xs font-extrabold uppercase tracking-[0.28em] text-orange-400">
-              Ready to travel?
+              <HomeText en="Ready to travel?" de="Bereit für Ihre Reise?" />
             </p>
 
             <h2 className="mt-3 text-3xl font-black tracking-[-0.035em] md:text-4xl">
-              Start your journey the right way
+              <HomeText en="Start your journey the right way" de="Starten Sie Ihre Reise richtig" />
             </h2>
 
             <p className="mt-3 max-w-xl leading-7 text-blue-200">
-              Choose your destination, select your transfer type and book your private vehicle
+              <HomeText en="Choose your destination, select your transfer type and book your private vehicle" de="Wählen Sie Ihr Reiseziel und Ihre Transferart und buchen Sie Ihr privates Fahrzeug." />
             </p>
 
           </div>
@@ -629,7 +629,7 @@ export default function TransfersPage() {
             href="#destinations"
             className="shrink-0 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 px-7 py-4 font-extrabold text-white shadow-xl shadow-orange-500/20 transition-all duration-300 hover:-translate-y-0.5 hover:from-orange-600 hover:to-amber-600 hover:shadow-2xl hover:shadow-orange-500/25"
           >
-            Explore Transfers
+            <HomeText en="Explore Transfers" de="Transfers entdecken" />
           </Link>
 
         </div>
