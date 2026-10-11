@@ -1044,7 +1044,7 @@ ${notes.trim() || "-"}`;
             {childAges.length > 0 && (
               <div className="mt-7 rounded-2xl border border-blue-100 bg-blue-50/50 p-5">
                 <h3 className="mb-4 text-lg font-black text-[#071a36]">
-                  <HomeText en="Children Ages (5-<HomeText en="10 years" de="10 Jahre" />)" de="Alter der Kinder (5–10 Jahre)" />
+                  <HomeText en="Children Ages (5-10 years)" de="Alter der Kinder (5–10 Jahre)" />
                 </h3>
 
                 <div className="grid gap-4 md:grid-cols-2">
@@ -1115,7 +1115,7 @@ ${notes.trim() || "-"}`;
             {infantAges.length > 0 && (
               <div className="mt-7 rounded-2xl border border-orange-100 bg-orange-50/50 p-5">
                 <h3 className="mb-4 text-lg font-black text-[#071a36]">
-                  <HomeText en="Infant Ages (1-<HomeText en="4 years" de="4 Jahre" />)" de="Alter der Kleinkinder (1–4 Jahre)" />
+                  <HomeText en="Infant Ages (1-4 years)" de="Alter der Kleinkinder (1–4 Jahre)" />
                 </h3>
 
                 <div className="grid gap-4 md:grid-cols-2">
