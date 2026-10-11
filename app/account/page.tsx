@@ -158,6 +158,22 @@ const COUNTRY_CODES = [
   { name: "Kuwait", flag: "kw", code: "+965" },
 ];
 
+function translateAccountMessage(message: string) {
+  const translations: Record<string, string> = {
+    "Please select a JPG, PNG, WebP or GIF image": "Bitte wähle ein JPG-, PNG-, WebP- oder GIF-Bild aus",
+    "Image size must be 5 MB or smaller": "Das Bild darf höchstens 5 MB groß sein",
+    "Each memory image must be 5 MB or smaller": "Jedes Erinnerungsfoto darf höchstens 5 MB groß sein",
+    "Please choose a photo first": "Bitte wähle zuerst ein Foto aus",
+    "You have reached the maximum of 25 travel memories": "Du hast die Höchstzahl von 25 Reiseerinnerungen erreicht",
+    "Could not save this memory": "Diese Erinnerung konnte nicht gespeichert werden",
+    "Your travel memory has been added": "Deine Reiseerinnerung wurde hinzugefügt",
+    "Travel memory deleted": "Reiseerinnerung gelöscht",
+    "Your profile has been saved": "Dein Profil wurde gespeichert",
+    " Please check your email to confirm the new address": " Bitte überprüfe deine E-Mails, um die neue Adresse zu bestätigen",
+  };
+  return Object.entries(translations).reduce((text, [english, german]) => text.split(english).join(german), message);
+}
+
 export default function AccountPage() {
   const router = useRouter();
 
@@ -1160,7 +1176,7 @@ export default function AccountPage() {
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-400">
-                  Travel Memories
+                  <HomeText en="Travel Memories" de="Reiseerinnerungen" />
                 </p>
                 <p className="mt-3 text-3xl font-semibold tracking-tight text-[#071d49]">
                   {memories.length}
@@ -1201,7 +1217,7 @@ export default function AccountPage() {
             </div>
 
             <p className="mt-3 text-xs leading-5 text-slate-500">
-              Save photos from your favorite trips
+              <HomeText en="Save photos from your favorite trips" de="Speichere Fotos deiner Lieblingsausflüge" />
             </p>
           </div>
 
@@ -1216,11 +1232,11 @@ export default function AccountPage() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-orange-500">
-                  Personal Details
+                  <HomeText en="Personal Details" de="Persönliche Angaben" />
                 </p>
 
                 <h2 className="mt-1 text-xl font-semibold tracking-tight text-[#071d49]">
-                  Your Profile
+                  <HomeText en="Your Profile" de="Dein Profil" />
                 </h2>
               </div>
 
@@ -1341,7 +1357,7 @@ export default function AccountPage() {
               <div className="mt-7">
                 <div className="mb-2 flex items-center justify-between">
                   <label className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                    Full Name
+                    <HomeText en="Full Name" de="Vollständiger Name" />
                   </label>
 
                   {!isEditingProfile && (
@@ -1390,7 +1406,7 @@ export default function AccountPage() {
                 ) : (
                   <div className="rounded-xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-800">
                     {fullName ||
-                      "Not added yet"}
+                      <HomeText en="Not added yet" de="Noch nicht angegeben" />}
                   </div>
                 )}
               </div>
@@ -1399,7 +1415,7 @@ export default function AccountPage() {
               <div className="mt-5">
                 <div className="mb-2 flex items-center justify-between">
                   <label className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                    WhatsApp Number
+                    <HomeText en="WhatsApp Number" de="WhatsApp-Nummer" />
                   </label>
 
                   {!isEditingProfile && (
@@ -1608,8 +1624,8 @@ export default function AccountPage() {
                     className="flex-1 rounded-xl bg-orange-500 py-3 text-sm font-bold text-white shadow-sm transition hover:bg-orange-600 hover:shadow-md disabled:opacity-60"
                   >
                     {isSaving
-                      ? "Saving..."
-                      : "Save Changes"}
+                      ? <HomeText en="Saving..." de="Wird gespeichert..." />
+                      : <HomeText en="Save Changes" de="Änderungen speichern" />}
                   </button>
 
                   <button
@@ -1648,7 +1664,7 @@ export default function AccountPage() {
                     }}
                     className="rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-bold text-slate-600 transition hover:bg-slate-50"
                   >
-                    Cancel
+                    <HomeText en="Cancel" de="Abbrechen" />
                   </button>
                 </div>
               )}
@@ -1912,7 +1928,7 @@ export default function AccountPage() {
               <span className="truncate">
                 {memoryFile
                   ? memoryFile.name
-                  : "Choose a travel photo"}
+                  : <HomeText en="Choose a travel photo" de="Reisefoto auswählen" />}
               </span>
 
               <input
@@ -1965,10 +1981,10 @@ export default function AccountPage() {
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-orange-500 px-6 py-3 text-sm font-bold text-white transition hover:bg-orange-600 disabled:cursor-not-allowed disabled:opacity-50"
             >
               {isUploadingMemory ? (
-                "Uploading..."
+                <HomeText en="Uploading..." de="Wird hochgeladen..." />
               ) : (
                 <>
-                  Add Photo
+                  <HomeText en="Add Photo" de="Foto hinzufügen" />
 
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -1991,7 +2007,7 @@ export default function AccountPage() {
 
           {message && (
             <p className="mt-4 rounded-xl border border-blue-100 bg-blue-50 px-4 py-3 text-sm font-medium text-[#071d49]">
-              {message}
+              {translateAccountMessage(message)}
             </p>
           )}
 
@@ -2091,7 +2107,7 @@ export default function AccountPage() {
                           />
                         </svg>
 
-                        Delete Photo
+                        <HomeText en="Delete Photo" de="Foto löschen" />
                       </button>
                     </div>
                   </article>
