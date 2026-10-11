@@ -1,6 +1,51 @@
 import Link from "next/link";
 import HomeText from "@/app/components/HomeText";
 
+const luxuryGermanText: Record<string, string> = {
+  "Private Luxor Overday Tour": "Private Luxor-Tagesreise",
+  "Discover the wonders of ancient Luxor in complete privacy, with a dedicated private vehicle, professional Egyptologist guide and a carefully planned full-day experience from Hurghada.": "Entdecken Sie die Wunder des antiken Luxor ganz privat – mit einem eigenen Fahrzeug, einem professionellen Ägyptologen als Reiseleiter und einem sorgfältig geplanten Ganztagesausflug ab Hurghada.",
+  "A Private Journey Through Ancient Egypt": "Eine private Reise durch das alte Ägypten",
+  "Private transportation": "Privater Transfer",
+  "Private Egyptologist guide": "Privater Ägyptologen-Reiseleiter",
+  "Hotel pickup & drop-off": "Abholung und Rücktransfer zum Hotel",
+  "Karnak Temple": "Karnak-Tempel",
+  "Valley of the Kings – 3 tombs": "Tal der Könige – 3 Gräber",
+  "Temple of Hatshepsut": "Tempel der Hatschepsut",
+  "Lunch included": "Mittagessen inklusive",
+  "Fully private experience": "Vollständig privates Erlebnis",
+  "Private Early-Morning Departure": "Private Abfahrt am frühen Morgen",
+  "Your private journey begins with pickup from your hotel in Hurghada at 04:30 AM. Relax in your selected private vehicle as you travel comfortably towards Luxor through the Eastern Desert.": "Ihre private Reise beginnt mit der Abholung an Ihrem Hotel in Hurghada um 04:30 Uhr. Lehnen Sie sich in Ihrem ausgewählten Privatfahrzeug zurück und fahren Sie komfortabel durch die Östliche Wüste nach Luxor.",
+  "Explore the magnificent Karnak Temple complex with your private Egyptologist guide. Discover the Great Hypostyle Hall, monumental columns and fascinating stories from ancient Egyptian history.": "Erkunden Sie mit Ihrem privaten Ägyptologen-Reiseleiter die beeindruckende Tempelanlage von Karnak. Entdecken Sie die Große Säulenhalle, monumentale Säulen und faszinierende Geschichten aus der altägyptischen Geschichte.",
+  "Lunch by the Nile": "Mittagessen am Nil",
+  "Take a relaxing break and enjoy a freshly prepared Egyptian lunch at a carefully selected local restaurant, with the opportunity to enjoy the atmosphere of the Nile.": "Gönnen Sie sich eine entspannte Pause und genießen Sie ein frisch zubereitetes ägyptisches Mittagessen in einem sorgfältig ausgewählten Restaurant – mit Gelegenheit, die Atmosphäre am Nil zu erleben.",
+  "Cross to the West Bank": "Überfahrt zum Westufer",
+  "Continue your private exploration by crossing the Nile to Luxor's legendary West Bank, home to some of Egypt's most remarkable ancient monuments.": "Setzen Sie Ihre private Entdeckungstour mit der Überquerung des Nils zum legendären Westufer von Luxor fort, wo einige der bedeutendsten antiken Denkmäler Ägyptens liegen.",
+  "Valley of the Kings": "Tal der Könige",
+  "Enter the Valley of the Kings and explore three included royal tombs carved deep into the mountains, while your private guide explains the history and stories behind them.": "Betreten Sie das Tal der Könige und besichtigen Sie drei enthaltene Königsgräber, die tief in den Fels gehauen wurden. Ihr privater Reiseleiter erklärt Ihnen ihre Geschichte und die Geschichten dahinter.",
+  "Visit the spectacular Temple of Hatshepsut at Deir el-Bahari and discover the story of one of ancient Egypt's most remarkable rulers.": "Besuchen Sie den beeindruckenden Tempel der Hatschepsut in Deir el-Bahari und erfahren Sie mehr über eine der bemerkenswertesten Herrscherinnen des alten Ägyptens.",
+  "Colossi of Memnon": "Memnonkolosse",
+  "Stop at the iconic Colossi of Memnon for photographs and a closer look at the monumental statues that have watched over the West Bank for thousands of years.": "Halten Sie an den berühmten Memnonkolossen für Fotos und sehen Sie sich die monumentalen Statuen näher an, die seit Jahrtausenden über das Westufer wachen.",
+  "Return to Hurghada": "Rückfahrt nach Hurghada",
+  "After a full day of discovery, settle back into your private vehicle and enjoy a comfortable journey back to your hotel in Hurghada.": "Nach einem erlebnisreichen Tag machen Sie es sich in Ihrem Privatfahrzeug bequem und fahren entspannt zurück zu Ihrem Hotel in Hurghada.",
+  "Private round-trip transportation from your hotel": "Privater Hin- und Rücktransfer ab Ihrem Hotel",
+  "Professional private Egyptologist guide": "Professioneller privater Ägyptologen-Reiseleiter",
+  "Entrance ticket to Karnak Temple": "Eintrittskarte für den Karnak-Tempel",
+  "Entrance ticket to Hatshepsut Temple": "Eintrittskarte für den Hatschepsut-Tempel",
+  "Lunch at a local restaurant": "Mittagessen in einem lokalen Restaurant",
+  "Drinks during lunch": "Getränke zum Mittagessen",
+  "Tutankhamun, Ramses VI or Nefertari tomb tickets": "Eintrittskarten für die Gräber von Tutanchamun, Ramses VI. oder Nefertari",
+  "Nile felucca ride or Banana Island visit": "Fahrt mit einer Nil-Felucca oder Besuch der Bananeninsel",
+  "Tips and personal expenses": "Trinkgelder und persönliche Ausgaben",
+  "Request a breakfast box from your hotel the evening before departure.": "Bestellen Sie am Abend vor der Abfahrt eine Frühstücksbox bei Ihrem Hotel.",
+  "Wear comfortable shoes as the tour involves walking.": "Tragen Sie bequeme Schuhe, da bei der Tour zu Fuß gegangen wird.",
+  "Bring a hat, sunglasses and sunscreen.": "Bringen Sie einen Hut, eine Sonnenbrille und Sonnencreme mit.",
+  "Private experiences can be tailored around your preferences and schedule.": "Private Erlebnisse können an Ihre Wünsche und Ihren Zeitplan angepasst werden.",
+};
+
+function luxuryText(value: string): string {
+  return luxuryGermanText[value] ?? value;
+}
+
 const luxuryTours = {
   luxor: {
     name: "Private Luxor Overday Tour",
@@ -985,15 +1030,15 @@ export default async function LuxuryTourPage({
             </div>
 
             <h1 className="mt-7 text-4xl font-semibold leading-[1.05] tracking-tight md:text-6xl lg:text-7xl">
-              {cleanText(tour.name)}
+              <HomeText en={cleanText(tour.name)} de={luxuryText(cleanText(tour.name))} />
             </h1>
 
             <p className="mt-5 text-lg font-medium text-orange-300 md:text-xl">
-              {cleanText(tour.subtitle)}
+              <HomeText en={cleanText(tour.subtitle)} de={luxuryText(cleanText(tour.subtitle))} />
             </p>
 
             <p className="mt-6 max-w-3xl text-base leading-8 text-blue-100 md:text-lg">
-              {cleanText(tour.description)}
+              <HomeText en={cleanText(tour.description)} de={luxuryText(cleanText(tour.description))} />
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
@@ -1063,7 +1108,7 @@ export default async function LuxuryTourPage({
                     </span>
 
                     <span className="text-sm font-semibold text-blue-950">
-                      {cleanText(item)}
+                      <HomeText en={cleanText(item)} de={luxuryText(cleanText(item))} />
                     </span>
                   </div>
                 ))}
@@ -1102,11 +1147,11 @@ export default async function LuxuryTourPage({
 
                     <div className="pt-0.5">
                       <h3 className="text-lg font-bold text-blue-950 transition duration-300 group-hover:text-orange-500">
-                        {cleanText(item.title)}
+                        <HomeText en={cleanText(item.title)} de={luxuryText(cleanText(item.title))} />
                       </h3>
 
                       <p className="mt-2 text-sm leading-7 text-gray-600">
-                        {cleanText(item.description)}
+                        <HomeText en={cleanText(item.description)} de={luxuryText(cleanText(item.description))} />
                       </p>
                     </div>
                   </div>
@@ -1136,7 +1181,7 @@ export default async function LuxuryTourPage({
                       </span>
 
                       <span className="text-sm leading-6 text-gray-600">
-                        {cleanText(item)}
+                        <HomeText en={cleanText(item)} de={luxuryText(cleanText(item))} />
                       </span>
                     </div>
                   ))}
@@ -1163,7 +1208,7 @@ export default async function LuxuryTourPage({
                       </span>
 
                       <span className="text-sm leading-6 text-gray-600">
-                        {cleanText(item)}
+                        <HomeText en={cleanText(item)} de={luxuryText(cleanText(item))} />
                       </span>
                     </div>
                   ))}
@@ -1190,7 +1235,7 @@ export default async function LuxuryTourPage({
                     <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-orange-500" />
 
                     <p className="text-sm leading-7 text-gray-700">
-                      {cleanText(note)}
+                      <HomeText en={cleanText(note)} de={luxuryText(cleanText(note))} />
                     </p>
                   </div>
                 ))}
