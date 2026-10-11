@@ -1171,6 +1171,20 @@ Each package must contain a list of exact tour slugs from the catalog.
         ? error.message
         : "";
 
+    // Keep a safe diagnostic code in the response so failures can be identified
+    // without exposing API keys, request payloads, prompts, or stack traces.
+    const apiError = error && typeof error === "object"
+      ? error as { status?: unknown; code?: unknown; type?: unknown; name?: unknown }
+      : {};
+    const safeDiagnostic = [
+      typeof apiError.status === "number" || typeof apiError.status === "string"
+        ? `status=${apiError.status}`
+        : "",
+      typeof apiError.code === "string" ? `code=${apiError.code}` : "",
+      typeof apiError.type === "string" ? `type=${apiError.type}` : "",
+      typeof apiError.name === "string" ? `name=${apiError.name}` : "",
+    ].filter(Boolean).join(", ");
+
     const isValidationError =
       /Invalid request body|Adults must|Children must|Area is required|Unsupported area|Days must|Budget must|selected categories|Select at least one experience category/i.test(message);
     const isAuthError = /api key|authentication|unauthorized|invalid.*key/i.test(message);
@@ -1185,7 +1199,7 @@ Each package must contain a list of exact tour slugs from the catalog.
             ? "The AI service rejected its API key. Check OPENAI_API_KEY in Vercel Production."
             : isModelError
               ? "The AI model configuration is invalid. Check the configured model in the trip planner."
-              : "Unable to create your trip plan right now. Please try again shortly.",
+              : `Unable to create your trip plan right now. Please try again shortly.${safeDiagnostic ? ` (diagnostic: ${safeDiagnostic})` : ""}`,
       },
       { status: isValidationError ? 400 : isAuthError || isModelError ? 503 : 500 },
     );
