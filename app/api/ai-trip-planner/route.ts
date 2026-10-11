@@ -372,6 +372,7 @@ function buildPackageFromAI(
   for (let pass = 0; pass < maxActivities; pass++) {
     const currentPlaced = getPlacedTours(selectedTours);
     const currentTotal = getTotalEUR(currentPlaced);
+    if (currentTotal >= targetSpendEUR) break;
     const currentCategories = new Set(currentPlaced.map((tour) => tour.category));
     let best:
       | { tours: Tour[]; candidate: Tour; score: number; total: number }
