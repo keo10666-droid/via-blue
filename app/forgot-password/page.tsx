@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Eye, EyeOff, ArrowLeft } from "lucide-react";
@@ -19,6 +19,19 @@ const passwordRules = [
 export default function ForgotPasswordPage() {
   const router = useRouter();
   const [step, setStep] = useState<Step>("email");
+  const [isGerman, setIsGerman] = useState(false);
+
+  useEffect(() => {
+    try { setIsGerman(window.localStorage.getItem("via-blue-language") === "de"); } catch { /* English fallback */ }
+    const handleLanguageChange = (event: Event) => {
+      const next = (event as CustomEvent<"en" | "de">).detail;
+      if (next === "en" || next === "de") setIsGerman(next === "de");
+    };
+    window.addEventListener("via-blue-language-change", handleLanguageChange);
+    return () => window.removeEventListener("via-blue-language-change", handleLanguageChange);
+  }, []);
+
+  const text = (en: string, de: string) => isGerman ? de : en;
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [password, setPassword] = useState("");
@@ -133,12 +146,12 @@ export default function ForgotPasswordPage() {
                 </div>
 
                 <div className="mt-32 max-w-md">
-                  <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#f28c28]">Account Recovery</p>
+                  <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#f28c28]">{text("Account Recovery", "Kontowiederherstellung")}</p>
                   <h2 className="mt-5 text-5xl font-black leading-[1.05] tracking-tight">
-                    Back to your<br /><span className="text-white/65">journey.</span>
+                    {text("Back to your", "Zurück zu deiner")}<br /><span className="text-white/65">{text("journey.", "Reise.")}</span>
                   </h2>
                   <p className="mt-7 max-w-sm text-base leading-7 text-white/65">
-                    Securely verify your email and create a new password for your Via Blue account
+                    {text("Securely verify your email and create a new password for your Via Blue account", "Bestätige sicher deine E-Mail-Adresse und lege ein neues Passwort für dein Via-Blue-Konto fest")}
                   </p>
                 </div>
               </div>
@@ -154,25 +167,25 @@ export default function ForgotPasswordPage() {
             <div className="mx-auto w-full max-w-md">
               <div className="mb-8">
                 <Link href="/login" className="mb-7 inline-flex items-center gap-2 text-xs font-bold text-gray-400 transition hover:text-[#0b3a78]">
-                  <ArrowLeft className="h-4 w-4" /> Back to login
+                  <ArrowLeft className="h-4 w-4" /> {text("Back to login", "Zurück zur Anmeldung")}
                 </Link>
 
                 <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#f28c28]">
-                  {step === "success" ? "Password Updated" : "Account Recovery"}
+                  {step === "success" ? text("Password Updated", "Passwort geändert") : text("Account Recovery", "Kontowiederherstellung")}
                 </p>
 
                 <h1 className="mt-3 text-4xl font-black tracking-tight text-[#0b3a78]">
-                  {step === "email" && "Forgot your password?"}
-                  {step === "code" && "Check your email"}
-                  {step === "password" && "Create a new password"}
-                  {step === "success" && "You're all set"}
+                  {step === "email" && text("Forgot your password?", "Passwort vergessen?")}
+                  {step === "code" && text("Check your email", "Prüfe deine E-Mail")}
+                  {step === "password" && text("Create a new password", "Neues Passwort erstellen")}
+                  {step === "success" && text("You're all set", "Alles erledigt")}
                 </h1>
 
                 <p className="mt-3 text-sm leading-6 text-gray-500">
-                  {step === "email" && "Enter the email address registered to your Via Blue account."}
-                  {step === "code" && "Enter the 6-digit password reset code we sent to " + email + "."}
-                  {step === "password" && "Choose a strong new password for your account."}
-                  {step === "success" && "Your password has been changed successfully. You can now sign in with your new password."}
+                  {step === "email" && text("Enter the email address registered to your Via Blue account.", "Gib die E-Mail-Adresse ein, die mit deinem Via-Blue-Konto verknüpft ist.")}
+                  {step === "code" && text("Enter the 6-digit password reset code we sent to " + email + ".", "Gib den 6-stelligen Code ein, den wir an " + email + " gesendet haben.")}
+                  {step === "password" && text("Choose a strong new password for your account.", "Wähle ein sicheres neues Passwort für dein Konto.")}
+                  {step === "success" && text("Your password has been changed successfully. You can now sign in with your new password.", "Dein Passwort wurde erfolgreich geändert. Du kannst dich jetzt mit deinem neuen Passwort anmelden.")}
                 </p>
               </div>
 
@@ -193,7 +206,7 @@ export default function ForgotPasswordPage() {
 
               {step === "email" && (
                 <form onSubmit={handleSendCode}>
-                  <label className="mb-2 block text-xs font-bold uppercase tracking-wide text-[#0b3a78]">Email Address</label>
+                  <label className="mb-2 block text-xs font-bold uppercase tracking-wide text-[#0b3a78]">{text("Email Address", "E-Mail-Adresse")}</label>
                   <input
                     type="email"
                     value={email}
@@ -204,14 +217,14 @@ export default function ForgotPasswordPage() {
                     className="w-full rounded-2xl border border-gray-200 bg-gray-50/70 px-5 py-4 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 hover:border-gray-300 focus:border-[#0b3a78] focus:bg-white focus:ring-4 focus:ring-[#0b3a78]/5"
                   />
                   <button type="submit" disabled={isLoading} className="mt-7 flex w-full items-center justify-center rounded-2xl bg-[#0b3a78] px-6 py-4 text-sm font-bold text-white shadow-lg shadow-[#0b3a78]/20 transition hover:-translate-y-0.5 hover:bg-[#082d5d] disabled:cursor-not-allowed disabled:opacity-60">
-                    {isLoading ? "Sending code..." : "Send verification code"}
+                    {isLoading ? text("Sending code...", "Code wird gesendet...") : text("Send verification code", "Bestätigungscode senden")}
                   </button>
                 </form>
               )}
 
               {step === "code" && (
                 <form onSubmit={handleVerifyCode}>
-                  <label className="mb-2 block text-xs font-bold uppercase tracking-wide text-[#0b3a78]">Verification Code</label>
+                  <label className="mb-2 block text-xs font-bold uppercase tracking-wide text-[#0b3a78]">{text("Verification Code", "Bestätigungscode")}</label>
                   <input
                     type="text"
                     inputMode="numeric"
@@ -225,10 +238,10 @@ export default function ForgotPasswordPage() {
                     className="w-full rounded-2xl border border-gray-200 bg-gray-50/70 px-5 py-4 text-center text-xl font-bold tracking-[0.4em] text-gray-900 outline-none transition placeholder:text-gray-300 focus:border-[#0b3a78] focus:bg-white focus:ring-4 focus:ring-[#0b3a78]/5"
                   />
                   <button type="submit" disabled={isLoading || code.length !== 6} className="mt-7 flex w-full items-center justify-center rounded-2xl bg-[#0b3a78] px-6 py-4 text-sm font-bold text-white shadow-lg shadow-[#0b3a78]/20 transition hover:-translate-y-0.5 hover:bg-[#082d5d] disabled:cursor-not-allowed disabled:opacity-60">
-                    {isLoading ? "Verifying..." : "Verify code"}
+                    {isLoading ? text("Verifying...", "Code wird überprüft...") : text("Verify code", "Code bestätigen")}
                   </button>
                   <button type="button" disabled={isLoading} onClick={() => { setStep("email"); setCode(""); setMessage(""); setIsError(false); }} className="mt-4 w-full text-center text-xs font-bold text-gray-500 transition hover:text-[#f28c28]">
-                    Use a different email
+                    {text("Use a different email", "Andere E-Mail-Adresse verwenden")}
                   </button>
                 </form>
               )}
@@ -236,7 +249,7 @@ export default function ForgotPasswordPage() {
               {step === "password" && (
                 <form onSubmit={handleUpdatePassword}>
                   <div>
-                    <label className="mb-2 block text-xs font-bold uppercase tracking-wide text-[#0b3a78]">New Password</label>
+                    <label className="mb-2 block text-xs font-bold uppercase tracking-wide text-[#0b3a78]">{text("New Password", "Neues Passwort")}</label>
                     <div className="relative">
                       <input
                         type={showPassword ? "text" : "password"}
@@ -244,7 +257,7 @@ export default function ForgotPasswordPage() {
                         onChange={(event) => setPassword(event.target.value)}
                         required
                         autoComplete="new-password"
-                        placeholder="Create a strong password"
+                        placeholder={text("Create a strong password", "Erstelle ein sicheres Passwort")}
                         className="w-full rounded-2xl border border-gray-200 bg-gray-50/70 px-5 py-4 pr-14 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 hover:border-gray-300 focus:border-[#0b3a78] focus:bg-white focus:ring-4 focus:ring-[#0b3a78]/5"
                       />
                       <button type="button" onClick={() => setShowPassword((current) => !current)} className="absolute right-4 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-lg p-1 text-gray-400 transition hover:text-[#0b3a78]" aria-label={showPassword ? "Hide password" : "Show password"}>
@@ -254,7 +267,7 @@ export default function ForgotPasswordPage() {
                   </div>
 
                   <div className="mt-5">
-                    <label className="mb-2 block text-xs font-bold uppercase tracking-wide text-[#0b3a78]">Confirm Password</label>
+                    <label className="mb-2 block text-xs font-bold uppercase tracking-wide text-[#0b3a78]">{text("Confirm Password", "Passwort bestätigen")}</label>
                     <div className="relative">
                       <input
                         type={showConfirmPassword ? "text" : "password"}
@@ -262,7 +275,7 @@ export default function ForgotPasswordPage() {
                         onChange={(event) => setConfirmPassword(event.target.value)}
                         required
                         autoComplete="new-password"
-                        placeholder="Repeat your new password"
+                        placeholder={text("Repeat your new password", "Wiederhole dein neues Passwort")}
                         className="w-full rounded-2xl border border-gray-200 bg-gray-50/70 px-5 py-4 pr-14 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 hover:border-gray-300 focus:border-[#0b3a78] focus:bg-white focus:ring-4 focus:ring-[#0b3a78]/5"
                       />
                       <button type="button" onClick={() => setShowConfirmPassword((current) => !current)} className="absolute right-4 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-lg p-1 text-gray-400 transition hover:text-[#0b3a78]" aria-label={showConfirmPassword ? "Hide password" : "Show password"}>
@@ -272,12 +285,12 @@ export default function ForgotPasswordPage() {
                   </div>
 
                   <div className="mt-5 rounded-2xl border border-gray-100 bg-gray-50/70 p-4">
-                    <p className="mb-3 text-xs font-bold uppercase tracking-wide text-[#0b3a78]">Password requirements</p>
+                    <p className="mb-3 text-xs font-bold uppercase tracking-wide text-[#0b3a78]">{text("Password requirements", "Passwortanforderungen")}</p>
                     <div className="space-y-2">
                       {passwordRules.map((rule) => {
                         const valid = rule.test(password);
                         return (
-                          <div key={rule.label} className={"flex items-center gap-2 text-xs font-medium " + (valid ? "text-green-600" : "text-gray-400")}>
+                          <div key={text(rule.label, ({ "At least 8 characters": "Mindestens 8 Zeichen", "One uppercase letter": "Ein Großbuchstabe", "One lowercase letter": "Ein Kleinbuchstabe", "One number": "Eine Zahl", "One special character": "Ein Sonderzeichen" } as Record<string, string>)[rule.label] || rule.label)} className={"flex items-center gap-2 text-xs font-medium " + (valid ? "text-green-600" : "text-gray-400")}>
                             <span className={"flex h-4 w-4 items-center justify-center rounded-full text-[9px] font-black " + (valid ? "bg-green-100" : "bg-gray-100")}>
                               {valid ? "✓" : "•"}
                             </span>
@@ -289,20 +302,20 @@ export default function ForgotPasswordPage() {
                         <span className={"flex h-4 w-4 items-center justify-center rounded-full text-[9px] font-black " + (passwordsMatch ? "bg-green-100" : "bg-gray-100")}>
                           {passwordsMatch ? "✓" : "•"}
                         </span>
-                        Passwords match
+                        {text("Passwords match", "Passwörter stimmen überein")}
                       </div>
                     </div>
                   </div>
 
                   <button type="submit" disabled={isLoading || !allRulesValid || !passwordsMatch} className="mt-7 flex w-full items-center justify-center rounded-2xl bg-[#0b3a78] px-6 py-4 text-sm font-bold text-white shadow-lg shadow-[#0b3a78]/20 transition hover:-translate-y-0.5 hover:bg-[#082d5d] disabled:cursor-not-allowed disabled:opacity-60">
-                    {isLoading ? "Updating password..." : "Set new password"}
+                    {isLoading ? text("Updating password...", "Passwort wird aktualisiert...") : text("Set new password", "Neues Passwort festlegen")}
                   </button>
                 </form>
               )}
 
               {step === "success" && (
                 <button type="button" onClick={() => router.push("/login")} className="mt-4 flex w-full items-center justify-center rounded-2xl bg-[#0b3a78] px-6 py-4 text-sm font-bold text-white shadow-lg shadow-[#0b3a78]/20 transition hover:-translate-y-0.5 hover:bg-[#082d5d]">
-                  Continue to login
+                  {text("Continue to login", "Weiter zur Anmeldung")}
                 </button>
               )}
 
@@ -314,8 +327,8 @@ export default function ForgotPasswordPage() {
 
               {step !== "success" && (
                 <p className="mt-6 text-center text-xs font-semibold text-gray-400">
-                  Remember your password?{" "}
-                  <Link href="/login" className="text-[#0b3a78] transition hover:text-[#f28c28]">Log in</Link>
+                  {text("Remember your password?", "Du erinnerst dich an dein Passwort?")}{" "}
+                  <Link href="/login" className="text-[#0b3a78] transition hover:text-[#f28c28]">{text("Log in", "Anmelden")}</Link>
                 </p>
               )}
             </div>
