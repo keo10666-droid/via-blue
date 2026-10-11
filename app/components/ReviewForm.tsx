@@ -108,7 +108,7 @@ export default function ReviewForm({
               type="text"
               value={name}
               onChange={(event) => setName(event.target.value)}
-              placeholder="Enter your name"
+              placeholder="Gib deinen Namen ein"
               maxLength={80}
               required
               className="w-full rounded-2xl border border-slate-200 bg-slate-50/70 px-4 py-4 text-slate-900 shadow-sm outline-none transition duration-300 placeholder:text-slate-400 focus:border-orange-400 focus:bg-white focus:ring-4 focus:ring-orange-500/10"
@@ -153,7 +153,7 @@ export default function ReviewForm({
               id="review-comment"
               value={comment}
               onChange={(event) => setComment(event.target.value)}
-              placeholder="Tell us about your experience..."
+              placeholder="Beschreibe deine Erfahrung..."
               maxLength={1000}
               rows={5}
               required
