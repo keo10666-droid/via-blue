@@ -862,9 +862,7 @@ ${notes.trim() || "-"}
                   </h1>
 
                   <p className="mt-5 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base">
-                    Complete your details below and send your
-                    booking request directly to our team. We will
-                    confirm your private experience with you.
+                    <HomeText en="Complete your details below and send your booking request directly to our team. We will confirm your private experience with you." de="Vervollständigen Sie die Angaben und senden Sie Ihre Buchungsanfrage direkt an unser Team. Wir bestätigen anschließend Ihr privates Erlebnis." />
                   </p>
                 </div>
 
@@ -932,7 +930,7 @@ ${notes.trim() || "-"}
 
                     <div>
                       <label className={labelClass}>
-                        Full Name *
+                        <HomeText en="Full Name *" de="Vollständiger Name *" />
                       </label>
 
                       <div className="relative">
@@ -942,7 +940,7 @@ ${notes.trim() || "-"}
 
                         <input
                           type="text"
-                          placeholder="Enter full name"
+                          placeholder="Vollständigen Namen eingeben"
                           value={name}
                           onChange={(e) =>
                             setName(e.target.value)
@@ -956,7 +954,7 @@ ${notes.trim() || "-"}
                       {submitAttempted &&
                         !isNameValid &&
                         errorText(
-                          "Please enter the guest's full name."
+                          <HomeText en="Please enter the guest's full name." de="Bitte geben Sie den vollständigen Namen des Gastes ein." />
                         )}
                     </div>
 
@@ -972,7 +970,7 @@ ${notes.trim() || "-"}
 
                         <input
                           type="text"
-                          placeholder="Select nationality"
+                          placeholder="Nationalität auswählen"
                           value={nationality}
                           onChange={(e) => {
                             setNationality(e.target.value);
@@ -1021,7 +1019,7 @@ ${notes.trim() || "-"}
 
                     <div>
                       <label className={labelClass}>
-                        Email *
+                        <HomeText en="Email *" de="E-Mail *" />
                       </label>
 
                       <div className="relative">
@@ -1045,13 +1043,13 @@ ${notes.trim() || "-"}
                       {submitAttempted &&
                         !isEmailValid &&
                         errorText(
-                          "Please enter a valid email address."
+                          <HomeText en="Please enter a valid email address." de="Bitte geben Sie eine gültige E-Mail-Adresse ein." />
                         )}
                     </div>
 
                     <div>
                       <label className={labelClass}>
-                        WhatsApp Number *
+                        <HomeText en="WhatsApp Number *" de="WhatsApp-Nummer *" />
                       </label>
 
                       <div className="flex gap-2">
@@ -1084,7 +1082,7 @@ ${notes.trim() || "-"}
                               <div className="border-b border-slate-100 p-3">
                                 <input
                                   type="text"
-                                  placeholder="Search country or code..."
+                                  placeholder="Land oder Vorwahl suchen..."
                                   value={countrySearch}
                                   onChange={(e) =>
                                     setCountrySearch(
@@ -1141,7 +1139,7 @@ ${notes.trim() || "-"}
 
                           <input
                             type="tel"
-                            placeholder="WhatsApp number"
+                            placeholder="WhatsApp-Nummer"
                             value={phone}
                             onChange={(e) =>
                               setPhone(e.target.value)
@@ -1157,7 +1155,7 @@ ${notes.trim() || "-"}
                       {submitAttempted &&
                         !isPhoneValid &&
                         errorText(
-                          "Please enter a valid number (at least 6 digits)."
+                          <HomeText en="Please enter a valid number (at least 6 digits)." de="Bitte geben Sie eine gültige Nummer mit mindestens 6 Ziffern ein." />
                         )}
                     </div>
                   </div>
@@ -1197,7 +1195,7 @@ ${notes.trim() || "-"}
 
                         <input
                           type="text"
-                          placeholder="Your hotel name"
+                          placeholder="Name Ihres Hotels"
                           value={hotel}
                           onChange={(e) =>
                             setHotel(e.target.value)
@@ -1219,7 +1217,7 @@ ${notes.trim() || "-"}
 
                         <input
                           type="text"
-                          placeholder="Room number"
+                          placeholder="Zimmernummer"
                           value={roomNumber}
                           onChange={(e) =>
                             setRoomNumber(e.target.value)
