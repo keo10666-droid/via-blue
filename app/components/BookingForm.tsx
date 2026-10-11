@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 
 import { supabase } from "@/lib/supabase";
+import HomeText from "@/app/components/HomeText";
 
 type BookingFormProps = {
   tourName: string;
@@ -593,7 +594,7 @@ ${notes.trim() || "-"}`;
             </div>
 
             <h1 className="mt-5 max-w-3xl text-4xl font-black tracking-tight text-white sm:text-5xl md:text-6xl">
-              Book Your Tour
+              <HomeText en="Book Your Tour" de="Buchen Sie Ihre Tour" />
             </h1>
 
             <p className="mt-5 max-w-2xl text-base leading-7 text-blue-100/80 sm:text-lg">
@@ -619,11 +620,11 @@ ${notes.trim() || "-"}`;
           <div className="rounded-[28px] border border-gray-200/80 bg-white p-6 shadow-[0_20px_60px_rgba(7,26,54,0.08)] sm:p-8 lg:col-span-2">
             <div className="mb-8 border-b border-gray-100 pb-6">
               <p className="mb-2 text-xs font-black uppercase tracking-[0.18em] text-orange-500">
-                Guest Details
+                <HomeText en="Guest Details" de="Angaben zum Gast" />
               </p>
 
               <h2 className="text-2xl font-black tracking-tight text-[#071a36] sm:text-3xl">
-                Guest Information
+                <HomeText en="Guest Information" de="Gastinformationen" />
               </h2>
 
               <p className="mt-2 text-sm text-gray-500">
@@ -636,12 +637,12 @@ ${notes.trim() || "-"}`;
               {/* Name */}
               <div>
                 <label className={labelClass}>
-                  Full Name *
+                  <HomeText en="Full Name *" de="Vollständiger Name *" />
                 </label>
 
                 <input
                   type="text"
-                  placeholder="Full Name *"
+                  placeholder="Vollständigen Namen eingeben *"
                   value={name}
                   onChange={(e) =>
                     setName(e.target.value)
@@ -661,12 +662,12 @@ ${notes.trim() || "-"}`;
               {/* Nationality */}
               <div className="relative">
                 <label className={labelClass}>
-                  Nationality
+                  <HomeText en="Nationality" de="Nationalität" />
                 </label>
 
                 <input
                   type="text"
-                  placeholder="Nationality"
+                  placeholder="Nationalität"
                   value={nationality}
                   onChange={(e) => {
                     setNationality(e.target.value);
@@ -717,7 +718,7 @@ ${notes.trim() || "-"}`;
               {/* Email */}
               <div>
                 <label className={labelClass}>
-                  Email *
+                  <HomeText en="Email *" de="E-Mail *" />
                 </label>
 
                 <input
@@ -743,7 +744,7 @@ ${notes.trim() || "-"}`;
               {/* Phone */}
               <div>
                 <label className={labelClass}>
-                  WhatsApp Number *
+                  <HomeText en="WhatsApp Number *" de="WhatsApp-Nummer *" />
                 </label>
 
                 <div className="flex gap-2">
@@ -775,7 +776,7 @@ ${notes.trim() || "-"}`;
                       <div className="absolute z-30 mt-2 w-72 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-[0_20px_50px_rgba(7,26,54,0.14)]">
                         <input
                           type="text"
-                          placeholder="Search country..."
+                          placeholder="Land suchen..."
                           value={countrySearch}
                           onChange={(e) =>
                             setCountrySearch(
@@ -824,7 +825,7 @@ ${notes.trim() || "-"}`;
 
                   <input
                     type="tel"
-                    placeholder="Number"
+                    placeholder="Nummer"
                     value={phone}
                     onChange={(e) =>
                       setPhone(e.target.value)
@@ -849,23 +850,23 @@ ${notes.trim() || "-"}`;
             {/* Hotel */}
             <div className="mb-8 mt-12 border-b border-gray-100 pb-8">
               <p className="mb-2 text-xs font-black uppercase tracking-[0.18em] text-orange-500">
-                Stay Details
+                <HomeText en="Stay Details" de="Angaben zur Unterkunft" />
               </p>
 
               <h2 className="text-2xl font-black tracking-tight text-[#071a36]">
-                Hotel Information
+                <HomeText en="Hotel Information" de="Hotelinformationen" />
               </h2>
             </div>
 
             <div className="grid gap-5 md:grid-cols-2">
               <div>
                 <label className={labelClass}>
-                  Hotel Name
+                  <HomeText en="Hotel Name" de="Hotelname" />
                 </label>
 
                 <input
                   type="text"
-                  placeholder="Hotel Name"
+                  placeholder="Hotelname"
                   value={hotel}
                   onChange={(e) =>
                     setHotel(e.target.value)
@@ -876,12 +877,12 @@ ${notes.trim() || "-"}`;
 
               <div>
                 <label className={labelClass}>
-                  Room Number
+                  <HomeText en="Room Number" de="Zimmernummer" />
                 </label>
 
                 <input
                   type="text"
-                  placeholder="Room Number"
+                  placeholder="Zimmernummer"
                   value={roomNumber}
                   onChange={(e) =>
                     setRoomNumber(e.target.value)
@@ -894,11 +895,11 @@ ${notes.trim() || "-"}`;
             {/* Tour Date */}
             <div className="mb-8 mt-12 border-b border-gray-100 pb-8">
               <p className="mb-2 text-xs font-black uppercase tracking-[0.18em] text-orange-500">
-                Experience Details
+                <HomeText en="Experience Details" de="Erlebnisdetails" />
               </p>
 
               <h2 className="text-2xl font-black tracking-tight text-[#071a36]">
-                Tour Information
+                <HomeText en="Tour Information" de="Tourinformationen" />
               </h2>
             </div>
 
@@ -927,11 +928,11 @@ ${notes.trim() || "-"}`;
             {/* Guests */}
             <div className="mb-8 mt-12 border-b border-gray-100 pb-8">
               <p className="mb-2 text-xs font-black uppercase tracking-[0.18em] text-orange-500">
-                Travelers
+                <HomeText en="Travelers" de="Reisende" />
               </p>
 
               <h2 className="text-2xl font-black tracking-tight text-[#071a36]">
-                Guests
+                <HomeText en="Guests" de="Gäste" />
               </h2>
             </div>
 
@@ -940,7 +941,7 @@ ${notes.trim() || "-"}`;
               {/* Adults */}
               <div>
                 <label className={labelClass}>
-                  Adults
+                  <HomeText en="Adults" de="Erwachsene" />
                 </label>
 
                 <select
@@ -967,7 +968,7 @@ ${notes.trim() || "-"}`;
               {/* Children */}
               <div>
                 <label className={labelClass}>
-                  Children (5-10)
+                  <HomeText en="Children (5-10)" de="Kinder (5–10)" />
                 </label>
 
                 <select
@@ -1004,7 +1005,7 @@ ${notes.trim() || "-"}`;
               {/* Infants */}
               <div>
                 <label className={labelClass}>
-                  Infants (1-4)
+                  <HomeText en="Infants (1-4)" de="Kleinkinder (1–4)" />
                 </label>
 
                 <select
@@ -1043,7 +1044,7 @@ ${notes.trim() || "-"}`;
             {childAges.length > 0 && (
               <div className="mt-7 rounded-2xl border border-blue-100 bg-blue-50/50 p-5">
                 <h3 className="mb-4 text-lg font-black text-[#071a36]">
-                  Children Ages (5-10 years)
+                  <HomeText en="Children Ages (5-10 years)" de="Alter der Kinder (5–10 Jahre)" />
                 </h3>
 
                 <div className="grid gap-4 md:grid-cols-2">
@@ -1116,7 +1117,7 @@ ${notes.trim() || "-"}`;
             {infantAges.length > 0 && (
               <div className="mt-7 rounded-2xl border border-orange-100 bg-orange-50/50 p-5">
                 <h3 className="mb-4 text-lg font-black text-[#071a36]">
-                  Infant Ages (1-4 years)
+                  <HomeText en="Infant Ages (1-4 years)" de="Alter der Kleinkinder (1–4 Jahre)" />
                 </h3>
 
                 <div className="grid gap-4 md:grid-cols-2">
@@ -1227,11 +1228,11 @@ ${notes.trim() || "-"}`;
             {/* Notes */}
             <div className="mb-8 mt-12 border-b border-gray-100 pb-8">
               <p className="mb-2 text-xs font-black uppercase tracking-[0.18em] text-orange-500">
-                Final Details
+                <HomeText en="Final Details" de="Abschließende Angaben" />
               </p>
 
               <h2 className="text-2xl font-black tracking-tight text-[#071a36]">
-                Additional Information
+                <HomeText en="Additional Information" de="Zusätzliche Informationen" />
               </h2>
             </div>
 
@@ -1241,7 +1242,7 @@ ${notes.trim() || "-"}`;
 
             <textarea
               rows={5}
-              placeholder="Special Requests / Notes"
+              placeholder="Besondere Wünsche / Anmerkungen"
               value={notes}
               onChange={(e) =>
                 setNotes(e.target.value)
@@ -1280,15 +1281,15 @@ ${notes.trim() || "-"}`;
 
                 <div className="relative">
                   <p className="mb-2 text-xs font-black uppercase tracking-[0.18em] text-orange-400">
-                    Your Experience
+                    <HomeText en="Your Experience" de="Ihr Erlebnis" />
                   </p>
 
                   <h3 className="text-2xl font-black text-white">
-                    Tour Summary
+                    <HomeText en="Tour Summary" de="Tourübersicht" />
                   </h3>
 
                   <p className="mt-2 text-sm text-blue-100/70">
-                    Everything you need for your booking
+                    <HomeText en="Everything you need for your booking" de="Alles, was Sie für Ihre Buchung benötigen" />
                   </p>
                 </div>
               </div>
@@ -1327,7 +1328,7 @@ ${notes.trim() || "-"}`;
 
                 <div className="rounded-2xl border border-emerald-100 bg-emerald-50/60 p-5">
                   <p className="text-xs font-black uppercase tracking-wider text-gray-500">
-                    Tour Type
+                    <HomeText en="Tour Type" de="Tourart" />
                   </p>
 
                   <p className="mt-2 font-black text-emerald-700">
@@ -1362,7 +1363,7 @@ ${notes.trim() || "-"}`;
 
                 <div className="rounded-2xl border border-blue-100 bg-[#071a36] p-5 text-white">
                   <p className="text-sm font-black">
-                    Secure Booking
+                    <HomeText en="Secure Booking" de="Sichere Buchung" />
                   </p>
 
                   <p className="mt-2 text-sm leading-6 text-blue-100/70">
