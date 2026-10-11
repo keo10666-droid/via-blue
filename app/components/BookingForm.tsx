@@ -723,7 +723,7 @@ ${notes.trim() || "-"}`;
 
                 <input
                   type="email"
-                  placeholder="Email *"
+                  placeholder="E-Mail *"
                   value={email}
                   onChange={(e) =>
                     setEmail(e.target.value)
