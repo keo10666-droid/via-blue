@@ -550,7 +550,7 @@ export async function POST(request: Request) {
 
     const bookingName =
       getField(fields, "Tour", "Service") ||
-      subject
+      validSubject
         .replace(
           /^New\s+(?:Tour|Luxury Tour|Transfer)\s+Booking\s*-\s*/i,
           ""
