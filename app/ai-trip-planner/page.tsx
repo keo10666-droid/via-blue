@@ -1571,18 +1571,13 @@ export default function AITripPlannerPage() {
                       {surpriseMe
                         ? <HomeText en="Surprise me with the best experiences" de="Überraschen Sie mich mit den besten Erlebnissen" />
                         : selectedCategories.length > 0
-                        ? `${selectedCategories.length} experience ${
-                            selectedCategories.length === 1
-                              ? "Kategorie"
-                              : "Kategorien"
-                          } ausgewählt`
+                        ? <>{selectedCategories.length} {selectedCategories.length === 1 ? <HomeText en="category" de="Kategorie" /> : <HomeText en="categories" de="Kategorien" />} <HomeText en="selected" de="ausgewählt" /></>
                         : <HomeText en="Choose at least one category" de="Wählen Sie mindestens eine Kategorie aus" />}
                     </p>
 
                     {!surpriseMe && selectedCategories.length > 0 && (
                       <p className="mt-2 text-sm leading-6 text-blue-200">
-                        The planner will use these preferences together with your
-                        destination, duration, group size and budget.
+                        <HomeText en="The planner will use these preferences together with your destination, duration, group size and budget." de="Der Planer berücksichtigt diese Wünsche zusammen mit Reiseziel, Dauer, Gruppengröße und Budget." />
                       </p>
                     )}
                   </div>
