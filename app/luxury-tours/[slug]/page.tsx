@@ -2,6 +2,23 @@ import Link from "next/link";
 import HomeText from "@/app/components/HomeText";
 
 const luxuryGermanText: Record<string, string> = {
+  "Aswan Private Tour": "Private Assuan-Tour",
+  "Discover the beauty and history of Aswan with a premium private tour from Hurghada, designed for guests who appreciate comfort, privacy and personalized service.": "Entdecken Sie die Schönheit und Geschichte Assuans auf einer exklusiven privaten Tour ab Hurghada – ideal für Gäste, die Komfort, Privatsphäre und persönlichen Service schätzen.",
+  "A Private Journey to Southern Egypt": "Eine private Reise in den Süden Ägyptens",
+  "Aswan highlights": "Höhepunkte Assuans",
+  "Private Departure": "Private Abfahrt",
+  "Depart from your hotel in Hurghada in your selected private vehicle and travel comfortably towards Aswan.": "Starten Sie an Ihrem Hotel in Hurghada in Ihrem ausgewählten Privatfahrzeug und reisen Sie bequem nach Assuan.",
+  "Discover Aswan": "Assuan entdecken",
+  "Explore the city's most important landmarks and discover the unique beauty and history of southern Egypt with your private guide.": "Entdecken Sie mit Ihrem privaten Reiseleiter die wichtigsten Sehenswürdigkeiten der Stadt sowie die einzigartige Schönheit und Geschichte Südägyptens.",
+  "Private Exploration": "Private Entdeckungstour",
+  "Enjoy a flexible private itinerary designed around the highlights you want to experience during your visit.": "Genießen Sie einen flexiblen privaten Reiseplan, der auf die Höhepunkte abgestimmt ist, die Sie während Ihres Besuchs erleben möchten.",
+  "After your private day in Aswan, relax during the return journey to your hotel.": "Entspannen Sie sich nach Ihrem privaten Tag in Assuan während der Rückfahrt zu Ihrem Hotel.",
+  "Professional private guide": "Professioneller privater Reiseleiter",
+  "Included entrance tickets according to the final itinerary": "Enthaltene Eintrittskarten gemäß dem endgültigen Reiseplan",
+  "Optional entrance tickets": "Optionale Eintrittskarten",
+  "An early departure is recommended.": "Eine frühe Abfahrt wird empfohlen.",
+  "Comfortable walking shoes are recommended.": "Bequeme Schuhe zum Gehen werden empfohlen.",
+  "The itinerary can be customized upon request.": "Der Reiseplan kann auf Anfrage individuell angepasst werden.",
   "Alexandria Private Tour": "Private Alexandria-Tour",
   "Discover the historic Mediterranean city of Alexandria on a completely private full-day journey from Hurghada, exploring ancient Roman and Greek heritage, museums, royal gardens and the city's iconic Mediterranean landmarks with your private guide.": "Entdecken Sie die historische Mittelmeerstadt Alexandria auf einem vollständig privaten Tagesausflug ab Hurghada. Erkunden Sie antikes römisches und griechisches Erbe, Museen, königliche Gärten und berühmte Sehenswürdigkeiten am Mittelmeer mit Ihrem privaten Reiseleiter.",
   "A Private Journey Through Alexandria": "Eine private Reise durch Alexandria",
