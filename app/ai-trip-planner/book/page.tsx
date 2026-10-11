@@ -202,14 +202,14 @@ const toIsoDate = (date: Date) => {
   return `${yyyy}-${mm}-${dd}`;
 };
 
-const formatDateLabel = (value: string) => {
-  if (!value) return "Select your trip start date";
+const formatDateLabel = (value: string, isGerman = false) => {
+  if (!value) return isGerman ? "Wählen Sie Ihr Reisedatum" : "Select your trip start date";
 
   const parsedDate = parseDateInput(value);
 
-  if (!parsedDate) return "Select your trip start date";
+  if (!parsedDate) return isGerman ? "Wählen Sie Ihr Reisedatum" : "Select your trip start date";
 
-  return new Intl.DateTimeFormat("en-US", {
+  return new Intl.DateTimeFormat(isGerman ? "de-DE" : "en-US", {
     weekday: "short",
     month: "short",
     day: "numeric",
@@ -1309,7 +1309,7 @@ Via Blue AI Trip Planner
                             : "text-gray-400"
                         }`}
                       >
-                        {formatDateLabel(date)}
+                        {formatDateLabel(date, isGerman)}
                       </span>
 
                       <svg
