@@ -319,6 +319,8 @@ export default function AITripPlannerPage() {
     setSelectedPackage(null);
     setProcessingStage(0);
     setIsGenerating(true);
+    // Start the preparation screen at the top instead of preserving the form's scroll position.
+    window.scrollTo(0, 0);
     setStep(6);
 
     try {
@@ -402,6 +404,11 @@ export default function AITripPlannerPage() {
       setStep(5);
     }
   };
+
+  useEffect(() => {
+    if (step !== 6) return;
+    window.scrollTo(0, 0);
+  }, [step]);
 
   useEffect(() => {
     if (step !== 6 || !isGenerating) return;
