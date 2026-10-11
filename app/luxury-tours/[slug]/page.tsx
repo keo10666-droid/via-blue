@@ -1334,7 +1334,7 @@ export default async function LuxuryTourPage({
                 <span className="text-orange-400">
                   <ClockIcon />
                 </span>
-                {cleanText(tour.duration)}
+                <HomeText en={cleanText(tour.duration)} de={cleanText(tour.duration) === "8 Hours" ? "8 Stunden" : cleanText(tour.duration) === "4 Hours" ? "4 Stunden" : cleanText(tour.duration) === "Full Day" ? "Ganztägig" : cleanText(tour.duration) === "2–3 Hours" ? "2–3 Stunden" : cleanText(tour.duration)} />
               </div>
 
               <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.08] px-4 py-2.5 text-xs font-semibold shadow-lg shadow-blue-950/10 backdrop-blur-xl">
@@ -1591,7 +1591,7 @@ export default async function LuxuryTourPage({
                     </p>
 
                     <p className="mt-1 text-sm font-bold text-blue-950">
-                      {cleanText(tour.departure)}
+                      <HomeText en={cleanText(tour.departure)} de={luxuryText(cleanText(tour.departure))} />
                     </p>
                   </div>
 
@@ -1601,7 +1601,7 @@ export default async function LuxuryTourPage({
                     </p>
 
                     <p className="mt-1 text-sm font-bold text-blue-950">
-                      {cleanText(tour.returnTime)}
+                      <HomeText en={cleanText(tour.returnTime)} de={luxuryText(cleanText(tour.returnTime))} />
                     </p>
                   </div>
 
