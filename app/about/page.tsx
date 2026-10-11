@@ -1,4 +1,5 @@
 import Image from "next/image";
+import HomeText from "@/app/components/HomeText";
 import Link from "next/link";
 import {
   CarFront,
@@ -41,23 +42,21 @@ export default function AboutPage() {
               <span className="h-px w-12 bg-orange-400" />
 
               <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-orange-400">
-                About Via Blue
+                <HomeText en="About Via Blue" de="Über Via Blue" />
               </p>
 
               <span className="h-px w-6 bg-white/20" />
             </div>
 
             <h1 className="text-5xl font-bold leading-[1.02] tracking-[-0.035em] md:text-7xl lg:text-[5.25rem]">
-              More Than A Trip
+              <HomeText en="More Than A Trip" de="Mehr als nur eine Reise" />
               <span className="block bg-gradient-to-r from-orange-300 via-orange-400 to-amber-300 bg-clip-text text-transparent">
-                It&apos;s The Experience
+                <HomeText en="It&apos;s The Experience" de="Es ist das Erlebnis" />
               </span>
             </h1>
 
             <p className="mt-8 max-w-2xl text-lg leading-8 text-blue-50/90 md:text-xl">
-              Discover Hurghada through carefully selected experiences,
-              reliable transportation and local expertise — all designed
-              to make your time in the Red Sea effortless and unforgettable
+              <HomeText en="Discover Hurghada through carefully selected experiences, reliable transportation and local expertise — all designed to make your time in the Red Sea effortless and unforgettable" de="Entdecken Sie Hurghada mit sorgfältig ausgewählten Erlebnissen, zuverlässigen Transfers und lokaler Expertise – für eine unvergessliche und entspannte Zeit am Roten Meer." />
             </p>
 
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
@@ -67,7 +66,7 @@ export default function AboutPage() {
                 className="group rounded-xl border border-orange-300/20 bg-gradient-to-r from-orange-500 to-orange-400 px-7 py-4 text-center font-bold text-white shadow-xl shadow-orange-950/30 transition-all duration-300 hover:-translate-y-1 hover:from-orange-400 hover:to-amber-400 hover:shadow-orange-500/20"
               >
                 <span className="flex items-center justify-center gap-2">
-                  Explore Our Tours
+                  <HomeText en="Explore Our Tours" de="Unsere Touren entdecken" />
                   <span className="transition-transform duration-300 group-hover:translate-x-1">
                     →
                   </span>
@@ -84,11 +83,11 @@ export default function AboutPage() {
             </div>
 
             <div className="mt-10 flex flex-wrap items-center gap-x-7 gap-y-3 text-sm text-white/60">
-              <span>Red Sea Experiences</span>
+              <span><HomeText en="Red Sea Experiences" de="Erlebnisse am Roten Meer" /></span>
               <span className="h-1 w-1 rounded-full bg-orange-400" />
-              <span>Private Transfers</span>
+              <span><HomeText en="Private Transfers" de="Private Transfers" /></span>
               <span className="h-1 w-1 rounded-full bg-orange-400" />
-              <span>Local Expertise</span>
+              <span><HomeText en="Local Expertise" de="Lokale Expertise" /></span>
             </div>
 
           </div>
@@ -142,18 +141,18 @@ export default function AboutPage() {
               <div className="absolute inset-0 bg-gradient-to-t from-blue-950/75 via-blue-950/5 to-transparent" />
 
               <div className="absolute left-5 top-5 rounded-full border border-white/20 bg-black/20 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-white backdrop-blur-md">
-                The Red Sea
+                <HomeText en="The Red Sea" de="Das Rote Meer" />
               </div>
 
               {/* Floating card */}
               <div className="absolute bottom-6 left-6 right-6 rounded-2xl border border-white/30 bg-white/[0.92] p-5 shadow-2xl backdrop-blur-xl">
 
                 <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-orange-500">
-                  The Via Blue Experience
+                  <HomeText en="The Via Blue Experience" de="Das Via-Blue-Erlebnis" />
                 </p>
 
                 <p className="mt-2 text-xl font-bold tracking-tight text-blue-950">
-                  Local knowledge. Personal service
+                  <HomeText en="Local knowledge. Personal service" de="Lokales Wissen. Persönlicher Service" />
                 </p>
 
                 <div className="mt-3 h-px w-12 bg-orange-400" />
@@ -175,14 +174,14 @@ export default function AboutPage() {
               <span className="h-px w-12 bg-orange-500" />
 
               <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-orange-500">
-                Who We Are
+                <HomeText en="Who We Are" de="Wer wir sind" />
               </p>
             </div>
 
             <h2 className="mt-5 text-4xl font-bold leading-[1.08] tracking-[-0.025em] text-blue-950 md:text-5xl">
-              Your Time in Hurghada
+              <HomeText en="Your Time in Hurghada" de="Ihre Zeit in Hurghada" />
               <span className="block bg-gradient-to-r from-blue-700 to-cyan-700 bg-clip-text text-transparent">
-                Deserves More
+                <HomeText en="Deserves More" de="Verdient mehr" />
               </span>
             </h2>
 
@@ -248,7 +247,7 @@ export default function AboutPage() {
         <div className="relative mx-auto max-w-5xl text-center">
 
           <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-orange-400">
-            Our Philosophy
+            <HomeText en="Our Philosophy" de="Unsere Philosophie" />
           </p>
 
           <h2 className="mt-5 text-4xl font-bold leading-[1.05] tracking-[-0.03em] md:text-6xl">
@@ -289,14 +288,14 @@ export default function AboutPage() {
               <span className="h-px w-12 bg-orange-500" />
 
               <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-orange-500">
-                What We Offer
+                <HomeText en="What We Offer" de="Was wir anbieten" />
               </p>
             </div>
 
             <h2 className="mt-5 text-4xl font-bold leading-[1.08] tracking-[-0.025em] text-blue-950 md:text-5xl">
-              Everything You Need
+              <HomeText en="Everything You Need" de="Alles, was Sie brauchen" />
               <span className="block bg-gradient-to-r from-blue-700 to-cyan-700 bg-clip-text text-transparent">
-                For Your Red Sea Escape
+                <HomeText en="For Your Red Sea Escape" de="Für Ihre Auszeit am Roten Meer" />
               </span>
             </h2>
 
@@ -488,7 +487,7 @@ export default function AboutPage() {
               <span className="h-px w-12 bg-orange-500" />
 
               <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-orange-500">
-                Why Via Blue
+                <HomeText en="Why Via Blue" de="Warum Via Blue" />
               </p>
             </div>
 
@@ -708,7 +707,7 @@ export default function AboutPage() {
           </p>
 
           <h2 className="mt-5 text-4xl font-bold leading-[1.05] tracking-[-0.03em] md:text-6xl">
-            Hurghada Is Waiting
+            <HomeText en="Hurghada Is Waiting" de="Hurghada erwartet Sie" />
           </h2>
 
           <p className="mx-auto mt-7 max-w-2xl text-lg leading-8 text-blue-100/85">
