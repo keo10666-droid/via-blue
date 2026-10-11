@@ -951,7 +951,7 @@ function ToursPageContent() {
                       <div className="min-w-0">
 
                         <p className="text-[10px] font-semibold uppercase tracking-wide text-gray-400">
-                          Duration
+                          <HomeText en="Duration" de="Dauer" />
                         </p>
 
                         <p className="truncate text-xs font-bold text-gray-700">
