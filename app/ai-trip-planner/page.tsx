@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import HomeText from "@/app/components/HomeText";
 
 const areas = [
   "Hurghada",
@@ -774,7 +775,7 @@ export default function AITripPlannerPage() {
                       </div>
 
                       <div className="mt-3 flex items-center justify-between text-xs font-semibold text-gray-400">
-                        <span>Personalizing your journey</span>
+                        <span><HomeText en="Personalizing your journey" de="Ihre Reise wird personalisiert" /></span>
 
                         <span>
                           {Math.min(
@@ -1125,8 +1126,8 @@ export default function AITripPlannerPage() {
                   <div className="space-y-5">
                     <div className="flex items-center justify-between rounded-2xl border border-gray-100 p-5">
                       <div>
-                        <p className="font-bold text-blue-950">Adults</p>
-                        <p className="mt-1 text-sm text-gray-400">Age 11+</p>
+                        <p className="font-bold text-blue-950"><HomeText en="Adults" de="Erwachsene" /></p>
+                        <p className="mt-1 text-sm text-gray-400"><HomeText en="Age 11+" de="Ab 11 Jahren" /></p>
                       </div>
 
                       <div className="flex items-center gap-4">
@@ -1154,8 +1155,8 @@ export default function AITripPlannerPage() {
 
                     <div className="flex items-center justify-between rounded-2xl border border-gray-100 p-5">
                       <div>
-                        <p className="font-bold text-blue-950">Children</p>
-                        <p className="mt-1 text-sm text-gray-400">Age 5–10</p>
+                        <p className="font-bold text-blue-950"><HomeText en="Children" de="Kinder" /></p>
+                        <p className="mt-1 text-sm text-gray-400"><HomeText en="Age 5–10" de="5–10 Jahre" /></p>
                       </div>
 
                       <div className="flex items-center gap-4">
@@ -1370,7 +1371,7 @@ export default function AITripPlannerPage() {
 
                   <div className="mt-8">
                     <p className="mb-4 text-sm font-bold text-blue-950">
-                      Your experience budget
+                      <HomeText en="Your experience budget" de="Ihr Budget für Erlebnisse" />
                     </p>
 
                     <div className="relative">
@@ -1383,7 +1384,7 @@ export default function AITripPlannerPage() {
                         min="0"
                         value={budget}
                         onChange={(e) => setBudget(e.target.value)}
-                        placeholder="Enter amount"
+                        placeholder="Betrag eingeben"
                         className="h-16 w-full rounded-2xl border border-gray-200 bg-white pl-12 pr-5 text-xl font-bold text-blue-950 outline-none transition placeholder:text-base placeholder:font-normal placeholder:text-gray-300 focus:border-blue-950 focus:ring-4 focus:ring-blue-950/5"
                       />
                     </div>
