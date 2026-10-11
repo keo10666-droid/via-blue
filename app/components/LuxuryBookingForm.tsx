@@ -527,6 +527,14 @@ export default function LuxuryBookingForm({
   tourType = "Private Luxury",
   included = [],
 }: LuxuryBookingFormProps) {
+  const [isGerman, setIsGerman] = useState(false);
+  useEffect(() => {
+    const syncLanguage = () => setIsGerman(localStorage.getItem("via-blue-language") === "de");
+    syncLanguage();
+    window.addEventListener("via-blue-language-change", syncLanguage);
+    return () => window.removeEventListener("via-blue-language-change", syncLanguage);
+  }, []);
+
   const [name, setName] = useState("");
   const [nationality, setNationality] = useState("");
   const [isNationalityOpen, setIsNationalityOpen] = useState(false);
@@ -940,7 +948,7 @@ ${notes.trim() || "-"}
 
                         <input
                           type="text"
-                          placeholder="Vollständigen Namen eingeben"
+                          placeholder={isGerman ? "Vollständigen Namen eingeben" : "Enter full name"}
                           value={name}
                           onChange={(e) =>
                             setName(e.target.value)
@@ -970,7 +978,7 @@ ${notes.trim() || "-"}
 
                         <input
                           type="text"
-                          placeholder="Nationalität auswählen"
+                          placeholder={isGerman ? "Nationalität auswählen" : "Select nationality"}
                           value={nationality}
                           onChange={(e) => {
                             setNationality(e.target.value);
@@ -1029,7 +1037,7 @@ ${notes.trim() || "-"}
 
                         <input
                           type="email"
-                          placeholder="du@beispiel.de"
+                          placeholder={isGerman ? "du@beispiel.de" : "you@example.com"}
                           value={email}
                           onChange={(e) =>
                             setEmail(e.target.value)
@@ -1082,7 +1090,7 @@ ${notes.trim() || "-"}
                               <div className="border-b border-slate-100 p-3">
                                 <input
                                   type="text"
-                                  placeholder="Land oder Vorwahl suchen..."
+                                  placeholder={isGerman ? "Land oder Vorwahl suchen..." : "Search country or dial code..."}
                                   value={countrySearch}
                                   onChange={(e) =>
                                     setCountrySearch(
@@ -1139,7 +1147,7 @@ ${notes.trim() || "-"}
 
                           <input
                             type="tel"
-                            placeholder="WhatsApp-Nummer"
+                            placeholder={isGerman ? "WhatsApp-Nummer" : "WhatsApp number"}
                             value={phone}
                             onChange={(e) =>
                               setPhone(e.target.value)
@@ -1195,7 +1203,7 @@ ${notes.trim() || "-"}
 
                         <input
                           type="text"
-                          placeholder="Name Ihres Hotels"
+                          placeholder={isGerman ? "Name Ihres Hotels" : "Hotel name"}
                           value={hotel}
                           onChange={(e) =>
                             setHotel(e.target.value)
@@ -1217,7 +1225,7 @@ ${notes.trim() || "-"}
 
                         <input
                           type="text"
-                          placeholder="Zimmernummer"
+                          placeholder={isGerman ? "Zimmernummer" : "Room number"}
                           value={roomNumber}
                           onChange={(e) =>
                             setRoomNumber(e.target.value)
@@ -1838,7 +1846,7 @@ ${notes.trim() || "-"}
 
                   <textarea
                     rows={5}
-                    placeholder="Teilen Sie uns besondere Wünsche, Vorlieben oder wichtige Details mit..."
+                    placeholder={isGerman ? "Teilen Sie uns besondere Wünsche, Vorlieben oder wichtige Details mit..." : "Tell us any special requests, preferences, or important details..."}
                     value={notes}
                     onChange={(e) =>
                       setNotes(e.target.value)
