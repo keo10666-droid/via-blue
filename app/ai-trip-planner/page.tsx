@@ -267,7 +267,7 @@ export default function AITripPlannerPage() {
 
   const [days, setDays] = useState(5);
 
-  const [currency, set<HomeText en="Currency" de="Währung" />] =
+  const [currency, setCurrency] =
     useState<(typeof currencies)[number]>("EUR");
   const [budget, setBudget] = useState("");
 
