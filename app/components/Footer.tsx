@@ -122,7 +122,7 @@ function GmailIcon() {
   );
 }
 
-function {text.location}Icon() {
+function LocationIcon() {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -455,7 +455,7 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* {text.quickLinks} */}
+          {/* Quick Links */}
           <div>
             <h3 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">
               Quick Links
