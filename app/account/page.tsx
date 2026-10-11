@@ -9,6 +9,7 @@ import {
 } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
+import HomeText from "@/app/components/HomeText";
 
 type Profile = {
   full_name: string | null;
@@ -1060,7 +1061,7 @@ export default function AccountPage() {
             <div className="flex items-center gap-3">
               <div className="h-px w-8 bg-orange-400" />
               <p className="text-xs font-bold uppercase tracking-[0.28em] text-orange-400">
-                My Account
+                <HomeText en="My Account" de="Mein Konto" />
               </p>
             </div>
 
@@ -1073,7 +1074,7 @@ export default function AccountPage() {
             </h1>
 
             <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base">
-              Manage your profile, view your bookings and keep your favorite Hurghada memories in one place
+              <HomeText en="Manage your profile, view your bookings and keep your favorite Hurghada memories in one place" de="Verwalte dein Profil, sieh deine Buchungen ein und bewahre deine schönsten Hurghada-Erinnerungen an einem Ort auf" />
             </p>
           </div>
         </section>
@@ -1085,7 +1086,7 @@ export default function AccountPage() {
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-400">
-                  Reward Points
+                  <HomeText en="Reward Points" de="Bonuspunkte" />
                 </p>
                 <p className="mt-3 text-3xl font-semibold tracking-tight text-[#071d49]">
                   {loyalty?.points || 0}
@@ -1111,7 +1112,7 @@ export default function AccountPage() {
             </div>
 
             <p className="mt-3 text-xs leading-5 text-slate-500">
-              Keep booking to unlock future gifts
+              <HomeText en="Keep booking to unlock future gifts" de="Buche weitere Erlebnisse und sichere dir zukünftige Prämien" />
             </p>
           </div>
 
@@ -1119,7 +1120,7 @@ export default function AccountPage() {
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-400">
-                  Completed Trips
+                  <HomeText en="Completed Trips" de="Abgeschlossene Ausflüge" />
                 </p>
                 <p className="mt-3 text-3xl font-semibold tracking-tight text-[#071d49]">
                   {loyalty?.completed_bookings ||
@@ -1151,7 +1152,7 @@ export default function AccountPage() {
             </div>
 
             <p className="mt-3 text-xs leading-5 text-slate-500">
-              Your completed adventures with us
+              <HomeText en="Your completed adventures with us" de="Deine abgeschlossenen Abenteuer mit uns" />
             </p>
           </div>
 
@@ -1661,11 +1662,11 @@ export default function AccountPage() {
             <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-center">
               <div>
                 <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-orange-500">
-                  My Trips
+                  <HomeText en="My Trips" de="Meine Reisen" />
                 </p>
 
                 <h2 className="mt-1 text-xl font-semibold tracking-tight text-[#071d49]">
-                  Booking History
+                  <HomeText en="Booking History" de="Buchungsverlauf" />
                 </h2>
               </div>
 
@@ -1673,7 +1674,7 @@ export default function AccountPage() {
                 href="/tours"
                 className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#071d49] px-5 py-3 text-sm font-bold text-white transition hover:bg-blue-800"
               >
-                Explore Tours
+                <HomeText en="Explore Tours" de="Touren entdecken" />
 
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -1717,11 +1718,11 @@ export default function AccountPage() {
                 </div>
 
                 <h3 className="mt-4 text-lg font-semibold text-[#071d49]">
-                  No bookings yet
+                  <HomeText en="No bookings yet" de="Noch keine Buchungen" />
                 </h3>
 
                 <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-500">
-                  Your confirmed and upcoming trips will appear here
+                  <HomeText en="Your confirmed and upcoming trips will appear here" de="Hier erscheinen deine bestätigten und bevorstehenden Ausflüge" />
                 </p>
               </div>
             ) : (
@@ -1867,17 +1868,17 @@ export default function AccountPage() {
 
                 <div>
                   <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-orange-500">
-                    My Travel Memories
+                    <HomeText en="My Travel Memories" de="Meine Reiseerinnerungen" />
                   </p>
 
                   <h2 className="mt-1 text-xl font-semibold tracking-tight text-[#071d49]">
-                    Save Your Hurghada Moments
+                    <HomeText en="Save Your Hurghada Moments" de="Bewahre deine Hurghada-Momente" />
                   </h2>
                 </div>
               </div>
 
               <p className="mt-4 text-sm leading-6 text-slate-500">
-                Add up to 25 photos from your trips. Only you can see them
+                <HomeText en="Add up to 25 photos from your trips. Only you can see them" de="Füge bis zu 25 Fotos deiner Ausflüge hinzu. Nur du kannst sie sehen" />
               </p>
             </div>
 
@@ -2026,11 +2027,11 @@ export default function AccountPage() {
               </div>
 
               <h3 className="mt-4 text-lg font-semibold text-[#071d49]">
-                No memories yet
+                <HomeText en="No memories yet" de="Noch keine Erinnerungen" />
               </h3>
 
               <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-500">
-                Upload your first Hurghada memory above
+                <HomeText en="Upload your first Hurghada memory above" de="Lade oben deine erste Hurghada-Erinnerung hoch" />
               </p>
             </div>
           ) : (
