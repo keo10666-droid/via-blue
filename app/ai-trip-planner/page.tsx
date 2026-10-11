@@ -275,6 +275,7 @@ export default function AITripPlannerPage() {
   const [processingStage, setProcessingStage] = useState(0);
 
   const [packages, setPackages] = useState<PackageOption[]>([]);
+  const [availableTours, setAvailableTours] = useState<PackageTour[]>([]);
   const [selectedPackage, setSelectedPackage] =
     useState<PackageOption | null>(null);
 
@@ -309,6 +310,55 @@ export default function AITripPlannerPage() {
   const selectSurpriseMe = () => {
     setSurpriseMe(true);
     setSelectedCategories([]);
+  };
+
+  const replacePackageTour = (
+    packageId: string,
+    dayNumber: number,
+    oldSlug: string,
+    newSlug: string,
+  ) => {
+    const replacement = availableTours.find((tour) => tour.slug === newSlug);
+    if (!replacement) return;
+
+    const updatePackage = (pkg: PackageOption): PackageOption => {
+      if (pkg.id !== packageId) return pkg;
+      const alreadyIncluded = pkg.itinerary.some((day) =>
+        day.tours.some((tour) => tour.slug === newSlug && tour.slug !== oldSlug)
+      );
+      if (alreadyIncluded) return pkg;
+
+      const itinerary = pkg.itinerary.map((day) =>
+        day.day !== dayNumber
+          ? day
+          : {
+              ...day,
+              tours: day.tours.map((tour) =>
+                tour.slug === oldSlug
+                  ? { ...replacement, day: dayNumber }
+                  : tour
+              ),
+            }
+      );
+      const totalCost = Math.round(
+        itinerary.reduce(
+          (sum, day) =>
+            sum + day.tours.reduce((daySum, tour) => daySum + tour.estimatedTotal, 0),
+          0
+        ) * 100
+      ) / 100;
+
+      return {
+        ...pkg,
+        itinerary,
+        totalCost,
+        remainingBudget: Math.round((pkg.budget - totalCost) * 100) / 100,
+        activities: itinerary.reduce((sum, day) => sum + day.tours.length, 0),
+      };
+    };
+
+    setPackages((current) => current.map(updatePackage));
+    setSelectedPackage((current) => current ? updatePackage(current) : current);
   };
 
   const generateTrip = async () => {
@@ -356,6 +406,7 @@ export default function AITripPlannerPage() {
       });
 
       setPackages(data.packages ?? []);
+      setAvailableTours(data.alternatives ?? []);
 
       if (!data.packages || data.packages.length !== 3) {
         throw new Error(
@@ -914,6 +965,47 @@ export default function AITripPlannerPage() {
                                             {tour.rating.toFixed(1)}
                                           </span>
                                         )}
+                                      </div>
+
+                                      <div className="mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-gray-200 pt-3">
+                                        <span className="text-xs font-semibold text-gray-500">
+                                          {tour.estimatedTotal.toFixed(2)} {pkg.currency}
+                                        </span>
+                                        <select
+                                          key={`${pkg.id}-${tour.slug}`}
+                                          defaultValue=""
+                                          aria-label={`Replace ${tour.name}`}
+                                          onChange={(event) => {
+                                            if (event.target.value) {
+                                              replacePackageTour(
+                                                pkg.id,
+                                                day.day,
+                                                tour.slug,
+                                                event.target.value
+                                              );
+                                            }
+                                          }}
+                                          className="max-w-full rounded-lg border border-gray-200 bg-white px-2.5 py-2 text-xs font-bold text-blue-950 outline-none focus:border-orange-500"
+                                        >
+                                          <option value="" disabled>
+                                            Replace experience…
+                                          </option>
+                                          {availableTours
+                                            .filter((option) =>
+                                              option.slug !== tour.slug &&
+                                              !pkg.itinerary.some((item) =>
+                                                item.tours.some((existing) =>
+                                                  existing.slug === option.slug &&
+                                                  existing.slug !== tour.slug
+                                                )
+                                              )
+                                            )
+                                            .map((option) => (
+                                              <option key={option.slug} value={option.slug}>
+                                                {option.name} · {pkg.currency === "EUR" ? "€" : "$"}{option.estimatedTotal.toFixed(2)}
+                                              </option>
+                                            ))}
+                                        </select>
                                       </div>
                                     </div>
                                   ))}
