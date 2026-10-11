@@ -452,7 +452,7 @@ export default function AITripPlannerPage() {
               <span className="h-px w-12 bg-orange-400" />
 
               <p className="text-xs font-bold uppercase tracking-[0.35em] text-orange-400 sm:text-sm">
-                Via Blue AI Trip Planner
+                Via Blue Smart Trip Planner
               </p>
             </div>
 
@@ -464,7 +464,7 @@ export default function AITripPlannerPage() {
             </h1>
 
             <p className="mt-7 max-w-2xl text-lg leading-8 text-blue-100 sm:text-xl">
-              Tell us what you&apos;re looking for and let our AI build a
+              Tell us what you&apos;re looking for and let our planner build a
               personalized Red Sea experience around you.
             </p>
 
@@ -474,7 +474,7 @@ export default function AITripPlannerPage() {
               </span>
 
               <span className="text-sm font-semibold text-white">
-                Intelligent planning · Real Via Blue experiences
+                Smart planning · Real Via Blue experiences
               </span>
             </div>
           </div>
@@ -577,13 +577,13 @@ export default function AITripPlannerPage() {
                   "Choose your main area and we'll focus on experiences that work naturally from there."}
 
                 {step === 3 &&
-                  "Your trip length helps our AI decide how many experiences can comfortably fit."}
+                  "Your trip length helps our planner decide how many experiences can comfortably fit."}
 
                 {step === 4 &&
                   "Set your spending limit and we'll keep your recommendations within it."}
 
                 {step === 5 &&
-                  "Choose your favorite experiences, or let our AI surprise you with the best combination."}
+                  "Choose your favorite experiences, or let the planner surprise you with the best combination."}
               </p>
             </div>
           )}
@@ -608,7 +608,7 @@ export default function AITripPlannerPage() {
                     <span className="h-px w-10 bg-orange-500" />
 
                     <p className="text-xs font-bold uppercase tracking-[0.3em] text-orange-500">
-                      Via Blue AI
+                      Via Blue Smart Planner
                     </p>
 
                     <span className="h-px w-10 bg-orange-500" />
@@ -764,7 +764,7 @@ export default function AITripPlannerPage() {
                   <span className="h-px w-10 bg-orange-500" />
 
                   <p className="text-xs font-bold uppercase tracking-[0.3em] text-orange-500">
-                    Your Via Blue AI Plan
+                    Your Via Blue Smart Planner Plan
                   </p>
 
                   <span className="h-px w-10 bg-orange-500" />
@@ -1366,7 +1366,7 @@ export default function AITripPlannerPage() {
                           </p>
 
                           <p className="mt-1 text-sm leading-6 text-gray-500">
-                            Let our AI choose the perfect mix of experiences
+                            Let the planner choose the perfect mix of experiences
                             for your trip.
                           </p>
                         </div>
@@ -1486,7 +1486,7 @@ export default function AITripPlannerPage() {
 
                     {!surpriseMe && selectedCategories.length > 0 && (
                       <p className="mt-2 text-sm leading-6 text-blue-200">
-                        Our AI will use these preferences together with your
+                        The planner will use these preferences together with your
                         destination, duration, group size and budget.
                       </p>
                     )}
