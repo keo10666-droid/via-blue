@@ -1,4 +1,5 @@
 import Link from "next/link";
+import HomeText from "@/app/components/HomeText";
 
 const luxuryTours = {
   luxor: {
@@ -942,11 +943,11 @@ export default async function LuxuryTourPage({
           </p>
 
           <h1 className="mt-3 text-4xl font-semibold tracking-tight text-blue-950">
-            Tour Not Found
+            <HomeText en="Tour Not Found" de="Tour nicht gefunden" />
           </h1>
 
           <p className="mx-auto mt-4 max-w-md text-gray-600">
-            Sorry, this luxury experience is not available
+            <HomeText en="Sorry, this luxury experience is not available" de="Dieses luxuriöse Erlebnis ist leider nicht verfügbar." />
           </p>
 
           <Link
@@ -1035,11 +1036,11 @@ export default async function LuxuryTourPage({
 
                 <div>
                   <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-orange-500">
-                    The Experience
+                    <HomeText en="The Experience" de="Das Erlebnis" />
                   </p>
 
                   <h2 className="mt-1 text-3xl font-semibold tracking-tight text-blue-950">
-                    A Private Journey, Designed Around You
+                    <HomeText en="A Private Journey, Designed Around You" de="Eine private Reise, ganz nach Ihren Wünschen" />
                   </h2>
                 </div>
               </div>
@@ -1118,7 +1119,7 @@ export default async function LuxuryTourPage({
             <section className="grid gap-6 md:grid-cols-2">
               <div className="rounded-[28px] border border-slate-200/80 bg-white p-7 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:shadow-lg">
                 <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-orange-500">
-                  Included
+                  <HomeText en="Included" de="Inklusive" />
                 </p>
 
                 <h2 className="mt-2 text-2xl font-semibold tracking-tight text-blue-950">
@@ -1145,7 +1146,7 @@ export default async function LuxuryTourPage({
 
               <div className="rounded-[28px] border border-slate-200/80 bg-white p-7 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:shadow-lg">
                 <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-orange-500">
-                  Not Included
+                  <HomeText en="Not Included" de="Nicht inklusive" />
                 </p>
 
                 <h2 className="mt-2 text-2xl font-semibold tracking-tight text-blue-950">
@@ -1246,7 +1247,7 @@ export default async function LuxuryTourPage({
                     <div className="flex items-center justify-between gap-4">
                       <div>
                         <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400">
-                          Duration
+                          <HomeText en="Duration" de="Dauer" />
                         </p>
 
                         <p className="mt-1 text-sm font-bold text-blue-950">
@@ -1282,11 +1283,11 @@ export default async function LuxuryTourPage({
 
                   <div className="rounded-2xl border border-orange-100 bg-orange-50 p-4">
                     <p className="text-[10px] font-bold uppercase tracking-wider text-orange-500">
-                      Experience Type
+                      <HomeText en="Experience Type" de="Erlebnisart" />
                     </p>
 
                     <p className="mt-1 text-sm font-bold text-orange-700">
-                      Fully Private
+                      <HomeText en="Fully Private" de="Vollständig privat" />
                     </p>
                   </div>
                 </div>
@@ -1336,13 +1337,13 @@ export default async function LuxuryTourPage({
             </div>
 
             <p className="mt-5 text-xs font-bold uppercase tracking-[0.3em] text-orange-400">
-              Your Private Experience
+              <HomeText en="Your Private Experience" de="Ihr privates Erlebnis" />
             </p>
 
             <h2 className="mt-3 text-3xl font-semibold tracking-tight md:text-4xl">
-              Travel Privately
+              <HomeText en="Travel Privately" de="Privat reisen" />
               <span className="block text-orange-400">
-                Experience More
+                <HomeText en="Experience More" de="Mehr erleben" />
               </span>
             </h2>
 
@@ -1356,7 +1357,7 @@ export default async function LuxuryTourPage({
                 href={`/luxury-tours/${slug}/book`}
                 className="inline-flex items-center justify-center gap-2 rounded-2xl bg-orange-500 px-8 py-3.5 text-sm font-bold text-white shadow-lg shadow-orange-500/20 transition duration-300 hover:-translate-y-0.5 hover:bg-orange-600"
               >
-                Reserve This Experience
+                <HomeText en="Reserve This Experience" de="Dieses Erlebnis reservieren" />
                 <ArrowRightIcon />
               </Link>
             </div>
