@@ -298,7 +298,21 @@ export async function POST(request: Request) {
       }, { status: 422 });
     }
 
-    return NextResponse.json({ success: true, packages });
+    const alternatives: PackageTour[] = categoryTours.map((tour) => ({
+      slug: tour.slug,
+      name: tour.name,
+      category: tour.category,
+      image: tour.image,
+      duration: tour.duration,
+      rating: tour.rating,
+      reviews: tour.reviews,
+      price: tour.price,
+      childPrice: tour.childPrice,
+      estimatedTotal: convertCurrency(tourCost(tour, plannerRequest), plannerRequest.currency),
+      day: 0,
+    }));
+
+    return NextResponse.json({ success: true, packages, alternatives });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unable to create your trip plan.";
     return NextResponse.json({ success: false, error: message }, { status: 400 });
