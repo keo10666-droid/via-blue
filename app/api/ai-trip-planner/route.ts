@@ -57,10 +57,6 @@ type AIPlannerResponse = {
   packages: AIPackage[];
 };
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
 const EUR_TO_USD = 1.17;
 
 const AREA_KEYWORDS: Record<string, string[]> = {
@@ -324,46 +320,103 @@ function buildPackageFromAI(
     ]),
   );
 
+  const maxActivities = Math.min(5, request.days);
+  const targetSpendEUR = budgetEUR * 0.95;
   const selectedTours: Tour[] = [];
   const usedSlugs = new Set<string>();
 
+  // Start with the AI's concepts, but never let the AI underspend the
+  // customer's budget simply because it selected a few inexpensive tours.
   for (const slug of aiPackage.tourSlugs) {
     const tour = catalogBySlug.get(slug);
+    if (!tour || usedSlugs.has(tour.slug)) continue;
 
-    if (!tour) {
-      continue;
-    }
-
-    if (usedSlugs.has(tour.slug)) {
-      continue;
-    }
-
-    const nextTours = [
-      ...selectedTours,
-      tour,
-    ];
-
-    const nextTotal = nextTours.reduce(
+    const nextTotal = [...selectedTours, tour].reduce(
       (total, item) =>
-        total +
-        calculateTourTotal(
-          item,
-          request.adults,
-          request.children,
-        ),
+        total + calculateTourTotal(item, request.adults, request.children),
       0,
     );
 
-    if (nextTotal > budgetEUR) {
-      continue;
-    }
-
+    if (nextTotal > budgetEUR) continue;
     selectedTours.push(tour);
     usedSlugs.add(tour.slug);
+    if (selectedTours.length >= Math.min(3, maxActivities)) break;
+  }
 
-    if (selectedTours.length >= 5) {
-      break;
+  // Keep only tours that can actually fit into the day-by-day itinerary.
+  const initiallyPlaced = buildItinerary(selectedTours, request.days)
+    .flatMap((day) => day.tours)
+    .map((item) => catalogBySlug.get(item.slug))
+    .filter((tour): tour is Tour => Boolean(tour));
+
+  selectedTours.splice(0, selectedTours.length, ...initiallyPlaced);
+  usedSlugs.clear();
+  selectedTours.forEach((tour) => usedSlugs.add(tour.slug));
+
+  const getPlacedTours = (candidateTours: Tour[]) =>
+    buildItinerary(candidateTours, request.days)
+      .flatMap((day) => day.tours)
+      .map((item) => catalogBySlug.get(item.slug))
+      .filter((tour): tour is Tour => Boolean(tour));
+
+  const getTotalEUR = (candidateTours: Tour[]) =>
+    candidateTours.reduce(
+      (total, tour) =>
+        total + calculateTourTotal(tour, request.adults, request.children),
+      0,
+    );
+
+  // Fill toward 95% of the budget (without ever exceeding it). When all
+  // slots are occupied, replace cheaper selections if that makes a better
+  // use of the customer's budget while keeping the schedule realistic.
+  for (let pass = 0; pass < maxActivities; pass++) {
+    const currentPlaced = getPlacedTours(selectedTours);
+    const currentTotal = getTotalEUR(currentPlaced);
+    const currentCategories = new Set(currentPlaced.map((tour) => tour.category));
+    let best:
+      | { tours: Tour[]; candidate: Tour; score: number; total: number }
+      | undefined;
+
+    for (const candidate of catalogTours) {
+      if (currentPlaced.some((tour) => tour.slug === candidate.slug)) continue;
+
+      const replacements =
+        currentPlaced.length < maxActivities
+          ? [undefined]
+          : currentPlaced;
+
+      for (const replaceTour of replacements) {
+        const proposed = replaceTour
+          ? currentPlaced.filter((tour) => tour.slug !== replaceTour.slug).concat(candidate)
+          : currentPlaced.concat(candidate);
+        const placed = getPlacedTours(proposed);
+
+        if (!placed.some((tour) => tour.slug === candidate.slug)) continue;
+        if (placed.length > maxActivities) continue;
+
+        const total = getTotalEUR(placed);
+        if (total > budgetEUR || total <= currentTotal) continue;
+
+        const addsCategory = !currentCategories.has(candidate.category);
+        const score =
+          Math.abs(targetSpendEUR - total) -
+          (addsCategory ? 8 : 0) -
+          candidate.rating * 0.25 +
+          ((catalogTours.indexOf(candidate) + packageIndex) % 3) * 0.01;
+
+        if (!best || score < best.score) {
+          best = { tours: placed, candidate, score, total };
+        }
+      }
     }
+
+    if (!best) break;
+
+    selectedTours.splice(0, selectedTours.length, ...best.tours);
+    usedSlugs.clear();
+    selectedTours.forEach((tour) => usedSlugs.add(tour.slug));
+
+    if (best.total >= targetSpendEUR) break;
   }
 
   const itinerary = buildItinerary(
@@ -857,10 +910,23 @@ Each package must contain a list of exact tour slugs from the catalog.
 
     /*
      * REAL OPENAI CALL
+     * Keep the API key server-side and fail clearly if Production is missing it.
      */
+    const apiKey = process.env.OPENAI_API_KEY?.trim();
+    if (!apiKey) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "AI Trip Planner is not configured. Add OPENAI_API_KEY to the Vercel Production environment and redeploy.",
+        },
+        { status: 503 },
+      );
+    }
+
+    const openai = new OpenAI({ apiKey });
     const response =
       await openai.responses.create({
-        model: "gpt-6-luna",
+        model: "gpt-4.1-mini",
 
         instructions:
           systemPrompt,
@@ -1097,7 +1163,10 @@ Each package must contain a list of exact tour slugs from the catalog.
       },
     });
   } catch (error) {
-    console.error("AI Trip Planner request failed.");
+    console.error("AI Trip Planner request failed:", {
+      name: error instanceof Error ? error.name : "UnknownError",
+      message: error instanceof Error ? error.message : "Unknown error",
+    });
 
     const message =
       error instanceof Error
@@ -1106,15 +1175,21 @@ Each package must contain a list of exact tour slugs from the catalog.
 
     const isValidationError =
       /Invalid request body|Adults must|Children must|Area is required|Unsupported area|Days must|Budget must|selected categories|Select at least one experience category/i.test(message);
+    const isAuthError = /api key|authentication|unauthorized|invalid.*key/i.test(message);
+    const isModelError = /model.*not found|does not exist|unsupported model/i.test(message);
 
     return NextResponse.json(
       {
         success: false,
         error: isValidationError
           ? message
-          : "Unable to create your trip plan right now. Please try again shortly.",
+          : isAuthError
+            ? "The AI service rejected its API key. Check OPENAI_API_KEY in Vercel Production."
+            : isModelError
+              ? "The AI model configuration is invalid. Check the configured model in the trip planner."
+              : "Unable to create your trip plan right now. Please try again shortly.",
       },
-      { status: isValidationError ? 400 : 500 },
+      { status: isValidationError ? 400 : isAuthError || isModelError ? 503 : 500 },
     );
   }
 }
