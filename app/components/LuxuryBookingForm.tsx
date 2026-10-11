@@ -1029,7 +1029,7 @@ ${notes.trim() || "-"}
 
                         <input
                           type="email"
-                          placeholder="you@example.com"
+                          placeholder="du@beispiel.de"
                           value={email}
                           onChange={(e) =>
                             setEmail(e.target.value)
