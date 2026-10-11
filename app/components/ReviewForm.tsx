@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import HomeText from "@/app/components/HomeText";
 
 type ReviewFormProps = {
   tourSlug: string;
@@ -24,7 +25,7 @@ export default function ReviewForm({
     event.preventDefault();
 
     if (!name.trim() || !comment.trim()) {
-      setMessage("Please enter your name and review");
+      setMessage("REVIEW_REQUIRED");
       return;
     }
 
@@ -55,7 +56,7 @@ export default function ReviewForm({
       setName("");
       setRating(5);
       setComment("");
-      setMessage("Thank you! Your review has been submitted and is awaiting moderation");
+      setMessage("REVIEW_SUBMITTED");
 
       router.refresh();
     } catch (error) {
@@ -79,16 +80,16 @@ export default function ReviewForm({
         <div className="mb-7">
           <div className="inline-flex items-center rounded-full border border-orange-200 bg-orange-50 px-4 py-2 shadow-sm">
             <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-orange-500">
-              Share Your Experience
+              <HomeText en="Share Your Experience" de="Teile deine Erfahrung" />
             </p>
           </div>
 
           <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-blue-950 md:text-4xl">
-            Leave a Review
+            <HomeText en="Leave a Review" de="Bewertung schreiben" />
           </h2>
 
           <p className="mt-2 max-w-2xl text-base leading-7 text-slate-600">
-            Tell other guests about your experience with {tourName}
+            <HomeText en={`Tell other guests about your experience with ${tourName}`} de={`Teile deine Erfahrung mit ${tourName} mit anderen Gästen`} />
           </p>
         </div>
 
@@ -99,7 +100,7 @@ export default function ReviewForm({
               htmlFor="review-name"
               className="mb-2 block text-sm font-extrabold text-blue-950"
             >
-              Your Name
+              <HomeText en="Your Name" de="Dein Name" />
             </label>
 
             <input
@@ -117,7 +118,7 @@ export default function ReviewForm({
           {/* Rating */}
           <div>
             <label className="mb-3 block text-sm font-extrabold text-blue-950">
-              Your Rating
+              <HomeText en="Your Rating" de="Deine Bewertung" />
             </label>
 
             <div className="inline-flex items-center gap-1 rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3 shadow-sm">
@@ -145,7 +146,7 @@ export default function ReviewForm({
               htmlFor="review-comment"
               className="mb-2 block text-sm font-extrabold text-blue-950"
             >
-              Your Review
+              <HomeText en="Your Review" de="Deine Rezension" />
             </label>
 
             <textarea
@@ -169,7 +170,7 @@ export default function ReviewForm({
             <span className="absolute inset-y-0 right-0 w-20 translate-x-8 bg-orange-500/20 blur-2xl transition duration-500 group-hover:translate-x-0" />
 
             <span className="relative">
-              {loading ? "Publishing..." : "Submit Review"}
+              {loading ? <HomeText en="Publishing..." de="Wird veröffentlicht..." /> : <HomeText en="Submit Review" de="Bewertung absenden" />}
             </span>
           </button>
 
@@ -177,12 +178,18 @@ export default function ReviewForm({
           {message && (
             <div
               className={`rounded-2xl border px-4 py-3 font-semibold ${
-                message.includes("Thank you")
+                message === "REVIEW_SUBMITTED"
                   ? "border-green-200 bg-green-50 text-green-700"
                   : "border-red-200 bg-red-50 text-red-600"
               }`}
             >
-              {message}
+              {message === "REVIEW_SUBMITTED" ? (
+                <HomeText en="Thank you! Your review has been submitted and is awaiting moderation" de="Vielen Dank! Deine Bewertung wurde übermittelt und wartet auf Freigabe" />
+              ) : message === "REVIEW_REQUIRED" ? (
+                <HomeText en="Please enter your name and review" de="Bitte gib deinen Namen und deine Bewertung ein" />
+              ) : (
+                message
+              )}
             </div>
           )}
         </form>
