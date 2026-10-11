@@ -608,7 +608,7 @@ ${notes.trim() || "-"}`;
               </div>
 
               <div className="rounded-full border border-orange-400/20 bg-orange-500/10 px-4 py-2 text-sm font-bold text-orange-300 backdrop-blur-md">
-                €{adultPrice} per adult
+                €{adultPrice} <HomeText en="per adult" de="pro Erwachsenem" />
               </div>
             </div>
           </div>
@@ -892,7 +892,7 @@ ${notes.trim() || "-"}`;
               </div>
             </div>
 
-            {/* Tour Date */}
+            {/* <HomeText en="Tour Date *" de="Reisedatum *" />/}
             <div className="mb-8 mt-12 border-b border-gray-100 pb-8">
               <p className="mb-2 text-xs font-black uppercase tracking-[0.18em] text-orange-500">
                 <HomeText en="Experience Details" de="Erlebnisdetails" />
@@ -1044,7 +1044,7 @@ ${notes.trim() || "-"}`;
             {childAges.length > 0 && (
               <div className="mt-7 rounded-2xl border border-blue-100 bg-blue-50/50 p-5">
                 <h3 className="mb-4 text-lg font-black text-[#071a36]">
-                  <HomeText en="Children Ages (5-10 years)" de="Alter der Kinder (5–10 Jahre)" />
+                  <HomeText en="Children Ages (5-<HomeText en="10 years" de="10 Jahre" />)" de="Alter der Kinder (5–10 Jahre)" />
                 </h3>
 
                 <div className="grid gap-4 md:grid-cols-2">
@@ -1072,27 +1072,27 @@ ${notes.trim() || "-"}`;
                         }}
                       >
                         <option value="">
-                          Select Child {index + 1} Age
+                          <HomeText en={`Select Child ${index + 1} Age`} de={`Alter für Kind ${index + 1} auswählen`} />
                         </option>
 
                         <option value="5">
-                          5 years
+                          <HomeText en="5 years" de="5 Jahre" />
                         </option>
 
                         <option value="6">
-                          6 years
+                          <HomeText en="6 years" de="6 Jahre" />
                         </option>
 
                         <option value="7">
-                          7 years
+                          <HomeText en="7 years" de="7 Jahre" />
                         </option>
 
                         <option value="8">
-                          8 years
+                          <HomeText en="8 years" de="8 Jahre" />
                         </option>
 
                         <option value="9">
-                          9 years
+                          <HomeText en="9 years" de="9 Jahre" />
                         </option>
 
                         <option value="10">
@@ -1117,7 +1117,7 @@ ${notes.trim() || "-"}`;
             {infantAges.length > 0 && (
               <div className="mt-7 rounded-2xl border border-orange-100 bg-orange-50/50 p-5">
                 <h3 className="mb-4 text-lg font-black text-[#071a36]">
-                  <HomeText en="Infant Ages (1-4 years)" de="Alter der Kleinkinder (1–4 Jahre)" />
+                  <HomeText en="Infant Ages (1-<HomeText en="4 years" de="4 Jahre" />)" de="Alter der Kleinkinder (1–4 Jahre)" />
                 </h3>
 
                 <div className="grid gap-4 md:grid-cols-2">
@@ -1145,19 +1145,19 @@ ${notes.trim() || "-"}`;
                         }}
                       >
                         <option value="">
-                          Select Infant {index + 1} Age
+                          <HomeText en={`Select Infant ${index + 1} Age`} de={`Alter für Kleinkind ${index + 1} auswählen`} />
                         </option>
 
                         <option value="1">
-                          1 year
+                          <HomeText en="1 year" de="1 Jahr" />
                         </option>
 
                         <option value="2">
-                          2 years
+                          <HomeText en="2 years" de="2 Jahre" />
                         </option>
 
                         <option value="3">
-                          3 years
+                          <HomeText en="3 years" de="3 Jahre" />
                         </option>
 
                         <option value="4">
@@ -1199,17 +1199,17 @@ ${notes.trim() || "-"}`;
 
               <div className="mt-5 space-y-3 text-gray-700">
                 <p className="font-bold">
-                  Adults: {adults} × €{adultPrice} = €
+                  <HomeText en="Adults" de="Erwachsene" />: {adults} × €{adultPrice} = €
                   {Number(adults) * adultPrice}
                 </p>
 
                 <p className="font-bold">
-                  Children: {children} × €{childPrice} = €
+                  <HomeText en="Children" de="Kinder" />: {children} × €{childPrice} = €
                   {Number(children) * childPrice}
                 </p>
 
                 <p className="font-bold">
-                  Infants: {infants} × €{infantPrice} = €
+                  <HomeText en="Infants" de="Kleinkinder" />: {infants} × €{infantPrice} = €
                   {Number(infants) * infantPrice}
                 </p>
               </div>
@@ -1267,8 +1267,8 @@ ${notes.trim() || "-"}`;
               className="mt-8 w-full rounded-2xl bg-[#071a36] py-5 text-lg font-black text-white shadow-[0_16px_35px_rgba(7,26,54,0.2)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#0b2548] hover:shadow-[0_20px_40px_rgba(7,26,54,0.26)] disabled:cursor-not-allowed disabled:opacity-60"
             >
               {isSubmitting
-                ? "Saving Booking..."
-                : "📱 Send Booking Request"}
+                ? <HomeText en="Saving Booking..." de="Buchung wird gespeichert..." />
+                : <HomeText en="📱 Send Booking Request" de="📱 Buchungsanfrage senden" />}
             </button>
           </div>
 
