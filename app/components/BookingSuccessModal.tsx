@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import HomeText from "@/app/components/HomeText";
 
 type BookingSuccessModalProps = {
   open: boolean;
@@ -54,20 +55,18 @@ export default function BookingSuccessModal({
             </div>
 
             <p className="mt-7 text-[10px] font-extrabold uppercase tracking-[0.28em] text-orange-300">
-              Booking Request Received
+              <HomeText en="Booking Request Received" de="Buchungsanfrage erhalten" />
             </p>
 
             <h2
               id="booking-success-title"
               className="mt-2 text-3xl font-extrabold tracking-tight sm:text-4xl"
             >
-              Thank you{guestName ? ", " + guestName : ""}
+              <HomeText en={`Thank you${guestName ? ", " + guestName : ""}`} de={`Vielen Dank${guestName ? ", " + guestName : ""}`} />
             </h2>
 
             <p className="mt-4 max-w-lg text-sm leading-7 text-blue-100 sm:text-base">
-              Your booking request has been received successfully. Our team
-              will review the details and contact you shortly to confirm the
-              reservation and final arrangements
+              <HomeText en="Your booking request has been received successfully. Our team will review the details and contact you shortly to confirm the reservation and final arrangements." de="Ihre Buchungsanfrage ist erfolgreich eingegangen. Unser Team prüft die Angaben und meldet sich in Kürze, um die Reservierung und die letzten Details zu bestätigen." />
             </p>
           </div>
         </div>
@@ -75,7 +74,7 @@ export default function BookingSuccessModal({
         <div className="space-y-5 p-6 sm:p-8">
           <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
             <p className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-slate-400">
-              Your Request
+              <HomeText en="Your Request" de="Ihre Anfrage" />
             </p>
 
             <p className="mt-2 text-lg font-extrabold text-blue-950">
@@ -122,14 +121,14 @@ export default function BookingSuccessModal({
               <div>
                 <p className="text-sm font-extrabold text-blue-950">
                   {emailSent
-                    ? "Confirmation email sent"
-                    : "Your request is safely received"}
+                    ? <HomeText en="Confirmation email sent" de="Bestätigungs-E-Mail gesendet" />
+                    : <HomeText en="Your request is safely received" de="Ihre Anfrage ist sicher eingegangen" />}
                 </p>
 
                 <p className="mt-1 text-xs leading-5 text-slate-600">
                   {emailSent
-                    ? "We sent a confirmation message to " + email
-                    : "We will still contact you using the details you provided"}
+                    ? <HomeText en={"We sent a confirmation message to " + email} de={"Wir haben eine Bestätigungsnachricht an " + email + " gesendet"} />
+                    : <HomeText en="We will still contact you using the details you provided" de="Wir werden Sie weiterhin über die von Ihnen angegebenen Kontaktdaten erreichen" />}
                 </p>
               </div>
             </div>
@@ -137,13 +136,13 @@ export default function BookingSuccessModal({
 
           <div className="rounded-2xl border border-green-100 bg-green-50 p-5">
             <p className="text-sm font-extrabold text-green-900">
-              What happens next
+              <HomeText en="What happens next" de="Wie geht es weiter?" />
             </p>
 
             <div className="mt-3 space-y-2.5 text-xs font-medium leading-5 text-green-800">
-              <p>Our team will review your request and availability</p>
-              <p>We will contact you shortly with the next steps</p>
-              <p>Thank you for choosing Via Blue for your Egypt experience</p>
+              <p><HomeText en="Our team will review your request and availability" de="Unser Team prüft Ihre Anfrage und die Verfügbarkeit" /></p>
+              <p><HomeText en="We will contact you shortly with the next steps" de="Wir kontaktieren Sie in Kürze mit den nächsten Schritten" /></p>
+              <p><HomeText en="Thank you for choosing Via Blue for your Egypt experience" de="Vielen Dank, dass Sie Via Blue für Ihr Erlebnis in Ägypten gewählt haben" /></p>
             </div>
           </div>
 
@@ -153,7 +152,7 @@ export default function BookingSuccessModal({
               onClick={onClose}
               className="flex-1 rounded-2xl border border-slate-200 px-5 py-3.5 text-sm font-bold text-blue-950 transition-all hover:border-blue-200 hover:bg-slate-50"
             >
-              Close
+              <HomeText en="Close" de="Schließen" />
             </button>
 
             <Link
