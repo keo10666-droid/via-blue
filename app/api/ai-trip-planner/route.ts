@@ -950,9 +950,6 @@ Each package must contain a list of exact tour slugs from the catalog.
                 packages: {
                   type: "array",
 
-                  minItems: 3,
-                  maxItems: 3,
-
                   items: {
                     type: "object",
 
