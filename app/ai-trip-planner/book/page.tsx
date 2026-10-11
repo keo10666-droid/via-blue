@@ -222,7 +222,7 @@ export default function AITripBookingPage() {
   const [isGerman, setIsGerman] = useState(false);
   const [loading, setLoading] = useState(true);
   const [name, setName] = useState("");
-  const [nationality, set<HomeText en="Nationality" de="Nationalität" />] = useState("");
+  const [nationality, setNationality] = useState("");
   const [isNationalityOpen, setIsNationalityOpen] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState(countryCodes[0]);
   const [isCountryOpen, setIsCountryOpen] = useState(false);
@@ -992,19 +992,19 @@ Via Blue AI Trip Planner
                   placeholder={isGerman ? "Nationalität" : "Nationality"}
                   value={nationality}
                   onChange={(event) => {
-                    set<HomeText en="Nationality" de="Nationalität" />(
+                    setNationality(
                       event.target.value,
                     );
 
-                    setIs<HomeText en="Nationality" de="Nationalität" />Open(true);
+                    setIsNationalityOpen(true);
                   }}
                   onFocus={() =>
-                    setIs<HomeText en="Nationality" de="Nationalität" />Open(true)
+                    setIsNationalityOpen(true)
                   }
                   onBlur={() =>
                     setTimeout(
                       () =>
-                        setIs<HomeText en="Nationality" de="Nationalität" />Open(false),
+                        setIsNationalityOpen(false),
                       150,
                     )
                   }
@@ -1024,8 +1024,8 @@ Via Blue AI Trip Planner
                               event.preventDefault()
                             }
                             onClick={() => {
-                              set<HomeText en="Nationality" de="Nationalität" />(item);
-                              setIs<HomeText en="Nationality" de="Nationalität" />Open(
+                              setNationality(item);
+                              setIsNationalityOpen(
                                 false,
                               );
                             }}
