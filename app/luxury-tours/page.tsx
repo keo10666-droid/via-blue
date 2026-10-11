@@ -95,6 +95,17 @@ const luxuryTours = [
   },
 ];
 
+const germanTourContent: Record<string, { name: string; description: string }> = {
+  luxor: { name: "Private Luxor-Tour", description: "Entdecken Sie die antiken Tempel, Monumente und die Geschichte von Luxor bei einem exklusiven privaten Erlebnis." },
+  cairo: { name: "Private Kairo-Tour", description: "Erkunden Sie die Pyramiden, die Sphinx und die Höhepunkte Kairos bei einer vollständig privaten Tour." },
+  alexandria: { name: "Private Alexandria-Tour", description: "Entdecken Sie die historische Stadt Alexandria mit ihren berühmten Sehenswürdigkeiten, mediterranem Flair und faszinierender Geschichte." },
+  aswan: { name: "Private Assuan-Tour", description: "Entdecken Sie die Schönheit und Geschichte Assuans bei einer exklusiven privaten Tour ab Hurghada." },
+  "speed-boat": { name: "Privates Schnellboot", description: "Genießen Sie eine exklusive Fahrt mit einem privaten Schnellboot über das wunderschöne Rote Meer." },
+  "quad-safari": { name: "Private Quad-Safari", description: "Erleben Sie die ägyptische Wüste bei einem exklusiven Quad-Abenteuer." },
+  "buggy-safari": { name: "Private Buggy-Safari", description: "Erleben Sie ein aufregendes privates Buggy-Abenteuer in der ägyptischen Wüste." },
+  "private-boat": { name: "Privates Boot", description: "Genießen Sie eine exklusive private Bootstour am Roten Meer mit maximaler Privatsphäre, Komfort und Flexibilität." },
+};
+
 function StarIcon() {
   return (
     <svg
@@ -286,7 +297,7 @@ export default function LuxuryToursPage() {
                 <div className="relative h-64 overflow-hidden bg-slate-100 md:h-68">
                   <Image
                     src={tour.image}
-                    alt={tour.name}
+                    alt=<HomeText en={tour.name} de={germanTourContent[tour.slug]?.name ?? tour.name} />
                     fill
                     className="object-cover transition duration-700 group-hover:scale-110"
                     sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -306,7 +317,7 @@ export default function LuxuryToursPage() {
 
                   {/* DURATION */}
                   <div className="absolute right-4 top-4 rounded-full border border-white/30 bg-white/90 px-3.5 py-2 text-[10px] font-bold uppercase tracking-wider text-blue-950 shadow-lg backdrop-blur-md">
-                    {tour.duration}
+                    <HomeText en={tour.duration} de={tour.duration === "Full Day" ? "Ganztägig" : tour.duration === "Half Day" ? "Halbtägig" : tour.duration} />
                   </div>
 
                   {/* IMAGE BOTTOM */}
@@ -317,7 +328,7 @@ export default function LuxuryToursPage() {
                       </p>
 
                       <p className="mt-1 text-lg font-bold leading-tight text-white">
-                        {tour.name}
+                        <HomeText en={tour.name} de={germanTourContent[tour.slug]?.name ?? tour.name} />
                       </p>
                     </div>
 
@@ -351,12 +362,12 @@ export default function LuxuryToursPage() {
 
                 <Link href={`/luxury-tours/${tour.slug}`}>
                   <h3 className="mt-3 text-2xl font-semibold tracking-tight text-blue-950 transition duration-300 group-hover:text-orange-500">
-                    {tour.name}
+                    <HomeText en={tour.name} de={germanTourContent[tour.slug]?.name ?? tour.name} />
                   </h3>
                 </Link>
 
                 <p className="mt-3 text-sm leading-6 text-gray-600">
-                  {tour.description}
+                  <HomeText en={tour.description} de={germanTourContent[tour.slug]?.description ?? tour.description} />
                 </p>
 
                 {/* FEATURES */}
