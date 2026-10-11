@@ -383,7 +383,7 @@ export default async function Home() {
 
               <div className="flex items-center gap-2">
                 <CheckIcon className="h-4 w-4 text-orange-400" />
-                <HomeText en="Reliable Service" de="Zuverlässiger Service" />
+                <HomeText en="Reliable <HomeText en="Service" de="Service" />" de="Zuverlässiger Service" />
               </div>
 
             </div>
@@ -427,11 +427,11 @@ export default async function Home() {
 
             <div>
               <p className="font-bold">
-                Local Knowledge
+                <HomeText en="Local Knowledge" de="Lokale Ortskenntnis" />
               </p>
 
               <p className="mt-1 text-sm text-blue-200">
-                Experiences built around Hurghada
+                <HomeText en="<HomeText en="Experiences" de="Erlebnisse" /> built around Hurghada" de="Erlebnisse rund um Hurghada" />
               </p>
             </div>
 
@@ -449,7 +449,7 @@ export default async function Home() {
               </p>
 
               <p className="mt-1 text-sm text-blue-200">
-                Clear booking & dependable support
+                <HomeText en="Clear booking & dependable support" de="Einfache Buchung und verlässliche Unterstützung" />
               </p>
             </div>
 
@@ -463,11 +463,11 @@ export default async function Home() {
 
             <div>
               <p className="font-bold">
-                <HomeText en="Guest Support" de="Gästeservice" />
+                <HomeText en="<HomeText en="Guest Support" de="Gästeservice" />" de="Gästeservice" />
               </p>
 
               <p className="mt-1 text-sm text-blue-200">
-                We're here when you need us
+                <HomeText en="We’re here when you need us" de="Wir sind für dich da, wenn du uns brauchst" />
               </p>
             </div>
 
@@ -668,7 +668,7 @@ export default async function Home() {
                 <span className="h-px w-10 bg-orange-500" />
 
                 <p className="text-xs font-bold uppercase tracking-[0.3em] text-orange-500">
-                  Explore
+                  <HomeText en="Explore" de="Entdecken" />
                 </p>
 
               </div>
@@ -679,7 +679,7 @@ export default async function Home() {
 
               <p className="mt-4 max-w-2xl text-lg leading-8 text-gray-600">
                 <HomeText en="Start with some of our most exciting experiences" de="Entdecke einige unserer spannendsten Erlebnisse" />
-                in Hurghada and the Red Sea
+                <HomeText en="in Hurghada and the Red Sea" de="in Hurghada und am Roten Meer" />
               </p>
 
             </div>
@@ -860,7 +860,7 @@ export default async function Home() {
                       href={`/tours/${tour.slug}`}
                       className="rounded-xl border-2 border-blue-950 py-3 text-center text-sm font-bold text-blue-950 transition hover:bg-blue-950 hover:text-white"
                     >
-                      View Tour
+                      <HomeText en="View Tour" de="Ausflug ansehen" />
                     </Link>
 
                     {tour.available ? (
@@ -868,11 +868,11 @@ export default async function Home() {
                         href={`/tours/${tour.slug}/book`}
                         className="rounded-xl bg-orange-500 py-3 text-center text-sm font-bold text-white shadow-md transition hover:bg-orange-600"
                       >
-                        Book Now
+                        <HomeText en="Book Now" de="Jetzt buchen" />
                       </Link>
                     ) : (
                       <div className="rounded-xl bg-gray-100 py-3 text-center text-sm font-bold text-gray-400">
-                        Coming Soon
+                        <HomeText en="Coming Soon" de="Demnächst verfügbar" />
                       </div>
                     )}
 
@@ -907,7 +907,7 @@ export default async function Home() {
                   <div className="absolute inset-0 bg-gradient-to-t from-blue-950/80 via-transparent to-transparent" />
 
                   <div className="absolute left-5 top-5 rounded-full border border-white/20 bg-orange-500 px-3.5 py-2 text-xs font-bold text-white shadow-xl">
-                    PRIVATE TRANSFER
+                    <HomeText en="PRIVATE TRANSFER" de="PRIVATER TRANSFER" />
                   </div>
 
                   <div className="absolute bottom-5 right-5 rounded-2xl border border-white/20 bg-blue-950/85 px-4 py-2.5 text-white shadow-xl backdrop-blur-md">
@@ -954,9 +954,7 @@ export default async function Home() {
                   </div>
 
                   <p className="mt-4 text-sm leading-7 text-gray-600">
-                    Travel comfortably between Hurghada Airport,
-                    hotels and surrounding destinations with a
-                    reliable private transfer
+                    <HomeText en="Travel comfortably between Hurghada Airport, hotels and surrounding destinations with a reliable private transfer" de="Reise bequem zwischen dem Flughafen Hurghada, Hotels und umliegenden Reisezielen mit einem zuverlässigen privaten Transfer" />
                   </p>
 
                   <div className="mt-auto pt-7">
@@ -1150,8 +1148,7 @@ export default async function Home() {
               </h2>
 
               <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-gray-600">
-                Nothing says more about an experience than the people
-                who have already enjoyed it
+                <HomeText en="Nothing says more about an experience than the people who have already enjoyed it" de="Nichts erzählt mehr über ein Erlebnis als die Menschen, die es bereits genossen haben" />
               </p>
 
             </div>
