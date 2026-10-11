@@ -78,11 +78,10 @@ function tourText(tour: Tour) {
 }
 
 function matchesArea(tour: Tour, area: string) {
-  if (area === "Hurghada") return tour.destination === "hurghada";
-  const keywords = AREA_KEYWORDS[area] ?? [normalize(area)];
-  const text = tourText(tour);
-  return tour.destination === "hurghada" &&
-    keywords.some((keyword) => text.includes(normalize(keyword)));
+  // The selected area is the customer's hotel/pickup area. Keep Hurghada-based
+  // experiences plus Cairo/Luxor excursions that depart from the Red Sea region.
+  return Boolean(AREA_KEYWORDS[area]) &&
+    ["hurghada", "cairo", "luxor"].includes(tour.destination);
 }
 
 function durationHours(duration: string) {
