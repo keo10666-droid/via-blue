@@ -250,20 +250,16 @@ export default function Navbar() {
 
             </div>
           ) : (
-            <Link
-              href="/login"
-              className="group relative ml-3 flex items-center gap-2 overflow-hidden rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 px-5 py-3 text-[13px] font-black text-white shadow-[0_8px_25px_rgba(249,115,22,0.22)] transition-all duration-300 hover:-translate-y-0.5 hover:from-orange-600 hover:to-amber-500 hover:shadow-[0_12px_30px_rgba(249,115,22,0.28)]"
-            >
-              <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
-
-              <span className="relative">
-                Log In
-              </span>
-
-              <span className="relative text-base transition-transform duration-300 group-hover:translate-x-1">
-                →
-              </span>
-            </Link>
+            <div className="ml-3 flex items-center gap-2">
+              <Link href="/login?mode=register" className="rounded-2xl border border-blue-950/15 bg-white px-4 py-3 text-[13px] font-black text-blue-950 transition-all duration-300 hover:border-blue-950 hover:bg-blue-50">
+                Register
+              </Link>
+              <Link href="/login" className="group relative flex items-center gap-2 overflow-hidden rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 px-5 py-3 text-[13px] font-black text-white shadow-[0_8px_25px_rgba(249,115,22,0.22)] transition-all duration-300 hover:-translate-y-0.5 hover:from-orange-600 hover:to-amber-500 hover:shadow-[0_12px_30px_rgba(249,115,22,0.28)]">
+                <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+                <span className="relative">Log In</span>
+                <span className="relative text-base transition-transform duration-300 group-hover:translate-x-1">→</span>
+              </Link>
+            </div>
           )}
 
         </div>
@@ -384,17 +380,15 @@ export default function Navbar() {
 
                 </div>
               ) : (
-                <Link
-                  href="/login"
-                  onClick={() => setIsOpen(false)}
-                  className="group relative flex items-center justify-center gap-2 overflow-hidden rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 px-4 py-3.5 font-black text-white shadow-lg shadow-orange-500/20 transition-all duration-300 hover:from-orange-600 hover:to-amber-500"
-                >
-                  <span>Log In</span>
-
-                  <span className="transition-transform duration-300 group-hover:translate-x-1">
-                    →
-                  </span>
-                </Link>
+                <div className="grid grid-cols-2 gap-2">
+                  <Link href="/login?mode=register" onClick={() => setIsOpen(false)} className="flex items-center justify-center rounded-2xl border border-blue-950/15 bg-white px-4 py-3.5 text-sm font-black text-blue-950 transition-all duration-300 hover:border-blue-950 hover:bg-blue-50">
+                    Register
+                  </Link>
+                  <Link href="/login" onClick={() => setIsOpen(false)} className="group relative flex items-center justify-center gap-2 overflow-hidden rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 px-4 py-3.5 font-black text-white shadow-lg shadow-orange-500/20 transition-all duration-300 hover:from-orange-600 hover:to-amber-500">
+                    <span>Log In</span>
+                    <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+                  </Link>
+                </div>
               )}
 
             </div>
