@@ -1160,7 +1160,7 @@ Each package must contain a list of exact tour slugs from the catalog.
           EUR_TO_USD,
 
         aiModel:
-          "gpt-6-luna",
+          "gpt-4.1-mini",
       },
     });
   } catch (error) {
