@@ -148,7 +148,7 @@ export default function LoginPage() {
                     </p>
 
                     <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-white/55">
-                      Tours & Transfers
+                      {text("Tours & Transfers", "Ausflüge & Transfers")}
                     </p>
                   </div>
                 </div>
@@ -174,7 +174,7 @@ export default function LoginPage() {
 
               <div className="flex items-center gap-3 text-sm text-white/55">
                 <div className="h-px w-10 bg-white/20" />
-                <span>Hurghada · Egypt</span>
+                <span>{text("Hurghada · Egypt", "Hurghada · Ägypten")}</span>
               </div>
             </div>
           </div>
