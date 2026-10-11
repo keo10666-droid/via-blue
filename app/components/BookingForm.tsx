@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 
 import { supabase } from "@/lib/supabase";
 import HomeText from "@/app/components/HomeText";
@@ -262,7 +262,7 @@ export default function BookingForm({
   const labelClass =
     "mb-2.5 block text-sm font-bold tracking-wide text-[#071a36]";
 
-  const errorText = (msg: string) => (
+  const errorText = (msg: ReactNode) => (
     <p className="mt-2 text-sm font-semibold text-red-600">
       {msg}
     </p>
@@ -543,7 +543,7 @@ ${notes.trim() || "-"}`;
        * 10. Success
        */
       alert(
-        "Booking saved successfully!"
+        (localStorage.getItem("via-blue-language") === "de" ? "Buchung erfolgreich gespeichert!" : "Booking saved successfully!")
       );
     } catch (error) {
       console.error(
@@ -568,7 +568,7 @@ ${notes.trim() || "-"}`;
           : "Unknown error";
 
       alert(
-        `Something went wrong\n\n${errorMessage}`
+        `${localStorage.getItem("via-blue-language") === "de" ? "Ein Fehler ist aufgetreten" : "Something went wrong"}\n\n${errorMessage}`
       );
     } finally {
       setIsSubmitting(false);
