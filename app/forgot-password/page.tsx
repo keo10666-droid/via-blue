@@ -267,7 +267,7 @@ export default function ForgotPasswordPage() {
                         placeholder={text("Create a strong password", "Erstelle ein sicheres Passwort")}
                         className="w-full rounded-2xl border border-gray-200 bg-gray-50/70 px-5 py-4 pr-14 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 hover:border-gray-300 focus:border-[#0b3a78] focus:bg-white focus:ring-4 focus:ring-[#0b3a78]/5"
                       />
-                      <button type="button" onClick={() => setShowPassword((current) => !current)} className="absolute right-4 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-lg p-1 text-gray-400 transition hover:text-[#0b3a78]" aria-label={showPassword ? "Hide password" : "Show password"}>
+                      <button type="button" onClick={() => setShowPassword((current) => !current)} className="absolute right-4 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-lg p-1 text-gray-400 transition hover:text-[#0b3a78]" aria-label={showPassword ? text("Hide password", "Passwort verbergen") : text("Show password", "Passwort anzeigen")}>
                         {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                       </button>
                     </div>
