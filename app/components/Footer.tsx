@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
 function WhatsAppIcon() {
@@ -119,7 +122,7 @@ function GmailIcon() {
   );
 }
 
-function LocationIcon() {
+function {text.location}Icon() {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -221,6 +224,75 @@ function TripadvisorIcon() {
 }
 
 export default function Footer() {
+  const [language, setLanguage] = useState<"en" | "de">("en");
+
+  useEffect(() => {
+    try {
+      const saved = window.localStorage.getItem("via-blue-language");
+      if (saved === "de" || saved === "en") setLanguage(saved);
+    } catch {
+      // English remains the fallback if browser storage is unavailable.
+    }
+
+    const handleLanguageChange = (event: Event) => {
+      const nextLanguage = (event as CustomEvent<"en" | "de">).detail;
+      if (nextLanguage === "en" || nextLanguage === "de") setLanguage(nextLanguage);
+    };
+
+    window.addEventListener("via-blue-language-change", handleLanguageChange);
+    return () => window.removeEventListener("via-blue-language-change", handleLanguageChange);
+  }, []);
+
+  const text = language === "de"
+    ? {
+        intro: "Dein Erlebnis am Roten Meer",
+        headline: "Entdecke Hurghada auf besondere Weise",
+        description: "Entdecke unvergessliche Ausflüge, Bootstouren, Schnorchelabenteuer und private Transfers in Hurghada",
+        exploreEgypt: "Ägypten entdecken",
+        follow: "Folge Via Blue",
+        reputation: "Reisebewertungen",
+        comingSoon: "Demnächst verfügbar",
+        quickLinks: "Schnellzugriff",
+        home: "Startseite",
+        tours: "Ausflüge",
+        airportTransfers: "Flughafentransfers",
+        contact: "Kontakt",
+        experiences: "Beliebte Erlebnisse",
+        privateTransfer: "Privater Transfer",
+        luxuryTours: "Luxus-Ausflüge",
+        contactUs: "Kontaktiere uns",
+        location: "Standort",
+        email: "E-Mail",
+        closing: "Deine Reise beginnt am Roten Meer",
+        privacy: "Datenschutzerklärung",
+        terms: "Allgemeine Geschäftsbedingungen",
+        rights: "Alle Rechte vorbehalten",
+      }
+    : {
+        intro: "{text.intro}",
+        headline: "{text.headline}",
+        description: "Discover unforgettable tours, boat trips, snorkeling adventures and private transfers in Hurghada",
+        exploreEgypt: "{text.exploreEgypt}",
+        follow: "{text.follow}",
+        reputation: "{text.reputation}",
+        comingSoon: "{text.comingSoon}",
+        quickLinks: "{text.quickLinks}",
+        home: "Home",
+        tours: "Tours",
+        airportTransfers: "{text.airportTransfers}",
+        contact: "Contact",
+        experiences: "{text.experiences}",
+        privateTransfer: "{text.privateTransfer}",
+        luxuryTours: "{text.luxuryTours}",
+        contactUs: "{text.contactUs}",
+        location: "Location",
+        email: "{text.email}",
+        closing: "{text.closing}",
+        privacy: "{text.privacy}",
+        terms: "{text.terms}",
+        rights: "{text.rights}",
+      };
+
   return (
     <footer className="relative overflow-hidden bg-[#03112a] text-white">
       {/* Premium background atmosphere */}
@@ -269,8 +341,7 @@ export default function Footer() {
               </h2>
 
               <p className="mt-5 max-w-xl text-[15px] leading-7 text-slate-400">
-                Discover unforgettable tours, boat trips, snorkeling
-                adventures and private transfers in Hurghada
+                {text.description}
               </p>
             </div>
           </div>
@@ -426,7 +497,7 @@ export default function Footer() {
                   href="/contact"
                   className="group flex items-center gap-2 text-[15px] text-slate-300 transition-all duration-300 hover:translate-x-1 hover:text-orange-400"
                 >
-                  <span>Contact Us</span>
+                  <span>{text.contactUs}</span>
                   <ArrowIcon />
                 </Link>
               </li>
