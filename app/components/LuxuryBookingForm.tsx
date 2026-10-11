@@ -688,7 +688,7 @@ export default function LuxuryBookingForm({
   const labelClass =
     "mb-2.5 block text-[13px] font-bold uppercase tracking-[0.08em] text-slate-500";
 
-  const errorText = (msg: string) => (
+  const errorText = (msg: ReactNode) => (
     <p className="mt-2 text-xs font-semibold text-red-600">
       {msg}
     </p>
