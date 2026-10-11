@@ -367,18 +367,42 @@ export async function POST(request: Request) {
       accessToken,
     } = body as Record<string, unknown>;
 
+    const bookingEmailValidationIssues: string[] = [];
+
     if (
       typeof subject !== "string" ||
       !subject.trim() ||
       /[\r\n]/.test(subject) ||
-      subject.length > 180 ||
+      subject.length > 180
+    ) {
+      bookingEmailValidationIssues.push("subject_invalid_or_too_long");
+    }
+
+    if (
       typeof html !== "string" ||
       !html.trim() ||
-      html.length > 48 * 1024 ||
-      (accessToken !== undefined &&
-        (typeof accessToken !== "string" ||
-          accessToken.length > 4096))
+      html.length > 48 * 1024
     ) {
+      bookingEmailValidationIssues.push("html_missing_or_too_long");
+    }
+
+    if (
+      accessToken !== undefined &&
+      (typeof accessToken !== "string" ||
+        accessToken.length > 4096)
+    ) {
+      bookingEmailValidationIssues.push("access_token_invalid_or_too_long");
+    }
+
+    if (bookingEmailValidationIssues.length > 0) {
+      // Log validation categories and lengths only; never log customer data or tokens.
+      console.warn("Booking email payload rejected by validation.", {
+        issues: bookingEmailValidationIssues,
+        subjectLength: typeof subject === "string" ? subject.length : null,
+        htmlLength: typeof html === "string" ? html.length : null,
+        accessTokenLength: typeof accessToken === "string" ? accessToken.length : null,
+      });
+
       return Response.json(
         { success: false, error: "Invalid booking email data." },
         { status: 400 },
