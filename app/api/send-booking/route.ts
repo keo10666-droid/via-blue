@@ -387,7 +387,7 @@ export async function POST(request: Request) {
     }
 
     if (
-      accessToken !== undefined &&
+      accessToken != null &&
       (typeof accessToken !== "string" ||
         accessToken.length > 4096)
     ) {
