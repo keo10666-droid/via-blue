@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 
 import { supabase } from "@/lib/supabase";
 import HomeText from "@/app/components/HomeText";
@@ -146,6 +146,14 @@ export default function BookingForm({
   included,
 }: BookingFormProps) {
   const childPrice = adultPrice / 2;
+
+  const [isGerman, setIsGerman] = useState(false);
+  useEffect(() => {
+    const syncLanguage = () => setIsGerman(localStorage.getItem("via-blue-language") === "de");
+    syncLanguage();
+    window.addEventListener("via-blue-language-change", syncLanguage);
+    return () => window.removeEventListener("via-blue-language-change", syncLanguage);
+  }, []);
 
   const [name, setName] = useState("");
   const [nationality, setNationality] = useState("");
@@ -642,7 +650,7 @@ ${notes.trim() || "-"}`;
 
                 <input
                   type="text"
-                  placeholder="Vollständigen Namen eingeben *"
+                  placeholder={isGerman ? "Vollständigen Namen eingeben *" : "Enter full name *"}
                   value={name}
                   onChange={(e) =>
                     setName(e.target.value)
@@ -667,7 +675,7 @@ ${notes.trim() || "-"}`;
 
                 <input
                   type="text"
-                  placeholder="Nationalität"
+                  placeholder={isGerman ? "Nationalität" : "Nationality"}
                   value={nationality}
                   onChange={(e) => {
                     setNationality(e.target.value);
@@ -723,7 +731,7 @@ ${notes.trim() || "-"}`;
 
                 <input
                   type="email"
-                  placeholder="E-Mail *"
+                  placeholder={isGerman ? "E-Mail *" : "Email *"}
                   value={email}
                   onChange={(e) =>
                     setEmail(e.target.value)
@@ -776,7 +784,7 @@ ${notes.trim() || "-"}`;
                       <div className="absolute z-30 mt-2 w-72 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-[0_20px_50px_rgba(7,26,54,0.14)]">
                         <input
                           type="text"
-                          placeholder="Land suchen..."
+                          placeholder={isGerman ? "Land suchen..." : "Search country..."}
                           value={countrySearch}
                           onChange={(e) =>
                             setCountrySearch(
@@ -825,7 +833,7 @@ ${notes.trim() || "-"}`;
 
                   <input
                     type="tel"
-                    placeholder="Nummer"
+                    placeholder={isGerman ? "Nummer" : "Number"}
                     value={phone}
                     onChange={(e) =>
                       setPhone(e.target.value)
@@ -866,7 +874,7 @@ ${notes.trim() || "-"}`;
 
                 <input
                   type="text"
-                  placeholder="Hotelname"
+                  placeholder={isGerman ? "Hotelname" : "Hotel name"}
                   value={hotel}
                   onChange={(e) =>
                     setHotel(e.target.value)
@@ -882,7 +890,7 @@ ${notes.trim() || "-"}`;
 
                 <input
                   type="text"
-                  placeholder="Zimmernummer"
+                  placeholder={isGerman ? "Zimmernummer" : "Room number"}
                   value={roomNumber}
                   onChange={(e) =>
                     setRoomNumber(e.target.value)
@@ -1238,7 +1246,7 @@ ${notes.trim() || "-"}`;
 
             <textarea
               rows={5}
-              placeholder="Besondere Wünsche / Anmerkungen"
+              placeholder={isGerman ? "Besondere Wünsche / Anmerkungen" : "Special requests / notes"}
               value={notes}
               onChange={(e) =>
                 setNotes(e.target.value)
