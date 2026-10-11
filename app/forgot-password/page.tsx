@@ -148,7 +148,7 @@ export default function ForgotPasswordPage() {
                   <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/20 bg-white/10 text-xl font-black backdrop-blur-sm">VB</div>
                   <div>
                     <p className="text-lg font-black tracking-tight">Via Blue</p>
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-white/55">Tours & Transfers</p>
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-white/55">{text("Tours & Transfers", "Ausflüge & Transfers")}</p>
                   </div>
                 </div>
 
@@ -165,7 +165,7 @@ export default function ForgotPasswordPage() {
 
               <div className="flex items-center gap-3 text-sm text-white/55">
                 <div className="h-px w-10 bg-white/20" />
-                <span>Hurghada · Egypt</span>
+                <span>{text("Hurghada · Egypt", "Hurghada · Ägypten")}</span>
               </div>
             </div>
           </div>
@@ -285,7 +285,7 @@ export default function ForgotPasswordPage() {
                         placeholder={text("Repeat your new password", "Wiederhole dein neues Passwort")}
                         className="w-full rounded-2xl border border-gray-200 bg-gray-50/70 px-5 py-4 pr-14 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 hover:border-gray-300 focus:border-[#0b3a78] focus:bg-white focus:ring-4 focus:ring-[#0b3a78]/5"
                       />
-                      <button type="button" onClick={() => setShowConfirmPassword((current) => !current)} className="absolute right-4 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-lg p-1 text-gray-400 transition hover:text-[#0b3a78]" aria-label={showConfirmPassword ? "Hide password" : "Show password"}>
+                      <button type="button" onClick={() => setShowConfirmPassword((current) => !current)} className="absolute right-4 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-lg p-1 text-gray-400 transition hover:text-[#0b3a78]" aria-label={showConfirmPassword ? text("Hide password", "Passwort verbergen") : text("Show password", "Passwort anzeigen")}>
                         {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                       </button>
                     </div>
@@ -301,7 +301,7 @@ export default function ForgotPasswordPage() {
                             <span className={"flex h-4 w-4 items-center justify-center rounded-full text-[9px] font-black " + (valid ? "bg-green-100" : "bg-gray-100")}>
                               {valid ? "✓" : "•"}
                             </span>
-                            {rule.label}
+                            {text(rule.label, ({ "At least 8 characters": "Mindestens 8 Zeichen", "One uppercase letter": "Ein Großbuchstabe", "One lowercase letter": "Ein Kleinbuchstabe", "One number": "Eine Zahl", "One special character": "Ein Sonderzeichen" } as Record<string, string>)[rule.label] || rule.label)}
                           </div>
                         );
                       })}
