@@ -1074,16 +1074,15 @@ export default async function LuxuryTourPage({
             <section className="rounded-[28px] border border-slate-200/80 bg-white p-7 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:shadow-lg md:p-9">
               <div>
                 <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-orange-500">
-                  Your Journey
+                  <HomeText en="Your Journey" de="Ihre Reise" />
                 </p>
 
                 <h2 className="mt-2 text-3xl font-semibold tracking-tight text-blue-950">
-                  Private Itinerary
+                  <HomeText en="Private Itinerary" de="Privater Reiseplan" />
                 </h2>
 
                 <p className="mt-3 max-w-2xl text-sm leading-7 text-gray-500">
-                  A carefully planned experience with the flexibility and
-                  privacy of a dedicated private tour
+                  <HomeText en="A carefully planned experience with the flexibility and privacy of a dedicated private tour" de="Ein sorgfältig geplanter Ausflug mit der Flexibilität und Privatsphäre einer exklusiven privaten Tour" />
                 </p>
               </div>
 
@@ -1123,7 +1122,7 @@ export default async function LuxuryTourPage({
                 </p>
 
                 <h2 className="mt-2 text-2xl font-semibold tracking-tight text-blue-950">
-                  Everything Prepared For You
+                  <HomeText en="Everything Prepared For You" de="Alles für Sie vorbereitet" />
                 </h2>
 
                 <div className="mt-6 space-y-3">
@@ -1150,7 +1149,7 @@ export default async function LuxuryTourPage({
                 </p>
 
                 <h2 className="mt-2 text-2xl font-semibold tracking-tight text-blue-950">
-                  Optional Extras
+                  <HomeText en="Optional Extras" de="Optionale Extras" />
                 </h2>
 
                 <div className="mt-6 space-y-3">
@@ -1175,11 +1174,11 @@ export default async function LuxuryTourPage({
             {/* NOTES */}
             <section className="rounded-[28px] border border-orange-100 bg-orange-50/60 p-7 shadow-sm md:p-9">
               <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-orange-500">
-                Good To Know
+                <HomeText en="Good To Know" de="Gut zu wissen" />
               </p>
 
               <h2 className="mt-2 text-2xl font-semibold tracking-tight text-blue-950">
-                Before Your Experience
+                <HomeText en="Before Your Experience" de="Vor Ihrem Erlebnis" />
               </h2>
 
               <div className="mt-5 space-y-3">
@@ -1207,7 +1206,7 @@ export default async function LuxuryTourPage({
 
                 <div className="relative">
                   <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-orange-400">
-                    Private Collection
+                    <HomeText en="Private Collection" de="Private Auswahl" />
                   </p>
 
                   <h2 className="mt-2 text-2xl font-semibold">
@@ -1215,8 +1214,7 @@ export default async function LuxuryTourPage({
                   </h2>
 
                   <p className="mt-2 text-sm leading-6 text-blue-200">
-                    Premium service, private transportation and a journey
-                    designed around you
+                    <HomeText en="Premium service, private transportation and a journey designed around you" de="Premium-Service, privater Transfer und eine Reise, die ganz auf Sie abgestimmt ist" />
                   </p>
                 </div>
               </div>
@@ -1225,7 +1223,7 @@ export default async function LuxuryTourPage({
                 {/* PRICE */}
                 <div className="rounded-2xl border border-orange-100 bg-orange-50/60 p-5 shadow-sm">
                   <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400">
-                    Starting From
+                    <HomeText en="Starting From" de="Ab" />
                   </p>
 
                   <div className="mt-1 flex items-end gap-2">
@@ -1234,7 +1232,7 @@ export default async function LuxuryTourPage({
                     </span>
 
                     <span className="pb-1 text-xs text-gray-400">
-                      / private experience
+                      <HomeText en="/ private experience" de="/ privates Erlebnis" />
                     </span>
                   </div>
                 </div>
@@ -1313,7 +1311,7 @@ export default async function LuxuryTourPage({
                     <span className="text-orange-500">
                       <ShieldIcon />
                     </span>
-                    Premium private service
+                    <HomeText en="Premium private service" de="Premium-Privatservice" />
                   </div>
                 </div>
               </div>
@@ -1348,8 +1346,7 @@ export default async function LuxuryTourPage({
             </h2>
 
             <p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-blue-100 md:text-base">
-              Looking for something more personalized? Our private experiences
-              can be arranged around your preferences and schedule
+              <HomeText en="Looking for something more personalized? Our private experiences can be arranged around your preferences and schedule" de="Sie wünschen sich etwas Persönlicheres? Unsere privaten Erlebnisse lassen sich an Ihre Wünsche und Ihren Zeitplan anpassen" />
             </p>
 
             <div className="mt-7">
