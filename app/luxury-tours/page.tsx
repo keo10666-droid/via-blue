@@ -295,6 +295,7 @@ export default function LuxuryToursPage() {
                 className="block"
               >
                 <div className="relative h-64 overflow-hidden bg-slate-100 md:h-68">
+                  {/* Image alt must remain a plain string; HomeText returns an element. */}
                   <Image
                     src={tour.image}
                     alt={tour.name}
