@@ -383,7 +383,7 @@ export default async function Home() {
 
               <div className="flex items-center gap-2">
                 <CheckIcon className="h-4 w-4 text-orange-400" />
-                <HomeText en="Reliable <HomeText en="Service" de="Service" />" de="Zuverlässiger Service" />
+                <HomeText en="Reliable Service" de="Zuverlässiger Service" />
               </div>
 
             </div>
@@ -431,7 +431,7 @@ export default async function Home() {
               </p>
 
               <p className="mt-1 text-sm text-blue-200">
-                <HomeText en="<HomeText en="Experiences" de="Erlebnisse" /> built around Hurghada" de="Erlebnisse rund um Hurghada" />
+                <HomeText en="Experiences built around Hurghada" de="Erlebnisse rund um Hurghada" />
               </p>
             </div>
 
@@ -463,7 +463,7 @@ export default async function Home() {
 
             <div>
               <p className="font-bold">
-                <HomeText en="<HomeText en="Guest Support" de="Gästeservice" />" de="Gästeservice" />
+                <HomeText en="Guest Support" de="Gästeservice" />
               </p>
 
               <p className="mt-1 text-sm text-blue-200">
