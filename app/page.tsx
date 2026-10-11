@@ -1031,27 +1031,27 @@ export default async function Home() {
               <span className="h-px w-10 bg-orange-400" />
 
               <p className="text-xs font-bold uppercase tracking-[0.3em] text-orange-400">
-                {homepageContent.experience_badge}
+                <HomeText en={homepageContent.experience_badge} de="Das Rote Meer wartet auf Sie" />
               </p>
 
             </div>
 
             <h2 className="mt-5 max-w-3xl text-4xl font-bold leading-tight sm:text-5xl md:text-6xl">
-              {homepageContent.experience_title_first}
-              <span className="text-orange-400"> {homepageContent.experience_title_highlight}</span>
+              <HomeText en={homepageContent.experience_title_first} de="Schwimmen" />
+              <span className="text-orange-400"> <HomeText en={homepageContent.experience_title_highlight} de="Entdecken" /></span>
               <br />
-              {homepageContent.experience_title_last}
+              <HomeText en={homepageContent.experience_title_last} de="Erinnerungen schaffen" />
             </h2>
 
             <p className="mt-6 max-w-2xl text-lg leading-8 text-blue-100">
-              {homepageContent.experience_description}
+              <HomeText en={homepageContent.experience_description} de="Von kristallklarem Wasser und wunderschönen Inseln bis hin zu unvergesslichen Wüstenlandschaften – in Hurghada wartet ein Erlebnis auf Sie." />
             </p>
 
             <Link
               href="/tours"
               className="group mt-8 inline-flex items-center gap-3 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 px-7 py-4 font-bold text-white shadow-xl shadow-orange-950/30 transition hover:-translate-y-1 hover:from-orange-400 hover:to-amber-400"
             >
-              {homepageContent.experience_button}
+              <HomeText en={homepageContent.experience_button} de="Erlebnis finden" />
 
               <ArrowRightIcon className="h-5 w-5 transition-transform group-hover:translate-x-1" />
             </Link>
@@ -1246,7 +1246,7 @@ export default async function Home() {
             <span className="h-px w-10 bg-orange-500" />
 
             <p className="text-xs font-bold uppercase tracking-[0.3em] text-orange-500">
-              {homepageContent.cta_badge}
+              <HomeText en={homepageContent.cta_badge} de="Ihr Hurghada-Abenteuer beginnt hier" />
             </p>
 
             <span className="h-px w-10 bg-orange-500" />
@@ -1255,16 +1255,16 @@ export default async function Home() {
 
           <h2 className="mt-6 text-4xl font-bold leading-tight text-blue-950 sm:text-5xl md:text-6xl">
 
-            {homepageContent.cta_title_first}
+            <HomeText en={homepageContent.cta_title_first} de="Besuchen Sie Hurghada nicht nur" />
 
             <span className="block bg-gradient-to-r from-orange-500 to-amber-500 bg-clip-text text-transparent">
-              {homepageContent.cta_title_highlight}
+              <HomeText en={homepageContent.cta_title_highlight} de="Erleben Sie es" />
             </span>
 
           </h2>
 
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-gray-600">
-            {homepageContent.cta_description}
+            <HomeText en={homepageContent.cta_description} de="Wählen Sie Ihr nächstes Abenteuer, buchen Sie mit Vertrauen und freuen Sie sich auf ein unvergessliches Erlebnis am Roten Meer." />
           </p>
 
           <div className="mt-9 flex flex-col justify-center gap-4 sm:flex-row">
@@ -1273,7 +1273,7 @@ export default async function Home() {
               href="#top"
               className="group flex items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 px-8 py-4 font-bold text-white shadow-xl shadow-orange-200 transition hover:-translate-y-1 hover:from-orange-400 hover:to-amber-400"
             >
-              {homepageContent.cta_primary_button}
+              <HomeText en={homepageContent.cta_primary_button} de="Touren entdecken" />
 
               <ArrowRightIcon className="h-5 w-5 transition-transform group-hover:translate-x-1" />
             </Link>
@@ -1282,7 +1282,7 @@ export default async function Home() {
               href="/transfers"
               className="flex items-center justify-center rounded-2xl border-2 border-blue-950 px-8 py-4 font-bold text-blue-950 transition hover:-translate-y-1 hover:bg-blue-950 hover:text-white hover:shadow-xl"
             >
-              {homepageContent.cta_secondary_button}
+              <HomeText en={homepageContent.cta_secondary_button} de="Transfers ansehen" />
             </Link>
 
           </div>
