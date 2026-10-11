@@ -1856,9 +1856,7 @@ ${notes.trim() || "-"}
                     <div className="mt-0.5 h-2 w-2 shrink-0 rounded-full bg-red-500" />
 
                     <p className="text-sm font-semibold leading-6 text-red-700">
-                      <HomeText en="Please complete the required fields" de="Bitte füllen Sie die erforderlichen Felder aus" />
-                      highlighted above before sending your
-                      booking request.
+                      <HomeText en="Please complete the required fields highlighted above before sending your booking request." de="Bitte füllen Sie die oben markierten Pflichtfelder aus, bevor Sie Ihre Buchungsanfrage senden." />
                     </p>
                   </div>
                 )}
@@ -1873,7 +1871,7 @@ ${notes.trim() || "-"}
                       </p>
 
                       <p className="mt-1 text-sm font-semibold text-slate-600">
-                        {totalGuests} guests
+                        {totalGuests} <HomeText en="guests" de="Gäste" />
                       </p>
                     </div>
 
@@ -2009,7 +2007,7 @@ ${notes.trim() || "-"}
                       <span className="max-w-[150px] text-right text-xs font-bold text-[#071a36]">
                         {date
                           ? formatDateDisplay(date)
-                          : "Not selected"}
+                          : <HomeText en="Not selected" de="Nicht ausgewählt" />}
                       </span>
 
                     </div>
