@@ -954,7 +954,7 @@ export default async function LuxuryTourPage({
             href="/luxury-tours"
             className="mt-7 inline-flex items-center gap-2 rounded-2xl bg-blue-950 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-950/20 transition duration-300 hover:-translate-y-0.5 hover:bg-blue-900"
           >
-            Back to Luxury Tours
+            <HomeText en="Back to Luxury Tours" de="Zurück zu den Luxustouren" />
             <ArrowRightIcon />
           </Link>
         </div>
@@ -1210,7 +1210,7 @@ export default async function LuxuryTourPage({
                   </p>
 
                   <h2 className="mt-2 text-2xl font-semibold">
-                    Reserve Your Experience
+                    <HomeText en="Reserve Your Experience" de="Ihr Erlebnis reservieren" />
                   </h2>
 
                   <p className="mt-2 text-sm leading-6 text-blue-200">
@@ -1261,7 +1261,7 @@ export default async function LuxuryTourPage({
 
                   <div className="rounded-2xl border border-slate-100 bg-slate-50 p-4 transition duration-300 hover:border-slate-200 hover:bg-white hover:shadow-sm">
                     <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400">
-                      Departure
+                      <HomeText en="Departure" de="Abfahrt" />
                     </p>
 
                     <p className="mt-1 text-sm font-bold text-blue-950">
@@ -1271,7 +1271,7 @@ export default async function LuxuryTourPage({
 
                   <div className="rounded-2xl border border-slate-100 bg-slate-50 p-4 transition duration-300 hover:border-slate-200 hover:bg-white hover:shadow-sm">
                     <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400">
-                      Return
+                      <HomeText en="Return" de="Rückkehr" />
                     </p>
 
                     <p className="mt-1 text-sm font-bold text-blue-950">
@@ -1295,7 +1295,7 @@ export default async function LuxuryTourPage({
                   href={`/luxury-tours/${slug}/book`}
                   className="mt-6 flex w-full items-center justify-center gap-2 rounded-2xl bg-orange-500 py-4 text-sm font-bold text-white shadow-lg shadow-orange-500/20 transition duration-300 hover:-translate-y-0.5 hover:bg-orange-600 hover:shadow-xl"
                 >
-                  Reserve Your Experience
+                  <HomeText en="Reserve Your Experience" de="Ihr Erlebnis reservieren" />
                   <ArrowRightIcon />
                 </Link>
 
@@ -1303,7 +1303,7 @@ export default async function LuxuryTourPage({
                   href="/luxury-tours"
                   className="mt-3 flex w-full items-center justify-center rounded-2xl border border-blue-950 py-3.5 text-sm font-bold text-blue-950 transition duration-300 hover:bg-blue-950 hover:text-white"
                 >
-                  Back to Luxury Tours
+                  <HomeText en="Back to Luxury Tours" de="Zurück zu den Luxustouren" />
                 </Link>
 
                 <div className="mt-6 border-t border-gray-100 pt-5 text-center">
