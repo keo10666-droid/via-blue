@@ -1723,9 +1723,7 @@ ${notes.trim() || "-"}
                             {submitAttempted &&
                               !childrenAgeValues[index] &&
                               errorText(
-                                `Select an age for Child ${
-                                  index + 1
-                                }.`
+                                <HomeText en={`Select an age for Child ${index + 1}.`} de={`Bitte wählen Sie das Alter für Kind ${index + 1} aus.`} />
                               )}
                           </div>
                         ))}
@@ -1802,9 +1800,7 @@ ${notes.trim() || "-"}
                             {submitAttempted &&
                               !infantAgeValues[index] &&
                               errorText(
-                                `Select an age for Infant ${
-                                  index + 1
-                                }.`
+                                <HomeText en={`Select an age for Infant ${index + 1}.`} de={`Bitte wählen Sie das Alter für Kleinkind ${index + 1} aus.`} />
                               )}
                           </div>
                         ))}
