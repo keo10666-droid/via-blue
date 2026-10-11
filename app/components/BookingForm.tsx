@@ -598,8 +598,8 @@ ${notes.trim() || "-"}`;
             </h1>
 
             <p className="mt-5 max-w-2xl text-base leading-7 text-blue-100/80 sm:text-lg">
-              Reserve your {tourName} experience quickly and securely
-              through WhatsApp
+              <HomeText en={`Reserve your ${tourName} experience quickly and securely`} de={`Buchen Sie Ihr ${tourName}-Erlebnis schnell und sicher`} />
+              <HomeText en="through WhatsApp" de="über WhatsApp" />
             </p>
 
             <div className="mt-7 flex flex-wrap gap-3">
@@ -628,7 +628,7 @@ ${notes.trim() || "-"}`;
               </h2>
 
               <p className="mt-2 text-sm text-gray-500">
-                Tell us who will be joining the experience
+                <HomeText en="Tell us who will be joining the experience" de="Teilen Sie uns mit, wer an diesem Erlebnis teilnimmt" />
               </p>
             </div>
 
@@ -655,7 +655,7 @@ ${notes.trim() || "-"}`;
                 {submitAttempted &&
                   !isNameValid &&
                   errorText(
-                    "Please enter the guest's full name"
+                    <HomeText en="Please enter the guest's full name" de="Bitte geben Sie den vollständigen Namen des Gastes ein" />
                   )}
               </div>
 
@@ -737,7 +737,7 @@ ${notes.trim() || "-"}`;
                 {submitAttempted &&
                   !isEmailValid &&
                   errorText(
-                    "Please enter a valid email address"
+                    <HomeText en="Please enter a valid email address" de="Bitte geben Sie eine gültige E-Mail-Adresse ein" />
                   )}
               </div>
 
@@ -842,7 +842,7 @@ ${notes.trim() || "-"}`;
                 {submitAttempted &&
                   !isPhoneValid &&
                   errorText(
-                    "Please enter a valid number (at least 6 digits)"
+                    <HomeText en="Please enter a valid number (at least 6 digits)" de="Bitte geben Sie eine gültige Nummer mit mindestens 6 Ziffern ein" />
                   )}
               </div>
             </div>
@@ -1193,7 +1193,7 @@ ${notes.trim() || "-"}`;
                 </h3>
 
                 <div className="rounded-full bg-orange-100 px-3 py-1 text-xs font-black uppercase tracking-wider text-orange-600">
-                  Live Total
+                  <HomeText en="Live Total" de="Aktuelle Gesamtsumme" />
                 </div>
               </div>
 
@@ -1216,7 +1216,7 @@ ${notes.trim() || "-"}`;
 
               <div className="mt-5 flex items-center justify-between border-t border-orange-200 pt-5">
                 <span className="text-sm font-bold uppercase tracking-wider text-gray-500">
-                  Total Price
+                  <HomeText en="Total Price" de="Gesamtpreis" />
                 </span>
 
                 <span className="text-3xl font-black text-[#071a36]">
@@ -1253,7 +1253,7 @@ ${notes.trim() || "-"}`;
             {submitAttempted &&
               !isFormValid && (
                 <p className="mt-4 rounded-2xl border border-red-100 bg-red-50 p-4 font-bold leading-6 text-red-700">
-                  Please fill in the required fields
+                  <HomeText en="Please fill in the required fields" de="Bitte füllen Sie die Pflichtfelder aus" />
                   highlighted above before sending
                   your request
                 </p>
@@ -1298,7 +1298,7 @@ ${notes.trim() || "-"}`;
 
                 <div className="rounded-2xl border border-blue-100 bg-blue-50/60 p-5">
                   <p className="text-xs font-black uppercase tracking-wider text-gray-500">
-                    Tour
+                    <HomeText en="Tour" de="Tour" />
                   </p>
 
                   <p className="mt-2 font-black leading-6 text-[#071a36]">
@@ -1308,7 +1308,7 @@ ${notes.trim() || "-"}`;
 
                 <div className="rounded-2xl border border-orange-100 bg-orange-50/70 p-5">
                   <p className="text-xs font-black uppercase tracking-wider text-gray-500">
-                    Price
+                    <HomeText en="Price" de="Preis" />
                   </p>
 
                   <p className="mt-1 text-3xl font-black text-orange-500">
@@ -1318,7 +1318,7 @@ ${notes.trim() || "-"}`;
 
                 <div className="rounded-2xl border border-gray-100 bg-gray-50 p-5">
                   <p className="text-xs font-black uppercase tracking-wider text-gray-500">
-                    Total Guests
+                    <HomeText en="Total Guests" de="Gäste insgesamt" />
                   </p>
 
                   <p className="mt-1 text-3xl font-black text-[#071a36]">
@@ -1338,7 +1338,7 @@ ${notes.trim() || "-"}`;
 
                 <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-[0_8px_25px_rgba(7,26,54,0.04)]">
                   <p className="mb-4 text-xs font-black uppercase tracking-wider text-gray-500">
-                    Included
+                    <HomeText en="Included" de="Inklusive" />
                   </p>
 
                   <ul className="space-y-3 font-semibold leading-6 text-gray-700">
@@ -1367,7 +1367,7 @@ ${notes.trim() || "-"}`;
                   </p>
 
                   <p className="mt-2 text-sm leading-6 text-blue-100/70">
-                    Your booking is saved securely before your WhatsApp request is sent
+                    <HomeText en="Your booking is saved securely before your WhatsApp request is sent" de="Ihre Buchung wird sicher gespeichert, bevor Ihre WhatsApp-Anfrage gesendet wird" />
                   </p>
                 </div>
 
