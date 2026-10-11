@@ -1699,7 +1699,7 @@ ${notes.trim() || "-"}
                                 }}
                               >
                                 <option value="">
-                                  Select Child {index + 1} age
+                                  <HomeText en="Select age for child" de="Alter für Kind" /> {index + 1}
                                 </option>
 
                                 {[5, 6, 7, 8, 9, 10].map(
@@ -1708,7 +1708,7 @@ ${notes.trim() || "-"}
                                       key={age}
                                       value={age}
                                     >
-                                      {age} years
+                                      {age} <HomeText en="years" de="Jahre" />
                                     </option>
                                   )
                                 )}
@@ -1777,7 +1777,7 @@ ${notes.trim() || "-"}
                                 }}
                               >
                                 <option value="">
-                                  Select Infant {index + 1} age
+                                  <HomeText en="Select age for infant" de="Alter für Kleinkind" /> {index + 1}
                                 </option>
 
                                 {[1, 2, 3, 4].map((age) => (
