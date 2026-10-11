@@ -1259,7 +1259,7 @@ export default async function TourDetailsPage({
                 <span className="h-px w-10 bg-orange-500" />
 
                 <p className="text-xs font-bold uppercase tracking-[0.25em] text-orange-500">
-                  Included
+                  <HomeText en="Included" de="Inklusive" />
                 </p>
 
               </div>
@@ -1353,7 +1353,7 @@ export default async function TourDetailsPage({
                 <span className="h-px w-10 bg-orange-500" />
 
                 <p className="text-xs font-bold uppercase tracking-[0.25em] text-orange-500">
-                  Highlights
+                  <HomeText en="Highlights" de="Höhepunkte" />
                 </p>
 
               </div>
