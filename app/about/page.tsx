@@ -188,24 +188,15 @@ export default function AboutPage() {
             <div className="mt-8 space-y-5 text-base leading-8 text-gray-600 md:text-lg">
 
               <p>
-                Via Blue is a local tourism and transportation company
-                based in Hurghada, Egypt. We help travelers discover the
-                Red Sea through experiences chosen with care and delivered
-                with reliable local service
+                <HomeText en="Via Blue is a local tourism and transportation company based in Hurghada, Egypt. We help travelers discover the Red Sea through experiences chosen with care and delivered with reliable local service" de="Via Blue ist ein lokales Tourismus- und Transportunternehmen in Hurghada, Ägypten. Wir helfen Reisenden, das Rote Meer mit sorgfältig ausgewählten Erlebnissen und zuverlässigem lokalem Service zu entdecken." />
               </p>
 
               <p>
-                From airport transfers and private transportation to
-                island trips, snorkeling, boat adventures and desert
-                experiences, we make it easier to enjoy everything
-                Hurghada has to offer
+                <HomeText en="From airport transfers and private transportation to island trips, snorkeling, boat adventures and desert experiences, we make it easier to enjoy everything Hurghada has to offer" de="Von Flughafentransfers und privaten Fahrten bis hin zu Inselausflügen, Schnorcheln, Bootsabenteuern und Wüstenerlebnissen – wir machen es einfacher, alles zu genießen, was Hurghada zu bieten hat." />
               </p>
 
               <p>
-                Because we believe a great holiday is not simply about
-                the destination. It is about feeling comfortable,
-                knowing what to expect and enjoying every moment along
-                the way
+                <HomeText en="Because we believe a great holiday is not simply about the destination. It is about feeling comfortable, knowing what to expect and enjoying every moment along the way" de="Denn wir glauben, dass ein gelungener Urlaub mehr ist als nur das Reiseziel. Es geht darum, sich wohlzufühlen, zu wissen, was einen erwartet, und jeden Moment zu genießen." />
               </p>
 
             </div>
@@ -258,9 +249,7 @@ export default function AboutPage() {
           </h2>
 
           <p className="mx-auto mt-8 max-w-3xl text-lg leading-8 text-blue-100/85 md:text-xl">
-            We take care of the details so you can focus on what really
-            matters — discovering new places, enjoying the sea and creating
-            memories worth taking home
+            <HomeText en="We take care of the details so you can focus on what really matters — discovering new places, enjoying the sea and creating memories worth taking home" de="Wir kümmern uns um die Details, damit Sie sich auf das Wesentliche konzentrieren können: neue Orte entdecken, das Meer genießen und unvergessliche Erinnerungen sammeln." />
           </p>
 
           <div className="mx-auto mt-9 h-px w-20 bg-gradient-to-r from-transparent via-orange-400 to-transparent" />
@@ -300,9 +289,7 @@ export default function AboutPage() {
             </h2>
 
             <p className="mt-6 max-w-2xl text-lg leading-8 text-gray-600">
-              From the moment you arrive in Hurghada to your next
-              unforgettable adventure, Via Blue is here to make your
-              journey easier
+              <HomeText en="From the moment you arrive in Hurghada to your next unforgettable adventure, Via Blue is here to make your journey easier" de="Von Ihrer Ankunft in Hurghada bis zu Ihrem nächsten unvergesslichen Abenteuer – Via Blue macht Ihre Reise einfacher." />
             </p>
 
           </div>
@@ -325,8 +312,7 @@ export default function AboutPage() {
               </h3>
 
               <p className="mt-3 leading-7 text-gray-600">
-                Comfortable airport and hotel transfers with dependable
-                service across Hurghada and the Red Sea
+                <HomeText en="Comfortable airport and hotel transfers with dependable service across Hurghada and the Red Sea" de="Komfortable Flughafen- und Hoteltransfers mit zuverlässigem Service in Hurghada und am Roten Meer." />
               </p>
 
               <Link
@@ -354,8 +340,7 @@ export default function AboutPage() {
               </h3>
 
               <p className="mt-3 leading-7 text-gray-600">
-                Island trips, snorkeling, boat excursions and unforgettable
-                moments across the Red Sea
+                <HomeText en="Island trips, snorkeling, boat excursions and unforgettable moments across the Red Sea" de="Inselausflüge, Schnorcheln, Bootstouren und unvergessliche Momente am Roten Meer." />
               </p>
 
               <Link
@@ -383,8 +368,7 @@ export default function AboutPage() {
               </h3>
 
               <p className="mt-3 leading-7 text-gray-600">
-                Discover the Egyptian desert through safari trips,
-                quad biking and authentic local experiences
+                <HomeText en="Discover the Egyptian desert through safari trips, quad biking and authentic local experiences" de="Entdecken Sie die ägyptische Wüste bei Safaris, Quad-Touren und authentischen lokalen Erlebnissen." />
               </p>
 
               <Link
@@ -412,8 +396,7 @@ export default function AboutPage() {
               </h3>
 
               <p className="mt-3 leading-7 text-gray-600">
-                Carefully selected experiences for travelers who value
-                comfort, quality and a more personal journey
+                <HomeText en="Carefully selected experiences for travelers who value comfort, quality and a more personal journey" de="Sorgfältig ausgewählte Erlebnisse für Reisende, die Komfort, Qualität und eine persönlichere Reise schätzen." />
               </p>
 
             </div>
@@ -434,8 +417,7 @@ export default function AboutPage() {
               </h3>
 
               <p className="mt-3 leading-7 text-gray-600">
-                Direct communication and friendly local assistance before,
-                during and after your experience
+                <HomeText en="Direct communication and friendly local assistance before, during and after your experience" de="Direkte Kommunikation und freundliche Unterstützung vor, während und nach Ihrem Erlebnis." />
               </p>
 
             </div>
@@ -456,8 +438,7 @@ export default function AboutPage() {
               </h3>
 
               <p className="mt-3 leading-7 text-gray-600">
-                Simple booking, clear pricing and fast confirmation through
-                direct communication with our team
+                <HomeText en="Simple booking, clear pricing and fast confirmation through direct communication with our team" de="Einfache Buchung, transparente Preise und schnelle Bestätigung durch direkten Kontakt mit unserem Team." />
               </p>
 
             </div>
@@ -499,9 +480,7 @@ export default function AboutPage() {
             </h2>
 
             <p className="mt-7 max-w-xl text-lg leading-8 text-gray-600">
-              We combine local knowledge with a modern, straightforward
-              approach to tourism. No unnecessary complications — just
-              well-organized experiences and people who care about your trip
+              <HomeText en="We combine local knowledge with a modern, straightforward approach to tourism. No unnecessary complications — just well-organized experiences and people who care about your trip" de="Wir verbinden lokale Kenntnisse mit einem modernen, unkomplizierten Tourismusansatz. Keine unnötigen Umstände – nur gut organisierte Erlebnisse und Menschen, denen Ihre Reise am Herzen liegt." />
             </p>
 
             <div className="mt-10 space-y-6">
@@ -518,8 +497,7 @@ export default function AboutPage() {
                   </h3>
 
                   <p className="mt-1 text-sm leading-6 text-gray-600">
-                    Straightforward information and easy communication from
-                    the beginning
+                    <HomeText en="Straightforward information and easy communication from the beginning" de="Klare Informationen und einfache Kommunikation von Anfang an" />
                   </p>
                 </div>
 
@@ -538,8 +516,7 @@ export default function AboutPage() {
                   </h3>
 
                   <p className="mt-1 text-sm leading-6 text-gray-600">
-                    We know Hurghada, the Red Sea and the experiences that
-                    make a holiday special
+                    <HomeText en="We know Hurghada, the Red Sea and the experiences that make a holiday special" de="Wir kennen Hurghada, das Rote Meer und die Erlebnisse, die einen Urlaub besonders machen." />
                   </p>
                 </div>
 
@@ -558,8 +535,7 @@ export default function AboutPage() {
                   </h3>
 
                   <p className="mt-1 text-sm leading-6 text-gray-600">
-                    Direct support from a local team that is here to help
-                    when you need it
+                    <HomeText en="Direct support from a local team that is here to help when you need it" de="Direkte Unterstützung durch ein lokales Team, das Ihnen bei Bedarf gerne hilft." />
                   </p>
                 </div>
 
@@ -680,7 +656,7 @@ export default function AboutPage() {
             </p>
 
             <p className="mt-1 text-sm leading-6 text-gray-500">
-              Clear prices without unnecessary complications
+              <HomeText en="Clear prices without unnecessary complications" de="Klare Preise ohne unnötige Komplikationen" />
             </p>
           </div>
 
@@ -711,8 +687,7 @@ export default function AboutPage() {
           </h2>
 
           <p className="mx-auto mt-7 max-w-2xl text-lg leading-8 text-blue-100/85">
-            Explore the Red Sea, discover unforgettable experiences and
-            travel with a team that knows Hurghada
+            <HomeText en="Explore the Red Sea, discover unforgettable experiences and travel with a team that knows Hurghada" de="Entdecken Sie das Rote Meer und unvergessliche Erlebnisse – mit einem Team, das Hurghada kennt." />
           </p>
 
           <div className="mx-auto mt-6 h-px w-16 bg-gradient-to-r from-transparent via-orange-400 to-transparent" />
