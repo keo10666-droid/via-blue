@@ -612,7 +612,7 @@ export default function AITripPlannerPage() {
                 <span className="h-px w-10 bg-orange-500" />
 
                 <p className="text-xs font-bold uppercase tracking-[0.3em] text-orange-500">
-                  Step 0{step}
+                  <HomeText en={`Step 0${step}`} de={`Schritt 0${step}`} />
                 </p>
               </div>
 
