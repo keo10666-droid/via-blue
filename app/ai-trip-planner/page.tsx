@@ -483,10 +483,10 @@ export default function AITripPlannerPage() {
   }, [step, isGenerating]);
 
   const processingItems = [
-    "Understanding your travel style",
-    "Matching real Via Blue experiences",
-    "Optimizing your days and activities",
-    "Building 3 personalized packages",
+    { en: "Understanding your travel style", de: "Wir verstehen Ihren Reisestil" },
+    { en: "Matching real Via Blue experiences", de: "Wir finden passende Via-Blue-Erlebnisse" },
+    { en: "Optimizing your days and activities", de: "Wir optimieren Ihre Tage und Aktivitäten" },
+    { en: "Building 3 personalized packages", de: "Wir erstellen 3 persönliche Pakete" },
   ];
 
   const currencySymbol = currency === "EUR" ? "€" : "$";
@@ -698,7 +698,7 @@ export default function AITripPlannerPage() {
                         onClick={generateTrip}
                         className="mt-5 rounded-xl bg-blue-950 px-5 py-3 text-sm font-bold text-white transition hover:bg-orange-500"
                       >
-                        Try Again
+                        <HomeText en="Try Again" de="Erneut versuchen" />
                       </button>
                     </div>
                   ) : (
@@ -710,7 +710,7 @@ export default function AITripPlannerPage() {
 
                           return (
                             <div
-                              key={item}
+                              key={item.en}
                               className={`flex items-center gap-4 transition duration-500 ${
                                 active || completed
                                   ? "opacity-100"
@@ -901,9 +901,7 @@ export default function AITripPlannerPage() {
 
                           <p className="mt-1 text-sm text-blue-100">
                             {pkg.activities}{" "}
-                            {pkg.activities === 1
-                              ? "experience"
-                              : "experiences"}
+                            {pkg.activities === 1 ? <HomeText en="experience" de="Erlebnis" /> : <HomeText en="experiences" de="Erlebnisse" />}
                           </p>
                         </div>
                       </div>
@@ -980,7 +978,7 @@ export default function AITripPlannerPage() {
                                         <select
                                           key={`${pkg.id}-${tour.slug}`}
                                           defaultValue=""
-                                          aria-label={`Replace ${tour.name}`}
+                                          aria-label={`Ersetzen: ${tour.name}`}
                                           onChange={(event) => {
                                             if (event.target.value) {
                                               replacePackageTour(
@@ -1303,7 +1301,7 @@ export default function AITripPlannerPage() {
                               : "bg-slate-50 text-blue-950 hover:bg-blue-50"
                           }`}
                         >
-                          {value}d
+                          {value}<HomeText en="d" de="T" />
                         </button>
                       ))}
                     </div>
@@ -1533,7 +1531,7 @@ export default function AITripPlannerPage() {
                               </div>
 
                               <div>
-                                <p className="font-bold">{category.title}</p>
+                                <p className="font-bold">{category.id === "islands-boat-trips" ? <HomeText en="Islands & Boat Trips" de="Inseln und Bootsausflüge" /> : category.id === "snorkeling-diving" ? <HomeText en="Snorkeling & Diving" de="Schnorcheln und Tauchen" /> : category.id === "sea-water-activities" ? <HomeText en="Sea & Water Activities" de="Wasseraktivitäten" /> : category.id === "dolphin-experiences" ? <HomeText en="Dolphin Experiences" de="Delfinerlebnisse" /> : category.id === "desert-adventures" ? <HomeText en="Desert Adventures" de="Wüstenabenteuer" /> : category.id === "egypt-tours-excursions" ? <HomeText en="Egypt Tours" de="Ägypten-Ausflüge" /> : <HomeText en="Family Attractions" de="Familienattraktionen" />}</p>
 
                                 <p
                                   className={`mt-1 text-xs leading-5 ${
@@ -1542,7 +1540,7 @@ export default function AITripPlannerPage() {
                                       : "text-gray-400"
                                   }`}
                                 >
-                                  {category.description}
+                                  {category.id === "islands-boat-trips" ? <HomeText en="Boats, islands, cruises & sea days" de="Boote, Inseln, Kreuzfahrten und Meer" /> : category.id === "snorkeling-diving" ? <HomeText en="Coral reefs, snorkeling & diving" de="Korallenriffe, Schnorcheln und Tauchen" /> : category.id === "sea-water-activities" ? <HomeText en="Parasailing, water sports & fun" de="Parasailing, Wassersport und Spaß" /> : category.id === "dolphin-experiences" ? <HomeText en="Dolphins, encounters & marine life" de="Delfine und Meereslebewesen" /> : category.id === "desert-adventures" ? <HomeText en="Safaris, quad bikes & Bedouin life" de="Safaris, Quads und Beduinenleben" /> : category.id === "egypt-tours-excursions" ? <HomeText en="Luxor, Cairo & ancient Egypt" de="Luxor, Kairo und das alte Ägypten" /> : <HomeText en="Fun experiences for the whole family" de="Erlebnisse für die ganze Familie" />}
                                 </p>
                               </div>
                             </div>
