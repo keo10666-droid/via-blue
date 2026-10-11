@@ -1281,7 +1281,7 @@ ${notes.trim() || "-"}
                         >
                           {date
                             ? formatDateDisplay(date)
-                            : "Select your preferred date"}
+                            : <HomeText en="Select your preferred date" de="Wählen Sie Ihr Wunschdatum" />}
                         </div>
                       </div>
 
@@ -1421,7 +1421,7 @@ ${notes.trim() || "-"}
                   {submitAttempted &&
                     !isDateValid &&
                     errorText(
-                      "Please select a valid tour date (from tomorrow onward)."
+                      <HomeText en="Please select a valid tour date (from tomorrow onward)." de="Bitte wählen Sie ein gültiges Reisedatum ab morgen." />
                     )}
                 </div>
 
@@ -1448,7 +1448,7 @@ ${notes.trim() || "-"}
                     </div>
 
                     <div className="hidden rounded-full bg-slate-100 px-3 py-1.5 text-xs font-bold text-slate-600 sm:block">
-                      {totalGuests} guests
+                      {totalGuests} <HomeText en="guests" de="Gäste" />
                     </div>
 
                   </div>
@@ -1469,7 +1469,7 @@ ${notes.trim() || "-"}
                           </p>
 
                           <p className="text-xs text-slate-400">
-                            Age 11+
+                            <HomeText en="Age 11+" de="Ab 11 Jahren" />
                           </p>
                         </div>
                       </div>
@@ -1528,7 +1528,7 @@ ${notes.trim() || "-"}
                           </p>
 
                           <p className="text-xs text-slate-400">
-                            Ages 5–10
+                            <HomeText en="Ages 5–10" de="5–10 Jahre" />
                           </p>
                         </div>
                       </div>
@@ -1587,7 +1587,7 @@ ${notes.trim() || "-"}
                           </p>
 
                           <p className="text-xs text-slate-400">
-                            Ages 1–4
+                            <HomeText en="Ages 1–4" de="1–4 Jahre" />
                           </p>
                         </div>
                       </div>
@@ -1637,7 +1637,7 @@ ${notes.trim() || "-"}
                   {submitAttempted &&
                     !isGuestsValid &&
                     errorText(
-                      "Private tours require a minimum of 2 guests and a maximum of 25 guests."
+                      <HomeText en="Private tours require a minimum of 2 guests and a maximum of 25 guests." de="Private Touren erfordern mindestens 2 und höchstens 25 Gäste." />
                     )}
 
                   <div className="mt-4 flex items-center justify-between rounded-2xl bg-[#071a36] px-5 py-4 text-white">
