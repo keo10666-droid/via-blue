@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import HomeText from "@/app/components/HomeText";
 
 function WhatsAppIcon() {
   return (
@@ -269,18 +270,16 @@ export default function ContactPage() {
           <div className="max-w-3xl">
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.06] px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-orange-300">
               <span className="h-1.5 w-1.5 rounded-full bg-orange-400" />
-              We are here to help
+              <HomeText en="We are here to help" de="Wir sind für Sie da" />
             </div>
 
             <h1 className="text-4xl font-semibold tracking-[-0.03em] text-white sm:text-5xl lg:text-6xl">
-              Let&apos;s talk about
-              <span className="block text-orange-400">your next journey</span>
+              <HomeText en="Let&apos;s talk about" de="Sprechen wir über" />
+              <span className="block text-orange-400"><HomeText en="your next journey" de="Ihre nächste Reise" /></span>
             </h1>
 
             <p className="mt-6 max-w-2xl text-base leading-7 text-slate-300 sm:text-lg">
-              Have a question about a tour, transfer or private experience?
-              Get in touch with Via Blue and our team will be happy to help
-              you plan your trip in Hurghada
+              <HomeText en="Have a question about a tour, transfer or private experience? Get in touch with Via Blue and our team will be happy to help you plan your trip in Hurghada" de="Haben Sie Fragen zu einer Tour, einem Transfer oder einem privaten Erlebnis? Kontaktieren Sie Via Blue – unser Team hilft Ihnen gerne bei der Planung Ihrer Reise in Hurghada." />
             </p>
           </div>
         </div>
@@ -293,17 +292,15 @@ export default function ContactPage() {
           <div>
             <div>
               <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[#f59a23]">
-                Contact Via Blue
+                <HomeText en="Contact Via Blue" de="Kontaktieren Sie Via Blue" />
               </p>
 
               <h2 className="mt-3 text-3xl font-semibold tracking-[-0.025em] text-[#071d49] sm:text-4xl">
-                We&apos;re just a message away
+                <HomeText en="We&apos;re just a message away" de="Wir sind nur eine Nachricht entfernt" />
               </h2>
 
               <p className="mt-4 max-w-lg text-[15px] leading-7 text-[#667085]">
-                Whether you need help choosing an excursion, arranging an
-                airport transfer or simply have a question, feel free to
-                contact us
+                <HomeText en="Whether you need help choosing an excursion, arranging an airport transfer or simply have a question, feel free to contact us" de="Ob Sie Hilfe bei der Auswahl eines Ausflugs, bei einem Flughafentransfer oder einfach eine Antwort auf Ihre Frage benötigen – kontaktieren Sie uns gerne." />
               </p>
             </div>
 
@@ -329,7 +326,7 @@ export default function ContactPage() {
                   </p>
 
                   <p className="mt-0.5 text-sm text-[#667085]">
-                    Chat with us directly
+                    <HomeText en="Chat with us directly" de="Chatten Sie direkt mit uns" />
                   </p>
                 </div>
 
@@ -354,7 +351,7 @@ export default function ContactPage() {
                   </p>
 
                   <p className="mt-0.5 text-sm text-[#667085]">
-                    Send us an email
+                    <HomeText en="Send us an email" de="Senden Sie uns eine E-Mail" />
                   </p>
                 </div>
 
@@ -376,7 +373,7 @@ export default function ContactPage() {
                   </p>
 
                   <p className="mt-0.5 text-sm text-[#667085]">
-                    Serving Hurghada and the Red Sea
+                    <HomeText en="Serving Hurghada and the Red Sea" de="Wir sind in Hurghada und am Roten Meer für Sie da" />
                   </p>
                 </div>
               </div>
@@ -385,7 +382,7 @@ export default function ContactPage() {
             {/* Social media */}
             <div className="mt-6">
               <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[#f59a23]">
-                Connect with us
+                <HomeText en="Connect with us" de="Verbinden Sie sich mit uns" />
               </p>
 
               <div className="mt-4 grid gap-3 sm:grid-cols-2">
@@ -469,7 +466,7 @@ export default function ContactPage() {
                     </p>
 
                     <p className="mt-1 font-semibold text-[#071d49]">
-                      Coming soon
+                      <HomeText en="Coming soon" de="Demnächst verfügbar" />
                     </p>
                   </div>
                 </div>
@@ -479,7 +476,7 @@ export default function ContactPage() {
             {/* Trust box */}
             <div className="mt-6 rounded-2xl bg-[#071d49] p-6 text-white">
               <p className="text-sm font-semibold">
-                Why contact Via Blue?
+                <HomeText en="Why contact Via Blue?" de="Warum Via Blue kontaktieren?" />
               </p>
 
               <div className="mt-4 space-y-3">
@@ -487,21 +484,21 @@ export default function ContactPage() {
                   <span className="text-orange-400">
                     <CheckIcon />
                   </span>
-                  Local team based in Hurghada
+                  <HomeText en="Local team based in Hurghada" de="Lokales Team in Hurghada" />
                 </div>
 
                 <div className="flex items-center gap-3 text-sm text-slate-300">
                   <span className="text-orange-400">
                     <CheckIcon />
                   </span>
-                  Professional tours and transfers
+                  <HomeText en="Professional tours and transfers" de="Professionelle Touren und Transfers" />
                 </div>
 
                 <div className="flex items-center gap-3 text-sm text-slate-300">
                   <span className="text-orange-400">
                     <CheckIcon />
                   </span>
-                  Personal assistance before your trip
+                  <HomeText en="Personal assistance before your trip" de="Persönliche Unterstützung vor Ihrer Reise" />
                 </div>
               </div>
             </div>
@@ -513,15 +510,15 @@ export default function ContactPage() {
               <>
                 <div>
                   <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[#f59a23]">
-                    Send a message
+                    <HomeText en="Send a message" de="Nachricht senden" />
                   </p>
 
                   <h2 className="mt-2 text-2xl font-semibold tracking-[-0.02em] text-[#071d49] sm:text-3xl">
-                    How can we help?
+                    <HomeText en="How can we help?" de="Wie können wir Ihnen helfen?" />
                   </h2>
 
                   <p className="mt-3 text-sm leading-6 text-[#667085]">
-                    Fill in the form below and our team will get back to you
+                    <HomeText en="Fill in the form below and our team will get back to you" de="Füllen Sie das Formular aus. Unser Team wird sich bei Ihnen melden." />
                   </p>
                 </div>
 
@@ -542,7 +539,7 @@ export default function ContactPage() {
                         htmlFor="name"
                         className="mb-2 block text-sm font-medium text-[#172033]"
                       >
-                        Full Name
+                        <HomeText en="Full Name" de="Vollständiger Name" />
                       </label>
 
                       <input
@@ -550,7 +547,7 @@ export default function ContactPage() {
                         name="name"
                         type="text"
                         required
-                        placeholder="Your full name"
+                        placeholder="Ihr vollständiger Name"
                         className="h-12 w-full rounded-xl border border-[#dfe3ea] bg-[#fbfcfd] px-4 text-sm text-[#172033] outline-none transition placeholder:text-[#98a2b3] focus:border-[#f59a23] focus:bg-white focus:ring-4 focus:ring-[#f59a23]/10"
                       />
                     </div>
@@ -560,7 +557,7 @@ export default function ContactPage() {
                         htmlFor="email"
                         className="mb-2 block text-sm font-medium text-[#172033]"
                       >
-                        Email Address
+                        <HomeText en="Email Address" de="E-Mail-Adresse" />
                       </label>
 
                       <input
@@ -580,7 +577,7 @@ export default function ContactPage() {
                         htmlFor="whatsapp"
                         className="mb-2 block text-sm font-medium text-[#172033]"
                       >
-                        WhatsApp Number
+                        <HomeText en="WhatsApp Number" de="WhatsApp-Nummer" />
                       </label>
 
                       <input
@@ -597,7 +594,7 @@ export default function ContactPage() {
                         htmlFor="subject"
                         className="mb-2 block text-sm font-medium text-[#172033]"
                       >
-                        Subject
+                        <HomeText en="Subject" de="Betreff" />
                       </label>
 
                       <input
@@ -615,7 +612,7 @@ export default function ContactPage() {
                       htmlFor="message"
                       className="mb-2 block text-sm font-medium text-[#172033]"
                     >
-                      Message
+                      <HomeText en="Message" de="Nachricht" />
                     </label>
 
                     <textarea
@@ -623,7 +620,7 @@ export default function ContactPage() {
                       name="message"
                       required
                       rows={7}
-                      placeholder="Tell us how we can help..."
+                      placeholder="Wie können wir Ihnen helfen?"
                       className="w-full resize-none rounded-xl border border-[#dfe3ea] bg-[#fbfcfd] px-4 py-3 text-sm leading-6 text-[#172033] outline-none transition placeholder:text-[#98a2b3] focus:border-[#f59a23] focus:bg-white focus:ring-4 focus:ring-[#f59a23]/10"
                     />
                   </div>
@@ -642,13 +639,12 @@ export default function ContactPage() {
                     disabled={isSending}
                     className="group flex h-13 w-full items-center justify-center gap-3 rounded-xl bg-[#071d49] px-6 text-sm font-semibold text-white shadow-lg shadow-[#071d49]/15 transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#04142f] hover:shadow-xl hover:shadow-[#071d49]/20 disabled:cursor-not-allowed disabled:opacity-60"
                   >
-                    {isSending ? "Sending..." : "Send Message"}
+                    {isSending ? <HomeText en="Sending..." de="Wird gesendet..." /> : <HomeText en="Send Message" de="Nachricht senden" />}
                     {!isSending ? <ArrowIcon /> : null}
                   </button>
 
                   <p className="text-center text-xs leading-5 text-[#98a2b3]">
-                    We&apos;ll use your details only to respond to your
-                    enquiry
+                    <HomeText en="We&apos;ll use your details only to respond to your enquiry" de="Wir verwenden Ihre Angaben ausschließlich zur Beantwortung Ihrer Anfrage." />
                   </p>
                 </form>
               </>
@@ -663,9 +659,7 @@ export default function ContactPage() {
                 </h2>
 
                 <p className="mt-4 max-w-md text-[15px] leading-7 text-[#667085]">
-                  Thank you for contacting Via Blue. Your message has been
-                  received and our team will get back to you as soon as
-                  possible
+                  <HomeText en="Thank you for contacting Via Blue. Your message has been received and our team will get back to you as soon as possible" de="Vielen Dank für Ihre Nachricht an Via Blue. Wir haben Ihre Nachricht erhalten und unser Team meldet sich so bald wie möglich bei Ihnen." />
                 </p>
 
                 <button
@@ -673,7 +667,7 @@ export default function ContactPage() {
                   onClick={() => setSubmitted(false)}
                   className="mt-8 inline-flex items-center gap-2 rounded-xl border border-[#e6e9ef] px-5 py-3 text-sm font-semibold text-[#071d49] transition hover:border-[#f59a23] hover:text-[#f59a23]"
                 >
-                  Send another message
+                  <HomeText en="Send another message" de="Eine weitere Nachricht senden" />
                 </button>
               </div>
             )}
@@ -689,16 +683,15 @@ export default function ContactPage() {
           <div className="relative flex flex-col gap-7 lg:flex-row lg:items-center lg:justify-between">
             <div className="max-w-2xl">
               <p className="text-sm font-semibold uppercase tracking-[0.16em] text-orange-300">
-                Prefer WhatsApp?
+                <HomeText en="Prefer WhatsApp?" de="Lieber WhatsApp?" />
               </p>
 
               <h2 className="mt-2 text-2xl font-semibold tracking-[-0.02em] text-white sm:text-3xl">
-                Talk to our team directly
+                <HomeText en="Talk to our team directly" de="Sprechen Sie direkt mit unserem Team" />
               </h2>
 
               <p className="mt-3 text-sm leading-6 text-slate-300">
-                For quick questions and bookings, WhatsApp is the fastest way
-                to reach us
+                <HomeText en="For quick questions and bookings, WhatsApp is the fastest way to reach us" de="Für schnelle Fragen und Buchungen erreichen Sie uns am besten über WhatsApp." />
               </p>
             </div>
 
@@ -709,7 +702,7 @@ export default function ContactPage() {
               className="inline-flex shrink-0 items-center justify-center gap-3 rounded-xl bg-[#f59a23] px-6 py-3.5 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#df8413] hover:shadow-lg hover:shadow-[#f59a23]/20"
             >
               <WhatsAppIcon />
-              Chat on WhatsApp
+              <HomeText en="Chat on WhatsApp" de="Auf WhatsApp chatten" />
             </a>
           </div>
         </div>
