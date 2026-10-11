@@ -45,9 +45,16 @@ export default function ForgotPasswordPage() {
   const allRulesValid = passwordRules.every((rule) => rule.test(password));
   const passwordsMatch = password.length > 0 && password === confirmPassword;
 
-  function showError(text: string) {
+  function showError(value: string) {
+    const messages: Record<string, string> = {
+      "We couldn't send the verification code. Please check your email and try again.": "Der Bestätigungscode konnte nicht gesendet werden. Bitte überprüfe deine E-Mail-Adresse und versuche es erneut.",
+      "The verification code is invalid or expired. Please request a new code.": "Der Bestätigungscode ist ungültig oder abgelaufen. Bitte fordere einen neuen Code an.",
+      "Please meet all password requirements.": "Bitte erfülle alle Passwortanforderungen.",
+      "Passwords do not match.": "Die Passwörter stimmen nicht überein.",
+      "We couldn't update your password. Please verify your reset code is still valid and try again.": "Dein Passwort konnte nicht geändert werden. Bitte prüfe, ob der Code noch gültig ist, und versuche es erneut."
+    };
     setIsError(true);
-    setMessage(text);
+    setMessage(isGerman ? (messages[value] || value) : value);
   }
 
   async function handleSendCode(event: FormEvent<HTMLFormElement>) {
@@ -62,7 +69,7 @@ export default function ForgotPasswordPage() {
     } else {
       setStep("code");
       setIsError(false);
-      setMessage("A verification code has been sent to your email address.");
+      setMessage(text("A verification code has been sent to your email address.", "Ein Bestätigungscode wurde an deine E-Mail-Adresse gesendet."));
     }
 
     setIsLoading(false);
