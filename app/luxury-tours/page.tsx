@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import HomeText from "@/app/components/HomeText";
 import Link from "next/link";
 
 const luxuryTours = [
@@ -193,9 +194,9 @@ export default function LuxuryToursPage() {
             </div>
 
             <h1 className="mt-7 max-w-4xl text-4xl font-semibold leading-[1.05] tracking-tight md:text-6xl lg:text-7xl">
-              Luxury Experiences
+              <HomeText en="Luxury Experiences" de="Luxuriöse Erlebnisse" />
               <span className="block text-orange-400">
-                Designed Around You
+                <HomeText en="Designed Around You" de="Für Sie gestaltet" />
               </span>
             </h1>
 
@@ -217,7 +218,7 @@ export default function LuxuryToursPage() {
                 <span className="text-orange-400">
                   <ShieldIcon />
                 </span>
-                Premium Service
+                <HomeText en="Premium Service" de="Premium-Service" />
               </div>
 
               <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-2.5 text-xs font-semibold backdrop-blur-md">
@@ -244,7 +245,7 @@ export default function LuxuryToursPage() {
             </div>
 
             <h2 className="mt-4 text-3xl font-semibold tracking-tight text-blue-950 md:text-4xl">
-              Experiences Worth Travelling For
+              <HomeText en="Experiences Worth Travelling For" de="Erlebnisse, für die sich eine Reise lohnt" />
             </h2>
 
             <p className="mt-4 text-sm leading-7 text-gray-600 md:text-base">
@@ -312,7 +313,7 @@ export default function LuxuryToursPage() {
                   <div className="absolute bottom-4 left-5 right-5 flex items-end justify-between gap-4">
                     <div>
                       <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-orange-300">
-                        Exclusive Experience
+                        <HomeText en="Exclusive Experience" de="Exklusives Erlebnis" />
                       </p>
 
                       <p className="mt-1 text-lg font-bold leading-tight text-white">
@@ -368,11 +369,11 @@ export default function LuxuryToursPage() {
 
                       <div>
                         <p className="text-[9px] font-bold uppercase tracking-wider text-gray-400">
-                          Guests
+                          <HomeText en="Guests" de="Gäste" />
                         </p>
 
                         <p className="text-xs font-bold text-blue-950">
-                          From 2 Guests
+                          <HomeText en="From 2 Guests" de="Ab 2 Gästen" />
                         </p>
                       </div>
                     </div>
@@ -386,7 +387,7 @@ export default function LuxuryToursPage() {
 
                       <div>
                         <p className="text-[9px] font-bold uppercase tracking-wider text-gray-400">
-                          Service
+                          <HomeText en="Service" de="Service" />
                         </p>
 
                         <p className="text-xs font-bold text-blue-950">
@@ -402,11 +403,11 @@ export default function LuxuryToursPage() {
                   <div className="flex items-end justify-between border-t border-gray-100 pt-5">
                     <div>
                       <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-gray-400">
-                        Starting From
+                        <HomeText en="Starting From" de="Ab" />
                       </p>
 
                       <p className="mt-1 text-xs text-gray-500">
-                        Private experience
+                        <HomeText en="Private experience" de="Privates Erlebnis" />
                       </p>
                     </div>
 
@@ -429,14 +430,14 @@ export default function LuxuryToursPage() {
                   href={`/luxury-tours/${tour.slug}`}
                   className="rounded-xl border border-blue-950 py-3.5 text-center text-sm font-bold text-blue-950 transition duration-300 hover:bg-blue-950 hover:text-white"
                 >
-                  Explore
+                  <HomeText en="Explore" de="Entdecken" />
                 </Link>
 
                 <Link
                   href={`/luxury-tours/${tour.slug}/book`}
                   className="rounded-xl bg-orange-500 py-3.5 text-center text-sm font-bold text-white shadow-md shadow-orange-500/20 transition duration-300 hover:-translate-y-0.5 hover:bg-orange-600 hover:shadow-lg"
                 >
-                  Reserve Now
+                  <HomeText en="Reserve Now" de="Jetzt reservieren" />
                 </Link>
               </div>
             </article>
@@ -459,13 +460,13 @@ export default function LuxuryToursPage() {
             </div>
 
             <p className="mt-5 text-[10px] font-bold uppercase tracking-[0.3em] text-orange-400">
-              Made For Exceptional Journeys
+              <HomeText en="Made For Exceptional Journeys" de="Für außergewöhnliche Reisen geschaffen" />
             </p>
 
             <h2 className="mt-3 text-3xl font-semibold tracking-tight md:text-4xl">
-              Your Time in Egypt Deserves
+              <HomeText en="Your Time in Egypt Deserves" de="Ihre Zeit in Ägypten verdient" />
               <span className="block text-orange-400">
-                Something Extraordinary
+                <HomeText en="Something Extraordinary" de="etwas Außergewöhnliches" />
               </span>
             </h2>
 
@@ -480,14 +481,14 @@ export default function LuxuryToursPage() {
                 href="/luxury-tours/luxor"
                 className="rounded-xl bg-orange-500 px-7 py-3.5 text-sm font-bold text-white shadow-lg shadow-orange-500/20 transition duration-300 hover:-translate-y-0.5 hover:bg-orange-600 hover:shadow-xl"
               >
-                Explore Private Experiences
+                <HomeText en="Explore Private Experiences" de="Private Erlebnisse entdecken" />
               </Link>
 
               <Link
                 href="/contact"
                 className="rounded-xl border border-white/20 bg-white/10 px-7 py-3.5 text-sm font-bold text-white backdrop-blur-sm transition hover:bg-white hover:text-blue-950"
               >
-                Request a Tailored Experience
+                <HomeText en="Request a Tailored Experience" de="Individuelles Erlebnis anfragen" />
               </Link>
             </div>
           </div>
