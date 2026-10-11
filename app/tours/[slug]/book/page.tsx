@@ -1973,7 +1973,7 @@ ${notes.trim() || "-"}
                     </span>
 
                     <span className="font-semibold text-slate-800">
-                      €{totalPrice}
+                      €{baseTotalPrice}
                     </span>
 
                   </div>
@@ -1991,7 +1991,7 @@ ${notes.trim() || "-"}
                       </span>
                     </div>
 
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                       <span className="text-slate-500">
                         Adults × €{selectedVehicleOption.adultPrice}
                       </span>
@@ -2000,7 +2000,7 @@ ${notes.trim() || "-"}
                       </span>
                     </div>
 
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                       <span className="text-slate-500">
                         Children × €{selectedVehicleOption.childPrice}
                       </span>
@@ -2009,7 +2009,7 @@ ${notes.trim() || "-"}
                       </span>
                     </div>
 
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                       <span className="text-slate-500">
                         Infants × €{selectedVehicleOption.infantPrice}
                       </span>
@@ -2040,7 +2040,7 @@ ${notes.trim() || "-"}
                       </span>
                     </div>
 
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                       <span className="text-slate-500">
                         Adults × €{selectedCairoVehicleOption.adultPrice}
                       </span>
@@ -2049,7 +2049,7 @@ ${notes.trim() || "-"}
                       </span>
                     </div>
 
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                       <span className="text-slate-500">
                         Children × €{selectedCairoVehicleOption.childPrice}
                       </span>
@@ -2058,7 +2058,7 @@ ${notes.trim() || "-"}
                       </span>
                     </div>
 
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                       <span className="text-slate-500">
                         Infants × €{selectedCairoVehicleOption.infantPrice}
                       </span>
@@ -2071,7 +2071,7 @@ ${notes.trim() || "-"}
 
                   <>
 
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between border-b border-slate-100 pb-3">
 
                       <span className="text-slate-500">
                         Adults × €{tour.price}
@@ -2085,7 +2085,7 @@ ${notes.trim() || "-"}
 
                     </div>
 
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between border-b border-slate-100 pb-3">
 
                       <span className="text-slate-500">
                         Children × €{tour.childPrice}
@@ -2099,7 +2099,7 @@ ${notes.trim() || "-"}
 
                     </div>
 
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between border-b border-slate-100 pb-3">
 
                       <span className="text-slate-500">
                         Infants × €{tour.infantPrice}
@@ -2116,6 +2116,15 @@ ${notes.trim() || "-"}
                   </>
 
                 )}
+
+                <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                  <span className="text-slate-500">
+                    Extra transfer ({chargeableGuests} guests × €{hotelAreaSurchargePerPerson})
+                  </span>
+                  <span className="font-semibold text-slate-800">
+                    €{hotelAreaSurcharge}
+                  </span>
+                </div>
 
                 <div className="mt-4 flex items-center justify-between border-t border-slate-200 pt-4">
 
