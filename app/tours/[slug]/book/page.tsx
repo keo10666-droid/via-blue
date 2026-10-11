@@ -222,6 +222,7 @@ export default function BookingPage() {
   const [emailTouched, setEmailTouched] = useState(false);
 
   const [hotel, setHotel] = useState("");
+  const [hotelArea, setHotelArea] = useState("hurghada");
   const [roomNumber, setRoomNumber] = useState("");
   const [date, setDate] = useState("");
 
@@ -297,7 +298,7 @@ const selectedCairoVehicleOption =
     ? selectedCairoOption[selectedVehicle]
     : null;
 
-  const totalPrice =
+  const baseTotalPrice =
   slug === "speed-boat"
     ? 140 +
       Math.max(chargeableGuests - 4, 0) * 15
@@ -322,6 +323,18 @@ const selectedCairoVehicleOption =
     : Number(adults || 0) * tour.price +
       Number(children || 0) * tour.childPrice +
       Number(infants || 0) * tour.infantPrice;
+
+  const hotelAreaSurchargePerPerson =
+    hotelArea === "makadi-bay" || hotelArea === "sahl-hasheesh"
+      ? 5
+      : hotelArea === "el-gouna" || hotelArea === "safaga" || hotelArea === "soma-bay"
+        ? 10
+        : 0;
+
+  const hotelAreaSurcharge =
+    (Number(adults || 0) + Number(children || 0)) * hotelAreaSurchargePerPerson;
+
+  const totalPrice = baseTotalPrice + hotelAreaSurcharge;
 
   const filteredNationalities = useMemo(() => {
     if (!nationality) return [];
@@ -596,6 +609,10 @@ Nationality: ${nationality || "Not specified"}
 Email: ${email.trim()}
 
 Hotel: ${hotel || "Not specified"}
+
+Hotel Area: ${hotelArea}
+
+Hotel Area Surcharge: €${hotelAreaSurcharge}
 
 Room Number: ${roomNumber || "Not specified"}
 
@@ -1125,6 +1142,27 @@ ${notes.trim() || "-"}
                     }
                     className={inputClass(false)}
                   />
+
+                </div>
+
+                <div>
+
+                  <label className={labelClass}>
+                    Hotel Area
+                  </label>
+
+                  <select
+                    value={hotelArea}
+                    onChange={(e) => setHotelArea(e.target.value)}
+                    className={inputClass(false)}
+                  >
+                    <option value="hurghada">Hurghada — No extra charge</option>
+                    <option value="makadi-bay">Makadi Bay — +€5 per adult/child</option>
+                    <option value="sahl-hasheesh">Sahl Hasheesh — +€5 per adult/child</option>
+                    <option value="el-gouna">El Gouna — +€10 per adult/child</option>
+                    <option value="safaga">Safaga — +€10 per adult/child</option>
+                    <option value="soma-bay">Soma Bay — +€10 per adult/child</option>
+                  </select>
 
                 </div>
 
