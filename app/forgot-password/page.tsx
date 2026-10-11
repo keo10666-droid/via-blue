@@ -57,6 +57,13 @@ export default function ForgotPasswordPage() {
     setMessage(isGerman ? (messages[value] || value) : value);
   }
 
+  function translateMessage(value: string) {
+    const messages: Record<string, string> = {
+      "A verification code has been sent to your email address.": "Ein Bestätigungscode wurde an deine E-Mail-Adresse gesendet."
+    };
+    return isGerman ? (messages[value] || value) : value;
+  }
+
   async function handleSendCode(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setMessage("");
@@ -220,7 +227,7 @@ export default function ForgotPasswordPage() {
                     onChange={(event) => setEmail(event.target.value)}
                     required
                     autoComplete="email"
-                    placeholder="you@example.com"
+                    placeholder={text("you@example.com", "du@beispiel.de")}
                     className="w-full rounded-2xl border border-gray-200 bg-gray-50/70 px-5 py-4 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 hover:border-gray-300 focus:border-[#0b3a78] focus:bg-white focus:ring-4 focus:ring-[#0b3a78]/5"
                   />
                   <button type="submit" disabled={isLoading} className="mt-7 flex w-full items-center justify-center rounded-2xl bg-[#0b3a78] px-6 py-4 text-sm font-bold text-white shadow-lg shadow-[#0b3a78]/20 transition hover:-translate-y-0.5 hover:bg-[#082d5d] disabled:cursor-not-allowed disabled:opacity-60">
@@ -328,7 +335,7 @@ export default function ForgotPasswordPage() {
 
               {message && step !== "success" && (
                 <div className={"mt-5 rounded-2xl border px-4 py-4 text-sm font-medium leading-6 " + (isError ? "border-red-200 bg-red-50 text-red-700" : "border-[#0b3a78]/10 bg-[#0b3a78]/5 text-[#0b3a78]")}>
-                  {message}
+                  {translateMessage(message)}
                 </div>
               )}
 
