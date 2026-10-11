@@ -13,6 +13,7 @@ import {
 } from "react";
 
 import BookingSuccessModal from "@/app/components/BookingSuccessModal";
+import HomeText from "@/app/components/HomeText";
 
 type LuxuryBookingFormProps = {
   tourName: string;
@@ -850,11 +851,11 @@ ${notes.trim() || "-"}
                 <div className="max-w-3xl">
                   <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.07] px-4 py-2 text-[11px] font-bold uppercase tracking-[0.18em] text-orange-300">
                     <SparklesIcon />
-                    Private Luxury Experience
+                    <HomeText en="Private Luxury Experience" de="Luxuriöses privates Erlebnis" />
                   </div>
 
                   <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-[48px] lg:leading-[1.08]">
-                    Reserve your private
+                    <HomeText en="Reserve your private" de="Reservieren Sie Ihr privates" />
                     <span className="block text-orange-400">
                       {tourName}
                     </span>
@@ -870,7 +871,7 @@ ${notes.trim() || "-"}
                 <div className="hidden shrink-0 lg:block">
                   <div className="rounded-2xl border border-white/10 bg-white/[0.06] px-5 py-4 backdrop-blur-sm">
                     <div className="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-400">
-                      Experience
+                      <HomeText en="Experience" de="Erlebnis" />
                     </div>
 
                     <div className="mt-1 text-lg font-bold text-white">
@@ -895,7 +896,7 @@ ${notes.trim() || "-"}
                     </p>
 
                     <h2 className="mt-1 text-xl font-bold text-[#071a36] sm:text-2xl">
-                      Guest details
+                      <HomeText en="Guest details" de="Angaben zu den Gästen" />
                     </h2>
                   </div>
 
@@ -918,11 +919,11 @@ ${notes.trim() || "-"}
 
                     <div>
                       <h3 className="font-bold text-[#071a36]">
-                        Personal information
+                        <HomeText en="Personal information" de="Persönliche Angaben" />
                       </h3>
 
                       <p className="text-xs text-slate-400">
-                        Tell us who will be joining the experience
+                        <HomeText en="Tell us who will be joining the experience" de="Teilen Sie uns mit, wer an diesem Erlebnis teilnimmt" />
                       </p>
                     </div>
                   </div>
@@ -961,7 +962,7 @@ ${notes.trim() || "-"}
 
                     <div className="relative">
                       <label className={labelClass}>
-                        Nationality
+                        <HomeText en="Nationality" de="Nationalität" />
                       </label>
 
                       <div className="relative">
@@ -1173,11 +1174,11 @@ ${notes.trim() || "-"}
 
                     <div>
                       <h3 className="font-bold text-[#071a36]">
-                        Hotel information
+                        <HomeText en="Hotel information" de="Hotelinformationen" />
                       </h3>
 
                       <p className="text-xs text-slate-400">
-                        Pickup details help us arrange your transfer
+                        <HomeText en="Pickup details help us arrange your transfer" de="Die Abholdetails helfen uns, Ihren Transfer zu organisieren" />
                       </p>
                     </div>
                   </div>
@@ -1186,7 +1187,7 @@ ${notes.trim() || "-"}
 
                     <div>
                       <label className={labelClass}>
-                        Hotel Name
+                        <HomeText en="Hotel Name" de="Hotelname" />
                       </label>
 
                       <div className="relative">
@@ -1208,7 +1209,7 @@ ${notes.trim() || "-"}
 
                     <div>
                       <label className={labelClass}>
-                        Room Number
+                        <HomeText en="Room Number" de="Zimmernummer" />
                       </label>
 
                       <div className="relative">
@@ -1242,11 +1243,11 @@ ${notes.trim() || "-"}
 
                     <div>
                       <h3 className="font-bold text-[#071a36]">
-                        Choose your date
+                        <HomeText en="Choose your date" de="Wählen Sie Ihr Datum" />
                       </h3>
 
                       <p className="text-xs text-slate-400">
-                        Select a date from tomorrow onward
+                        <HomeText en="Select a date from tomorrow onward" de="Wählen Sie ein Datum ab morgen" />
                       </p>
                     </div>
                   </div>
@@ -1270,7 +1271,7 @@ ${notes.trim() || "-"}
 
                       <div className="ml-4 flex-1">
                         <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">
-                          Tour date
+                          <HomeText en="Tour date" de="Reisedatum" />
                         </div>
 
                         <div
@@ -1319,7 +1320,7 @@ ${notes.trim() || "-"}
                             </p>
 
                             <p className="mt-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-400">
-                              Select a date
+                              <HomeText en="Select a date" de="Datum auswählen" />
                             </p>
                           </div>
 
@@ -1413,7 +1414,7 @@ ${notes.trim() || "-"}
 
                         <div className="mt-5 flex items-center gap-2 border-t border-slate-100 pt-4 text-[11px] font-semibold text-slate-400">
                           <div className="h-2 w-2 rounded-full bg-orange-500" />
-                          Available from tomorrow
+                          <HomeText en="Available from tomorrow" de="Ab morgen verfügbar" />
                         </div>
                       </div>
                     )}
@@ -1439,11 +1440,11 @@ ${notes.trim() || "-"}
 
                       <div>
                         <h3 className="font-bold text-[#071a36]">
-                          Guests
+                          <HomeText en="Guests" de="Gäste" />
                         </h3>
 
                         <p className="text-xs text-slate-400">
-                          Private experience for your group
+                          <HomeText en="Private experience for your group" de="Privates Erlebnis für Ihre Gruppe" />
                         </p>
                       </div>
                     </div>
@@ -1466,7 +1467,7 @@ ${notes.trim() || "-"}
 
                         <div>
                           <p className="text-sm font-bold text-slate-800">
-                            Adults
+                            <HomeText en="Adults" de="Erwachsene" />
                           </p>
 
                           <p className="text-xs text-slate-400">
@@ -1525,7 +1526,7 @@ ${notes.trim() || "-"}
 
                         <div>
                           <p className="text-sm font-bold text-slate-800">
-                            Children
+                            <HomeText en="Children" de="Kinder" />
                           </p>
 
                           <p className="text-xs text-slate-400">
@@ -1584,7 +1585,7 @@ ${notes.trim() || "-"}
 
                         <div>
                           <p className="text-sm font-bold text-slate-800">
-                            Infants
+                            <HomeText en="Infants" de="Kleinkinder" />
                           </p>
 
                           <p className="text-xs text-slate-400">
@@ -1647,7 +1648,7 @@ ${notes.trim() || "-"}
                       <UsersIcon />
 
                       <span className="text-sm font-semibold text-slate-300">
-                        Total guests
+                        <HomeText en="Total guests" de="Gäste insgesamt" />
                       </span>
                     </div>
 
@@ -1666,11 +1667,11 @@ ${notes.trim() || "-"}
                     <div>
                       <div className="mb-4">
                         <h3 className="font-bold text-[#071a36]">
-                          Children ages
+                          <HomeText en="Children ages" de="Alter der Kinder" />
                         </h3>
 
                         <p className="mt-1 text-xs text-slate-400">
-                          Please provide the age of each child.
+                          <HomeText en="Please provide the age of each child." de="Bitte geben Sie das Alter jedes Kindes an." />
                         </p>
                       </div>
 
@@ -1744,11 +1745,11 @@ ${notes.trim() || "-"}
                     <div>
                       <div className="mb-4">
                         <h3 className="font-bold text-[#071a36]">
-                          Infant ages
+                          <HomeText en="Infant ages" de="Alter der Kleinkinder" />
                         </h3>
 
                         <p className="mt-1 text-xs text-slate-400">
-                          Please provide the age of each infant.
+                          <HomeText en="Please provide the age of each infant." de="Bitte geben Sie das Alter jedes Kleinkindes an." />
                         </p>
                       </div>
 
@@ -1827,23 +1828,23 @@ ${notes.trim() || "-"}
 
                     <div>
                       <h3 className="font-bold text-[#071a36]">
-                        Additional information
+                        <HomeText en="Additional information" de="Zusätzliche Informationen" />
                       </h3>
 
                       <p className="text-xs text-slate-400">
-                        Anything else we should know?
+                        <HomeText en="Anything else we should know?" de="Gibt es noch etwas, das wir wissen sollten?" />
                       </p>
                     </div>
 
                   </div>
 
                   <label className={labelClass}>
-                    Special Requests / Notes
+                    <HomeText en="Special Requests / Notes" de="Besondere Wünsche / Anmerkungen" />
                   </label>
 
                   <textarea
                     rows={5}
-                    placeholder="Tell us about any special requests, preferences or important details..."
+                    placeholder="Teilen Sie uns besondere Wünsche, Vorlieben oder wichtige Details mit..."
                     value={notes}
                     onChange={(e) =>
                       setNotes(e.target.value)
@@ -1857,7 +1858,7 @@ ${notes.trim() || "-"}
                     <div className="mt-0.5 h-2 w-2 shrink-0 rounded-full bg-red-500" />
 
                     <p className="text-sm font-semibold leading-6 text-red-700">
-                      Please complete the required fields
+                      <HomeText en="Please complete the required fields" de="Bitte füllen Sie die erforderlichen Felder aus" />
                       highlighted above before sending your
                       booking request.
                     </p>
@@ -1870,7 +1871,7 @@ ${notes.trim() || "-"}
 
                     <div>
                       <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-orange-600">
-                        Private tour
+                        <HomeText en="Private tour" de="Private Tour" />
                       </p>
 
                       <p className="mt-1 text-sm font-semibold text-slate-600">
@@ -1884,7 +1885,7 @@ ${notes.trim() || "-"}
                       </p>
 
                       <p className="text-[10px] font-semibold text-slate-400">
-                        total experience
+                        <HomeText en="total experience" de="Gesamtes Erlebnis" />
                       </p>
                     </div>
 
@@ -1899,7 +1900,7 @@ ${notes.trim() || "-"}
                 >
 
                   <span>
-                    Send Booking Request
+                    <HomeText en="Send Booking Request" de="Buchungsanfrage senden" />
                   </span>
 
                   <span className="text-slate-400 transition-transform duration-300 group-hover:translate-x-1">
@@ -1911,8 +1912,8 @@ ${notes.trim() || "-"}
                   <LockIcon />
 
                   <span>
-                    Your booking request is sent securely via
-                    WhatsApp
+                    <HomeText en="Your booking request is sent securely via" de="Ihre Buchungsanfrage wird sicher übermittelt via" />
+                    <HomeText en="WhatsApp" de="WhatsApp" />
                   </span>
                 </div>
 
@@ -1931,16 +1932,16 @@ ${notes.trim() || "-"}
                   <div className="relative">
 
                     <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-orange-300">
-                      Your reservation
+                      <HomeText en="Your reservation" de="Ihre Reservierung" />
                     </p>
 
                     <h3 className="mt-2 text-xl font-bold">
-                      Private Tour Summary
+                      <HomeText en="Private Tour Summary" de="Zusammenfassung der privaten Tour" />
                     </h3>
 
                     <p className="mt-2 text-xs leading-5 text-slate-300">
-                      Everything is private and arranged
-                      exclusively for your group.
+                      <HomeText en="Everything is private and arranged" de="Alles wird privat organisiert" />
+                      <HomeText en="exclusively for your group." de="exklusiv für Ihre Gruppe." />
                     </p>
 
                   </div>
@@ -1951,7 +1952,7 @@ ${notes.trim() || "-"}
                   <div className="rounded-2xl bg-slate-50 p-4">
 
                     <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">
-                      Tour
+                      <HomeText en="Tour" de="Tour" />
                     </p>
 
                     <p className="mt-2 text-sm font-bold leading-6 text-[#071a36]">
@@ -1970,11 +1971,11 @@ ${notes.trim() || "-"}
 
                       <div>
                         <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-orange-600">
-                          Total price
+                          <HomeText en="Total price" de="Gesamtpreis" />
                         </p>
 
                         <p className="mt-1 text-xs font-semibold text-slate-500">
-                          Private experience
+                          <HomeText en="Private experience" de="Privates Erlebnis" />
                         </p>
                       </div>
 
@@ -1987,8 +1988,8 @@ ${notes.trim() || "-"}
                     </div>
 
                     <div className="border-t border-orange-100 px-5 py-3 text-[10px] font-semibold text-orange-700">
-                      Price updates automatically with guest
-                      count
+                      <HomeText en="Price updates automatically with guest" de="Der Preis wird automatisch anhand der Gästeanzahl" />
+                      <HomeText en="count" de="aktualisiert" />
                     </div>
 
                   </div>
@@ -2003,7 +2004,7 @@ ${notes.trim() || "-"}
                         </div>
 
                         <span className="text-xs font-bold text-slate-500">
-                          Date
+                          <HomeText en="Date" de="Datum" />
                         </span>
                       </div>
 
@@ -2023,7 +2024,7 @@ ${notes.trim() || "-"}
                         </div>
 
                         <span className="text-xs font-bold text-slate-500">
-                          Guests
+                          <HomeText en="Guests" de="Gäste" />
                         </span>
                       </div>
 
@@ -2041,7 +2042,7 @@ ${notes.trim() || "-"}
                         </div>
 
                         <span className="text-xs font-bold text-slate-500">
-                          Pickup
+                          <HomeText en="Pickup" de="Abholung" />
                         </span>
                       </div>
 
@@ -2058,11 +2059,11 @@ ${notes.trim() || "-"}
 
                       <div className="mb-4 flex items-center justify-between">
                         <h4 className="text-sm font-bold text-[#071a36]">
-                          Included in your experience
+                          <HomeText en="Included in your experience" de="In Ihrem Erlebnis enthalten" />
                         </h4>
 
                         <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                          Included
+                          <HomeText en="Included" de="Inklusive" />
                         </span>
                       </div>
 
@@ -2097,13 +2098,13 @@ ${notes.trim() || "-"}
 
                       <div>
                         <p className="text-xs font-bold text-[#071a36]">
-                          Simple & direct booking
+                          <HomeText en="Simple & direct booking" de="Einfache und direkte Buchung" />
                         </p>
 
                         <p className="mt-1 text-[11px] leading-5 text-slate-400">
-                          Send your request and our team will
-                          contact you directly to confirm the
-                          details.
+                          <HomeText en="Send your request and our team will" de="Senden Sie Ihre Anfrage; unser Team wird sich" />
+                          <HomeText en="contact you directly to confirm the" de="direkt mit Ihnen in Verbindung setzen, um die" />
+                          <HomeText en="details." de="Details zu bestätigen." />
                         </p>
                       </div>
 
