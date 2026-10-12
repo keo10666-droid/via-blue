@@ -77,7 +77,7 @@ export default function AboutPage() {
                 href="/transfers"
                 className="rounded-xl border border-white/20 bg-white/[0.08] px-7 py-4 text-center font-bold text-white shadow-xl shadow-black/10 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-white/40 hover:bg-white hover:text-blue-950"
               >
-                Private Transfers
+                <HomeText en="Private Transfers" de="Private Transfers" />
               </Link>
 
             </div>
@@ -108,7 +108,7 @@ export default function AboutPage() {
 
 
       {/* =========================================================
-          INTRO / WHO WE ARE
+          <HomeText en="INTRO / WHO WE ARE" de="EINLEITUNG / WER WIR SIND" />
       ========================================================= */}
       <section className="relative overflow-hidden px-6 py-24 md:py-28">
 
@@ -204,15 +204,15 @@ export default function AboutPage() {
             <div className="mt-9 flex flex-wrap gap-3">
 
               <div className="rounded-full border border-blue-100 bg-gradient-to-r from-blue-50 to-cyan-50 px-5 py-2.5 text-sm font-semibold text-blue-900 shadow-sm">
-                Local Expertise
+                <HomeText en="Local Expertise" de="Lokale Expertise" />
               </div>
 
               <div className="rounded-full border border-orange-100 bg-gradient-to-r from-orange-50 to-amber-50 px-5 py-2.5 text-sm font-semibold text-orange-700 shadow-sm">
-                Personal Service
+                <HomeText en="Personal Service" de="Persönlicher Service" />
               </div>
 
               <div className="rounded-full border border-gray-200 bg-gray-50 px-5 py-2.5 text-sm font-semibold text-gray-700 shadow-sm">
-                Reliable Experiences
+                <HomeText en="Reliable Experiences" de="Verlässliche Erlebnisse" />
               </div>
 
             </div>
@@ -225,7 +225,7 @@ export default function AboutPage() {
 
 
       {/* =========================================================
-          EXPERIENCE STATEMENT
+          <HomeText en="EXPERIENCE STATEMENT" de="UNSER REISEVERSPRECHEN" />
       ========================================================= */}
       <section className="relative overflow-hidden bg-[#03112a] px-6 py-28 text-white">
 
@@ -242,9 +242,9 @@ export default function AboutPage() {
           </p>
 
           <h2 className="mt-5 text-4xl font-bold leading-[1.05] tracking-[-0.03em] md:text-6xl">
-            Travel should feel
+            <HomeText en="Travel should feel" de="Reisen sollte sich" />
             <span className="block bg-gradient-to-r from-orange-300 to-amber-400 bg-clip-text text-transparent">
-              effortless
+              <HomeText en="effortless" de="mühelos anfühlen" />
             </span>
           </h2>
 
@@ -260,7 +260,7 @@ export default function AboutPage() {
 
 
       {/* =========================================================
-          WHAT WE OFFER
+          <HomeText en="WHAT WE OFFER" de="UNSER ANGEBOT" />
       ========================================================= */}
       <section className="relative overflow-hidden bg-slate-50 px-6 py-24 md:py-28">
 
@@ -308,7 +308,7 @@ export default function AboutPage() {
               </div>
 
               <h3 className="mt-6 text-xl font-bold tracking-tight text-blue-950">
-                Private Transfers
+                <HomeText en="Private Transfers" de="Private Transfers" />
               </h3>
 
               <p className="mt-3 leading-7 text-gray-600">
@@ -336,7 +336,7 @@ export default function AboutPage() {
               </div>
 
               <h3 className="mt-6 text-xl font-bold tracking-tight text-blue-950">
-                Sea Adventures
+                <HomeText en="Sea Adventures" de="Meeresabenteuer" />
               </h3>
 
               <p className="mt-3 leading-7 text-gray-600">
@@ -364,7 +364,7 @@ export default function AboutPage() {
               </div>
 
               <h3 className="mt-6 text-xl font-bold tracking-tight text-blue-950">
-                Desert Adventures
+                <HomeText en="Desert Adventures" de="Wüstenabenteuer" />
               </h3>
 
               <p className="mt-3 leading-7 text-gray-600">
@@ -392,7 +392,7 @@ export default function AboutPage() {
               </div>
 
               <h3 className="mt-6 text-xl font-bold tracking-tight text-blue-950">
-                Premium Experiences
+                <HomeText en="Premium Experiences" de="Premium-Erlebnisse" />
               </h3>
 
               <p className="mt-3 leading-7 text-gray-600">
@@ -413,7 +413,7 @@ export default function AboutPage() {
               </div>
 
               <h3 className="mt-6 text-xl font-bold tracking-tight text-blue-950">
-                Local Support
+                <HomeText en="Local Support" de="Unterstützung vor Ort" />
               </h3>
 
               <p className="mt-3 leading-7 text-gray-600">
@@ -434,7 +434,7 @@ export default function AboutPage() {
               </div>
 
               <h3 className="mt-6 text-xl font-bold tracking-tight text-blue-950">
-                Easy Booking
+                <HomeText en="Easy Booking" de="Einfache Buchung" />
               </h3>
 
               <p className="mt-3 leading-7 text-gray-600">
@@ -451,7 +451,7 @@ export default function AboutPage() {
 
 
       {/* =========================================================
-          WHY VIA BLUE
+          <HomeText en="WHY VIA BLUE" de="WARUM VIA BLUE" />
       ========================================================= */}
       <section className="relative overflow-hidden px-6 py-24 md:py-28">
 
@@ -473,9 +473,9 @@ export default function AboutPage() {
             </div>
 
             <h2 className="mt-5 text-4xl font-bold leading-[1.08] tracking-[-0.025em] text-blue-950 md:text-5xl">
-              A better way to
+              <HomeText en="A better way to" de="Eine bessere Art," />
               <span className="block bg-gradient-to-r from-blue-700 to-cyan-700 bg-clip-text text-transparent">
-                experience Hurghada
+                <HomeText en="experience Hurghada" de="Hurghada zu erleben" />
               </span>
             </h2>
 
@@ -493,7 +493,7 @@ export default function AboutPage() {
 
                 <div>
                   <h3 className="font-bold text-blue-950">
-                    Clear & Simple
+                    <HomeText en="Clear & Simple" de="Klar und unkompliziert" />
                   </h3>
 
                   <p className="mt-1 text-sm leading-6 text-gray-600">
@@ -512,7 +512,7 @@ export default function AboutPage() {
 
                 <div>
                   <h3 className="font-bold text-blue-950">
-                    Local Expertise
+                    <HomeText en="Local Expertise" de="Lokale Expertise" />
                   </h3>
 
                   <p className="mt-1 text-sm leading-6 text-gray-600">
@@ -531,7 +531,7 @@ export default function AboutPage() {
 
                 <div>
                   <h3 className="font-bold text-blue-950">
-                    Personal Service
+                    <HomeText en="Personal Service" de="Persönlicher Service" />
                   </h3>
 
                   <p className="mt-1 text-sm leading-6 text-gray-600">
@@ -563,17 +563,17 @@ export default function AboutPage() {
               <div className="absolute inset-0 bg-gradient-to-t from-blue-950/80 via-blue-950/10 to-transparent" />
 
               <div className="absolute left-6 top-6 rounded-full border border-white/20 bg-black/20 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-white backdrop-blur-md">
-                Red Sea Experience
+                <HomeText en="Red Sea Experience" de="Erlebnisse am Roten Meer" />
               </div>
 
               <div className="absolute bottom-7 left-7 right-7">
 
                 <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-orange-400">
-                  Explore The Red Sea
+                  <HomeText en="Explore The Red Sea" de="Entdecken Sie das Rote Meer" />
                 </p>
 
                 <p className="mt-2 text-2xl font-bold leading-tight text-white md:text-3xl">
-                  Your next unforgettable experience is waiting
+                  <HomeText en="Your next unforgettable experience is waiting" de="Ihr nächstes unvergessliches Erlebnis wartet auf Sie" />
                 </p>
 
                 <div className="mt-4 h-px w-14 bg-orange-400" />
@@ -590,7 +590,7 @@ export default function AboutPage() {
 
 
       {/* =========================================================
-          TRUST / VALUES
+          <HomeText en="TRUST / VALUES" de="VERTRAUEN / WERTE" />
       ========================================================= */}
       <section className="relative overflow-hidden border-y border-gray-100 bg-slate-50 px-6 py-16">
 
@@ -607,11 +607,11 @@ export default function AboutPage() {
             </p>
 
             <p className="mt-2 font-bold text-blue-950">
-              Local Support
+              <HomeText en="Local Support" de="Unterstützung vor Ort" />
             </p>
 
             <p className="mt-1 text-sm leading-6 text-gray-500">
-              Assistance when you need it
+              <HomeText en="Assistance when you need it" de="Hilfe, wenn Sie sie brauchen" />
             </p>
           </div>
 
@@ -622,11 +622,11 @@ export default function AboutPage() {
             </p>
 
             <p className="mt-2 font-bold text-blue-950">
-              Local Knowledge
+              <HomeText en="Local Knowledge" de="Ortskenntnis" />
             </p>
 
             <p className="mt-1 text-sm leading-6 text-gray-500">
-              Experience rooted in Hurghada
+              <HomeText en="Experience rooted in Hurghada" de="Verwurzelt in Hurghada" />
             </p>
           </div>
 
@@ -641,7 +641,7 @@ export default function AboutPage() {
             </p>
 
             <p className="mt-1 text-sm leading-6 text-gray-500">
-              Simple and straightforward
+              <HomeText en="Simple and straightforward" de="Einfach und unkompliziert" />
             </p>
           </div>
 
