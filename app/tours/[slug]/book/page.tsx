@@ -950,7 +950,7 @@ ${notes.trim() || "-"}
                     )}
                   />
 
-                  <p className="mt-1.5 text-xs text-slate-500">Use a Gmail address ending in @gmail.com</p>
+                  <p className="mt-1.5 text-xs text-slate-500">{isGerman ? "Verwenden Sie eine Gmail-Adresse mit der Endung @gmail.com" : "Use a Gmail address ending in @gmail.com"}</p>
 
                   {(emailTouched || submitAttempted) &&
                     !isEmailValid &&
@@ -1165,12 +1165,12 @@ ${notes.trim() || "-"}
                     onChange={(e) => setHotelArea(e.target.value)}
                     className={inputClass(false)}
                   >
-                    <option value="hurghada">Hurghada — No extra charge</option>
-                    <option value="makadi-bay">Makadi Bay — +€5 per adult/child</option>
-                    <option value="sahl-hasheesh">Sahl Hasheesh — +€5 per adult/child</option>
-                    <option value="el-gouna">El Gouna — +€10 per adult/child</option>
-                    <option value="safaga">Safaga — +€10 per adult/child</option>
-                    <option value="soma-bay">Soma Bay — +€10 per adult/child</option>
+                    <option value="hurghada">{isGerman ? "Hurghada — Kein Aufpreis" : "Hurghada — No extra charge"}</option>
+                    <option value="makadi-bay">{isGerman ? "Makadi Bay — +5 € pro Erwachsenem/Kind" : "Makadi Bay — +€5 per adult/child"}</option>
+                    <option value="sahl-hasheesh">{isGerman ? "Sahl Hasheesh — +5 € pro Erwachsenem/Kind" : "Sahl Hasheesh — +€5 per adult/child"}</option>
+                    <option value="el-gouna">{isGerman ? "El Gouna — +10 € pro Erwachsenem/Kind" : "El Gouna — +€10 per adult/child"}</option>
+                    <option value="safaga">{isGerman ? "Safaga — +10 € pro Erwachsenem/Kind" : "Safaga — +€10 per adult/child"}</option>
+                    <option value="soma-bay">{isGerman ? "Soma Bay — +10 € pro Erwachsenem/Kind" : "Soma Bay — +€10 per adult/child"}</option>
                   </select>
 
                 </div>
