@@ -258,7 +258,28 @@ function ClockIcon({ className = "h-4 w-4" }: { className?: string }) {
 
 export default function AITripPlannerPage() {
   const [step, setStep] = useState(1);
+  const [language, setLanguage] = useState<"en" | "de">("en");
   const processingSectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const syncLanguage = (event?: Event) => {
+      const requestedLanguage = (event as CustomEvent<"en" | "de"> | undefined)?.detail;
+      if (requestedLanguage === "en" || requestedLanguage === "de") {
+        setLanguage(requestedLanguage);
+        return;
+      }
+
+      try {
+        setLanguage(window.localStorage.getItem("via-blue-language") === "de" ? "de" : "en");
+      } catch {
+        setLanguage("en");
+      }
+    };
+
+    syncLanguage();
+    window.addEventListener("via-blue-language-change", syncLanguage);
+    return () => window.removeEventListener("via-blue-language-change", syncLanguage);
+  }, []);
 
   const [adults, setAdults] = useState(2);
   const [children, setChildren] = useState(0);
@@ -508,7 +529,7 @@ export default function AITripPlannerPage() {
               <span className="h-px w-12 bg-orange-400" />
 
               <p className="text-xs font-bold uppercase tracking-[0.35em] text-orange-400 sm:text-sm">
-                <HomeText en="Via Blue Smart Trip Planner" de="Via Blue Smart Trip Planner" />
+                <HomeText en="Via Blue Smart Trip Planner" de="Via Blue Smart-Reiseplaner" />
               </p>
             </div>
 
@@ -978,7 +999,7 @@ export default function AITripPlannerPage() {
                                         <select
                                           key={`${pkg.id}-${tour.slug}`}
                                           defaultValue=""
-                                          aria-label={`Ersetzen: ${tour.name}`}
+                                          aria-label={language === "de" ? `Erlebnis ersetzen: ${tour.name}` : `Replace experience: ${tour.name}`}
                                           onChange={(event) => {
                                             if (event.target.value) {
                                               replacePackageTour(
@@ -1379,7 +1400,7 @@ export default function AITripPlannerPage() {
                         min="0"
                         value={budget}
                         onChange={(e) => setBudget(e.target.value)}
-                        placeholder="Betrag eingeben"
+                        placeholder={language === "de" ? "Betrag eingeben" : "Enter amount"}
                         className="h-16 w-full rounded-2xl border border-gray-200 bg-white pl-12 pr-5 text-xl font-bold text-blue-950 outline-none transition placeholder:text-base placeholder:font-normal placeholder:text-gray-300 focus:border-blue-950 focus:ring-4 focus:ring-blue-950/5"
                       />
                     </div>
