@@ -2043,7 +2043,7 @@ ${notes.trim() || "-"}
 
                     <div className="flex items-center justify-between">
                       <span className="text-slate-500">
-                        Vehicle
+                        <HomeText en="Vehicle" de="Fahrzeug" />
                       </span>
                       <span className="font-semibold text-slate-800">
                         {selectedVehicle === "bus" ? <HomeText en="Bus" de="Bus" /> : <HomeText en="Van" de="Kleinbus" />}
@@ -2052,7 +2052,7 @@ ${notes.trim() || "-"}
 
                     <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                       <span className="text-slate-500">
-                        Adults × €{selectedCairoVehicleOption.adultPrice}
+                        <HomeText en={`Adults × €${selectedCairoVehicleOption.adultPrice}`} de={`Erwachsene × €${selectedCairoVehicleOption.adultPrice}`} />
                       </span>
                       <span className="font-semibold text-slate-800">
                         €{Number(adults || 0) * selectedCairoVehicleOption.adultPrice}
@@ -2061,7 +2061,7 @@ ${notes.trim() || "-"}
 
                     <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                       <span className="text-slate-500">
-                        Children × €{selectedCairoVehicleOption.childPrice}
+                        <HomeText en={`Children × €${selectedCairoVehicleOption.childPrice}`} de={`Kinder × €${selectedCairoVehicleOption.childPrice}`} />
                       </span>
                       <span className="font-semibold text-slate-800">
                         €{Number(children || 0) * selectedCairoVehicleOption.childPrice}
@@ -2070,7 +2070,7 @@ ${notes.trim() || "-"}
 
                     <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                       <span className="text-slate-500">
-                        Infants × €{selectedCairoVehicleOption.infantPrice}
+                        <HomeText en={`Infants × €${selectedCairoVehicleOption.infantPrice}`} de={`Kleinkinder × €${selectedCairoVehicleOption.infantPrice}`} />
                       </span>
                       <span className="font-semibold text-slate-800">
                         €{Number(infants || 0) * selectedCairoVehicleOption.infantPrice}
