@@ -1015,7 +1015,7 @@ function ToursPageContent() {
                           <span className="text-2xl font-extrabold text-orange-500">
                             {tour.price > 0
                               ? `€${tour.price}`
-                              : "Auf Anfrage"}
+                              : <HomeText en="On request" de="Auf Anfrage" />}
                           </span>
 
                           {tour.price > 0 && (
