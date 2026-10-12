@@ -312,7 +312,7 @@ export default function BookingForm({
         );
 
         alert(
-          `Unable to verify your account\n\n${userError.message}`
+          `${localStorage.getItem("via-blue-language") === "de" ? "Dein Konto konnte nicht überprüft werden" : "Unable to verify your account"}\n\n${userError.message}`
         );
 
         return;
@@ -345,9 +345,9 @@ export default function BookingForm({
           );
 
           alert(
-            `Unable to start your booking session\n\n${
+            `${localStorage.getItem("via-blue-language") === "de" ? "Deine Buchungssitzung konnte nicht gestartet werden" : "Unable to start your booking session"}\n\n${
               anonError?.message ||
-              "Unknown authentication error"
+              (localStorage.getItem("via-blue-language") === "de" ? "Unbekannter Authentifizierungsfehler" : "Unknown authentication error")
             }`
           );
 
@@ -456,7 +456,7 @@ export default function BookingForm({
         );
 
         alert(
-          `BOOKING WAS NOT SAVED\n\n${bookingError.message}\n\nCode: ${
+          `${localStorage.getItem("via-blue-language") === "de" ? "BUCHUNG WURDE NICHT GESPEICHERT" : "BOOKING WAS NOT SAVED"}\n\n${bookingError.message}\n\nCode: ${
             bookingError.code || "Unknown"
           }`
         );
