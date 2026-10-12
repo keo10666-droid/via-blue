@@ -13,6 +13,16 @@ import {
   tourCategoryMap,
 } from "@/data/tours";
 
+const germanTourCategories: Record<string, string> = {
+  "islands-boat-trips": "Inseln & Bootsausflüge",
+  "snorkeling-diving": "Schnorcheln & Tauchen",
+  "sea-water-activities": "Wasseraktivitäten",
+  "dolphin-experiences": "Delfin-Erlebnisse",
+  "desert-adventures": "Wüstenabenteuer",
+  "egypt-tours-excursions": "Ägypten-Touren & Ausflüge",
+  "family-attractions": "Familienattraktionen",
+};
+
 /* =========================================================
    ICONS
 ========================================================= */
@@ -697,7 +707,7 @@ function ToursPageContent() {
                   </span>
 
                   <span className="truncate">
-                    {tourCategories[category]}
+                    <HomeText en={tourCategories[category]} de={germanTourCategories[category] ?? tourCategories[category]} />
                   </span>
 
                 </button>
@@ -735,7 +745,7 @@ function ToursPageContent() {
             </div>
 
             <h2 className="mt-4 text-3xl font-bold tracking-tight text-blue-950 sm:text-4xl">
-              {tourCategories[activeCategory]}
+              <HomeText en={tourCategories[activeCategory]} de={germanTourCategories[activeCategory] ?? tourCategories[activeCategory]} />
             </h2>
 
             <p className="mt-3 max-w-2xl text-base leading-7 text-gray-600">
@@ -866,7 +876,7 @@ function ToursPageContent() {
                       <p className="text-base font-extrabold">
                         {tour.price > 0
                           ? `€${tour.price}`
-                          : "Auf Anfrage"}
+                          : <HomeText en="On request" de="Auf Anfrage" />}
                       </p>
 
                     </div>
