@@ -30,12 +30,12 @@ export default function Navbar() {
     const nextLanguage = language === "en" ? "de" : "en";
     setLanguage(nextLanguage);
     document.documentElement.lang = nextLanguage;
-    window.dispatchEvent(new CustomEvent("via-blue-language-change", { detail: nextLanguage }));
     try {
       window.localStorage.setItem("via-blue-language", nextLanguage);
     } catch {
       // The language switch still works for the current page if storage is unavailable.
     }
+    window.dispatchEvent(new CustomEvent("via-blue-language-change", { detail: nextLanguage }));
   }
 
   const labels = language === "de"
