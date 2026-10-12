@@ -912,7 +912,7 @@ function CustomTimePicker({
 
             <div>
               <p className="text-left text-[9px] font-bold uppercase tracking-[0.12em] text-orange-500">
-                Selected Time
+                <HomeText en="Selected Time" de="Ausgewählte Uhrzeit" />
               </p>
 
               <p className="mt-0.5 text-xl font-bold text-blue-950">
@@ -928,7 +928,7 @@ function CustomTimePicker({
             onClick={handleApply}
             className="mt-4 w-full rounded-2xl bg-blue-950 px-4 py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-950/15 transition-all hover:-translate-y-0.5 hover:bg-orange-500 hover:shadow-xl hover:shadow-orange-500/20"
           >
-            Set Pickup Time
+            <HomeText en="Set Pickup Time" de="Abholzeit festlegen" />
           </button>
         </div>
       )}
@@ -1035,7 +1035,7 @@ export default function TransferBookingPage() {
           </div>
 
           <h1 className="mt-4 text-2xl font-bold text-blue-950">
-            Transfer Not Found
+            <HomeText en="Transfer Not Found" de="Transfer nicht gefunden" />
           </h1>
 
           <p className="mt-2 text-sm text-slate-500">
@@ -1297,7 +1297,7 @@ ${notes.trim() || "-"}
             <span className="h-px w-12 bg-orange-400" />
 
             <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-orange-400">
-              Secure Booking
+              <HomeText en="Secure Booking" de="Sichere Buchung" />
             </p>
           </div>
 
@@ -1315,21 +1315,21 @@ ${notes.trim() || "-"}
               <span className="flex h-5 w-5 items-center justify-center rounded-full bg-green-400/15 text-green-400">
                 <CheckIcon />
               </span>
-              Instant WhatsApp Confirmation
+              <HomeText en="Instant WhatsApp Confirmation" de="Sofortige WhatsApp-Bestätigung" />
             </div>
 
             <div className="flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.08] px-4 py-2.5 text-xs font-semibold shadow-lg shadow-black/5 backdrop-blur-xl">
               <span className="flex h-5 w-5 items-center justify-center rounded-full bg-green-400/15 text-green-400">
                 <CheckIcon />
               </span>
-              Fixed Price
+              <HomeText en="Fixed Price" de="Festpreis" />
             </div>
 
             <div className="flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.08] px-4 py-2.5 text-xs font-semibold shadow-lg shadow-black/5 backdrop-blur-xl">
               <span className="flex h-5 w-5 items-center justify-center rounded-full bg-green-400/15 text-green-400">
                 <CheckIcon />
               </span>
-              Professional Driver
+              <HomeText en="Professional Driver" de="Professioneller Fahrer" />
             </div>
           </div>
         </div>
@@ -1344,18 +1344,18 @@ ${notes.trim() || "-"}
               <div className="mb-6">
                 <div className="flex items-center gap-3">
                   <span className="flex h-8 items-center rounded-full bg-orange-50 px-3 text-[10px] font-bold uppercase tracking-[0.18em] text-orange-600">
-                    Step 1
+                    <HomeText en="Step 1" de="Schritt 1" />
                   </span>
 
                   <span className="h-px flex-1 bg-slate-100" />
                 </div>
 
                 <h2 className="mt-4 text-xl font-bold text-blue-950 md:text-2xl">
-                  Choose Transfer Type
+                  <HomeText en="Choose Transfer Type" de="Transferart auswählen" />
                 </h2>
 
                 <p className="mt-1.5 text-sm text-slate-500">
-                  Select the type of transfer you need
+                  <HomeText en="Select the type of transfer you need" de="Wählen Sie die gewünschte Transferart" />
                 </p>
               </div>
 
@@ -1495,14 +1495,14 @@ ${notes.trim() || "-"}
                 <div>
                   <div className="flex items-center gap-3">
                     <span className="flex h-8 items-center rounded-full bg-orange-50 px-3 text-[10px] font-bold uppercase tracking-[0.18em] text-orange-600">
-                      Step 2
+                      <HomeText en="Step 2" de="Schritt 2" />
                     </span>
 
                     <span className="hidden h-px w-10 bg-slate-100 sm:block" />
                   </div>
 
                   <h2 className="mt-4 text-xl font-bold text-blue-950 md:text-2xl">
-                    Select Your Vehicle
+                    <HomeText en="Select Your Vehicle" de="Fahrzeug auswählen" />
                   </h2>
                 </div>
 
@@ -1539,7 +1539,7 @@ ${notes.trim() || "-"}
                         <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-blue-950/80 to-transparent" />
 
                         <div className="absolute left-3 top-3 rounded-full border border-white/20 bg-blue-950/70 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.15em] text-white backdrop-blur-md">
-                          Private Transfer
+                          <HomeText en="Private Transfer" de="Privater Transfer" />
                         </div>
 
                         {selectedVehicle ===
@@ -1623,7 +1623,7 @@ ${notes.trim() || "-"}
               <div className="mb-6">
                 <div className="flex items-center gap-3">
                   <span className="flex h-8 items-center rounded-full bg-orange-50 px-3 text-[10px] font-bold uppercase tracking-[0.18em] text-orange-600">
-                    Step 3
+                    <HomeText en="Step 3" de="Schritt 3" />
                   </span>
 
                   <span className="h-px flex-1 bg-slate-100" />
@@ -1634,7 +1634,7 @@ ${notes.trim() || "-"}
                 </h2>
 
                 <p className="mt-1.5 text-sm text-slate-500">
-                  Tell us who will be travelling
+                  <HomeText en="Tell us who will be travelling" de="Teilen Sie uns mit, wer mitreist" />
                 </p>
               </div>
 
@@ -1821,7 +1821,7 @@ ${notes.trim() || "-"}
               <div className="mb-6">
                 <div className="flex items-center gap-3">
                   <span className="flex h-8 items-center rounded-full bg-orange-50 px-3 text-[10px] font-bold uppercase tracking-[0.18em] text-orange-600">
-                    Step 4
+                    <HomeText en="Step 4" de="Schritt 4" />
                   </span>
 
                   <span className="h-px flex-1 bg-slate-100" />
@@ -1945,7 +1945,7 @@ ${notes.trim() || "-"}
                   "hotel-to-hotel" && (
                   <div>
                     <label className={labelClass}>
-                      Flight Number
+                      <HomeText en="Flight Number" de="Flugnummer" />
                     </label>
 
                     <input
@@ -2014,21 +2014,21 @@ ${notes.trim() || "-"}
               <div className="mb-6">
                 <div className="flex items-center gap-3">
                   <span className="flex h-8 items-center rounded-full bg-orange-50 px-3 text-[10px] font-bold uppercase tracking-[0.18em] text-orange-600">
-                    Step 5
+                    <HomeText en="Step 5" de="Schritt 5" />
                   </span>
 
                   <span className="h-px flex-1 bg-slate-100" />
                 </div>
 
                 <h2 className="mt-4 text-xl font-bold text-blue-950 md:text-2xl">
-                  Transfer Details
+                  <HomeText en="Transfer Details" de="Transferdetails" />
                 </h2>
               </div>
 
               <div className="grid gap-4 md:grid-cols-2">
                 <div>
                   <label className={labelClass}>
-                    Passengers
+                    <HomeText en="Passengers" de="Fahrgäste" />
                   </label>
 
                   <select
@@ -2067,7 +2067,7 @@ ${notes.trim() || "-"}
 
                 <div>
                   <label className={labelClass}>
-                    Luggage
+                    <HomeText en="Luggage" de="Gepäck" />
                   </label>
 
                   <select
@@ -2111,7 +2111,7 @@ ${notes.trim() || "-"}
               <div className="mb-6">
                 <div className="flex items-center gap-3">
                   <span className="flex h-8 items-center rounded-full bg-slate-100 px-3 text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">
-                    Optional
+                    <HomeText en="Optional" de="Optional" />
                   </span>
 
                   <span className="h-px flex-1 bg-slate-100" />
@@ -2151,7 +2151,7 @@ ${notes.trim() || "-"}
             >
               <span className="relative z-10 flex items-center justify-center gap-3">
                 <ShieldIcon />
-                Book Transfer
+                <HomeText en="Book Transfer" de="Transfer buchen" />
               </span>
             </button>
 
@@ -2181,7 +2181,7 @@ ${notes.trim() || "-"}
                   </div>
 
                   <h2 className="mt-2 text-xl font-bold">
-                    Your Transfer
+                    <HomeText en="Your Transfer" de="Ihr Transfer" />
                   </h2>
                 </div>
               </div>
@@ -2190,7 +2190,7 @@ ${notes.trim() || "-"}
                 {/* TYPE */}
                 <div className="rounded-2xl border border-orange-100 bg-gradient-to-br from-orange-50 to-white p-4">
                   <p className="text-[9px] font-bold uppercase tracking-[0.16em] text-orange-600">
-                    Transfer Type
+                    <HomeText en="Transfer Type" de="Transferart" />
                   </p>
 
                   <p className="mt-1.5 text-sm font-bold text-blue-950">
@@ -2215,7 +2215,7 @@ ${notes.trim() || "-"}
 
                     <div className="min-w-0">
                       <p className="text-[9px] font-bold uppercase tracking-[0.14em] text-slate-400">
-                        From
+                        <HomeText en="From" de="Von" />
                       </p>
 
                       <p className="mt-1 text-sm font-bold leading-5 text-blue-950">
@@ -2260,7 +2260,7 @@ ${notes.trim() || "-"}
                     <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between">
                       <div>
                         <p className="text-[9px] font-bold uppercase tracking-[0.14em] text-white/70">
-                          Selected Vehicle
+                          <HomeText en="Selected Vehicle" de="Ausgewähltes Fahrzeug" />
                         </p>
 
                         <p className="mt-0.5 text-sm font-bold text-white">
@@ -2292,7 +2292,7 @@ ${notes.trim() || "-"}
                 <div className="mt-4 grid grid-cols-2 gap-3">
                   <div className="rounded-2xl border border-blue-100 bg-blue-50 p-3.5">
                     <p className="text-[9px] font-bold uppercase tracking-[0.12em] text-slate-400">
-                      Guests
+                      <HomeText en="Guests" de="Gäste" />
                     </p>
 
                     <p className="mt-1.5 flex items-center gap-1.5 text-sm font-bold text-blue-950">
@@ -2303,7 +2303,7 @@ ${notes.trim() || "-"}
 
                   <div className="rounded-2xl border border-orange-100 bg-orange-50 p-3.5">
                     <p className="text-[9px] font-bold uppercase tracking-[0.12em] text-slate-400">
-                      Luggage
+                      <HomeText en="Luggage" de="Gepäck" />
                     </p>
 
                     <p className="mt-1.5 flex items-center gap-1.5 text-sm font-bold text-orange-700">
@@ -2319,7 +2319,7 @@ ${notes.trim() || "-"}
                     <div className="flex items-center justify-between gap-3">
                       <div>
                         <p className="text-[9px] font-bold uppercase tracking-[0.12em] text-slate-400">
-                          Date
+                          <HomeText en="Date" de="Datum" />
                         </p>
 
                         <p className="mt-1 text-sm font-bold text-blue-950">
@@ -2333,7 +2333,7 @@ ${notes.trim() || "-"}
 
                       <div className="text-right">
                         <p className="text-[9px] font-bold uppercase tracking-[0.12em] text-slate-400">
-                          Time
+                          <HomeText en="Time" de="Uhrzeit" />
                         </p>
 
                         <p className="mt-1 text-sm font-bold text-blue-950">
@@ -2353,7 +2353,7 @@ ${notes.trim() || "-"}
                   <div className="flex items-end justify-between gap-4">
                     <div>
                       <p className="text-xs font-bold text-slate-500">
-                        Total Transfer Price
+                        <HomeText en="Total Transfer Price" de="Gesamtpreis des Transfers" />
                       </p>
 
                       <p className="mt-1 text-[10px] text-slate-400">
@@ -2377,7 +2377,7 @@ ${notes.trim() || "-"}
 
                     <div>
                       <p className="text-sm font-bold text-green-800">
-                        Safe & Reliable Transfer
+                        <HomeText en="Safe & Reliable Transfer" de="Sicherer und zuverlässiger Transfer" />
                       </p>
 
                       <p className="mt-1 text-xs leading-5 text-green-700">
