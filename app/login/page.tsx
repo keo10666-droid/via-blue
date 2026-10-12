@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
 import { supabase } from "@/lib/supabase";
-import HomeText from "@/app/components/HomeText";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -195,7 +194,7 @@ export default function LoginPage() {
                 </p>
 
                 <p className="text-[9px] font-bold uppercase tracking-[0.25em] text-gray-400">
-                  <HomeText en="Tours & Transfers" de="Ausflüge & Transfers" />
+                  {text("Tours & Transfers", "Ausflüge & Transfers")}
                 </p>
               </div>
             </div>
