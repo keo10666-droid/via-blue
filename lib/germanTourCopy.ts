@@ -68,20 +68,5 @@ export function germanTourValue(value: string): string {
     "Rating": "Bewertung", "Reviews": "Bewertungen", "Type": "Art", "Destination": "Reiseziel", "Duration": "Dauer", "Pickup": "Abholung",
   };
   if (exact[value]) return exact[value];
-  return value
-    .replace(/Approximately /g, "Ungefähr ")
-    .replace(/hours?/g, "Stunden")
-    .replace(/Full Day/g, "Ganztägig")
-    .replace(/Hotel Pickup/g, "Abholung vom Hotel")
-    .replace(/Morning/g, "Morgen")
-    .replace(/Daily/g, "Täglich")
-    .replace(/Snorkeling/g, "Schnorcheln")
-    .replace(/equipment/g, "Ausrüstung")
-    .replace(/Boat Trip/g, "Bootstour")
-    .replace(/Open[- ]buffet lunch/gi, "Mittagessen vom offenen Buffet")
-    .replace(/Hotel transfer/gi, "Hoteltransfer")
-    .replace(/Entrance/gi, "Eintritt")
-    .replace(/Island/g, "Insel")
-    .replace(/Drinks/g, "Getränke")
-    .replace(/Tips/g, "Trinkgeld");
+  return value;
 }
