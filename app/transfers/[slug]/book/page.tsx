@@ -376,6 +376,23 @@ function CustomDatePicker({
   invalid: boolean;
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isGerman, setIsGerman] = useState(false);
+
+  useEffect(() => {
+    try {
+      setIsGerman(window.localStorage.getItem("via-blue-language") === "de");
+    } catch {
+      setIsGerman(false);
+    }
+
+    const handleLanguageChange = (event: Event) => {
+      const next = (event as CustomEvent<"en" | "de">).detail;
+      if (next === "en" || next === "de") setIsGerman(next === "de");
+    };
+
+    window.addEventListener("via-blue-language-change", handleLanguageChange);
+    return () => window.removeEventListener("via-blue-language-change", handleLanguageChange);
+  }, []);
 
   const minDateObject = useMemo(
     () => new Date(`${minDate}T12:00:00`),
