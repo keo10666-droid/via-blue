@@ -876,7 +876,7 @@ Via Blue AI Trip Planner
         "noopener,noreferrer",
       );
 
-      alert("Booking saved successfully!");
+      alert(isGerman ? "Buchung erfolgreich gespeichert!" : "Booking saved successfully!");
 
       sessionStorage.removeItem(
         "viaBlueAITripBooking",
