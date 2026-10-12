@@ -12,6 +12,7 @@ import TourGallery from "@/app/components/TourGallery";
 import ReviewForm from "@/app/components/ReviewForm";
 import ReviewsList from "@/app/components/ReviewsList";
 import HomeText from "@/app/components/HomeText";
+import TourText from "@/app/components/TourText";
 
 type Props = {
   params: Promise<{
@@ -957,7 +958,7 @@ export default async function TourDetailsPage({
 
         <Image
           src={tour.image}
-          alt={tour.name}
+          alt=<TourText slug={tour.slug} value={tour.name} field="name" />
           fill
           priority
           sizes="100vw"
@@ -991,13 +992,13 @@ export default async function TourDetailsPage({
             </div>
 
             <h1 className="text-5xl font-extrabold leading-[1.05] tracking-tight drop-shadow-2xl md:text-7xl">
-              {tour.name}
+              <TourText slug={tour.slug} value={tour.name} field="name" />
             </h1>
 
             <div className="mx-auto mt-6 h-px w-16 bg-orange-400/80" />
 
             <p className="mx-auto mt-7 max-w-3xl text-base leading-8 text-blue-50/95 sm:text-lg md:text-xl">
-              {tour.description}
+              <TourText slug={tour.slug} value={tour.description} field="description" />
             </p>
 
             <div className="mt-8 flex flex-wrap justify-center gap-3">
@@ -1028,7 +1029,7 @@ export default async function TourDetailsPage({
               </div>
 
               <div className="rounded-full bg-orange-500 px-5 py-2.5 font-bold shadow-lg shadow-orange-950/20">
-                {tour.type}
+                <TourText slug={tour.slug} value={tour.type} />
               </div>
 
             </div>
@@ -1088,7 +1089,7 @@ export default async function TourDetailsPage({
               </h2>
 
               <p className="mt-5 text-lg leading-8 text-gray-600">
-                {tour.overview}
+                <TourText slug={tour.slug} value={tour.overview} />
               </p>
 
             </section>
@@ -1118,7 +1119,7 @@ export default async function TourDetailsPage({
                       </p>
 
                       <p className="mt-1 font-bold text-blue-950">
-                        {tour.duration}
+                        <TourText slug={tour.slug} value={tour.duration} />
                       </p>
 
                     </div>
@@ -1146,7 +1147,7 @@ export default async function TourDetailsPage({
                       </p>
 
                       <p className="mt-1 font-bold text-blue-950">
-                        {tour.pickup}
+                        <TourText slug={tour.slug} value={tour.pickup} />
                       </p>
 
                     </div>
@@ -1174,7 +1175,7 @@ export default async function TourDetailsPage({
                       </p>
 
                       <p className="mt-1 font-bold text-blue-950">
-                        {tour.schedule}
+                        <TourText slug={tour.slug} value={tour.schedule} />
                       </p>
 
                     </div>
@@ -1196,7 +1197,7 @@ export default async function TourDetailsPage({
 
                   <TourGallery
                     images={tour.gallery}
-                    tourName={tour.name}
+                    tourName=<TourText slug={tour.slug} value={tour.name} field="name" />
                     heroImage={tour.image}
                   />
 
@@ -1226,7 +1227,7 @@ export default async function TourDetailsPage({
                 {tour.program.map((item, index) => (
 
                   <div
-                    key={`${item}-${index}`}
+                    key={`$<TourText slug={tour.slug} value={item} />-${index}`}
                     className="group flex gap-5 rounded-[24px] border border-slate-200/80 bg-white p-5 shadow-[0_8px_28px_rgba(15,23,42,0.05)] transition-all duration-300 hover:-translate-y-1 hover:border-orange-200 hover:shadow-[0_18px_40px_rgba(15,23,42,0.1)]"
                   >
 
@@ -1238,7 +1239,7 @@ export default async function TourDetailsPage({
 
                     <p className="pt-1 leading-7 text-gray-700">
 
-                      {item}
+                      <TourText slug={tour.slug} value={item} />
 
                     </p>
 
@@ -1273,7 +1274,7 @@ export default async function TourDetailsPage({
                 {tour.included.map((item, index) => (
 
                   <div
-                    key={`${item}-${index}`}
+                    key={`$<TourText slug={tour.slug} value={item} />-${index}`}
                     className="flex items-start gap-3 rounded-[22px] border border-green-100 bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
                   >
 
@@ -1285,7 +1286,7 @@ export default async function TourDetailsPage({
 
                     <p className="text-sm font-semibold leading-6 text-gray-700">
 
-                      {item}
+                      <TourText slug={tour.slug} value={item} />
 
                     </p>
 
@@ -1320,7 +1321,7 @@ export default async function TourDetailsPage({
                 {tour.excluded.map((item, index) => (
 
                   <div
-                    key={`${item}-${index}`}
+                    key={`$<TourText slug={tour.slug} value={item} />-${index}`}
                     className="flex items-start gap-3 rounded-[22px] border border-red-100 bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
                   >
 
@@ -1332,7 +1333,7 @@ export default async function TourDetailsPage({
 
                     <p className="text-sm font-semibold leading-6 text-gray-700">
 
-                      {item}
+                      <TourText slug={tour.slug} value={item} />
 
                     </p>
 
@@ -1367,14 +1368,14 @@ export default async function TourDetailsPage({
                 {tour.highlights.map((item, index) => (
 
                   <div
-                    key={`${item}-${index}`}
+                    key={`$<TourText slug={tour.slug} value={item} />-${index}`}
                     className="group flex items-center gap-4 rounded-[24px] border border-slate-200/80 bg-white p-5 shadow-[0_8px_28px_rgba(15,23,42,0.05)] transition-all duration-300 hover:-translate-y-1 hover:border-orange-200 hover:shadow-[0_18px_40px_rgba(15,23,42,0.1)]"
                   >
 
                     <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-50 text-blue-700 transition-all duration-300 group-hover:bg-orange-50 group-hover:text-orange-600">
 
                       <HighlightIcon
-                        text={item}
+                        text=<TourText slug={tour.slug} value={item} />
                         className="h-6 w-6"
                       />
 
@@ -1382,7 +1383,7 @@ export default async function TourDetailsPage({
 
                     <h3 className="font-bold leading-6 text-blue-950">
 
-                      {item}
+                      <TourText slug={tour.slug} value={item} />
 
                     </h3>
 
@@ -1417,7 +1418,7 @@ export default async function TourDetailsPage({
                 {tour.notes.map((note, index) => (
 
                   <div
-                    key={`${note}-${index}`}
+                    key={`$<TourText slug={tour.slug} value={note} />-${index}`}
                     className="flex gap-3 rounded-[22px] border border-orange-100 bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
                   >
 
@@ -1425,7 +1426,7 @@ export default async function TourDetailsPage({
 
                     <p className="text-sm leading-7 text-gray-700">
 
-                      {note}
+                      <TourText slug={tour.slug} value={note} />
 
                     </p>
 
@@ -1443,14 +1444,14 @@ export default async function TourDetailsPage({
 
               <ReviewsList
                 tourSlug={tour.slug}
-                tourName={tour.name}
+                tourName=<TourText slug={tour.slug} value={tour.name} field="name" />
               />
 
               <div className="mt-12 border-t border-slate-100 pt-12">
 
                 <ReviewForm
                   tourSlug={tour.slug}
-                  tourName={tour.name}
+                  tourName=<TourText slug={tour.slug} value={tour.name} field="name" />
                 />
 
               </div>
@@ -1603,7 +1604,7 @@ export default async function TourDetailsPage({
 
                     <span className="max-w-[170px] text-right text-sm font-bold text-blue-950">
 
-                      {tour.type}
+                      <TourText slug={tour.slug} value={tour.type} />
 
                     </span>
 
@@ -1631,7 +1632,7 @@ export default async function TourDetailsPage({
 
                     <span className="text-right text-sm font-bold capitalize text-blue-950">
 
-                      {tour.destination}
+                      <TourText slug={tour.slug} value={tour.destination === "hurghada" ? "Hurghada" : tour.destination === "luxor" ? "Luxor" : tour.destination === "cairo" ? "Cairo" : "Sharm El Sheikh"} />
 
                     </span>
 
@@ -1659,7 +1660,7 @@ export default async function TourDetailsPage({
 
                     <span className="max-w-[170px] text-right text-sm font-bold text-blue-950">
 
-                      {tour.duration}
+                      <TourText slug={tour.slug} value={tour.duration} />
 
                     </span>
 
@@ -1687,7 +1688,7 @@ export default async function TourDetailsPage({
 
                     <span className="max-w-[170px] text-right text-sm font-bold text-blue-950">
 
-                      {tour.pickup}
+                      <TourText slug={tour.slug} value={tour.pickup} />
 
                     </span>
 
@@ -1791,7 +1792,7 @@ export default async function TourDetailsPage({
 
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-blue-100">
 
-            <HomeText en={`Reserve your ${tour.name} experience and enjoy an unforgettable day in Hurghada with Via Blue`} de={`Buchen Sie Ihr Erlebnis „${tour.name}“ und genießen Sie einen unvergesslichen Tag in Hurghada mit Via Blue.`} />
+            <HomeText en={`Reserve your $<TourText slug={tour.slug} value={tour.name} field="name" /> experience and enjoy an unforgettable day in Hurghada with Via Blue`} de={`Buchen Sie Ihr Erlebnis „$<TourText slug={tour.slug} value={tour.name} field="name" />“ und genießen Sie einen unvergesslichen Tag in Hurghada mit Via Blue.`} />
 
           </p>
 
@@ -1808,7 +1809,7 @@ export default async function TourDetailsPage({
               className="group mt-8 inline-flex items-center justify-center gap-3 rounded-2xl bg-orange-500 px-8 py-4 font-bold text-white shadow-lg shadow-orange-950/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-orange-600 hover:shadow-xl"
             >
 
-              Book {tour.name}
+              Book <TourText slug={tour.slug} value={tour.name} field="name" />
 
               <ArrowRightIcon className="h-5 w-5 transition-transform group-hover:translate-x-1" />
 
