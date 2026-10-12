@@ -68,11 +68,7 @@ export default function ReviewForm({
 
       router.refresh();
     } catch (error) {
-      setMessage(
-        error instanceof Error
-          ? error.message
-          : "Something went wrong, please try again"
-      );
+      setMessage("REVIEW_ERROR");
     } finally {
       setLoading(false);
     }
@@ -196,7 +192,7 @@ export default function ReviewForm({
               ) : message === "REVIEW_REQUIRED" ? (
                 <HomeText en="Please enter your name and review" de="Bitte gib deinen Namen und deine Bewertung ein" />
               ) : (
-                message
+                <HomeText en="Something went wrong. Please try again." de="Es ist ein Fehler aufgetreten. Bitte versuche es erneut." />
               )}
             </div>
           )}
