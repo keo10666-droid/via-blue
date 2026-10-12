@@ -203,6 +203,13 @@ export function germanTourValue(value: string): string {
     "Pickup time": "Abholzeit",
     "Departure time": "Abfahrtszeit",
     "Return time": "Rückkehrzeit",
+    "To be confirmed": "Wird noch bestätigt",
+    "New Experience": "Neues Erlebnis",
+    "Tour": "Tour",
+    "Review": "Bewertung",
+    "Person": "Person",
+    "Starting from": "Ab",
+    "No experiences available": "Keine Erlebnisse verfügbar",
   };
   if (exact[value]) return exact[value];
   return value;
