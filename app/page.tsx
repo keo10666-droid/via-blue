@@ -401,7 +401,7 @@ export default async function Home() {
 
               <span className="h-2 w-2 rounded-full bg-orange-400 shadow-lg shadow-orange-400/50" />
 
-              Hurghada · Red Sea · Egypt
+              <HomeText en="Hurghada · Red Sea · Egypt" de="Hurghada · Rotes Meer · Ägypten" />
 
             </div>
 
@@ -446,7 +446,7 @@ export default async function Home() {
 
             <div>
               <p className="font-bold">
-                Reliable Service
+                <HomeText en="Reliable Service" de="Zuverlässiger Service" />
               </p>
 
               <p className="mt-1 text-sm text-blue-200">
@@ -711,7 +711,7 @@ export default async function Home() {
                   <span className="h-px w-7 bg-orange-400" />
 
                   <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-orange-400">
-                    Explore Hurghada
+                    <HomeText en="Explore Hurghada" de="Hurghada entdecken" />
                   </p>
 
                 </div>
@@ -785,13 +785,13 @@ export default async function Home() {
                       <div className="absolute bottom-5 right-5 rounded-2xl border border-white/20 bg-blue-950/85 px-4 py-2.5 text-white shadow-xl backdrop-blur-md">
 
                         <span className="text-[10px] uppercase tracking-wider text-blue-200">
-                          From
+                          <HomeText en="From" de="Ab" />
                         </span>
 
                         <div className="font-bold">
                           €{tour.price}
                           <span className="ml-1 text-xs font-normal text-blue-200">
-                            / person
+                            / <HomeText en="person" de="Person" />
                           </span>
                         </div>
 
@@ -830,7 +830,7 @@ export default async function Home() {
 
                         <span className="text-xs text-gray-500">
                           ({reviewCount}{" "}
-                          {reviewCount === 1 ? "review" : "reviews"})
+                          {reviewCount === 1 ? <HomeText en="review" de="Bewertung" /> : <HomeText en="reviews" de="Bewertungen" />})
                         </span>
 
                       </div>
@@ -846,7 +846,7 @@ export default async function Home() {
                         </span>
 
                         <span className="flex items-center gap-1 text-sm font-bold text-blue-950 transition group-hover:text-orange-500">
-                          Explore
+                          <HomeText en="Explore" de="Entdecken" />
                           <ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                         </span>
 
@@ -915,7 +915,7 @@ export default async function Home() {
                   <div className="absolute bottom-5 right-5 rounded-2xl border border-white/20 bg-blue-950/85 px-4 py-2.5 text-white shadow-xl backdrop-blur-md">
 
                     <span className="text-[10px] uppercase tracking-wider text-blue-200">
-                      Service
+                      <HomeText en="Service" de="Leistung" />
                     </span>
 
                     <div className="font-bold">
@@ -985,7 +985,7 @@ export default async function Home() {
                   href="/transfers"
                   className="rounded-xl bg-orange-500 py-3 text-center text-sm font-bold text-white shadow-md transition hover:bg-orange-600"
                 >
-                  Book Now
+                  <HomeText en="Book Now" de="Jetzt buchen" />
                 </Link>
 
               </div>
@@ -1069,7 +1069,7 @@ export default async function Home() {
               </p>
 
               <p className="mt-2 text-sm font-medium text-blue-100">
-                Experiences
+                <HomeText en="Experiences" de="Erlebnisse" />
               </p>
 
             </div>
@@ -1093,7 +1093,7 @@ export default async function Home() {
               </p>
 
               <p className="mt-2 text-sm font-medium text-blue-100">
-                Guest Support
+                <HomeText en="Guest Support" de="Gästeservice" />
               </p>
 
             </div>
@@ -1213,7 +1213,7 @@ export default async function Home() {
                     href={`/tours/${review.tour_slug}`}
                     className="mt-6 flex items-center gap-2 text-sm font-bold text-blue-950 transition group-hover:text-orange-500"
                   >
-                    View Experience
+                    <HomeText en="View Experience" de="Erlebnis ansehen" />
 
                     <ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </Link>
