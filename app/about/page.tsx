@@ -633,11 +633,11 @@ export default function AboutPage() {
 
           <div className="rounded-2xl border border-orange-100 bg-white p-6 text-center shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl lg:text-left">
             <p className="text-4xl font-bold tracking-tight text-orange-500">
-              Easy
+              <HomeText en="Easy" de="Einfach" />
             </p>
 
             <p className="mt-2 font-bold text-blue-950">
-              Booking
+              <HomeText en="Booking" de="Buchung" />
             </p>
 
             <p className="mt-1 text-sm leading-6 text-gray-500">
@@ -648,11 +648,11 @@ export default function AboutPage() {
 
           <div className="rounded-2xl border border-blue-100 bg-white p-6 text-center shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl lg:text-left">
             <p className="text-4xl font-bold tracking-tight text-orange-500">
-              Fair
+              <HomeText en="Fair" de="Fair" />
             </p>
 
             <p className="mt-2 font-bold text-blue-950">
-              Pricing
+              <HomeText en="Pricing" de="Preise" />
             </p>
 
             <p className="mt-1 text-sm leading-6 text-gray-500">
@@ -679,7 +679,7 @@ export default function AboutPage() {
         <div className="relative mx-auto max-w-4xl text-center">
 
           <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-orange-400">
-            Start Your Journey
+            <HomeText en="Start Your Journey" de="Beginnen Sie Ihre Reise" />
           </p>
 
           <h2 className="mt-5 text-4xl font-bold leading-[1.05] tracking-[-0.03em] md:text-6xl">
@@ -699,7 +699,7 @@ export default function AboutPage() {
               className="group rounded-xl border border-orange-300/20 bg-gradient-to-r from-orange-500 to-orange-400 px-8 py-4 text-center font-bold text-white shadow-xl shadow-orange-950/30 transition-all duration-300 hover:-translate-y-1 hover:from-orange-400 hover:to-amber-400 hover:shadow-orange-500/20"
             >
               <span className="flex items-center justify-center gap-2">
-                Explore Tours
+                <HomeText en="Explore Tours" de="Ausflüge entdecken" />
                 <span className="transition-transform duration-300 group-hover:translate-x-1">
                   →
                 </span>
@@ -710,7 +710,7 @@ export default function AboutPage() {
               href="/transfers"
               className="rounded-xl border border-white/20 bg-white/[0.06] px-8 py-4 text-center font-bold text-white shadow-xl shadow-black/10 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-white/40 hover:bg-white hover:text-blue-950"
             >
-              View Transfers
+              <HomeText en="View Transfers" de="Transfers ansehen" />
             </Link>
 
           </div>
