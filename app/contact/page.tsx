@@ -254,20 +254,16 @@ export default function ContactPage() {
       const result = await response.json().catch(() => null);
 
       if (!response.ok || !result?.success) {
-        throw new Error(
-          typeof result?.error === "string"
-            ? result.error
-            : "We couldn't send your message. Please try again.",
-        );
+        throw new Error("CONTACT_SEND_ERROR");
       }
 
       setSubmitted(true);
       form.reset();
     } catch (error) {
       setErrorMessage(
-        error instanceof Error
-          ? error.message
-          : "Something went wrong. Please try again or contact us on WhatsApp.",
+        isGerman
+          ? "Ihre Nachricht konnte nicht gesendet werden. Bitte versuchen Sie es erneut oder kontaktieren Sie uns über WhatsApp."
+          : "We couldn't send your message. Please try again or contact us on WhatsApp.",
       );
     } finally {
       setIsSending(false);
