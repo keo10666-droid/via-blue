@@ -495,7 +495,7 @@ function CustomDatePicker({
 
           <span className="min-w-0">
             <span className="block text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400">
-              Transfer Date
+              <HomeText en="Transfer Date" de="Transferdatum" />
             </span>
 
             <span
@@ -638,7 +638,7 @@ function CustomDatePicker({
             </span>
 
             <p className="text-[11px] font-medium leading-4 text-orange-800">
-              Select a date from tomorrow onwards
+              <HomeText en="Select a date from tomorrow onwards" de="Wählen Sie ein Datum ab morgen" />
             </p>
           </div>
         </div>
@@ -763,7 +763,7 @@ function CustomTimePicker({
 
           <span className="min-w-0">
             <span className="block text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400">
-              Pickup Time
+              <HomeText en="Pickup Time" de="Abholzeit" />
             </span>
 
             <span
@@ -800,11 +800,11 @@ function CustomTimePicker({
 
             <div>
               <p className="text-sm font-bold text-blue-950">
-                Select Pickup Time
+                <HomeText en="Select Pickup Time" de="Abholzeit auswählen" />
               </p>
 
               <p className="mt-0.5 text-[11px] text-slate-400">
-                Choose your preferred pickup time
+                <HomeText en="Choose your preferred pickup time" de="Wählen Sie Ihre gewünschte Abholzeit" />
               </p>
             </div>
           </div>
@@ -814,7 +814,7 @@ function CustomTimePicker({
           <div className="grid grid-cols-3 gap-2.5">
             <div>
               <p className="mb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                Hour
+                <HomeText en="Hour" de="Stunde" />
               </p>
 
               <select
@@ -842,7 +842,7 @@ function CustomTimePicker({
 
             <div>
               <p className="mb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                Minute
+                <HomeText en="Minute" de="Minute" />
               </p>
 
               <select
@@ -1302,7 +1302,7 @@ ${notes.trim() || "-"}
           </div>
 
           <h1 className="mt-5 text-3xl font-bold tracking-tight md:text-5xl">
-            Book Your Transfer
+            <HomeText en="Book Your Transfer" de="Buchen Sie Ihren Transfer" />
           </h1>
 
           <p className="mt-3 max-w-2xl text-sm leading-6 text-blue-100 md:text-base">
@@ -1630,7 +1630,7 @@ ${notes.trim() || "-"}
                 </div>
 
                 <h2 className="mt-4 text-xl font-bold text-blue-950 md:text-2xl">
-                  Guest Information
+                  <HomeText en="Guest Information" de="Gästeinformationen" />
                 </h2>
 
                 <p className="mt-1.5 text-sm text-slate-500">
@@ -1828,7 +1828,7 @@ ${notes.trim() || "-"}
                 </div>
 
                 <h2 className="mt-4 text-xl font-bold text-blue-950 md:text-2xl">
-                  Transfer Information
+                  <HomeText en="Transfer Information" de="Transferinformationen" />
                 </h2>
               </div>
 
@@ -1925,7 +1925,7 @@ ${notes.trim() || "-"}
               <div className="mt-5 grid gap-4 md:grid-cols-2">
                 <div>
                   <label className={labelClass}>
-                    Room Number
+                    <HomeText en="Room Number" de="Zimmernummer" />
                   </label>
 
                   <input
@@ -2118,7 +2118,7 @@ ${notes.trim() || "-"}
                 </div>
 
                 <h2 className="mt-4 text-xl font-bold text-blue-950 md:text-2xl">
-                  Additional Information
+                  <HomeText en="Additional Information" de="Zusätzliche Informationen" />
                 </h2>
               </div>
 
@@ -2176,7 +2176,7 @@ ${notes.trim() || "-"}
                     <span className="h-px w-7 bg-orange-400" />
 
                     <p className="text-[9px] font-bold uppercase tracking-[0.25em] text-orange-400">
-                      Booking Summary
+                      <HomeText en="Booking Summary" de="Buchungsübersicht" />
                     </p>
                   </div>
 
