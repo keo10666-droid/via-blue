@@ -770,8 +770,8 @@ function ToursPageContent() {
               <p className="text-sm font-bold text-blue-950">
                 {categoryTours.length}{" "}
                 {categoryTours.length === 1
-                  ? "Erlebnis"
-                  : "Erlebnisse"}
+                  ? <HomeText en="experience" de="Erlebnis" />
+                  : <HomeText en="experiences" de="Erlebnisse" />}
               </p>
 
             </div>
@@ -826,7 +826,7 @@ function ToursPageContent() {
                   <div className="absolute left-5 top-5">
 
                     <span className="inline-flex items-center rounded-full border border-white/20 bg-blue-950/75 px-3.5 py-2 text-[10px] font-extrabold uppercase tracking-[0.12em] text-white shadow-lg backdrop-blur-md">
-                      {tour.badge}
+                      <TourText slug={tour.slug} value={tour.badge} />
                     </span>
 
                   </div>
@@ -863,7 +863,7 @@ function ToursPageContent() {
                       </div>
 
                       <span className="truncate text-xs font-bold uppercase tracking-[0.12em] text-white/90">
-                        {tour.type}
+                        <TourText slug={tour.slug} value={tour.type} />
                       </span>
 
                     </div>
@@ -985,7 +985,7 @@ function ToursPageContent() {
                       <div className="min-w-0">
 
                         <p className="text-[10px] font-semibold uppercase tracking-wide text-gray-400">
-                          Destination
+                          <HomeText en="Destination" de="Reiseziel" />
                         </p>
 
                         <p className="truncate text-xs font-bold text-gray-700">
@@ -1008,7 +1008,7 @@ function ToursPageContent() {
                       <div>
 
                         <p className="text-xs font-medium text-gray-400">
-                          Starting from
+                          <HomeText en="Starting from" de="Ab" />
                         </p>
 
                         <div className="mt-0.5 flex items-baseline gap-1">
@@ -1022,7 +1022,7 @@ function ToursPageContent() {
                           {tour.price > 0 && (
 
                             <span className="text-xs text-gray-400">
-                              / person
+                              / <HomeText en="person" de="Person" />
                             </span>
 
                           )}
@@ -1101,12 +1101,11 @@ function ToursPageContent() {
             </div>
 
             <h3 className="mt-7 text-2xl font-bold text-blue-950">
-              No experiences available
+              <HomeText en="No experiences available" de="Keine Erlebnisse verfügbar" />
             </h3>
 
             <p className="mx-auto mt-3 max-w-md text-sm leading-7 text-gray-500">
-              New experiences are being added soon
-              Explore another category to discover more of Hurghada
+              <HomeText en="New experiences are being added soon. Explore another category to discover more of Hurghada." de="Wir fügen bald neue Erlebnisse hinzu. Entdecken Sie weitere Angebote in einer anderen Kategorie." />
             </p>
 
           </div>
