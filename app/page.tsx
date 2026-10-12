@@ -767,6 +767,7 @@ export default async function Home() {
 
                     <div className="relative h-64 overflow-hidden">
 
+                      {/* Image alt must remain a plain string; TourText is for visible copy. */}
                       <Image
                         src={tour.image}
                         alt={tour.name}
