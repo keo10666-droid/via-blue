@@ -586,8 +586,9 @@ export default function AccountPage() {
           );
 
         if (uploadError) {
+          console.error("Avatar upload failed.", uploadError);
           setMessage(
-            uploadError.message
+            accountText("Could not upload your profile photo. Please try again.", "Dein Profilfoto konnte nicht hochgeladen werden. Bitte versuche es erneut.")
           );
           return;
         }
@@ -630,8 +631,9 @@ export default function AccountPage() {
         .eq("id", user.id);
 
       if (profileError) {
+        console.error("Profile save failed.", profileError);
         setMessage(
-          profileError.message
+          accountText("Your profile could not be saved. Please try again.", "Dein Profil konnte nicht gespeichert werden. Bitte versuche es erneut.")
         );
         return;
       }
@@ -650,8 +652,9 @@ export default function AccountPage() {
         });
 
         if (emailError) {
+          console.error("Email update failed.", emailError);
           setMessage(
-            emailError.message
+            accountText("Your email address could not be updated. Please try again.", "Deine E-Mail-Adresse konnte nicht aktualisiert werden. Bitte versuche es erneut.")
           );
           return;
         }
@@ -771,8 +774,9 @@ export default function AccountPage() {
         );
 
       if (uploadError) {
+        console.error("Travel memory upload failed.", uploadError);
         setMessage(
-          uploadError.message
+          accountText("Could not upload this travel memory. Please try again.", "Diese Reiseerinnerung konnte nicht hochgeladen werden. Bitte versuche es erneut.")
         );
         return;
       }
@@ -804,9 +808,9 @@ export default function AccountPage() {
             filePath,
           ]);
 
+        console.error("Travel memory save failed.", memoryError);
         setMessage(
-          memoryError?.message ||
-            accountText("Could not save this memory", "Diese Erinnerung konnte nicht gespeichert werden")
+          accountText("Could not save this memory. Please try again.", "Diese Erinnerung konnte nicht gespeichert werden. Bitte versuche es erneut.")
         );
 
         return;
@@ -882,8 +886,9 @@ export default function AccountPage() {
         );
 
       if (databaseError) {
+        console.error("Travel memory deletion failed.", databaseError);
         setMessage(
-          databaseError.message
+          accountText("Could not delete this memory. Please try again.", "Diese Erinnerung konnte nicht gelöscht werden. Bitte versuche es erneut.")
         );
         return;
       }
