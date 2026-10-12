@@ -570,13 +570,10 @@ ${notes.trim() || "-"}`;
         "===================================="
       );
 
-      const errorMessage =
-        error instanceof Error
-          ? error.message
-          : "Unknown error";
-
       alert(
-        `${localStorage.getItem("via-blue-language") === "de" ? "Ein Fehler ist aufgetreten" : "Something went wrong"}\n\n${errorMessage}`
+        localStorage.getItem("via-blue-language") === "de"
+          ? "Beim Senden Ihrer Buchung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
+          : "Something went wrong while submitting your booking. Please try again."
       );
     } finally {
       setIsSubmitting(false);
@@ -930,7 +927,7 @@ ${notes.trim() || "-"}`;
             {submitAttempted &&
               !isDateValid &&
               errorText(
-                "Please select a valid tour date (from tomorrow onward)"
+                <HomeText en="Please select a valid tour date (from tomorrow onward)" de="Bitte wählen Sie ein gültiges Ausflugsdatum ab morgen." />
               )}
 
             {/* Guests */}
