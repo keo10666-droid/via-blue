@@ -15,7 +15,30 @@ export default function TourGallery({
   heroImage,
 }: TourGalleryProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [language, setLanguage] = useState<"en" | "de">("en");
   const [isFullscreen, setIsFullscreen] = useState(false);
+
+  useEffect(() => {
+    const syncLanguage = () => {
+      try {
+        setLanguage(window.localStorage.getItem("via-blue-language") === "de" ? "de" : "en");
+      } catch {
+        setLanguage("en");
+      }
+    };
+
+    syncLanguage();
+    const handleLanguageChange = (event: Event) => {
+      const next = (event as CustomEvent<"en" | "de">).detail;
+      if (next === "en" || next === "de") setLanguage(next);
+    };
+    window.addEventListener("via-blue-language-change", handleLanguageChange);
+    window.addEventListener("storage", syncLanguage);
+    return () => {
+      window.removeEventListener("via-blue-language-change", handleLanguageChange);
+      window.removeEventListener("storage", syncLanguage);
+    };
+  }, []);
 
   /*
    * Remove duplicate images.
@@ -97,12 +120,12 @@ export default function TourGallery({
         <div className="mb-7">
           <div className="inline-flex items-center rounded-full border border-orange-200 bg-orange-50 px-4 py-2 shadow-sm">
             <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-orange-500">
-              Gallery
+              {language === "de" ? "Galerie" : "Gallery"}
             </p>
           </div>
 
           <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-blue-950 md:text-4xl">
-            Explore {tourName}
+            {language === "de" ? `${tourName} entdecken` : `Explore ${tourName}`}
           </h2>
         </div>
 
@@ -122,7 +145,7 @@ export default function TourGallery({
                   ? "col-span-2 row-span-2 h-[360px] md:h-[430px]"
                   : "h-[175px] md:h-[205px]"
               }`}
-              aria-label={`Open ${tourName} image ${index + 1}`}
+              aria-label={language === "de" ? `${tourName} Bild ${index + 1} öffnen` : `Open ${tourName} image ${index + 1}`}
             >
               <Image
                 src={image}
@@ -165,7 +188,7 @@ export default function TourGallery({
             type="button"
             onClick={() => setIsFullscreen(false)}
             className="absolute right-5 top-5 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/10 text-2xl text-white shadow-lg backdrop-blur-md transition duration-300 hover:bg-orange-500"
-            aria-label="Close gallery"
+            aria-label={language === "de" ? "Galerie schließen" : "Close gallery"}
           >
             ✕
           </button>
@@ -183,7 +206,7 @@ export default function TourGallery({
                 )
               }
               className="absolute left-4 z-20 flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/10 text-3xl text-white shadow-lg backdrop-blur-md transition duration-300 hover:bg-orange-500 md:left-8"
-              aria-label="Previous image"
+              aria-label={language === "de" ? "Vorheriges Bild" : "Previous image"}
             >
               ‹
             </button>
@@ -214,7 +237,7 @@ export default function TourGallery({
                 )
               }
               className="absolute right-4 z-20 flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/10 text-3xl text-white shadow-lg backdrop-blur-md transition duration-300 hover:bg-orange-500 md:right-8"
-              aria-label="Next image"
+              aria-label={language === "de" ? "Nächstes Bild" : "Next image"}
             >
               ›
             </button>
