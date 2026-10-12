@@ -1025,7 +1025,9 @@ export default async function TourDetailsPage({
 
                 <span className="font-bold">
                   {displayReviewCount}{" "}
-                  {displayReviewCount === 1 ? "Review" : "Reviews"}
+                  {displayReviewCount === 1
+                    ? <HomeText en="Review" de="Bewertung" />
+                    : <HomeText en="Reviews" de="Bewertungen" />}
                 </span>
 
               </div>
