@@ -789,19 +789,19 @@ export default function AITripBookingPage() {
           })
           .join("\n\n");
 
-      const message = `🌴 NEW AI TRIP PACKAGE BOOKING
+      const message = `🌴 ${isGerman ? "NEUE KI-REISEPAKETBUCHUNG" : "NEW AI TRIP PACKAGE BOOKING"}
 
-🤖 Booking Source: AI Trip Planner
+🤖 ${isGerman ? "Buchungsquelle" : "Booking Source"}: AI Trip Planner
 
 📦 Package: ${selectedPackage.title}
 
-📝 Package Summary:
+📝 ${isGerman ? "Paketbeschreibung" : "Package Summary"}:
 
 ${selectedPackage.summary}
 
 📍 ${isGerman ? "Region" : "Area"}: ${booking.area}
 
-📅 Trip Start Date: ${date}
+📅 ${isGerman ? "Reisebeginn" : "Trip Start Date"}: ${date}
 
 🗓️ ${isGerman ? "Dauer" : "Duration"}: ${booking.days} ${isGerman ? "Tage" : "Days"}
 
@@ -815,13 +815,13 @@ ${selectedPackage.summary}
         nationality.trim() || "Not specified"
       }
 
-👤 Full Name: ${name.trim()}
+👤 ${isGerman ? "Vollständiger Name" : "Full Name"}: ${name.trim()}
 
-✉️ Email: ${email.trim()}
+✉️ ${isGerman ? "E-Mail" : "Email"}: ${email.trim()}
 
 📱 WhatsApp: ${fullPhone}
 
-🏨 Hotel: ${
+🏨 ${isGerman ? "Hotel" : "Hotel"}: ${
         hotel.trim() || "Not specified"
       }
 
@@ -837,11 +837,11 @@ ${selectedPackage.summary}
         selectedPackage.totalCost,
       )} ${booking.currency}
 
-💰 Remaining Budget: ${formatPrice(
+💰 ${isGerman ? "Verbleibendes Budget" : "Remaining Budget"}: ${formatPrice(
         selectedPackage.remainingBudget,
       )} ${booking.currency}
 
-🎯 Experiences: ${
+🎯 ${isGerman ? "Erlebnisse" : "Experiences"}: ${
         selectedPackage.activities
       }
 
@@ -851,11 +851,11 @@ ${
   childrenAgeValues.filter(Boolean).join(", ") || "-"
 }
 
-🗺️ ITINERARY
+🗺️ ${isGerman ? "REISEPLAN" : "ITINERARY"}
 
 ${itineraryMessage}
 
-📝 Special Requests:
+📝 ${isGerman ? "Besondere Wünsche" : "Special Requests"}:
 
 -
 
