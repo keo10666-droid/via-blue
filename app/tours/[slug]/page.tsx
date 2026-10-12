@@ -957,6 +957,7 @@ export default async function TourDetailsPage({
 
       <section className="relative h-[560px] overflow-hidden bg-blue-950">
 
+        {/* Image alt must remain a plain string; TourText is for visible copy. */}
         <Image
           src={tour.image}
           alt={tour.name}
