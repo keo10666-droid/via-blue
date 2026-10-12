@@ -561,13 +561,9 @@ export default function AITripPlannerPage() {
             <div className="flex h-[82px] items-center">
               <div className="flex w-full items-center">
                 {[1, 2, 3, 4, 5].map((item, index) => {
-                  const labels = [
-                    "Travelers",
-                    "Location",
-                    "Duration",
-                    "Budget",
-                    "Experiences",
-                  ];
+                  const labels = language === "de"
+                    ? ["Reisende", "Reiseziel", "Dauer", "Budget", "Erlebnisse"]
+                    : ["Travelers", "Location", "Duration", "Budget", "Experiences"];
 
                   const active = step === item;
                   const completed = step > item;
