@@ -1285,7 +1285,7 @@ export default function AccountPage() {
                         src={
                           profile.avatar_url
                         }
-                        alt="Profile picture"
+                        alt="Profilbild"
                         className="h-full w-full object-cover"
                       />
                     ) : (
@@ -1551,7 +1551,7 @@ export default function AccountPage() {
                 ) : (
                   <div className="rounded-xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-800">
                     {phone ||
-                      "Not added yet"}
+                      <HomeText en="Not added yet" de="Noch nicht angegeben" />}
                   </div>
                 )}
               </div>
@@ -1560,7 +1560,7 @@ export default function AccountPage() {
               <div className="mt-5">
                 <div className="mb-2 flex items-center justify-between">
                   <label className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                    Email
+                    <HomeText en="Email" de="E-Mail" />
                   </label>
 
                   {!isEditingProfile && (
@@ -1609,7 +1609,7 @@ export default function AccountPage() {
                 ) : (
                   <div className="break-all rounded-xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-800">
                     {email ||
-                      "Not added yet"}
+                      <HomeText en="Not added yet" de="Noch nicht angegeben" />}
                   </div>
                 )}
               </div>
@@ -1899,7 +1899,7 @@ export default function AccountPage() {
             </div>
 
             <div className="rounded-xl bg-slate-50 px-4 py-2.5 text-sm font-semibold text-[#071d49]">
-              {memories.length} / 25 photos
+              <HomeText en={`${memories.length} / 25 photos`} de={`${memories.length} / 25 Fotos`} />
             </div>
           </div>
 
