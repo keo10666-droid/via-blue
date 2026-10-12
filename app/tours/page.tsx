@@ -351,7 +351,7 @@ function TourTypeIcon({
   className?: string;
 }) {
   const text =
-    `$<TourText slug={tour.slug} value={tour.name} field="name" /> ${tour.type} ${tour.slug}`.toLowerCase();
+    `${tour.name} ${tour.type} ${tour.slug}`.toLowerCase();
 
   if (
     text.includes("spa") ||
