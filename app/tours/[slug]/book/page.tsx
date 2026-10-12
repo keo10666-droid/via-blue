@@ -8,6 +8,7 @@ import { useParams, notFound } from "next/navigation";
 
 import { tours } from "@/data/tours";
 import BookingSuccessModal from "@/app/components/BookingSuccessModal";
+import HomeText from "@/app/components/HomeText";
 
 const nationalities = [
   "Egyptian",
