@@ -604,7 +604,7 @@ export default function AITripBookingPage() {
         );
 
         alert(
-          `${isGerman ? "Dein Konto konnte nicht überprüft werden." : "Unable to verify your account."}\n\n${userError.message}`,
+          (isGerman ? "Dein Konto konnte nicht überprüft werden. Bitte versuche es erneut." : "Unable to verify your account. Please try again."),
         );
 
         return;
@@ -637,10 +637,7 @@ export default function AITripBookingPage() {
           );
 
           alert(
-            `${isGerman ? "Deine Buchungssitzung konnte nicht gestartet werden." : "Unable to start your booking session."}\n\n${
-              anonError?.message ||
-              (isGerman ? "Unbekannter Authentifizierungsfehler" : "Unknown authentication error")
-            }`,
+            (isGerman ? "Deine Buchungssitzung konnte nicht gestartet werden. Bitte versuche es erneut." : "Unable to start your booking session. Please try again."),
           );
 
           return;
@@ -760,9 +757,7 @@ export default function AITripBookingPage() {
         );
 
         alert(
-          `${isGerman ? "BUCHUNG WURDE NICHT GESPEICHERT" : "BOOKING WAS NOT SAVED"}\n\n${bookingError.message}\n\nCode: ${
-            bookingError.code || "Unknown"
-          }`,
+          (isGerman ? "Deine Buchung konnte nicht gespeichert werden. Bitte versuche es erneut." : "Your booking could not be saved. Please try again."),
         );
 
         return;
