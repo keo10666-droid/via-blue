@@ -417,9 +417,7 @@ export default function AITripPlannerPage() {
       const data = await response.json();
 
       if (!response.ok || !data.success) {
-        throw new Error(
-          data.error || "Unable to create your trip plan."
-        );
+        throw new Error("TRIP_PLAN_ERROR");
       }
 
       setProcessingStage(4);
@@ -432,9 +430,7 @@ export default function AITripPlannerPage() {
       setAvailableTours(data.alternatives ?? []);
 
       if (!data.packages || data.packages.length !== 3) {
-        throw new Error(
-          "We couldn't create three complete package options."
-        );
+        throw new Error("TRIP_PLAN_ERROR");
       }
 
       setStep(7);
@@ -442,9 +438,9 @@ export default function AITripPlannerPage() {
       console.error("AI Trip Planner:", err);
 
       setError(
-        err instanceof Error
-          ? err.message
-          : "Something went wrong while creating your trip."
+        localStorage.getItem("via-blue-language") === "de"
+          ? "Dein Reiseplan konnte nicht erstellt werden. Bitte versuche es erneut."
+          : "Something went wrong while creating your trip. Please try again."
       );
 
       setStep(6);
@@ -1202,12 +1198,14 @@ export default function AITripPlannerPage() {
 
                   <div className="mt-8 rounded-2xl bg-blue-950 p-5 text-white">
                     <p className="text-xs font-bold uppercase tracking-[0.2em] text-blue-300">
-                      Your group
+                      <HomeText en="Your group" de="Ihre Gruppe" />
                     </p>
 
                     <p className="mt-2 text-xl font-bold">
                       {totalTravelers}{" "}
-                      {totalTravelers === 1 ? "traveler" : "travelers"}
+                      {totalTravelers === 1
+                        ? <HomeText en="traveler" de="Reisende Person" />
+                        : <HomeText en="travelers" de="Reisende" />}
                     </p>
                   </div>
                 </div>
