@@ -896,13 +896,10 @@ Via Blue AI Trip Planner
         "====================================",
       );
 
-      const errorMessage =
-        error instanceof Error
-          ? error.message
-          : "Unknown error";
-
       alert(
-        `${isGerman ? "Ein Fehler ist aufgetreten." : "Something went wrong."}\n\n${errorMessage}`,
+        isGerman
+          ? "Deine Buchung konnte nicht abgeschlossen werden. Bitte versuche es erneut."
+          : "Your booking could not be completed. Please try again.",
       );
     } finally {
       setIsSubmitting(false);

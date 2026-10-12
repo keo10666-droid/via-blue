@@ -704,11 +704,9 @@ ${notes.trim() || "-"}
   );
 
   alert(
-    error instanceof Error
-      ? error.message
-      : isGerman
-        ? "Beim Absenden Ihrer Buchung ist ein Fehler aufgetreten."
-        : "Something went wrong while submitting your booking"
+    isGerman
+      ? "Beim Absenden Ihrer Buchung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
+      : "Something went wrong while submitting your booking. Please try again."
   );
 }
 };
