@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import HomeText from "@/app/components/HomeText";
 
 function WhatsAppIcon() {
@@ -218,6 +218,21 @@ export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
   const [isSending, setIsSending] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [isGerman, setIsGerman] = useState(false);
+
+  useEffect(() => {
+    const syncLanguage = () => {
+      try {
+        setIsGerman(window.localStorage.getItem("via-blue-language") === "de");
+      } catch {
+        setIsGerman(false);
+      }
+    };
+
+    syncLanguage();
+    window.addEventListener("via-blue-language-change", syncLanguage);
+    return () => window.removeEventListener("via-blue-language-change", syncLanguage);
+  }, []);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -547,7 +562,7 @@ export default function ContactPage() {
                         name="name"
                         type="text"
                         required
-                        placeholder="Ihr vollständiger Name"
+                        placeholder={isGerman ? "Ihr vollständiger Name" : "Your full name"}
                         className="h-12 w-full rounded-xl border border-[#dfe3ea] bg-[#fbfcfd] px-4 text-sm text-[#172033] outline-none transition placeholder:text-[#98a2b3] focus:border-[#f59a23] focus:bg-white focus:ring-4 focus:ring-[#f59a23]/10"
                       />
                     </div>
@@ -565,7 +580,7 @@ export default function ContactPage() {
                         name="email"
                         type="email"
                         required
-                        placeholder="you@example.com"
+                        placeholder={isGerman ? "ihre@email.de" : "you@example.com"}
                         className="h-12 w-full rounded-xl border border-[#dfe3ea] bg-[#fbfcfd] px-4 text-sm text-[#172033] outline-none transition placeholder:text-[#98a2b3] focus:border-[#f59a23] focus:bg-white focus:ring-4 focus:ring-[#f59a23]/10"
                       />
                     </div>
@@ -601,7 +616,7 @@ export default function ContactPage() {
                         id="subject"
                         name="subject"
                         type="text"
-                        placeholder="Betreff Ihrer Nachricht"
+                        placeholder={isGerman ? "Betreff Ihrer Nachricht" : "Message subject"}
                         className="h-12 w-full rounded-xl border border-[#dfe3ea] bg-[#fbfcfd] px-4 text-sm text-[#172033] outline-none transition placeholder:text-[#98a2b3] focus:border-[#f59a23] focus:bg-white focus:ring-4 focus:ring-[#f59a23]/10"
                       />
                     </div>
@@ -620,7 +635,7 @@ export default function ContactPage() {
                       name="message"
                       required
                       rows={7}
-                      placeholder="Wie können wir Ihnen helfen?"
+                      placeholder={isGerman ? "Wie können wir Ihnen helfen?" : "How can we help you?"}
                       className="w-full resize-none rounded-xl border border-[#dfe3ea] bg-[#fbfcfd] px-4 py-3 text-sm leading-6 text-[#172033] outline-none transition placeholder:text-[#98a2b3] focus:border-[#f59a23] focus:bg-white focus:ring-4 focus:ring-[#f59a23]/10"
                     />
                   </div>
