@@ -51,6 +51,7 @@ export default function Navbar() {
         "Log In": "Anmelden",
         "Log Out": "Abmelden",
         New: "Neu",
+        Greeting: "Hallo,",
         "Toggle menu": "Menü öffnen",
       }
     : {
@@ -65,6 +66,7 @@ export default function Navbar() {
         "Log In": "Log In",
         "Log Out": "Log Out",
         New: "New",
+        Greeting: "Hi,",
         "Toggle menu": "Toggle menu",
       };
 
@@ -300,7 +302,7 @@ export default function Navbar() {
                 </span>
 
                 <span className="max-w-[90px] truncate text-[13px] font-extrabold">
-                  Hi, {userName.split(" ")[0]}
+                  {labels.Greeting} {userName.split(" ")[0]}
                 </span>
               </Link>
 
@@ -408,7 +410,7 @@ export default function Navbar() {
 
                   {item.special && !active && (
                     <span className="rounded-full bg-gradient-to-r from-orange-500 to-amber-400 px-2 py-1 text-[7px] font-black uppercase tracking-[0.08em] text-white shadow-sm">
-                      New
+                      {labels.New}
                     </span>
                   )}
 
@@ -437,7 +439,7 @@ export default function Navbar() {
                     </span>
 
                     <span className="truncate">
-                      Hi, {userName.split(" ")[0]}
+                      {labels.Greeting} {userName.split(" ")[0]}
                     </span>
                   </Link>
 
@@ -446,7 +448,7 @@ export default function Navbar() {
                     onClick={handleLogout}
                     className="w-full rounded-2xl border border-slate-200 px-4 py-3.5 text-center font-extrabold text-slate-700 transition-all duration-300 hover:border-red-200 hover:bg-red-50 hover:text-red-600"
                   >
-                    Log Out
+                    {labels["Log Out"]}
                   </button>
 
                 </div>
