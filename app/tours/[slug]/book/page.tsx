@@ -758,8 +758,7 @@ ${notes.trim() || "-"}
               </h1>
 
               <p className="mt-4 max-w-2xl text-sm leading-6 text-blue-100 md:text-base">
-                Complete your booking details below and our team
-                will confirm your reservation shortly
+                <HomeText en="Complete your booking details below and our team will confirm your reservation shortly" de="Vervollständigen Sie Ihre Buchungsdaten. Unser Team bestätigt Ihre Reservierung in Kürze." />
               </p>
 
               <div className="mt-7 flex flex-wrap gap-3 text-xs font-semibold text-blue-100">
@@ -1995,7 +1994,7 @@ ${notes.trim() || "-"}
                   <>
                     <div className="flex items-center justify-between">
                       <span className="text-slate-500">
-                        Vehicle
+                        <HomeText en="Vehicle" de="Fahrzeug" />
                       </span>
                       <span className="font-semibold text-slate-800">
                         {selectedVehicleOption.name}
@@ -2004,7 +2003,7 @@ ${notes.trim() || "-"}
 
                     <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                       <span className="text-slate-500">
-                        Adults × €{selectedVehicleOption.adultPrice}
+                        <HomeText en={`Adults × €${selectedVehicleOption.adultPrice}`} de={`Erwachsene × €${selectedVehicleOption.adultPrice}`} />
                       </span>
                       <span className="font-semibold text-slate-800">
                         €{Number(adults || 0) * selectedVehicleOption.adultPrice}
@@ -2013,7 +2012,7 @@ ${notes.trim() || "-"}
 
                     <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                       <span className="text-slate-500">
-                        Children × €{selectedVehicleOption.childPrice}
+                        <HomeText en={`Children × €${selectedVehicleOption.childPrice}`} de={`Kinder × €${selectedVehicleOption.childPrice}`} />
                       </span>
                       <span className="font-semibold text-slate-800">
                         €{Number(children || 0) * selectedVehicleOption.childPrice}
@@ -2022,7 +2021,7 @@ ${notes.trim() || "-"}
 
                     <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                       <span className="text-slate-500">
-                        Infants × €{selectedVehicleOption.infantPrice}
+                        <HomeText en={`Infants × €${selectedVehicleOption.infantPrice}`} de={`Kleinkinder × €${selectedVehicleOption.infantPrice}`} />
                       </span>
                       <span className="font-semibold text-slate-800">
                         €{Number(infants || 0) * selectedVehicleOption.infantPrice}
@@ -2047,7 +2046,7 @@ ${notes.trim() || "-"}
                         Vehicle
                       </span>
                       <span className="font-semibold text-slate-800">
-                        {selectedVehicle === "bus" ? "Bus" : "Van"}
+                        {selectedVehicle === "bus" ? <HomeText en="Bus" de="Bus" /> : <HomeText en="Van" de="Kleinbus" />}
                       </span>
                     </div>
 
@@ -2204,9 +2203,7 @@ ${notes.trim() || "-"}
 
                 <div className="mb-6 rounded-2xl border border-red-100 bg-red-50 p-4 text-sm font-semibold text-red-700">
 
-                  Please complete the required fields
-                  highlighted above before sending your booking
-                  request
+                  <HomeText en="Please complete the required fields highlighted above before sending your booking request" de="Bitte füllen Sie die oben markierten Pflichtfelder aus, bevor Sie Ihre Buchungsanfrage senden." />
 
                 </div>
 
@@ -2224,7 +2221,7 @@ ${notes.trim() || "-"}
               <span className="absolute inset-0 bg-gradient-to-r from-orange-500 via-orange-500 to-orange-400 opacity-0 transition-opacity duration-200 group-hover:opacity-100" />
 
               <span className="relative">
-                {(tour.available as boolean | undefined) === false ? "This tour is currently unavailable" : "Confirm Booking Request"}
+                {(tour.available as boolean | undefined) === false ? <HomeText en="This tour is currently unavailable" de="Diese Tour ist derzeit nicht verfügbar" /> : <HomeText en="Confirm Booking Request" de="Buchungsanfrage bestätigen" />}
               </span>
 
               <span className="relative text-lg transition-transform duration-200 group-hover:translate-x-1">
@@ -2234,8 +2231,7 @@ ${notes.trim() || "-"}
             </button>
 
             <p className="mt-4 text-center text-xs text-slate-400">
-              Your booking request will be sent securely to our
-              reservations team for confirmation
+              <HomeText en="Your booking request will be sent securely to our reservations team for confirmation" de="Ihre Buchungsanfrage wird sicher an unser Reservierungsteam zur Bestätigung übermittelt." />
             </p>
 
           </div>
@@ -2271,7 +2267,7 @@ ${notes.trim() || "-"}
                 <div className="rounded-[20px] border border-slate-100 bg-slate-50 p-4">
 
                   <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-400">
-                    Tour
+                    <HomeText en="Tour" de="Ausflug" />
                   </p>
 
                   <p className="font-bold leading-6 text-slate-900">
@@ -2315,7 +2311,7 @@ ${notes.trim() || "-"}
                   <div className="rounded-[20px] border border-slate-100 bg-slate-50 p-4">
 
                     <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-400">
-                      Type
+                      <HomeText en="Type" de="Art" />
                     </p>
 
                     <p className="font-bold text-slate-900">
@@ -2362,8 +2358,7 @@ ${notes.trim() || "-"}
                 <div className="rounded-[20px] border border-blue-100 bg-gradient-to-br from-blue-50 to-orange-50/30 p-4">
 
                   <p className="text-sm font-semibold leading-6 text-blue-950">
-                    Your request will be reviewed by our team
-                    and confirmed with you shortly
+                    <HomeText en="Your request will be reviewed by our team and confirmed with you shortly" de="Unser Team prüft Ihre Anfrage und bestätigt sie Ihnen in Kürze." />
                   </p>
 
                 </div>
