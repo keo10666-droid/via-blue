@@ -958,7 +958,7 @@ export default async function TourDetailsPage({
 
         <Image
           src={tour.image}
-          alt=<TourText slug={tour.slug} value={tour.name} field="name" />
+          alt={tour.name}
           fill
           priority
           sizes="100vw"
@@ -1197,7 +1197,7 @@ export default async function TourDetailsPage({
 
                   <TourGallery
                     images={tour.gallery}
-                    tourName=<TourText slug={tour.slug} value={tour.name} field="name" />
+                    tourName={tour.name}
                     heroImage={tour.image}
                   />
 
@@ -1227,7 +1227,7 @@ export default async function TourDetailsPage({
                 {tour.program.map((item, index) => (
 
                   <div
-                    key={`$<TourText slug={tour.slug} value={item} />-${index}`}
+                    key={`${item}-${index}`}
                     className="group flex gap-5 rounded-[24px] border border-slate-200/80 bg-white p-5 shadow-[0_8px_28px_rgba(15,23,42,0.05)] transition-all duration-300 hover:-translate-y-1 hover:border-orange-200 hover:shadow-[0_18px_40px_rgba(15,23,42,0.1)]"
                   >
 
@@ -1375,7 +1375,7 @@ export default async function TourDetailsPage({
                     <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-50 text-blue-700 transition-all duration-300 group-hover:bg-orange-50 group-hover:text-orange-600">
 
                       <HighlightIcon
-                        text=<TourText slug={tour.slug} value={item} />
+                        text={item}
                         className="h-6 w-6"
                       />
 
@@ -1418,7 +1418,7 @@ export default async function TourDetailsPage({
                 {tour.notes.map((note, index) => (
 
                   <div
-                    key={`$<TourText slug={tour.slug} value={note} />-${index}`}
+                    key={`${note}-${index}`}
                     className="flex gap-3 rounded-[22px] border border-orange-100 bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
                   >
 
