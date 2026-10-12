@@ -458,7 +458,7 @@ export default function Footer() {
           {/* Quick Links */}
           <div>
             <h3 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">
-              Quick Links
+              {text.quickLinks}
             </h3>
 
             <ul className="mt-7 space-y-4">
