@@ -1542,7 +1542,7 @@ export default async function LuxuryTourPage({
                         </p>
 
                         <p className="mt-1 text-sm font-bold text-blue-950">
-                          {cleanText(tour.duration)}
+          <HomeText en={cleanText(tour.duration)} de={cleanText(tour.duration) === "8 Hours" ? "8 Stunden" : cleanText(tour.duration) === "4 Hours" ? "4 Stunden" : cleanText(tour.duration) === "Full Day" ? "Ganztägig" : cleanText(tour.duration) === "Half Day" ? "Halbtägig" : cleanText(tour.duration) === "2–3 Hours" ? "2–3 Stunden" : cleanText(tour.duration)} />
                         </p>
                       </div>
 
