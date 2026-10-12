@@ -744,7 +744,7 @@ ${notes.trim() || "-"}
               </p>
 
               <h1 className="mt-2 text-3xl font-bold tracking-tight md:text-5xl">
-                Book Your Tour
+                <HomeText en="Book Your Tour" de="Buchen Sie Ihre Tour" />
               </h1>
 
               <p className="mt-4 max-w-2xl text-sm leading-6 text-blue-100 md:text-base">
@@ -795,7 +795,7 @@ ${notes.trim() || "-"}
                 <div>
 
                   <h2 className="text-xl font-bold text-slate-900">
-                    Guest Information
+                    <HomeText en="Guest Information" de="Gästeinformationen" />
                   </h2>
 
                   <p className="text-sm text-slate-500">
@@ -845,7 +845,7 @@ ${notes.trim() || "-"}
                 <div className="relative">
 
                   <label className={labelClass}>
-                    Nationality
+                    <HomeText en="Nationality" de="Nationalität" />
                   </label>
 
                   <input
@@ -1115,7 +1115,7 @@ ${notes.trim() || "-"}
                 <div>
 
                   <h2 className="text-xl font-bold text-slate-900">
-                    Hotel Information
+                    <HomeText en="Hotel Information" de="Hotelinformationen" />
                   </h2>
 
                   <p className="text-sm text-slate-500">
@@ -1131,7 +1131,7 @@ ${notes.trim() || "-"}
                 <div>
 
                   <label className={labelClass}>
-                    Hotel Name
+                    <HomeText en="Hotel Name" de="Hotelname" />
                   </label>
 
                   <input
@@ -1170,7 +1170,7 @@ ${notes.trim() || "-"}
                 <div>
 
                   <label className={labelClass}>
-                    Room Number
+                    <HomeText en="Room Number" de="Zimmernummer" />
                   </label>
 
                   <input
@@ -1622,7 +1622,7 @@ ${notes.trim() || "-"}
                 <div>
 
                   <label className={labelClass}>
-                    Adults
+                    <HomeText en="Adults" de="Erwachsene" />
                   </label>
 
                   <select
@@ -1942,7 +1942,7 @@ ${notes.trim() || "-"}
             <div className="mb-6 flex items-center justify-between rounded-[22px] border border-blue-100 bg-gradient-to-r from-blue-50 to-orange-50/30 px-5 py-4 shadow-sm">
 
               <span className="text-sm font-semibold text-slate-600">
-                Total Guests
+                <HomeText en="Total Guests" de="Gäste insgesamt" />
               </span>
 
               <span className="text-xl font-bold text-blue-950">
@@ -1958,7 +1958,7 @@ ${notes.trim() || "-"}
               <div className="border-b border-slate-200 bg-gradient-to-r from-slate-50 to-blue-50/40 px-5 py-4">
 
                 <h3 className="text-lg font-bold text-slate-900">
-                  Booking Summary
+                  <HomeText en="Booking Summary" de="Buchungsübersicht" />
                 </h3>
 
               </div>
@@ -2160,7 +2160,7 @@ ${notes.trim() || "-"}
                 <div>
 
                   <h2 className="text-xl font-bold text-slate-900">
-                    Additional Information
+                    <HomeText en="Additional Information" de="Zusätzliche Informationen" />
                   </h2>
 
                   <p className="text-sm text-slate-500">
@@ -2172,7 +2172,7 @@ ${notes.trim() || "-"}
               </div>
 
               <label className={labelClass}>
-                Special Requests / Notes
+                <HomeText en="Special Requests / Notes" de="Besondere Wünsche / Hinweise" />
               </label>
 
               <textarea
@@ -2249,7 +2249,7 @@ ${notes.trim() || "-"}
                   </p>
 
                   <h3 className="mt-2 text-2xl font-bold">
-                    Tour Summary
+                    <HomeText en="Tour Summary" de="Tourübersicht" />
                   </h3>
 
                 </div>
