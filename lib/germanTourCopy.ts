@@ -164,7 +164,6 @@ export function germanTourValue(value: string): string {
     "Air-conditioned vehicle": "Klimatisiertes Fahrzeug",
     "Return transfer to the hotel": "Rücktransfer zum Hotel",
     "Return to the hotel": "Rückfahrt zum Hotel",
-  };
     "Half Day": "Halbtägig",
     "Half-day": "Halbtägig",
     "8 Hours": "8 Stunden",
@@ -205,6 +204,7 @@ export function germanTourValue(value: string): string {
     "Pickup time": "Abholzeit",
     "Departure time": "Abfahrtszeit",
     "Return time": "Rückkehrzeit",
+  };
   if (exact[value]) return exact[value];
   return value;
 }
