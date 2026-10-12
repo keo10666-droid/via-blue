@@ -479,9 +479,10 @@ export default function LuxuryToursPage() {
             </h2>
 
             <p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-blue-100 md:text-base">
-              Prefer complete flexibility or have a special request? Our
-              private experiences can be tailored around your schedule and
-              preferences
+              <HomeText
+                en="Prefer complete flexibility or have a special request? Our private experiences can be tailored around your schedule and preferences."
+                de="Sie wünschen sich maximale Flexibilität oder haben einen besonderen Wunsch? Unsere privaten Erlebnisse lassen sich individuell an Ihren Zeitplan und Ihre Vorlieben anpassen."
+              />
             </p>
 
             <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
