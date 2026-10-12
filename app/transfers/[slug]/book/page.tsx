@@ -1308,7 +1308,7 @@ ${notes.trim() || "-"}
         email={email.trim()}
         emailSent={confirmationEmailSent}
         backHref="/transfers"
-        backLabel="Back to Transfers"
+        backLabel={isGerman ? "Zurück zu den Transfers" : "Back to Transfers"}
         onClose={() => setShowSuccess(false)}
       />
       {/* HEADER */}
