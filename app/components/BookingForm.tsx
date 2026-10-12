@@ -1104,7 +1104,7 @@ ${notes.trim() || "-"}`;
                         </option>
 
                         <option value="10">
-                          10 years
+                          <HomeText en="10 years" de="10 Jahre" />
                         </option>
                       </select>
 
@@ -1167,7 +1167,7 @@ ${notes.trim() || "-"}`;
                         </option>
 
                         <option value="4">
-                          4 years
+                          <HomeText en="4 years" de="4 Jahre" />
                         </option>
                       </select>
 
@@ -1185,7 +1185,7 @@ ${notes.trim() || "-"}`;
             {/* Total Guests */}
             <div className="mt-7 rounded-2xl border border-blue-100 bg-gradient-to-r from-blue-50 to-white p-5 shadow-[0_8px_25px_rgba(7,26,54,0.04)]">
               <p className="text-lg font-black text-[#071a36]">
-                👥 Total Guests: {totalGuests}
+                👥 <HomeText en="Total Guests" de="Gäste insgesamt" />: {totalGuests}
               </p>
             </div>
 
@@ -1193,7 +1193,7 @@ ${notes.trim() || "-"}`;
             <div className="mt-5 rounded-[24px] border border-orange-200/70 bg-gradient-to-br from-orange-50 to-white p-6 shadow-[0_8px_25px_rgba(255,122,0,0.06)]">
               <div className="flex items-center justify-between gap-4">
                 <h3 className="text-lg font-black text-orange-600">
-                  💰 Booking Summary
+                  💰 <HomeText en="Booking Summary" de="Buchungsübersicht" />
                 </h3>
 
                 <div className="rounded-full bg-orange-100 px-3 py-1 text-xs font-black uppercase tracking-wider text-orange-600">
@@ -1241,7 +1241,7 @@ ${notes.trim() || "-"}`;
             </div>
 
             <label className={labelClass}>
-              Special Requests / Notes
+              <HomeText en="Special Requests / Notes" de="Besondere Wünsche / Anmerkungen" />
             </label>
 
             <textarea
@@ -1257,9 +1257,7 @@ ${notes.trim() || "-"}`;
             {submitAttempted &&
               !isFormValid && (
                 <p className="mt-4 rounded-2xl border border-red-100 bg-red-50 p-4 font-bold leading-6 text-red-700">
-                  <HomeText en="Please fill in the required fields" de="Bitte füllen Sie die Pflichtfelder aus" />
-                  highlighted above before sending
-                  your request
+                  <HomeText en="Please fill in the required fields highlighted above before sending your request" de="Bitte füllen Sie vor dem Absenden alle oben markierten Pflichtfelder aus" />
                 </p>
               )}
 
