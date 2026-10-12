@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import HomeText from "@/app/components/HomeText";
+import TourText from "@/app/components/TourText";
 
 import { tourList } from "@/data/tours";
 import { supabase } from "@/lib/supabase";
@@ -768,7 +769,7 @@ export default async function Home() {
 
                       <Image
                         src={tour.image}
-                        alt={tour.name}
+                        alt=<TourText slug={tour.slug} value={tour.name} field="name" />
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                         className="object-cover transition duration-700 group-hover:scale-110"
@@ -834,13 +835,13 @@ export default async function Home() {
                       </div>
 
                       <p className="mt-4 line-clamp-3 text-sm leading-7 text-gray-600">
-                        {tour.description}
+                        <TourText slug={tour.slug} value={tour.description} field="description" />
                       </p>
 
                       <div className="mt-auto flex items-center justify-between pt-7">
 
                         <span className="rounded-full bg-slate-100 px-3 py-1.5 text-xs font-semibold text-gray-600">
-                          {tour.type}
+                          <TourText slug={tour.slug} value={tour.type} />
                         </span>
 
                         <span className="flex items-center gap-1 text-sm font-bold text-blue-950 transition group-hover:text-orange-500">
