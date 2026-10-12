@@ -7,6 +7,7 @@ import { useParams } from "next/navigation";
 
 import { transfers } from "@/data/transfers";
 import BookingSuccessModal from "@/app/components/BookingSuccessModal";
+import HomeText from "@/app/components/HomeText";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
