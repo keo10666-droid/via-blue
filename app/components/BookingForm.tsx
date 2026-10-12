@@ -1,8 +1,9 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 
 import { supabase } from "@/lib/supabase";
+import HomeText from "@/app/components/HomeText";
 
 type BookingFormProps = {
   tourName: string;
@@ -146,6 +147,14 @@ export default function BookingForm({
 }: BookingFormProps) {
   const childPrice = adultPrice / 2;
 
+  const [isGerman, setIsGerman] = useState(false);
+  useEffect(() => {
+    const syncLanguage = () => setIsGerman(localStorage.getItem("via-blue-language") === "de");
+    syncLanguage();
+    window.addEventListener("via-blue-language-change", syncLanguage);
+    return () => window.removeEventListener("via-blue-language-change", syncLanguage);
+  }, []);
+
   const [name, setName] = useState("");
   const [nationality, setNationality] = useState("");
   const [isNationalityOpen, setIsNationalityOpen] = useState(false);
@@ -261,7 +270,7 @@ export default function BookingForm({
   const labelClass =
     "mb-2.5 block text-sm font-bold tracking-wide text-[#071a36]";
 
-  const errorText = (msg: string) => (
+  const errorText = (msg: ReactNode) => (
     <p className="mt-2 text-sm font-semibold text-red-600">
       {msg}
     </p>
@@ -303,7 +312,7 @@ export default function BookingForm({
         );
 
         alert(
-          `Unable to verify your account\n\n${userError.message}`
+          `${localStorage.getItem("via-blue-language") === "de" ? "Dein Konto konnte nicht überprüft werden" : "Unable to verify your account"}\n\n${userError.message}`
         );
 
         return;
@@ -336,9 +345,9 @@ export default function BookingForm({
           );
 
           alert(
-            `Unable to start your booking session\n\n${
+            `${localStorage.getItem("via-blue-language") === "de" ? "Deine Buchungssitzung konnte nicht gestartet werden" : "Unable to start your booking session"}\n\n${
               anonError?.message ||
-              "Unknown authentication error"
+              (localStorage.getItem("via-blue-language") === "de" ? "Unbekannter Authentifizierungsfehler" : "Unknown authentication error")
             }`
           );
 
@@ -447,7 +456,7 @@ export default function BookingForm({
         );
 
         alert(
-          `BOOKING WAS NOT SAVED\n\n${bookingError.message}\n\nCode: ${
+          `${localStorage.getItem("via-blue-language") === "de" ? "BUCHUNG WURDE NICHT GESPEICHERT" : "BOOKING WAS NOT SAVED"}\n\n${bookingError.message}\n\nCode: ${
             bookingError.code || "Unknown"
           }`
         );
@@ -542,7 +551,7 @@ ${notes.trim() || "-"}`;
        * 10. Success
        */
       alert(
-        "Booking saved successfully!"
+        (localStorage.getItem("via-blue-language") === "de" ? "Buchung erfolgreich gespeichert!" : "Booking saved successfully!")
       );
     } catch (error) {
       console.error(
@@ -567,7 +576,7 @@ ${notes.trim() || "-"}`;
           : "Unknown error";
 
       alert(
-        `Something went wrong\n\n${errorMessage}`
+        `${localStorage.getItem("via-blue-language") === "de" ? "Ein Fehler ist aufgetreten" : "Something went wrong"}\n\n${errorMessage}`
       );
     } finally {
       setIsSubmitting(false);
@@ -593,12 +602,12 @@ ${notes.trim() || "-"}`;
             </div>
 
             <h1 className="mt-5 max-w-3xl text-4xl font-black tracking-tight text-white sm:text-5xl md:text-6xl">
-              Book Your Tour
+              <HomeText en="Book Your Tour" de="Buchen Sie Ihre Tour" />
             </h1>
 
             <p className="mt-5 max-w-2xl text-base leading-7 text-blue-100/80 sm:text-lg">
-              Reserve your {tourName} experience quickly and securely
-              through WhatsApp
+              <HomeText en={`Reserve your ${tourName} experience quickly and securely`} de={`Buchen Sie Ihr ${tourName}-Erlebnis schnell und sicher`} />
+              <HomeText en="through WhatsApp" de="über WhatsApp" />
             </p>
 
             <div className="mt-7 flex flex-wrap gap-3">
@@ -607,7 +616,7 @@ ${notes.trim() || "-"}`;
               </div>
 
               <div className="rounded-full border border-orange-400/20 bg-orange-500/10 px-4 py-2 text-sm font-bold text-orange-300 backdrop-blur-md">
-                €{adultPrice} per adult
+                €{adultPrice} <HomeText en="per adult" de="pro Erwachsenem" />
               </div>
             </div>
           </div>
@@ -619,15 +628,15 @@ ${notes.trim() || "-"}`;
           <div className="rounded-[28px] border border-gray-200/80 bg-white p-6 shadow-[0_20px_60px_rgba(7,26,54,0.08)] sm:p-8 lg:col-span-2">
             <div className="mb-8 border-b border-gray-100 pb-6">
               <p className="mb-2 text-xs font-black uppercase tracking-[0.18em] text-orange-500">
-                Guest Details
+                <HomeText en="Guest Details" de="Angaben zum Gast" />
               </p>
 
               <h2 className="text-2xl font-black tracking-tight text-[#071a36] sm:text-3xl">
-                Guest Information
+                <HomeText en="Guest Information" de="Gastinformationen" />
               </h2>
 
               <p className="mt-2 text-sm text-gray-500">
-                Tell us who will be joining the experience
+                <HomeText en="Tell us who will be joining the experience" de="Teilen Sie uns mit, wer an diesem Erlebnis teilnimmt" />
               </p>
             </div>
 
@@ -636,12 +645,12 @@ ${notes.trim() || "-"}`;
               {/* Name */}
               <div>
                 <label className={labelClass}>
-                  Full Name *
+                  <HomeText en="Full Name *" de="Vollständiger Name *" />
                 </label>
 
                 <input
                   type="text"
-                  placeholder="Full Name *"
+                  placeholder={isGerman ? "Vollständigen Namen eingeben *" : "Enter full name *"}
                   value={name}
                   onChange={(e) =>
                     setName(e.target.value)
@@ -654,19 +663,19 @@ ${notes.trim() || "-"}`;
                 {submitAttempted &&
                   !isNameValid &&
                   errorText(
-                    "Please enter the guest's full name"
+                    <HomeText en="Please enter the guest's full name" de="Bitte geben Sie den vollständigen Namen des Gastes ein" />
                   )}
               </div>
 
               {/* Nationality */}
               <div className="relative">
                 <label className={labelClass}>
-                  Nationality
+                  <HomeText en="Nationality" de="Nationalität" />
                 </label>
 
                 <input
                   type="text"
-                  placeholder="Nationality"
+                  placeholder={isGerman ? "Nationalität" : "Nationality"}
                   value={nationality}
                   onChange={(e) => {
                     setNationality(e.target.value);
@@ -717,12 +726,12 @@ ${notes.trim() || "-"}`;
               {/* Email */}
               <div>
                 <label className={labelClass}>
-                  Email *
+                  <HomeText en="Email *" de="E-Mail *" />
                 </label>
 
                 <input
                   type="email"
-                  placeholder="Email *"
+                  placeholder={isGerman ? "E-Mail *" : "Email *"}
                   value={email}
                   onChange={(e) =>
                     setEmail(e.target.value)
@@ -736,14 +745,14 @@ ${notes.trim() || "-"}`;
                 {submitAttempted &&
                   !isEmailValid &&
                   errorText(
-                    "Please enter a valid email address"
+                    <HomeText en="Please enter a valid email address" de="Bitte geben Sie eine gültige E-Mail-Adresse ein" />
                   )}
               </div>
 
               {/* Phone */}
               <div>
                 <label className={labelClass}>
-                  WhatsApp Number *
+                  <HomeText en="WhatsApp Number *" de="WhatsApp-Nummer *" />
                 </label>
 
                 <div className="flex gap-2">
@@ -775,7 +784,7 @@ ${notes.trim() || "-"}`;
                       <div className="absolute z-30 mt-2 w-72 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-[0_20px_50px_rgba(7,26,54,0.14)]">
                         <input
                           type="text"
-                          placeholder="Search country..."
+                          placeholder={isGerman ? "Land suchen..." : "Search country..."}
                           value={countrySearch}
                           onChange={(e) =>
                             setCountrySearch(
@@ -824,7 +833,7 @@ ${notes.trim() || "-"}`;
 
                   <input
                     type="tel"
-                    placeholder="Number"
+                    placeholder={isGerman ? "Nummer" : "Number"}
                     value={phone}
                     onChange={(e) =>
                       setPhone(e.target.value)
@@ -841,7 +850,7 @@ ${notes.trim() || "-"}`;
                 {submitAttempted &&
                   !isPhoneValid &&
                   errorText(
-                    "Please enter a valid number (at least 6 digits)"
+                    <HomeText en="Please enter a valid number (at least 6 digits)" de="Bitte geben Sie eine gültige Nummer mit mindestens 6 Ziffern ein" />
                   )}
               </div>
             </div>
@@ -849,23 +858,23 @@ ${notes.trim() || "-"}`;
             {/* Hotel */}
             <div className="mb-8 mt-12 border-b border-gray-100 pb-8">
               <p className="mb-2 text-xs font-black uppercase tracking-[0.18em] text-orange-500">
-                Stay Details
+                <HomeText en="Stay Details" de="Angaben zur Unterkunft" />
               </p>
 
               <h2 className="text-2xl font-black tracking-tight text-[#071a36]">
-                Hotel Information
+                <HomeText en="Hotel Information" de="Hotelinformationen" />
               </h2>
             </div>
 
             <div className="grid gap-5 md:grid-cols-2">
               <div>
                 <label className={labelClass}>
-                  Hotel Name
+                  <HomeText en="Hotel Name" de="Hotelname" />
                 </label>
 
                 <input
                   type="text"
-                  placeholder="Hotel Name"
+                  placeholder={isGerman ? "Hotelname" : "Hotel name"}
                   value={hotel}
                   onChange={(e) =>
                     setHotel(e.target.value)
@@ -876,12 +885,12 @@ ${notes.trim() || "-"}`;
 
               <div>
                 <label className={labelClass}>
-                  Room Number
+                  <HomeText en="Room Number" de="Zimmernummer" />
                 </label>
 
                 <input
                   type="text"
-                  placeholder="Room Number"
+                  placeholder={isGerman ? "Zimmernummer" : "Room number"}
                   value={roomNumber}
                   onChange={(e) =>
                     setRoomNumber(e.target.value)
@@ -894,16 +903,16 @@ ${notes.trim() || "-"}`;
             {/* Tour Date */}
             <div className="mb-8 mt-12 border-b border-gray-100 pb-8">
               <p className="mb-2 text-xs font-black uppercase tracking-[0.18em] text-orange-500">
-                Experience Details
+                <HomeText en="Experience Details" de="Erlebnisdetails" />
               </p>
 
               <h2 className="text-2xl font-black tracking-tight text-[#071a36]">
-                Tour Information
+                <HomeText en="Tour Information" de="Tourinformationen" />
               </h2>
             </div>
 
             <label className={labelClass}>
-              Tour Date *
+              <HomeText en="Tour Date *" de="Reisedatum *" />
             </label>
 
             <input
@@ -927,11 +936,11 @@ ${notes.trim() || "-"}`;
             {/* Guests */}
             <div className="mb-8 mt-12 border-b border-gray-100 pb-8">
               <p className="mb-2 text-xs font-black uppercase tracking-[0.18em] text-orange-500">
-                Travelers
+                <HomeText en="Travelers" de="Reisende" />
               </p>
 
               <h2 className="text-2xl font-black tracking-tight text-[#071a36]">
-                Guests
+                <HomeText en="Guests" de="Gäste" />
               </h2>
             </div>
 
@@ -940,7 +949,7 @@ ${notes.trim() || "-"}`;
               {/* Adults */}
               <div>
                 <label className={labelClass}>
-                  Adults
+                  <HomeText en="Adults" de="Erwachsene" />
                 </label>
 
                 <select
@@ -967,7 +976,7 @@ ${notes.trim() || "-"}`;
               {/* Children */}
               <div>
                 <label className={labelClass}>
-                  Children (5-10)
+                  <HomeText en="Children (5-10)" de="Kinder (5–10)" />
                 </label>
 
                 <select
@@ -1004,7 +1013,7 @@ ${notes.trim() || "-"}`;
               {/* Infants */}
               <div>
                 <label className={labelClass}>
-                  Infants (1-4)
+                  <HomeText en="Infants (1-4)" de="Kleinkinder (1–4)" />
                 </label>
 
                 <select
@@ -1043,7 +1052,7 @@ ${notes.trim() || "-"}`;
             {childAges.length > 0 && (
               <div className="mt-7 rounded-2xl border border-blue-100 bg-blue-50/50 p-5">
                 <h3 className="mb-4 text-lg font-black text-[#071a36]">
-                  Children Ages (5-10 years)
+                  <HomeText en="Children Ages (5-10 years)" de="Alter der Kinder (5–10 Jahre)" />
                 </h3>
 
                 <div className="grid gap-4 md:grid-cols-2">
@@ -1071,40 +1080,38 @@ ${notes.trim() || "-"}`;
                         }}
                       >
                         <option value="">
-                          Select Child {index + 1} Age
+                          {isGerman ? `Alter für Kind ${index + 1} auswählen` : `Select Child ${index + 1} Age`}
                         </option>
 
                         <option value="5">
-                          5 years
+                          {isGerman ? "5 Jahre" : "5 years"}
                         </option>
 
                         <option value="6">
-                          6 years
+                          {isGerman ? "6 Jahre" : "6 years"}
                         </option>
 
                         <option value="7">
-                          7 years
+                          {isGerman ? "7 Jahre" : "7 years"}
                         </option>
 
                         <option value="8">
-                          8 years
+                          {isGerman ? "8 Jahre" : "8 years"}
                         </option>
 
                         <option value="9">
-                          9 years
+                          {isGerman ? "9 Jahre" : "9 years"}
                         </option>
 
                         <option value="10">
-                          10 years
+                          {isGerman ? "10 Jahre" : "10 years"}
                         </option>
                       </select>
 
                       {submitAttempted &&
                         !childrenAgeValues[index] &&
                         errorText(
-                          `Select an age for Child ${
-                            index + 1
-                          }`
+                          <HomeText en={`Select an age for Child ${index + 1}`} de={`Bitte wählen Sie das Alter für Kind ${index + 1} aus`} />
                         )}
                     </div>
                   ))}
@@ -1116,7 +1123,7 @@ ${notes.trim() || "-"}`;
             {infantAges.length > 0 && (
               <div className="mt-7 rounded-2xl border border-orange-100 bg-orange-50/50 p-5">
                 <h3 className="mb-4 text-lg font-black text-[#071a36]">
-                  Infant Ages (1-4 years)
+                  <HomeText en="Infant Ages (1-4 years)" de="Alter der Kleinkinder (1–4 Jahre)" />
                 </h3>
 
                 <div className="grid gap-4 md:grid-cols-2">
@@ -1144,32 +1151,30 @@ ${notes.trim() || "-"}`;
                         }}
                       >
                         <option value="">
-                          Select Infant {index + 1} Age
+                          {isGerman ? `Alter für Kleinkind ${index + 1} auswählen` : `Select Infant ${index + 1} Age`}
                         </option>
 
                         <option value="1">
-                          1 year
+                          {isGerman ? "1 Jahr" : "1 year"}
                         </option>
 
                         <option value="2">
-                          2 years
+                          {isGerman ? "2 Jahre" : "2 years"}
                         </option>
 
                         <option value="3">
-                          3 years
+                          {isGerman ? "3 Jahre" : "3 years"}
                         </option>
 
                         <option value="4">
-                          4 years
+                          {isGerman ? "4 Jahre" : "4 years"}
                         </option>
                       </select>
 
                       {submitAttempted &&
                         !infantAgeValues[index] &&
                         errorText(
-                          `Select an age for Infant ${
-                            index + 1
-                          }`
+                          <HomeText en={`Select an age for Infant ${index + 1}`} de={`Bitte wählen Sie das Alter für Kleinkind ${index + 1} aus`} />
                         )}
                     </div>
                   ))}
@@ -1180,7 +1185,7 @@ ${notes.trim() || "-"}`;
             {/* Total Guests */}
             <div className="mt-7 rounded-2xl border border-blue-100 bg-gradient-to-r from-blue-50 to-white p-5 shadow-[0_8px_25px_rgba(7,26,54,0.04)]">
               <p className="text-lg font-black text-[#071a36]">
-                👥 Total Guests: {totalGuests}
+                👥 <HomeText en="Total Guests" de="Gäste insgesamt" />: {totalGuests}
               </p>
             </div>
 
@@ -1188,34 +1193,34 @@ ${notes.trim() || "-"}`;
             <div className="mt-5 rounded-[24px] border border-orange-200/70 bg-gradient-to-br from-orange-50 to-white p-6 shadow-[0_8px_25px_rgba(255,122,0,0.06)]">
               <div className="flex items-center justify-between gap-4">
                 <h3 className="text-lg font-black text-orange-600">
-                  💰 Booking Summary
+                  💰 <HomeText en="Booking Summary" de="Buchungsübersicht" />
                 </h3>
 
                 <div className="rounded-full bg-orange-100 px-3 py-1 text-xs font-black uppercase tracking-wider text-orange-600">
-                  Live Total
+                  <HomeText en="Live Total" de="Aktuelle Gesamtsumme" />
                 </div>
               </div>
 
               <div className="mt-5 space-y-3 text-gray-700">
                 <p className="font-bold">
-                  Adults: {adults} × €{adultPrice} = €
+                  <HomeText en="Adults" de="Erwachsene" />: {adults} × €{adultPrice} = €
                   {Number(adults) * adultPrice}
                 </p>
 
                 <p className="font-bold">
-                  Children: {children} × €{childPrice} = €
+                  <HomeText en="Children" de="Kinder" />: {children} × €{childPrice} = €
                   {Number(children) * childPrice}
                 </p>
 
                 <p className="font-bold">
-                  Infants: {infants} × €{infantPrice} = €
+                  <HomeText en="Infants" de="Kleinkinder" />: {infants} × €{infantPrice} = €
                   {Number(infants) * infantPrice}
                 </p>
               </div>
 
               <div className="mt-5 flex items-center justify-between border-t border-orange-200 pt-5">
                 <span className="text-sm font-bold uppercase tracking-wider text-gray-500">
-                  Total Price
+                  <HomeText en="Total Price" de="Gesamtpreis" />
                 </span>
 
                 <span className="text-3xl font-black text-[#071a36]">
@@ -1227,21 +1232,21 @@ ${notes.trim() || "-"}`;
             {/* Notes */}
             <div className="mb-8 mt-12 border-b border-gray-100 pb-8">
               <p className="mb-2 text-xs font-black uppercase tracking-[0.18em] text-orange-500">
-                Final Details
+                <HomeText en="Final Details" de="Abschließende Angaben" />
               </p>
 
               <h2 className="text-2xl font-black tracking-tight text-[#071a36]">
-                Additional Information
+                <HomeText en="Additional Information" de="Zusätzliche Informationen" />
               </h2>
             </div>
 
             <label className={labelClass}>
-              Special Requests / Notes
+              <HomeText en="Special Requests / Notes" de="Besondere Wünsche / Anmerkungen" />
             </label>
 
             <textarea
               rows={5}
-              placeholder="Special Requests / Notes"
+              placeholder={isGerman ? "Besondere Wünsche / Anmerkungen" : "Special requests / notes"}
               value={notes}
               onChange={(e) =>
                 setNotes(e.target.value)
@@ -1252,9 +1257,7 @@ ${notes.trim() || "-"}`;
             {submitAttempted &&
               !isFormValid && (
                 <p className="mt-4 rounded-2xl border border-red-100 bg-red-50 p-4 font-bold leading-6 text-red-700">
-                  Please fill in the required fields
-                  highlighted above before sending
-                  your request
+                  <HomeText en="Please fill in the required fields highlighted above before sending your request" de="Bitte füllen Sie vor dem Absenden alle oben markierten Pflichtfelder aus" />
                 </p>
               )}
 
@@ -1266,8 +1269,8 @@ ${notes.trim() || "-"}`;
               className="mt-8 w-full rounded-2xl bg-[#071a36] py-5 text-lg font-black text-white shadow-[0_16px_35px_rgba(7,26,54,0.2)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#0b2548] hover:shadow-[0_20px_40px_rgba(7,26,54,0.26)] disabled:cursor-not-allowed disabled:opacity-60"
             >
               {isSubmitting
-                ? "Saving Booking..."
-                : "📱 Send Booking Request"}
+                ? <HomeText en="Saving Booking..." de="Buchung wird gespeichert..." />
+                : <HomeText en="📱 Send Booking Request" de="📱 Buchungsanfrage senden" />}
             </button>
           </div>
 
@@ -1280,15 +1283,15 @@ ${notes.trim() || "-"}`;
 
                 <div className="relative">
                   <p className="mb-2 text-xs font-black uppercase tracking-[0.18em] text-orange-400">
-                    Your Experience
+                    <HomeText en="Your Experience" de="Ihr Erlebnis" />
                   </p>
 
                   <h3 className="text-2xl font-black text-white">
-                    Tour Summary
+                    <HomeText en="Tour Summary" de="Tourübersicht" />
                   </h3>
 
                   <p className="mt-2 text-sm text-blue-100/70">
-                    Everything you need for your booking
+                    <HomeText en="Everything you need for your booking" de="Alles, was Sie für Ihre Buchung benötigen" />
                   </p>
                 </div>
               </div>
@@ -1297,7 +1300,7 @@ ${notes.trim() || "-"}`;
 
                 <div className="rounded-2xl border border-blue-100 bg-blue-50/60 p-5">
                   <p className="text-xs font-black uppercase tracking-wider text-gray-500">
-                    Tour
+                    <HomeText en="Tour" de="Tour" />
                   </p>
 
                   <p className="mt-2 font-black leading-6 text-[#071a36]">
@@ -1307,7 +1310,7 @@ ${notes.trim() || "-"}`;
 
                 <div className="rounded-2xl border border-orange-100 bg-orange-50/70 p-5">
                   <p className="text-xs font-black uppercase tracking-wider text-gray-500">
-                    Price
+                    <HomeText en="Price" de="Preis" />
                   </p>
 
                   <p className="mt-1 text-3xl font-black text-orange-500">
@@ -1317,7 +1320,7 @@ ${notes.trim() || "-"}`;
 
                 <div className="rounded-2xl border border-gray-100 bg-gray-50 p-5">
                   <p className="text-xs font-black uppercase tracking-wider text-gray-500">
-                    Total Guests
+                    <HomeText en="Total Guests" de="Gäste insgesamt" />
                   </p>
 
                   <p className="mt-1 text-3xl font-black text-[#071a36]">
@@ -1327,7 +1330,7 @@ ${notes.trim() || "-"}`;
 
                 <div className="rounded-2xl border border-emerald-100 bg-emerald-50/60 p-5">
                   <p className="text-xs font-black uppercase tracking-wider text-gray-500">
-                    Tour Type
+                    <HomeText en="Tour Type" de="Tourart" />
                   </p>
 
                   <p className="mt-2 font-black text-emerald-700">
@@ -1337,7 +1340,7 @@ ${notes.trim() || "-"}`;
 
                 <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-[0_8px_25px_rgba(7,26,54,0.04)]">
                   <p className="mb-4 text-xs font-black uppercase tracking-wider text-gray-500">
-                    Included
+                    <HomeText en="Included" de="Inklusive" />
                   </p>
 
                   <ul className="space-y-3 font-semibold leading-6 text-gray-700">
@@ -1362,11 +1365,11 @@ ${notes.trim() || "-"}`;
 
                 <div className="rounded-2xl border border-blue-100 bg-[#071a36] p-5 text-white">
                   <p className="text-sm font-black">
-                    Secure Booking
+                    <HomeText en="Secure Booking" de="Sichere Buchung" />
                   </p>
 
                   <p className="mt-2 text-sm leading-6 text-blue-100/70">
-                    Your booking is saved securely before your WhatsApp request is sent
+                    <HomeText en="Your booking is saved securely before your WhatsApp request is sent" de="Ihre Buchung wird sicher gespeichert, bevor Ihre WhatsApp-Anfrage gesendet wird" />
                   </p>
                 </div>
 

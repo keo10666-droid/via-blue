@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import { supabase } from "@/lib/supabase";
+import HomeText from "@/app/components/HomeText";
 
 type PackageTour = {
   slug: string;
@@ -201,14 +202,14 @@ const toIsoDate = (date: Date) => {
   return `${yyyy}-${mm}-${dd}`;
 };
 
-const formatDateLabel = (value: string) => {
-  if (!value) return "Select your trip start date";
+const formatDateLabel = (value: string, isGerman = false) => {
+  if (!value) return isGerman ? "Wählen Sie Ihr Reisedatum" : "Select your trip start date";
 
   const parsedDate = parseDateInput(value);
 
-  if (!parsedDate) return "Select your trip start date";
+  if (!parsedDate) return isGerman ? "Wählen Sie Ihr Reisedatum" : "Select your trip start date";
 
-  return new Intl.DateTimeFormat("en-US", {
+  return new Intl.DateTimeFormat(isGerman ? "de-DE" : "en-US", {
     weekday: "short",
     month: "short",
     day: "numeric",
@@ -218,6 +219,7 @@ const formatDateLabel = (value: string) => {
 
 export default function AITripBookingPage() {
   const [booking, setBooking] = useState<BookingData | null>(null);
+  const [isGerman, setIsGerman] = useState(false);
   const [loading, setLoading] = useState(true);
   const [name, setName] = useState("");
   const [nationality, setNationality] = useState("");
@@ -249,6 +251,13 @@ export default function AITripBookingPage() {
       1,
     );
   });
+
+  useEffect(() => {
+    const syncLanguage = () => setIsGerman(localStorage.getItem("via-blue-language") === "de");
+    syncLanguage();
+    window.addEventListener("via-blue-language-change", syncLanguage);
+    return () => window.removeEventListener("via-blue-language-change", syncLanguage);
+  }, []);
 
   useEffect(() => {
     try {
@@ -590,7 +599,7 @@ export default function AITripBookingPage() {
         );
 
         alert(
-          `Unable to verify your account.\n\n${userError.message}`,
+          `${isGerman ? "Dein Konto konnte nicht überprüft werden." : "Unable to verify your account."}\n\n${userError.message}`,
         );
 
         return;
@@ -623,9 +632,9 @@ export default function AITripBookingPage() {
           );
 
           alert(
-            `Unable to start your booking session.\n\n${
+            `${isGerman ? "Deine Buchungssitzung konnte nicht gestartet werden." : "Unable to start your booking session."}\n\n${
               anonError?.message ||
-              "Unknown authentication error"
+              (isGerman ? "Unbekannter Authentifizierungsfehler" : "Unknown authentication error")
             }`,
           );
 
@@ -746,7 +755,7 @@ export default function AITripBookingPage() {
         );
 
         alert(
-          `BOOKING WAS NOT SAVED\n\n${bookingError.message}\n\nCode: ${
+          `${isGerman ? "BUCHUNG WURDE NICHT GESPEICHERT" : "BOOKING WAS NOT SAVED"}\n\n${bookingError.message}\n\nCode: ${
             bookingError.code || "Unknown"
           }`,
         );
@@ -780,43 +789,43 @@ export default function AITripBookingPage() {
           })
           .join("\n\n");
 
-      const message = `🌴 NEW AI TRIP PACKAGE BOOKING
+      const message = `🌴 ${isGerman ? "NEUE KI-REISEPAKETBUCHUNG" : "NEW AI TRIP PACKAGE BOOKING"}
 
-🤖 Booking Source: AI Trip Planner
+🤖 ${isGerman ? "Buchungsquelle" : "Booking Source"}: AI Trip Planner
 
 📦 Package: ${selectedPackage.title}
 
-📝 Package Summary:
+📝 ${isGerman ? "Paketbeschreibung" : "Package Summary"}:
 
 ${selectedPackage.summary}
 
-📍 Area: ${booking.area}
+📍 ${isGerman ? "Region" : "Area"}: ${booking.area}
 
-📅 Trip Start Date: ${date}
+📅 ${isGerman ? "Reisebeginn" : "Trip Start Date"}: ${date}
 
-🗓️ Duration: ${booking.days} Days
+🗓️ ${isGerman ? "Dauer" : "Duration"}: ${booking.days} ${isGerman ? "Tage" : "Days"}
 
-👨 Adults: ${adults}
+👨 ${isGerman ? "Erwachsene" : "Adults"}: ${adults}
 
-🧒 Children: ${children}
+🧒 ${isGerman ? "Kinder" : "Children"}: ${children}
 
-👥 Total Guests: ${totalGuests}
+👥 ${isGerman ? "Gäste insgesamt" : "Total Guests"}: ${totalGuests}
 
-🌍 Nationality: ${
+🌍 ${isGerman ? "Nationalität" : "Nationality"}: ${
         nationality.trim() || "Not specified"
       }
 
-👤 Full Name: ${name.trim()}
+👤 ${isGerman ? "Vollständiger Name" : "Full Name"}: ${name.trim()}
 
-✉️ Email: ${email.trim()}
+✉️ ${isGerman ? "E-Mail" : "Email"}: ${email.trim()}
 
 📱 WhatsApp: ${fullPhone}
 
-🏨 Hotel: ${
+🏨 ${isGerman ? "Hotel" : "Hotel"}: ${
         hotel.trim() || "Not specified"
       }
 
-🚪 Room Number: ${
+🚪 ${isGerman ? "Zimmernummer" : "Room Number"}: ${
         roomNumber.trim() || "Not specified"
       }
 
@@ -824,29 +833,29 @@ ${selectedPackage.summary}
         booking.budget,
       )} ${booking.currency}
 
-💰 Package Total: ${formatPrice(
+💰 ${isGerman ? "Paketgesamtpreis" : "Package Total"}: ${formatPrice(
         selectedPackage.totalCost,
       )} ${booking.currency}
 
-💰 Remaining Budget: ${formatPrice(
+💰 ${isGerman ? "Verbleibendes Budget" : "Remaining Budget"}: ${formatPrice(
         selectedPackage.remainingBudget,
       )} ${booking.currency}
 
-🎯 Experiences: ${
+🎯 ${isGerman ? "Erlebnisse" : "Experiences"}: ${
         selectedPackage.activities
       }
 
-🧒 Children Ages:
+🧒 ${isGerman ? "Alter der Kinder" : "Children Ages"}:
 
 ${
   childrenAgeValues.filter(Boolean).join(", ") || "-"
 }
 
-🗺️ ITINERARY
+🗺️ ${isGerman ? "REISEPLAN" : "ITINERARY"}
 
 ${itineraryMessage}
 
-📝 Special Requests:
+📝 ${isGerman ? "Besondere Wünsche" : "Special Requests"}:
 
 -
 
@@ -867,7 +876,7 @@ Via Blue AI Trip Planner
         "noopener,noreferrer",
       );
 
-      alert("Booking saved successfully!");
+      alert(isGerman ? "Buchung erfolgreich gespeichert!" : "Booking saved successfully!");
 
       sessionStorage.removeItem(
         "viaBlueAITripBooking",
@@ -893,7 +902,7 @@ Via Blue AI Trip Planner
           : "Unknown error";
 
       alert(
-        `Something went wrong.\n\n${errorMessage}`,
+        `${isGerman ? "Ein Fehler ist aufgetreten." : "Something went wrong."}\n\n${errorMessage}`,
       );
     } finally {
       setIsSubmitting(false);
@@ -923,13 +932,12 @@ Via Blue AI Trip Planner
             </p>
 
             <h1 className="mt-2 text-4xl font-bold md:text-5xl">
-              Book Your AI-Crafted Trip
+              <HomeText en="Book Your AI-Crafted Trip" de="Buchen Sie Ihre KI-geplante Reise" />
             </h1>
 
             <p className="mt-4 max-w-3xl text-blue-100">
               Your personalized itinerary is ready.
-              Complete your details below and our team
-              will take care of the rest.
+              <HomeText en="Complete your details below and our team will take care of the rest." de="Ergänzen Sie Ihre Angaben – unser Team kümmert sich um den Rest." />
             </p>
           </div>
         </div>
@@ -939,25 +947,24 @@ Via Blue AI Trip Planner
 
           <div className="rounded-3xl bg-white p-8 shadow-lg lg:col-span-2">
             <h2 className="mb-2 text-2xl font-bold text-blue-900">
-              Guest Information
+              <HomeText en="Guest Information" de="Gästeinformationen" />
             </h2>
 
             <p className="mb-8 text-sm text-gray-500">
-              Tell us who is traveling so we can prepare
-              your booking correctly.
+              <HomeText en="Tell us who is traveling so we can prepare your booking correctly." de="Geben Sie an, wer reist, damit wir Ihre Buchung korrekt vorbereiten können." />
             </p>
 
-            {/* Name + Nationality */}
+            {/* Name + <HomeText en="Nationality" de="Nationalität" /> */}
 
             <div className="grid gap-4 md:grid-cols-2">
               <div>
                 <label className={labelClass}>
-                  Full Name *
+                  <HomeText en="Full Name *" de="Vollständiger Name *" />
                 </label>
 
                 <input
                   type="text"
-                  placeholder="Full Name *"
+                  placeholder={isGerman ? "Vollständiger Name *" : "Full Name *"}
                   value={name}
                   onChange={(event) =>
                     setName(event.target.value)
@@ -977,12 +984,12 @@ Via Blue AI Trip Planner
 
               <div className="relative">
                 <label className={labelClass}>
-                  Nationality
+                  <HomeText en="Nationality" de="Nationalität" />
                 </label>
 
                 <input
                   type="text"
-                  placeholder="Nationality"
+                  placeholder={isGerman ? "Nationalität" : "Nationality"}
                   value={nationality}
                   onChange={(event) => {
                     setNationality(
@@ -1038,12 +1045,12 @@ Via Blue AI Trip Planner
             <div className="mt-4 grid gap-4 md:grid-cols-2">
               <div>
                 <label className={labelClass}>
-                  Email *
+                  <HomeText en="Email *" de="E-Mail *" />
                 </label>
 
                 <input
                   type="email"
-                  placeholder="Email *"
+                  placeholder={isGerman ? "E-Mail *" : "Email *"}
                   value={email}
                   onChange={(event) =>
                     setEmail(event.target.value)
@@ -1063,7 +1070,7 @@ Via Blue AI Trip Planner
 
               <div>
                 <label className={labelClass}>
-                  WhatsApp Number *
+                  <HomeText en="WhatsApp Number *" de="WhatsApp-Nummer *" />
                 </label>
 
                 <div className="flex gap-2">
@@ -1095,7 +1102,7 @@ Via Blue AI Trip Planner
                       <div className="absolute left-0 top-full z-40 mt-1 w-72 rounded-xl border bg-white shadow-xl">
                         <input
                           type="text"
-                          placeholder="Search country..."
+                          placeholder={isGerman ? "Land suchen..." : "Search country..."}
                           value={countrySearch}
                           onChange={(event) =>
                             setCountrySearch(
@@ -1156,7 +1163,7 @@ Via Blue AI Trip Planner
 
                   <input
                     type="tel"
-                    placeholder="Number"
+                    placeholder={isGerman ? "Telefonnummer" : "Number"}
                     value={phone}
                     onChange={(event) =>
                       setPhone(
@@ -1183,18 +1190,18 @@ Via Blue AI Trip Planner
             {/* Hotel */}
 
             <h2 className="mb-6 mt-10 text-2xl font-bold text-blue-900">
-              Hotel Information
+              <HomeText en="Hotel Information" de="Hotelinformationen" />
             </h2>
 
             <div className="grid gap-4 md:grid-cols-2">
               <div>
                 <label className={labelClass}>
-                  Hotel Name
+                  <HomeText en="Hotel Name" de="Hotelname" />
                 </label>
 
                 <input
                   type="text"
-                  placeholder="Hotel Name"
+                  placeholder={isGerman ? "Hotelname" : "Hotel Name"}
                   value={hotel}
                   onChange={(event) =>
                     setHotel(
@@ -1207,12 +1214,12 @@ Via Blue AI Trip Planner
 
               <div>
                 <label className={labelClass}>
-                  Room Number
+                  <HomeText en="Room Number" de="Zimmernummer" />
                 </label>
 
                 <input
                   type="text"
-                  placeholder="Room Number"
+                  placeholder={isGerman ? "Zimmernummer" : "Room Number"}
                   value={roomNumber}
                   onChange={(event) =>
                     setRoomNumber(
@@ -1224,14 +1231,14 @@ Via Blue AI Trip Planner
               </div>
             </div>
 
-            {/* Trip Information */}
+            {/* <HomeText en="Trip Information" de="Reiseinformationen" /> */}
 
             <h2 className="mb-6 mt-10 text-2xl font-bold text-blue-900">
-              Trip Information
+              <HomeText en="Trip Information" de="Reiseinformationen" />
             </h2>
 
             <label className={labelClass}>
-              Trip Start Date *
+              <HomeText en="Trip Start Date *" de="Reisebeginn *" />
             </label>
 
             {/* PREMIUM DATE PICKER */}
@@ -1302,7 +1309,7 @@ Via Blue AI Trip Planner
                             : "text-gray-400"
                         }`}
                       >
-                        {formatDateLabel(date)}
+                        {formatDateLabel(date, isGerman)}
                       </span>
 
                       <svg
@@ -1360,7 +1367,7 @@ Via Blue AI Trip Planner
                       <div className="flex items-center justify-between">
                         <div>
                           <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-orange-400">
-                            Trip Date
+                            <HomeText en="Trip Date" de="Reisedatum" />
                           </p>
 
                           <p className="mt-1 text-xl font-bold text-white">
@@ -1380,7 +1387,7 @@ Via Blue AI Trip Planner
                               goToPreviousMonth
                             }
                             disabled={!canGoPrev}
-                            aria-label="Previous month"
+                            aria-label={isGerman ? "Vorheriger Monat" : "Previous month"}
                             className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white transition-all duration-200 hover:border-orange-400/50 hover:bg-orange-500 disabled:cursor-not-allowed disabled:opacity-30"
                           >
                             <svg
@@ -1403,7 +1410,7 @@ Via Blue AI Trip Planner
                             onClick={
                               goToNextMonth
                             }
-                            aria-label="Next month"
+                            aria-label={isGerman ? "Nächster Monat" : "Next month"}
                             className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white transition-all duration-200 hover:border-orange-400/50 hover:bg-orange-500"
                           >
                             <svg
@@ -1518,7 +1525,7 @@ Via Blue AI Trip Planner
                       <div className="flex items-center gap-2 text-xs font-medium text-gray-400">
                         <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
 
-                        Select the first day of your trip
+                        <HomeText en="Select the first day of your trip" de="Wählen Sie den ersten Reisetag" />
                       </div>
                     </div>
                   </div>
@@ -1528,7 +1535,7 @@ Via Blue AI Trip Planner
 
             <p className="mt-2 flex items-center gap-2 text-xs text-gray-400">
               <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
-              Select the first day of your trip
+              <HomeText en="Select the first day of your trip" de="Wählen Sie den ersten Reisetag" />
             </p>
 
             {submitAttempted &&
@@ -1537,16 +1544,16 @@ Via Blue AI Trip Planner
                 "Please select a valid trip start date from tomorrow onward.",
               )}
 
-            {/* Travelers */}
+            {/* <HomeText en="Travelers" de="Reisende" /> */}
 
             <h2 className="mb-6 mt-10 text-2xl font-bold text-blue-900">
-              Travelers
+              <HomeText en="Travelers" de="Reisende" />
             </h2>
 
             <div className="grid gap-4 md:grid-cols-2">
               <div className="rounded-xl bg-blue-50 p-5">
                 <p className="text-sm font-bold text-gray-500">
-                  Adults
+                  <HomeText en="Adults" de="Erwachsene" />
                 </p>
 
                 <p className="mt-1 text-2xl font-bold text-blue-900">
@@ -1556,7 +1563,7 @@ Via Blue AI Trip Planner
 
               <div className="rounded-xl bg-orange-50 p-5">
                 <p className="text-sm font-bold text-gray-500">
-                  Children
+                  <HomeText en="Children" de="Kinder" />
                 </p>
 
                 <p className="mt-1 text-2xl font-bold text-orange-600">
@@ -1565,12 +1572,12 @@ Via Blue AI Trip Planner
               </div>
             </div>
 
-            {/* Children Ages */}
+            {/* <HomeText en="Children" de="Kinder" /> Ages */}
 
             {childAges.length > 0 && (
               <div className="mt-6">
                 <h3 className="mb-4 text-lg font-bold text-blue-900">
-                  Children Ages (5-10 years)
+                  <HomeText en="Children ages (5–10 years)" de="Alter der Kinder (5–10 Jahre)" />
                 </h3>
 
                 <div className="grid gap-4 md:grid-cols-2">
@@ -1603,32 +1610,31 @@ Via Blue AI Trip Planner
                           }}
                         >
                           <option value="">
-                            Select Child{" "}
-                            {index + 1} Age
+                            {isGerman ? `Alter für Kind ${index + 1} auswählen` : `Select Child ${index + 1} Age`}
                           </option>
 
                           <option value="5">
-                            5 years
+                            {isGerman ? "5 Jahre" : "5 years"}
                           </option>
 
                           <option value="6">
-                            6 years
+                            {isGerman ? "6 Jahre" : "6 years"}
                           </option>
 
                           <option value="7">
-                            7 years
+                            {isGerman ? "7 Jahre" : "7 years"}
                           </option>
 
                           <option value="8">
-                            8 years
+                            {isGerman ? "8 Jahre" : "8 years"}
                           </option>
 
                           <option value="9">
-                            9 years
+                            {isGerman ? "9 Jahre" : "9 years"}
                           </option>
 
                           <option value="10">
-                            10 years
+                            {isGerman ? "10 Jahre" : "10 years"}
                           </option>
                         </select>
 
@@ -1637,9 +1643,9 @@ Via Blue AI Trip Planner
                             index
                           ] &&
                           errorText(
-                            `Select an age for Child ${
-                              index + 1
-                            }.`,
+                            isGerman
+                              ? `Bitte wählen Sie das Alter für Kind ${index + 1} aus.`
+                              : `Select an age for Child ${index + 1}.`,
                           )}
                       </div>
                     ),
@@ -1648,7 +1654,7 @@ Via Blue AI Trip Planner
               </div>
             )}
 
-            {/* Total Guests */}
+            {/* <HomeText en="Total Guests" de="Gäste insgesamt" /> */}
 
             <div className="mt-6 flex items-center gap-4 rounded-2xl bg-blue-50 p-5">
               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white text-blue-950 shadow-sm">
@@ -1688,7 +1694,7 @@ Via Blue AI Trip Planner
 
               <div>
                 <p className="text-xs font-bold uppercase tracking-wider text-gray-500">
-                  Total Guests
+                  <HomeText en="Total Guests" de="Gäste insgesamt" />
                 </p>
 
                 <p className="mt-1 text-xl font-bold text-blue-900">
@@ -1700,16 +1706,16 @@ Via Blue AI Trip Planner
             {/* Special Requests */}
 
             <h2 className="mb-6 mt-10 text-2xl font-bold text-blue-900">
-              Additional Information
+              <HomeText en="Additional Information" de="Zusätzliche Informationen" />
             </h2>
 
             <label className={labelClass}>
-              Special Requests / Notes
+              <HomeText en="Special Requests / Notes" de="Besondere Wünsche / Hinweise" />
             </label>
 
             <textarea
               rows={3}
-              placeholder="Special Requests / Notes"
+              placeholder={isGerman ? "Besondere Wünsche / Hinweise" : "Special Requests / Notes"}
               className={inputClass(false)}
             />
 
@@ -1718,9 +1724,7 @@ Via Blue AI Trip Planner
             {submitAttempted &&
               !isFormValid && (
                 <p className="mt-4 rounded-xl bg-red-50 p-4 font-bold text-red-700">
-                  Please fill in the required fields
-                  highlighted above before sending
-                  your request.
+                  <HomeText en="Please fill in the required fields highlighted above before sending your request." de="Bitte füllen Sie vor dem Absenden alle oben markierten Pflichtfelder aus." />
                 </p>
               )}
 
@@ -1746,7 +1750,7 @@ Via Blue AI Trip Planner
 
               <div className="bg-blue-950 p-7 text-white">
                 <p className="text-xs font-bold uppercase tracking-[0.2em] text-orange-400">
-                  Selected Package
+                  <HomeText en="Selected Package" de="Ausgewähltes Paket" />
                 </p>
 
                 <h3 className="mt-2 text-2xl font-bold">
@@ -1764,7 +1768,7 @@ Via Blue AI Trip Planner
                 <div className="grid gap-3">
                   <div className="rounded-xl bg-blue-50 p-4">
                     <p className="text-xs font-bold uppercase tracking-wider text-gray-500">
-                      Area
+                      <HomeText en="Area" de="Region" />
                     </p>
 
                     <p className="mt-1 font-bold text-blue-900">
@@ -1774,7 +1778,7 @@ Via Blue AI Trip Planner
 
                   <div className="rounded-xl bg-gray-50 p-4">
                     <p className="text-xs font-bold uppercase tracking-wider text-gray-500">
-                      Duration
+                      <HomeText en="Duration" de="Dauer" />
                     </p>
 
                     <p className="mt-1 font-bold text-blue-900">
@@ -1784,13 +1788,13 @@ Via Blue AI Trip Planner
 
                   <div className="rounded-xl bg-gray-50 p-4">
                     <p className="text-xs font-bold uppercase tracking-wider text-gray-500">
-                      Travelers
+                      <HomeText en="Travelers" de="Reisende" />
                     </p>
 
                     <p className="mt-1 font-bold text-blue-900">
-                      {adults} Adults
+                      {adults} <HomeText en="Adults" de="Erwachsene" />
                       {children > 0
-                        ? ` · ${children} Children`
+                        ? ` · ${children} ${isGerman ? "Kinder" : "Children"}`
                         : ""}
                     </p>
                   </div>
@@ -1799,7 +1803,7 @@ Via Blue AI Trip Planner
                 {/* Itinerary */}
 
                 <h3 className="mb-5 mt-8 text-xl font-bold text-blue-900">
-                  Your Itinerary
+                  <HomeText en="Your Itinerary" de="Ihr Reiseplan" />
                 </h3>
 
                 <div className="space-y-6">
@@ -1862,7 +1866,7 @@ Via Blue AI Trip Planner
 
                 <div className="mt-8 border-t border-gray-100 pt-6">
                   <p className="text-xs font-bold uppercase tracking-wider text-gray-400">
-                    Package Total
+                    <HomeText en="Package Total" de="Paketgesamtpreis" />
                   </p>
 
                   <p className="mt-1 text-3xl font-bold text-orange-500">
@@ -1891,7 +1895,7 @@ Via Blue AI Trip Planner
                   </p>
 
                   <p className="mt-1 text-xs leading-5 text-gray-600">
-                    Your package contains real
+                    <HomeText en="Your package contains real" de="Ihr Paket enthält echte" />
                     experiences selected from the Via
                     Blue tour inventory.
                   </p>

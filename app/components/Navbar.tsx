@@ -12,6 +12,63 @@ export default function Navbar() {
 
   const [isOpen, setIsOpen] = useState(false);
   const [userName, setUserName] = useState<string | null>(null);
+  const [language, setLanguage] = useState<"en" | "de">("en");
+
+  useEffect(() => {
+    try {
+      const savedLanguage = window.localStorage.getItem("via-blue-language");
+      if (savedLanguage === "de" || savedLanguage === "en") {
+        setLanguage(savedLanguage);
+        document.documentElement.lang = savedLanguage;
+      }
+    } catch {
+      // Keep English as the safe default if browser storage is unavailable.
+    }
+  }, []);
+
+  function toggleLanguage() {
+    const nextLanguage = language === "en" ? "de" : "en";
+    setLanguage(nextLanguage);
+    document.documentElement.lang = nextLanguage;
+    try {
+      window.localStorage.setItem("via-blue-language", nextLanguage);
+    } catch {
+      // The language switch still works for the current page if storage is unavailable.
+    }
+    window.dispatchEvent(new CustomEvent("via-blue-language-change", { detail: nextLanguage }));
+  }
+
+  const labels = language === "de"
+    ? {
+        Home: "Startseite",
+        Tours: "Ausflüge",
+        Transfers: "Transfers",
+        "Luxury Tours": "Luxus-Ausflüge",
+        "AI Trip Planner": "KI-Reiseplaner",
+        "About Us": "Über uns",
+        Contact: "Kontakt",
+        Register: "Registrieren",
+        "Log In": "Anmelden",
+        "Log Out": "Abmelden",
+        New: "Neu",
+        Greeting: "Hallo,",
+        "Toggle menu": "Menü öffnen",
+      }
+    : {
+        Home: "Home",
+        Tours: "Tours",
+        Transfers: "Transfers",
+        "Luxury Tours": "Luxury Tours",
+        "AI Trip Planner": "AI Trip Planner",
+        "About Us": "About Us",
+        Contact: "Contact",
+        Register: "Register",
+        "Log In": "Log In",
+        "Log Out": "Log Out",
+        New: "New",
+        Greeting: "Hi,",
+        "Toggle menu": "Toggle menu",
+      };
 
   useEffect(() => {
     async function loadUser() {
@@ -55,33 +112,33 @@ export default function Navbar() {
 
   const navItems = [
     {
-      name: "Home",
+      name: labels.Home,
       href: "/",
     },
     {
-      name: "Tours",
+      name: labels.Tours,
       href: "/tours",
     },
     {
-      name: "Transfers",
+      name: labels.Transfers,
       href: "/transfers",
     },
     {
-      name: "Luxury Tours",
+      name: labels["Luxury Tours"],
       href: "/luxury-tours",
       premium: true,
     },
     {
-      name: "AI Trip Planner",
+      name: labels["AI Trip Planner"],
       href: "/ai-trip-planner",
       special: true,
     },
     {
-      name: "About Us",
+      name: labels["About Us"],
       href: "/about",
     },
     {
-      name: "Contact",
+      name: labels.Contact,
       href: "/contact",
     },
   ];
@@ -168,7 +225,7 @@ export default function Navbar() {
 
                   {!active && (
                     <span className="absolute right-1 top-1 rounded-full bg-gradient-to-r from-orange-500 to-amber-400 px-1.5 py-0.5 text-[6px] font-black uppercase tracking-[0.08em] text-white shadow-sm">
-                      New
+                      {labels.New}
                     </span>
                   )}
                 </Link>
@@ -215,6 +272,15 @@ export default function Navbar() {
 
         </nav>
 
+        <button
+          type="button"
+          onClick={toggleLanguage}
+          aria-label={language === "en" ? "Auf Deutsch wechseln" : "Switch to English"}
+          className="hidden shrink-0 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-extrabold text-blue-950 transition hover:border-orange-300 hover:bg-orange-50 lg:inline-flex"
+        >
+          {language === "en" ? "DE" : "EN"}
+        </button>
+
         {/* Desktop Account */}
         <div className="hidden items-center lg:flex">
 
@@ -236,7 +302,7 @@ export default function Navbar() {
                 </span>
 
                 <span className="max-w-[90px] truncate text-[13px] font-extrabold">
-                  Hi, {userName.split(" ")[0]}
+                  {labels.Greeting} {userName.split(" ")[0]}
                 </span>
               </Link>
 
@@ -245,18 +311,18 @@ export default function Navbar() {
                 onClick={handleLogout}
                 className="rounded-2xl px-3 py-2.5 text-[13px] font-bold text-slate-500 transition-all duration-300 hover:bg-red-50 hover:text-red-600"
               >
-                Log Out
+                {labels["Log Out"]}
               </button>
 
             </div>
           ) : (
             <div className="ml-3 flex items-center gap-2">
               <Link href="/login?mode=register" className="rounded-2xl border border-blue-950/15 bg-white px-4 py-3 text-[13px] font-black text-blue-950 transition-all duration-300 hover:border-blue-950 hover:bg-blue-50">
-                Register
+                {labels.Register}
               </Link>
               <Link href="/login" className="group relative flex items-center gap-2 overflow-hidden rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 px-5 py-3 text-[13px] font-black text-white shadow-[0_8px_25px_rgba(249,115,22,0.22)] transition-all duration-300 hover:-translate-y-0.5 hover:from-orange-600 hover:to-amber-500 hover:shadow-[0_12px_30px_rgba(249,115,22,0.28)]">
                 <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
-                <span className="relative">Log In</span>
+                <span className="relative">{labels["Log In"]}</span>
                 <span className="relative text-base transition-transform duration-300 group-hover:translate-x-1">→</span>
               </Link>
             </div>
@@ -273,7 +339,7 @@ export default function Navbar() {
               ? "border-blue-950 bg-blue-950 text-white shadow-blue-950/20"
               : "border-slate-200 bg-white text-blue-950 hover:border-orange-200 hover:bg-orange-50"
           }`}
-          aria-label="Toggle menu"
+          aria-label={labels["Toggle menu"]}
           aria-expanded={isOpen}
         >
           {isOpen ? "✕" : "☰"}
@@ -286,6 +352,13 @@ export default function Navbar() {
         <div className="border-t border-slate-100 bg-white/95 px-4 pb-5 pt-3 shadow-[0_18px_35px_rgba(15,23,42,0.08)] backdrop-blur-xl lg:hidden">
 
           <nav className="flex flex-col gap-1.5">
+            <button
+              type="button"
+              onClick={toggleLanguage}
+              className="mb-2 self-start rounded-xl border border-slate-200 bg-white px-4 py-2 text-xs font-extrabold text-blue-950 transition hover:border-orange-300 hover:bg-orange-50"
+            >
+              {language === "en" ? "Deutsch" : "English"}
+            </button>
 
             {navItems.map((item) => {
               const active = isActive(item.href);
@@ -337,7 +410,7 @@ export default function Navbar() {
 
                   {item.special && !active && (
                     <span className="rounded-full bg-gradient-to-r from-orange-500 to-amber-400 px-2 py-1 text-[7px] font-black uppercase tracking-[0.08em] text-white shadow-sm">
-                      New
+                      {labels.New}
                     </span>
                   )}
 
@@ -366,7 +439,7 @@ export default function Navbar() {
                     </span>
 
                     <span className="truncate">
-                      Hi, {userName.split(" ")[0]}
+                      {labels.Greeting} {userName.split(" ")[0]}
                     </span>
                   </Link>
 
@@ -375,17 +448,17 @@ export default function Navbar() {
                     onClick={handleLogout}
                     className="w-full rounded-2xl border border-slate-200 px-4 py-3.5 text-center font-extrabold text-slate-700 transition-all duration-300 hover:border-red-200 hover:bg-red-50 hover:text-red-600"
                   >
-                    Log Out
+                    {labels["Log Out"]}
                   </button>
 
                 </div>
               ) : (
                 <div className="grid grid-cols-2 gap-2">
                   <Link href="/login?mode=register" onClick={() => setIsOpen(false)} className="flex items-center justify-center rounded-2xl border border-blue-950/15 bg-white px-4 py-3.5 text-sm font-black text-blue-950 transition-all duration-300 hover:border-blue-950 hover:bg-blue-50">
-                    Register
+                    {labels.Register}
                   </Link>
                   <Link href="/login" onClick={() => setIsOpen(false)} className="group relative flex items-center justify-center gap-2 overflow-hidden rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 px-4 py-3.5 font-black text-white shadow-lg shadow-orange-500/20 transition-all duration-300 hover:from-orange-600 hover:to-amber-500">
-                    <span>Log In</span>
+                    <span>{labels["Log In"]}</span>
                     <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
                   </Link>
                 </div>

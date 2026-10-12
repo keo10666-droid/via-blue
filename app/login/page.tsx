@@ -16,6 +16,33 @@ export default function LoginPage() {
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [isGerman, setIsGerman] = useState(false);
+
+  useEffect(() => {
+    try {
+      setIsGerman(window.localStorage.getItem("via-blue-language") === "de");
+    } catch {
+      // Keep English as the safe fallback.
+    }
+    const handleLanguageChange = (event: Event) => {
+      const next = (event as CustomEvent<"en" | "de">).detail;
+      if (next === "en" || next === "de") setIsGerman(next === "de");
+    };
+    window.addEventListener("via-blue-language-change", handleLanguageChange);
+    return () => window.removeEventListener("via-blue-language-change", handleLanguageChange);
+  }, []);
+
+  const text = (en: string, de: string) => isGerman ? de : en;
+  const translateMessage = (value: string) => {
+    const messages: Record<string, string> = {
+      "We couldn’t complete this request. Please check your details and try again.": "Die Anfrage konnte nicht abgeschlossen werden. Bitte überprüfe deine Angaben und versuche es erneut.",
+      "Account created. Please check your email to confirm your account": "Konto erstellt. Bitte überprüfe deine E-Mail, um dein Konto zu bestätigen.",
+      "Email or password is incorrect.": "E-Mail-Adresse oder Passwort ist falsch.",
+      "Please enter your email address first.": "Bitte gib zuerst deine E-Mail-Adresse ein.",
+      "A new confirmation email has been sent.": "Eine neue Bestätigungs-E-Mail wurde gesendet."
+    };
+    return isGerman ? (messages[value] || value) : value;
+  };
 
   useEffect(() => {
     if (new URLSearchParams(window.location.search).get("mode") === "register") {
@@ -121,34 +148,33 @@ export default function LoginPage() {
                     </p>
 
                     <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-white/55">
-                      Tours & Transfers
+                      {text("Tours & Transfers", "Ausflüge & Transfers")}
                     </p>
                   </div>
                 </div>
 
                 <div className="mt-32 max-w-md">
                   <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#f28c28]">
-                    Your Egyptian Journey
+                    {text("Your Egyptian Journey", "Deine Reise durch Ägypten")}
                   </p>
 
                   <h2 className="mt-5 text-5xl font-black leading-[1.05] tracking-tight">
-                    Discover Egypt
+                    {text("Discover Egypt", "Ägypten entdecken")}
                     <br />
                     <span className="text-white/65">
-                      Travel beautifully
+                      {text("Travel beautifully", "Stilvoll reisen")}
                     </span>
                   </h2>
 
                   <p className="mt-7 max-w-sm text-base leading-7 text-white/65">
-                    Manage your bookings, keep your trips organized and enjoy
-                    a smoother travel experience with Via Blue
+                    {text("Manage your bookings, keep your trips organized and enjoy a smoother travel experience with Via Blue", "Verwalte deine Buchungen, organisiere deine Ausflüge und genieße ein entspanntes Reiseerlebnis mit Via Blue")}
                   </p>
                 </div>
               </div>
 
               <div className="flex items-center gap-3 text-sm text-white/55">
                 <div className="h-px w-10 bg-white/20" />
-                <span>Hurghada · Egypt</span>
+                <span>{text("Hurghada · Egypt", "Hurghada · Ägypten")}</span>
               </div>
             </div>
           </div>
@@ -176,17 +202,17 @@ export default function LoginPage() {
             <div className="mx-auto w-full max-w-md">
               <div className="mb-9">
                 <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#f28c28]">
-                  {isSignUp ? "Join Via Blue" : "Member Access"}
+                  {isSignUp ? text("Join Via Blue", "Via Blue beitreten") : text("Member Access", "Mitgliederzugang")}
                 </p>
 
                 <h1 className="mt-3 text-4xl font-black tracking-tight text-[#0b3a78]">
-                  {isSignUp ? "Create your account" : "Welcome back"}
+                  {isSignUp ? text("Create your account", "Konto erstellen") : text("Welcome back", "Willkommen zurück")}
                 </h1>
 
                 <p className="mt-3 text-sm leading-6 text-gray-500">
                   {isSignUp
-                    ? "Create your account and manage your bookings with ease"
-                    : "Sign in to access your bookings and travel details."}
+                    ? text("Create your account and manage your bookings with ease", "Erstelle dein Konto und verwalte deine Buchungen ganz einfach")
+                    : text("Sign in to access your bookings and travel details.", "Melde dich an, um deine Buchungen und Reisedetails aufzurufen.")}
                 </p>
               </div>
 
@@ -194,7 +220,7 @@ export default function LoginPage() {
                 {isSignUp && (
                   <div className="mb-5">
                     <label className="mb-2 block text-xs font-bold uppercase tracking-wide text-[#0b3a78]">
-                      Full Name
+                      {text("Full Name", "Vollständiger Name")}
                     </label>
 
                     <input
@@ -202,7 +228,7 @@ export default function LoginPage() {
                       value={fullName}
                       onChange={(event) => setFullName(event.target.value)}
                       required
-                      placeholder="Your full name"
+                      placeholder={text("Your full name", "Dein vollständiger Name")}
                       className="w-full rounded-2xl border border-gray-200 bg-gray-50/70 px-5 py-4 text-sm text-gray-900 outline-none transition duration-200 placeholder:text-gray-400 hover:border-gray-300 focus:border-[#0b3a78] focus:bg-white focus:ring-4 focus:ring-[#0b3a78]/5"
                     />
                   </div>
@@ -210,7 +236,7 @@ export default function LoginPage() {
 
                 <div className="mb-5">
                   <label className="mb-2 block text-xs font-bold uppercase tracking-wide text-[#0b3a78]">
-                    Email Address
+                    {text("Email Address", "E-Mail-Adresse")}
                   </label>
 
                   <input
@@ -218,7 +244,7 @@ export default function LoginPage() {
                     value={email}
                     onChange={(event) => setEmail(event.target.value)}
                     required
-                    placeholder="you@example.com"
+                    placeholder={text("you@example.com", "du@beispiel.de")}
                     className="w-full rounded-2xl border border-gray-200 bg-gray-50/70 px-5 py-4 text-sm text-gray-900 outline-none transition duration-200 placeholder:text-gray-400 hover:border-gray-300 focus:border-[#0b3a78] focus:bg-white focus:ring-4 focus:ring-[#0b3a78]/5"
                   />
                 </div>
@@ -226,7 +252,7 @@ export default function LoginPage() {
                 <div>
                   <div className="mb-2 flex items-center justify-between">
                     <label className="block text-xs font-bold uppercase tracking-wide text-[#0b3a78]">
-                      Password
+                      {text("Password", "Passwort")}
                     </label>
 
                   </div>
@@ -238,7 +264,7 @@ export default function LoginPage() {
                       onChange={(event) => setPassword(event.target.value)}
                       required
                       minLength={6}
-                      placeholder="At least 6 characters"
+                      placeholder={text("At least 6 characters", "Mindestens 6 Zeichen")}
                       className="w-full rounded-2xl border border-gray-200 bg-gray-50/70 px-5 py-4 pr-14 text-sm text-gray-900 outline-none transition duration-200 placeholder:text-gray-400 hover:border-gray-300 focus:border-[#0b3a78] focus:bg-white focus:ring-4 focus:ring-[#0b3a78]/5"
                     />
 
@@ -247,7 +273,7 @@ export default function LoginPage() {
                       onClick={() => setShowPassword((current) => !current)}
                       className="absolute right-4 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-lg p-1 text-gray-400 transition hover:text-[#0b3a78]"
                       aria-label={
-                        showPassword ? "Hide password" : "Show password"
+                        showPassword ? text("Hide password", "Passwort verbergen") : text("Show password", "Passwort anzeigen")
                       }
                     >
                       {showPassword ? (
@@ -264,13 +290,13 @@ export default function LoginPage() {
                     href="/forgot-password"
                     className="mt-4 block text-right text-xs font-bold text-gray-500 transition hover:text-[#f28c28]"
                   >
-                    Forgot your password?
+                    {text("Forgot your password?", "Passwort vergessen?")}
                   </Link>
                 )}
 
                 {message && (
                   <div className="mt-5 rounded-2xl border border-[#0b3a78]/10 bg-[#0b3a78]/5 px-4 py-4 text-sm font-medium leading-6 text-[#0b3a78]">
-                    {message}
+                    {translateMessage(message)}
                   </div>
                 )}
 
@@ -280,10 +306,10 @@ export default function LoginPage() {
                   className="mt-7 flex w-full items-center justify-center rounded-2xl bg-[#0b3a78] px-6 py-4 text-sm font-bold text-white shadow-lg shadow-[#0b3a78]/20 transition duration-200 hover:-translate-y-0.5 hover:bg-[#082d5d] hover:shadow-xl hover:shadow-[#0b3a78]/25 disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {isLoading
-                    ? "Please wait..."
+                    ? text("Please wait...", "Bitte warten...")
                     : isSignUp
-                      ? "Create Account"
-                      : "Log In"}
+                      ? text("Create Account", "Konto erstellen")
+                      : text("Log In", "Anmelden")}
                 </button>
 
                 {!isSignUp && (
@@ -293,7 +319,7 @@ export default function LoginPage() {
                     disabled={isLoading}
                     className="mt-4 w-full text-center text-xs font-bold text-gray-500 transition hover:text-[#f28c28] disabled:opacity-60"
                   >
-                    Resend confirmation email
+                    {text("Resend confirmation email", "Bestätigungs-E-Mail erneut senden")}
                   </button>
                 )}
 
@@ -301,7 +327,7 @@ export default function LoginPage() {
                   <div className="h-px flex-1 bg-gray-100" />
 
                   <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-300">
-                    or
+                    {text("or", "oder")}
                   </span>
 
                   <div className="h-px flex-1 bg-gray-100" />
@@ -316,15 +342,15 @@ export default function LoginPage() {
                   className="w-full rounded-2xl border border-gray-200 bg-white px-5 py-4 text-sm font-bold text-[#0b3a78] transition hover:border-[#f28c28]/40 hover:bg-[#f28c28]/5 hover:text-[#f28c28]"
                 >
                   {isSignUp
-                    ? "Already have an account? Log in"
-                    : "New here? Create an account"}
+                    ? text("Already have an account? Log in", "Du hast bereits ein Konto? Anmelden")
+                    : text("New here? Create an account", "Neu hier? Konto erstellen")}
                 </button>
 
                 <Link
                   href="/"
                   className="mt-6 block text-center text-xs font-semibold text-gray-400 transition hover:text-[#0b3a78]"
                 >
-                  ← Back to home
+                  {text("← Back to home", "← Zurück zur Startseite")}
                 </Link>
               </form>
             </div>

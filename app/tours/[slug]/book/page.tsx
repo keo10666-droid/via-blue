@@ -8,6 +8,7 @@ import { useParams, notFound } from "next/navigation";
 
 import { tours } from "@/data/tours";
 import BookingSuccessModal from "@/app/components/BookingSuccessModal";
+import HomeText from "@/app/components/HomeText";
 
 const nationalities = [
   "Egyptian",
@@ -135,6 +136,14 @@ const FlagIcon = ({
 const EMAIL_REGEX = /^(?!.*\.\.)[a-zA-Z0-9](?:[a-zA-Z0-9.]{4,28}[a-zA-Z0-9])@gmail\.com$/i;
 
 export default function BookingPage() {
+  const [isGerman, setIsGerman] = useState(false);
+
+  useEffect(() => {
+    const syncLanguage = () => setIsGerman(window.localStorage.getItem("via-blue-language") === "de");
+    syncLanguage();
+    window.addEventListener("via-blue-language-change", syncLanguage);
+    return () => window.removeEventListener("via-blue-language-change", syncLanguage);
+  }, []);
   const params = useParams();
 
   const slug = Array.isArray(params.slug)
@@ -697,13 +706,15 @@ ${notes.trim() || "-"}
   alert(
     error instanceof Error
       ? error.message
-      : "Something went wrong while submitting your booking"
+      : isGerman
+        ? "Beim Absenden Ihrer Buchung ist ein Fehler aufgetreten."
+        : "Something went wrong while submitting your booking"
   );
 }
 };
 
   if (!baseTour && !tourOverride.category && catalogLoaded) notFound();
-  if (!baseTour && !tourOverride.category) return <main className="min-h-screen p-8 text-center text-blue-950">Loading tour details…</main>;
+  if (!baseTour && !tourOverride.category) return <main className="min-h-screen p-8 text-center text-blue-950">{isGerman ? "Ausflugsdetails werden geladen…" : "Loading tour details…"}</main>;
   if (tour.available === false) notFound();
 
   return (
@@ -735,7 +746,7 @@ ${notes.trim() || "-"}
             <div className="relative">
 
               <div className="mb-5 inline-flex items-center rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-blue-100 backdrop-blur-md">
-                Secure Booking
+                <HomeText en="Secure Booking" de="Sichere Buchung" />
               </div>
 
               <p className="text-sm font-bold uppercase tracking-[0.14em] text-orange-400">
@@ -743,7 +754,7 @@ ${notes.trim() || "-"}
               </p>
 
               <h1 className="mt-2 text-3xl font-bold tracking-tight md:text-5xl">
-                Book Your Tour
+                <HomeText en="Book Your Tour" de="Buchen Sie Ihre Tour" />
               </h1>
 
               <p className="mt-4 max-w-2xl text-sm leading-6 text-blue-100 md:text-base">
@@ -754,15 +765,15 @@ ${notes.trim() || "-"}
               <div className="mt-7 flex flex-wrap gap-3 text-xs font-semibold text-blue-100">
 
                 <span className="rounded-full border border-white/10 bg-white/10 px-4 py-2 backdrop-blur-md">
-                  Secure Booking
+                  <HomeText en="Secure Booking" de="Sichere Buchung" />
                 </span>
 
                 <span className="rounded-full border border-white/10 bg-white/10 px-4 py-2 backdrop-blur-md">
-                  Quick Confirmation
+                  <HomeText en="Quick Confirmation" de="Schnelle Bestätigung" />
                 </span>
 
                 <span className="rounded-full border border-orange-400/20 bg-orange-500/10 px-4 py-2 text-orange-100 backdrop-blur-md">
-                  Professional Service
+                  <HomeText en="Professional Service" de="Professioneller Service" />
                 </span>
 
               </div>
@@ -794,11 +805,11 @@ ${notes.trim() || "-"}
                 <div>
 
                   <h2 className="text-xl font-bold text-slate-900">
-                    Guest Information
+                    <HomeText en="Guest Information" de="Gästeinformationen" />
                   </h2>
 
                   <p className="text-sm text-slate-500">
-                    Tell us who will be joining the tour
+                    <HomeText en="Tell us who will be joining the tour" de="Teilen Sie uns mit, wer an der Tour teilnimmt" />
                   </p>
 
                 </div>
@@ -820,7 +831,7 @@ ${notes.trim() || "-"}
 
                   <input
                     type="text"
-                    placeholder="Enter your full name"
+                    placeholder={isGerman ? "Vollständiger Name" : "Enter your full name"}
                     value={name}
                     onChange={(e) =>
                       setName(e.target.value)
@@ -844,12 +855,12 @@ ${notes.trim() || "-"}
                 <div className="relative">
 
                   <label className={labelClass}>
-                    Nationality
+                    <HomeText en="Nationality" de="Nationalität" />
                   </label>
 
                   <input
                     type="text"
-                    placeholder="Select your nationality"
+                    placeholder={isGerman ? "Nationalität auswählen" : "Select your nationality"}
                     value={nationality}
                     onChange={(e) => {
                       setNationality(
@@ -920,7 +931,7 @@ ${notes.trim() || "-"}
                 <div>
 
                   <label className={labelClass}>
-                    Email Address (Gmail only){" "}
+                    {isGerman ? "E-Mail-Adresse (nur Gmail)" : "Email Address (Gmail only)"}{" "}
                     <span className="text-red-500">
                       *
                     </span>
@@ -941,7 +952,7 @@ ${notes.trim() || "-"}
                     )}
                   />
 
-                  <p className="mt-1.5 text-xs text-slate-500">Use a Gmail address ending in @gmail.com</p>
+                  <p className="mt-1.5 text-xs text-slate-500">{isGerman ? "Verwenden Sie eine Gmail-Adresse mit der Endung @gmail.com" : "Use a Gmail address ending in @gmail.com"}</p>
 
                   {(emailTouched || submitAttempted) &&
                     !isEmailValid &&
@@ -1004,7 +1015,7 @@ ${notes.trim() || "-"}
 
                             <input
                               type="text"
-                              placeholder="Search country..."
+                              placeholder={isGerman ? "Land suchen..." : "Search country..."}
                               value={countrySearch}
                               onChange={(e) =>
                                 setCountrySearch(
@@ -1067,7 +1078,7 @@ ${notes.trim() || "-"}
 
                     <input
                       type="tel"
-                      placeholder="Phone number"
+                      placeholder={isGerman ? "Telefonnummer" : "Phone number"}
                       value={phone}
                       onChange={(e) =>
                         setPhone(
@@ -1114,11 +1125,11 @@ ${notes.trim() || "-"}
                 <div>
 
                   <h2 className="text-xl font-bold text-slate-900">
-                    Hotel Information
+                    <HomeText en="Hotel Information" de="Hotelinformationen" />
                   </h2>
 
                   <p className="text-sm text-slate-500">
-                    Where should we pick you up
+                    <HomeText en="Where should we pick you up" de="Wo sollen wir Sie abholen?" />
                   </p>
 
                 </div>
@@ -1130,12 +1141,12 @@ ${notes.trim() || "-"}
                 <div>
 
                   <label className={labelClass}>
-                    Hotel Name
+                    <HomeText en="Hotel Name" de="Hotelname" />
                   </label>
 
                   <input
                     type="text"
-                    placeholder="Your hotel name"
+                    placeholder={isGerman ? "Name Ihres Hotels" : "Your hotel name"}
                     value={hotel}
                     onChange={(e) =>
                       setHotel(e.target.value)
@@ -1148,7 +1159,7 @@ ${notes.trim() || "-"}
                 <div>
 
                   <label className={labelClass}>
-                    Hotel Area
+                    <HomeText en="Hotel Area" de="Hotelregion" />
                   </label>
 
                   <select
@@ -1156,12 +1167,12 @@ ${notes.trim() || "-"}
                     onChange={(e) => setHotelArea(e.target.value)}
                     className={inputClass(false)}
                   >
-                    <option value="hurghada">Hurghada — No extra charge</option>
-                    <option value="makadi-bay">Makadi Bay — +€5 per adult/child</option>
-                    <option value="sahl-hasheesh">Sahl Hasheesh — +€5 per adult/child</option>
-                    <option value="el-gouna">El Gouna — +€10 per adult/child</option>
-                    <option value="safaga">Safaga — +€10 per adult/child</option>
-                    <option value="soma-bay">Soma Bay — +€10 per adult/child</option>
+                    <option value="hurghada">{isGerman ? "Hurghada — Kein Aufpreis" : "Hurghada — No extra charge"}</option>
+                    <option value="makadi-bay">{isGerman ? "Makadi Bay — +5 € pro Erwachsenem/Kind" : "Makadi Bay — +€5 per adult/child"}</option>
+                    <option value="sahl-hasheesh">{isGerman ? "Sahl Hasheesh — +5 € pro Erwachsenem/Kind" : "Sahl Hasheesh — +€5 per adult/child"}</option>
+                    <option value="el-gouna">{isGerman ? "El Gouna — +10 € pro Erwachsenem/Kind" : "El Gouna — +€10 per adult/child"}</option>
+                    <option value="safaga">{isGerman ? "Safaga — +10 € pro Erwachsenem/Kind" : "Safaga — +€10 per adult/child"}</option>
+                    <option value="soma-bay">{isGerman ? "Soma Bay — +10 € pro Erwachsenem/Kind" : "Soma Bay — +€10 per adult/child"}</option>
                   </select>
 
                 </div>
@@ -1169,12 +1180,12 @@ ${notes.trim() || "-"}
                 <div>
 
                   <label className={labelClass}>
-                    Room Number
+                    <HomeText en="Room Number" de="Zimmernummer" />
                   </label>
 
                   <input
                     type="text"
-                    placeholder="Room number"
+                    placeholder={isGerman ? "Zimmernummer" : "Room number"}
                     value={roomNumber}
                     onChange={(e) =>
                       setRoomNumber(
@@ -1205,11 +1216,11 @@ ${notes.trim() || "-"}
                 <div>
 
                   <h2 className="text-xl font-bold text-slate-900">
-                    Tour Information
+                    <HomeText en="Tour Information" de="Tourinformationen" />
                   </h2>
 
                   <p className="text-sm text-slate-500">
-                    Select your preferred tour date
+                    <HomeText en="Select your preferred tour date" de="Wählen Sie Ihr gewünschtes Tourdatum" />
                   </p>
 
                 </div>
@@ -1284,7 +1295,7 @@ ${notes.trim() || "-"}
                       </p>
 
                       <p className="text-xs text-slate-400">
-                        Available from tomorrow
+                        <HomeText en="Available from tomorrow" de="Ab morgen verfügbar" />
                       </p>
 
                     </div>
@@ -1327,7 +1338,7 @@ ${notes.trim() || "-"}
                       <div className="relative">
 
                         <p className="text-xs font-semibold uppercase tracking-[0.14em] text-blue-200">
-                          Select Tour Date
+                          <HomeText en="Select Tour Date" de="Tourdatum auswählen" />
                         </p>
 
                         <p className="mt-1 text-xl font-bold">
@@ -1504,12 +1515,12 @@ ${notes.trim() || "-"}
 
                           <span className="h-2 w-2 rounded-full bg-orange-500" />
 
-                          Today
+                          <HomeText en="Today" de="Heute" />
 
                         </div>
 
                         <p className="mt-2 text-xs text-slate-400">
-                          Dates before tomorrow are unavailable
+                          <HomeText en="Dates before tomorrow are unavailable" de="Daten vor morgen sind nicht verfügbar" />
                         </p>
 
                       </div>
@@ -1523,7 +1534,7 @@ ${notes.trim() || "-"}
               </div>
 
               <p className="mt-2 text-xs text-slate-400">
-                Please select a date from tomorrow onward
+                <HomeText en="Please select a date from tomorrow onward" de="Bitte wählen Sie ein Datum ab morgen" />
               </p>
 
               {submitAttempted &&
@@ -1549,11 +1560,11 @@ ${notes.trim() || "-"}
                 <div>
 
                   <h2 className="text-xl font-bold text-slate-900">
-                    Guests
+                    <HomeText en="Guests" de="Gäste" />
                   </h2>
 
                   <p className="text-sm text-slate-500">
-                    Tell us how many guests are travelling
+                    <HomeText en="Tell us how many guests are travelling" de="Wie viele Gäste reisen mit?" />
                   </p>
 
                 </div>
@@ -1567,7 +1578,7 @@ ${notes.trim() || "-"}
   tour.cairoOptions && (
   <div className="mb-5 md:col-span-3">
     <label className={labelClass}>
-      Museum
+      <HomeText en="Museum" de="Museum" />
     </label>
     <select
       value={selectedMuseum}
@@ -1579,10 +1590,10 @@ ${notes.trim() || "-"}
       className={inputClass(false)}
     >
       <option value="oldMuseum">
-        Old Museum
+        <HomeText en="Old Museum" de="Altes Museum" />
       </option>
       <option value="newMuseum">
-        New Museum
+        <HomeText en="New Museum" de="Neues Museum" />
       </option>
     </select>
   </div>
@@ -1596,7 +1607,7 @@ ${notes.trim() || "-"}
   tour.cairoOptions)) && (
   <div className="mb-5 md:col-span-3">
     <label className={labelClass}>
-      Vehicle Type
+      <HomeText en="Vehicle Type" de="Fahrzeugtyp" />
     </label>
                     <select
                       value={selectedVehicle}
@@ -1608,11 +1619,11 @@ ${notes.trim() || "-"}
                       className={inputClass(false)}
                     >
                       <option value="bus">
-                        Bus
+                        <HomeText en="Bus" de="Bus" />
                       </option>
 
                       <option value="van">
-                        Van
+                        <HomeText en="Van" de="Van" />
                       </option>
                     </select>
                   </div>
@@ -1621,7 +1632,7 @@ ${notes.trim() || "-"}
                 <div>
 
                   <label className={labelClass}>
-                    Adults
+                    <HomeText en="Adults" de="Erwachsene" />
                   </label>
 
                   <select
@@ -1759,7 +1770,7 @@ ${notes.trim() || "-"}
               <div className="mb-8 rounded-[22px] border border-blue-100 bg-gradient-to-br from-slate-50 to-blue-50/40 p-5 shadow-sm">
 
                 <h3 className="mb-4 text-base font-bold text-slate-900">
-                  Children Ages
+                  <HomeText en="Children Ages" de="Alter der Kinder" />
                 </h3>
 
                 <div className="grid gap-4 md:grid-cols-2">
@@ -1855,7 +1866,7 @@ ${notes.trim() || "-"}
               <div className="mb-8 rounded-[22px] border border-orange-100 bg-gradient-to-br from-slate-50 to-orange-50/30 p-5 shadow-sm">
 
                 <h3 className="mb-4 text-base font-bold text-slate-900">
-                  Infant Ages
+                  <HomeText en="Infant Ages" de="Alter der Kleinkinder" />
                 </h3>
 
                 <div className="grid gap-4 md:grid-cols-2">
@@ -1941,7 +1952,7 @@ ${notes.trim() || "-"}
             <div className="mb-6 flex items-center justify-between rounded-[22px] border border-blue-100 bg-gradient-to-r from-blue-50 to-orange-50/30 px-5 py-4 shadow-sm">
 
               <span className="text-sm font-semibold text-slate-600">
-                Total Guests
+                <HomeText en="Total Guests" de="Gäste insgesamt" />
               </span>
 
               <span className="text-xl font-bold text-blue-950">
@@ -1957,7 +1968,7 @@ ${notes.trim() || "-"}
               <div className="border-b border-slate-200 bg-gradient-to-r from-slate-50 to-blue-50/40 px-5 py-4">
 
                 <h3 className="text-lg font-bold text-slate-900">
-                  Booking Summary
+                  <HomeText en="Booking Summary" de="Buchungsübersicht" />
                 </h3>
 
               </div>
@@ -2024,7 +2035,7 @@ ${notes.trim() || "-"}
                   <>
                     <div className="flex items-center justify-between">
                       <span className="text-slate-500">
-                        Museum
+                        <HomeText en="Museum" de="Museum" />
                       </span>
                       <span className="font-semibold text-slate-800">
                         {selectedCairoOption?.name}
@@ -2129,7 +2140,7 @@ ${notes.trim() || "-"}
                 <div className="mt-4 flex items-center justify-between border-t border-slate-200 pt-4">
 
                   <span className="text-base font-bold text-slate-900">
-                    Total Price
+                    <HomeText en="Total Price" de="Gesamtpreis" />
                   </span>
 
                   <span className="text-2xl font-bold text-orange-500">
@@ -2159,11 +2170,11 @@ ${notes.trim() || "-"}
                 <div>
 
                   <h2 className="text-xl font-bold text-slate-900">
-                    Additional Information
+                    <HomeText en="Additional Information" de="Zusätzliche Informationen" />
                   </h2>
 
                   <p className="text-sm text-slate-500">
-                    Anything else we should know
+                    <HomeText en="Anything else we should know" de="Gibt es noch etwas, das wir wissen sollten?" />
                   </p>
 
                 </div>
@@ -2171,12 +2182,12 @@ ${notes.trim() || "-"}
               </div>
 
               <label className={labelClass}>
-                Special Requests / Notes
+                <HomeText en="Special Requests / Notes" de="Besondere Wünsche / Hinweise" />
               </label>
 
               <textarea
                 rows={5}
-                placeholder="Let us know if you have any special requests..."
+                placeholder={isGerman ? "Haben Sie besondere Wünsche?" : "Let us know if you have any special requests..."}
                 value={notes}
                 onChange={(e) =>
                   setNotes(
@@ -2244,11 +2255,11 @@ ${notes.trim() || "-"}
                 <div className="relative">
 
                   <p className="text-xs font-semibold uppercase tracking-[0.14em] text-blue-200">
-                    Your Reservation
+                    <HomeText en="Your Reservation" de="Ihre Reservierung" />
                   </p>
 
                   <h3 className="mt-2 text-2xl font-bold">
-                    Tour Summary
+                    <HomeText en="Tour Summary" de="Tourübersicht" />
                   </h3>
 
                 </div>
@@ -2276,7 +2287,7 @@ ${notes.trim() || "-"}
                   <div className="relative">
 
                     <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-orange-500">
-                      Total Price
+                      <HomeText en="Total Price" de="Gesamtpreis" />
                     </p>
 
                     <p className="text-3xl font-bold text-blue-950">
@@ -2292,7 +2303,7 @@ ${notes.trim() || "-"}
                   <div className="rounded-[20px] border border-slate-100 bg-slate-50 p-4">
 
                     <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-400">
-                      Guests
+                      <HomeText en="Guests" de="Gäste" />
                     </p>
 
                     <p className="text-xl font-bold text-slate-900">
@@ -2318,7 +2329,7 @@ ${notes.trim() || "-"}
                 <div className="rounded-[20px] border border-slate-200 p-5">
 
                   <p className="mb-4 text-sm font-bold text-slate-900">
-                    What's Included
+                    <HomeText en="What's Included" de="Was ist inklusive?" />
                   </p>
 
                   <ul className="space-y-3">

@@ -5,11 +5,24 @@ import Link from "next/link";
 import { Suspense, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
+import HomeText from "@/app/components/HomeText";
+import TourText from "@/app/components/TourText";
+
 import {
   tours,
   tourCategories,
   tourCategoryMap,
 } from "@/data/tours";
+
+const germanTourCategories: Record<string, string> = {
+  "islands-boat-trips": "Inseln & Bootsausflüge",
+  "snorkeling-diving": "Schnorcheln & Tauchen",
+  "sea-water-activities": "Wasseraktivitäten",
+  "dolphin-experiences": "Delfin-Erlebnisse",
+  "desert-adventures": "Wüstenabenteuer",
+  "egypt-tours-excursions": "Ägypten-Touren & Ausflüge",
+  "family-attractions": "Familienattraktionen",
+};
 
 /* =========================================================
    ICONS
@@ -592,7 +605,7 @@ function ToursPageContent() {
             </span>
 
             <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-orange-300 sm:text-xs">
-              Via Blue Experiences
+              <HomeText en="Via Blue Experiences" de="Erlebnisse mit Via Blue" />
             </p>
 
           </div>
@@ -600,11 +613,11 @@ function ToursPageContent() {
           <h1 className="mt-7 text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
 
             <span className="block text-white">
-              Discover Hurghada
+              <HomeText en="Discover Hurghada" de="Entdecken Sie Hurghada" />
             </span>
 
             <span className="mt-2 block text-orange-400">
-              Experience the Red Sea
+              <HomeText en="Experience the Red Sea" de="Erleben Sie das Rote Meer" />
             </span>
 
           </h1>
@@ -612,9 +625,7 @@ function ToursPageContent() {
           <div className="mx-auto mt-7 h-px w-16 bg-orange-400/70" />
 
           <p className="mx-auto mt-6 max-w-3xl text-sm leading-7 text-blue-100 sm:text-base md:text-lg">
-            Explore hand-picked boat trips, island escapes,
-            snorkeling adventures, water activities, desert
-            experiences and unforgettable Egypt excursions
+            <HomeText en="Explore hand-picked boat trips, island escapes, snorkeling adventures, water activities, desert experiences and unforgettable Egypt excursions" de="Entdecken Sie ausgewählte Bootstouren, Insel-Ausflüge, Schnorchelabenteuer, Wassersport, Wüstenerlebnisse und unvergessliche Ausflüge in Ägypten." />
           </p>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
@@ -625,7 +636,7 @@ function ToursPageContent() {
                 <SparklesIcon className="h-3.5 w-3.5 text-orange-400" />
               </span>
 
-              Carefully Selected Experiences
+              <HomeText en="Carefully Selected Experiences" de="Sorgfältig ausgewählte Erlebnisse" />
 
             </div>
 
@@ -635,7 +646,7 @@ function ToursPageContent() {
                 <StarIcon className="h-3.5 w-3.5 text-orange-400" />
               </span>
 
-              Great Guest Experiences
+              <HomeText en="Great Guest Experiences" de="Unvergessliche Erlebnisse für unsere Gäste" />
 
             </div>
 
@@ -697,7 +708,7 @@ function ToursPageContent() {
                   </span>
 
                   <span className="truncate">
-                    {tourCategories[category]}
+                    <HomeText en={tourCategories[category]} de={germanTourCategories[category] ?? tourCategories[category]} />
                   </span>
 
                 </button>
@@ -729,18 +740,17 @@ function ToursPageContent() {
               <span className="h-px w-10 bg-orange-500" />
 
               <p className="text-xs font-bold uppercase tracking-[0.3em] text-orange-500">
-                Explore Category
+                <HomeText en="Explore Category" de="Kategorie entdecken" />
               </p>
 
             </div>
 
             <h2 className="mt-4 text-3xl font-bold tracking-tight text-blue-950 sm:text-4xl">
-              {tourCategories[activeCategory]}
+              <HomeText en={tourCategories[activeCategory]} de={germanTourCategories[activeCategory] ?? tourCategories[activeCategory]} />
             </h2>
 
             <p className="mt-3 max-w-2xl text-base leading-7 text-gray-600">
-              Find the perfect experience for your Hurghada
-              holiday and make your time in the Red Sea unforgettable
+              <HomeText en="Find the perfect experience for your Hurghada holiday and make your time in the Red Sea unforgettable" de="Finden Sie das passende Erlebnis für Ihren Urlaub in Hurghada und machen Sie Ihre Zeit am Roten Meer unvergesslich." />
             </p>
 
           </div>
@@ -754,14 +764,14 @@ function ToursPageContent() {
             <div>
 
               <p className="text-xs font-medium text-gray-400">
-                Available
+                <HomeText en="Available" de="Verfügbar" />
               </p>
 
               <p className="text-sm font-bold text-blue-950">
                 {categoryTours.length}{" "}
                 {categoryTours.length === 1
-                  ? "Experience"
-                  : "Experiences"}
+                  ? "Erlebnis"
+                  : "Erlebnisse"}
               </p>
 
             </div>
@@ -861,13 +871,13 @@ function ToursPageContent() {
                     <div className="shrink-0 rounded-2xl border border-white/20 bg-blue-950/80 px-4 py-2.5 text-white shadow-lg backdrop-blur-md">
 
                       <p className="text-[9px] font-semibold uppercase tracking-wider text-blue-200">
-                        From
+                        <HomeText en="From" de="Ab" />
                       </p>
 
                       <p className="text-base font-extrabold">
                         {tour.price > 0
                           ? `€${tour.price}`
-                          : "On Request"}
+                          : <HomeText en="On request" de="Auf Anfrage" />}
                       </p>
 
                     </div>
@@ -884,7 +894,7 @@ function ToursPageContent() {
                 <div className="flex flex-1 flex-col p-6">
 
                   <h3 className="line-clamp-2 min-h-[56px] text-xl font-bold leading-7 text-blue-950 transition-colors duration-300 group-hover:text-orange-500">
-                    {tour.name}
+                    <TourText slug={tour.slug} value={tour.name} field="name" />
                   </h3>
 
 
@@ -913,8 +923,8 @@ function ToursPageContent() {
                         <span className="text-sm text-gray-500">
                           {tour.reviews}{" "}
                           {tour.reviews === 1
-                            ? "review"
-                            : "reviews"}
+                            ? "Bewertung"
+                            : "Bewertungen"}
                         </span>
 
                       </>
@@ -922,7 +932,7 @@ function ToursPageContent() {
                     ) : (
 
                       <span className="rounded-full border border-blue-100 bg-blue-50 px-3 py-1 text-xs font-bold text-blue-700">
-                        New Experience
+                        <HomeText en="New Experience" de="Neues Erlebnis" />
                       </span>
 
                     )}
@@ -933,7 +943,7 @@ function ToursPageContent() {
                   {/* Description */}
 
                   <p className="mt-4 line-clamp-3 text-sm leading-7 text-gray-600">
-                    {tour.description}
+                    <TourText slug={tour.slug} value={tour.description} field="description" />
                   </p>
 
 
@@ -952,11 +962,11 @@ function ToursPageContent() {
                       <div className="min-w-0">
 
                         <p className="text-[10px] font-semibold uppercase tracking-wide text-gray-400">
-                          Duration
+                          <HomeText en="Duration" de="Dauer" />
                         </p>
 
                         <p className="truncate text-xs font-bold text-gray-700">
-                          {tour.duration}
+                          <TourText slug={tour.slug} value={tour.duration} />
                         </p>
 
                       </div>
@@ -979,7 +989,7 @@ function ToursPageContent() {
                         </p>
 
                         <p className="truncate text-xs font-bold text-gray-700">
-                          {tour.destination}
+                          <TourText slug={tour.slug} value={tour.destination === "hurghada" ? "Hurghada" : tour.destination === "luxor" ? "Luxor" : tour.destination === "cairo" ? "Cairo" : "Sharm El Sheikh"} />
                         </p>
 
                       </div>
@@ -1006,7 +1016,7 @@ function ToursPageContent() {
                           <span className="text-2xl font-extrabold text-orange-500">
                             {tour.price > 0
                               ? `€${tour.price}`
-                              : "On Request"}
+                              : <HomeText en="On request" de="Auf Anfrage" />}
                           </span>
 
                           {tour.price > 0 && (
@@ -1046,7 +1056,7 @@ function ToursPageContent() {
                   href={`/tours/${tour.slug}?fromCategory=${activeCategory}`}
                   className="group/button flex items-center justify-center rounded-2xl border border-blue-950 bg-white px-3 py-3 text-center text-sm font-bold text-blue-950 transition-all duration-300 hover:-translate-y-0.5 hover:bg-blue-950 hover:text-white hover:shadow-lg active:scale-[0.98]"
                 >
-                  View Tour
+                  <HomeText en="View Tour" de="Tour ansehen" />
                   <ArrowRightIcon className="ml-1.5 h-4 w-4 opacity-0 transition-all duration-300 group-hover/button:translate-x-1 group-hover/button:opacity-100" />
                 </Link>
 
@@ -1056,13 +1066,13 @@ function ToursPageContent() {
                     href={`/tours/${tour.slug}/book?fromCategory=${activeCategory}`}
                     className="flex items-center justify-center rounded-2xl bg-gradient-to-r from-orange-500 to-orange-600 px-3 py-3 text-center text-sm font-bold text-white shadow-md shadow-orange-500/20 transition-all duration-300 hover:-translate-y-0.5 hover:from-orange-600 hover:to-orange-700 hover:shadow-xl hover:shadow-orange-500/25 active:scale-[0.98]"
                   >
-                    Book Now
+                    <HomeText en="Book Now" de="Jetzt buchen" />
                   </Link>
 
                 ) : (
 
                   <div className="flex items-center justify-center rounded-2xl bg-slate-100 px-3 py-3 text-center text-sm font-bold text-gray-400">
-                    Coming Soon
+                    <HomeText en="Coming Soon" de="Demnächst verfügbar" />
                   </div>
 
                 )}

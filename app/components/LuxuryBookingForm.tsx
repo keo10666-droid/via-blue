@@ -8,11 +8,13 @@ import {
   isValidElement,
   ReactElement,
   ReactNode,
+  useEffect,
   useMemo,
   useState,
 } from "react";
 
 import BookingSuccessModal from "@/app/components/BookingSuccessModal";
+import HomeText from "@/app/components/HomeText";
 
 type LuxuryBookingFormProps = {
   tourName: string;
@@ -100,6 +102,46 @@ const nationalities = [
   "Japanese",
   "Korean",
 ];
+
+const germanLuxuryTourNames: Record<string, string> = {
+  "Luxor Private Tour": "Private Tour nach Luxor",
+  "Cairo Private Tour": "Private Tour nach Kairo",
+  "Alexandria Private Tour": "Private Tour nach Alexandria",
+  "Aswan Private Tour": "Private Tour nach Assuan",
+  "Private Speed Boat": "Privates Schnellboot",
+  "Private Quad Safari": "Private Quad-Safari",
+  "Private Buggy Safari": "Private Buggy-Safari",
+  "Private Boat": "Privates Boot",
+};
+
+const germanLuxuryTourTypes: Record<string, string> = {
+  "Private Tour": "Private Tour",
+  "Private Boat": "Privates Boot",
+  "Private Safari": "Private Safari",
+};
+
+const germanLuxuryIncluded: Record<string, string> = {
+  "Private transportation": "Privater Transfer",
+  "Professional driver": "Professioneller Fahrer",
+  "Hotel pickup and drop-off": "Abholung und Rücktransfer zum Hotel",
+  "Flexible private experience": "Flexibles privates Erlebnis",
+  "Private modern air-conditioned transportation": "Privater, moderner und klimatisierter Transport",
+  "Professional private tour guide": "Professioneller privater Reiseleiter",
+  "Entrance tickets to all listed attractions": "Eintrittskarten für alle aufgeführten Sehenswürdigkeiten",
+  "Lunch": "Mittagessen",
+  "Fully private experience": "Exklusives privates Erlebnis",
+  "Private speed boat": "Privates Schnellboot",
+  "Professional crew": "Professionelle Crew",
+  "Hotel transfer": "Hoteltransfer",
+  "Private safari experience": "Privates Safari-Erlebnis",
+  "Quad bike": "Quad",
+  "Professional guide": "Professioneller Guide",
+  "Private buggy experience": "Privates Buggy-Erlebnis",
+  "Desert adventure": "Wüstenabenteuer",
+  "Private boat": "Privates Boot",
+  "Exclusive private experience": "Exklusives privates Erlebnis",
+  "Flexible timing": "Flexible Zeitplanung",
+};
 
 const countryCodes = [
   { name: "Egypt", dialCode: "+20", iso: "eg" },
@@ -526,6 +568,19 @@ export default function LuxuryBookingForm({
   tourType = "Private Luxury",
   included = [],
 }: LuxuryBookingFormProps) {
+  const [isGerman, setIsGerman] = useState(false);
+  const displayTourName = isGerman ? (germanLuxuryTourNames[tourName] ?? tourName) : tourName;
+  const displayTourType = isGerman ? (germanLuxuryTourTypes[tourType] ?? tourType) : tourType;
+  const displayIncluded = isGerman
+    ? included.map((item) => germanLuxuryIncluded[item] ?? item)
+    : included;
+  useEffect(() => {
+    const syncLanguage = () => setIsGerman(localStorage.getItem("via-blue-language") === "de");
+    syncLanguage();
+    window.addEventListener("via-blue-language-change", syncLanguage);
+    return () => window.removeEventListener("via-blue-language-change", syncLanguage);
+  }, []);
+
   const [name, setName] = useState("");
   const [nationality, setNationality] = useState("");
   const [isNationalityOpen, setIsNationalityOpen] = useState(false);
@@ -687,7 +742,7 @@ export default function LuxuryBookingForm({
   const labelClass =
     "mb-2.5 block text-[13px] font-bold uppercase tracking-[0.08em] text-slate-500";
 
-  const errorText = (msg: string) => (
+  const errorText = (msg: ReactNode) => (
     <p className="mt-2 text-xs font-semibold text-red-600">
       {msg}
     </p>
@@ -734,9 +789,9 @@ export default function LuxuryBookingForm({
   const message = `
 NEW LUXURY BOOKING REQUEST
 
-Tour: ${tourName}
+Tour: ${displayTourName}
 
-Type: ${tourType}
+Type: ${displayTourType}
 
 Full Name: ${name.trim()}
 
@@ -790,7 +845,7 @@ ${notes.trim() || "-"}
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          subject: `New Luxury Tour Booking - ${tourName}`,
+          subject: `New Luxury Tour Booking - ${displayTourName}`,
           html: `
             <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #1e293b;">
               <h2 style="color: #0f172a;">New Luxury Tour Booking Request</h2>
@@ -820,7 +875,9 @@ ${notes.trim() || "-"}
     );
 
     alert(
-      "Something went wrong while submitting your booking. Please try again"
+      isGerman
+        ? "Beim Senden Ihrer Buchung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
+        : "Something went wrong while submitting your booking. Please try again"
     );
   }
 };
@@ -830,7 +887,7 @@ ${notes.trim() || "-"}
       <BookingSuccessModal
         open={showSuccess}
         guestName={name.trim()}
-        bookingName={tourName}
+        bookingName={displayTourName}
         email={email.trim()}
         emailSent={confirmationEmailSent}
         backHref="/luxury-tours"
@@ -850,31 +907,29 @@ ${notes.trim() || "-"}
                 <div className="max-w-3xl">
                   <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.07] px-4 py-2 text-[11px] font-bold uppercase tracking-[0.18em] text-orange-300">
                     <SparklesIcon />
-                    Private Luxury Experience
+                    <HomeText en="Private Luxury Experience" de="Luxuriöses privates Erlebnis" />
                   </div>
 
                   <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-[48px] lg:leading-[1.08]">
-                    Reserve your private
+                    <HomeText en="Reserve your private" de="Reservieren Sie Ihr privates" />
                     <span className="block text-orange-400">
-                      {tourName}
+                      {displayTourName}
                     </span>
                   </h1>
 
                   <p className="mt-5 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base">
-                    Complete your details below and send your
-                    booking request directly to our team. We will
-                    confirm your private experience with you.
+                    <HomeText en="Complete your details below and send your booking request directly to our team. We will confirm your private experience with you." de="Vervollständigen Sie die Angaben und senden Sie Ihre Buchungsanfrage direkt an unser Team. Wir bestätigen anschließend Ihr privates Erlebnis." />
                   </p>
                 </div>
 
                 <div className="hidden shrink-0 lg:block">
                   <div className="rounded-2xl border border-white/10 bg-white/[0.06] px-5 py-4 backdrop-blur-sm">
                     <div className="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-400">
-                      Experience
+                      <HomeText en="Experience" de="Erlebnis" />
                     </div>
 
                     <div className="mt-1 text-lg font-bold text-white">
-                      {tourType}
+                      {displayTourType}
                     </div>
                   </div>
                 </div>
@@ -895,7 +950,7 @@ ${notes.trim() || "-"}
                     </p>
 
                     <h2 className="mt-1 text-xl font-bold text-[#071a36] sm:text-2xl">
-                      Guest details
+                      <HomeText en="Guest details" de="Angaben zu den Gästen" />
                     </h2>
                   </div>
 
@@ -918,11 +973,11 @@ ${notes.trim() || "-"}
 
                     <div>
                       <h3 className="font-bold text-[#071a36]">
-                        Personal information
+                        <HomeText en="Personal information" de="Persönliche Angaben" />
                       </h3>
 
                       <p className="text-xs text-slate-400">
-                        Tell us who will be joining the experience
+                        <HomeText en="Tell us who will be joining the experience" de="Teilen Sie uns mit, wer an diesem Erlebnis teilnimmt" />
                       </p>
                     </div>
                   </div>
@@ -931,7 +986,7 @@ ${notes.trim() || "-"}
 
                     <div>
                       <label className={labelClass}>
-                        Full Name *
+                        <HomeText en="Full Name *" de="Vollständiger Name *" />
                       </label>
 
                       <div className="relative">
@@ -941,7 +996,7 @@ ${notes.trim() || "-"}
 
                         <input
                           type="text"
-                          placeholder="Enter full name"
+                          placeholder={isGerman ? "Vollständigen Namen eingeben" : "Enter full name"}
                           value={name}
                           onChange={(e) =>
                             setName(e.target.value)
@@ -955,13 +1010,13 @@ ${notes.trim() || "-"}
                       {submitAttempted &&
                         !isNameValid &&
                         errorText(
-                          "Please enter the guest's full name."
+                          <HomeText en="Please enter the guest's full name." de="Bitte geben Sie den vollständigen Namen des Gastes ein." />
                         )}
                     </div>
 
                     <div className="relative">
                       <label className={labelClass}>
-                        Nationality
+                        <HomeText en="Nationality" de="Nationalität" />
                       </label>
 
                       <div className="relative">
@@ -971,7 +1026,7 @@ ${notes.trim() || "-"}
 
                         <input
                           type="text"
-                          placeholder="Select nationality"
+                          placeholder={isGerman ? "Nationalität auswählen" : "Select nationality"}
                           value={nationality}
                           onChange={(e) => {
                             setNationality(e.target.value);
@@ -1020,7 +1075,7 @@ ${notes.trim() || "-"}
 
                     <div>
                       <label className={labelClass}>
-                        Email *
+                        <HomeText en="Email *" de="E-Mail *" />
                       </label>
 
                       <div className="relative">
@@ -1030,7 +1085,7 @@ ${notes.trim() || "-"}
 
                         <input
                           type="email"
-                          placeholder="you@example.com"
+                          placeholder={isGerman ? "du@beispiel.de" : "you@example.com"}
                           value={email}
                           onChange={(e) =>
                             setEmail(e.target.value)
@@ -1044,13 +1099,13 @@ ${notes.trim() || "-"}
                       {submitAttempted &&
                         !isEmailValid &&
                         errorText(
-                          "Please enter a valid email address."
+                          <HomeText en="Please enter a valid email address." de="Bitte geben Sie eine gültige E-Mail-Adresse ein." />
                         )}
                     </div>
 
                     <div>
                       <label className={labelClass}>
-                        WhatsApp Number *
+                        <HomeText en="WhatsApp Number *" de="WhatsApp-Nummer *" />
                       </label>
 
                       <div className="flex gap-2">
@@ -1083,7 +1138,7 @@ ${notes.trim() || "-"}
                               <div className="border-b border-slate-100 p-3">
                                 <input
                                   type="text"
-                                  placeholder="Search country or code..."
+                                  placeholder={isGerman ? "Land oder Vorwahl suchen..." : "Search country or dial code..."}
                                   value={countrySearch}
                                   onChange={(e) =>
                                     setCountrySearch(
@@ -1140,7 +1195,7 @@ ${notes.trim() || "-"}
 
                           <input
                             type="tel"
-                            placeholder="WhatsApp number"
+                            placeholder={isGerman ? "WhatsApp-Nummer" : "WhatsApp number"}
                             value={phone}
                             onChange={(e) =>
                               setPhone(e.target.value)
@@ -1156,7 +1211,7 @@ ${notes.trim() || "-"}
                       {submitAttempted &&
                         !isPhoneValid &&
                         errorText(
-                          "Please enter a valid number (at least 6 digits)."
+                          <HomeText en="Please enter a valid number (at least 6 digits)." de="Bitte geben Sie eine gültige Nummer mit mindestens 6 Ziffern ein." />
                         )}
                     </div>
                   </div>
@@ -1173,11 +1228,11 @@ ${notes.trim() || "-"}
 
                     <div>
                       <h3 className="font-bold text-[#071a36]">
-                        Hotel information
+                        <HomeText en="Hotel information" de="Hotelinformationen" />
                       </h3>
 
                       <p className="text-xs text-slate-400">
-                        Pickup details help us arrange your transfer
+                        <HomeText en="Pickup details help us arrange your transfer" de="Die Abholdetails helfen uns, Ihren Transfer zu organisieren" />
                       </p>
                     </div>
                   </div>
@@ -1186,7 +1241,7 @@ ${notes.trim() || "-"}
 
                     <div>
                       <label className={labelClass}>
-                        Hotel Name
+                        <HomeText en="Hotel Name" de="Hotelname" />
                       </label>
 
                       <div className="relative">
@@ -1196,7 +1251,7 @@ ${notes.trim() || "-"}
 
                         <input
                           type="text"
-                          placeholder="Your hotel name"
+                          placeholder={isGerman ? "Name Ihres Hotels" : "Hotel name"}
                           value={hotel}
                           onChange={(e) =>
                             setHotel(e.target.value)
@@ -1208,7 +1263,7 @@ ${notes.trim() || "-"}
 
                     <div>
                       <label className={labelClass}>
-                        Room Number
+                        <HomeText en="Room Number" de="Zimmernummer" />
                       </label>
 
                       <div className="relative">
@@ -1218,7 +1273,7 @@ ${notes.trim() || "-"}
 
                         <input
                           type="text"
-                          placeholder="Room number"
+                          placeholder={isGerman ? "Zimmernummer" : "Room number"}
                           value={roomNumber}
                           onChange={(e) =>
                             setRoomNumber(e.target.value)
@@ -1242,11 +1297,11 @@ ${notes.trim() || "-"}
 
                     <div>
                       <h3 className="font-bold text-[#071a36]">
-                        Choose your date
+                        <HomeText en="Choose your date" de="Wählen Sie Ihr Datum" />
                       </h3>
 
                       <p className="text-xs text-slate-400">
-                        Select a date from tomorrow onward
+                        <HomeText en="Select a date from tomorrow onward" de="Wählen Sie ein Datum ab morgen" />
                       </p>
                     </div>
                   </div>
@@ -1270,7 +1325,7 @@ ${notes.trim() || "-"}
 
                       <div className="ml-4 flex-1">
                         <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">
-                          Tour date
+                          <HomeText en="Tour date" de="Reisedatum" />
                         </div>
 
                         <div
@@ -1282,7 +1337,7 @@ ${notes.trim() || "-"}
                         >
                           {date
                             ? formatDateDisplay(date)
-                            : "Select your preferred date"}
+                            : <HomeText en="Select your preferred date" de="Wählen Sie Ihr Wunschdatum" />}
                         </div>
                       </div>
 
@@ -1319,7 +1374,7 @@ ${notes.trim() || "-"}
                             </p>
 
                             <p className="mt-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-400">
-                              Select a date
+                              <HomeText en="Select a date" de="Datum auswählen" />
                             </p>
                           </div>
 
@@ -1413,7 +1468,7 @@ ${notes.trim() || "-"}
 
                         <div className="mt-5 flex items-center gap-2 border-t border-slate-100 pt-4 text-[11px] font-semibold text-slate-400">
                           <div className="h-2 w-2 rounded-full bg-orange-500" />
-                          Available from tomorrow
+                          <HomeText en="Available from tomorrow" de="Ab morgen verfügbar" />
                         </div>
                       </div>
                     )}
@@ -1422,7 +1477,7 @@ ${notes.trim() || "-"}
                   {submitAttempted &&
                     !isDateValid &&
                     errorText(
-                      "Please select a valid tour date (from tomorrow onward)."
+                      <HomeText en="Please select a valid tour date (from tomorrow onward)." de="Bitte wählen Sie ein gültiges Reisedatum ab morgen." />
                     )}
                 </div>
 
@@ -1439,17 +1494,17 @@ ${notes.trim() || "-"}
 
                       <div>
                         <h3 className="font-bold text-[#071a36]">
-                          Guests
+                          <HomeText en="Guests" de="Gäste" />
                         </h3>
 
                         <p className="text-xs text-slate-400">
-                          Private experience for your group
+                          <HomeText en="Private experience for your group" de="Privates Erlebnis für Ihre Gruppe" />
                         </p>
                       </div>
                     </div>
 
                     <div className="hidden rounded-full bg-slate-100 px-3 py-1.5 text-xs font-bold text-slate-600 sm:block">
-                      {totalGuests} guests
+                      {totalGuests} <HomeText en="guests" de="Gäste" />
                     </div>
 
                   </div>
@@ -1466,11 +1521,11 @@ ${notes.trim() || "-"}
 
                         <div>
                           <p className="text-sm font-bold text-slate-800">
-                            Adults
+                            <HomeText en="Adults" de="Erwachsene" />
                           </p>
 
                           <p className="text-xs text-slate-400">
-                            Age 11+
+                            <HomeText en="Age 11+" de="Ab 11 Jahren" />
                           </p>
                         </div>
                       </div>
@@ -1525,11 +1580,11 @@ ${notes.trim() || "-"}
 
                         <div>
                           <p className="text-sm font-bold text-slate-800">
-                            Children
+                            <HomeText en="Children" de="Kinder" />
                           </p>
 
                           <p className="text-xs text-slate-400">
-                            Ages 5–10
+                            <HomeText en="Ages 5–10" de="5–10 Jahre" />
                           </p>
                         </div>
                       </div>
@@ -1584,11 +1639,11 @@ ${notes.trim() || "-"}
 
                         <div>
                           <p className="text-sm font-bold text-slate-800">
-                            Infants
+                            <HomeText en="Infants" de="Kleinkinder" />
                           </p>
 
                           <p className="text-xs text-slate-400">
-                            Ages 1–4
+                            <HomeText en="Ages 1–4" de="1–4 Jahre" />
                           </p>
                         </div>
                       </div>
@@ -1638,7 +1693,7 @@ ${notes.trim() || "-"}
                   {submitAttempted &&
                     !isGuestsValid &&
                     errorText(
-                      "Private tours require a minimum of 2 guests and a maximum of 25 guests."
+                      <HomeText en="Private tours require a minimum of 2 guests and a maximum of 25 guests." de="Private Touren erfordern mindestens 2 und höchstens 25 Gäste." />
                     )}
 
                   <div className="mt-4 flex items-center justify-between rounded-2xl bg-[#071a36] px-5 py-4 text-white">
@@ -1647,7 +1702,7 @@ ${notes.trim() || "-"}
                       <UsersIcon />
 
                       <span className="text-sm font-semibold text-slate-300">
-                        Total guests
+                        <HomeText en="Total guests" de="Gäste insgesamt" />
                       </span>
                     </div>
 
@@ -1666,11 +1721,11 @@ ${notes.trim() || "-"}
                     <div>
                       <div className="mb-4">
                         <h3 className="font-bold text-[#071a36]">
-                          Children ages
+                          <HomeText en="Children ages" de="Alter der Kinder" />
                         </h3>
 
                         <p className="mt-1 text-xs text-slate-400">
-                          Please provide the age of each child.
+                          <HomeText en="Please provide the age of each child." de="Bitte geben Sie das Alter jedes Kindes an." />
                         </p>
                       </div>
 
@@ -1700,7 +1755,7 @@ ${notes.trim() || "-"}
                                 }}
                               >
                                 <option value="">
-                                  Select Child {index + 1} age
+                                  {isGerman ? `Alter für Kind ${index + 1}` : `Select age for child ${index + 1}`}
                                 </option>
 
                                 {[5, 6, 7, 8, 9, 10].map(
@@ -1709,7 +1764,7 @@ ${notes.trim() || "-"}
                                       key={age}
                                       value={age}
                                     >
-                                      {age} years
+                                      {age} {isGerman ? "Jahre" : "years"}
                                     </option>
                                   )
                                 )}
@@ -1724,9 +1779,7 @@ ${notes.trim() || "-"}
                             {submitAttempted &&
                               !childrenAgeValues[index] &&
                               errorText(
-                                `Select an age for Child ${
-                                  index + 1
-                                }.`
+                                <HomeText en={`Select an age for Child ${index + 1}.`} de={`Bitte wählen Sie das Alter für Kind ${index + 1} aus.`} />
                               )}
                           </div>
                         ))}
@@ -1744,11 +1797,11 @@ ${notes.trim() || "-"}
                     <div>
                       <div className="mb-4">
                         <h3 className="font-bold text-[#071a36]">
-                          Infant ages
+                          <HomeText en="Infant ages" de="Alter der Kleinkinder" />
                         </h3>
 
                         <p className="mt-1 text-xs text-slate-400">
-                          Please provide the age of each infant.
+                          <HomeText en="Please provide the age of each infant." de="Bitte geben Sie das Alter jedes Kleinkindes an." />
                         </p>
                       </div>
 
@@ -1778,7 +1831,7 @@ ${notes.trim() || "-"}
                                 }}
                               >
                                 <option value="">
-                                  Select Infant {index + 1} age
+                                  {isGerman ? `Alter für Kleinkind ${index + 1}` : `Select age for infant ${index + 1}`}
                                 </option>
 
                                 {[1, 2, 3, 4].map((age) => (
@@ -1788,8 +1841,8 @@ ${notes.trim() || "-"}
                                   >
                                     {age}{" "}
                                     {age === 1
-                                      ? "year"
-                                      : "years"}
+                                      ? (isGerman ? "Jahr" : "year")
+                                      : (isGerman ? "Jahre" : "years")}
                                   </option>
                                 ))}
                               </select>
@@ -1803,9 +1856,7 @@ ${notes.trim() || "-"}
                             {submitAttempted &&
                               !infantAgeValues[index] &&
                               errorText(
-                                `Select an age for Infant ${
-                                  index + 1
-                                }.`
+                                <HomeText en={`Select an age for Infant ${index + 1}.`} de={`Bitte wählen Sie das Alter für Kleinkind ${index + 1} aus.`} />
                               )}
                           </div>
                         ))}
@@ -1827,23 +1878,23 @@ ${notes.trim() || "-"}
 
                     <div>
                       <h3 className="font-bold text-[#071a36]">
-                        Additional information
+                        <HomeText en="Additional information" de="Zusätzliche Informationen" />
                       </h3>
 
                       <p className="text-xs text-slate-400">
-                        Anything else we should know?
+                        <HomeText en="Anything else we should know?" de="Gibt es noch etwas, das wir wissen sollten?" />
                       </p>
                     </div>
 
                   </div>
 
                   <label className={labelClass}>
-                    Special Requests / Notes
+                    <HomeText en="Special Requests / Notes" de="Besondere Wünsche / Anmerkungen" />
                   </label>
 
                   <textarea
                     rows={5}
-                    placeholder="Tell us about any special requests, preferences or important details..."
+                    placeholder={isGerman ? "Teilen Sie uns besondere Wünsche, Vorlieben oder wichtige Details mit..." : "Tell us any special requests, preferences, or important details..."}
                     value={notes}
                     onChange={(e) =>
                       setNotes(e.target.value)
@@ -1857,9 +1908,7 @@ ${notes.trim() || "-"}
                     <div className="mt-0.5 h-2 w-2 shrink-0 rounded-full bg-red-500" />
 
                     <p className="text-sm font-semibold leading-6 text-red-700">
-                      Please complete the required fields
-                      highlighted above before sending your
-                      booking request.
+                      <HomeText en="Please complete the required fields highlighted above before sending your booking request." de="Bitte füllen Sie die oben markierten Pflichtfelder aus, bevor Sie Ihre Buchungsanfrage senden." />
                     </p>
                   </div>
                 )}
@@ -1870,11 +1919,11 @@ ${notes.trim() || "-"}
 
                     <div>
                       <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-orange-600">
-                        Private tour
+                        <HomeText en="Private tour" de="Private Tour" />
                       </p>
 
                       <p className="mt-1 text-sm font-semibold text-slate-600">
-                        {totalGuests} guests
+                        {totalGuests} <HomeText en="guests" de="Gäste" />
                       </p>
                     </div>
 
@@ -1884,7 +1933,7 @@ ${notes.trim() || "-"}
                       </p>
 
                       <p className="text-[10px] font-semibold text-slate-400">
-                        total experience
+                        <HomeText en="total experience" de="Gesamtes Erlebnis" />
                       </p>
                     </div>
 
@@ -1899,7 +1948,7 @@ ${notes.trim() || "-"}
                 >
 
                   <span>
-                    Send Booking Request
+                    <HomeText en="Send Booking Request" de="Buchungsanfrage senden" />
                   </span>
 
                   <span className="text-slate-400 transition-transform duration-300 group-hover:translate-x-1">
@@ -1911,8 +1960,8 @@ ${notes.trim() || "-"}
                   <LockIcon />
 
                   <span>
-                    Your booking request is sent securely via
-                    WhatsApp
+                    <HomeText en="Your booking request is sent securely via" de="Ihre Buchungsanfrage wird sicher übermittelt via" />
+                    <HomeText en="WhatsApp" de="WhatsApp" />
                   </span>
                 </div>
 
@@ -1931,16 +1980,16 @@ ${notes.trim() || "-"}
                   <div className="relative">
 
                     <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-orange-300">
-                      Your reservation
+                      <HomeText en="Your reservation" de="Ihre Reservierung" />
                     </p>
 
                     <h3 className="mt-2 text-xl font-bold">
-                      Private Tour Summary
+                      <HomeText en="Private Tour Summary" de="Zusammenfassung der privaten Tour" />
                     </h3>
 
                     <p className="mt-2 text-xs leading-5 text-slate-300">
-                      Everything is private and arranged
-                      exclusively for your group.
+                      <HomeText en="Everything is private and arranged" de="Alles wird privat organisiert" />
+                      <HomeText en="exclusively for your group." de="exklusiv für Ihre Gruppe." />
                     </p>
 
                   </div>
@@ -1951,15 +2000,15 @@ ${notes.trim() || "-"}
                   <div className="rounded-2xl bg-slate-50 p-4">
 
                     <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">
-                      Tour
+                      <HomeText en="Tour" de="Tour" />
                     </p>
 
                     <p className="mt-2 text-sm font-bold leading-6 text-[#071a36]">
-                      {tourName}
+                      {displayTourName}
                     </p>
 
                     <div className="mt-3 inline-flex items-center rounded-full bg-blue-50 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-[#0b3a78]">
-                      {tourType}
+                      {displayTourType}
                     </div>
 
                   </div>
@@ -1970,11 +2019,11 @@ ${notes.trim() || "-"}
 
                       <div>
                         <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-orange-600">
-                          Total price
+                          <HomeText en="Total price" de="Gesamtpreis" />
                         </p>
 
                         <p className="mt-1 text-xs font-semibold text-slate-500">
-                          Private experience
+                          <HomeText en="Private experience" de="Privates Erlebnis" />
                         </p>
                       </div>
 
@@ -1987,8 +2036,8 @@ ${notes.trim() || "-"}
                     </div>
 
                     <div className="border-t border-orange-100 px-5 py-3 text-[10px] font-semibold text-orange-700">
-                      Price updates automatically with guest
-                      count
+                      <HomeText en="Price updates automatically with guest" de="Der Preis wird automatisch anhand der Gästeanzahl" />
+                      <HomeText en="count" de="aktualisiert" />
                     </div>
 
                   </div>
@@ -2003,14 +2052,14 @@ ${notes.trim() || "-"}
                         </div>
 
                         <span className="text-xs font-bold text-slate-500">
-                          Date
+                          <HomeText en="Date" de="Datum" />
                         </span>
                       </div>
 
                       <span className="max-w-[150px] text-right text-xs font-bold text-[#071a36]">
                         {date
                           ? formatDateDisplay(date)
-                          : "Not selected"}
+                          : <HomeText en="Not selected" de="Nicht ausgewählt" />}
                       </span>
 
                     </div>
@@ -2023,7 +2072,7 @@ ${notes.trim() || "-"}
                         </div>
 
                         <span className="text-xs font-bold text-slate-500">
-                          Guests
+                          <HomeText en="Guests" de="Gäste" />
                         </span>
                       </div>
 
@@ -2041,7 +2090,7 @@ ${notes.trim() || "-"}
                         </div>
 
                         <span className="text-xs font-bold text-slate-500">
-                          Pickup
+                          <HomeText en="Pickup" de="Abholung" />
                         </span>
                       </div>
 
@@ -2058,17 +2107,17 @@ ${notes.trim() || "-"}
 
                       <div className="mb-4 flex items-center justify-between">
                         <h4 className="text-sm font-bold text-[#071a36]">
-                          Included in your experience
+                          <HomeText en="Included in your experience" de="In Ihrem Erlebnis enthalten" />
                         </h4>
 
                         <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                          Included
+                          <HomeText en="Included" de="Inklusive" />
                         </span>
                       </div>
 
                       <div className="space-y-3">
 
-                        {included.map((item, index) => (
+                        {displayIncluded.map((item, index) => (
                           <div
                             key={index}
                             className="flex items-start gap-3"
@@ -2097,13 +2146,13 @@ ${notes.trim() || "-"}
 
                       <div>
                         <p className="text-xs font-bold text-[#071a36]">
-                          Simple & direct booking
+                          <HomeText en="Simple & direct booking" de="Einfache und direkte Buchung" />
                         </p>
 
                         <p className="mt-1 text-[11px] leading-5 text-slate-400">
-                          Send your request and our team will
-                          contact you directly to confirm the
-                          details.
+                          <HomeText en="Send your request and our team will" de="Senden Sie Ihre Anfrage; unser Team wird sich" />
+                          <HomeText en="contact you directly to confirm the" de="direkt mit Ihnen in Verbindung setzen, um die" />
+                          <HomeText en="details." de="Details zu bestätigen." />
                         </p>
                       </div>
 

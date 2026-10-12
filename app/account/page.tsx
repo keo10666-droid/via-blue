@@ -9,6 +9,18 @@ import {
 } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
+import HomeText from "@/app/components/HomeText";
+
+function accountText(en: string, de: string) {
+  try {
+    return typeof window !== "undefined" &&
+      window.localStorage.getItem("via-blue-language") === "de"
+      ? de
+      : en;
+  } catch {
+    return en;
+  }
+}
 
 type Profile = {
   full_name: string | null;
@@ -156,6 +168,22 @@ const COUNTRY_CODES = [
   { name: "Qatar", flag: "qa", code: "+974" },
   { name: "Kuwait", flag: "kw", code: "+965" },
 ];
+
+function translateAccountMessage(message: string) {
+  const translations: Record<string, string> = {
+    "Please select a JPG, PNG, WebP or GIF image": "Bitte wähle ein JPG-, PNG-, WebP- oder GIF-Bild aus",
+    "Image size must be 5 MB or smaller": "Das Bild darf höchstens 5 MB groß sein",
+    "Each memory image must be 5 MB or smaller": "Jedes Erinnerungsfoto darf höchstens 5 MB groß sein",
+    "Please choose a photo first": "Bitte wähle zuerst ein Foto aus",
+    "You have reached the maximum of 25 travel memories": "Du hast die Höchstzahl von 25 Reiseerinnerungen erreicht",
+    "Could not save this memory": "Diese Erinnerung konnte nicht gespeichert werden",
+    "Your travel memory has been added": "Deine Reiseerinnerung wurde hinzugefügt",
+    "Travel memory deleted": "Reiseerinnerung gelöscht",
+    "Your profile has been saved": "Dein Profil wurde gespeichert",
+    " Please check your email to confirm the new address": " Bitte überprüfe deine E-Mails, um die neue Adresse zu bestätigen",
+  };
+  return Object.entries(translations).reduce((text, [english, german]) => text.split(english).join(german), message);
+}
 
 export default function AccountPage() {
   const router = useRouter();
@@ -650,7 +678,7 @@ export default function AccountPage() {
       setIsCountryOpen(false);
 
       setMessage(
-        `Your profile has been saved${emailMessage}`
+        accountText(`Your profile has been saved${emailMessage}`, `Dein Profil wurde gespeichert${emailMessage}`)
       );
     } finally {
       setIsSaving(false);
@@ -835,7 +863,7 @@ export default function AccountPage() {
   ) {
     const confirmed =
       window.confirm(
-        "Are you sure you want to delete this travel memory?"
+        accountText("Are you sure you want to delete this travel memory?", "Möchtest du diese Reiseerinnerung wirklich löschen?")
       );
 
     if (!confirmed) return;
@@ -880,7 +908,7 @@ export default function AccountPage() {
       );
     } catch {
       setMessage(
-        "Could not delete this memory"
+        accountText("Could not delete this memory", "Diese Erinnerung konnte nicht gelöscht werden")
       );
     }
   }
@@ -1060,7 +1088,7 @@ export default function AccountPage() {
             <div className="flex items-center gap-3">
               <div className="h-px w-8 bg-orange-400" />
               <p className="text-xs font-bold uppercase tracking-[0.28em] text-orange-400">
-                My Account
+                <HomeText en="My Account" de="Mein Konto" />
               </p>
             </div>
 
@@ -1073,7 +1101,7 @@ export default function AccountPage() {
             </h1>
 
             <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base">
-              Manage your profile, view your bookings and keep your favorite Hurghada memories in one place
+              <HomeText en="Manage your profile, view your bookings and keep your favorite Hurghada memories in one place" de="Verwalte dein Profil, sieh deine Buchungen ein und bewahre deine schönsten Hurghada-Erinnerungen an einem Ort auf" />
             </p>
           </div>
         </section>
@@ -1085,7 +1113,7 @@ export default function AccountPage() {
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-400">
-                  Reward Points
+                  <HomeText en="Reward Points" de="Bonuspunkte" />
                 </p>
                 <p className="mt-3 text-3xl font-semibold tracking-tight text-[#071d49]">
                   {loyalty?.points || 0}
@@ -1111,7 +1139,7 @@ export default function AccountPage() {
             </div>
 
             <p className="mt-3 text-xs leading-5 text-slate-500">
-              Keep booking to unlock future gifts
+              <HomeText en="Keep booking to unlock future gifts" de="Buche weitere Erlebnisse und sichere dir zukünftige Prämien" />
             </p>
           </div>
 
@@ -1119,7 +1147,7 @@ export default function AccountPage() {
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-400">
-                  Completed Trips
+                  <HomeText en="Completed Trips" de="Abgeschlossene Ausflüge" />
                 </p>
                 <p className="mt-3 text-3xl font-semibold tracking-tight text-[#071d49]">
                   {loyalty?.completed_bookings ||
@@ -1151,7 +1179,7 @@ export default function AccountPage() {
             </div>
 
             <p className="mt-3 text-xs leading-5 text-slate-500">
-              Your completed adventures with us
+              <HomeText en="Your completed adventures with us" de="Deine abgeschlossenen Abenteuer mit uns" />
             </p>
           </div>
 
@@ -1159,7 +1187,7 @@ export default function AccountPage() {
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-400">
-                  Travel Memories
+                  <HomeText en="Travel Memories" de="Reiseerinnerungen" />
                 </p>
                 <p className="mt-3 text-3xl font-semibold tracking-tight text-[#071d49]">
                   {memories.length}
@@ -1200,7 +1228,7 @@ export default function AccountPage() {
             </div>
 
             <p className="mt-3 text-xs leading-5 text-slate-500">
-              Save photos from your favorite trips
+              <HomeText en="Save photos from your favorite trips" de="Speichere Fotos deiner Lieblingsausflüge" />
             </p>
           </div>
 
@@ -1215,11 +1243,11 @@ export default function AccountPage() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-orange-500">
-                  Personal Details
+                  <HomeText en="Personal Details" de="Persönliche Angaben" />
                 </p>
 
                 <h2 className="mt-1 text-xl font-semibold tracking-tight text-[#071d49]">
-                  Your Profile
+                  <HomeText en="Your Profile" de="Dein Profil" />
                 </h2>
               </div>
 
@@ -1231,8 +1259,8 @@ export default function AccountPage() {
                     setMessage("");
                   }}
                   className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 text-[#071d49] transition hover:border-orange-200 hover:bg-orange-50 hover:text-orange-500"
-                  title="Edit profile"
-                  aria-label="Edit profile"
+                  title={accountText("Edit profile", "Profil bearbeiten")}
+                  aria-label={accountText("Edit profile", "Profil bearbeiten")}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -1268,7 +1296,7 @@ export default function AccountPage() {
                         src={
                           profile.avatar_url
                         }
-                        alt="Profile picture"
+                        alt="Profilbild"
                         className="h-full w-full object-cover"
                       />
                     ) : (
@@ -1340,7 +1368,7 @@ export default function AccountPage() {
               <div className="mt-7">
                 <div className="mb-2 flex items-center justify-between">
                   <label className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                    Full Name
+                    <HomeText en="Full Name" de="Vollständiger Name" />
                   </label>
 
                   {!isEditingProfile && (
@@ -1350,8 +1378,8 @@ export default function AccountPage() {
                         setIsEditingProfile(true)
                       }
                       className="text-slate-400 transition hover:text-orange-500"
-                      title="Edit full name"
-                      aria-label="Edit full name"
+                      title={accountText("Edit full name", "Vollständigen Namen bearbeiten")}
+                      aria-label={accountText("Edit full name", "Vollständigen Namen bearbeiten")}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -1389,7 +1417,7 @@ export default function AccountPage() {
                 ) : (
                   <div className="rounded-xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-800">
                     {fullName ||
-                      "Not added yet"}
+                      <HomeText en="Not added yet" de="Noch nicht angegeben" />}
                   </div>
                 )}
               </div>
@@ -1398,7 +1426,7 @@ export default function AccountPage() {
               <div className="mt-5">
                 <div className="mb-2 flex items-center justify-between">
                   <label className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                    WhatsApp Number
+                    <HomeText en="WhatsApp Number" de="WhatsApp-Nummer" />
                   </label>
 
                   {!isEditingProfile && (
@@ -1408,8 +1436,8 @@ export default function AccountPage() {
                         setIsEditingProfile(true)
                       }
                       className="text-slate-400 transition hover:text-orange-500"
-                      title="Edit WhatsApp number"
-                      aria-label="Edit WhatsApp number"
+                      title={accountText("Edit WhatsApp number", "WhatsApp-Nummer bearbeiten")}
+                      aria-label={accountText("Edit WhatsApp number", "WhatsApp-Nummer bearbeiten")}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -1534,7 +1562,7 @@ export default function AccountPage() {
                 ) : (
                   <div className="rounded-xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-800">
                     {phone ||
-                      "Not added yet"}
+                      <HomeText en="Not added yet" de="Noch nicht angegeben" />}
                   </div>
                 )}
               </div>
@@ -1543,7 +1571,7 @@ export default function AccountPage() {
               <div className="mt-5">
                 <div className="mb-2 flex items-center justify-between">
                   <label className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                    Email
+                    <HomeText en="Email" de="E-Mail" />
                   </label>
 
                   {!isEditingProfile && (
@@ -1553,8 +1581,8 @@ export default function AccountPage() {
                         setIsEditingProfile(true)
                       }
                       className="text-slate-400 transition hover:text-orange-500"
-                      title="Edit email"
-                      aria-label="Edit email"
+                      title={accountText("Edit email", "E-Mail bearbeiten")}
+                      aria-label={accountText("Edit email", "E-Mail bearbeiten")}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -1592,7 +1620,7 @@ export default function AccountPage() {
                 ) : (
                   <div className="break-all rounded-xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-800">
                     {email ||
-                      "Not added yet"}
+                      <HomeText en="Not added yet" de="Noch nicht angegeben" />}
                   </div>
                 )}
               </div>
@@ -1607,8 +1635,8 @@ export default function AccountPage() {
                     className="flex-1 rounded-xl bg-orange-500 py-3 text-sm font-bold text-white shadow-sm transition hover:bg-orange-600 hover:shadow-md disabled:opacity-60"
                   >
                     {isSaving
-                      ? "Saving..."
-                      : "Save Changes"}
+                      ? <HomeText en="Saving..." de="Wird gespeichert..." />
+                      : <HomeText en="Save Changes" de="Änderungen speichern" />}
                   </button>
 
                   <button
@@ -1647,7 +1675,7 @@ export default function AccountPage() {
                     }}
                     className="rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-bold text-slate-600 transition hover:bg-slate-50"
                   >
-                    Cancel
+                    <HomeText en="Cancel" de="Abbrechen" />
                   </button>
                 </div>
               )}
@@ -1661,11 +1689,11 @@ export default function AccountPage() {
             <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-center">
               <div>
                 <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-orange-500">
-                  My Trips
+                  <HomeText en="My Trips" de="Meine Reisen" />
                 </p>
 
                 <h2 className="mt-1 text-xl font-semibold tracking-tight text-[#071d49]">
-                  Booking History
+                  <HomeText en="Booking History" de="Buchungsverlauf" />
                 </h2>
               </div>
 
@@ -1673,7 +1701,7 @@ export default function AccountPage() {
                 href="/tours"
                 className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#071d49] px-5 py-3 text-sm font-bold text-white transition hover:bg-blue-800"
               >
-                Explore Tours
+                <HomeText en="Explore Tours" de="Touren entdecken" />
 
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -1717,11 +1745,11 @@ export default function AccountPage() {
                 </div>
 
                 <h3 className="mt-4 text-lg font-semibold text-[#071d49]">
-                  No bookings yet
+                  <HomeText en="No bookings yet" de="Noch keine Buchungen" />
                 </h3>
 
                 <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-500">
-                  Your confirmed and upcoming trips will appear here
+                  <HomeText en="Your confirmed and upcoming trips will appear here" de="Hier erscheinen deine bestätigten und bevorstehenden Ausflüge" />
                 </p>
               </div>
             ) : (
@@ -1867,22 +1895,22 @@ export default function AccountPage() {
 
                 <div>
                   <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-orange-500">
-                    My Travel Memories
+                    <HomeText en="My Travel Memories" de="Meine Reiseerinnerungen" />
                   </p>
 
                   <h2 className="mt-1 text-xl font-semibold tracking-tight text-[#071d49]">
-                    Save Your Hurghada Moments
+                    <HomeText en="Save Your Hurghada Moments" de="Bewahre deine Hurghada-Momente" />
                   </h2>
                 </div>
               </div>
 
               <p className="mt-4 text-sm leading-6 text-slate-500">
-                Add up to 25 photos from your trips. Only you can see them
+                <HomeText en="Add up to 25 photos from your trips. Only you can see them" de="Füge bis zu 25 Fotos deiner Ausflüge hinzu. Nur du kannst sie sehen" />
               </p>
             </div>
 
             <div className="rounded-xl bg-slate-50 px-4 py-2.5 text-sm font-semibold text-[#071d49]">
-              {memories.length} / 25 photos
+              <HomeText en={`${memories.length} / 25 photos`} de={`${memories.length} / 25 Fotos`} />
             </div>
           </div>
 
@@ -1911,7 +1939,7 @@ export default function AccountPage() {
               <span className="truncate">
                 {memoryFile
                   ? memoryFile.name
-                  : "Choose a travel photo"}
+                  : <HomeText en="Choose a travel photo" de="Reisefoto auswählen" />}
               </span>
 
               <input
@@ -1945,7 +1973,7 @@ export default function AccountPage() {
                 )
               }
               maxLength={120}
-              placeholder="Add a caption (optional)"
+              placeholder={accountText("Add a caption (optional)", "Bildbeschreibung hinzufügen (optional)")}
               disabled={
                 memories.length >=
                 25
@@ -1964,10 +1992,10 @@ export default function AccountPage() {
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-orange-500 px-6 py-3 text-sm font-bold text-white transition hover:bg-orange-600 disabled:cursor-not-allowed disabled:opacity-50"
             >
               {isUploadingMemory ? (
-                "Uploading..."
+                <HomeText en="Uploading..." de="Wird hochgeladen..." />
               ) : (
                 <>
-                  Add Photo
+                  <HomeText en="Add Photo" de="Foto hinzufügen" />
 
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -1990,7 +2018,7 @@ export default function AccountPage() {
 
           {message && (
             <p className="mt-4 rounded-xl border border-blue-100 bg-blue-50 px-4 py-3 text-sm font-medium text-[#071d49]">
-              {message}
+              {translateAccountMessage(message)}
             </p>
           )}
 
@@ -2026,11 +2054,11 @@ export default function AccountPage() {
               </div>
 
               <h3 className="mt-4 text-lg font-semibold text-[#071d49]">
-                No memories yet
+                <HomeText en="No memories yet" de="Noch keine Erinnerungen" />
               </h3>
 
               <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-500">
-                Upload your first Hurghada memory above
+                <HomeText en="Upload your first Hurghada memory above" de="Lade oben deine erste Hurghada-Erinnerung hoch" />
               </p>
             </div>
           ) : (
@@ -2090,7 +2118,7 @@ export default function AccountPage() {
                           />
                         </svg>
 
-                        Delete Photo
+                        <HomeText en="Delete Photo" de="Foto löschen" />
                       </button>
                     </div>
                   </article>

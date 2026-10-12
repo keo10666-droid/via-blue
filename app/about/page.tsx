@@ -1,4 +1,5 @@
 import Image from "next/image";
+import HomeText from "@/app/components/HomeText";
 import Link from "next/link";
 import {
   CarFront,
@@ -41,23 +42,21 @@ export default function AboutPage() {
               <span className="h-px w-12 bg-orange-400" />
 
               <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-orange-400">
-                About Via Blue
+                <HomeText en="About Via Blue" de="Über Via Blue" />
               </p>
 
               <span className="h-px w-6 bg-white/20" />
             </div>
 
             <h1 className="text-5xl font-bold leading-[1.02] tracking-[-0.035em] md:text-7xl lg:text-[5.25rem]">
-              More Than A Trip
+              <HomeText en="More Than A Trip" de="Mehr als nur eine Reise" />
               <span className="block bg-gradient-to-r from-orange-300 via-orange-400 to-amber-300 bg-clip-text text-transparent">
-                It&apos;s The Experience
+                <HomeText en="It&apos;s The Experience" de="Es ist das Erlebnis" />
               </span>
             </h1>
 
             <p className="mt-8 max-w-2xl text-lg leading-8 text-blue-50/90 md:text-xl">
-              Discover Hurghada through carefully selected experiences,
-              reliable transportation and local expertise — all designed
-              to make your time in the Red Sea effortless and unforgettable
+              <HomeText en="Discover Hurghada through carefully selected experiences, reliable transportation and local expertise — all designed to make your time in the Red Sea effortless and unforgettable" de="Entdecken Sie Hurghada mit sorgfältig ausgewählten Erlebnissen, zuverlässigen Transfers und lokaler Expertise – für eine unvergessliche und entspannte Zeit am Roten Meer." />
             </p>
 
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
@@ -67,7 +66,7 @@ export default function AboutPage() {
                 className="group rounded-xl border border-orange-300/20 bg-gradient-to-r from-orange-500 to-orange-400 px-7 py-4 text-center font-bold text-white shadow-xl shadow-orange-950/30 transition-all duration-300 hover:-translate-y-1 hover:from-orange-400 hover:to-amber-400 hover:shadow-orange-500/20"
               >
                 <span className="flex items-center justify-center gap-2">
-                  Explore Our Tours
+                  <HomeText en="Explore Our Tours" de="Unsere Touren entdecken" />
                   <span className="transition-transform duration-300 group-hover:translate-x-1">
                     →
                   </span>
@@ -84,11 +83,11 @@ export default function AboutPage() {
             </div>
 
             <div className="mt-10 flex flex-wrap items-center gap-x-7 gap-y-3 text-sm text-white/60">
-              <span>Red Sea Experiences</span>
+              <span><HomeText en="Red Sea Experiences" de="Erlebnisse am Roten Meer" /></span>
               <span className="h-1 w-1 rounded-full bg-orange-400" />
-              <span>Private Transfers</span>
+              <span><HomeText en="Private Transfers" de="Private Transfers" /></span>
               <span className="h-1 w-1 rounded-full bg-orange-400" />
-              <span>Local Expertise</span>
+              <span><HomeText en="Local Expertise" de="Lokale Expertise" /></span>
             </div>
 
           </div>
@@ -142,18 +141,18 @@ export default function AboutPage() {
               <div className="absolute inset-0 bg-gradient-to-t from-blue-950/75 via-blue-950/5 to-transparent" />
 
               <div className="absolute left-5 top-5 rounded-full border border-white/20 bg-black/20 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-white backdrop-blur-md">
-                The Red Sea
+                <HomeText en="The Red Sea" de="Das Rote Meer" />
               </div>
 
               {/* Floating card */}
               <div className="absolute bottom-6 left-6 right-6 rounded-2xl border border-white/30 bg-white/[0.92] p-5 shadow-2xl backdrop-blur-xl">
 
                 <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-orange-500">
-                  The Via Blue Experience
+                  <HomeText en="The Via Blue Experience" de="Das Via-Blue-Erlebnis" />
                 </p>
 
                 <p className="mt-2 text-xl font-bold tracking-tight text-blue-950">
-                  Local knowledge. Personal service
+                  <HomeText en="Local knowledge. Personal service" de="Lokales Wissen. Persönlicher Service" />
                 </p>
 
                 <div className="mt-3 h-px w-12 bg-orange-400" />
@@ -175,38 +174,29 @@ export default function AboutPage() {
               <span className="h-px w-12 bg-orange-500" />
 
               <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-orange-500">
-                Who We Are
+                <HomeText en="Who We Are" de="Wer wir sind" />
               </p>
             </div>
 
             <h2 className="mt-5 text-4xl font-bold leading-[1.08] tracking-[-0.025em] text-blue-950 md:text-5xl">
-              Your Time in Hurghada
+              <HomeText en="Your Time in Hurghada" de="Ihre Zeit in Hurghada" />
               <span className="block bg-gradient-to-r from-blue-700 to-cyan-700 bg-clip-text text-transparent">
-                Deserves More
+                <HomeText en="Deserves More" de="Verdient mehr" />
               </span>
             </h2>
 
             <div className="mt-8 space-y-5 text-base leading-8 text-gray-600 md:text-lg">
 
               <p>
-                Via Blue is a local tourism and transportation company
-                based in Hurghada, Egypt. We help travelers discover the
-                Red Sea through experiences chosen with care and delivered
-                with reliable local service
+                <HomeText en="Via Blue is a local tourism and transportation company based in Hurghada, Egypt. We help travelers discover the Red Sea through experiences chosen with care and delivered with reliable local service" de="Via Blue ist ein lokales Tourismus- und Transportunternehmen in Hurghada, Ägypten. Wir helfen Reisenden, das Rote Meer mit sorgfältig ausgewählten Erlebnissen und zuverlässigem lokalem Service zu entdecken." />
               </p>
 
               <p>
-                From airport transfers and private transportation to
-                island trips, snorkeling, boat adventures and desert
-                experiences, we make it easier to enjoy everything
-                Hurghada has to offer
+                <HomeText en="From airport transfers and private transportation to island trips, snorkeling, boat adventures and desert experiences, we make it easier to enjoy everything Hurghada has to offer" de="Von Flughafentransfers und privaten Fahrten bis hin zu Inselausflügen, Schnorcheln, Bootsabenteuern und Wüstenerlebnissen – wir machen es einfacher, alles zu genießen, was Hurghada zu bieten hat." />
               </p>
 
               <p>
-                Because we believe a great holiday is not simply about
-                the destination. It is about feeling comfortable,
-                knowing what to expect and enjoying every moment along
-                the way
+                <HomeText en="Because we believe a great holiday is not simply about the destination. It is about feeling comfortable, knowing what to expect and enjoying every moment along the way" de="Denn wir glauben, dass ein gelungener Urlaub mehr ist als nur das Reiseziel. Es geht darum, sich wohlzufühlen, zu wissen, was einen erwartet, und jeden Moment zu genießen." />
               </p>
 
             </div>
@@ -248,7 +238,7 @@ export default function AboutPage() {
         <div className="relative mx-auto max-w-5xl text-center">
 
           <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-orange-400">
-            Our Philosophy
+            <HomeText en="Our Philosophy" de="Unsere Philosophie" />
           </p>
 
           <h2 className="mt-5 text-4xl font-bold leading-[1.05] tracking-[-0.03em] md:text-6xl">
@@ -259,9 +249,7 @@ export default function AboutPage() {
           </h2>
 
           <p className="mx-auto mt-8 max-w-3xl text-lg leading-8 text-blue-100/85 md:text-xl">
-            We take care of the details so you can focus on what really
-            matters — discovering new places, enjoying the sea and creating
-            memories worth taking home
+            <HomeText en="We take care of the details so you can focus on what really matters — discovering new places, enjoying the sea and creating memories worth taking home" de="Wir kümmern uns um die Details, damit Sie sich auf das Wesentliche konzentrieren können: neue Orte entdecken, das Meer genießen und unvergessliche Erinnerungen sammeln." />
           </p>
 
           <div className="mx-auto mt-9 h-px w-20 bg-gradient-to-r from-transparent via-orange-400 to-transparent" />
@@ -289,21 +277,19 @@ export default function AboutPage() {
               <span className="h-px w-12 bg-orange-500" />
 
               <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-orange-500">
-                What We Offer
+                <HomeText en="What We Offer" de="Was wir anbieten" />
               </p>
             </div>
 
             <h2 className="mt-5 text-4xl font-bold leading-[1.08] tracking-[-0.025em] text-blue-950 md:text-5xl">
-              Everything You Need
+              <HomeText en="Everything You Need" de="Alles, was Sie brauchen" />
               <span className="block bg-gradient-to-r from-blue-700 to-cyan-700 bg-clip-text text-transparent">
-                For Your Red Sea Escape
+                <HomeText en="For Your Red Sea Escape" de="Für Ihre Auszeit am Roten Meer" />
               </span>
             </h2>
 
             <p className="mt-6 max-w-2xl text-lg leading-8 text-gray-600">
-              From the moment you arrive in Hurghada to your next
-              unforgettable adventure, Via Blue is here to make your
-              journey easier
+              <HomeText en="From the moment you arrive in Hurghada to your next unforgettable adventure, Via Blue is here to make your journey easier" de="Von Ihrer Ankunft in Hurghada bis zu Ihrem nächsten unvergesslichen Abenteuer – Via Blue macht Ihre Reise einfacher." />
             </p>
 
           </div>
@@ -326,8 +312,7 @@ export default function AboutPage() {
               </h3>
 
               <p className="mt-3 leading-7 text-gray-600">
-                Comfortable airport and hotel transfers with dependable
-                service across Hurghada and the Red Sea
+                <HomeText en="Comfortable airport and hotel transfers with dependable service across Hurghada and the Red Sea" de="Komfortable Flughafen- und Hoteltransfers mit zuverlässigem Service in Hurghada und am Roten Meer." />
               </p>
 
               <Link
@@ -355,8 +340,7 @@ export default function AboutPage() {
               </h3>
 
               <p className="mt-3 leading-7 text-gray-600">
-                Island trips, snorkeling, boat excursions and unforgettable
-                moments across the Red Sea
+                <HomeText en="Island trips, snorkeling, boat excursions and unforgettable moments across the Red Sea" de="Inselausflüge, Schnorcheln, Bootstouren und unvergessliche Momente am Roten Meer." />
               </p>
 
               <Link
@@ -384,8 +368,7 @@ export default function AboutPage() {
               </h3>
 
               <p className="mt-3 leading-7 text-gray-600">
-                Discover the Egyptian desert through safari trips,
-                quad biking and authentic local experiences
+                <HomeText en="Discover the Egyptian desert through safari trips, quad biking and authentic local experiences" de="Entdecken Sie die ägyptische Wüste bei Safaris, Quad-Touren und authentischen lokalen Erlebnissen." />
               </p>
 
               <Link
@@ -413,8 +396,7 @@ export default function AboutPage() {
               </h3>
 
               <p className="mt-3 leading-7 text-gray-600">
-                Carefully selected experiences for travelers who value
-                comfort, quality and a more personal journey
+                <HomeText en="Carefully selected experiences for travelers who value comfort, quality and a more personal journey" de="Sorgfältig ausgewählte Erlebnisse für Reisende, die Komfort, Qualität und eine persönlichere Reise schätzen." />
               </p>
 
             </div>
@@ -435,8 +417,7 @@ export default function AboutPage() {
               </h3>
 
               <p className="mt-3 leading-7 text-gray-600">
-                Direct communication and friendly local assistance before,
-                during and after your experience
+                <HomeText en="Direct communication and friendly local assistance before, during and after your experience" de="Direkte Kommunikation und freundliche Unterstützung vor, während und nach Ihrem Erlebnis." />
               </p>
 
             </div>
@@ -457,8 +438,7 @@ export default function AboutPage() {
               </h3>
 
               <p className="mt-3 leading-7 text-gray-600">
-                Simple booking, clear pricing and fast confirmation through
-                direct communication with our team
+                <HomeText en="Simple booking, clear pricing and fast confirmation through direct communication with our team" de="Einfache Buchung, transparente Preise und schnelle Bestätigung durch direkten Kontakt mit unserem Team." />
               </p>
 
             </div>
@@ -488,7 +468,7 @@ export default function AboutPage() {
               <span className="h-px w-12 bg-orange-500" />
 
               <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-orange-500">
-                Why Via Blue
+                <HomeText en="Why Via Blue" de="Warum Via Blue" />
               </p>
             </div>
 
@@ -500,9 +480,7 @@ export default function AboutPage() {
             </h2>
 
             <p className="mt-7 max-w-xl text-lg leading-8 text-gray-600">
-              We combine local knowledge with a modern, straightforward
-              approach to tourism. No unnecessary complications — just
-              well-organized experiences and people who care about your trip
+              <HomeText en="We combine local knowledge with a modern, straightforward approach to tourism. No unnecessary complications — just well-organized experiences and people who care about your trip" de="Wir verbinden lokale Kenntnisse mit einem modernen, unkomplizierten Tourismusansatz. Keine unnötigen Umstände – nur gut organisierte Erlebnisse und Menschen, denen Ihre Reise am Herzen liegt." />
             </p>
 
             <div className="mt-10 space-y-6">
@@ -519,8 +497,7 @@ export default function AboutPage() {
                   </h3>
 
                   <p className="mt-1 text-sm leading-6 text-gray-600">
-                    Straightforward information and easy communication from
-                    the beginning
+                    <HomeText en="Straightforward information and easy communication from the beginning" de="Klare Informationen und einfache Kommunikation von Anfang an" />
                   </p>
                 </div>
 
@@ -539,8 +516,7 @@ export default function AboutPage() {
                   </h3>
 
                   <p className="mt-1 text-sm leading-6 text-gray-600">
-                    We know Hurghada, the Red Sea and the experiences that
-                    make a holiday special
+                    <HomeText en="We know Hurghada, the Red Sea and the experiences that make a holiday special" de="Wir kennen Hurghada, das Rote Meer und die Erlebnisse, die einen Urlaub besonders machen." />
                   </p>
                 </div>
 
@@ -559,8 +535,7 @@ export default function AboutPage() {
                   </h3>
 
                   <p className="mt-1 text-sm leading-6 text-gray-600">
-                    Direct support from a local team that is here to help
-                    when you need it
+                    <HomeText en="Direct support from a local team that is here to help when you need it" de="Direkte Unterstützung durch ein lokales Team, das Ihnen bei Bedarf gerne hilft." />
                   </p>
                 </div>
 
@@ -681,7 +656,7 @@ export default function AboutPage() {
             </p>
 
             <p className="mt-1 text-sm leading-6 text-gray-500">
-              Clear prices without unnecessary complications
+              <HomeText en="Clear prices without unnecessary complications" de="Klare Preise ohne unnötige Komplikationen" />
             </p>
           </div>
 
@@ -708,12 +683,11 @@ export default function AboutPage() {
           </p>
 
           <h2 className="mt-5 text-4xl font-bold leading-[1.05] tracking-[-0.03em] md:text-6xl">
-            Hurghada Is Waiting
+            <HomeText en="Hurghada Is Waiting" de="Hurghada erwartet Sie" />
           </h2>
 
           <p className="mx-auto mt-7 max-w-2xl text-lg leading-8 text-blue-100/85">
-            Explore the Red Sea, discover unforgettable experiences and
-            travel with a team that knows Hurghada
+            <HomeText en="Explore the Red Sea, discover unforgettable experiences and travel with a team that knows Hurghada" de="Entdecken Sie das Rote Meer und unvergessliche Erlebnisse – mit einem Team, das Hurghada kennt." />
           </p>
 
           <div className="mx-auto mt-6 h-px w-16 bg-gradient-to-r from-transparent via-orange-400 to-transparent" />

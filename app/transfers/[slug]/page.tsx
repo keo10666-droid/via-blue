@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { transfers } from "@/data/transfers";
 import { createSupabaseAdminClient } from "@/lib/supabaseAdmin";
+import HomeText from "@/app/components/HomeText";
 
 type Props = {
   params: Promise<{
@@ -126,7 +127,7 @@ export default async function TransferPage({ params }: Props) {
             <span className="h-px w-12 bg-orange-400" />
 
             <p className="text-xs font-bold uppercase tracking-[0.35em] text-orange-400 sm:text-sm">
-              Private Airport Transfer
+              <HomeText en="Private Airport Transfer" de="Privater Flughafentransfer" />
             </p>
 
           </div>
@@ -136,22 +137,21 @@ export default async function TransferPage({ params }: Props) {
           </h1>
 
           <p className="mt-5 max-w-2xl text-lg leading-8 text-blue-100">
-            Comfortable private transfer from {transfer.from}
-            to your destination
+            <HomeText en={`Comfortable private transfer from ${transfer.from} to your destination`} de={`Komfortabler Privattransfer von ${transfer.from} zu Ihrem Ziel`} />
           </p>
 
           <div className="mt-7 flex flex-wrap gap-3">
 
             <div className="rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm font-semibold text-white backdrop-blur-sm">
-              ✓ Private Vehicle
+              ✓ <HomeText en="Private Vehicle" de="Privatfahrzeug" />
             </div>
 
             <div className="rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm font-semibold text-white backdrop-blur-sm">
-              ✓ Professional Driver
+              ✓ <HomeText en="Professional Driver" de="Professioneller Fahrer" />
             </div>
 
             <div className="rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm font-semibold text-white backdrop-blur-sm">
-              ✓ Fixed Price
+              ✓ <HomeText en="Fixed Price" de="Festpreis" />
             </div>
 
           </div>
@@ -182,17 +182,17 @@ export default async function TransferPage({ params }: Props) {
                 <span className="h-px w-10 bg-orange-500" />
 
                 <p className="text-xs font-bold uppercase tracking-[0.3em] text-orange-500">
-                  Choose Your Ride
+                  <HomeText en="Choose Your Ride" de="Wählen Sie Ihre Fahrt" />
                 </p>
 
               </div>
 
               <h2 className="mt-4 text-3xl font-bold tracking-tight text-blue-950 sm:text-4xl">
-                Choose Your Vehicle
+                <HomeText en="Choose Your Vehicle" de="Wählen Sie Ihr Fahrzeug" />
               </h2>
 
               <p className="mt-3 max-w-2xl text-base leading-7 text-gray-600">
-                Select the vehicle that best suits your group and luggage
+                <HomeText en="Select the vehicle that best suits your group and luggage" de="Wählen Sie das Fahrzeug, das zu Ihrer Gruppe und Ihrem Gepäck passt" />
               </p>
 
             </div>
@@ -222,7 +222,7 @@ export default async function TransferPage({ params }: Props) {
                     <div className="absolute inset-0 bg-gradient-to-t from-blue-950/70 via-blue-950/10 to-transparent" />
 
                     <div className="absolute left-5 top-5 rounded-full border border-white/20 bg-blue-950/80 px-3.5 py-2 text-[9px] font-bold uppercase tracking-[0.18em] text-white shadow-lg backdrop-blur-md">
-                      Private Transfer
+                      <HomeText en="Private Transfer" de="Privater Transfer" />
                     </div>
 
                     <div className="absolute bottom-4 left-5">
@@ -253,7 +253,7 @@ export default async function TransferPage({ params }: Props) {
                         </h3>
 
                         <p className="mt-1 text-xs font-medium text-slate-500">
-                          Private & comfortable transfer
+                          <HomeText en="Private & comfortable transfer" de="Privater und komfortabler Transfer" />
                         </p>
 
                       </div>
@@ -262,7 +262,7 @@ export default async function TransferPage({ params }: Props) {
                       <div className="shrink-0 text-right">
 
                         <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-slate-400">
-                          From
+                          <HomeText en="From" de="Ab" />
                         </p>
 
                         <div className="mt-0.5 flex items-baseline justify-end gap-1">
@@ -274,7 +274,7 @@ export default async function TransferPage({ params }: Props) {
                         </div>
 
                         <p className="text-[10px] font-medium text-slate-400">
-                          per vehicle
+                          <HomeText en="per vehicle" de="pro Fahrzeug" />
                         </p>
 
                       </div>
@@ -289,11 +289,11 @@ export default async function TransferPage({ params }: Props) {
                       <div className="border-r border-slate-100 px-4 py-3.5">
 
                         <p className="text-[9px] font-bold uppercase tracking-[0.15em] text-slate-400">
-                          Passengers
+                          <HomeText en="Passengers" de="Fahrgäste" />
                         </p>
 
                         <p className="mt-1 text-sm font-bold text-blue-950">
-                          {vehicle.passengers} Guests
+                          {vehicle.passengers} <HomeText en="Guests" de="Gäste" />
                         </p>
 
                       </div>
@@ -302,11 +302,11 @@ export default async function TransferPage({ params }: Props) {
                       <div className="px-4 py-3.5">
 
                         <p className="text-[9px] font-bold uppercase tracking-[0.15em] text-slate-400">
-                          Luggage
+                          <HomeText en="Luggage" de="Gepäck" />
                         </p>
 
                         <p className="mt-1 text-sm font-bold text-blue-950">
-                          {vehicle.luggage} Bags
+                          {vehicle.luggage} <HomeText en="Bags" de="Gepäckstücke" />
                         </p>
 
                       </div>
@@ -322,21 +322,21 @@ export default async function TransferPage({ params }: Props) {
                         <span className="flex h-4 w-4 items-center justify-center rounded-full bg-green-50 text-[9px] font-bold text-green-600">
                           ✓
                         </span>
-                        Private vehicle
+                        <HomeText en="Private vehicle" de="Privatfahrzeug" />
                       </span>
 
                       <span className="flex items-center gap-1.5">
                         <span className="flex h-4 w-4 items-center justify-center rounded-full bg-green-50 text-[9px] font-bold text-green-600">
                           ✓
                         </span>
-                        Professional driver
+                        <HomeText en="Professional driver" de="Professioneller Fahrer" />
                       </span>
 
                       <span className="flex items-center gap-1.5">
                         <span className="flex h-4 w-4 items-center justify-center rounded-full bg-green-50 text-[9px] font-bold text-green-600">
                           ✓
                         </span>
-                        Fixed price
+                        <HomeText en="Fixed price" de="Festpreis" />
                       </span>
 
                     </div>
@@ -349,7 +349,7 @@ export default async function TransferPage({ params }: Props) {
                       className="group/button mt-6 flex items-center justify-center gap-2 rounded-2xl bg-blue-950 px-5 py-3.5 text-center text-sm font-bold text-white shadow-lg shadow-blue-950/10 transition-all duration-300 hover:-translate-y-0.5 hover:bg-orange-500 hover:shadow-orange-500/20"
                     >
 
-                      Book {vehicle.type}
+                      <HomeText en={`Book ${vehicle.type}`} de={`${vehicle.type} buchen`} />
 
                       <ArrowRightIcon className="h-4 w-4 transition-transform duration-300 group-hover/button:translate-x-1" />
 
@@ -383,15 +383,15 @@ export default async function TransferPage({ params }: Props) {
                 <div className="relative">
 
                   <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-orange-400">
-                    Your Transfer
+                    <HomeText en="Your Transfer" de="Ihr Transfer" />
                   </p>
 
                   <h2 className="mt-2 text-xl font-bold">
-                    Transfer Summary
+                    <HomeText en="Transfer Summary" de="Transferübersicht" />
                   </h2>
 
                   <p className="mt-2 text-xs leading-5 text-blue-100">
-                    Simple, comfortable and private
+                    <HomeText en="Simple, comfortable and private" de="Einfach, komfortabel und privat" />
                   </p>
 
                 </div>
@@ -403,12 +403,12 @@ export default async function TransferPage({ params }: Props) {
 
                 <div className="space-y-3">
 
-                  {/* From */}
+                  {/* <HomeText en="From" de="Ab" /> */}
 
                   <div className="rounded-2xl border border-blue-100 bg-blue-50/70 p-4">
 
                     <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-slate-400">
-                      From
+                      <HomeText en="From" de="Ab" />
                     </p>
 
                     <p className="mt-1.5 text-sm font-bold text-blue-950">
@@ -418,12 +418,12 @@ export default async function TransferPage({ params }: Props) {
                   </div>
 
 
-                  {/* To */}
+                  {/* <HomeText en="To" de="Nach" /> */}
 
                   <div className="rounded-2xl border border-orange-100 bg-orange-50/70 p-4">
 
                     <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-slate-400">
-                      To
+                      <HomeText en="To" de="Nach" />
                     </p>
 
                     <p className="mt-1.5 text-sm font-bold text-orange-700">
@@ -438,7 +438,7 @@ export default async function TransferPage({ params }: Props) {
                   <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
 
                     <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-slate-400">
-                      Starting From
+                      <HomeText en="Starting From" de="Ab" />
                     </p>
 
                     <div className="mt-1 flex items-end gap-2">
@@ -448,7 +448,7 @@ export default async function TransferPage({ params }: Props) {
                       </span>
 
                       <span className="mb-1 text-xs font-medium text-slate-500">
-                        / vehicle
+                        / <HomeText en="vehicle" de="Fahrzeug" />
                       </span>
 
                     </div>
@@ -461,7 +461,7 @@ export default async function TransferPage({ params }: Props) {
                   <div className="rounded-2xl border border-slate-200 bg-white p-5">
 
                     <p className="text-sm font-bold text-blue-950">
-                      What's Included
+                      <HomeText en="What's Included" de="Inklusive Leistungen" />
                     </p>
 
                     <ul className="mt-4 space-y-3 text-xs font-medium text-slate-600">
@@ -470,35 +470,35 @@ export default async function TransferPage({ params }: Props) {
                         <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-green-50 text-[10px] font-bold text-green-600">
                           ✓
                         </span>
-                        Private vehicle
+                        <HomeText en="Private vehicle" de="Privatfahrzeug" />
                       </li>
 
                       <li className="flex items-center gap-2.5">
                         <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-green-50 text-[10px] font-bold text-green-600">
                           ✓
                         </span>
-                        Airport pickup
+                        <HomeText en="Airport pickup" de="Abholung am Flughafen" />
                       </li>
 
                       <li className="flex items-center gap-2.5">
                         <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-green-50 text-[10px] font-bold text-green-600">
                           ✓
                         </span>
-                        Professional driver
+                        <HomeText en="Professional driver" de="Professioneller Fahrer" />
                       </li>
 
                       <li className="flex items-center gap-2.5">
                         <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-green-50 text-[10px] font-bold text-green-600">
                           ✓
                         </span>
-                        Fixed price
+                        <HomeText en="Fixed price" de="Festpreis" />
                       </li>
 
                       <li className="flex items-center gap-2.5">
                         <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-green-50 text-[10px] font-bold text-green-600">
                           ✓
                         </span>
-                        Direct transfer
+                        <HomeText en="Direct transfer" de="Direkttransfer" />
                       </li>
 
                     </ul>
@@ -512,7 +512,7 @@ export default async function TransferPage({ params }: Props) {
                   href="/transfers"
                   className="mt-5 flex items-center justify-center gap-2 rounded-2xl border-2 border-blue-950 px-5 py-3.5 text-center text-sm font-bold text-blue-950 transition-all duration-300 hover:bg-blue-950 hover:text-white"
                 >
-                  ← Back to Transfers
+                  ← <HomeText en="Back to Transfers" de="Zurück zu den Transfers" />
                 </Link>
 
               </div>

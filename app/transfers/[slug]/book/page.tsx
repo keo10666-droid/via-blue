@@ -7,6 +7,7 @@ import { useParams } from "next/navigation";
 
 import { transfers } from "@/data/transfers";
 import BookingSuccessModal from "@/app/components/BookingSuccessModal";
+import HomeText from "@/app/components/HomeText";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -375,6 +376,23 @@ function CustomDatePicker({
   invalid: boolean;
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isGerman, setIsGerman] = useState(false);
+
+  useEffect(() => {
+    try {
+      setIsGerman(window.localStorage.getItem("via-blue-language") === "de");
+    } catch {
+      setIsGerman(false);
+    }
+
+    const handleLanguageChange = (event: Event) => {
+      const next = (event as CustomEvent<"en" | "de">).detail;
+      if (next === "en" || next === "de") setIsGerman(next === "de");
+    };
+
+    window.addEventListener("via-blue-language-change", handleLanguageChange);
+    return () => window.removeEventListener("via-blue-language-change", handleLanguageChange);
+  }, []);
 
   const minDateObject = useMemo(
     () => new Date(`${minDate}T12:00:00`),
@@ -494,7 +512,7 @@ function CustomDatePicker({
 
           <span className="min-w-0">
             <span className="block text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400">
-              Transfer Date
+              <HomeText en="Transfer Date" de="Transferdatum" />
             </span>
 
             <span
@@ -529,7 +547,7 @@ function CustomDatePicker({
               type="button"
               onClick={previousMonth}
               className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-100 bg-white text-slate-500 transition-all hover:border-orange-100 hover:bg-orange-50 hover:text-orange-600"
-              aria-label="Previous month"
+              aria-label={isGerman ? "Vorheriger Monat" : "Previous month"}
             >
               <ChevronLeftIcon />
             </button>
@@ -546,7 +564,7 @@ function CustomDatePicker({
               type="button"
               onClick={nextMonth}
               className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-100 bg-white text-slate-500 transition-all hover:border-orange-100 hover:bg-orange-50 hover:text-orange-600"
-              aria-label="Next month"
+              aria-label={isGerman ? "Nächster Monat" : "Next month"}
             >
               <ChevronRightIcon />
             </button>
@@ -637,7 +655,7 @@ function CustomDatePicker({
             </span>
 
             <p className="text-[11px] font-medium leading-4 text-orange-800">
-              Select a date from tomorrow onwards
+              <HomeText en="Select a date from tomorrow onwards" de="Wählen Sie ein Datum ab morgen" />
             </p>
           </div>
         </div>
@@ -762,7 +780,7 @@ function CustomTimePicker({
 
           <span className="min-w-0">
             <span className="block text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400">
-              Pickup Time
+              <HomeText en="Pickup Time" de="Abholzeit" />
             </span>
 
             <span
@@ -799,11 +817,11 @@ function CustomTimePicker({
 
             <div>
               <p className="text-sm font-bold text-blue-950">
-                Select Pickup Time
+                <HomeText en="Select Pickup Time" de="Abholzeit auswählen" />
               </p>
 
               <p className="mt-0.5 text-[11px] text-slate-400">
-                Choose your preferred pickup time
+                <HomeText en="Choose your preferred pickup time" de="Wählen Sie Ihre gewünschte Abholzeit" />
               </p>
             </div>
           </div>
@@ -813,7 +831,7 @@ function CustomTimePicker({
           <div className="grid grid-cols-3 gap-2.5">
             <div>
               <p className="mb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                Hour
+                <HomeText en="Hour" de="Stunde" />
               </p>
 
               <select
@@ -841,7 +859,7 @@ function CustomTimePicker({
 
             <div>
               <p className="mb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                Minute
+                <HomeText en="Minute" de="Minute" />
               </p>
 
               <select
@@ -911,7 +929,7 @@ function CustomTimePicker({
 
             <div>
               <p className="text-left text-[9px] font-bold uppercase tracking-[0.12em] text-orange-500">
-                Selected Time
+                <HomeText en="Selected Time" de="Ausgewählte Uhrzeit" />
               </p>
 
               <p className="mt-0.5 text-xl font-bold text-blue-950">
@@ -927,7 +945,7 @@ function CustomTimePicker({
             onClick={handleApply}
             className="mt-4 w-full rounded-2xl bg-blue-950 px-4 py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-950/15 transition-all hover:-translate-y-0.5 hover:bg-orange-500 hover:shadow-xl hover:shadow-orange-500/20"
           >
-            Set Pickup Time
+            <HomeText en="Set Pickup Time" de="Abholzeit festlegen" />
           </button>
         </div>
       )}
@@ -936,6 +954,14 @@ function CustomTimePicker({
 }
 
 export default function TransferBookingPage() {
+  const [isGerman, setIsGerman] = useState(false);
+
+  useEffect(() => {
+    const syncLanguage = () => setIsGerman(window.localStorage.getItem("via-blue-language") === "de");
+    syncLanguage();
+    window.addEventListener("via-blue-language-change", syncLanguage);
+    return () => window.removeEventListener("via-blue-language-change", syncLanguage);
+  }, []);
   const params = useParams();
 
   const slug = Array.isArray(params.slug)
@@ -1034,7 +1060,7 @@ export default function TransferBookingPage() {
           </div>
 
           <h1 className="mt-4 text-2xl font-bold text-blue-950">
-            Transfer Not Found
+            <HomeText en="Transfer Not Found" de="Transfer nicht gefunden" />
           </h1>
 
           <p className="mt-2 text-sm text-slate-500">
@@ -1266,7 +1292,9 @@ ${notes.trim() || "-"}
     );
 
     alert(
-      "Something went wrong while submitting your transfer booking. Please try again"
+      isGerman
+        ? "Beim Absenden Ihrer Transferbuchung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
+        : "Something went wrong while submitting your transfer booking. Please try again"
     );
   }
 };
@@ -1296,12 +1324,12 @@ ${notes.trim() || "-"}
             <span className="h-px w-12 bg-orange-400" />
 
             <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-orange-400">
-              Secure Booking
+              <HomeText en="Secure Booking" de="Sichere Buchung" />
             </p>
           </div>
 
           <h1 className="mt-5 text-3xl font-bold tracking-tight md:text-5xl">
-            Book Your Transfer
+            <HomeText en="Book Your Transfer" de="Buchen Sie Ihren Transfer" />
           </h1>
 
           <p className="mt-3 max-w-2xl text-sm leading-6 text-blue-100 md:text-base">
@@ -1314,21 +1342,21 @@ ${notes.trim() || "-"}
               <span className="flex h-5 w-5 items-center justify-center rounded-full bg-green-400/15 text-green-400">
                 <CheckIcon />
               </span>
-              Instant WhatsApp Confirmation
+              <HomeText en="Instant WhatsApp Confirmation" de="Sofortige WhatsApp-Bestätigung" />
             </div>
 
             <div className="flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.08] px-4 py-2.5 text-xs font-semibold shadow-lg shadow-black/5 backdrop-blur-xl">
               <span className="flex h-5 w-5 items-center justify-center rounded-full bg-green-400/15 text-green-400">
                 <CheckIcon />
               </span>
-              Fixed Price
+              <HomeText en="Fixed Price" de="Festpreis" />
             </div>
 
             <div className="flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.08] px-4 py-2.5 text-xs font-semibold shadow-lg shadow-black/5 backdrop-blur-xl">
               <span className="flex h-5 w-5 items-center justify-center rounded-full bg-green-400/15 text-green-400">
                 <CheckIcon />
               </span>
-              Professional Driver
+              <HomeText en="Professional Driver" de="Professioneller Fahrer" />
             </div>
           </div>
         </div>
@@ -1343,18 +1371,18 @@ ${notes.trim() || "-"}
               <div className="mb-6">
                 <div className="flex items-center gap-3">
                   <span className="flex h-8 items-center rounded-full bg-orange-50 px-3 text-[10px] font-bold uppercase tracking-[0.18em] text-orange-600">
-                    Step 1
+                    <HomeText en="Step 1" de="Schritt 1" />
                   </span>
 
                   <span className="h-px flex-1 bg-slate-100" />
                 </div>
 
                 <h2 className="mt-4 text-xl font-bold text-blue-950 md:text-2xl">
-                  Choose Transfer Type
+                  <HomeText en="Choose Transfer Type" de="Transferart auswählen" />
                 </h2>
 
                 <p className="mt-1.5 text-sm text-slate-500">
-                  Select the type of transfer you need
+                  <HomeText en="Select the type of transfer you need" de="Wählen Sie die gewünschte Transferart" />
                 </p>
               </div>
 
@@ -1494,14 +1522,14 @@ ${notes.trim() || "-"}
                 <div>
                   <div className="flex items-center gap-3">
                     <span className="flex h-8 items-center rounded-full bg-orange-50 px-3 text-[10px] font-bold uppercase tracking-[0.18em] text-orange-600">
-                      Step 2
+                      <HomeText en="Step 2" de="Schritt 2" />
                     </span>
 
                     <span className="hidden h-px w-10 bg-slate-100 sm:block" />
                   </div>
 
                   <h2 className="mt-4 text-xl font-bold text-blue-950 md:text-2xl">
-                    Select Your Vehicle
+                    <HomeText en="Select Your Vehicle" de="Fahrzeug auswählen" />
                   </h2>
                 </div>
 
@@ -1538,7 +1566,7 @@ ${notes.trim() || "-"}
                         <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-blue-950/80 to-transparent" />
 
                         <div className="absolute left-3 top-3 rounded-full border border-white/20 bg-blue-950/70 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.15em] text-white backdrop-blur-md">
-                          Private Transfer
+                          <HomeText en="Private Transfer" de="Privater Transfer" />
                         </div>
 
                         {selectedVehicle ===
@@ -1622,18 +1650,18 @@ ${notes.trim() || "-"}
               <div className="mb-6">
                 <div className="flex items-center gap-3">
                   <span className="flex h-8 items-center rounded-full bg-orange-50 px-3 text-[10px] font-bold uppercase tracking-[0.18em] text-orange-600">
-                    Step 3
+                    <HomeText en="Step 3" de="Schritt 3" />
                   </span>
 
                   <span className="h-px flex-1 bg-slate-100" />
                 </div>
 
                 <h2 className="mt-4 text-xl font-bold text-blue-950 md:text-2xl">
-                  Guest Information
+                  <HomeText en="Guest Information" de="Gästeinformationen" />
                 </h2>
 
                 <p className="mt-1.5 text-sm text-slate-500">
-                  Tell us who will be travelling
+                  <HomeText en="Tell us who will be travelling" de="Teilen Sie uns mit, wer mitreist" />
                 </p>
               </div>
 
@@ -1650,7 +1678,7 @@ ${notes.trim() || "-"}
 
                     <input
                       type="text"
-                      placeholder="Enter your full name"
+                      placeholder={isGerman ? "Vollständiger Name" : "Enter your full name"}
                       value={name}
                       onChange={(e) =>
                         setName(e.target.value)
@@ -1671,7 +1699,7 @@ ${notes.trim() || "-"}
 
                 <div>
                   <label className={labelClass}>
-                    Email Address *
+                    {isGerman ? "E-Mail-Adresse *" : "Email Address *"}
                   </label>
 
                   <div className="relative">
@@ -1681,7 +1709,7 @@ ${notes.trim() || "-"}
 
                     <input
                       type="email"
-                      placeholder="your@email.com"
+                      placeholder={isGerman ? "ihre@email.com" : "your@email.com"}
                       value={email}
                       onChange={(e) =>
                         setEmail(e.target.value)
@@ -1792,7 +1820,7 @@ ${notes.trim() || "-"}
 
                     <input
                       type="tel"
-                      placeholder="WhatsApp Number"
+                      placeholder={isGerman ? "WhatsApp-Nummer" : "WhatsApp Number"}
                       value={phone}
                       onChange={(e) =>
                         setPhone(e.target.value)
@@ -1820,14 +1848,14 @@ ${notes.trim() || "-"}
               <div className="mb-6">
                 <div className="flex items-center gap-3">
                   <span className="flex h-8 items-center rounded-full bg-orange-50 px-3 text-[10px] font-bold uppercase tracking-[0.18em] text-orange-600">
-                    Step 4
+                    <HomeText en="Step 4" de="Schritt 4" />
                   </span>
 
                   <span className="h-px flex-1 bg-slate-100" />
                 </div>
 
                 <h2 className="mt-4 text-xl font-bold text-blue-950 md:text-2xl">
-                  Transfer Information
+                  <HomeText en="Transfer Information" de="Transferinformationen" />
                 </h2>
               </div>
 
@@ -1846,7 +1874,7 @@ ${notes.trim() || "-"}
 
                       <input
                         type="text"
-                        placeholder="Pickup hotel name"
+                        placeholder={isGerman ? "Name des Abholhotels" : "Pickup hotel name"}
                         value={fromHotel}
                         onChange={(e) =>
                           setFromHotel(
@@ -1873,7 +1901,7 @@ ${notes.trim() || "-"}
 
                       <input
                         type="text"
-                        placeholder="Destination hotel name"
+                        placeholder={isGerman ? "Name des Zielhotels" : "Destination hotel name"}
                         value={toHotel}
                         onChange={(e) =>
                           setToHotel(
@@ -1901,7 +1929,7 @@ ${notes.trim() || "-"}
 
                     <input
                       type="text"
-                      placeholder="Your hotel name"
+                      placeholder={isGerman ? "Name Ihres Hotels" : "Your hotel name"}
                       value={hotel}
                       onChange={(e) =>
                         setHotel(e.target.value)
@@ -1924,12 +1952,12 @@ ${notes.trim() || "-"}
               <div className="mt-5 grid gap-4 md:grid-cols-2">
                 <div>
                   <label className={labelClass}>
-                    Room Number
+                    <HomeText en="Room Number" de="Zimmernummer" />
                   </label>
 
                   <input
                     type="text"
-                    placeholder="Room number"
+                    placeholder={isGerman ? "Zimmernummer" : "Room number"}
                     value={roomNumber}
                     onChange={(e) =>
                       setRoomNumber(
@@ -1944,12 +1972,12 @@ ${notes.trim() || "-"}
                   "hotel-to-hotel" && (
                   <div>
                     <label className={labelClass}>
-                      Flight Number
+                      <HomeText en="Flight Number" de="Flugnummer" />
                     </label>
 
                     <input
                       type="text"
-                      placeholder="Example: MS042"
+                      placeholder={isGerman ? "Beispiel: MS042" : "Example: MS042"}
                       value={flightNumber}
                       onChange={(e) =>
                         setFlightNumber(
@@ -2013,21 +2041,21 @@ ${notes.trim() || "-"}
               <div className="mb-6">
                 <div className="flex items-center gap-3">
                   <span className="flex h-8 items-center rounded-full bg-orange-50 px-3 text-[10px] font-bold uppercase tracking-[0.18em] text-orange-600">
-                    Step 5
+                    <HomeText en="Step 5" de="Schritt 5" />
                   </span>
 
                   <span className="h-px flex-1 bg-slate-100" />
                 </div>
 
                 <h2 className="mt-4 text-xl font-bold text-blue-950 md:text-2xl">
-                  Transfer Details
+                  <HomeText en="Transfer Details" de="Transferdetails" />
                 </h2>
               </div>
 
               <div className="grid gap-4 md:grid-cols-2">
                 <div>
                   <label className={labelClass}>
-                    Passengers
+                    <HomeText en="Passengers" de="Fahrgäste" />
                   </label>
 
                   <select
@@ -2066,7 +2094,7 @@ ${notes.trim() || "-"}
 
                 <div>
                   <label className={labelClass}>
-                    Luggage
+                    <HomeText en="Luggage" de="Gepäck" />
                   </label>
 
                   <select
@@ -2110,20 +2138,20 @@ ${notes.trim() || "-"}
               <div className="mb-6">
                 <div className="flex items-center gap-3">
                   <span className="flex h-8 items-center rounded-full bg-slate-100 px-3 text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">
-                    Optional
+                    <HomeText en="Optional" de="Optional" />
                   </span>
 
                   <span className="h-px flex-1 bg-slate-100" />
                 </div>
 
                 <h2 className="mt-4 text-xl font-bold text-blue-950 md:text-2xl">
-                  Additional Information
+                  <HomeText en="Additional Information" de="Zusätzliche Informationen" />
                 </h2>
               </div>
 
               <textarea
                 rows={4}
-                placeholder="Special requests, child seats, extra luggage or anything else..."
+                placeholder={isGerman ? "Besondere Wünsche, Kindersitze, zusätzliches Gepäck oder Sonstiges..." : "Special requests, child seats, extra luggage or anything else..."}
                 value={notes}
                 onChange={(e) =>
                   setNotes(e.target.value)
@@ -2150,7 +2178,7 @@ ${notes.trim() || "-"}
             >
               <span className="relative z-10 flex items-center justify-center gap-3">
                 <ShieldIcon />
-                Book Transfer
+                <HomeText en="Book Transfer" de="Transfer buchen" />
               </span>
             </button>
 
@@ -2175,12 +2203,12 @@ ${notes.trim() || "-"}
                     <span className="h-px w-7 bg-orange-400" />
 
                     <p className="text-[9px] font-bold uppercase tracking-[0.25em] text-orange-400">
-                      Booking Summary
+                      <HomeText en="Booking Summary" de="Buchungsübersicht" />
                     </p>
                   </div>
 
                   <h2 className="mt-2 text-xl font-bold">
-                    Your Transfer
+                    <HomeText en="Your Transfer" de="Ihr Transfer" />
                   </h2>
                 </div>
               </div>
@@ -2189,7 +2217,7 @@ ${notes.trim() || "-"}
                 {/* TYPE */}
                 <div className="rounded-2xl border border-orange-100 bg-gradient-to-br from-orange-50 to-white p-4">
                   <p className="text-[9px] font-bold uppercase tracking-[0.16em] text-orange-600">
-                    Transfer Type
+                    <HomeText en="Transfer Type" de="Transferart" />
                   </p>
 
                   <p className="mt-1.5 text-sm font-bold text-blue-950">
@@ -2214,7 +2242,7 @@ ${notes.trim() || "-"}
 
                     <div className="min-w-0">
                       <p className="text-[9px] font-bold uppercase tracking-[0.14em] text-slate-400">
-                        From
+                        <HomeText en="From" de="Von" />
                       </p>
 
                       <p className="mt-1 text-sm font-bold leading-5 text-blue-950">
@@ -2259,7 +2287,7 @@ ${notes.trim() || "-"}
                     <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between">
                       <div>
                         <p className="text-[9px] font-bold uppercase tracking-[0.14em] text-white/70">
-                          Selected Vehicle
+                          <HomeText en="Selected Vehicle" de="Ausgewähltes Fahrzeug" />
                         </p>
 
                         <p className="mt-0.5 text-sm font-bold text-white">
@@ -2291,7 +2319,7 @@ ${notes.trim() || "-"}
                 <div className="mt-4 grid grid-cols-2 gap-3">
                   <div className="rounded-2xl border border-blue-100 bg-blue-50 p-3.5">
                     <p className="text-[9px] font-bold uppercase tracking-[0.12em] text-slate-400">
-                      Guests
+                      <HomeText en="Guests" de="Gäste" />
                     </p>
 
                     <p className="mt-1.5 flex items-center gap-1.5 text-sm font-bold text-blue-950">
@@ -2302,7 +2330,7 @@ ${notes.trim() || "-"}
 
                   <div className="rounded-2xl border border-orange-100 bg-orange-50 p-3.5">
                     <p className="text-[9px] font-bold uppercase tracking-[0.12em] text-slate-400">
-                      Luggage
+                      <HomeText en="Luggage" de="Gepäck" />
                     </p>
 
                     <p className="mt-1.5 flex items-center gap-1.5 text-sm font-bold text-orange-700">
@@ -2318,7 +2346,7 @@ ${notes.trim() || "-"}
                     <div className="flex items-center justify-between gap-3">
                       <div>
                         <p className="text-[9px] font-bold uppercase tracking-[0.12em] text-slate-400">
-                          Date
+                          <HomeText en="Date" de="Datum" />
                         </p>
 
                         <p className="mt-1 text-sm font-bold text-blue-950">
@@ -2332,7 +2360,7 @@ ${notes.trim() || "-"}
 
                       <div className="text-right">
                         <p className="text-[9px] font-bold uppercase tracking-[0.12em] text-slate-400">
-                          Time
+                          <HomeText en="Time" de="Uhrzeit" />
                         </p>
 
                         <p className="mt-1 text-sm font-bold text-blue-950">
@@ -2352,7 +2380,7 @@ ${notes.trim() || "-"}
                   <div className="flex items-end justify-between gap-4">
                     <div>
                       <p className="text-xs font-bold text-slate-500">
-                        Total Transfer Price
+                        <HomeText en="Total Transfer Price" de="Gesamtpreis des Transfers" />
                       </p>
 
                       <p className="mt-1 text-[10px] text-slate-400">
@@ -2376,7 +2404,7 @@ ${notes.trim() || "-"}
 
                     <div>
                       <p className="text-sm font-bold text-green-800">
-                        Safe & Reliable Transfer
+                        <HomeText en="Safe & Reliable Transfer" de="Sicherer und zuverlässiger Transfer" />
                       </p>
 
                       <p className="mt-1 text-xs leading-5 text-green-700">
