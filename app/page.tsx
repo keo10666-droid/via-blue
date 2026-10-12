@@ -801,7 +801,7 @@ export default async function Home() {
                     <div className="flex flex-1 flex-col p-6">
 
                       <h3 className="text-xl font-bold leading-7 text-blue-950 transition group-hover:text-orange-500">
-                        {tour.name}
+                        <TourText slug={tour.slug} value={tour.name} field="name" />
                       </h3>
 
                       <div className="mt-3 flex items-center gap-2">
