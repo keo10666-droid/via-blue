@@ -38,7 +38,6 @@ export default function LoginPage() {
       "We couldn’t complete this request. Please check your details and try again.": "Die Anfrage konnte nicht abgeschlossen werden. Bitte überprüfe deine Angaben und versuche es erneut.",
       "Account created. Please check your email to confirm your account": "Konto erstellt. Bitte überprüfe deine E-Mail, um dein Konto zu bestätigen.",
       "Email or password is incorrect.": "E-Mail-Adresse oder Passwort ist falsch.",
-      "Account created. Please check your email to confirm your account": "Konto erstellt. Bitte überprüfe deine E-Mail, um dein Konto zu bestätigen.",
       "Please enter your email address first.": "Bitte gib zuerst deine E-Mail-Adresse ein.",
       "A new confirmation email has been sent.": "Eine neue Bestätigungs-E-Mail wurde gesendet."
     };
