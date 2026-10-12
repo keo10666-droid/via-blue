@@ -875,7 +875,9 @@ ${notes.trim() || "-"}
     );
 
     alert(
-      "Something went wrong while submitting your booking. Please try again"
+      isGerman
+        ? "Beim Senden Ihrer Buchung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
+        : "Something went wrong while submitting your booking. Please try again"
     );
   }
 };
