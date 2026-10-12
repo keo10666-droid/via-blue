@@ -743,7 +743,7 @@ export default function AITripPlannerPage() {
                                       : "text-gray-400"
                                   }`}
                                 >
-                                  {item}
+                                  <HomeText en={item.en} de={item.de} />
                                 </p>
 
                                 {active && (
