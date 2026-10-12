@@ -524,7 +524,7 @@ export default function ContactPage() {
 
                 <form onSubmit={handleSubmit} className="mt-8 space-y-5">
                   <div className="absolute -left-[9999px]" aria-hidden="true">
-                    <label htmlFor="website">Leave this field empty</label>
+                    <label htmlFor="website"><HomeText en="Leave this field empty" de="Dieses Feld leer lassen" /></label>
                     <input
                       id="website"
                       name="website"
