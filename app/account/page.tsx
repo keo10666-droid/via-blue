@@ -11,6 +11,17 @@ import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import HomeText from "@/app/components/HomeText";
 
+function accountText(en: string, de: string) {
+  try {
+    return typeof window !== "undefined" &&
+      window.localStorage.getItem("via-blue-language") === "de"
+      ? de
+      : en;
+  } catch {
+    return en;
+  }
+}
+
 type Profile = {
   full_name: string | null;
   phone: string | null;
@@ -160,16 +171,16 @@ const COUNTRY_CODES = [
 
 function translateAccountMessage(message: string) {
   const translations: Record<string, string> = {
-    "Please select a JPG, PNG, WebP or GIF image": "Bitte wähle ein JPG-, PNG-, WebP- oder GIF-Bild aus",
-    "Image size must be 5 MB or smaller": "Das Bild darf höchstens 5 MB groß sein",
-    "Each memory image must be 5 MB or smaller": "Jedes Erinnerungsfoto darf höchstens 5 MB groß sein",
-    "Please choose a photo first": "Bitte wähle zuerst ein Foto aus",
-    "You have reached the maximum of 25 travel memories": "Du hast die Höchstzahl von 25 Reiseerinnerungen erreicht",
-    "Could not save this memory": "Diese Erinnerung konnte nicht gespeichert werden",
-    "Your travel memory has been added": "Deine Reiseerinnerung wurde hinzugefügt",
-    "Travel memory deleted": "Reiseerinnerung gelöscht",
+    accountText("Please select a JPG, PNG, WebP or GIF image", "Bitte wählen Sie ein JPG-, PNG-, WebP- oder GIF-Bild aus"): "Bitte wähle ein JPG-, PNG-, WebP- oder GIF-Bild aus",
+    accountText("Image size must be 5 MB or smaller", "Das Bild darf höchstens 5 MB groß sein"): "Das Bild darf höchstens 5 MB groß sein",
+    accountText("Each memory image must be 5 MB or smaller", "Jedes Erinnerungsfoto darf höchstens 5 MB groß sein"): "Jedes Erinnerungsfoto darf höchstens 5 MB groß sein",
+    accountText("Please choose a photo first", "Bitte wählen Sie zuerst ein Foto aus"): "Bitte wähle zuerst ein Foto aus",
+    accountText("You have reached the maximum of 25 travel memories", "Du hast die maximale Anzahl von 25 Reiseerinnerungen erreicht"): "Du hast die Höchstzahl von 25 Reiseerinnerungen erreicht",
+    accountText("Could not save this memory", "Diese Erinnerung konnte nicht gespeichert werden"): "Diese Erinnerung konnte nicht gespeichert werden",
+    accountText("Your travel memory has been added", "Deine Reiseerinnerung wurde hinzugefügt"): "Deine Reiseerinnerung wurde hinzugefügt",
+    accountText("Travel memory deleted", "Reiseerinnerung gelöscht"): "Reiseerinnerung gelöscht",
     "Your profile has been saved": "Dein Profil wurde gespeichert",
-    " Please check your email to confirm the new address": " Bitte überprüfe deine E-Mails, um die neue Adresse zu bestätigen",
+    accountText(" Please check your email to confirm the new address", " Bitte prüfen Sie Ihre E-Mail, um die neue Adresse zu bestätigen"): " Bitte überprüfe deine E-Mails, um die neue Adresse zu bestätigen",
   };
   return Object.entries(translations).reduce((text, [english, german]) => text.split(english).join(german), message);
 }
@@ -667,7 +678,7 @@ export default function AccountPage() {
       setIsCountryOpen(false);
 
       setMessage(
-        `Your profile has been saved${emailMessage}`
+        accountText(`Your profile has been saved${emailMessage}`, `Dein Profil wurde gespeichert${emailMessage}`)
       );
     } finally {
       setIsSaving(false);
@@ -852,7 +863,7 @@ export default function AccountPage() {
   ) {
     const confirmed =
       window.confirm(
-        "Are you sure you want to delete this travel memory?"
+        accountText("Are you sure you want to delete this travel memory?", "Möchtest du diese Reiseerinnerung wirklich löschen?")
       );
 
     if (!confirmed) return;
@@ -897,7 +908,7 @@ export default function AccountPage() {
       );
     } catch {
       setMessage(
-        "Could not delete this memory"
+        accountText("Could not delete this memory", "Diese Erinnerung konnte nicht gelöscht werden")
       );
     }
   }
@@ -1248,8 +1259,8 @@ export default function AccountPage() {
                     setMessage("");
                   }}
                   className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 text-[#071d49] transition hover:border-orange-200 hover:bg-orange-50 hover:text-orange-500"
-                  title="Profil bearbeiten"
-                  aria-label="Profil bearbeiten"
+                  title={accountText("Edit profile", "Profil bearbeiten")}
+                  aria-label={accountText("Edit profile", "Profil bearbeiten")}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -1367,8 +1378,8 @@ export default function AccountPage() {
                         setIsEditingProfile(true)
                       }
                       className="text-slate-400 transition hover:text-orange-500"
-                      title="Vollständigen Namen bearbeiten"
-                      aria-label="Vollständigen Namen bearbeiten"
+                      title={accountText("Edit full name", "Vollständigen Namen bearbeiten")}
+                      aria-label={accountText("Edit full name", "Vollständigen Namen bearbeiten")}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -1425,8 +1436,8 @@ export default function AccountPage() {
                         setIsEditingProfile(true)
                       }
                       className="text-slate-400 transition hover:text-orange-500"
-                      title="WhatsApp-Nummer bearbeiten"
-                      aria-label="WhatsApp-Nummer bearbeiten"
+                      title={accountText("Edit WhatsApp number", "WhatsApp-Nummer bearbeiten")}
+                      aria-label={accountText("Edit WhatsApp number", "WhatsApp-Nummer bearbeiten")}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -1570,8 +1581,8 @@ export default function AccountPage() {
                         setIsEditingProfile(true)
                       }
                       className="text-slate-400 transition hover:text-orange-500"
-                      title="E-Mail bearbeiten"
-                      aria-label="E-Mail bearbeiten"
+                      title={accountText("Edit email", "E-Mail bearbeiten")}
+                      aria-label={accountText("Edit email", "E-Mail bearbeiten")}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -1962,7 +1973,7 @@ export default function AccountPage() {
                 )
               }
               maxLength={120}
-              placeholder="Bildbeschreibung hinzufügen (optional)"
+              placeholder={accountText("Add a caption (optional)", "Bildbeschreibung hinzufügen (optional)")}
               disabled={
                 memories.length >=
                 25
