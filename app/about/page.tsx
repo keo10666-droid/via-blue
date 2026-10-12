@@ -679,7 +679,7 @@ export default function AboutPage() {
         <div className="relative mx-auto max-w-4xl text-center">
 
           <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-orange-400">
-            Start Your Journey
+            <HomeText en="Start Your Journey" de="Starten Sie Ihre Reise" />
           </p>
 
           <h2 className="mt-5 text-4xl font-bold leading-[1.05] tracking-[-0.03em] md:text-6xl">
