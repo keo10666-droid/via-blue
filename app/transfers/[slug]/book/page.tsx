@@ -1292,7 +1292,9 @@ ${notes.trim() || "-"}
     );
 
     alert(
-      "Something went wrong while submitting your transfer booking. Please try again"
+      isGerman
+        ? "Beim Absenden Ihrer Transferbuchung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
+        : "Something went wrong while submitting your transfer booking. Please try again"
     );
   }
 };
