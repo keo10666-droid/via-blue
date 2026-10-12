@@ -194,7 +194,7 @@ export default function LoginPage() {
                 </p>
 
                 <p className="text-[9px] font-bold uppercase tracking-[0.25em] text-gray-400">
-                  Tours & Transfers
+                  <HomeText en="Tours & Transfers" de="Ausflüge & Transfers" />
                 </p>
               </div>
             </div>
