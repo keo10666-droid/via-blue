@@ -530,7 +530,7 @@ function CustomDatePicker({
               type="button"
               onClick={previousMonth}
               className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-100 bg-white text-slate-500 transition-all hover:border-orange-100 hover:bg-orange-50 hover:text-orange-600"
-              aria-label="Previous month"
+              aria-label={isGerman ? "Vorheriger Monat" : "Previous month"}
             >
               <ChevronLeftIcon />
             </button>
@@ -547,7 +547,7 @@ function CustomDatePicker({
               type="button"
               onClick={nextMonth}
               className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-100 bg-white text-slate-500 transition-all hover:border-orange-100 hover:bg-orange-50 hover:text-orange-600"
-              aria-label="Next month"
+              aria-label={isGerman ? "Nächster Monat" : "Next month"}
             >
               <ChevronRightIcon />
             </button>
@@ -937,6 +937,14 @@ function CustomTimePicker({
 }
 
 export default function TransferBookingPage() {
+  const [isGerman, setIsGerman] = useState(false);
+
+  useEffect(() => {
+    const syncLanguage = () => setIsGerman(window.localStorage.getItem("via-blue-language") === "de");
+    syncLanguage();
+    window.addEventListener("via-blue-language-change", syncLanguage);
+    return () => window.removeEventListener("via-blue-language-change", syncLanguage);
+  }, []);
   const params = useParams();
 
   const slug = Array.isArray(params.slug)
@@ -1651,7 +1659,7 @@ ${notes.trim() || "-"}
 
                     <input
                       type="text"
-                      placeholder="Enter your full name"
+                      placeholder={isGerman ? "Vollständiger Name" : "Enter your full name"}
                       value={name}
                       onChange={(e) =>
                         setName(e.target.value)
@@ -1672,7 +1680,7 @@ ${notes.trim() || "-"}
 
                 <div>
                   <label className={labelClass}>
-                    Email Address *
+                    {isGerman ? "E-Mail-Adresse *" : "Email Address *"}
                   </label>
 
                   <div className="relative">
@@ -1682,7 +1690,7 @@ ${notes.trim() || "-"}
 
                     <input
                       type="email"
-                      placeholder="your@email.com"
+                      placeholder={isGerman ? "ihre@email.com" : "your@email.com"}
                       value={email}
                       onChange={(e) =>
                         setEmail(e.target.value)
@@ -1793,7 +1801,7 @@ ${notes.trim() || "-"}
 
                     <input
                       type="tel"
-                      placeholder="WhatsApp Number"
+                      placeholder={isGerman ? "WhatsApp-Nummer" : "WhatsApp Number"}
                       value={phone}
                       onChange={(e) =>
                         setPhone(e.target.value)
@@ -1847,7 +1855,7 @@ ${notes.trim() || "-"}
 
                       <input
                         type="text"
-                        placeholder="Pickup hotel name"
+                        placeholder={isGerman ? "Name des Abholhotels" : "Pickup hotel name"}
                         value={fromHotel}
                         onChange={(e) =>
                           setFromHotel(
@@ -1874,7 +1882,7 @@ ${notes.trim() || "-"}
 
                       <input
                         type="text"
-                        placeholder="Destination hotel name"
+                        placeholder={isGerman ? "Name des Zielhotels" : "Destination hotel name"}
                         value={toHotel}
                         onChange={(e) =>
                           setToHotel(
@@ -1902,7 +1910,7 @@ ${notes.trim() || "-"}
 
                     <input
                       type="text"
-                      placeholder="Your hotel name"
+                      placeholder={isGerman ? "Name Ihres Hotels" : "Your hotel name"}
                       value={hotel}
                       onChange={(e) =>
                         setHotel(e.target.value)
@@ -1930,7 +1938,7 @@ ${notes.trim() || "-"}
 
                   <input
                     type="text"
-                    placeholder="Room number"
+                    placeholder={isGerman ? "Zimmernummer" : "Room number"}
                     value={roomNumber}
                     onChange={(e) =>
                       setRoomNumber(
@@ -1950,7 +1958,7 @@ ${notes.trim() || "-"}
 
                     <input
                       type="text"
-                      placeholder="Example: MS042"
+                      placeholder={isGerman ? "Beispiel: MS042" : "Example: MS042"}
                       value={flightNumber}
                       onChange={(e) =>
                         setFlightNumber(
@@ -2124,7 +2132,7 @@ ${notes.trim() || "-"}
 
               <textarea
                 rows={4}
-                placeholder="Special requests, child seats, extra luggage or anything else..."
+                placeholder={isGerman ? "Besondere Wünsche, Kindersitze, zusätzliches Gepäck oder Sonstiges..." : "Special requests, child seats, extra luggage or anything else..."}
                 value={notes}
                 onChange={(e) =>
                   setNotes(e.target.value)
