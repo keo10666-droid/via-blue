@@ -1979,8 +1979,8 @@ ${notes.trim() || "-"}
                   <div className="flex items-center justify-between">
 
                     <span className="text-slate-500">
-                      Speedboat: {chargeableGuests} chargeable guests
-                    </span>
+                      <HomeText en={`Speedboat: ${chargeableGuests} chargeable guests`} de={`Schnellboot: ${chargeableGuests} zahlende Gäste`} />
+</span>
 
                     <span className="font-semibold text-slate-800">
                       €{baseTotalPrice}
