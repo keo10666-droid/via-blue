@@ -706,7 +706,9 @@ ${notes.trim() || "-"}
   alert(
     error instanceof Error
       ? error.message
-      : "Something went wrong while submitting your booking"
+      : isGerman
+        ? "Beim Absenden Ihrer Buchung ist ein Fehler aufgetreten."
+        : "Something went wrong while submitting your booking"
   );
 }
 };
