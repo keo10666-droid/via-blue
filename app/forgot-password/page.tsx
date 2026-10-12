@@ -54,7 +54,11 @@ export default function ForgotPasswordPage() {
       "We couldn't update your password. Please verify your reset code is still valid and try again.": "Dein Passwort konnte nicht geändert werden. Bitte prüfe, ob der Code noch gültig ist, und versuche es erneut."
     };
     setIsError(true);
-    setMessage(isGerman ? (messages[value] || value) : value);
+    setMessage(
+      isGerman
+        ? (messages[value] || "Etwas ist schiefgelaufen. Bitte versuche es erneut.")
+        : (messages[value] ? value : "Something went wrong. Please try again.")
+    );
   }
 
   function translateMessage(value: string) {
