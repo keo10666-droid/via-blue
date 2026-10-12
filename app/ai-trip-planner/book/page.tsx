@@ -902,7 +902,7 @@ Via Blue AI Trip Planner
           : "Unknown error";
 
       alert(
-        `Something went wrong.\n\n${errorMessage}`,
+        `${isGerman ? "Ein Fehler ist aufgetreten." : "Something went wrong."}\n\n${errorMessage}`,
       );
     } finally {
       setIsSubmitting(false);
