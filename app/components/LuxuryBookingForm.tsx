@@ -103,6 +103,46 @@ const nationalities = [
   "Korean",
 ];
 
+const germanLuxuryTourNames: Record<string, string> = {
+  "Luxor Private Tour": "Private Tour nach Luxor",
+  "Cairo Private Tour": "Private Tour nach Kairo",
+  "Alexandria Private Tour": "Private Tour nach Alexandria",
+  "Aswan Private Tour": "Private Tour nach Assuan",
+  "Private Speed Boat": "Privates Schnellboot",
+  "Private Quad Safari": "Private Quad-Safari",
+  "Private Buggy Safari": "Private Buggy-Safari",
+  "Private Boat": "Privates Boot",
+};
+
+const germanLuxuryTourTypes: Record<string, string> = {
+  "Private Tour": "Private Tour",
+  "Private Boat": "Privates Boot",
+  "Private Safari": "Private Safari",
+};
+
+const germanLuxuryIncluded: Record<string, string> = {
+  "Private transportation": "Privater Transfer",
+  "Professional driver": "Professioneller Fahrer",
+  "Hotel pickup and drop-off": "Abholung und Rücktransfer zum Hotel",
+  "Flexible private experience": "Flexibles privates Erlebnis",
+  "Private modern air-conditioned transportation": "Privater, moderner und klimatisierter Transport",
+  "Professional private tour guide": "Professioneller privater Reiseleiter",
+  "Entrance tickets to all listed attractions": "Eintrittskarten für alle aufgeführten Sehenswürdigkeiten",
+  "Lunch": "Mittagessen",
+  "Fully private experience": "Exklusives privates Erlebnis",
+  "Private speed boat": "Privates Schnellboot",
+  "Professional crew": "Professionelle Crew",
+  "Hotel transfer": "Hoteltransfer",
+  "Private safari experience": "Privates Safari-Erlebnis",
+  "Quad bike": "Quad",
+  "Professional guide": "Professioneller Guide",
+  "Private buggy experience": "Privates Buggy-Erlebnis",
+  "Desert adventure": "Wüstenabenteuer",
+  "Private boat": "Privates Boot",
+  "Exclusive private experience": "Exklusives privates Erlebnis",
+  "Flexible timing": "Flexible Zeitplanung",
+};
+
 const countryCodes = [
   { name: "Egypt", dialCode: "+20", iso: "eg" },
   { name: "Germany", dialCode: "+49", iso: "de" },
@@ -529,6 +569,11 @@ export default function LuxuryBookingForm({
   included = [],
 }: LuxuryBookingFormProps) {
   const [isGerman, setIsGerman] = useState(false);
+  const displayTourName = isGerman ? (germanLuxuryTourNames[tourName] ?? tourName) : tourName;
+  const displayTourType = isGerman ? (germanLuxuryTourTypes[tourType] ?? tourType) : tourType;
+  const displayIncluded = isGerman
+    ? included.map((item) => germanLuxuryIncluded[item] ?? item)
+    : included;
   useEffect(() => {
     const syncLanguage = () => setIsGerman(localStorage.getItem("via-blue-language") === "de");
     syncLanguage();
@@ -744,9 +789,9 @@ export default function LuxuryBookingForm({
   const message = `
 NEW LUXURY BOOKING REQUEST
 
-Tour: ${tourName}
+Tour: ${displayTourName}
 
-Type: ${tourType}
+Type: ${displayTourType}
 
 Full Name: ${name.trim()}
 
@@ -800,7 +845,7 @@ ${notes.trim() || "-"}
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          subject: `New Luxury Tour Booking - ${tourName}`,
+          subject: `New Luxury Tour Booking - ${displayTourName}`,
           html: `
             <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #1e293b;">
               <h2 style="color: #0f172a;">New Luxury Tour Booking Request</h2>
@@ -840,7 +885,7 @@ ${notes.trim() || "-"}
       <BookingSuccessModal
         open={showSuccess}
         guestName={name.trim()}
-        bookingName={tourName}
+        bookingName={displayTourName}
         email={email.trim()}
         emailSent={confirmationEmailSent}
         backHref="/luxury-tours"
@@ -866,7 +911,7 @@ ${notes.trim() || "-"}
                   <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-[48px] lg:leading-[1.08]">
                     <HomeText en="Reserve your private" de="Reservieren Sie Ihr privates" />
                     <span className="block text-orange-400">
-                      {tourName}
+                      {displayTourName}
                     </span>
                   </h1>
 
@@ -882,7 +927,7 @@ ${notes.trim() || "-"}
                     </div>
 
                     <div className="mt-1 text-lg font-bold text-white">
-                      {tourType}
+                      {displayTourType}
                     </div>
                   </div>
                 </div>
@@ -1957,11 +2002,11 @@ ${notes.trim() || "-"}
                     </p>
 
                     <p className="mt-2 text-sm font-bold leading-6 text-[#071a36]">
-                      {tourName}
+                      {displayTourName}
                     </p>
 
                     <div className="mt-3 inline-flex items-center rounded-full bg-blue-50 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-[#0b3a78]">
-                      {tourType}
+                      {displayTourType}
                     </div>
 
                   </div>
@@ -2070,7 +2115,7 @@ ${notes.trim() || "-"}
 
                       <div className="space-y-3">
 
-                        {included.map((item, index) => (
+                        {displayIncluded.map((item, index) => (
                           <div
                             key={index}
                             className="flex items-start gap-3"
