@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
 import { supabase } from "@/lib/supabase";
+import HomeText from "@/app/components/HomeText";
 
 export default function LoginPage() {
   const router = useRouter();
