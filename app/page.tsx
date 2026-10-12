@@ -769,7 +769,7 @@ export default async function Home() {
 
                       <Image
                         src={tour.image}
-                        alt=<TourText slug={tour.slug} value={tour.name} field="name" />
+                        alt={tour.name}
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                         className="object-cover transition duration-700 group-hover:scale-110"
