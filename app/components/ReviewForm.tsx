@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import HomeText from "@/app/components/HomeText";
 
@@ -20,6 +20,14 @@ export default function ReviewForm({
   const [comment, setComment] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [isGerman, setIsGerman] = useState(false);
+
+  useEffect(() => {
+    const syncLanguage = () => setIsGerman(window.localStorage.getItem("via-blue-language") === "de");
+    syncLanguage();
+    window.addEventListener("via-blue-language-change", syncLanguage);
+    return () => window.removeEventListener("via-blue-language-change", syncLanguage);
+  }, []);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -108,7 +116,7 @@ export default function ReviewForm({
               type="text"
               value={name}
               onChange={(event) => setName(event.target.value)}
-              placeholder="Gib deinen Namen ein"
+              placeholder={isGerman ? "Gib deinen Namen ein" : "Enter your name"}
               maxLength={80}
               required
               className="w-full rounded-2xl border border-slate-200 bg-slate-50/70 px-4 py-4 text-slate-900 shadow-sm outline-none transition duration-300 placeholder:text-slate-400 focus:border-orange-400 focus:bg-white focus:ring-4 focus:ring-orange-500/10"
@@ -127,7 +135,7 @@ export default function ReviewForm({
                   key={star}
                   type="button"
                   onClick={() => setRating(star)}
-                  aria-label={`${star} star${star > 1 ? "s" : ""}`}
+                  aria-label={isGerman ? `${star} ${star === 1 ? "Stern" : "Sterne"}` : `${star} star${star > 1 ? "s" : ""}`}
                   className={`text-4xl leading-none transition duration-200 hover:scale-110 ${
                     star <= rating
                       ? "text-orange-400 drop-shadow-sm"
@@ -153,7 +161,7 @@ export default function ReviewForm({
               id="review-comment"
               value={comment}
               onChange={(event) => setComment(event.target.value)}
-              placeholder="Beschreibe deine Erfahrung..."
+              placeholder={isGerman ? "Beschreibe deine Erfahrung..." : "Describe your experience..."}
               maxLength={1000}
               rows={5}
               required
