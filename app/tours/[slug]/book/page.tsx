@@ -736,7 +736,7 @@ ${notes.trim() || "-"}
             <div className="relative">
 
               <div className="mb-5 inline-flex items-center rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-blue-100 backdrop-blur-md">
-                Secure Booking
+                <HomeText en="Secure Booking" de="Sichere Buchung" />
               </div>
 
               <p className="text-sm font-bold uppercase tracking-[0.14em] text-orange-400">
@@ -755,15 +755,15 @@ ${notes.trim() || "-"}
               <div className="mt-7 flex flex-wrap gap-3 text-xs font-semibold text-blue-100">
 
                 <span className="rounded-full border border-white/10 bg-white/10 px-4 py-2 backdrop-blur-md">
-                  Secure Booking
+                  <HomeText en="Secure Booking" de="Sichere Buchung" />
                 </span>
 
                 <span className="rounded-full border border-white/10 bg-white/10 px-4 py-2 backdrop-blur-md">
-                  Quick Confirmation
+                  <HomeText en="Quick Confirmation" de="Schnelle Bestätigung" />
                 </span>
 
                 <span className="rounded-full border border-orange-400/20 bg-orange-500/10 px-4 py-2 text-orange-100 backdrop-blur-md">
-                  Professional Service
+                  <HomeText en="Professional Service" de="Professioneller Service" />
                 </span>
 
               </div>
@@ -799,7 +799,7 @@ ${notes.trim() || "-"}
                   </h2>
 
                   <p className="text-sm text-slate-500">
-                    Tell us who will be joining the tour
+                    <HomeText en="Tell us who will be joining the tour" de="Teilen Sie uns mit, wer an der Tour teilnimmt" />
                   </p>
 
                 </div>
@@ -1119,7 +1119,7 @@ ${notes.trim() || "-"}
                   </h2>
 
                   <p className="text-sm text-slate-500">
-                    Where should we pick you up
+                    <HomeText en="Where should we pick you up" de="Wo sollen wir Sie abholen?" />
                   </p>
 
                 </div>
@@ -1149,7 +1149,7 @@ ${notes.trim() || "-"}
                 <div>
 
                   <label className={labelClass}>
-                    Hotel Area
+                    <HomeText en="Hotel Area" de="Hotelregion" />
                   </label>
 
                   <select
@@ -1206,11 +1206,11 @@ ${notes.trim() || "-"}
                 <div>
 
                   <h2 className="text-xl font-bold text-slate-900">
-                    Tour Information
+                    <HomeText en="Tour Information" de="Tourinformationen" />
                   </h2>
 
                   <p className="text-sm text-slate-500">
-                    Select your preferred tour date
+                    <HomeText en="Select your preferred tour date" de="Wählen Sie Ihr gewünschtes Tourdatum" />
                   </p>
 
                 </div>
@@ -1285,7 +1285,7 @@ ${notes.trim() || "-"}
                       </p>
 
                       <p className="text-xs text-slate-400">
-                        Available from tomorrow
+                        <HomeText en="Available from tomorrow" de="Ab morgen verfügbar" />
                       </p>
 
                     </div>
@@ -1328,7 +1328,7 @@ ${notes.trim() || "-"}
                       <div className="relative">
 
                         <p className="text-xs font-semibold uppercase tracking-[0.14em] text-blue-200">
-                          Select Tour Date
+                          <HomeText en="Select Tour Date" de="Tourdatum auswählen" />
                         </p>
 
                         <p className="mt-1 text-xl font-bold">
@@ -1505,12 +1505,12 @@ ${notes.trim() || "-"}
 
                           <span className="h-2 w-2 rounded-full bg-orange-500" />
 
-                          Today
+                          <HomeText en="Today" de="Heute" />
 
                         </div>
 
                         <p className="mt-2 text-xs text-slate-400">
-                          Dates before tomorrow are unavailable
+                          <HomeText en="Dates before tomorrow are unavailable" de="Daten vor morgen sind nicht verfügbar" />
                         </p>
 
                       </div>
@@ -1524,7 +1524,7 @@ ${notes.trim() || "-"}
               </div>
 
               <p className="mt-2 text-xs text-slate-400">
-                Please select a date from tomorrow onward
+                <HomeText en="Please select a date from tomorrow onward" de="Bitte wählen Sie ein Datum ab morgen" />
               </p>
 
               {submitAttempted &&
@@ -1550,11 +1550,11 @@ ${notes.trim() || "-"}
                 <div>
 
                   <h2 className="text-xl font-bold text-slate-900">
-                    Guests
+                    <HomeText en="Guests" de="Gäste" />
                   </h2>
 
                   <p className="text-sm text-slate-500">
-                    Tell us how many guests are travelling
+                    <HomeText en="Tell us how many guests are travelling" de="Wie viele Gäste reisen mit?" />
                   </p>
 
                 </div>
@@ -1568,7 +1568,7 @@ ${notes.trim() || "-"}
   tour.cairoOptions && (
   <div className="mb-5 md:col-span-3">
     <label className={labelClass}>
-      Museum
+      <HomeText en="Museum" de="Museum" />
     </label>
     <select
       value={selectedMuseum}
@@ -1580,10 +1580,10 @@ ${notes.trim() || "-"}
       className={inputClass(false)}
     >
       <option value="oldMuseum">
-        Old Museum
+        <HomeText en="Old Museum" de="Altes Museum" />
       </option>
       <option value="newMuseum">
-        New Museum
+        <HomeText en="New Museum" de="Neues Museum" />
       </option>
     </select>
   </div>
@@ -1597,7 +1597,7 @@ ${notes.trim() || "-"}
   tour.cairoOptions)) && (
   <div className="mb-5 md:col-span-3">
     <label className={labelClass}>
-      Vehicle Type
+      <HomeText en="Vehicle Type" de="Fahrzeugtyp" />
     </label>
                     <select
                       value={selectedVehicle}
@@ -1609,11 +1609,11 @@ ${notes.trim() || "-"}
                       className={inputClass(false)}
                     >
                       <option value="bus">
-                        Bus
+                        <HomeText en="Bus" de="Bus" />
                       </option>
 
                       <option value="van">
-                        Van
+                        <HomeText en="Van" de="Van" />
                       </option>
                     </select>
                   </div>
@@ -1760,7 +1760,7 @@ ${notes.trim() || "-"}
               <div className="mb-8 rounded-[22px] border border-blue-100 bg-gradient-to-br from-slate-50 to-blue-50/40 p-5 shadow-sm">
 
                 <h3 className="mb-4 text-base font-bold text-slate-900">
-                  Children Ages
+                  <HomeText en="Children Ages" de="Alter der Kinder" />
                 </h3>
 
                 <div className="grid gap-4 md:grid-cols-2">
@@ -1856,7 +1856,7 @@ ${notes.trim() || "-"}
               <div className="mb-8 rounded-[22px] border border-orange-100 bg-gradient-to-br from-slate-50 to-orange-50/30 p-5 shadow-sm">
 
                 <h3 className="mb-4 text-base font-bold text-slate-900">
-                  Infant Ages
+                  <HomeText en="Infant Ages" de="Alter der Kleinkinder" />
                 </h3>
 
                 <div className="grid gap-4 md:grid-cols-2">
@@ -2025,7 +2025,7 @@ ${notes.trim() || "-"}
                   <>
                     <div className="flex items-center justify-between">
                       <span className="text-slate-500">
-                        Museum
+                        <HomeText en="Museum" de="Museum" />
                       </span>
                       <span className="font-semibold text-slate-800">
                         {selectedCairoOption?.name}
@@ -2130,7 +2130,7 @@ ${notes.trim() || "-"}
                 <div className="mt-4 flex items-center justify-between border-t border-slate-200 pt-4">
 
                   <span className="text-base font-bold text-slate-900">
-                    Total Price
+                    <HomeText en="Total Price" de="Gesamtpreis" />
                   </span>
 
                   <span className="text-2xl font-bold text-orange-500">
@@ -2164,7 +2164,7 @@ ${notes.trim() || "-"}
                   </h2>
 
                   <p className="text-sm text-slate-500">
-                    Anything else we should know
+                    <HomeText en="Anything else we should know" de="Gibt es noch etwas, das wir wissen sollten?" />
                   </p>
 
                 </div>
@@ -2245,7 +2245,7 @@ ${notes.trim() || "-"}
                 <div className="relative">
 
                   <p className="text-xs font-semibold uppercase tracking-[0.14em] text-blue-200">
-                    Your Reservation
+                    <HomeText en="Your Reservation" de="Ihre Reservierung" />
                   </p>
 
                   <h3 className="mt-2 text-2xl font-bold">
@@ -2277,7 +2277,7 @@ ${notes.trim() || "-"}
                   <div className="relative">
 
                     <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-orange-500">
-                      Total Price
+                      <HomeText en="Total Price" de="Gesamtpreis" />
                     </p>
 
                     <p className="text-3xl font-bold text-blue-950">
@@ -2293,7 +2293,7 @@ ${notes.trim() || "-"}
                   <div className="rounded-[20px] border border-slate-100 bg-slate-50 p-4">
 
                     <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-400">
-                      Guests
+                      <HomeText en="Guests" de="Gäste" />
                     </p>
 
                     <p className="text-xl font-bold text-slate-900">
@@ -2319,7 +2319,7 @@ ${notes.trim() || "-"}
                 <div className="rounded-[20px] border border-slate-200 p-5">
 
                   <p className="mb-4 text-sm font-bold text-slate-900">
-                    What's Included
+                    <HomeText en="What's Included" de="Was ist inklusive?" />
                   </p>
 
                   <ul className="space-y-3">
