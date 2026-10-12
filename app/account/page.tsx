@@ -522,7 +522,7 @@ export default function AccountPage() {
 
     if (!["image/jpeg", "image/png", "image/webp", "image/gif"].includes(file.type)) {
       setMessage(
-        "Please select a JPG, PNG, WebP or GIF image"
+        accountText("Please select a JPG, PNG, WebP or GIF image", "Bitte wähle ein JPG-, PNG-, WebP- oder GIF-Bild aus")
       );
       return;
     }
@@ -532,7 +532,7 @@ export default function AccountPage() {
       5 * 1024 * 1024
     ) {
       setMessage(
-        "Image size must be 5 MB or smaller"
+        accountText("Image size must be 5 MB or smaller", "Das Bild darf höchstens 5 MB groß sein")
       );
       return;
     }
@@ -697,7 +697,7 @@ export default function AccountPage() {
       !["image/jpeg", "image/png", "image/webp", "image/gif"].includes(file.type)
     ) {
       setMessage(
-        "Please select a JPG, PNG, WebP or GIF image"
+        accountText("Please select a JPG, PNG, WebP or GIF image", "Bitte wähle ein JPG-, PNG-, WebP- oder GIF-Bild aus")
       );
       return;
     }
@@ -707,7 +707,7 @@ export default function AccountPage() {
       5 * 1024 * 1024
     ) {
       setMessage(
-        "Each memory image must be 5 MB or smaller"
+        accountText("Each memory image must be 5 MB or smaller", "Jedes Erinnerungsfoto darf höchstens 5 MB groß sein")
       );
       return;
     }
@@ -732,14 +732,14 @@ export default function AccountPage() {
 
     if (!memoryFile) {
       setMessage(
-        "Please choose a photo first"
+        accountText("Please choose a photo first", "Bitte wähle zuerst ein Foto aus")
       );
       return;
     }
 
     if (memories.length >= 25) {
       setMessage(
-        "You have reached the maximum of 25 travel memories"
+        accountText("You have reached the maximum of 25 travel memories", "Du hast die Höchstzahl von 25 Reiseerinnerungen erreicht")
       );
       return;
     }
@@ -806,7 +806,7 @@ export default function AccountPage() {
 
         setMessage(
           memoryError?.message ||
-            "Could not save this memory"
+            accountText("Could not save this memory", "Diese Erinnerung konnte nicht gespeichert werden")
         );
 
         return;
@@ -849,7 +849,7 @@ export default function AccountPage() {
       );
 
       setMessage(
-        "Your travel memory has been added"
+        accountText("Your travel memory has been added", "Deine Reiseerinnerung wurde hinzugefügt")
       );
     } finally {
       setIsUploadingMemory(
@@ -904,7 +904,7 @@ export default function AccountPage() {
       );
 
       setMessage(
-        "Travel memory deleted"
+        accountText("Travel memory deleted", "Reiseerinnerung gelöscht")
       );
     } catch {
       setMessage(
