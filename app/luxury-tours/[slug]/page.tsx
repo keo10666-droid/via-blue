@@ -287,7 +287,7 @@ const luxuryGermanText: Record<string, string> = {
   "Request a breakfast box from your hotel the evening before departure.": "Bestellen Sie am Abend vor der Abfahrt eine Frühstücksbox bei Ihrem Hotel.",
   "Wear comfortable shoes as the tour involves walking.": "Tragen Sie bequeme Schuhe, da bei der Tour zu Fuß gegangen wird.",
   "Bring a hat, sunglasses and sunscreen.": "Bringen Sie einen Hut, eine Sonnenbrille und Sonnencreme mit.",
-  "Private experiences can be tailored around your preferences and schedule.": "Private Erlebnisse können an Ihre Wünsche und Ihren Zeitplan angepasst werden.",,
+  "Private experiences can be tailored around your preferences and schedule.": "Private Erlebnisse können an Ihre Wünsche und Ihren Zeitplan angepasst werden.",
 
   "Your selected private vehicle": "Ihr ausgewähltes Privatfahrzeug",
   "Fully private experience with no shared transportation": "Vollständig privates Erlebnis ohne gemeinsame Transfers",
