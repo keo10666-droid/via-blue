@@ -799,19 +799,19 @@ export default function AITripBookingPage() {
 
 ${selectedPackage.summary}
 
-📍 <HomeText en="Area" de="Region" />: ${booking.area}
+📍 ${isGerman ? "Region" : "Area"}: ${booking.area}
 
 📅 Trip Start Date: ${date}
 
-🗓️ <HomeText en="Duration" de="Dauer" />: ${booking.days} Days
+🗓️ ${isGerman ? "Dauer" : "Duration"}: ${booking.days} ${isGerman ? "Tage" : "Days"}
 
-👨 <HomeText en="Adults" de="Erwachsene" />: ${adults}
+👨 ${isGerman ? "Erwachsene" : "Adults"}: ${adults}
 
-🧒 <HomeText en="Children" de="Kinder" />: ${children}
+🧒 ${isGerman ? "Kinder" : "Children"}: ${children}
 
-👥 <HomeText en="Total Guests" de="Gäste insgesamt" />: ${totalGuests}
+👥 ${isGerman ? "Gäste insgesamt" : "Total Guests"}: ${totalGuests}
 
-🌍 <HomeText en="Nationality" de="Nationalität" />: ${
+🌍 ${isGerman ? "Nationalität" : "Nationality"}: ${
         nationality.trim() || "Not specified"
       }
 
@@ -825,7 +825,7 @@ ${selectedPackage.summary}
         hotel.trim() || "Not specified"
       }
 
-🚪 <HomeText en="Room Number" de="Zimmernummer" />: ${
+🚪 ${isGerman ? "Zimmernummer" : "Room Number"}: ${
         roomNumber.trim() || "Not specified"
       }
 
@@ -833,7 +833,7 @@ ${selectedPackage.summary}
         booking.budget,
       )} ${booking.currency}
 
-💰 <HomeText en="Package Total" de="Paketgesamtpreis" />: ${formatPrice(
+💰 ${isGerman ? "Paketgesamtpreis" : "Package Total"}: ${formatPrice(
         selectedPackage.totalCost,
       )} ${booking.currency}
 
@@ -845,7 +845,7 @@ ${selectedPackage.summary}
         selectedPackage.activities
       }
 
-🧒 <HomeText en="Children" de="Kinder" /> Ages:
+🧒 ${isGerman ? "Alter der Kinder" : "Children Ages"}:
 
 ${
   childrenAgeValues.filter(Boolean).join(", ") || "-"
@@ -1011,7 +1011,7 @@ Via Blue AI Trip Planner
                   className={inputClass(false)}
                 />
 
-                {is<HomeText en="Nationality" de="Nationalität" />Open &&
+                {isNationalityOpen &&
                   filteredNationalities.length >
                     0 && (
                     <div className="absolute z-30 mt-1 w-full rounded-xl border bg-white shadow-lg">
@@ -1604,7 +1604,7 @@ Via Blue AI Trip Planner
                             updated[index] =
                               event.target.value;
 
-                            set<HomeText en="Children" de="Kinder" />AgeValues(
+                            setChildrenAgeValues(
                               updated,
                             );
                           }}
