@@ -13,6 +13,7 @@ import ReviewForm from "@/app/components/ReviewForm";
 import ReviewsList from "@/app/components/ReviewsList";
 import HomeText from "@/app/components/HomeText";
 import TourText from "@/app/components/TourText";
+import { germanTourCopy } from "@/lib/germanTourCopy";
 
 type Props = {
   params: Promise<{
@@ -1792,7 +1793,7 @@ export default async function TourDetailsPage({
 
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-blue-100">
 
-            <HomeText en={`Reserve your ${tour.name} experience and enjoy an unforgettable day in Hurghada with Via Blue`} de={`Buchen Sie Ihr Erlebnis „${tour.name}“ und genießen Sie einen unvergesslichen Tag in Hurghada mit Via Blue.`} />
+            <HomeText en={`Reserve your ${tour.name} experience and enjoy an unforgettable day in Hurghada with Via Blue`} de={`Buchen Sie Ihr Erlebnis „${germanTourCopy(tour.slug, "name", tour.name)}“ und genießen Sie einen unvergesslichen Tag in Hurghada mit Via Blue.`} />
 
           </p>
 
@@ -1809,7 +1810,7 @@ export default async function TourDetailsPage({
               className="group mt-8 inline-flex items-center justify-center gap-3 rounded-2xl bg-orange-500 px-8 py-4 font-bold text-white shadow-lg shadow-orange-950/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-orange-600 hover:shadow-xl"
             >
 
-              Book <TourText slug={tour.slug} value={tour.name} field="name" />
+              <HomeText en={`Book ${tour.name}`} de={`${germanTourCopy(tour.slug, "name", tour.name)} buchen`} />
 
               <ArrowRightIcon className="h-5 w-5 transition-transform group-hover:translate-x-1" />
 
