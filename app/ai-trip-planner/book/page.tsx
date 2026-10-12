@@ -185,6 +185,11 @@ const MONTH_NAMES = [
 ];
 
 const WEEK_DAYS = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+const GERMAN_MONTH_NAMES = [
+  "Januar", "Februar", "März", "April", "Mai", "Juni",
+  "Juli", "August", "September", "Oktober", "November", "Dezember",
+];
+const GERMAN_WEEK_DAYS = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
 
 const parseDateInput = (value: string) => {
   if (!value) return null;
@@ -475,7 +480,7 @@ export default function AITripBookingPage() {
           <div className="text-center">
             <div className="mx-auto mb-5 h-10 w-10 animate-spin rounded-full border-4 border-slate-200 border-t-orange-500" />
             <p className="text-sm font-semibold text-gray-600">
-              Preparing your trip...
+              {isGerman ? "Ihre Reise wird vorbereitet..." : "Preparing your trip..."}
             </p>
           </div>
         </main>
@@ -490,20 +495,20 @@ export default function AITripBookingPage() {
           </div>
 
           <h1 className="text-2xl font-bold text-blue-950">
-            Trip Package Not Found
+            {isGerman ? "Reisepaket nicht gefunden" : "Trip Package Not Found"}
           </h1>
 
           <p className="mt-3 text-gray-600">
-            Your selected trip package could not be
-            found. Please return to the AI Trip Planner
-            and create your package again.
+            {isGerman
+              ? "Das ausgewählte Reisepaket wurde nicht gefunden. Kehren Sie bitte zum KI-Reiseplaner zurück und erstellen Sie Ihr Paket erneut."
+              : "Your selected trip package could not be found. Please return to the AI Trip Planner and create your package again."}
           </p>
 
           <a
             href="/ai-trip-planner"
             className="mt-7 inline-flex rounded-xl bg-blue-950 px-6 py-3 font-semibold text-white transition hover:bg-blue-900"
           >
-            Back to AI Trip Planner
+            {isGerman ? "Zurück zum KI-Reiseplaner" : "Back to AI Trip Planner"}
           </a>
         </div>
       </main>
@@ -1372,7 +1377,7 @@ Via Blue AI Trip Planner
 
                           <p className="mt-1 text-xl font-bold text-white">
                             {
-                              MONTH_NAMES[
+                              (isGerman ? GERMAN_MONTH_NAMES : MONTH_NAMES)[
                                 calendarMonth.getMonth()
                               ]
                             }{" "}
@@ -1438,12 +1443,12 @@ Via Blue AI Trip Planner
 
                       <div className="mb-2 grid grid-cols-7">
                         {WEEK_DAYS.map(
-                          (day) => (
+                          (day, index) => (
                             <div
                               key={day}
                               className="py-2 text-center text-[11px] font-bold uppercase tracking-wide text-gray-400"
                             >
-                              {day}
+                              {isGerman ? GERMAN_WEEK_DAYS[index] : day}
                             </div>
                           ),
                         )}
