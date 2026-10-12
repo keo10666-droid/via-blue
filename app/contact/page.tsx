@@ -670,7 +670,7 @@ export default function ContactPage() {
                 </div>
 
                 <h2 className="mt-6 text-3xl font-semibold tracking-[-0.02em] text-[#071d49]">
-                  Message received
+                  <HomeText en="Message received" de="Nachricht erhalten" />
                 </h2>
 
                 <p className="mt-4 max-w-md text-[15px] leading-7 text-[#667085]">
