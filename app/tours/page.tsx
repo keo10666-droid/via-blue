@@ -6,6 +6,7 @@ import { Suspense, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 import HomeText from "@/app/components/HomeText";
+import TourText from "@/app/components/TourText";
 
 import {
   tours,
@@ -350,7 +351,7 @@ function TourTypeIcon({
   className?: string;
 }) {
   const text =
-    `${tour.name} ${tour.type} ${tour.slug}`.toLowerCase();
+    `$<TourText slug={tour.slug} value={tour.name} field="name" /> ${tour.type} ${tour.slug}`.toLowerCase();
 
   if (
     text.includes("spa") ||
@@ -942,7 +943,7 @@ function ToursPageContent() {
                   {/* Description */}
 
                   <p className="mt-4 line-clamp-3 text-sm leading-7 text-gray-600">
-                    {tour.description}
+                    <TourText slug={tour.slug} value={tour.description} field="description" />
                   </p>
 
 
@@ -965,7 +966,7 @@ function ToursPageContent() {
                         </p>
 
                         <p className="truncate text-xs font-bold text-gray-700">
-                          {tour.duration}
+                          <TourText slug={tour.slug} value={tour.duration} />
                         </p>
 
                       </div>
@@ -988,7 +989,7 @@ function ToursPageContent() {
                         </p>
 
                         <p className="truncate text-xs font-bold text-gray-700">
-                          {tour.destination}
+                          <TourText slug={tour.slug} value={tour.destination === "hurghada" ? "Hurghada" : tour.destination === "luxor" ? "Luxor" : tour.destination === "cairo" ? "Cairo" : "Sharm El Sheikh"} />
                         </p>
 
                       </div>
