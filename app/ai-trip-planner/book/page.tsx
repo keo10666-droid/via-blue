@@ -1577,7 +1577,7 @@ Via Blue AI Trip Planner
             {childAges.length > 0 && (
               <div className="mt-6">
                 <h3 className="mb-4 text-lg font-bold text-blue-900">
-                  <HomeText en="Children" de="Kinder" /> Ages (5-10 years)
+                  <HomeText en="Children ages (5–10 years)" de="Alter der Kinder (5–10 Jahre)" />
                 </h3>
 
                 <div className="grid gap-4 md:grid-cols-2">
@@ -1610,32 +1610,31 @@ Via Blue AI Trip Planner
                           }}
                         >
                           <option value="">
-                            Select Child{" "}
-                            {index + 1} Age
+                            {isGerman ? `Alter für Kind ${index + 1} auswählen` : `Select Child ${index + 1} Age`}
                           </option>
 
                           <option value="5">
-                            5 years
+                            {isGerman ? "5 Jahre" : "5 years"}
                           </option>
 
                           <option value="6">
-                            6 years
+                            {isGerman ? "6 Jahre" : "6 years"}
                           </option>
 
                           <option value="7">
-                            7 years
+                            {isGerman ? "7 Jahre" : "7 years"}
                           </option>
 
                           <option value="8">
-                            8 years
+                            {isGerman ? "8 Jahre" : "8 years"}
                           </option>
 
                           <option value="9">
-                            9 years
+                            {isGerman ? "9 Jahre" : "9 years"}
                           </option>
 
                           <option value="10">
-                            10 years
+                            {isGerman ? "10 Jahre" : "10 years"}
                           </option>
                         </select>
 
@@ -1644,9 +1643,9 @@ Via Blue AI Trip Planner
                             index
                           ] &&
                           errorText(
-                            `Select an age for Child ${
-                              index + 1
-                            }.`,
+                            isGerman
+                              ? `Bitte wählen Sie das Alter für Kind ${index + 1} aus.`
+                              : `Select an age for Child ${index + 1}.`,
                           )}
                       </div>
                     ),
