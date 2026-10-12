@@ -275,7 +275,7 @@ export default function Navbar() {
         <button
           type="button"
           onClick={toggleLanguage}
-          aria-label={language === "en" ? "Auf Deutsch wechseln" : "Switch to English"}
+          aria-label={language === "en" ? "Switch to German" : "Auf Englisch wechseln"}
           className="hidden shrink-0 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-extrabold text-blue-950 transition hover:border-orange-300 hover:bg-orange-50 lg:inline-flex"
         >
           {language === "en" ? "DE" : "EN"}
