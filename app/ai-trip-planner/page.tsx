@@ -529,7 +529,7 @@ export default function AITripPlannerPage() {
               </span>
 
               <span className="text-sm font-semibold text-white">
-                <HomeText en="Smart planning · <HomeText en="Real Via Blue experiences" de="Echte Via-Blue-Erlebnisse" />" de="Intelligente Planung · Echte Via-Blue-Erlebnisse" />
+               <HomeText en="Smart planning · Real Via Blue experiences" de="Intelligente Planung · Echte Via-Blue-Erlebnisse" />
               </span>
             </div>
           </div>
