@@ -1274,7 +1274,7 @@ export default async function TourDetailsPage({
                 {tour.included.map((item, index) => (
 
                   <div
-                    key={`$<TourText slug={tour.slug} value={item} />-${index}`}
+                    key={`${item}-${index}`}
                     className="flex items-start gap-3 rounded-[22px] border border-green-100 bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
                   >
 
@@ -1321,7 +1321,7 @@ export default async function TourDetailsPage({
                 {tour.excluded.map((item, index) => (
 
                   <div
-                    key={`$<TourText slug={tour.slug} value={item} />-${index}`}
+                    key={`${item}-${index}`}
                     className="flex items-start gap-3 rounded-[22px] border border-red-100 bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
                   >
 
@@ -1368,7 +1368,7 @@ export default async function TourDetailsPage({
                 {tour.highlights.map((item, index) => (
 
                   <div
-                    key={`$<TourText slug={tour.slug} value={item} />-${index}`}
+                    key={`${item}-${index}`}
                     className="group flex items-center gap-4 rounded-[24px] border border-slate-200/80 bg-white p-5 shadow-[0_8px_28px_rgba(15,23,42,0.05)] transition-all duration-300 hover:-translate-y-1 hover:border-orange-200 hover:shadow-[0_18px_40px_rgba(15,23,42,0.1)]"
                   >
 
@@ -1444,14 +1444,14 @@ export default async function TourDetailsPage({
 
               <ReviewsList
                 tourSlug={tour.slug}
-                tourName=<TourText slug={tour.slug} value={tour.name} field="name" />
+                tourName={tour.name}
               />
 
               <div className="mt-12 border-t border-slate-100 pt-12">
 
                 <ReviewForm
                   tourSlug={tour.slug}
-                  tourName=<TourText slug={tour.slug} value={tour.name} field="name" />
+                  tourName={tour.name}
                 />
 
               </div>
@@ -1792,7 +1792,7 @@ export default async function TourDetailsPage({
 
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-blue-100">
 
-            <HomeText en={`Reserve your $<TourText slug={tour.slug} value={tour.name} field="name" /> experience and enjoy an unforgettable day in Hurghada with Via Blue`} de={`Buchen Sie Ihr Erlebnis „$<TourText slug={tour.slug} value={tour.name} field="name" />“ und genießen Sie einen unvergesslichen Tag in Hurghada mit Via Blue.`} />
+            <HomeText en={`Reserve your ${tour.name} experience and enjoy an unforgettable day in Hurghada with Via Blue`} de={`Buchen Sie Ihr Erlebnis „${tour.name}“ und genießen Sie einen unvergesslichen Tag in Hurghada mit Via Blue.`} />
 
           </p>
 
