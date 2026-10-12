@@ -1795,7 +1795,7 @@ Via Blue AI Trip Planner
                     <p className="mt-1 font-bold text-blue-900">
                       {adults} <HomeText en="Adults" de="Erwachsene" />
                       {children > 0
-                        ? ` · ${children} <HomeText en="Children" de="Kinder" />`
+                        ? ` · ${children} ${isGerman ? "Kinder" : "Children"}`
                         : ""}
                     </p>
                   </div>
