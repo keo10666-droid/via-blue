@@ -1708,7 +1708,7 @@ ${notes.trim() || "-"}
                                 }}
                               >
                                 <option value="">
-                                  <HomeText en="Select age for child" de="Alter für Kind" /> {index + 1}
+                                  {isGerman ? `Alter für Kind ${index + 1}` : `Select age for child ${index + 1}`}
                                 </option>
 
                                 {[5, 6, 7, 8, 9, 10].map(
@@ -1717,7 +1717,7 @@ ${notes.trim() || "-"}
                                       key={age}
                                       value={age}
                                     >
-                                      {age} <HomeText en="years" de="Jahre" />
+                                      {age} {isGerman ? "Jahre" : "years"}
                                     </option>
                                   )
                                 )}
@@ -1784,7 +1784,7 @@ ${notes.trim() || "-"}
                                 }}
                               >
                                 <option value="">
-                                  <HomeText en="Select age for infant" de="Alter für Kleinkind" /> {index + 1}
+                                  {isGerman ? `Alter für Kleinkind ${index + 1}` : `Select age for infant ${index + 1}`}
                                 </option>
 
                                 {[1, 2, 3, 4].map((age) => (
