@@ -1080,31 +1080,31 @@ ${notes.trim() || "-"}`;
                         }}
                       >
                         <option value="">
-                          <HomeText en={`Select Child ${index + 1} Age`} de={`Alter für Kind ${index + 1} auswählen`} />
+                          {isGerman ? `Alter für Kind ${index + 1} auswählen` : `Select Child ${index + 1} Age`}
                         </option>
 
                         <option value="5">
-                          <HomeText en="5 years" de="5 Jahre" />
+                          {isGerman ? "5 Jahre" : "5 years"}
                         </option>
 
                         <option value="6">
-                          <HomeText en="6 years" de="6 Jahre" />
+                          {isGerman ? "6 Jahre" : "6 years"}
                         </option>
 
                         <option value="7">
-                          <HomeText en="7 years" de="7 Jahre" />
+                          {isGerman ? "7 Jahre" : "7 years"}
                         </option>
 
                         <option value="8">
-                          <HomeText en="8 years" de="8 Jahre" />
+                          {isGerman ? "8 Jahre" : "8 years"}
                         </option>
 
                         <option value="9">
-                          <HomeText en="9 years" de="9 Jahre" />
+                          {isGerman ? "9 Jahre" : "9 years"}
                         </option>
 
                         <option value="10">
-                          <HomeText en="10 years" de="10 Jahre" />
+                          {isGerman ? "10 Jahre" : "10 years"}
                         </option>
                       </select>
 
@@ -1151,23 +1151,23 @@ ${notes.trim() || "-"}`;
                         }}
                       >
                         <option value="">
-                          <HomeText en={`Select Infant ${index + 1} Age`} de={`Alter für Kleinkind ${index + 1} auswählen`} />
+                          {isGerman ? `Alter für Kleinkind ${index + 1} auswählen` : `Select Infant ${index + 1} Age`}
                         </option>
 
                         <option value="1">
-                          <HomeText en="1 year" de="1 Jahr" />
+                          {isGerman ? "1 Jahr" : "1 year"}
                         </option>
 
                         <option value="2">
-                          <HomeText en="2 years" de="2 Jahre" />
+                          {isGerman ? "2 Jahre" : "2 years"}
                         </option>
 
                         <option value="3">
-                          <HomeText en="3 years" de="3 Jahre" />
+                          {isGerman ? "3 Jahre" : "3 years"}
                         </option>
 
                         <option value="4">
-                          <HomeText en="4 years" de="4 Jahre" />
+                          {isGerman ? "4 Jahre" : "4 years"}
                         </option>
                       </select>
 
