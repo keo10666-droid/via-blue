@@ -688,7 +688,7 @@ export default function AITripPlannerPage() {
                     <span className="h-px w-10 bg-orange-500" />
 
                     <p className="text-xs font-bold uppercase tracking-[0.3em] text-orange-500">
-                      Via Blue Smart Planner
+                      <HomeText en="Via Blue Smart Planner" de="Via Blue Reiseplaner" />
                     </p>
 
                     <span className="h-px w-10 bg-orange-500" />
@@ -769,7 +769,7 @@ export default function AITripPlannerPage() {
 
                                 {active && (
                                   <p className="mt-1 text-xs font-medium text-orange-500">
-                                    Working on it...
+                                    <HomeText en="Working on it..." de="Einen Moment bitte..." />
                                   </p>
                                 )}
                               </div>
@@ -815,7 +815,7 @@ export default function AITripPlannerPage() {
                   <div className="mt-7 flex flex-wrap items-center justify-center gap-x-7 gap-y-3 text-xs font-semibold text-gray-400">
                     <span className="flex items-center gap-2">
                       <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
-                      Real Via Blue experiences
+                      <HomeText en="Real Via Blue experiences" de="Echte Erlebnisse von Via Blue" />
                     </span>
 
                     <span className="flex items-center gap-2">
@@ -825,7 +825,7 @@ export default function AITripPlannerPage() {
 
                     <span className="flex items-center gap-2">
                       <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
-                      3 personalized options
+                      <HomeText en="3 personalized options" de="3 personalisierte Optionen" />
                     </span>
                   </div>
                 )}
@@ -842,19 +842,18 @@ export default function AITripPlannerPage() {
                   <span className="h-px w-10 bg-orange-500" />
 
                   <p className="text-xs font-bold uppercase tracking-[0.3em] text-orange-500">
-                    Your Via Blue Trip Plan
+                    <HomeText en="Your Via Blue Trip Plan" de="Ihr Via-Blue-Reiseplan" />
                   </p>
 
                   <span className="h-px w-10 bg-orange-500" />
                 </div>
 
                 <h2 className="text-4xl font-bold tracking-tight text-blue-950 sm:text-5xl">
-                  Your holiday, your way.
+                  <HomeText en="Your holiday, your way." de="Ihr Urlaub, ganz nach Ihren Wünschen." />
                 </h2>
 
                 <p className="mt-4 text-base leading-7 text-gray-500">
-                  We created three different options using real Via Blue
-                  experiences and real prices.
+                  <HomeText en="We created three different options using real Via Blue experiences and real prices." de="Wir haben drei verschiedene Optionen mit echten Via-Blue-Erlebnissen und realen Preisen erstellt." />
                 </p>
 
                 <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
@@ -1665,12 +1664,12 @@ export default function AITripPlannerPage() {
             <div className="mx-auto mt-7 flex max-w-4xl flex-wrap items-center justify-center gap-x-7 gap-y-3 text-xs font-semibold text-gray-400">
               <span className="flex items-center gap-2">
                 <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
-                Real Via Blue experiences
+                <HomeText en="Real Via Blue experiences" de="Echte Erlebnisse von Via Blue" />
               </span>
 
               <span className="flex items-center gap-2">
                 <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
-                Real prices
+                <HomeText en="Real prices" de="Echte Preise" />
               </span>
 
               <span className="flex items-center gap-2">
