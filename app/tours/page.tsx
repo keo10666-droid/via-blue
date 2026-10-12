@@ -894,7 +894,7 @@ function ToursPageContent() {
                 <div className="flex flex-1 flex-col p-6">
 
                   <h3 className="line-clamp-2 min-h-[56px] text-xl font-bold leading-7 text-blue-950 transition-colors duration-300 group-hover:text-orange-500">
-                    {tour.name}
+                    <TourText slug={tour.slug} value={tour.name} field="name" />
                   </h3>
 
 
