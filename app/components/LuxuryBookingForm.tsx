@@ -1794,8 +1794,8 @@ ${notes.trim() || "-"}
                                   >
                                     {age}{" "}
                                     {age === 1
-                                      ? "year"
-                                      : "years"}
+                                      ? (isGerman ? "Jahr" : "year")
+                                      : (isGerman ? "Jahre" : "years")}
                                   </option>
                                 ))}
                               </select>
