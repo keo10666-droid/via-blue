@@ -353,7 +353,7 @@ export default function Footer() {
               </p>
 
               <p className="mt-2 text-sm font-medium text-slate-200">
-                Tours • Sea • Desert • Transfers
+                {language === "de" ? "Ausflüge • Meer • Wüste • Transfers" : "Tours • Sea • Desert • Transfers"}
               </p>
             </div>
           </div>
