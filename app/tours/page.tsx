@@ -1132,18 +1132,17 @@ function ToursPageContent() {
                 <span className="h-px w-8 bg-orange-400" />
 
                 <p className="text-xs font-bold uppercase tracking-[0.25em] text-orange-400">
-                  Can't Decide?
+                  <HomeText en="Can't Decide?" de="Noch unentschlossen?" />
                 </p>
 
               </div>
 
               <h3 className="mt-4 text-2xl font-bold sm:text-3xl">
-                Find the perfect experience for your holiday
+                <HomeText en="Find the perfect experience for your holiday" de="Finden Sie das perfekte Erlebnis für Ihren Urlaub" />
               </h3>
 
               <p className="mt-3 text-sm leading-7 text-blue-200 sm:text-base">
-                Browse all our experiences and choose what fits
-                your time, budget and holiday plans
+                <HomeText en="Browse all our experiences and choose what fits your time, budget and holiday plans" de="Entdecken Sie unsere Erlebnisse und wählen Sie das Passende für Ihre Zeit, Ihr Budget und Ihre Urlaubspläne" />
               </p>
 
             </div>
@@ -1152,7 +1151,7 @@ function ToursPageContent() {
               href="/tours"
               className="group flex shrink-0 items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-orange-500 to-orange-600 px-7 py-4 font-bold text-white shadow-lg shadow-orange-950/20 transition-all duration-300 hover:-translate-y-0.5 hover:from-orange-600 hover:to-orange-700 hover:shadow-xl"
             >
-              Explore All Tours
+              <HomeText en="Explore All Tours" de="Alle Ausflüge entdecken" />
 
               <ArrowRightIcon className="h-5 w-5 transition-transform group-hover:translate-x-1" />
             </Link>
