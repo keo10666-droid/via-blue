@@ -1309,7 +1309,7 @@ export default async function TourDetailsPage({
                 <span className="h-px w-10 bg-orange-500" />
 
                 <p className="text-xs font-bold uppercase tracking-[0.25em] text-orange-500">
-                  Please Note
+                  <HomeText en="Please Note" de="Bitte beachten" />
                 </p>
 
               </div>
@@ -1496,7 +1496,7 @@ export default async function TourDetailsPage({
 
                       {tour.price > 0
                         ? `€${tour.price}`
-                        : "On Request"}
+                        : <HomeText en="On Request" de="Auf Anfrage" />}
 
                     </span>
 
@@ -1542,7 +1542,7 @@ export default async function TourDetailsPage({
 
                       <span className="text-sm font-medium">
 
-                        Rating
+                        <HomeText en="Rating" de="Bewertung" />
 
                       </span>
 
@@ -1570,7 +1570,7 @@ export default async function TourDetailsPage({
 
                       <span className="text-sm font-medium">
 
-                        Reviews
+                        <HomeText en="Reviews" de="Bewertungen" />
 
                       </span>
 
@@ -1598,7 +1598,7 @@ export default async function TourDetailsPage({
 
                       <span className="text-sm font-medium">
 
-                        Type
+                        <HomeText en="Type" de="Art der Tour" />
 
                       </span>
 
@@ -1626,7 +1626,7 @@ export default async function TourDetailsPage({
 
                       <span className="text-sm font-medium">
 
-                        Destination
+                        <HomeText en="Destination" de="Reiseziel" />
 
                       </span>
 
