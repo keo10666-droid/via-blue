@@ -524,7 +524,9 @@ function CustomDatePicker({
             >
               {value
                 ? formatDateForDisplay(value)
-                : "Select transfer date"}
+                : isGerman
+                  ? "Wählen Sie ein Transferdatum"
+                  : "Select transfer date"}
             </span>
           </span>
         </div>
