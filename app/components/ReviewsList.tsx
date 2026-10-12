@@ -26,6 +26,14 @@ export default function ReviewsList({
   const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isSample, setIsSample] = useState(false);
+  const [isGerman, setIsGerman] = useState(false);
+
+  useEffect(() => {
+    const syncLanguage = () => setIsGerman(window.localStorage.getItem("via-blue-language") === "de");
+    syncLanguage();
+    window.addEventListener("via-blue-language-change", syncLanguage);
+    return () => window.removeEventListener("via-blue-language-change", syncLanguage);
+  }, []);
 
   useEffect(() => {
     async function loadReviews() {
@@ -210,7 +218,7 @@ export default function ReviewsList({
               <button
                 type="button"
                 onClick={goToPrevious}
-                aria-label="Vorherige Bewertung" title="Vorherige Bewertung"
+                aria-label={isGerman ? "Vorherige Bewertung" : "Previous review"} title={isGerman ? "Vorherige Bewertung" : "Previous review"}
                 className="absolute left-1 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white text-xl font-bold text-blue-950 shadow-[0_10px_30px_rgba(7,26,54,0.12)] transition duration-300 hover:-translate-x-0.5 hover:bg-blue-950 hover:text-white hover:shadow-[0_14px_35px_rgba(7,26,54,0.2)] sm:left-2"
               >
                 ←
@@ -219,7 +227,7 @@ export default function ReviewsList({
               <button
                 type="button"
                 onClick={goToNext}
-                aria-label="Nächste Bewertung" title="Nächste Bewertung"
+                aria-label={isGerman ? "Nächste Bewertung" : "Next review"} title={isGerman ? "Nächste Bewertung" : "Next review"}
                 className="absolute right-1 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white text-xl font-bold text-blue-950 shadow-[0_10px_30px_rgba(7,26,54,0.12)] transition duration-300 hover:translate-x-0.5 hover:bg-blue-950 hover:text-white hover:shadow-[0_14px_35px_rgba(7,26,54,0.2)] sm:right-2"
               >
                 →
@@ -235,7 +243,7 @@ export default function ReviewsList({
                   key={review.id}
                   type="button"
                   onClick={() => setCurrentIndex(index)}
-                  aria-label={`Go to review ${index + 1}`}
+                  aria-label={isGerman ? `Zu Bewertung ${index + 1}` : `Go to review ${index + 1}`}
                   className={`h-2.5 rounded-full transition-all duration-300 ${
                     index === currentIndex
                       ? "w-8 bg-orange-500 shadow-sm"
