@@ -136,6 +136,14 @@ const FlagIcon = ({
 const EMAIL_REGEX = /^(?!.*\.\.)[a-zA-Z0-9](?:[a-zA-Z0-9.]{4,28}[a-zA-Z0-9])@gmail\.com$/i;
 
 export default function BookingPage() {
+  const [isGerman, setIsGerman] = useState(false);
+
+  useEffect(() => {
+    const syncLanguage = () => setIsGerman(window.localStorage.getItem("via-blue-language") === "de");
+    syncLanguage();
+    window.addEventListener("via-blue-language-change", syncLanguage);
+    return () => window.removeEventListener("via-blue-language-change", syncLanguage);
+  }, []);
   const params = useParams();
 
   const slug = Array.isArray(params.slug)
@@ -704,7 +712,7 @@ ${notes.trim() || "-"}
 };
 
   if (!baseTour && !tourOverride.category && catalogLoaded) notFound();
-  if (!baseTour && !tourOverride.category) return <main className="min-h-screen p-8 text-center text-blue-950">Loading tour details…</main>;
+  if (!baseTour && !tourOverride.category) return <main className="min-h-screen p-8 text-center text-blue-950">{isGerman ? "Ausflugsdetails werden geladen…" : "Loading tour details…"}</main>;
   if (tour.available === false) notFound();
 
   return (
@@ -821,7 +829,7 @@ ${notes.trim() || "-"}
 
                   <input
                     type="text"
-                    placeholder="Enter your full name"
+                    placeholder={isGerman ? "Vollständiger Name" : "Enter your full name"}
                     value={name}
                     onChange={(e) =>
                       setName(e.target.value)
@@ -850,7 +858,7 @@ ${notes.trim() || "-"}
 
                   <input
                     type="text"
-                    placeholder="Select your nationality"
+                    placeholder={isGerman ? "Nationalität auswählen" : "Select your nationality"}
                     value={nationality}
                     onChange={(e) => {
                       setNationality(
@@ -921,7 +929,7 @@ ${notes.trim() || "-"}
                 <div>
 
                   <label className={labelClass}>
-                    Email Address (Gmail only){" "}
+                    {isGerman ? "E-Mail-Adresse (nur Gmail)" : "Email Address (Gmail only)"}{" "}
                     <span className="text-red-500">
                       *
                     </span>
@@ -1005,7 +1013,7 @@ ${notes.trim() || "-"}
 
                             <input
                               type="text"
-                              placeholder="Search country..."
+                              placeholder={isGerman ? "Land suchen..." : "Search country..."}
                               value={countrySearch}
                               onChange={(e) =>
                                 setCountrySearch(
@@ -1068,7 +1076,7 @@ ${notes.trim() || "-"}
 
                     <input
                       type="tel"
-                      placeholder="Phone number"
+                      placeholder={isGerman ? "Telefonnummer" : "Phone number"}
                       value={phone}
                       onChange={(e) =>
                         setPhone(
@@ -1136,7 +1144,7 @@ ${notes.trim() || "-"}
 
                   <input
                     type="text"
-                    placeholder="Your hotel name"
+                    placeholder={isGerman ? "Name Ihres Hotels" : "Your hotel name"}
                     value={hotel}
                     onChange={(e) =>
                       setHotel(e.target.value)
@@ -1175,7 +1183,7 @@ ${notes.trim() || "-"}
 
                   <input
                     type="text"
-                    placeholder="Room number"
+                    placeholder={isGerman ? "Zimmernummer" : "Room number"}
                     value={roomNumber}
                     onChange={(e) =>
                       setRoomNumber(
@@ -2177,7 +2185,7 @@ ${notes.trim() || "-"}
 
               <textarea
                 rows={5}
-                placeholder="Let us know if you have any special requests..."
+                placeholder={isGerman ? "Haben Sie besondere Wünsche?" : "Let us know if you have any special requests..."}
                 value={notes}
                 onChange={(e) =>
                   setNotes(
