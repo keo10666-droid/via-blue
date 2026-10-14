@@ -420,16 +420,25 @@ export async function POST(request: Request) {
       if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(tourSlug)) {
         return Response.json({ success: false, error: "Invalid tour." }, { status: 400 });
       }
-      const catalog = createSupabaseAdminClient();
-      const { data: override, error: catalogError } = catalog
-        ? await catalog.from("tour_catalog_overrides").select("slug,category,available").eq("slug", tourSlug).maybeSingle()
-        : { data: null, error: new Error("Tour catalog unavailable") };
-      if (catalogError) {
-        return Response.json({ success: false, error: "Tour availability could not be verified. Please try again." }, { status: 503 });
-      }
       const isBuiltInTour = Object.prototype.hasOwnProperty.call(tours, tourSlug);
-      if ((!override && !isBuiltInTour) || (override && override.available === false)) {
-        return Response.json({ success: false, error: "This tour is currently unavailable. Please choose another tour." }, { status: 409 });
+      const catalog = createSupabaseAdminClient();
+      if (!catalog) {
+        // Preserve built-in tour bookings when the optional admin database client is not configured.
+        if (!isBuiltInTour) {
+          return Response.json({ success: false, error: "Tour availability could not be verified. Please try again." }, { status: 503 });
+        }
+      } else {
+        const { data: override, error: catalogError } = await catalog
+          .from("tour_catalog_overrides")
+          .select("slug,category,available")
+          .eq("slug", tourSlug)
+          .maybeSingle();
+        if (catalogError) {
+          return Response.json({ success: false, error: "Tour availability could not be verified. Please try again." }, { status: 503 });
+        }
+        if ((!override && !isBuiltInTour) || (override && override.available === false)) {
+          return Response.json({ success: false, error: "This tour is currently unavailable. Please choose another tour." }, { status: 409 });
+        }
       }
     }
 
