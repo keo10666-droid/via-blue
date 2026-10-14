@@ -1171,11 +1171,11 @@ ${notes.trim() || "-"}
                     <option value="safaga">Safaga</option>
                     <option value="soma-bay">Soma Bay</option>
                   </select>
-                  <p className="mt-1.5 text-xs leading-5 text-slate-500">
+                  <div className="mt-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs leading-5 text-slate-600">
                     {hotelAreaSurchargePerPerson === 0
                       ? <HomeText en="Hotel pickup in Hurghada is included." de="Hotelabholung in Hurghada ist inklusive." />
-                      : <HomeText en={`€${hotelAreaSurchargePerPerson} per adult or child for this area.`} de={`${hotelAreaSurchargePerPerson} € pro Erwachsenem oder Kind für diese Region.`} />}
-                  </p>
+                      : <HomeText en={`Additional pickup fee: €${hotelAreaSurchargePerPerson} per adult or child.`} de={`Zusätzliche Abholgebühr: ${hotelAreaSurchargePerPerson} € pro Erwachsenem oder Kind.`} />}
+                  </div>
                 </div>
 
                 <div className="min-w-0">
