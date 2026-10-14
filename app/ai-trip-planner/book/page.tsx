@@ -924,7 +924,7 @@ Via Blue AI Trip Planner
               href="/ai-trip-planner"
               className="mb-6 inline-flex items-center gap-2 text-sm font-semibold text-white/70 transition hover:text-white"
             >
-              ← Back to AI Trip Planner
+              <HomeText en="← Back to AI Trip Planner" de="← Zurück zum KI-Reiseplaner" />
             </a>
 
             <p className="font-bold uppercase tracking-wider text-orange-400">
@@ -936,7 +936,7 @@ Via Blue AI Trip Planner
             </h1>
 
             <p className="mt-4 max-w-3xl text-blue-100">
-              Your personalized itinerary is ready.
+              <HomeText en="Your personalized itinerary is ready." de="Ihr persönlicher Reiseplan ist fertig." />
               <HomeText en="Complete your details below and our team will take care of the rest." de="Ergänzen Sie Ihre Angaben – unser Team kümmert sich um den Rest." />
             </p>
           </div>
@@ -1288,7 +1288,7 @@ Via Blue AI Trip Planner
 
                   <div className="min-w-0 flex-1">
                     <p className="text-xs font-semibold uppercase tracking-[0.12em] text-gray-400">
-                      When are you traveling?
+                      <HomeText en="When are you traveling?" de="Wann reisen Sie?" />
                     </p>
 
                     {/* Date trigger */}

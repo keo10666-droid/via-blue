@@ -536,7 +536,7 @@ export default function Footer() {
           {/* Contact */}
           <div>
             <h3 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">
-              Contact Us
+              {text.contactUs}
             </h3>
 
             <div className="mt-7 space-y-3">

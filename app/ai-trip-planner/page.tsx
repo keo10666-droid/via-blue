@@ -1343,7 +1343,7 @@ export default function AITripPlannerPage() {
 
                   <div>
                     <p className="mb-4 text-sm font-bold text-blue-950">
-                      Currency
+                      <HomeText en="Currency" de="Währung" />
                     </p>
 
                     <div className="grid grid-cols-2 gap-3">

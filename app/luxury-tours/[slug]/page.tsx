@@ -1265,7 +1265,7 @@ export default async function LuxuryTourPage({
           </div>
 
           <p className="mt-6 text-xs font-bold uppercase tracking-[0.3em] text-orange-500">
-            Private Collection
+            <HomeText en="Private Collection" de="Exklusive Auswahl" />
           </p>
 
           <h1 className="mt-3 text-4xl font-semibold tracking-tight text-blue-950">

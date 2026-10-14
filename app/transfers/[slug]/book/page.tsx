@@ -897,7 +897,7 @@ function CustomTimePicker({
 
             <div>
               <p className="mb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                Period
+                <HomeText en="Period" de="Tageshälfte" />
               </p>
 
               <select
@@ -1064,8 +1064,7 @@ export default function TransferBookingPage() {
           </h1>
 
           <p className="mt-2 text-sm text-slate-500">
-            The transfer you are looking for is not
-            available
+            <HomeText en="The transfer you are looking for is not available" de="Der gesuchte Transfer ist nicht verfügbar." />
           </p>
         </div>
       </main>
@@ -1333,8 +1332,7 @@ ${notes.trim() || "-"}
           </h1>
 
           <p className="mt-3 max-w-2xl text-sm leading-6 text-blue-100 md:text-base">
-            Choose your transfer type and complete
-            your booking details
+            <HomeText en="Choose your transfer type and complete your booking details" de="Wählen Sie Ihre Transferart und geben Sie Ihre Buchungsdaten ein." />
           </p>
 
           <div className="mt-7 flex flex-wrap gap-3">
@@ -1420,13 +1418,11 @@ ${notes.trim() || "-"}
                   </div>
 
                   <h3 className="mt-4 font-bold text-blue-950">
-                    Airport → Hotel
+                    <HomeText en="Airport → Hotel" de="Flughafen → Hotel" />
                   </h3>
 
                   <p className="mt-1.5 text-xs leading-5 text-slate-500">
-                    Pick up from Hurghada Airport
-                    and take you directly to your
-                    hotel
+                    <HomeText en="Pick up from Hurghada Airport and take you directly to your hotel" de="Abholung am Flughafen Hurghada und direkter Transfer zu Ihrem Hotel." />
                   </p>
                 </button>
 
@@ -1463,12 +1459,11 @@ ${notes.trim() || "-"}
                   </div>
 
                   <h3 className="mt-4 font-bold text-blue-950">
-                    Hotel → Airport
+                    <HomeText en="Hotel → Airport" de="Hotel → Flughafen" />
                   </h3>
 
                   <p className="mt-1.5 text-xs leading-5 text-slate-500">
-                    Pick up from your hotel and
-                    take you to Hurghada Airport
+                    <HomeText en="Pick up from your hotel and take you to Hurghada Airport" de="Abholung an Ihrem Hotel und Transfer zum Flughafen Hurghada." />
                   </p>
                 </button>
 
@@ -1505,12 +1500,11 @@ ${notes.trim() || "-"}
                   </div>
 
                   <h3 className="mt-4 font-bold text-blue-950">
-                    Hotel → Hotel
+                    <HomeText en="Hotel → Hotel" de="Hotel → Hotel" />
                   </h3>
 
                   <p className="mt-1.5 text-xs leading-5 text-slate-500">
-                    Travel comfortably between
-                    two hotels
+                    <HomeText en="Travel comfortably between two hotels" de="Reisen Sie bequem zwischen zwei Hotels." />
                   </p>
                 </button>
               </div>
@@ -2165,8 +2159,7 @@ ${notes.trim() || "-"}
             {submitAttempted &&
               !isFormValid && (
                 <div className="rounded-2xl border border-red-100 bg-red-50 px-5 py-4 text-sm font-semibold text-red-700 shadow-sm">
-                  Please fill in all required
-                  fields highlighted above
+                  <HomeText en="Please fill in all required fields highlighted above" de="Bitte füllen Sie alle oben markierten Pflichtfelder aus." />
                 </div>
               )}
 
@@ -2187,8 +2180,7 @@ ${notes.trim() || "-"}
                 <ShieldIcon />
               </span>
 
-              Your information is used only to
-              process your transfer booking
+              <HomeText en="Your information is used only to process your transfer booking" de="Ihre Angaben werden ausschließlich zur Bearbeitung Ihrer Transferbuchung verwendet." />
             </div>
           </div>
 
@@ -2408,18 +2400,14 @@ ${notes.trim() || "-"}
                       </p>
 
                       <p className="mt-1 text-xs leading-5 text-green-700">
-                        Professional driver,
-                        private vehicle and fixed
-                        price
+                        <HomeText en="Professional driver, private vehicle and fixed price" de="Professioneller Fahrer, Privatfahrzeug und Festpreis." />
                       </p>
                     </div>
                   </div>
                 </div>
 
                 <p className="mt-4 text-center text-[11px] leading-5 text-slate-400">
-                  By sending your request, our
-                  team will contact you on WhatsApp
-                  to confirm your booking
+                  <HomeText en="By sending your request, our team will contact you on WhatsApp to confirm your booking" de="Nach dem Absenden Ihrer Anfrage kontaktiert Sie unser Team per WhatsApp, um Ihre Buchung zu bestätigen." />
                 </p>
               </div>
             </div>
