@@ -42,7 +42,7 @@ export async function generateMetadata({
     const { data: custom } = adminClient
       ? await adminClient.from("tour_catalog_overrides").select("slug,category,name,description,image,price,child_price,infant_price,available,pricing_options").eq("slug", slug).maybeSingle()
       : { data: null };
-    if (!custom?.category || !custom.available) {
+    if (!custom?.category) {
       return { title: "Tour Not Found", description: "The requested tour could not be found." };
     }
     const customTitle = custom.name || slug;
@@ -823,14 +823,15 @@ export default async function TourDetailsPage({
         ...baseTour,
         ...(pricingOverride?.name ? { name: pricingOverride.name } : {}),
         ...(pricingOverride?.description ? { description: pricingOverride.description, overview: pricingOverride.description } : {}),
-        ...(pricingOverride?.image ? { image: pricingOverride.image, gallery: [pricingOverride.image, ...baseTour.gallery.slice(1)] } : {}),
+        ...(pricingOverride?.image ? { image: pricingOverride.image } : {}),
+        ...(Array.isArray(savedPricingOptions?.gallery) ? { gallery: savedPricingOptions.gallery as string[] } : pricingOverride?.image ? { gallery: [pricingOverride.image, ...baseTour.gallery.slice(1)] } : {}),
         ...(pricingOverride ? { price: Number(pricingOverride.price), childPrice: Number(pricingOverride.child_price), infantPrice: Number(pricingOverride.infant_price), available: pricingOverride.available } : {}),
         ...(savedPricingOptions?.vehicleOptions ? { vehicleOptions: savedPricingOptions.vehicleOptions, price: savedPricingOptions.vehicleOptions.bus.adultPrice, childPrice: savedPricingOptions.vehicleOptions.bus.childPrice, infantPrice: savedPricingOptions.vehicleOptions.bus.infantPrice } : {}),
         ...(savedPricingOptions?.cairoOptions ? { cairoOptions: savedPricingOptions.cairoOptions, price: savedPricingOptions.cairoOptions.oldMuseum.bus.adultPrice, childPrice: savedPricingOptions.cairoOptions.oldMuseum.bus.childPrice, infantPrice: savedPricingOptions.cairoOptions.oldMuseum.bus.infantPrice } : {}),
       }
     : customTour;
 
-  if (!tour || !tour.available) {
+  if (!tour) {
     notFound();
   }
 
