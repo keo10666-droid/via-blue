@@ -2166,7 +2166,7 @@ ${notes.trim() || "-"}
 
                       <span className="max-w-[150px] text-right text-xs font-bold text-[#071a36]">
                         {date
-                          ? formatDateDisplay(date)
+                          ? formatDateDisplay(date, isGerman)
                           : <HomeText en="Not selected" de="Nicht ausgewählt" />}
                       </span>
 
