@@ -723,7 +723,7 @@ ${notes.trim() || "-"}
       <BookingSuccessModal
         open={showSuccess}
         guestName={name.trim()}
-        bookingName={typeof tour.slug === "string" ? germanTourCopy(tour.slug, "name", tour.name) : tour.name}
+        bookingName={isGerman ? germanTourCopy(tour.slug, "name", tour.name) : tour.name}
         email={email.trim()}
         emailSent={confirmationEmailSent}
         backHref="/tours"
