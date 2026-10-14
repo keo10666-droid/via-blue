@@ -159,7 +159,16 @@ export default function BookingSuccessModal({
               href={backHref}
               className="flex flex-1 items-center justify-center rounded-2xl bg-orange-500 px-5 py-3.5 text-sm font-bold text-white shadow-lg shadow-orange-200 transition-all hover:-translate-y-0.5 hover:bg-orange-600 hover:shadow-xl"
             >
-              {backLabel}
+              <HomeText
+                en={backLabel}
+                de={
+                  backLabel === "Back to Transfers"
+                    ? "Zurück zu den Transfers"
+                    : backLabel === "Back to Luxury Tours"
+                      ? "Zurück zu den Luxus-Ausflügen"
+                      : "Zurück zu den Ausflügen"
+                }
+              />
             </Link>
           </div>
 
