@@ -1141,120 +1141,55 @@ ${notes.trim() || "-"}
 
               </div>
 
-              <div className="grid gap-5 md:grid-cols-2">
-
-                <div>
-
+              <div className="grid gap-4 md:grid-cols-3">
+                <div className="min-w-0">
                   <label className={labelClass}>
                     <HomeText en="Hotel Name" de="Hotelname" />
                   </label>
-
                   <input
                     type="text"
                     placeholder={isGerman ? "Name Ihres Hotels" : "Your hotel name"}
                     value={hotel}
-                    onChange={(e) =>
-                      setHotel(e.target.value)
-                    }
+                    onChange={(e) => setHotel(e.target.value)}
                     className={inputClass(false)}
                   />
-
                 </div>
 
-                <div>
-
+                <div className="min-w-0">
                   <label className={labelClass}>
                     <HomeText en="Hotel Area" de="Hotelregion" />
                   </label>
-
-                  <div className="grid grid-cols-2 gap-2.5">
-                    {([
-                      { value: "hurghada", name: "Hurghada", fee: 0 },
-                      { value: "makadi-bay", name: "Makadi Bay", fee: 5 },
-                      { value: "sahl-hasheesh", name: "Sahl Hasheesh", fee: 5 },
-                      { value: "el-gouna", name: "El Gouna", fee: 10 },
-                      { value: "safaga", name: "Safaga", fee: 10 },
-                      { value: "soma-bay", name: "Soma Bay", fee: 10 },
-                    ] as const).map((area) => {
-                      const selected = hotelArea === area.value;
-                      return (
-                        <button
-                          key={area.value}
-                          type="button"
-                          onClick={() => setHotelArea(area.value)}
-                          aria-pressed={selected}
-                          className={`flex min-h-[72px] items-center justify-between gap-2 rounded-xl border px-3 py-3 text-left transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 ${
-                            selected
-                              ? "border-blue-700 bg-blue-50 shadow-sm ring-1 ring-blue-700/10"
-                              : "border-slate-200 bg-white hover:border-blue-300 hover:bg-slate-50"
-                          }`}
-                        >
-                          <span className="min-w-0">
-                            <span className={`block text-sm font-semibold leading-5 ${selected ? "text-blue-950" : "text-slate-800"}`}>
-                              {area.name}
-                            </span>
-                            <span className="mt-1 block text-xs text-slate-500">
-                              {area.fee === 0
-                                ? <HomeText en="Pickup included" de="Abholung inklusive" />
-                                : <HomeText en="Per person" de="Pro Person" />}
-                            </span>
-                          </span>
-                          <span className={`shrink-0 rounded-lg px-2 py-1 text-xs font-bold tabular-nums ${
-                            area.fee === 0
-                              ? "bg-emerald-50 text-emerald-700"
-                              : selected
-                                ? "bg-blue-700 text-white"
-                                : "bg-slate-100 text-slate-700"
-                          }`}>
-                            {area.fee === 0 ? <HomeText en="Included" de="Inklusive" /> : `+€${area.fee}`}
-                          </span>
-                        </button>
-                      );
-                    })}
-                  </div>
-                  <div className="mt-2 flex items-start gap-3 rounded-xl border border-blue-100 bg-blue-50/70 px-3.5 py-3">
-                    <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white text-blue-800 shadow-sm" aria-hidden="true">
-                      <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4" stroke="currentColor" strokeWidth="1.8">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.5h18M5 13.5l1.5-5h11l1.5 5M6 17.5h.01M18 17.5h.01M4 13.5v4h16v-4M7 8.5l1-3h8l1 3" />
-                      </svg>
-                    </span>
-                    <div className="min-w-0 flex-1">
-                      <p className="text-xs font-bold uppercase tracking-wide text-blue-950">
-                        <HomeText en="Hotel pickup & transfer" de="Hotelabholung & Transfer" />
-                      </p>
-                      <p className="mt-1 text-xs leading-5 text-slate-600">
-                        {hotelAreaSurchargePerPerson === 0
-                          ? <HomeText en="Included for hotels in Hurghada — no extra charge." de="Für Hotels in Hurghada inklusive — kein Aufpreis." />
-                          : <HomeText en={`A transfer supplement of €${hotelAreaSurchargePerPerson} per adult or child applies to this area.`} de={`Für diese Region fällt ein Transferzuschlag von ${hotelAreaSurchargePerPerson} € pro Erwachsenem oder Kind an.`} />}
-                      </p>
-                    </div>
-                    <span className="shrink-0 rounded-full bg-white px-2.5 py-1 text-xs font-bold text-blue-900 shadow-sm">
-                      {hotelAreaSurchargePerPerson === 0 ? <HomeText en="Included" de="Inklusive" /> : `+€${hotelAreaSurchargePerPerson}`}
-                    </span>
-                  </div>
-
+                  <select
+                    value={hotelArea}
+                    onChange={(e) => setHotelArea(e.target.value)}
+                    className={inputClass(false)}
+                  >
+                    <option value="hurghada">Hurghada — {isGerman ? "Inklusive" : "Included"}</option>
+                    <option value="makadi-bay">Makadi Bay — +€5 {isGerman ? "pro Person" : "per person"}</option>
+                    <option value="sahl-hasheesh">Sahl Hasheesh — +€5 {isGerman ? "pro Person" : "per person"}</option>
+                    <option value="el-gouna">El Gouna — +€10 {isGerman ? "pro Person" : "per person"}</option>
+                    <option value="safaga">Safaga — +€10 {isGerman ? "pro Person" : "per person"}</option>
+                    <option value="soma-bay">Soma Bay — +€10 {isGerman ? "pro Person" : "per person"}</option>
+                  </select>
+                  <p className="mt-1.5 text-xs leading-5 text-slate-500">
+                    {hotelAreaSurchargePerPerson === 0
+                      ? <HomeText en="Hotel pickup in Hurghada is included." de="Hotelabholung in Hurghada ist inklusive." />
+                      : <HomeText en={`€${hotelAreaSurchargePerPerson} per adult or child for this area.`} de={`${hotelAreaSurchargePerPerson} € pro Erwachsenem oder Kind für diese Region.`} />}
+                  </p>
                 </div>
 
-                <div>
-
+                <div className="min-w-0">
                   <label className={labelClass}>
                     <HomeText en="Room Number" de="Zimmernummer" />
                   </label>
-
                   <input
                     type="text"
                     placeholder={isGerman ? "Zimmernummer" : "Room number"}
                     value={roomNumber}
-                    onChange={(e) =>
-                      setRoomNumber(
-                        e.target.value
-                      )
-                    }
+                    onChange={(e) => setRoomNumber(e.target.value)}
                     className={inputClass(false)}
                   />
-
                 </div>
-
               </div>
 
             </div>
