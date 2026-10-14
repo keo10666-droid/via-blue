@@ -29,9 +29,9 @@ export async function generateMetadata({
     };
   }
 
-  const title = `$<HomeText en={transfer.from} de={germanTransferLocation(transfer.from)} /> to $<HomeText en={transfer.to} de={germanTransferLocation(transfer.to)} /> Transfer`;
+  const title = `${transfer.from} to ${transfer.to} Transfer`;
 
-  const description = `Book a private transfer from $<HomeText en={transfer.from} de={germanTransferLocation(transfer.from)} /> to $<HomeText en={transfer.to} de={germanTransferLocation(transfer.to)} /> with Via Blue. Comfortable vehicles, professional drivers and fixed prices.`;
+  const description = `Book a private transfer from ${transfer.from} to ${transfer.to} with Via Blue. Comfortable vehicles, professional drivers and fixed prices.`;
 
   const canonicalUrl = `https://viabluetours.com/transfers/${slug}`;
 
@@ -42,8 +42,8 @@ export async function generateMetadata({
     description,
 
     keywords: [
-      `$<HomeText en={transfer.from} de={germanTransferLocation(transfer.from)} /> to $<HomeText en={transfer.to} de={germanTransferLocation(transfer.to)} /> transfer`,
-      `$<HomeText en={transfer.to} de={germanTransferLocation(transfer.to)} /> transfer`,
+      `${transfer.from} to ${transfer.to} transfer`,
+      `${transfer.to} transfer`,
       "Hurghada airport transfer",
       "Hurghada private transfer",
       "Hurghada airport taxi",
@@ -134,11 +134,11 @@ export default async function TransferPage({ params }: Props) {
           </div>
 
           <h1 className="mt-5 text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
-            <HomeText en=<HomeText en={transfer.to} de={germanTransferLocation(transfer.to)} /> de={germanTransferLocation(transfer.to)} />
+            <HomeText en={transfer.to} de={germanTransferLocation(transfer.to)} />
           </h1>
 
           <p className="mt-5 max-w-2xl text-lg leading-8 text-blue-100">
-            <HomeText en={`Comfortable private transfer from $<HomeText en={transfer.from} de={germanTransferLocation(transfer.from)} /> to your destination`} de={`Komfortabler Privattransfer vom ${germanTransferLocation(transfer.from)} zu Ihrem Ziel`} />
+            <HomeText en={`Comfortable private transfer from ${transfer.from} to your destination`} de={`Komfortabler Privattransfer vom ${germanTransferLocation(transfer.from)} zu Ihrem Ziel`} />
           </p>
 
           <div className="mt-7 flex flex-wrap gap-3">
