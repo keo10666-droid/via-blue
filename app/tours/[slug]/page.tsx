@@ -951,7 +951,7 @@ export default async function TourDetailsPage({
 
   return (
     <main className="min-h-screen bg-slate-50">
-      {tour.available === false && <div role="status" className="mx-auto mt-5 max-w-7xl px-4 sm:px-6"><div className="flex items-center gap-3 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-bold text-red-800"><span className="h-2.5 w-2.5 shrink-0 rounded-full bg-red-600" /><HomeText en="This tour is currently unavailable. Booking is temporarily disabled." de="Diese Tour ist derzeit nicht verfügbar. Buchungen sind vorübergehend deaktiviert." /></div></div>}
+
 
       {/* =====================================================
           STRUCTURED DATA
@@ -991,6 +991,7 @@ export default async function TourDetailsPage({
         <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-orange-400/60 to-transparent" />
 
         <div className="relative z-10 flex h-full items-center justify-center px-6 text-center text-white">
+          {tour.available === false && <div role="status" className="absolute left-4 right-4 top-4 z-20 mx-auto max-w-3xl rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-center text-sm font-bold text-red-800 shadow-lg sm:left-6 sm:right-6"><HomeText en="This tour is currently unavailable. Booking is temporarily disabled." de="Diese Tour ist derzeit nicht verfügbar. Buchungen sind vorübergehend deaktiviert." /></div>}
 
           <div className="max-w-5xl">
 
