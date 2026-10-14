@@ -1810,7 +1810,7 @@ export default function AccountPage() {
 
                               {booking.tour_date
                                 ? booking.tour_date
-                                : "Date to be confirmed"}
+                                : accountText("Date to be confirmed", "Termin wird noch bestätigt")}
                             </span>
 
                             {booking.guests && (
