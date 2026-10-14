@@ -310,7 +310,7 @@ const selectedCairoVehicleOption =
 
   const baseTotalPrice =
   slug === "speed-boat"
-    ? 140 +
+    ? tour.price +
       Math.max(chargeableGuests - 4, 0) * 15
     : (slug === "luxor-over-day" ||
    slug === "luxor-over-night") &&
