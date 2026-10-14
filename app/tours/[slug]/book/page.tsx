@@ -266,6 +266,7 @@ const [selectedMuseum, setSelectedMuseum] =
   const [notes, setNotes] = useState("");
   const [promoCode, setPromoCode] = useState("");
   const [promoDiscountPercent, setPromoDiscountPercent] = useState<number | null>(null);
+  const [promoFixedAmount, setPromoFixedAmount] = useState<number | null>(null);
   const [promoMessage, setPromoMessage] = useState("");
   const [promoMessageType, setPromoMessageType] = useState<"success" | "error" | "">("");
   const [promoLoading, setPromoLoading] = useState(false);
@@ -354,7 +355,7 @@ const selectedCairoVehicleOption =
     (Number(adults || 0) + Number(children || 0)) * hotelAreaSurchargePerPerson;
 
   const totalPrice = baseTotalPrice + hotelAreaSurcharge;
-  const promoDiscountAmount = promoDiscountPercent === null ? 0 : Math.round(totalPrice * promoDiscountPercent) / 100;
+  const promoDiscountAmount = promoFixedAmount !== null ? Math.min(totalPrice, promoFixedAmount) : promoDiscountPercent === null ? 0 : Math.round(totalPrice * promoDiscountPercent) / 100;
   const finalTotalPrice = Math.max(0, Math.round((totalPrice - promoDiscountAmount) * 100) / 100);
 
   const applyPromoCode = async () => {
@@ -2260,11 +2261,11 @@ ${notes.trim() || "-"}
               </div>
               <div className="p-4 sm:p-5">
                 <div className="flex flex-col gap-2 sm:flex-row">
-                  <div className="relative min-w-0 flex-1"><input type="text" value={promoCode} onChange={(e) => { setPromoCode(e.target.value.toUpperCase()); setPromoDiscountPercent(null); setPromoMessage(""); setPromoMessageType(""); }} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); void applyPromoCode(); } }} placeholder={isGerman ? "Gutscheincode eingeben" : "Enter promo code"} maxLength={40} autoComplete="off" className="min-h-[50px] w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm font-bold uppercase tracking-wider text-blue-950 outline-none transition placeholder:font-medium placeholder:normal-case placeholder:tracking-normal placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100" /></div>
+                  <div className="relative min-w-0 flex-1"><input type="text" value={promoCode} onChange={(e) => { setPromoCode(e.target.value.toUpperCase()); setPromoDiscountPercent(null); setPromoFixedAmount(null); setPromoMessage(""); setPromoMessageType(""); }} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); void applyPromoCode(); } }} placeholder={isGerman ? "Gutscheincode eingeben" : "Enter promo code"} maxLength={40} autoComplete="off" className="min-h-[50px] w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm font-bold uppercase tracking-wider text-blue-950 outline-none transition placeholder:font-medium placeholder:normal-case placeholder:tracking-normal placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100" /></div>
                   <button type="button" onClick={() => void applyPromoCode()} disabled={promoLoading || !promoCode.trim()} className="min-h-[50px] rounded-xl bg-blue-950 px-6 text-sm font-extrabold text-white shadow-sm transition hover:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-50">{promoLoading ? (isGerman ? "Prüfen…" : "Checking…") : (isGerman ? "Code anwenden" : "Apply code")}</button>
                 </div>
                 {promoMessage && <p className={`mt-3 flex items-center gap-2 text-xs font-bold ${promoMessageType === "success" ? "text-emerald-700" : "text-red-600"}`}><span className={`flex h-5 w-5 items-center justify-center rounded-full ${promoMessageType === "success" ? "bg-emerald-100" : "bg-red-100"}`}>{promoMessageType === "success" ? "✓" : "!"}</span>{promoMessage}</p>}
-                {promoDiscountPercent !== null && <><div className="mt-4 flex items-center justify-between rounded-xl border border-emerald-100 bg-emerald-50 px-3.5 py-3"><span className="text-sm font-semibold text-emerald-800">{promoCode} · {promoDiscountPercent}% off</span><button type="button" onClick={() => { setPromoCode(""); setPromoDiscountPercent(null); setPromoMessage(""); setPromoMessageType(""); }} className="text-xs font-bold text-emerald-800 underline underline-offset-2"><HomeText en="Remove" de="Entfernen" /></button></div><div className="mt-4 space-y-2 border-t border-dashed border-slate-200 pt-4 text-sm"><div className="flex items-center justify-between text-slate-500"><span><HomeText en="Subtotal" de="Zwischensumme" /></span><span>€{totalPrice.toFixed(2)}</span></div><div className="flex items-center justify-between font-semibold text-emerald-700"><span>{promoCode} ({promoDiscountPercent}% <HomeText en="off" de="Rabatt" />)</span><span>−€{promoDiscountAmount.toFixed(2)}</span></div></div></>}
+                {promoDiscountPercent !== null && <><div className="mt-4 flex items-center justify-between rounded-xl border border-emerald-100 bg-emerald-50 px-3.5 py-3"><span className="text-sm font-semibold text-emerald-800">{promoCode} · {promoDiscountPercent !== null ? `${promoDiscountPercent}% off` : `€${Number(promoFixedAmount).toFixed(2)} off`}</span><button type="button" onClick={() => { setPromoCode(""); setPromoDiscountPercent(null); setPromoFixedAmount(null); setPromoMessage(""); setPromoMessageType(""); }} className="text-xs font-bold text-emerald-800 underline underline-offset-2"><HomeText en="Remove" de="Entfernen" /></button></div><div className="mt-4 space-y-2 border-t border-dashed border-slate-200 pt-4 text-sm"><div className="flex items-center justify-between text-slate-500"><span><HomeText en="Subtotal" de="Zwischensumme" /></span><span>€{totalPrice.toFixed(2)}</span></div><div className="flex items-center justify-between font-semibold text-emerald-700"><span>{promoCode} ({promoDiscountPercent !== null ? `${promoDiscountPercent}%` : `€${Number(promoFixedAmount).toFixed(2)}`} <HomeText en="off" de="Rabatt" />)</span><span>−€{promoDiscountAmount.toFixed(2)}</span></div></div></>}
               </div>
             </section>
 
