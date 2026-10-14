@@ -676,6 +676,7 @@ ${notes.trim() || "-"}
         },
         body: JSON.stringify({
           subject: `New Tour Booking - ${tour.name}`,
+          tourSlug: slug,
           html: `
             <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #1e293b;">
               <h2 style="color: #0f172a;">New Tour Booking Request</h2>
