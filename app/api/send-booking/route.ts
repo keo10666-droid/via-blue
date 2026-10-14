@@ -468,6 +468,12 @@ export async function POST(request: Request) {
       fields,
     } = parseBookingHtml(validHtml);
 
+    const emailForRateLimit = getField(fields, "Email").trim();
+    if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailForRateLimit) &&
+      await isIdentifierRateLimited(emailForRateLimit.toLowerCase(), "booking-confirmation-email", 3, 3600)) {
+      return Response.json({ success: false, error: "Too many booking requests for this email address. Please try again later." }, { status: 429 });
+    }
+
     // Redeem server-side so the usage cap is enforced atomically at booking submission.
     if (couponCodeValue) {
       const couponDb = createSupabaseAdminClient();
@@ -553,6 +559,9 @@ export async function POST(request: Request) {
       fields,
       [
         "Total Price",
+        "Total Before Discount",
+        "Discount",
+        "Promo Code",
         "PRIVATE TOUR PRICE",
         "Price",
       ]
@@ -578,23 +587,6 @@ export async function POST(request: Request) {
       /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customerEmail)
         ? customerEmail
         : "";
-
-    // Prevent repeated booking requests from sending repeated confirmations
-    // to the same recipient, even when requests come from different clients.
-    if (
-      validCustomerEmail &&
-      await isIdentifierRateLimited(
-        validCustomerEmail.toLowerCase(),
-        "booking-confirmation-email",
-        3,
-        3600,
-      )
-    ) {
-      return Response.json(
-        { success: false, error: "Too many booking requests for this email address. Please try again later." },
-        { status: 429 },
-      );
-    }
 
     const replyTo = validCustomerEmail;
 
