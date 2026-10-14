@@ -787,6 +787,7 @@ export default async function TourDetailsPage({
     pricing_options?: {
       vehicleOptions?: NonNullable<(typeof tours)[keyof typeof tours]["vehicleOptions"]>;
       cairoOptions?: NonNullable<(typeof tours)[keyof typeof tours]["cairoOptions"]>;
+      gallery?: string[];
     };
   } | null)?.pricing_options;
 
