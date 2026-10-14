@@ -1636,24 +1636,49 @@ ${notes.trim() || "-"}
   tour.cairoOptions && (
   <div className="mb-5 md:col-span-3">
     <label className={labelClass}>
-      <HomeText en="Museum" de="Museum" />
+      <HomeText en="Museum Experience" de="Museumserlebnis" />
     </label>
-    <select
-      value={selectedMuseum}
-      onChange={(e) =>
-        setSelectedMuseum(
-          e.target.value as "oldMuseum" | "newMuseum"
-        )
-      }
-      className={inputClass(false)}
-    >
-      <option value="oldMuseum">
-        <HomeText en="Old Museum" de="Altes Museum" />
-      </option>
-      <option value="newMuseum">
-        <HomeText en="New Museum" de="Neues Museum" />
-      </option>
-    </select>
+    <p className="mb-3 mt-1 text-sm text-slate-500">
+      <HomeText en="Choose which museum you would like to visit" de="Wählen Sie das Museum, das Sie besuchen möchten" />
+    </p>
+    <div className="grid gap-3 sm:grid-cols-2">
+      {([
+        { value: "oldMuseum", title: "Old Museum", deTitle: "Altes Museum", detail: "Egyptian Museum in Tahrir", deDetail: "Ägyptisches Museum am Tahrir-Platz" },
+        { value: "newMuseum", title: "New Museum", deTitle: "Neues Museum", detail: "Grand Egyptian Museum (GEM)", deDetail: "Grand Egyptian Museum (GEM)" },
+      ] as const).map((museum) => {
+        const selected = selectedMuseum === museum.value;
+        return (
+          <button
+            key={museum.value}
+            type="button"
+            onClick={() => setSelectedMuseum(museum.value)}
+            aria-pressed={selected}
+            className={`flex min-h-[92px] items-center gap-3 rounded-xl border p-4 text-left transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 ${
+              selected ? "border-blue-700 bg-blue-50 shadow-sm ring-1 ring-blue-700/10" : "border-slate-200 bg-white hover:border-blue-300 hover:bg-slate-50"
+            }`}
+          >
+            <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${selected ? "bg-blue-800 text-white" : "bg-slate-100 text-slate-600"}`} aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" stroke="currentColor" strokeWidth="1.7">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3 9l9-5 9 5M5 10v8m4-8v8m6-8v8m4-8v8M3 20h18M2 22h20" />
+              </svg>
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className={`block text-sm font-bold ${selected ? "text-blue-950" : "text-slate-800"}`}>
+                <HomeText en={museum.title} de={museum.deTitle} />
+              </span>
+              <span className="mt-1 block text-xs leading-5 text-slate-500">
+                <HomeText en={museum.detail} de={museum.deDetail} />
+              </span>
+            </span>
+            <span className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border ${selected ? "border-blue-700 bg-blue-700 text-white" : "border-slate-300 bg-white text-transparent"}`} aria-hidden="true">
+              <svg viewBox="0 0 20 20" fill="none" className="h-3 w-3" stroke="currentColor" strokeWidth="2.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="m4 10 4 4 8-8" />
+              </svg>
+            </span>
+          </button>
+        );
+      })}
+    </div>
   </div>
 )}
 
@@ -1665,26 +1690,54 @@ ${notes.trim() || "-"}
   tour.cairoOptions)) && (
   <div className="mb-5 md:col-span-3">
     <label className={labelClass}>
-      <HomeText en="Vehicle Type" de="Fahrzeugtyp" />
+      <HomeText en="Choose Your Vehicle" de="Wählen Sie Ihr Fahrzeug" />
     </label>
-                    <select
-                      value={selectedVehicle}
-                      onChange={(e) =>
-                        setSelectedVehicle(
-                          e.target.value as "bus" | "van"
-                        )
-                      }
-                      className={inputClass(false)}
-                    >
-                      <option value="bus">
-                        <HomeText en="Bus" de="Bus" />
-                      </option>
-
-                      <option value="van">
-                        <HomeText en="Van" de="Van" />
-                      </option>
-                    </select>
-                  </div>
+    <p className="mb-3 mt-1 text-sm text-slate-500">
+      <HomeText en="Select your preferred transport option" de="Wählen Sie Ihre bevorzugte Transportoption" />
+    </p>
+    <div className="grid gap-3 sm:grid-cols-2">
+      {([
+        { value: "bus", title: "Bus", deTitle: "Bus", detail: "Comfortable group transport", deDetail: "Komfortabler Gruppentransport" },
+        { value: "van", title: "Van", deTitle: "Van", detail: "Smaller group, more flexible", deDetail: "Kleinere Gruppe, flexibler unterwegs" },
+      ] as const).map((vehicle) => {
+        const selected = selectedVehicle === vehicle.value;
+        return (
+          <button
+            key={vehicle.value}
+            type="button"
+            onClick={() => setSelectedVehicle(vehicle.value)}
+            aria-pressed={selected}
+            className={`flex min-h-[86px] items-center gap-3 rounded-xl border p-4 text-left transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 ${
+              selected ? "border-blue-700 bg-blue-50 shadow-sm ring-1 ring-blue-700/10" : "border-slate-200 bg-white hover:border-blue-300 hover:bg-slate-50"
+            }`}
+          >
+            <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${selected ? "bg-blue-800 text-white" : "bg-slate-100 text-slate-600"}`} aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" stroke="currentColor" strokeWidth="1.7">
+                {vehicle.value === "bus" ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 16V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v10M5 11h14M7 16v2m10-2v2M4 18h16M7 20h.01M17 20h.01" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 15V9a2 2 0 0 1 2-2h9l4 4v4M3 15h18M7 18h.01M17 18h.01M6 18a2 2 0 1 0 0 .01M18 18a2 2 0 1 0 0 .01" />
+                )}
+              </svg>
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className={`block text-sm font-bold ${selected ? "text-blue-950" : "text-slate-800"}`}>
+                <HomeText en={vehicle.title} de={vehicle.deTitle} />
+              </span>
+              <span className="mt-1 block text-xs leading-5 text-slate-500">
+                <HomeText en={vehicle.detail} de={vehicle.deDetail} />
+              </span>
+            </span>
+            <span className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border ${selected ? "border-blue-700 bg-blue-700 text-white" : "border-slate-300 bg-white text-transparent"}`} aria-hidden="true">
+              <svg viewBox="0 0 20 20" fill="none" className="h-3 w-3" stroke="currentColor" strokeWidth="2.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="m4 10 4 4 8-8" />
+              </svg>
+            </span>
+          </button>
+        );
+      })}
+    </div>
+  </div>
                 )}
 
                 <div>
