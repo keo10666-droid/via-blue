@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { tours } from "@/data/tours";
+import { tours, type TourCategory } from "@/data/tours";
 import { getSampleReviews } from "@/data/sampleReviews";
 import { supabase } from "@/lib/supabase";
 import { createSupabaseAdminClient } from "@/lib/supabaseAdmin";
@@ -787,7 +787,7 @@ export default async function TourDetailsPage({
     slug,
     name: pricingOverride.name || slug,
     destination: "hurghada" as const,
-    category: "islands-boat-trips" as const,
+    category: (pricingOverride.category || "islands-boat-trips") as TourCategory,
     image: pricingOverride.image || "/images/via-blue-hero.webp",
     gallery: [pricingOverride.image || "/images/via-blue-hero.webp"],
     description: pricingOverride.description || "",
