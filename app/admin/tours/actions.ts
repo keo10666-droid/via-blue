@@ -47,6 +47,9 @@ export async function updateTourPricing(formData: FormData) {
   }
 
   const available = String(formData.get("available")) === "true";
+  const galleryRaw = String(formData.get("gallery_images") ?? "").trim();
+  const galleryImages = galleryRaw ? [...new Set(galleryRaw.split(/\r?\n/).map((item) => item.trim()).filter(Boolean))] : [];
+  if (galleryImages.length > 20 || galleryImages.some((item) => item.length > 500 || !(item.startsWith("/") || /^https:\/\//i.test(item)))) redirect("/admin/tours?error=content");
   const readMatrixPrice = (key: string) => parsePrice(key);
   let pricingOptions: Record<string, unknown> | null = null;
   if (tour?.vehicleOptions) {
@@ -80,12 +83,14 @@ export async function updateTourPricing(formData: FormData) {
   const supabase = createSupabaseAdminClient();
   if (!supabase) redirect("/admin/tours?error=connection");
 
+  const { data: existingRow } = await supabase.from("tour_catalog_overrides").select("category,pricing_options").eq("slug", slug).maybeSingle();
   let savedCategory: string | undefined;
   if (!tour) {
-    const { data: existingCustom } = await supabase.from("tour_catalog_overrides").select("category").eq("slug", slug).maybeSingle();
-    if (!existingCustom?.category) redirect("/admin/tours?error=invalid");
-    savedCategory = existingCustom.category;
+    if (!existingRow?.category) redirect("/admin/tours?error=invalid");
+    savedCategory = existingRow.category;
   }
+  const existingOptions = (existingRow?.pricing_options ?? {}) as Record<string, unknown>;
+  const nextPricingOptions = { ...existingOptions, ...(pricingOptions ?? {}), gallery: galleryImages };
 
   const { error } = await supabase.from("tour_catalog_overrides").upsert({
     slug,
@@ -96,7 +101,7 @@ export async function updateTourPricing(formData: FormData) {
     price: effectivePrice,
     child_price: effectiveChildPrice,
     infant_price: effectiveInfantPrice,
-    ...(pricingOptions ? { pricing_options: pricingOptions } : {}),
+    pricing_options: nextPricingOptions,
     available,
     updated_at: new Date().toISOString(),
   }, { onConflict: "slug" });
@@ -139,7 +144,7 @@ export async function createCustomTour(formData: FormData) {
   const supabase = createSupabaseAdminClient();
   if (!supabase) redirect("/admin/tours?error=connection");
   const { error } = await supabase.from("tour_catalog_overrides").insert({
-    slug, category, name, description, image, price, child_price: childPrice, infant_price: infantPrice, available: true, updated_at: new Date().toISOString(),
+    slug, category, name, description, image, price, child_price: childPrice, infant_price: infantPrice, available: true, pricing_options: { gallery: [image] }, updated_at: new Date().toISOString(),
   });
   if (error) {
     console.error("Custom tour creation failed:", error.message);
