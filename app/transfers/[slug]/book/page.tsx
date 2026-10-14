@@ -1303,7 +1303,7 @@ ${notes.trim() || "-"}
       <BookingSuccessModal
         open={showSuccess}
         guestName={name.trim()}
-        bookingName={transfer?.name || "Private Transfer"}
+        bookingName={isGerman ? transfer?.name || "Privater Transfer" : transfer?.name || "Private Transfer"}
         email={email.trim()}
         emailSent={confirmationEmailSent}
         backHref="/transfers"
@@ -1528,7 +1528,7 @@ ${notes.trim() || "-"}
                 </div>
 
                 <span className="hidden rounded-full border border-blue-100 bg-blue-50 px-3.5 py-2 text-xs font-bold text-blue-800 sm:block">
-                  {transfer.vehicles.length} Options
+                  {transfer.vehicles.length} <HomeText en="Options" de="Optionen" />
                 </span>
               </div>
 
@@ -1595,9 +1595,9 @@ ${notes.trim() || "-"}
                             </h3>
 
                             <p className="mt-1 text-[11px] text-slate-500">
-                              Up to{" "}
+                              <HomeText en="Up to" de="Bis zu" />{" "}
                               {item.passengers}{" "}
-                              passengers
+                              <HomeText en="passengers" de="Passagiere" />
                             </p>
                           </div>
                         </div>
@@ -1606,13 +1606,13 @@ ${notes.trim() || "-"}
                           <span className="flex items-center gap-1.5 rounded-xl bg-slate-50 px-2.5 py-2 text-[10px] font-bold text-slate-600">
                             <UsersIcon />
                             {item.passengers}
-                            passengers
+                            <HomeText en="passengers" de="Passagiere" />
                           </span>
 
                           <span className="flex items-center gap-1.5 rounded-xl bg-slate-50 px-2.5 py-2 text-[10px] font-bold text-slate-600">
                             <LuggageIcon />
                             {item.luggage}
-                            bags
+                            <HomeText en="bags" de="Gepäckstücke" />
                           </span>
                         </div>
 
@@ -1626,8 +1626,8 @@ ${notes.trim() || "-"}
                           <span>
                             {selectedVehicle ===
                             index
-                              ? "Selected Vehicle"
-                              : "Select Vehicle"}
+                              ? <HomeText en="Selected Vehicle" de="Ausgewähltes Fahrzeug" />
+                              : <HomeText en="Select Vehicle" de="Fahrzeug auswählen" />}
                           </span>
 
                           <span>€{item.price}</span>
@@ -2072,17 +2072,15 @@ ${notes.trim() || "-"}
                           value={i + 1}
                         >
                           {i + 1}{" "}
-                          {i + 1 === 1
-                            ? "Passenger"
-                            : "Passengers"}
+                          <HomeText en={i + 1 === 1 ? "Passenger" : "Passengers"} de={i + 1 === 1 ? "Fahrgast" : "Fahrgäste"} />
                         </option>
                       )
                     )}
                   </select>
 
                   <p className="mt-1.5 text-xs text-slate-400">
-                    Maximum:{" "}
-                    {vehicle.passengers} passengers
+                    <HomeText en="Maximum" de="Maximal" />:{" "}
+                    {vehicle.passengers} <HomeText en="passengers" de="Fahrgäste" />
                   </p>
                 </div>
 
@@ -2111,17 +2109,15 @@ ${notes.trim() || "-"}
                           value={i + 1}
                         >
                           {i + 1}{" "}
-                          {i + 1 === 1
-                            ? "Bag"
-                            : "Bags"}
+                          <HomeText en={i + 1 === 1 ? "Bag" : "Bags"} de={i + 1 === 1 ? "Gepäckstück" : "Gepäckstücke"} />
                         </option>
                       )
                     )}
                   </select>
 
                   <p className="mt-1.5 text-xs text-slate-400">
-                    Maximum:{" "}
-                    {vehicle.luggage} luggage
+                    <HomeText en="Maximum" de="Maximal" />:{" "}
+                    {vehicle.luggage} <HomeText en="pieces of luggage" de="Gepäckstücke" />
                   </p>
                 </div>
               </div>
@@ -2213,13 +2209,10 @@ ${notes.trim() || "-"}
                   </p>
 
                   <p className="mt-1.5 text-sm font-bold text-blue-950">
-                    {transferType ===
-                    "airport-to-hotel"
-                      ? "Airport → Hotel"
-                      : transferType ===
-                        "hotel-to-airport"
-                      ? "Hotel → Airport"
-                      : "Hotel → Hotel"}
+                    <HomeText
+                      en={transferType === "airport-to-hotel" ? "Airport → Hotel" : transferType === "hotel-to-airport" ? "Hotel → Airport" : "Hotel → Hotel"}
+                      de={transferType === "airport-to-hotel" ? "Flughafen → Hotel" : transferType === "hotel-to-airport" ? "Hotel → Flughafen" : "Hotel → Hotel"}
+                    />
                   </p>
                 </div>
 
@@ -2250,7 +2243,7 @@ ${notes.trim() || "-"}
 
                     <div className="min-w-0">
                       <p className="text-[9px] font-bold uppercase tracking-[0.14em] text-slate-400">
-                        To
+                        <HomeText en="To" de="Nach" />
                       </p>
 
                       <p className="mt-1 text-sm font-bold leading-5 text-blue-950">
@@ -2296,13 +2289,14 @@ ${notes.trim() || "-"}
                   <div className="grid grid-cols-2 gap-2 p-3">
                     <span className="flex items-center gap-1.5 rounded-xl bg-slate-50 px-2.5 py-2 text-[10px] font-bold text-slate-600">
                       <UsersIcon />
-                      {vehicle.passengers}
-                      passengers
+                      {vehicle.passengers}{" "}
+                      <HomeText en="passengers" de="Fahrgäste" />
                     </span>
 
                     <span className="flex items-center gap-1.5 rounded-xl bg-slate-50 px-2.5 py-2 text-[10px] font-bold text-slate-600">
                       <LuggageIcon />
-                      {vehicle.luggage} bags
+                      {vehicle.luggage}{" "}
+                      <HomeText en="bags" de="Gepäckstücke" />
                     </span>
                   </div>
                 </div>
