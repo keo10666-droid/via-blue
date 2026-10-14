@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { transfers } from "@/data/transfers";
 import { createSupabaseAdminClient } from "@/lib/supabaseAdmin";
 import HomeText from "@/app/components/HomeText";
+import { germanTransferLocation, germanTransferVehicle } from "@/lib/germanTransferCopy";
 
 type Props = {
   params: Promise<{
@@ -28,9 +29,9 @@ export async function generateMetadata({
     };
   }
 
-  const title = `${transfer.from} to ${transfer.to} Transfer`;
+  const title = `$<HomeText en={transfer.from} de={germanTransferLocation(transfer.from)} /> to $<HomeText en={transfer.to} de={germanTransferLocation(transfer.to)} /> Transfer`;
 
-  const description = `Book a private transfer from ${transfer.from} to ${transfer.to} with Via Blue. Comfortable vehicles, professional drivers and fixed prices.`;
+  const description = `Book a private transfer from $<HomeText en={transfer.from} de={germanTransferLocation(transfer.from)} /> to $<HomeText en={transfer.to} de={germanTransferLocation(transfer.to)} /> with Via Blue. Comfortable vehicles, professional drivers and fixed prices.`;
 
   const canonicalUrl = `https://viabluetours.com/transfers/${slug}`;
 
@@ -41,8 +42,8 @@ export async function generateMetadata({
     description,
 
     keywords: [
-      `${transfer.from} to ${transfer.to} transfer`,
-      `${transfer.to} transfer`,
+      `$<HomeText en={transfer.from} de={germanTransferLocation(transfer.from)} /> to $<HomeText en={transfer.to} de={germanTransferLocation(transfer.to)} /> transfer`,
+      `$<HomeText en={transfer.to} de={germanTransferLocation(transfer.to)} /> transfer`,
       "Hurghada airport transfer",
       "Hurghada private transfer",
       "Hurghada airport taxi",
@@ -133,11 +134,11 @@ export default async function TransferPage({ params }: Props) {
           </div>
 
           <h1 className="mt-5 text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
-            {transfer.to}
+            <HomeText en=<HomeText en={transfer.to} de={germanTransferLocation(transfer.to)} /> de={germanTransferLocation(transfer.to)} />
           </h1>
 
           <p className="mt-5 max-w-2xl text-lg leading-8 text-blue-100">
-            <HomeText en={`Comfortable private transfer from ${transfer.from} to your destination`} de={`Komfortabler Privattransfer von ${transfer.from} zu Ihrem Ziel`} />
+            <HomeText en={`Comfortable private transfer from $<HomeText en={transfer.from} de={germanTransferLocation(transfer.from)} /> to your destination`} de={`Komfortabler Privattransfer vom ${germanTransferLocation(transfer.from)} zu Ihrem Ziel`} />
           </p>
 
           <div className="mt-7 flex flex-wrap gap-3">
@@ -232,7 +233,7 @@ export default async function TransferPage({ params }: Props) {
                       </p>
 
                       <p className="mt-1 text-lg font-bold text-white">
-                        {vehicle.type}
+                        <HomeText en={vehicle.type} de={germanTransferVehicle(vehicle.type)} />
                       </p>
 
                     </div>
@@ -249,7 +250,7 @@ export default async function TransferPage({ params }: Props) {
                       <div className="min-w-0">
 
                         <h3 className="text-2xl font-bold tracking-tight text-blue-950 transition-colors duration-300 group-hover:text-orange-500">
-                          {vehicle.type}
+                          <HomeText en={vehicle.type} de={germanTransferVehicle(vehicle.type)} />
                         </h3>
 
                         <p className="mt-1 text-xs font-medium text-slate-500">
@@ -349,7 +350,7 @@ export default async function TransferPage({ params }: Props) {
                       className="group/button mt-6 flex items-center justify-center gap-2 rounded-2xl bg-blue-950 px-5 py-3.5 text-center text-sm font-bold text-white shadow-lg shadow-blue-950/10 transition-all duration-300 hover:-translate-y-0.5 hover:bg-orange-500 hover:shadow-orange-500/20"
                     >
 
-                      <HomeText en={`Book ${vehicle.type}`} de={`${vehicle.type} buchen`} />
+                      <HomeText en={`Book ${vehicle.type}`} de={`${germanTransferVehicle(vehicle.type)} buchen`} />
 
                       <ArrowRightIcon className="h-4 w-4 transition-transform duration-300 group-hover/button:translate-x-1" />
 
@@ -412,7 +413,7 @@ export default async function TransferPage({ params }: Props) {
                     </p>
 
                     <p className="mt-1.5 text-sm font-bold text-blue-950">
-                      {transfer.from}
+                      <HomeText en={transfer.from} de={germanTransferLocation(transfer.from)} />
                     </p>
 
                   </div>
@@ -427,7 +428,7 @@ export default async function TransferPage({ params }: Props) {
                     </p>
 
                     <p className="mt-1.5 text-sm font-bold text-orange-700">
-                      {transfer.to}
+                      <HomeText en={transfer.to} de={germanTransferLocation(transfer.to)} />
                     </p>
 
                   </div>
