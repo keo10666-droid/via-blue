@@ -1164,12 +1164,12 @@ ${notes.trim() || "-"}
                     onChange={(e) => setHotelArea(e.target.value)}
                     className={inputClass(false)}
                   >
-                    <option value="hurghada">Hurghada — {isGerman ? "Inklusive" : "Included"}</option>
-                    <option value="makadi-bay">Makadi Bay — +€5 {isGerman ? "pro Person" : "per person"}</option>
-                    <option value="sahl-hasheesh">Sahl Hasheesh — +€5 {isGerman ? "pro Person" : "per person"}</option>
-                    <option value="el-gouna">El Gouna — +€10 {isGerman ? "pro Person" : "per person"}</option>
-                    <option value="safaga">Safaga — +€10 {isGerman ? "pro Person" : "per person"}</option>
-                    <option value="soma-bay">Soma Bay — +€10 {isGerman ? "pro Person" : "per person"}</option>
+                    <option value="hurghada">Hurghada</option>
+                    <option value="makadi-bay">Makadi Bay</option>
+                    <option value="sahl-hasheesh">Sahl Hasheesh</option>
+                    <option value="el-gouna">El Gouna</option>
+                    <option value="safaga">Safaga</option>
+                    <option value="soma-bay">Soma Bay</option>
                   </select>
                   <p className="mt-1.5 text-xs leading-5 text-slate-500">
                     {hotelAreaSurchargePerPerson === 0
