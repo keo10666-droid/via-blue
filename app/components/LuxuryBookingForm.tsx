@@ -573,7 +573,7 @@ const FlagIcon = ({
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-function formatDateDisplay(value: string) {
+function formatDateDisplay(value: string, isGerman = false) {
   if (!value) return "";
 
   const [year, month, day] = value.split("-").map(Number);
@@ -582,7 +582,7 @@ function formatDateDisplay(value: string) {
 
   const date = new Date(year, month - 1, day);
 
-  return date.toLocaleDateString("en-GB", {
+  return date.toLocaleDateString(isGerman ? "de-DE" : "en-GB", {
     weekday: "short",
     day: "numeric",
     month: "short",
@@ -783,7 +783,7 @@ export default function LuxuryBookingForm({
   );
 
   const calendarMonthLabel = calendarMonth.toLocaleDateString(
-    "en-US",
+    isGerman ? "de-DE" : "en-US",
     {
       month: "long",
       year: "numeric",
@@ -1444,7 +1444,7 @@ ${notes.trim() || "-"}
                           }`}
                         >
                           {date
-                            ? formatDateDisplay(date)
+                            ? formatDateDisplay(date, isGerman)
                             : <HomeText en="Select your preferred date" de="Wählen Sie Ihr Wunschdatum" />}
                         </div>
                       </div>
