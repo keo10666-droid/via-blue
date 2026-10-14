@@ -369,23 +369,38 @@ const selectedCairoVehicleOption =
     setPromoMessage("");
     setPromoMessageType("");
     try {
-      const response = await fetch("/api/promo-codes/validate", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ code }) });
+      const response = await fetch("/api/promo-codes/validate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code }),
+      });
       const result = await response.json();
-      if (!response.ok || !result.valid || typeof result.discountPercent !== "number") {
+      const hasPercentDiscount = typeof result.discountPercent === "number";
+      const hasFixedDiscount = typeof result.discountAmount === "number";
+      if (!response.ok || !result.valid || (!hasPercentDiscount && !hasFixedDiscount)) {
         setPromoDiscountPercent(null);
+        setPromoFixedAmount(null);
         setPromoMessage(result.error || (isGerman ? "Dieser Gutscheincode ist ungültig." : "This promo code is not valid."));
         setPromoMessageType("error");
         return;
       }
       setPromoCode(result.code || code);
-      setPromoDiscountPercent(result.discountPercent);
-      setPromoMessage(isGerman ? `Gutscheincode angewendet: ${result.discountPercent}% Rabatt.` : `Code applied — ${result.discountPercent}% discount added.`);
+      setPromoDiscountPercent(hasPercentDiscount ? result.discountPercent : null);
+      setPromoFixedAmount(hasFixedDiscount ? result.discountAmount : null);
+      setPromoMessage(
+        isGerman
+          ? (hasPercentDiscount ? `Gutscheincode angewendet: ${result.discountPercent}% Rabatt.` : `Gutscheincode angewendet: €${Number(result.discountAmount).toFixed(2)} Rabatt.`)
+          : (hasPercentDiscount ? `Code applied — ${result.discountPercent}% discount added.` : `Code applied — €${Number(result.discountAmount).toFixed(2)} off.`)
+      );
       setPromoMessageType("success");
     } catch {
       setPromoDiscountPercent(null);
+      setPromoFixedAmount(null);
       setPromoMessage(isGerman ? "Code konnte nicht geprüft werden. Bitte erneut versuchen." : "Could not check the code. Please try again.");
       setPromoMessageType("error");
-    } finally { setPromoLoading(false); }
+    } finally {
+      setPromoLoading(false);
+    }
   };
 
   const filteredNationalities = useMemo(() => {
