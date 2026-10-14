@@ -663,7 +663,13 @@ Hotel: ${hotel || "Not specified"}
 
 Hotel Area: ${hotelArea}
 
-Hotel Area Surcharge: €${hotelAreaSurcharge}\n\nPromo Code: ${promoDiscountPercent !== null ? promoCode.trim().toUpperCase() : "Not used"}\n\nTotal Before Discount: €${totalPrice}\n\nDiscount: €${promoDiscountAmount.toFixed(2)}
+Hotel Area Surcharge: €${hotelAreaSurcharge}
+
+Promo Code: ${promoDiscountPercent !== null ? promoCode.trim().toUpperCase() : "Not used"}
+
+Total Before Discount: €${totalPrice}
+
+Discount: €${promoDiscountAmount.toFixed(2)}
 
 Room Number: ${roomNumber || "Not specified"}
 
