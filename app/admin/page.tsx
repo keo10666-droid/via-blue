@@ -17,6 +17,7 @@ import {
   ShieldCheck,
   Ship,
   Sparkles,
+  TicketPercent,
 } from "lucide-react";
 
 import { logoutAdmin } from "@/app/admin/login/actions";
@@ -100,6 +101,15 @@ const modules = [
     tag: "Available now",
     available: true,
     iconClass: "bg-violet-50 text-violet-700",
+  },
+  {
+    title: "Promo codes",
+    description: "Create discount codes, set percentage discounts and usage limits.",
+    href: "/admin/coupons",
+    icon: TicketPercent,
+    tag: "Available now",
+    available: true,
+    iconClass: "bg-orange-50 text-orange-700",
   },
   {
     title: "Reviews",

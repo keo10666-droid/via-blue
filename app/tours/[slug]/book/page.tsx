@@ -264,6 +264,11 @@ const [selectedMuseum, setSelectedMuseum] =
   useState<"oldMuseum" | "newMuseum">("oldMuseum");
 
   const [notes, setNotes] = useState("");
+  const [promoCode, setPromoCode] = useState("");
+  const [promoDiscountPercent, setPromoDiscountPercent] = useState<number | null>(null);
+  const [promoMessage, setPromoMessage] = useState("");
+  const [promoMessageType, setPromoMessageType] = useState<"success" | "error" | "">("");
+  const [promoLoading, setPromoLoading] = useState(false);
 
   const [childrenAgeValues, setChildrenAgeValues] =
     useState<string[]>([]);
@@ -349,6 +354,38 @@ const selectedCairoVehicleOption =
     (Number(adults || 0) + Number(children || 0)) * hotelAreaSurchargePerPerson;
 
   const totalPrice = baseTotalPrice + hotelAreaSurcharge;
+  const promoDiscountAmount = promoDiscountPercent === null ? 0 : Math.round(totalPrice * promoDiscountPercent) / 100;
+  const finalTotalPrice = Math.max(0, Math.round((totalPrice - promoDiscountAmount) * 100) / 100);
+
+  const applyPromoCode = async () => {
+    const code = promoCode.trim().toUpperCase();
+    if (!code) {
+      setPromoMessage(isGerman ? "Bitte geben Sie einen Gutscheincode ein." : "Please enter a promo code.");
+      setPromoMessageType("error");
+      return;
+    }
+    setPromoLoading(true);
+    setPromoMessage("");
+    setPromoMessageType("");
+    try {
+      const response = await fetch("/api/promo-codes/validate", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ code }) });
+      const result = await response.json();
+      if (!response.ok || !result.valid || typeof result.discountPercent !== "number") {
+        setPromoDiscountPercent(null);
+        setPromoMessage(result.error || (isGerman ? "Dieser Gutscheincode ist ungültig." : "This promo code is not valid."));
+        setPromoMessageType("error");
+        return;
+      }
+      setPromoCode(result.code || code);
+      setPromoDiscountPercent(result.discountPercent);
+      setPromoMessage(isGerman ? `Gutscheincode angewendet: ${result.discountPercent}% Rabatt.` : `Code applied — ${result.discountPercent}% discount added.`);
+      setPromoMessageType("success");
+    } catch {
+      setPromoDiscountPercent(null);
+      setPromoMessage(isGerman ? "Code konnte nicht geprüft werden. Bitte erneut versuchen." : "Could not check the code. Please try again.");
+      setPromoMessageType("error");
+    } finally { setPromoLoading(false); }
+  };
 
   const filteredNationalities = useMemo(() => {
     if (!nationality) return [];
@@ -628,6 +665,12 @@ Hotel Area: ${hotelArea}
 
 Hotel Area Surcharge: €${hotelAreaSurcharge}
 
+Promo Code: ${promoDiscountPercent !== null ? promoCode.trim().toUpperCase() : "Not used"}
+
+Total Before Discount: €${totalPrice}
+
+Discount: €${promoDiscountAmount.toFixed(2)}
+
 Room Number: ${roomNumber || "Not specified"}
 
 Tour Date: ${date}
@@ -652,7 +695,7 @@ Infant Ages: ${
       .join(", ") || "-"
   }
 
-Total Price: €${totalPrice}
+Total Price: €${finalTotalPrice.toFixed(2)}
 
 WhatsApp: ${fullPhone}
 
@@ -681,6 +724,7 @@ ${notes.trim() || "-"}
         body: JSON.stringify({
           subject: `New Tour Booking - ${tour.name}`,
           tourSlug: slug,
+          couponCode: promoDiscountPercent !== null ? promoCode.trim().toUpperCase() : null,
           html: `
             <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #1e293b;">
               <h2 style="color: #0f172a;">New Tour Booking Request</h2>
@@ -2199,7 +2243,7 @@ ${notes.trim() || "-"}
                   </span>
 
                   <span className="text-2xl font-bold text-orange-500">
-                    €{totalPrice}
+                    €{finalTotalPrice}
                   </span>
 
                 </div>
@@ -2207,6 +2251,22 @@ ${notes.trim() || "-"}
               </div>
 
             </div>
+
+            {/* Professional promo code field */}
+            <section className="mb-8 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+              <div className="flex items-center gap-3 border-b border-slate-100 bg-gradient-to-r from-blue-50/80 to-white px-4 py-4 sm:px-5">
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-950 text-white shadow-sm"><span className="text-lg font-bold">%</span></span>
+                <div><h3 className="text-sm font-extrabold text-blue-950"><HomeText en="Have a promo code?" de="Haben Sie einen Gutscheincode?" /></h3><p className="mt-0.5 text-xs text-slate-500"><HomeText en="Enter your code to unlock a special discount." de="Geben Sie Ihren Code ein und sichern Sie sich einen Rabatt." /></p></div>
+              </div>
+              <div className="p-4 sm:p-5">
+                <div className="flex flex-col gap-2 sm:flex-row">
+                  <div className="relative min-w-0 flex-1"><input type="text" value={promoCode} onChange={(e) => { setPromoCode(e.target.value.toUpperCase()); setPromoDiscountPercent(null); setPromoMessage(""); setPromoMessageType(""); }} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); void applyPromoCode(); } }} placeholder={isGerman ? "Gutscheincode eingeben" : "Enter promo code"} maxLength={40} autoComplete="off" className="min-h-[50px] w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm font-bold uppercase tracking-wider text-blue-950 outline-none transition placeholder:font-medium placeholder:normal-case placeholder:tracking-normal placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100" /></div>
+                  <button type="button" onClick={() => void applyPromoCode()} disabled={promoLoading || !promoCode.trim()} className="min-h-[50px] rounded-xl bg-blue-950 px-6 text-sm font-extrabold text-white shadow-sm transition hover:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-50">{promoLoading ? (isGerman ? "Prüfen…" : "Checking…") : (isGerman ? "Code anwenden" : "Apply code")}</button>
+                </div>
+                {promoMessage && <p className={`mt-3 flex items-center gap-2 text-xs font-bold ${promoMessageType === "success" ? "text-emerald-700" : "text-red-600"}`}><span className={`flex h-5 w-5 items-center justify-center rounded-full ${promoMessageType === "success" ? "bg-emerald-100" : "bg-red-100"}`}>{promoMessageType === "success" ? "✓" : "!"}</span>{promoMessage}</p>}
+                {promoDiscountPercent !== null && <><div className="mt-4 flex items-center justify-between rounded-xl border border-emerald-100 bg-emerald-50 px-3.5 py-3"><span className="text-sm font-semibold text-emerald-800">{promoCode} · {promoDiscountPercent}% off</span><button type="button" onClick={() => { setPromoCode(""); setPromoDiscountPercent(null); setPromoMessage(""); setPromoMessageType(""); }} className="text-xs font-bold text-emerald-800 underline underline-offset-2"><HomeText en="Remove" de="Entfernen" /></button></div><div className="mt-4 space-y-2 border-t border-dashed border-slate-200 pt-4 text-sm"><div className="flex items-center justify-between text-slate-500"><span><HomeText en="Subtotal" de="Zwischensumme" /></span><span>€{totalPrice.toFixed(2)}</span></div><div className="flex items-center justify-between font-semibold text-emerald-700"><span>{promoCode} ({promoDiscountPercent}% <HomeText en="off" de="Rabatt" />)</span><span>−€{promoDiscountAmount.toFixed(2)}</span></div></div></>}
+              </div>
+            </section>
 
             {/* Additional Information */}
 
@@ -2343,7 +2403,7 @@ ${notes.trim() || "-"}
                     </p>
 
                     <p className="text-3xl font-bold text-blue-950">
-                      €{totalPrice}
+                      €{finalTotalPrice}
                     </p>
 
                   </div>

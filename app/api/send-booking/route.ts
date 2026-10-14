@@ -367,6 +367,7 @@ export async function POST(request: Request) {
       html,
       accessToken,
       tourSlug,
+      couponCode,
     } = body as Record<string, unknown>;
 
     const bookingEmailValidationIssues: string[] = [];
@@ -457,10 +458,56 @@ export async function POST(request: Request) {
       authenticatedUserId = user?.id || null;
     }
 
+    const couponCodeValue = typeof couponCode === "string" ? couponCode.trim().toUpperCase() : "";
+    if (couponCode != null && (typeof couponCode !== "string" || (couponCodeValue && !/^[A-Z0-9][A-Z0-9_-]{2,39}$/.test(couponCodeValue)))) {
+      return Response.json({ success: false, error: "Invalid promo code." }, { status: 400 });
+    }
+
     const {
       title,
       fields,
     } = parseBookingHtml(validHtml);
+
+    const emailForRateLimit = getField(fields, "Email").trim();
+    if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailForRateLimit) &&
+      await isIdentifierRateLimited(emailForRateLimit.toLowerCase(), "booking-confirmation-email", 3, 3600)) {
+      return Response.json({ success: false, error: "Too many booking requests for this email address. Please try again later." }, { status: 429 });
+    }
+
+    // Redeem server-side so the usage cap is enforced atomically at booking submission.
+    if (couponCodeValue) {
+      const couponDb = createSupabaseAdminClient();
+      if (!couponDb) {
+        return Response.json({ success: false, error: "Promo codes are temporarily unavailable. Please try again." }, { status: 503 });
+      }
+
+      const subtotalText = getField(fields, "Total Before Discount");
+      const subtotal = Number(subtotalText.replace(/[^0-9.\-]/g, ""));
+      if (!subtotalText || !Number.isFinite(subtotal) || subtotal < 0) {
+        return Response.json({ success: false, error: "Could not verify the booking total for this promo code." }, { status: 400 });
+      }
+
+      const { data: redeemedRows, error: redeemError } = await couponDb.rpc("redeem_promo_coupon", { p_code: couponCodeValue });
+      if (redeemError) {
+        console.error("Promo code redemption failed:", redeemError.message);
+        return Response.json({ success: false, error: "Could not redeem this promo code. Please try again." }, { status: 503 });
+      }
+      const redeemed = Array.isArray(redeemedRows) ? redeemedRows[0] : null;
+      if (!redeemed) {
+        return Response.json({ success: false, error: "This promo code is invalid, expired, inactive, or has reached its usage limit." }, { status: 409 });
+      }
+
+      const discountAmount = Math.round(subtotal * Number(redeemed.discount_percent)) / 100;
+      const finalTotal = Math.max(0, Math.round((subtotal - discountAmount) * 100) / 100);
+      for (let index = fields.length - 1; index >= 0; index--) {
+        if (["promo code", "discount", "total price"].includes(fields[index].label.toLowerCase())) fields.splice(index, 1);
+      }
+      fields.push(
+        { label: "Promo Code", value: redeemed.code },
+        { label: "Discount", value: `€${discountAmount.toFixed(2)} (${redeemed.discount_percent}%)` },
+        { label: "Total Price", value: `€${finalTotal.toFixed(2)}` },
+      );
+    }
 
     const guestFields = getFields(
       fields,
@@ -512,6 +559,9 @@ export async function POST(request: Request) {
       fields,
       [
         "Total Price",
+        "Total Before Discount",
+        "Discount",
+        "Promo Code",
         "PRIVATE TOUR PRICE",
         "Price",
       ]
@@ -537,23 +587,6 @@ export async function POST(request: Request) {
       /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customerEmail)
         ? customerEmail
         : "";
-
-    // Prevent repeated booking requests from sending repeated confirmations
-    // to the same recipient, even when requests come from different clients.
-    if (
-      validCustomerEmail &&
-      await isIdentifierRateLimited(
-        validCustomerEmail.toLowerCase(),
-        "booking-confirmation-email",
-        3,
-        3600,
-      )
-    ) {
-      return Response.json(
-        { success: false, error: "Too many booking requests for this email address. Please try again later." },
-        { status: 429 },
-      );
-    }
 
     const replyTo = validCustomerEmail;
 
