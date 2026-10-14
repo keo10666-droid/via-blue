@@ -133,7 +133,7 @@ export default function AboutPage() {
 
               <Image
                 src="/images/about-story.webp"
-                alt={isGerman ? "Gäste erleben das Rote Meer mit Via Blue" : "Guests enjoying a Red Sea experience with Via Blue"}
+                alt="Guests enjoying a Red Sea experience with Via Blue"
                 fill
                 className="object-cover transition duration-1000 hover:scale-105"
               />
