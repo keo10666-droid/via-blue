@@ -1303,7 +1303,7 @@ ${notes.trim() || "-"}
       <BookingSuccessModal
         open={showSuccess}
         guestName={name.trim()}
-        bookingName={transfer?.name || "Private Transfer"}
+        bookingName={isGerman ? transfer?.name || "Privater Transfer" : transfer?.name || "Private Transfer"}
         email={email.trim()}
         emailSent={confirmationEmailSent}
         backHref="/transfers"
