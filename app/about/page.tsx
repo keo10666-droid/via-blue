@@ -99,7 +99,7 @@ export default function AboutPage() {
           <div className="mx-auto max-w-7xl px-6 pb-7 lg:px-8">
             <div className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.16em] text-white/65">
               <span className="h-2 w-2 rounded-full bg-orange-400 shadow-[0_0_12px_rgba(251,146,60,0.7)]" />
-              Hurghada · Red Sea · Egypt
+              <HomeText en="Hurghada · Red Sea · Egypt" de="Hurghada · Rotes Meer · Ägypten" />
             </div>
           </div>
         </div>
@@ -319,7 +319,7 @@ export default function AboutPage() {
                 href="/transfers"
                 className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-orange-500 transition-all duration-300 group-hover:translate-x-1 group-hover:text-orange-600"
               >
-                Explore Transfers →
+                <HomeText en="Explore Transfers" de="Transfers entdecken" /> →
               </Link>
 
             </div>
@@ -347,7 +347,7 @@ export default function AboutPage() {
                 href="/tours"
                 className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-orange-500 transition-all duration-300 group-hover:translate-x-1 group-hover:text-orange-600"
               >
-                Explore Tours →
+                <HomeText en="Explore Tours" de="Ausflüge entdecken" /> →
               </Link>
 
             </div>
@@ -375,7 +375,7 @@ export default function AboutPage() {
                 href="/tours"
                 className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-orange-500 transition-all duration-300 group-hover:translate-x-1 group-hover:text-orange-600"
               >
-                Discover More →
+                <HomeText en="Discover More" de="Mehr entdecken" /> →
               </Link>
 
             </div>

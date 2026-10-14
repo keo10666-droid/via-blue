@@ -180,7 +180,7 @@ export default function ReviewsList({
                         <p className="mt-0.5 text-sm text-slate-400">
                           {new Date(
                             reviews[currentIndex].created_at
-                          ).toLocaleDateString("en-GB")}
+                          ).toLocaleDateString(isGerman ? "de-DE" : "en-GB")}
                         </p>
                       </div>
                     </div>

@@ -446,6 +446,114 @@ function SparklesIcon() {
   );
 }
 
+
+const germanNationalityNames: Record<string, string> = {
+  "Egyptian": "Ägyptisch",
+  "German": "Deutsch",
+  "British": "Britisch",
+  "French": "Französisch",
+  "Italian": "Italienisch",
+  "Polish": "Polnisch",
+  "Dutch": "Niederländisch",
+  "Belgian": "Belgisch",
+  "Swiss": "Schweizerisch",
+  "Austrian": "Österreichisch",
+  "Russian": "Russisch",
+  "Ukrainian": "Ukrainisch",
+  "Spanish": "Spanisch",
+  "Portuguese": "Portugiesisch",
+  "Turkish": "Türkisch",
+  "American": "Amerikanisch",
+  "Canadian": "Kanadisch",
+  "Brazilian": "Brasilianisch",
+  "Australian": "Australisch",
+  "Swedish": "Schwedisch",
+  "Norwegian": "Norwegisch",
+  "Danish": "Dänisch",
+  "Finnish": "Finnisch",
+  "Czech": "Tschechisch",
+  "Slovak": "Slowakisch",
+  "Romanian": "Rumänisch",
+  "Hungarian": "Ungarisch",
+  "Serbian": "Serbisch",
+  "Croatian": "Kroatisch",
+  "Slovenian": "Slowenisch",
+  "Irish": "Irisch",
+  "Greek": "Griechisch",
+  "Saudi": "Saudi-arabisch",
+  "Emirati": "Emiratisch",
+  "Kuwaiti": "Kuwaitisch",
+  "Qatari": "Katarisch",
+  "Bahraini": "Bahrainisch",
+  "Omani": "Omanisch",
+  "Jordanian": "Jordanisch",
+  "Lebanese": "Libanesisch",
+  "Moroccan": "Marokkanisch",
+  "Algerian": "Algerisch",
+  "Tunisian": "Tunesisch",
+  "Libyan": "Libysch",
+  "South African": "Südafrikanisch",
+  "Indian": "Indisch",
+  "Pakistani": "Pakistanisch",
+  "Chinese": "Chinesisch",
+  "Japanese": "Japanisch",
+  "Korean": "Koreanisch"
+};
+const germanCountryNames: Record<string, string> = {
+  "Egypt": "Ägypten",
+  "Germany": "Deutschland",
+  "United Kingdom": "Vereinigtes Königreich",
+  "France": "Frankreich",
+  "Italy": "Italien",
+  "Poland": "Polen",
+  "Netherlands": "Niederlande",
+  "Belgium": "Belgien",
+  "Switzerland": "Schweiz",
+  "Austria": "Österreich",
+  "Russia": "Russland",
+  "Ukraine": "Ukraine",
+  "Spain": "Spanien",
+  "Portugal": "Portugal",
+  "Turkey": "Türkei",
+  "United States": "Vereinigte Staaten",
+  "Canada": "Kanada",
+  "Brazil": "Brasilien",
+  "Australia": "Australien",
+  "Sweden": "Schweden",
+  "Norway": "Norwegen",
+  "Denmark": "Dänemark",
+  "Finland": "Finnland",
+  "Czech Republic": "Tschechien",
+  "Slovakia": "Slowakei",
+  "Romania": "Rumänien",
+  "Hungary": "Ungarn",
+  "Serbia": "Serbien",
+  "Croatia": "Kroatien",
+  "Slovenia": "Slowenien",
+  "Ireland": "Irland",
+  "Greece": "Griechenland",
+  "Saudi Arabia": "Saudi-Arabien",
+  "United Arab Emirates": "Vereinigte Arabische Emirate",
+  "Kuwait": "Kuwait",
+  "Qatar": "Katar",
+  "Bahrain": "Bahrain",
+  "Oman": "Oman",
+  "Jordan": "Jordanien",
+  "Lebanon": "Libanon",
+  "Morocco": "Marokko",
+  "Algeria": "Algerien",
+  "Tunisia": "Tunesien",
+  "Libya": "Libyen",
+  "South Africa": "Südafrika",
+  "India": "Indien",
+  "Pakistan": "Pakistan",
+  "China": "China",
+  "Japan": "Japan",
+  "South Korea": "Südkorea"
+};
+const displayNationality = (value: string, isGerman: boolean) => isGerman ? (germanNationalityNames[value] || value) : value;
+const displayCountryName = (value: string, isGerman: boolean) => isGerman ? (germanCountryNames[value] || value) : value;
+
 const FlagIcon = ({
   iso,
   name,
@@ -465,7 +573,7 @@ const FlagIcon = ({
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-function formatDateDisplay(value: string) {
+function formatDateDisplay(value: string, isGerman = false) {
   if (!value) return "";
 
   const [year, month, day] = value.split("-").map(Number);
@@ -474,7 +582,7 @@ function formatDateDisplay(value: string) {
 
   const date = new Date(year, month - 1, day);
 
-  return date.toLocaleDateString("en-GB", {
+  return date.toLocaleDateString(isGerman ? "de-DE" : "en-GB", {
     weekday: "short",
     day: "numeric",
     month: "short",
@@ -647,7 +755,8 @@ export default function LuxuryBookingForm({
 
     return nationalities
       .filter((n) =>
-        n.toLowerCase().includes(nationality.toLowerCase())
+        n.toLowerCase().includes(nationality.toLowerCase()) ||
+        (germanNationalityNames[n] || n).toLowerCase().includes(nationality.toLowerCase())
       )
       .slice(0, 7);
   }, [nationality]);
@@ -657,9 +766,8 @@ export default function LuxuryBookingForm({
 
     return countryCodes.filter(
       (c) =>
-        c.name
-          .toLowerCase()
-          .includes(countrySearch.toLowerCase()) ||
+        c.name.toLowerCase().includes(countrySearch.toLowerCase()) ||
+        (germanCountryNames[c.name] || c.name).toLowerCase().includes(countrySearch.toLowerCase()) ||
         c.dialCode.includes(countrySearch)
     );
   }, [countrySearch]);
@@ -675,7 +783,7 @@ export default function LuxuryBookingForm({
   );
 
   const calendarMonthLabel = calendarMonth.toLocaleDateString(
-    "en-US",
+    isGerman ? "de-DE" : "en-US",
     {
       month: "long",
       year: "numeric",
@@ -1027,7 +1135,7 @@ ${notes.trim() || "-"}
                         <input
                           type="text"
                           placeholder={isGerman ? "Nationalität auswählen" : "Select nationality"}
-                          value={nationality}
+                          value={displayNationality(nationality, isGerman)}
                           onChange={(e) => {
                             setNationality(e.target.value);
                             setIsNationalityOpen(true);
@@ -1065,7 +1173,7 @@ ${notes.trim() || "-"}
                                 <GlobeIcon />
 
                                 <span className="ml-3">
-                                  {item}
+                                  {displayNationality(item, isGerman)}
                                 </span>
                               </button>
                             ))}
@@ -1120,7 +1228,7 @@ ${notes.trim() || "-"}
                           >
                             <FlagIcon
                               iso={selectedCountry.iso}
-                              name={selectedCountry.name}
+                              name={displayCountryName(selectedCountry.name, isGerman)}
                             />
 
                             <span className="text-sm font-bold">
@@ -1170,11 +1278,11 @@ ${notes.trim() || "-"}
                                     >
                                       <FlagIcon
                                         iso={country.iso}
-                                        name={country.name}
+                                        name={displayCountryName(country.name, isGerman)}
                                       />
 
                                       <span className="flex-1 text-sm font-semibold text-slate-700">
-                                        {country.name}
+                                        {displayCountryName(country.name, isGerman)}
                                       </span>
 
                                       <span className="text-xs font-bold text-slate-400">
@@ -1336,7 +1444,7 @@ ${notes.trim() || "-"}
                           }`}
                         >
                           {date
-                            ? formatDateDisplay(date)
+                            ? formatDateDisplay(date, isGerman)
                             : <HomeText en="Select your preferred date" de="Wählen Sie Ihr Wunschdatum" />}
                         </div>
                       </div>
@@ -2058,7 +2166,7 @@ ${notes.trim() || "-"}
 
                       <span className="max-w-[150px] text-right text-xs font-bold text-[#071a36]">
                         {date
-                          ? formatDateDisplay(date)
+                          ? formatDateDisplay(date, isGerman)
                           : <HomeText en="Not selected" de="Nicht ausgewählt" />}
                       </span>
 
