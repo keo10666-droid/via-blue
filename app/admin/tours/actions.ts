@@ -50,13 +50,16 @@ export async function updateTourPricing(formData: FormData) {
   const supabase = createSupabaseAdminClient();
   if (!supabase) redirect("/admin/tours?error=connection");
 
+  let savedCategory: string | undefined;
   if (!tour) {
     const { data: existingCustom } = await supabase.from("tour_catalog_overrides").select("category").eq("slug", slug).maybeSingle();
     if (!existingCustom?.category) redirect("/admin/tours?error=invalid");
+    savedCategory = existingCustom.category;
   }
 
   const { error } = await supabase.from("tour_catalog_overrides").upsert({
     slug,
+    ...(savedCategory ? { category: savedCategory } : {}),
     name,
     description,
     image,
