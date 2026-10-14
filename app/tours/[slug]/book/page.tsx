@@ -1167,18 +1167,51 @@ ${notes.trim() || "-"}
                     <HomeText en="Hotel Area" de="Hotelregion" />
                   </label>
 
-                  <select
-                    value={hotelArea}
-                    onChange={(e) => setHotelArea(e.target.value)}
-                    className={inputClass(false)}
-                  >
-                    <option value="hurghada">Hurghada</option>
-                    <option value="makadi-bay">Makadi Bay</option>
-                    <option value="sahl-hasheesh">Sahl Hasheesh</option>
-                    <option value="el-gouna">El Gouna</option>
-                    <option value="safaga">Safaga</option>
-                    <option value="soma-bay">Soma Bay</option>
-                  </select>
+                  <div className="grid grid-cols-2 gap-2.5">
+                    {([
+                      { value: "hurghada", name: "Hurghada", fee: 0 },
+                      { value: "makadi-bay", name: "Makadi Bay", fee: 5 },
+                      { value: "sahl-hasheesh", name: "Sahl Hasheesh", fee: 5 },
+                      { value: "el-gouna", name: "El Gouna", fee: 10 },
+                      { value: "safaga", name: "Safaga", fee: 10 },
+                      { value: "soma-bay", name: "Soma Bay", fee: 10 },
+                    ] as const).map((area) => {
+                      const selected = hotelArea === area.value;
+                      return (
+                        <button
+                          key={area.value}
+                          type="button"
+                          onClick={() => setHotelArea(area.value)}
+                          aria-pressed={selected}
+                          className={`flex min-h-[72px] items-center justify-between gap-2 rounded-xl border px-3 py-3 text-left transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 ${
+                            selected
+                              ? "border-blue-700 bg-blue-50 shadow-sm ring-1 ring-blue-700/10"
+                              : "border-slate-200 bg-white hover:border-blue-300 hover:bg-slate-50"
+                          }`}
+                        >
+                          <span className="min-w-0">
+                            <span className={`block text-sm font-semibold leading-5 ${selected ? "text-blue-950" : "text-slate-800"}`}>
+                              {area.name}
+                            </span>
+                            <span className="mt-1 block text-xs text-slate-500">
+                              {area.fee === 0
+                                ? <HomeText en="Pickup included" de="Abholung inklusive" />
+                                : <HomeText en="Per person" de="Pro Person" />}
+                            </span>
+                          </span>
+                          <span className={`shrink-0 rounded-lg px-2 py-1 text-xs font-bold tabular-nums ${
+                            area.fee === 0
+                              ? "bg-emerald-50 text-emerald-700"
+                              : selected
+                                ? "bg-blue-700 text-white"
+                                : "bg-slate-100 text-slate-700"
+                          }`}>
+                            {area.fee === 0 ? <HomeText en="Included" de="Inklusive" /> : `+€${area.fee}`}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
                   <div className="mt-2 flex items-start gap-3 rounded-xl border border-blue-100 bg-blue-50/70 px-3.5 py-3">
                     <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white text-blue-800 shadow-sm" aria-hidden="true">
                       <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4" stroke="currentColor" strokeWidth="1.8">
@@ -1603,24 +1636,49 @@ ${notes.trim() || "-"}
   tour.cairoOptions && (
   <div className="mb-5 md:col-span-3">
     <label className={labelClass}>
-      <HomeText en="Museum" de="Museum" />
+      <HomeText en="Museum Experience" de="Museumserlebnis" />
     </label>
-    <select
-      value={selectedMuseum}
-      onChange={(e) =>
-        setSelectedMuseum(
-          e.target.value as "oldMuseum" | "newMuseum"
-        )
-      }
-      className={inputClass(false)}
-    >
-      <option value="oldMuseum">
-        <HomeText en="Old Museum" de="Altes Museum" />
-      </option>
-      <option value="newMuseum">
-        <HomeText en="New Museum" de="Neues Museum" />
-      </option>
-    </select>
+    <p className="mb-3 mt-1 text-sm text-slate-500">
+      <HomeText en="Choose which museum you would like to visit" de="Wählen Sie das Museum, das Sie besuchen möchten" />
+    </p>
+    <div className="grid gap-3 sm:grid-cols-2">
+      {([
+        { value: "oldMuseum", title: "Old Museum", deTitle: "Altes Museum", detail: "Egyptian Museum in Tahrir", deDetail: "Ägyptisches Museum am Tahrir-Platz" },
+        { value: "newMuseum", title: "New Museum", deTitle: "Neues Museum", detail: "Grand Egyptian Museum (GEM)", deDetail: "Grand Egyptian Museum (GEM)" },
+      ] as const).map((museum) => {
+        const selected = selectedMuseum === museum.value;
+        return (
+          <button
+            key={museum.value}
+            type="button"
+            onClick={() => setSelectedMuseum(museum.value)}
+            aria-pressed={selected}
+            className={`flex min-h-[92px] items-center gap-3 rounded-xl border p-4 text-left transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 ${
+              selected ? "border-blue-700 bg-blue-50 shadow-sm ring-1 ring-blue-700/10" : "border-slate-200 bg-white hover:border-blue-300 hover:bg-slate-50"
+            }`}
+          >
+            <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${selected ? "bg-blue-800 text-white" : "bg-slate-100 text-slate-600"}`} aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" stroke="currentColor" strokeWidth="1.7">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3 9l9-5 9 5M5 10v8m4-8v8m6-8v8m4-8v8M3 20h18M2 22h20" />
+              </svg>
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className={`block text-sm font-bold ${selected ? "text-blue-950" : "text-slate-800"}`}>
+                <HomeText en={museum.title} de={museum.deTitle} />
+              </span>
+              <span className="mt-1 block text-xs leading-5 text-slate-500">
+                <HomeText en={museum.detail} de={museum.deDetail} />
+              </span>
+            </span>
+            <span className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border ${selected ? "border-blue-700 bg-blue-700 text-white" : "border-slate-300 bg-white text-transparent"}`} aria-hidden="true">
+              <svg viewBox="0 0 20 20" fill="none" className="h-3 w-3" stroke="currentColor" strokeWidth="2.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="m4 10 4 4 8-8" />
+              </svg>
+            </span>
+          </button>
+        );
+      })}
+    </div>
   </div>
 )}
 
@@ -1632,26 +1690,54 @@ ${notes.trim() || "-"}
   tour.cairoOptions)) && (
   <div className="mb-5 md:col-span-3">
     <label className={labelClass}>
-      <HomeText en="Vehicle Type" de="Fahrzeugtyp" />
+      <HomeText en="Choose Your Vehicle" de="Wählen Sie Ihr Fahrzeug" />
     </label>
-                    <select
-                      value={selectedVehicle}
-                      onChange={(e) =>
-                        setSelectedVehicle(
-                          e.target.value as "bus" | "van"
-                        )
-                      }
-                      className={inputClass(false)}
-                    >
-                      <option value="bus">
-                        <HomeText en="Bus" de="Bus" />
-                      </option>
-
-                      <option value="van">
-                        <HomeText en="Van" de="Van" />
-                      </option>
-                    </select>
-                  </div>
+    <p className="mb-3 mt-1 text-sm text-slate-500">
+      <HomeText en="Select your preferred transport option" de="Wählen Sie Ihre bevorzugte Transportoption" />
+    </p>
+    <div className="grid gap-3 sm:grid-cols-2">
+      {([
+        { value: "bus", title: "Bus", deTitle: "Bus", detail: "Comfortable group transport", deDetail: "Komfortabler Gruppentransport" },
+        { value: "van", title: "Van", deTitle: "Van", detail: "Smaller group, more flexible", deDetail: "Kleinere Gruppe, flexibler unterwegs" },
+      ] as const).map((vehicle) => {
+        const selected = selectedVehicle === vehicle.value;
+        return (
+          <button
+            key={vehicle.value}
+            type="button"
+            onClick={() => setSelectedVehicle(vehicle.value)}
+            aria-pressed={selected}
+            className={`flex min-h-[86px] items-center gap-3 rounded-xl border p-4 text-left transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 ${
+              selected ? "border-blue-700 bg-blue-50 shadow-sm ring-1 ring-blue-700/10" : "border-slate-200 bg-white hover:border-blue-300 hover:bg-slate-50"
+            }`}
+          >
+            <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${selected ? "bg-blue-800 text-white" : "bg-slate-100 text-slate-600"}`} aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" stroke="currentColor" strokeWidth="1.7">
+                {vehicle.value === "bus" ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 16V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v10M5 11h14M7 16v2m10-2v2M4 18h16M7 20h.01M17 20h.01" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 15V9a2 2 0 0 1 2-2h9l4 4v4M3 15h18M7 18h.01M17 18h.01M6 18a2 2 0 1 0 0 .01M18 18a2 2 0 1 0 0 .01" />
+                )}
+              </svg>
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className={`block text-sm font-bold ${selected ? "text-blue-950" : "text-slate-800"}`}>
+                <HomeText en={vehicle.title} de={vehicle.deTitle} />
+              </span>
+              <span className="mt-1 block text-xs leading-5 text-slate-500">
+                <HomeText en={vehicle.detail} de={vehicle.deDetail} />
+              </span>
+            </span>
+            <span className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border ${selected ? "border-blue-700 bg-blue-700 text-white" : "border-slate-300 bg-white text-transparent"}`} aria-hidden="true">
+              <svg viewBox="0 0 20 20" fill="none" className="h-3 w-3" stroke="currentColor" strokeWidth="2.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="m4 10 4 4 8-8" />
+              </svg>
+            </span>
+          </button>
+        );
+      })}
+    </div>
+  </div>
                 )}
 
                 <div>
