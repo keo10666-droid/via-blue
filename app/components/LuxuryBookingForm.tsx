@@ -20,6 +20,7 @@ type LuxuryBookingFormProps = {
   tourName: string;
   adultPrice?: number;
   tourType?: string;
+  tourSlug?: string;
   included?: string[];
 };
 
@@ -674,6 +675,7 @@ function NoPeriods({ children }: { children: ReactNode }) {
 export default function LuxuryBookingForm({
   tourName,
   tourType = "Private Luxury",
+  tourSlug = "",
   included = [],
 }: LuxuryBookingFormProps) {
   const [isGerman, setIsGerman] = useState(false);
@@ -714,6 +716,32 @@ export default function LuxuryBookingForm({
   const [adults, setAdults] = useState("2");
   const [children, setChildren] = useState("0");
   const [infants, setInfants] = useState("0");
+  const [selectedVehicle, setSelectedVehicle] = useState<"limousine" | "xpander" | "hiace">("limousine");
+  const [selectedMuseum, setSelectedMuseum] = useState<"old" | "new">("old");
+  const [selectedIsland, setSelectedIsland] = useState("none");
+
+  const isVehiclePricedTour = tourSlug === "luxor" || tourSlug === "cairo";
+  const isIslandPricedTour = tourSlug === "speed-boat" || tourSlug === "private-boat";
+  const isCustomPricedTour = isVehiclePricedTour || isIslandPricedTour;
+
+  const islandPrices: Record<string, number> = {
+    none: 0,
+    paradise: 20,
+    orange: 10,
+    eden: 35,
+    mahmya: 60,
+  };
+
+  const guestLimits = (() => {
+    if (tourSlug === "luxor" || tourSlug === "cairo") {
+      if (selectedVehicle === "limousine") return { min: 1, max: 2 };
+      if (selectedVehicle === "xpander") return { min: 2, max: 3 };
+      return { min: 4, max: 8 };
+    }
+    if (tourSlug === "speed-boat") return { min: 1, max: 8 };
+    if (tourSlug === "private-boat") return { min: 1, max: 30 };
+    return { min: 2, max: 25 };
+  })();
 
   const [notes, setNotes] = useState("");
 
@@ -745,10 +773,36 @@ export default function LuxuryBookingForm({
     Number(children || 0) +
     Number(infants || 0);
 
-  const totalPrice =
-    privatePrices[
-      Math.min(Math.max(totalGuests, 2), 25)
-    ] ?? privatePrices[25];
+  const totalPrice = (() => {
+    if (tourSlug === "luxor") {
+      if (selectedVehicle === "limousine") return ({ 1: 320, 2: 350 } as Record<number, number>)[totalGuests] ?? 0;
+      if (selectedVehicle === "xpander") return ({ 2: 350, 3: 390 } as Record<number, number>)[totalGuests] ?? 0;
+      return totalGuests >= 4 && totalGuests <= 8 ? 450 + (totalGuests - 4) * 40 : 0;
+    }
+    if (tourSlug === "cairo") {
+      if (selectedVehicle === "limousine") {
+        const prices = selectedMuseum === "old" ? { 1: 300, 2: 340 } : { 1: 325, 2: 390 };
+        return (prices as Record<number, number>)[totalGuests] ?? 0;
+      }
+      if (selectedVehicle === "xpander") {
+        const prices = selectedMuseum === "old" ? { 2: 340, 3: 380 } : { 2: 390, 3: 450 };
+        return (prices as Record<number, number>)[totalGuests] ?? 0;
+      }
+      if (totalGuests < 4 || totalGuests > 8) return 0;
+      return (selectedMuseum === "old" ? 450 : 510) + (totalGuests - 4) * (selectedMuseum === "old" ? 40 : 60);
+    }
+    if (tourSlug === "speed-boat") {
+      if (totalGuests < 1 || totalGuests > 8) return 0;
+      const boatPrice = totalGuests <= 4 ? 180 : 250;
+      return boatPrice + (islandPrices[selectedIsland] ?? 0) * totalGuests;
+    }
+    if (tourSlug === "private-boat") {
+      if (totalGuests < 1 || totalGuests > 30) return 0;
+      const boatPrice = totalGuests <= 15 ? 450 : 600;
+      return boatPrice + (islandPrices[selectedIsland] ?? 0) * totalGuests;
+    }
+    return privatePrices[Math.min(Math.max(totalGuests, 2), 25)] ?? privatePrices[25];
+  })();
 
   const filteredNationalities = useMemo(() => {
     if (!nationality) return [];
@@ -821,7 +875,7 @@ export default function LuxuryBookingForm({
     date.length > 0 && date >= tomorrowIso;
 
   const isGuestsValid =
-    totalGuests >= 2 && totalGuests <= 25;
+    totalGuests >= guestLimits.min && totalGuests <= guestLimits.max && (!isCustomPricedTour || totalPrice > 0);
 
   const allChildAgesSet = childAges.every((_, i) =>
     Boolean(childrenAgeValues[i])
@@ -861,13 +915,13 @@ export default function LuxuryBookingForm({
     value: number
   ) => {
     if (type === "adults") {
-      const next = Math.min(Math.max(value, 1), 25);
-      setAdults(String(next));
+      const next = Math.min(Math.max(value, 1), guestLimits.max - Number(children || 0) - Number(infants || 0));
+      setAdults(String(Math.max(1, next)));
       return;
     }
 
     if (type === "children") {
-      const next = Math.min(Math.max(value, 0), 10);
+      const next = Math.min(Math.max(value, 0), Math.min(10, guestLimits.max - Number(adults || 0) - Number(infants || 0)));
 
       setChildren(String(next));
 
@@ -878,7 +932,7 @@ export default function LuxuryBookingForm({
       return;
     }
 
-    const next = Math.min(Math.max(value, 0), 10);
+    const next = Math.min(Math.max(value, 0), Math.min(10, guestLimits.max - Number(adults || 0) - Number(children || 0)));
 
     setInfants(String(next));
 
@@ -920,6 +974,12 @@ Children: ${children}
 Infants: ${infants}
 
 Total Guests: ${totalGuests}
+
+Vehicle: ${isVehiclePricedTour ? selectedVehicle : "-"}
+
+Museum: ${tourSlug === "cairo" ? selectedMuseum : "-"}
+
+Island: ${isIslandPricedTour ? selectedIsland : "-"}
 
 Children Ages:
 ${childrenAgeValues.filter(Boolean).join(", ") || "-"}
@@ -1591,6 +1651,69 @@ ${notes.trim() || "-"}
 
                 <div className="my-9 h-px bg-slate-100" />
 
+                {isVehiclePricedTour && (
+                  <section className="mb-7 rounded-2xl border border-slate-200 bg-white p-5">
+                    <h3 className="mb-4 text-sm font-bold text-[#071a36]">
+                      <HomeText en="Choose your vehicle" de="Fahrzeug auswählen" />
+                    </h3>
+                    <div className="grid gap-3 sm:grid-cols-3">
+                      {([
+                        ["limousine", "Limousine", "1–2 guests"],
+                        ["xpander", "Xpander", "2–3 guests"],
+                        ["hiace", "Hiace", "4–8 guests"],
+                      ] as const).map(([value, label, capacity]) => (
+                        <button key={value} type="button" onClick={() => {
+                          setSelectedVehicle(value);
+                          const limits = value === "limousine" ? { min: 1, max: 2 } : value === "xpander" ? { min: 2, max: 3 } : { min: 4, max: 8 };
+                          const otherGuests = Number(children || 0) + Number(infants || 0);
+                          const nextAdults = Math.max(1, Math.min(limits.max - otherGuests, Math.max(limits.min - otherGuests, Number(adults || 0))));
+                          setAdults(String(nextAdults));
+                        }} className={`rounded-xl border p-4 text-left transition ${selectedVehicle === value ? "border-blue-900 bg-blue-50 ring-2 ring-blue-900/10" : "border-slate-200 hover:border-slate-400"}`}>
+                          <span className="block font-bold text-slate-800">{label}</span>
+                          <span className="mt-1 block text-xs text-slate-500">{capacity}</span>
+                        </button>
+                      ))}
+                    </div>
+                    {tourSlug === "cairo" && (
+                      <div className="mt-5">
+                        <label className={labelClass}><HomeText en="Museum option" de="Museum auswählen" /></label>
+                        <div className="grid grid-cols-2 gap-3">
+                          {([{ value: "old", label: "Old Museum" }, { value: "new", label: "New Museum" }] as const).map((item) => (
+                            <button key={item.value} type="button" onClick={() => setSelectedMuseum(item.value)} className={`rounded-xl border p-3 text-sm font-bold transition ${selectedMuseum === item.value ? "border-blue-900 bg-blue-50 text-blue-950" : "border-slate-200 text-slate-600"}`}>
+                              <HomeText en={item.label} de={item.value === "old" ? "Altes Museum" : "Neues Museum"} />
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </section>
+                )}
+
+                {isIslandPricedTour && (
+                  <section className="mb-7 rounded-2xl border border-slate-200 bg-white p-5">
+                    <h3 className="mb-2 text-sm font-bold text-[#071a36]">
+                      <HomeText en="Add an island (optional)" de="Insel hinzufügen (optional)" />
+                    </h3>
+                    <p className="mb-4 text-xs text-slate-500">
+                      <HomeText en="Island prices are per person." de="Die Inselpreise gelten pro Person." />
+                    </p>
+                    <div className="grid gap-3 sm:grid-cols-2">
+                      {([
+                        ["none", "No island", "€0 / person"],
+                        ["paradise", "Paradise", "€20 / person"],
+                        ["orange", "Orange Bay, Hula Hula, Magawish or Amwaj", "€10 / person"],
+                        ["eden", "Eden or Ozirea", "€35 / person"],
+                        ["mahmya", "Mahmya", "€60 / person"],
+                      ] as const).map(([value, label, price]) => (
+                        <button key={value} type="button" onClick={() => setSelectedIsland(value)} className={`rounded-xl border p-4 text-left transition ${selectedIsland === value ? "border-blue-900 bg-blue-50 ring-2 ring-blue-900/10" : "border-slate-200 hover:border-slate-400"}`}>
+                          <span className="block text-sm font-bold text-slate-800"><HomeText en={label} de={label} /></span>
+                          <span className="mt-1 block text-xs text-slate-500">{price}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </section>
+                )}
+
                 {/* GUESTS */}
                 <div>
                   <div className="mb-5 flex items-center justify-between gap-4">
@@ -1667,8 +1790,8 @@ ${notes.trim() || "-"}
                             )
                           }
                           disabled={
-                            Number(adults) >= 25 ||
-                            totalGuests >= 25
+                            Number(adults) >= guestLimits.max ||
+                            totalGuests >= guestLimits.max
                           }
                           className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:border-[#0b3a78] hover:text-[#0b3a78] disabled:cursor-not-allowed disabled:opacity-30"
                         >
@@ -1727,7 +1850,7 @@ ${notes.trim() || "-"}
                           }
                           disabled={
                             Number(children) >= 10 ||
-                            totalGuests >= 25
+                            totalGuests >= guestLimits.max
                           }
                           className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:border-[#0b3a78] hover:text-[#0b3a78] disabled:cursor-not-allowed disabled:opacity-30"
                         >
@@ -1786,7 +1909,7 @@ ${notes.trim() || "-"}
                           }
                           disabled={
                             Number(infants) >= 10 ||
-                            totalGuests >= 25
+                            totalGuests >= guestLimits.max
                           }
                           className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:border-[#0b3a78] hover:text-[#0b3a78] disabled:cursor-not-allowed disabled:opacity-30"
                         >
@@ -1801,7 +1924,7 @@ ${notes.trim() || "-"}
                   {submitAttempted &&
                     !isGuestsValid &&
                     errorText(
-                      <HomeText en="Private tours require a minimum of 2 guests and a maximum of 25 guests." de="Private Touren erfordern mindestens 2 und höchstens 25 Gäste." />
+                      <HomeText en={`This option allows ${guestLimits.min}–${guestLimits.max} guests. Please adjust the guest count for your selected vehicle or boat.`} de={`Diese Option erlaubt ${guestLimits.min}–${guestLimits.max} Gäste. Bitte passen Sie die Gästezahl an das gewählte Fahrzeug oder Boot an.`} />
                     )}
 
                   <div className="mt-4 flex items-center justify-between rounded-2xl bg-[#071a36] px-5 py-4 text-white">
