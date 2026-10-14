@@ -2,7 +2,7 @@ import Link from "next/link";
 import { createHash } from "node:crypto";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { TicketPercent, Tag, CalendarClock, CircleCheck, CircleOff } from "lucide-react";
+import { TicketPercent, Tag, CircleCheck, CircleOff } from "lucide-react";
 import { createSupabaseAdminClient } from "@/lib/supabaseAdmin";
 import { savePromoCoupon } from "./actions";
 
