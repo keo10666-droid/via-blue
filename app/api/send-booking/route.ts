@@ -497,14 +497,19 @@ export async function POST(request: Request) {
         return Response.json({ success: false, error: "This promo code is invalid, expired, inactive, or has reached its usage limit." }, { status: 409 });
       }
 
-      const discountAmount = Math.round(subtotal * Number(redeemed.discount_percent)) / 100;
+      const discountAmount = redeemed.discount_amount !== null && redeemed.discount_amount !== undefined
+        ? Math.min(subtotal, Number(redeemed.discount_amount))
+        : Math.round(subtotal * Number(redeemed.discount_percent)) / 100;
       const finalTotal = Math.max(0, Math.round((subtotal - discountAmount) * 100) / 100);
+      const discountDescription = redeemed.discount_percent !== null && redeemed.discount_percent !== undefined
+        ? `${redeemed.discount_percent}%`
+        : `€${Number(redeemed.discount_amount).toFixed(2)} fixed discount`;
       for (let index = fields.length - 1; index >= 0; index--) {
         if (["promo code", "discount", "total price"].includes(fields[index].label.toLowerCase())) fields.splice(index, 1);
       }
       fields.push(
         { label: "Promo Code", value: redeemed.code },
-        { label: "Discount", value: `€${discountAmount.toFixed(2)} (${redeemed.discount_percent}%)` },
+        { label: "Discount", value: `€${discountAmount.toFixed(2)} (${discountDescription})` },
         { label: "Total Price", value: `€${finalTotal.toFixed(2)}` },
       );
     }
