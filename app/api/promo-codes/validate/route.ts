@@ -14,7 +14,7 @@ export async function POST(request: Request) {
     const supabase = createSupabaseAdminClient();
     if (!supabase) return Response.json({ valid: false, error: "Promo codes are temporarily unavailable." }, { status: 503 });
     const { data, error } = await supabase.from("promo_coupons")
-      .select("code,discount_percent,max_uses,used_count,starts_at,expires_at,is_active")
+      .select("code,discount_percent,discount_amount,max_uses,used_count,starts_at,expires_at,is_active")
       .eq("code", code).maybeSingle();
     if (error) throw error;
     const now = Date.now();
@@ -23,7 +23,7 @@ export async function POST(request: Request) {
       (data.max_uses !== null && data.used_count >= data.max_uses)) {
       return Response.json({ valid: false, error: "This promo code is invalid, expired, or no longer available." }, { status: 400 });
     }
-    return Response.json({ valid: true, code: data.code, discountPercent: Number(data.discount_percent) });
+    return Response.json({ valid: true, code: data.code, discountPercent: data.discount_percent === null ? null : Number(data.discount_percent), discountAmount: data.discount_amount === null ? null : Number(data.discount_amount) });
   } catch (error) {
     console.error("Promo code validation failed:", error instanceof Error ? error.message : "unknown");
     return Response.json({ valid: false, error: "Could not validate this code right now." }, { status: 500 });
