@@ -150,13 +150,14 @@ export async function updateTourPricing(formData: FormData) {
 
   // Permanently remove deleted gallery uploads from Supabase Storage, but only
   // when the same image is no longer used as the cover or in the saved gallery.
-  const oldGallery = Array.isArray(existingRow?.pricing_options?.gallery)
-    ? existingRow.pricing_options.gallery.filter((item: unknown): item is string => typeof item === "string")
+  const storedGalleryValue: unknown = (existingRow?.pricing_options as Record<string, unknown> | null)?.gallery;
+  const oldGallery: string[] = Array.isArray(storedGalleryValue)
+    ? storedGalleryValue.filter((item: unknown): item is string => typeof item === "string")
     : [];
-  const retainedImages = new Set([image, ...galleryImages]);
-  const storagePathsToDelete = [...new Set(oldGallery
-    .filter((src) => !retainedImages.has(src))
-    .map((src) => {
+  const retainedImages = new Set<string>([image, ...galleryImages]);
+  const storagePathsToDelete: string[] = Array.from(new Set<string>(oldGallery
+    .filter((src: string) => !retainedImages.has(src))
+    .map((src: string): string | null => {
       const marker = "/storage/v1/object/public/tour-images/";
       const markerIndex = src.indexOf(marker);
       if (markerIndex < 0) return null;
@@ -167,7 +168,7 @@ export async function updateTourPricing(formData: FormData) {
         return null;
       }
     })
-    .filter((path): path is string => Boolean(path)))];
+    .filter((path: string | null): path is string => path !== null)));
   if (storagePathsToDelete.length) {
     const { error: deleteError } = await supabase.storage.from("tour-images").remove(storagePathsToDelete);
     if (deleteError) console.error("Removed gallery entries but could not delete stored image files:", deleteError.message);
