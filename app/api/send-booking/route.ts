@@ -2,6 +2,7 @@ import { Resend } from "resend";
 import { supabase } from "@/lib/supabase";
 import { createSupabaseAdminClient } from "@/lib/supabaseAdmin";
 import { isIdentifierRateLimited, isRateLimited } from "@/lib/apiRateLimit";
+import { tours } from "@/data/tours";
 
 function getResendClient() {
   const apiKey = process.env.RESEND_API_KEY?.trim();
@@ -365,6 +366,7 @@ export async function POST(request: Request) {
       subject,
       html,
       accessToken,
+      tourSlug,
     } = body as Record<string, unknown>;
 
     const bookingEmailValidationIssues: string[] = [];
@@ -412,6 +414,33 @@ export async function POST(request: Request) {
     // The validation above guarantees these values are strings.
     const validSubject = subject as string;
     const validHtml = html as string;
+
+    // Re-check tour availability on the server; the browser can be bypassed.
+    if (typeof tourSlug === "string" && tourSlug.trim()) {
+      if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(tourSlug)) {
+        return Response.json({ success: false, error: "Invalid tour." }, { status: 400 });
+      }
+      const isBuiltInTour = Object.prototype.hasOwnProperty.call(tours, tourSlug);
+      const catalog = createSupabaseAdminClient();
+      if (!catalog) {
+        // Preserve built-in tour bookings when the optional admin database client is not configured.
+        if (!isBuiltInTour) {
+          return Response.json({ success: false, error: "Tour availability could not be verified. Please try again." }, { status: 503 });
+        }
+      } else {
+        const { data: override, error: catalogError } = await catalog
+          .from("tour_catalog_overrides")
+          .select("slug,category,available")
+          .eq("slug", tourSlug)
+          .maybeSingle();
+        if (catalogError) {
+          return Response.json({ success: false, error: "Tour availability could not be verified. Please try again." }, { status: 503 });
+        }
+        if ((!override && !isBuiltInTour) || (override && override.available === false)) {
+          return Response.json({ success: false, error: "This tour is currently unavailable. Please choose another tour." }, { status: 409 });
+        }
+      }
+    }
 
     let authenticatedUserId: string | null = null;
 
