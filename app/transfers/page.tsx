@@ -396,7 +396,7 @@ export default function TransfersPage() {
                   <div className="flex items-center gap-3 rounded-2xl border border-slate-100 bg-slate-50/80 p-4 transition-colors duration-300 group-hover:border-blue-100 group-hover:bg-blue-50/40">
 
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-100 text-xs font-extrabold tracking-wide text-blue-700">
-                      AIR
+                      <HomeText en="AIR" de="FLUG" />
                     </div>
 
                     <div className="min-w-0 flex-1">
