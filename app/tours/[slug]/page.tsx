@@ -797,7 +797,7 @@ export default async function TourDetailsPage({
     destination: "hurghada" as const,
     category: (pricingOverride.category || "islands-boat-trips") as TourCategory,
     image: pricingOverride.image || "/images/via-blue-hero.webp",
-    gallery: [pricingOverride.image || "/images/via-blue-hero.webp"],
+    gallery: Array.isArray(savedPricingOptions?.gallery) ? savedPricingOptions.gallery as string[] : [pricingOverride.image || "/images/via-blue-hero.webp"],
     description: pricingOverride.description || "",
     overview: pricingOverride.description || "",
     duration: "To be confirmed",
@@ -950,6 +950,7 @@ export default async function TourDetailsPage({
 
   return (
     <main className="min-h-screen bg-slate-50">
+      {tour.available === false && <div role="status" className="mx-auto mt-5 max-w-7xl px-4 sm:px-6"><div className="flex items-center gap-3 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-bold text-red-800"><span className="h-2.5 w-2.5 shrink-0 rounded-full bg-red-600" /><HomeText en="This tour is currently unavailable. Booking is temporarily disabled." de="Diese Tour ist derzeit nicht verfügbar. Buchungen sind vorübergehend deaktiviert." /></div></div>}
 
       {/* =====================================================
           STRUCTURED DATA
