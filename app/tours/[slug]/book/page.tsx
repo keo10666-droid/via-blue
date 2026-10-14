@@ -162,6 +162,10 @@ export default function BookingPage() {
     infantPrice?: number;
     available?: boolean;
     category?: string;
+    pricingOptions?: {
+      vehicleOptions?: NonNullable<(typeof tours)[keyof typeof tours]["vehicleOptions"]>;
+      cairoOptions?: NonNullable<(typeof tours)[keyof typeof tours]["cairoOptions"]>;
+    };
   }>({});
 
   useEffect(() => {
@@ -181,7 +185,7 @@ export default function BookingPage() {
   }, [slug]);
 
   const tour = baseTour
-    ? { ...baseTour, ...tourOverride }
+    ? { ...baseTour, ...tourOverride, ...(tourOverride.pricingOptions?.vehicleOptions ? { vehicleOptions: tourOverride.pricingOptions.vehicleOptions } : {}), ...(tourOverride.pricingOptions?.cairoOptions ? { cairoOptions: tourOverride.pricingOptions.cairoOptions } : {}) }
     : !baseTour
       ? {
           slug: String(slug),
