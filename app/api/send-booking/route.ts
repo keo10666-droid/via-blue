@@ -367,6 +367,7 @@ export async function POST(request: Request) {
       html,
       accessToken,
       tourSlug,
+      couponCode,
     } = body as Record<string, unknown>;
 
     const bookingEmailValidationIssues: string[] = [];
