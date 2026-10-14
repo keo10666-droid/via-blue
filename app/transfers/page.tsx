@@ -345,7 +345,7 @@ export default function TransfersPage() {
 
                   <Image
                     src={destinationImage}
-                    alt={`Private transfer to $<HomeText en={transfer.to} de={germanTransferLocation(transfer.to)} />`}
+                    alt={`Private transfer to ${transfer.to}`}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     className="object-cover transition duration-700 group-hover:scale-110"
