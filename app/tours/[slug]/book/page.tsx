@@ -9,6 +9,7 @@ import { useParams, notFound } from "next/navigation";
 import { tours } from "@/data/tours";
 import BookingSuccessModal from "@/app/components/BookingSuccessModal";
 import HomeText from "@/app/components/HomeText";
+import { germanTourCopy } from "@/lib/germanTourCopy";
 
 const nationalities = [
   "Egyptian",
@@ -722,7 +723,7 @@ ${notes.trim() || "-"}
       <BookingSuccessModal
         open={showSuccess}
         guestName={name.trim()}
-        bookingName={tour.name}
+        bookingName={typeof tour.slug === "string" ? germanTourCopy(tour.slug, "name", tour.name) : tour.name}
         email={email.trim()}
         emailSent={confirmationEmailSent}
         backHref="/tours"
