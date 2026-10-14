@@ -6,7 +6,7 @@ import { createSupabaseAdminClient } from "@/lib/supabaseAdmin";
 import { tours, tourCategories } from "@/data/tours";
 import { createCustomTour, updateTourPricing } from "./actions";
 
-type SearchParams = Promise<{ saved?: string; error?: string }>;
+type SearchParams = Promise<{ saved?: string; error?: string; q?: string }>;
 
 function hashSecret(value: string) {
   return createHash("sha256").update(value).digest("hex");
@@ -21,6 +21,7 @@ async function requireAdmin() {
 export default async function AdminToursPage({ searchParams }: { searchParams: SearchParams }) {
   await requireAdmin();
   const params = await searchParams;
+  const searchQuery = (params.q ?? "").trim().toLowerCase();
   const supabase = createSupabaseAdminClient();
   if (!supabase) {
     return <main className="min-h-screen bg-slate-50 p-6 text-slate-900"><div className="mx-auto max-w-4xl rounded-2xl bg-white p-8"><h1 className="text-2xl font-bold">Tours & Experiences</h1><p className="mt-3 text-red-600">Database connection is not configured. Check the server-side Supabase admin key in Vercel.</p><Link className="mt-5 inline-block text-blue-700 underline" href="/admin">Back to dashboard</Link></div></main>;
@@ -28,7 +29,19 @@ export default async function AdminToursPage({ searchParams }: { searchParams: S
 
   const { data, error } = await supabase.from("tour_catalog_overrides").select("slug,category,name,description,image,price,child_price,infant_price,available,pricing_options");
   const overrides = new Map((data ?? []).map((item) => [item.slug, item]));
-  const tourList = Object.values(tours).sort((a,b) => a.name.localeCompare(b.name));
+  const categoryOrder = Object.keys(tourCategories);
+  const tourList = Object.values(tours)
+    .filter((tour) => {
+      const saved = overrides.get(tour.slug);
+      const haystack = [tour.name, saved?.name, tour.slug, tourCategories[tour.category]].filter(Boolean).join(" ").toLowerCase();
+      return !searchQuery || haystack.includes(searchQuery);
+    })
+    .sort((a, b) => categoryOrder.indexOf(a.category) - categoryOrder.indexOf(b.category));
+  const customTourList = (data ?? []).filter((item) => {
+    if (Object.prototype.hasOwnProperty.call(tours, item.slug) || !item.category) return false;
+    const haystack = [item.name, item.slug, tourCategories[item.category as keyof typeof tourCategories] ?? item.category].filter(Boolean).join(" ").toLowerCase();
+    return !searchQuery || haystack.includes(searchQuery);
+  });
 
   return (
     <main className="min-h-screen bg-[#f5f7fb] px-4 py-6 text-slate-900 sm:px-7 lg:px-10">
@@ -42,6 +55,14 @@ export default async function AdminToursPage({ searchParams }: { searchParams: S
         {params.saved && <div className="mb-5 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm font-semibold text-emerald-800">Tour changes saved. The updated content, prices, and availability are stored in the database.</div>}
         {params.error && <div className="mb-5 rounded-xl border border-red-200 bg-red-50 p-4 text-sm font-semibold text-red-700">{params.error === "connection" ? "Supabase admin connection is unavailable." : params.error === "upload" ? "Could not upload images. Check Supabase Storage settings and try again." : params.error === "duplicate" ? "That URL slug is already in use. Choose a different slug." : params.error === "invalid" ? "Please enter a valid slug and prices (0 or more)." : params.error === "content" ? "Please enter a name, description, category, valid slug, and image path or HTTPS image URL. Check the maximum lengths." : "Could not save changes. Check the database table and server logs."}</div>}
         {error && <div className="mb-5 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">Could not load saved tour prices. Showing the default catalog values. {error.message}</div>}
+
+        <form method="get" className="mb-6 flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:flex-row">
+          <label htmlFor="tour-search" className="sr-only">Search tours</label>
+          <input id="tour-search" name="q" type="search" defaultValue={params.q ?? ""} placeholder="Search by tour name, category, or slug…" className="min-w-0 flex-1 rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-100" />
+          <button type="submit" className="rounded-xl bg-blue-950 px-5 py-3 text-sm font-bold text-white transition hover:bg-blue-800">Search tours</button>
+          {params.q && <Link href="/admin/tours" className="rounded-xl border border-slate-200 px-5 py-3 text-center text-sm font-bold text-slate-600 hover:bg-slate-50">Clear</Link>}
+        </form>
+        {searchQuery && <p className="mb-4 text-sm text-slate-500">Showing matching tours for <strong className="text-slate-800">{params.q}</strong>.</p>}
 
         <section className="mb-7 rounded-2xl border border-blue-100 bg-white p-5 shadow-sm sm:p-6">
           <h2 className="text-xl font-extrabold text-blue-950">Add a new tour</h2>
@@ -66,7 +87,7 @@ export default async function AdminToursPage({ searchParams }: { searchParams: S
             const child = saved?.child_price ?? tour.childPrice;
             const infant = saved?.infant_price ?? tour.infantPrice;
             const available = saved?.available ?? tour.available;
-            const name = saved?.name ?? tour.name;
+            const name = tour.name;
             const description = saved?.description ?? tour.description;
             const image = saved?.image ?? tour.image;
             const savedPricingOptions = saved?.pricing_options ?? {};
@@ -79,7 +100,7 @@ export default async function AdminToursPage({ searchParams }: { searchParams: S
                 <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                   <div className="min-w-0 lg:max-w-[280px]"><p className="text-xs font-bold uppercase tracking-wider text-slate-400">{tourCategories[tour.category]}</p><h2 className="mt-1 text-lg font-extrabold text-blue-950">{name}</h2><p className="mt-1 text-xs text-slate-400">/{tour.slug}</p></div>
                   <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:min-w-[610px]">
-                    <label className="text-xs font-bold text-slate-500">Tour name<input name="name" type="text" maxLength={120} required defaultValue={name} className="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm font-semibold text-slate-900 outline-none focus:border-orange-400" /></label>
+                    <label className="text-xs font-bold text-slate-500">Tour name<input name="name" type="text" maxLength={120} required defaultValue={tour.name} className="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm font-semibold text-slate-900 outline-none focus:border-orange-400" /></label>
                     <label className="text-xs font-bold text-slate-500">Image path or URL<input name="image" type="text" maxLength={500} required defaultValue={image} className="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm font-semibold text-slate-900 outline-none focus:border-orange-400" /></label>
                     <label className="col-span-full text-xs font-bold text-slate-500">Short description<textarea name="description" maxLength={1500} required defaultValue={description} rows={3} className="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm font-medium text-slate-900 outline-none focus:border-orange-400" /></label>
                     <div className="col-span-full flex flex-wrap gap-3">{galleryImages.slice(0, 8).map((src: string, index: number) => <div key={`${src}-${index}`} className="h-20 w-24 overflow-hidden rounded-lg border border-slate-200 bg-slate-50"><img src={src} alt={`Gallery image ${index + 1}`} className="h-full w-full object-cover" /></div>)}</div><label className="col-span-full text-xs font-bold text-slate-500">Upload gallery photos<input name="gallery_uploads" type="file" multiple accept="image/jpeg,image/png,image/webp,image/avif" className="mt-1 block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 file:mr-3 file:rounded-lg file:border-0 file:bg-blue-50 file:px-3 file:py-2 file:text-xs file:font-bold file:text-blue-900" /><span className="mt-1 block font-normal text-slate-400">Choose up to 10 images (8 MB each); they are added when you save.</span></label><label className="col-span-full text-xs font-bold text-slate-500">Gallery images — one image path or HTTPS URL per line<textarea name="gallery_images" maxLength={10000} defaultValue={galleryImages.join("\n")} rows={Math.min(6, Math.max(3, galleryImages.length))} placeholder="/images/tour-photo.webp" className="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm font-medium text-slate-900 outline-none focus:border-orange-400" /><span className="mt-1 block font-normal text-slate-400">Keep the images you want to use. Delete a line to remove an image, or add a new URL on a new line. The cover image is controlled by the Image field above.</span></label>
@@ -95,7 +116,7 @@ export default async function AdminToursPage({ searchParams }: { searchParams: S
               </form>
             );
           })}
-          {((data ?? []).filter((item) => !Object.prototype.hasOwnProperty.call(tours, item.slug) && item.category)).map((tour) => (
+          {customTourList.map((tour) => (
             <form key={tour.slug} action={updateTourPricing} className="rounded-2xl border border-orange-200 bg-white p-5 shadow-sm sm:p-6">
               <input type="hidden" name="slug" value={tour.slug} />
               <p className="mb-3 text-xs font-bold uppercase tracking-wider text-orange-600">Custom tour · {tourCategories[tour.category as keyof typeof tourCategories] ?? tour.category} · /{tour.slug}</p>
