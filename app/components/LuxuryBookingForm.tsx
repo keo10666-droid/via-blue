@@ -446,6 +446,114 @@ function SparklesIcon() {
   );
 }
 
+
+const germanNationalityNames: Record<string, string> = {
+  "Egyptian": "Ägyptisch",
+  "German": "Deutsch",
+  "British": "Britisch",
+  "French": "Französisch",
+  "Italian": "Italienisch",
+  "Polish": "Polnisch",
+  "Dutch": "Niederländisch",
+  "Belgian": "Belgisch",
+  "Swiss": "Schweizerisch",
+  "Austrian": "Österreichisch",
+  "Russian": "Russisch",
+  "Ukrainian": "Ukrainisch",
+  "Spanish": "Spanisch",
+  "Portuguese": "Portugiesisch",
+  "Turkish": "Türkisch",
+  "American": "Amerikanisch",
+  "Canadian": "Kanadisch",
+  "Brazilian": "Brasilianisch",
+  "Australian": "Australisch",
+  "Swedish": "Schwedisch",
+  "Norwegian": "Norwegisch",
+  "Danish": "Dänisch",
+  "Finnish": "Finnisch",
+  "Czech": "Tschechisch",
+  "Slovak": "Slowakisch",
+  "Romanian": "Rumänisch",
+  "Hungarian": "Ungarisch",
+  "Serbian": "Serbisch",
+  "Croatian": "Kroatisch",
+  "Slovenian": "Slowenisch",
+  "Irish": "Irisch",
+  "Greek": "Griechisch",
+  "Saudi": "Saudi-arabisch",
+  "Emirati": "Emiratisch",
+  "Kuwaiti": "Kuwaitisch",
+  "Qatari": "Katarisch",
+  "Bahraini": "Bahrainisch",
+  "Omani": "Omanisch",
+  "Jordanian": "Jordanisch",
+  "Lebanese": "Libanesisch",
+  "Moroccan": "Marokkanisch",
+  "Algerian": "Algerisch",
+  "Tunisian": "Tunesisch",
+  "Libyan": "Libysch",
+  "South African": "Südafrikanisch",
+  "Indian": "Indisch",
+  "Pakistani": "Pakistanisch",
+  "Chinese": "Chinesisch",
+  "Japanese": "Japanisch",
+  "Korean": "Koreanisch"
+};
+const germanCountryNames: Record<string, string> = {
+  "Egypt": "Ägypten",
+  "Germany": "Deutschland",
+  "United Kingdom": "Vereinigtes Königreich",
+  "France": "Frankreich",
+  "Italy": "Italien",
+  "Poland": "Polen",
+  "Netherlands": "Niederlande",
+  "Belgium": "Belgien",
+  "Switzerland": "Schweiz",
+  "Austria": "Österreich",
+  "Russia": "Russland",
+  "Ukraine": "Ukraine",
+  "Spain": "Spanien",
+  "Portugal": "Portugal",
+  "Turkey": "Türkei",
+  "United States": "Vereinigte Staaten",
+  "Canada": "Kanada",
+  "Brazil": "Brasilien",
+  "Australia": "Australien",
+  "Sweden": "Schweden",
+  "Norway": "Norwegen",
+  "Denmark": "Dänemark",
+  "Finland": "Finnland",
+  "Czech Republic": "Tschechien",
+  "Slovakia": "Slowakei",
+  "Romania": "Rumänien",
+  "Hungary": "Ungarn",
+  "Serbia": "Serbien",
+  "Croatia": "Kroatien",
+  "Slovenia": "Slowenien",
+  "Ireland": "Irland",
+  "Greece": "Griechenland",
+  "Saudi Arabia": "Saudi-Arabien",
+  "United Arab Emirates": "Vereinigte Arabische Emirate",
+  "Kuwait": "Kuwait",
+  "Qatar": "Katar",
+  "Bahrain": "Bahrain",
+  "Oman": "Oman",
+  "Jordan": "Jordanien",
+  "Lebanon": "Libanon",
+  "Morocco": "Marokko",
+  "Algeria": "Algerien",
+  "Tunisia": "Tunesien",
+  "Libya": "Libyen",
+  "South Africa": "Südafrika",
+  "India": "Indien",
+  "Pakistan": "Pakistan",
+  "China": "China",
+  "Japan": "Japan",
+  "South Korea": "Südkorea"
+};
+const displayNationality = (value: string, isGerman: boolean) => isGerman ? (germanNationalityNames[value] || value) : value;
+const displayCountryName = (value: string, isGerman: boolean) => isGerman ? (germanCountryNames[value] || value) : value;
+
 const FlagIcon = ({
   iso,
   name,
@@ -647,7 +755,8 @@ export default function LuxuryBookingForm({
 
     return nationalities
       .filter((n) =>
-        n.toLowerCase().includes(nationality.toLowerCase())
+        n.toLowerCase().includes(nationality.toLowerCase()) ||
+        (germanNationalityNames[n] || n).toLowerCase().includes(nationality.toLowerCase())
       )
       .slice(0, 7);
   }, [nationality]);
@@ -657,9 +766,8 @@ export default function LuxuryBookingForm({
 
     return countryCodes.filter(
       (c) =>
-        c.name
-          .toLowerCase()
-          .includes(countrySearch.toLowerCase()) ||
+        c.name.toLowerCase().includes(countrySearch.toLowerCase()) ||
+        (germanCountryNames[c.name] || c.name).toLowerCase().includes(countrySearch.toLowerCase()) ||
         c.dialCode.includes(countrySearch)
     );
   }, [countrySearch]);
@@ -1120,7 +1228,7 @@ ${notes.trim() || "-"}
                           >
                             <FlagIcon
                               iso={selectedCountry.iso}
-                              name={selectedCountry.name}
+                              name={displayCountryName(selectedCountry.name, isGerman)}
                             />
 
                             <span className="text-sm font-bold">
