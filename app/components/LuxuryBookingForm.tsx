@@ -1135,7 +1135,7 @@ ${notes.trim() || "-"}
                         <input
                           type="text"
                           placeholder={isGerman ? "Nationalität auswählen" : "Select nationality"}
-                          value={nationality}
+                          value={displayNationality(nationality, isGerman)}
                           onChange={(e) => {
                             setNationality(e.target.value);
                             setIsNationalityOpen(true);
@@ -1173,7 +1173,7 @@ ${notes.trim() || "-"}
                                 <GlobeIcon />
 
                                 <span className="ml-3">
-                                  {item}
+                                  {displayNationality(item, isGerman)}
                                 </span>
                               </button>
                             ))}
@@ -1278,11 +1278,11 @@ ${notes.trim() || "-"}
                                     >
                                       <FlagIcon
                                         iso={country.iso}
-                                        name={country.name}
+                                        name={displayCountryName(country.name, isGerman)}
                                       />
 
                                       <span className="flex-1 text-sm font-semibold text-slate-700">
-                                        {country.name}
+                                        {displayCountryName(country.name, isGerman)}
                                       </span>
 
                                       <span className="text-xs font-bold text-slate-400">
