@@ -121,6 +121,7 @@ export default async function LuxuryBookingPage({
   return (
     <LuxuryBookingForm
       tourName={tour.name}
+      tourSlug={slug}
       adultPrice={tour.adultPrice}
       tourType={tour.tourType}
       included={tour.included}
