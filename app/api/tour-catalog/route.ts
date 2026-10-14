@@ -9,7 +9,7 @@ export async function GET() {
   if (!supabase) return NextResponse.json({ overrides: {}, customTours: [] }, { headers: { "Cache-Control": "no-store" } });
   const { data, error } = await supabase
     .from("tour_catalog_overrides")
-    .select("slug,category,name,description,image,price,child_price,infant_price,available");
+    .select("slug,category,name,description,image,price,child_price,infant_price,available,pricing_options");
   if (error) {
     console.error("Tour catalog overrides could not be loaded:", error.message);
     return NextResponse.json({ overrides: {}, customTours: [] }, { headers: { "Cache-Control": "no-store" } });
@@ -24,6 +24,7 @@ export async function GET() {
     childPrice: Number(item.child_price),
     infantPrice: Number(item.infant_price),
     available: item.available,
+    ...(item.pricing_options ? { pricingOptions: item.pricing_options } : {}),
   }]));
   const customTours = rows
     .filter((item) => !Object.prototype.hasOwnProperty.call(tours, item.slug) && item.category)
@@ -37,6 +38,7 @@ export async function GET() {
       childPrice: Number(item.child_price),
       infantPrice: Number(item.infant_price),
       available: item.available,
+      ...(item.pricing_options ? { pricingOptions: item.pricing_options } : {}),
       badge: "New Experience",
       rating: 0,
       reviews: 0,

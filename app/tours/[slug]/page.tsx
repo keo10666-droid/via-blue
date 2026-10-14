@@ -40,7 +40,7 @@ export async function generateMetadata({
   const adminClient = createSupabaseAdminClient();
   if (!tour) {
     const { data: custom } = adminClient
-      ? await adminClient.from("tour_catalog_overrides").select("slug,category,name,description,image,price,child_price,infant_price,available").eq("slug", slug).maybeSingle()
+      ? await adminClient.from("tour_catalog_overrides").select("slug,category,name,description,image,price,child_price,infant_price,available,pricing_options").eq("slug", slug).maybeSingle()
       : { data: null };
     if (!custom?.category || !custom.available) {
       return { title: "Tour Not Found", description: "The requested tour could not be found." };
@@ -779,7 +779,7 @@ export default async function TourDetailsPage({
   const baseTour = Object.values(tours).find((item) => item.slug === slug);
   const adminClient = createSupabaseAdminClient();
   const { data: pricingOverride } = adminClient
-    ? await adminClient.from("tour_catalog_overrides").select("slug,category,name,description,image,price,child_price,infant_price,available").eq("slug", slug).maybeSingle()
+    ? await adminClient.from("tour_catalog_overrides").select("slug,category,name,description,image,price,child_price,infant_price,available,pricing_options").eq("slug", slug).maybeSingle()
     : { data: null };
 
   if (!baseTour && !pricingOverride?.category) notFound();
@@ -817,6 +817,8 @@ export default async function TourDetailsPage({
         ...(pricingOverride?.description ? { description: pricingOverride.description, overview: pricingOverride.description } : {}),
         ...(pricingOverride?.image ? { image: pricingOverride.image, gallery: [pricingOverride.image, ...baseTour.gallery.slice(1)] } : {}),
         ...(pricingOverride ? { price: Number(pricingOverride.price), childPrice: Number(pricingOverride.child_price), infantPrice: Number(pricingOverride.infant_price), available: pricingOverride.available } : {}),
+        ...(pricingOverride?.pricing_options?.vehicleOptions ? { vehicleOptions: pricingOverride.pricing_options.vehicleOptions, price: pricingOverride.pricing_options.vehicleOptions.bus.adultPrice, childPrice: pricingOverride.pricing_options.vehicleOptions.bus.childPrice, infantPrice: pricingOverride.pricing_options.vehicleOptions.bus.infantPrice } : {}),
+        ...(pricingOverride?.pricing_options?.cairoOptions ? { cairoOptions: pricingOverride.pricing_options.cairoOptions, price: pricingOverride.pricing_options.cairoOptions.oldMuseum.bus.adultPrice, childPrice: pricingOverride.pricing_options.cairoOptions.oldMuseum.bus.childPrice, infantPrice: pricingOverride.pricing_options.cairoOptions.oldMuseum.bus.infantPrice } : {}),
       }
     : customTour;
 

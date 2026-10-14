@@ -47,6 +47,36 @@ export async function updateTourPricing(formData: FormData) {
   }
 
   const available = String(formData.get("available")) === "true";
+  const readMatrixPrice = (key: string) => parsePrice(key);
+  let pricingOptions: Record<string, unknown> | null = null;
+  if (tour?.vehicleOptions) {
+    const readVehicle = (vehicle: "bus" | "van") => ({
+      name: vehicle === "bus" ? "Bus" : "Van",
+      adultPrice: readMatrixPrice(`pricing_vehicle_${vehicle}_adult`),
+      childPrice: readMatrixPrice(`pricing_vehicle_${vehicle}_child`),
+      infantPrice: readMatrixPrice(`pricing_vehicle_${vehicle}_infant`),
+    });
+    const bus = readVehicle("bus");
+    const van = readVehicle("van");
+    if ([bus.adultPrice, bus.childPrice, bus.infantPrice, van.adultPrice, van.childPrice, van.infantPrice].some((value) => value === null)) redirect("/admin/tours?error=invalid");
+    pricingOptions = { vehicleOptions: { bus, van } };
+  } else if (tour?.cairoOptions) {
+    const readCairoOption = (museum: "oldMuseum" | "newMuseum", vehicle: "bus" | "van") => ({
+      adultPrice: readMatrixPrice(`pricing_cairo_${museum}_${vehicle}_adult`),
+      childPrice: readMatrixPrice(`pricing_cairo_${museum}_${vehicle}_child`),
+      infantPrice: readMatrixPrice(`pricing_cairo_${museum}_${vehicle}_infant`),
+    });
+    const oldMuseum = { name: "Old Museum", bus: readCairoOption("oldMuseum", "bus"), van: readCairoOption("oldMuseum", "van") };
+    const newMuseum = { name: "New Museum", bus: readCairoOption("newMuseum", "bus"), van: readCairoOption("newMuseum", "van") };
+    const values = [oldMuseum.bus, oldMuseum.van, newMuseum.bus, newMuseum.van].flatMap((option) => [option.adultPrice, option.childPrice, option.infantPrice]);
+    if (values.some((value) => value === null)) redirect("/admin/tours?error=invalid");
+    pricingOptions = { cairoOptions: { oldMuseum, newMuseum } };
+  }
+  const matrixDefault = (pricingOptions?.vehicleOptions as { bus: { adultPrice: number; childPrice: number; infantPrice: number } } | undefined)?.bus
+    ?? (pricingOptions?.cairoOptions as { oldMuseum: { bus: { adultPrice: number; childPrice: number; infantPrice: number } } } | undefined)?.oldMuseum.bus;
+  const effectivePrice = matrixDefault?.adultPrice ?? price;
+  const effectiveChildPrice = matrixDefault?.childPrice ?? childPrice;
+  const effectiveInfantPrice = matrixDefault?.infantPrice ?? infantPrice;
   const supabase = createSupabaseAdminClient();
   if (!supabase) redirect("/admin/tours?error=connection");
 
@@ -63,9 +93,10 @@ export async function updateTourPricing(formData: FormData) {
     name,
     description,
     image,
-    price,
-    child_price: childPrice,
-    infant_price: infantPrice,
+    price: effectivePrice,
+    child_price: effectiveChildPrice,
+    infant_price: effectiveInfantPrice,
+    ...(pricingOptions ? { pricing_options: pricingOptions } : {}),
     available,
     updated_at: new Date().toISOString(),
   }, { onConflict: "slug" });
