@@ -1172,13 +1172,33 @@ ${notes.trim() || "-"}
                     onChange={(e) => setHotelArea(e.target.value)}
                     className={inputClass(false)}
                   >
-                    <option value="hurghada">{isGerman ? "Hurghada — Kein Aufpreis" : "Hurghada — No extra charge"}</option>
-                    <option value="makadi-bay">{isGerman ? "Makadi Bay — +5 € pro Erwachsenem/Kind" : "Makadi Bay — +€5 per adult/child"}</option>
-                    <option value="sahl-hasheesh">{isGerman ? "Sahl Hasheesh — +5 € pro Erwachsenem/Kind" : "Sahl Hasheesh — +€5 per adult/child"}</option>
-                    <option value="el-gouna">{isGerman ? "El Gouna — +10 € pro Erwachsenem/Kind" : "El Gouna — +€10 per adult/child"}</option>
-                    <option value="safaga">{isGerman ? "Safaga — +10 € pro Erwachsenem/Kind" : "Safaga — +€10 per adult/child"}</option>
-                    <option value="soma-bay">{isGerman ? "Soma Bay — +10 € pro Erwachsenem/Kind" : "Soma Bay — +€10 per adult/child"}</option>
+                    <option value="hurghada">Hurghada</option>
+                    <option value="makadi-bay">Makadi Bay</option>
+                    <option value="sahl-hasheesh">Sahl Hasheesh</option>
+                    <option value="el-gouna">El Gouna</option>
+                    <option value="safaga">Safaga</option>
+                    <option value="soma-bay">Soma Bay</option>
                   </select>
+                  <div className="mt-2 flex items-start gap-3 rounded-xl border border-blue-100 bg-blue-50/70 px-3.5 py-3">
+                    <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white text-blue-800 shadow-sm" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4" stroke="currentColor" strokeWidth="1.8">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.5h18M5 13.5l1.5-5h11l1.5 5M6 17.5h.01M18 17.5h.01M4 13.5v4h16v-4M7 8.5l1-3h8l1 3" />
+                      </svg>
+                    </span>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xs font-bold uppercase tracking-wide text-blue-950">
+                        <HomeText en="Hotel pickup & transfer" de="Hotelabholung & Transfer" />
+                      </p>
+                      <p className="mt-1 text-xs leading-5 text-slate-600">
+                        {hotelAreaSurchargePerPerson === 0
+                          ? <HomeText en="Included for hotels in Hurghada — no extra charge." de="Für Hotels in Hurghada inklusive — kein Aufpreis." />
+                          : <HomeText en={`A transfer supplement of €${hotelAreaSurchargePerPerson} per adult or child applies to this area.`} de={`Für diese Region fällt ein Transferzuschlag von ${hotelAreaSurchargePerPerson} € pro Erwachsenem oder Kind an.`} />}
+                      </p>
+                    </div>
+                    <span className="shrink-0 rounded-full bg-white px-2.5 py-1 text-xs font-bold text-blue-900 shadow-sm">
+                      {hotelAreaSurchargePerPerson === 0 ? <HomeText en="Included" de="Inklusive" /> : `+€${hotelAreaSurchargePerPerson}`}
+                    </span>
+                  </div>
 
                 </div>
 
@@ -2133,13 +2153,22 @@ ${notes.trim() || "-"}
 
                 )}
 
-                <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-                  <span className="text-slate-500">
-                    Extra transfer ({chargeableGuests} guests × €{hotelAreaSurchargePerPerson})
-                  </span>
-                  <span className="font-semibold text-slate-800">
-                    €{hotelAreaSurcharge}
-                  </span>
+                <div className="rounded-xl border border-blue-100 bg-gradient-to-r from-blue-50/80 to-white p-3.5">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0">
+                      <p className="text-sm font-bold text-blue-950">
+                        <HomeText en="Hotel-area transfer" de="Transferzuschlag für die Hotelregion" />
+                      </p>
+                      <p className="mt-1 text-xs leading-5 text-slate-500">
+                        {hotelAreaSurchargePerPerson === 0
+                          ? <HomeText en="Hurghada pickup included" de="Abholung in Hurghada inklusive" />
+                          : <HomeText en={`${chargeableGuests} guests × €${hotelAreaSurchargePerPerson} per adult/child`} de={`${chargeableGuests} Gäste × ${hotelAreaSurchargePerPerson} € pro Erwachsenem/Kind`} />}
+                      </p>
+                    </div>
+                    <span className="shrink-0 text-base font-extrabold tabular-nums text-blue-950">
+                      {hotelAreaSurcharge === 0 ? <HomeText en="Included" de="Inklusive" /> : `€${hotelAreaSurcharge}`}
+                    </span>
+                  </div>
                 </div>
 
                 <div className="mt-4 flex items-center justify-between border-t border-slate-200 pt-4">
