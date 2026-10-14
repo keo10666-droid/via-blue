@@ -779,7 +779,7 @@ export default async function TourDetailsPage({
   const baseTour = Object.values(tours).find((item) => item.slug === slug);
   const adminClient = createSupabaseAdminClient();
   const { data: pricingOverride } = adminClient
-    ? await adminClient.from("tour_catalog_overrides").select("slug,category,name,description,image,price,child_price,infant_price,available").eq("slug", slug).maybeSingle()
+    ? await adminClient.from("tour_catalog_overrides").select("slug,category,name,description,image,price,child_price,infant_price,available,pricing_options").eq("slug", slug).maybeSingle()
     : { data: null };
 
   if (!baseTour && !pricingOverride?.category) notFound();
