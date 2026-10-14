@@ -18,7 +18,10 @@ async function requireAdmin() {
 
 function readCoupon(formData: FormData) {
   const code = String(formData.get("code") ?? "").trim().toUpperCase();
-  const discount = Number(formData.get("discount_percent"));
+  const rawPercent = String(formData.get("discount_percent") ?? "").trim();
+  const rawAmount = String(formData.get("discount_amount") ?? "").trim();
+  const discount = rawPercent ? Number(rawPercent) : null;
+  const discountAmount = rawAmount ? Number(rawAmount) : null;
   const rawMax = String(formData.get("max_uses") ?? "").trim();
   const maxUses = rawMax ? Number(rawMax) : null;
   const rawStart = String(formData.get("starts_at") ?? "").trim();
@@ -28,13 +31,16 @@ function readCoupon(formData: FormData) {
   const isActive = formData.get("is_active") === "on";
 
   if (!/^[A-Z0-9][A-Z0-9_-]{2,39}$/.test(code)) redirect("/admin/coupons?error=code");
-  if (!Number.isFinite(discount) || discount <= 0 || discount > 100) redirect("/admin/coupons?error=discount");
+  if ((discount === null) === (discountAmount === null)) redirect("/admin/coupons?error=discount");
+  if (discount !== null && (!Number.isFinite(discount) || discount <= 0 || discount > 100)) redirect("/admin/coupons?error=discount");
+  if (discountAmount !== null && (!Number.isFinite(discountAmount) || discountAmount <= 0 || discountAmount > 1000000)) redirect("/admin/coupons?error=discount");
   if (maxUses !== null && (!Number.isInteger(maxUses) || maxUses < 1 || maxUses > 10000000)) redirect("/admin/coupons?error=uses");
   if ((startsAt && Number.isNaN(startsAt.getTime())) || (expiresAt && Number.isNaN(expiresAt.getTime())) || (startsAt && expiresAt && expiresAt <= startsAt)) redirect("/admin/coupons?error=dates");
 
   return {
     code,
     discount_percent: discount,
+    discount_amount: discountAmount,
     max_uses: maxUses,
     starts_at: startsAt?.toISOString() ?? null,
     expires_at: expiresAt?.toISOString() ?? null,
