@@ -7,6 +7,40 @@ import { revalidatePath } from "next/cache";
 import { createSupabaseAdminClient } from "@/lib/supabaseAdmin";
 import { tours } from "@/data/tours";
 
+async function uploadGalleryFiles(
+  supabase: NonNullable<ReturnType<typeof createSupabaseAdminClient>>,
+  slug: string,
+  formData: FormData,
+) {
+  const files = formData.getAll("gallery_uploads").filter((entry): entry is File => typeof File !== "undefined" && entry instanceof File && entry.size > 0);
+  if (files.length === 0) return [];
+  if (files.length > 10 || files.some((file) => !["image/jpeg", "image/png", "image/webp", "image/avif"].includes(file.type) || file.size > 8 * 1024 * 1024)) redirect("/admin/tours?error=content");
+
+  const bucket = "tour-images";
+  const { data: buckets, error: bucketsError } = await supabase.storage.listBuckets();
+  if (bucketsError) redirect("/admin/tours?error=upload");
+  if (!buckets?.some((item) => item.name === bucket)) {
+    const { error } = await supabase.storage.createBucket(bucket, { public: true, fileSizeLimit: 8 * 1024 * 1024, allowedMimeTypes: ["image/jpeg", "image/png", "image/webp", "image/avif"] });
+    if (error) {
+      console.error("Tour image bucket setup failed:", error.message);
+      redirect("/admin/tours?error=upload");
+    }
+  }
+
+  const urls: string[] = [];
+  for (const [index, file] of files.entries()) {
+    const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "-");
+    const objectPath = `${slug}/${Date.now()}-${index}-${safeName}`;
+    const { error } = await supabase.storage.from(bucket).upload(objectPath, file, { contentType: file.type, upsert: false });
+    if (error) {
+      console.error("Tour image upload failed:", error.message);
+      redirect("/admin/tours?error=upload");
+    }
+    urls.push(supabase.storage.from(bucket).getPublicUrl(objectPath).data.publicUrl);
+  }
+  return urls;
+}
+
 function hashSecret(value: string) {
   return createHash("sha256").update(value).digest("hex");
 }
@@ -89,6 +123,9 @@ export async function updateTourPricing(formData: FormData) {
     if (!existingRow?.category) redirect("/admin/tours?error=invalid");
     savedCategory = existingRow.category;
   }
+  const uploadedImages = await uploadGalleryFiles(supabase, slug, formData);
+  galleryImages.push(...uploadedImages);
+  if (galleryImages.length > 20) redirect("/admin/tours?error=content");
   const existingOptions = (existingRow?.pricing_options ?? {}) as Record<string, unknown>;
   const nextPricingOptions = { ...existingOptions, ...(pricingOptions ?? {}), gallery: galleryImages };
 
@@ -143,8 +180,9 @@ export async function createCustomTour(formData: FormData) {
 
   const supabase = createSupabaseAdminClient();
   if (!supabase) redirect("/admin/tours?error=connection");
+  const uploadedImages = await uploadGalleryFiles(supabase, slug, formData);
   const { error } = await supabase.from("tour_catalog_overrides").insert({
-    slug, category, name, description, image, price, child_price: childPrice, infant_price: infantPrice, available: true, pricing_options: { gallery: [image] }, updated_at: new Date().toISOString(),
+    slug, category, name, description, image, price, child_price: childPrice, infant_price: infantPrice, available: true, pricing_options: { gallery: [image, ...uploadedImages] }, updated_at: new Date().toISOString(),
   });
   if (error) {
     console.error("Custom tour creation failed:", error.message);
