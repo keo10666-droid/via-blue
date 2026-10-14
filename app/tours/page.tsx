@@ -562,7 +562,7 @@ function ToursPageContent() {
       .filter((tour) => tourCategoryMap[tour.slug as keyof typeof tourCategoryMap] === activeCategory)
       .map((tour) => ({ ...tour, ...(tourOverrides[tour.slug] ?? {}) }));
     const custom = customTours
-      .filter((tour) => tour.category === activeCategory && tour.available !== false)
+      .filter((tour) => tour.category === activeCategory)
       .map((tour) => ({
         ...tour,
         destination: "hurghada" as const,
@@ -574,7 +574,7 @@ function ToursPageContent() {
         program: [], highlights: [], included: [], excluded: [], notes: [],
         seo: { title: `${tour.name} | Via Blue`, description: tour.description, keywords: [] },
       } as unknown as (typeof tours)[keyof typeof tours]));
-    return [...builtIn, ...custom].filter((tour) => tour.available !== false);
+    return [...builtIn, ...custom];
   }, [activeCategory, tourOverrides, customTours]);
 
   return (
@@ -817,6 +817,7 @@ function ToursPageContent() {
                   <div className="absolute inset-0 bg-gradient-to-t from-blue-950/90 via-blue-950/10 to-transparent" />
 
                   <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-blue-950/30 to-transparent" />
+                  {tour.available === false && <div className="absolute right-4 top-4 rounded-full border border-white/20 bg-red-600 px-3 py-2 text-[10px] font-extrabold uppercase tracking-wide text-white shadow-lg"><HomeText en="Currently unavailable" de="Derzeit nicht verfügbar" /></div>}
 
                   <div className="absolute inset-0 bg-gradient-to-t from-orange-500/10 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
