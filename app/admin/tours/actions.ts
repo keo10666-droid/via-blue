@@ -117,7 +117,7 @@ export async function updateTourPricing(formData: FormData) {
   const supabase = createSupabaseAdminClient();
   if (!supabase) redirect("/admin/tours?error=connection");
 
-  const { data: existingRow } = await supabase.from("tour_catalog_overrides").select("category,pricing_options").eq("slug", slug).maybeSingle();
+  const { data: existingRow } = await supabase.from("tour_catalog_overrides").select("category,pricing_options,image").eq("slug", slug).maybeSingle();
   let savedCategory: string | undefined;
   if (!tour) {
     if (!existingRow?.category) redirect("/admin/tours?error=invalid");
@@ -146,6 +146,31 @@ export async function updateTourPricing(formData: FormData) {
   if (error) {
     console.error("Tour pricing update failed:", error.message);
     redirect("/admin/tours?error=save");
+  }
+
+  // Permanently remove deleted gallery uploads from Supabase Storage, but only
+  // when the same image is no longer used as the cover or in the saved gallery.
+  const oldGallery = Array.isArray(existingRow?.pricing_options?.gallery)
+    ? existingRow.pricing_options.gallery.filter((item: unknown): item is string => typeof item === "string")
+    : [];
+  const retainedImages = new Set([image, ...galleryImages]);
+  const storagePathsToDelete = [...new Set(oldGallery
+    .filter((src) => !retainedImages.has(src))
+    .map((src) => {
+      const marker = "/storage/v1/object/public/tour-images/";
+      const markerIndex = src.indexOf(marker);
+      if (markerIndex < 0) return null;
+      try {
+        const objectPath = decodeURIComponent(src.slice(markerIndex + marker.length).split("?")[0]);
+        return objectPath && !objectPath.split("/").includes("..") ? objectPath : null;
+      } catch {
+        return null;
+      }
+    })
+    .filter((path): path is string => Boolean(path)))];
+  if (storagePathsToDelete.length) {
+    const { error: deleteError } = await supabase.storage.from("tour-images").remove(storagePathsToDelete);
+    if (deleteError) console.error("Removed gallery entries but could not delete stored image files:", deleteError.message);
   }
 
   revalidatePath("/admin/tours");
