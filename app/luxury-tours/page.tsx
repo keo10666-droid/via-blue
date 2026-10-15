@@ -10,7 +10,7 @@ const luxuryTours = [
     name: "Luxor Private Tour",
     description:
       "Discover the ancient temples, monuments and history of Luxor on a premium private experience",
-    price: 150,
+    price: 320,
     duration: "Full Day",
     image: "/luxury-tours/luxor-private-hero.webp",
     rating: 4.9,
@@ -21,7 +21,7 @@ const luxuryTours = [
     name: "Cairo Private Tour",
     description:
       "Explore the Pyramids, Sphinx and the highlights of Cairo with a completely private experience",
-    price: 180,
+    price: 300,
     duration: "Full Day",
     image: "/luxury-tours/cairo-private-hero.webp",
     rating: 4.9,
@@ -54,7 +54,7 @@ const luxuryTours = [
     name: "Private Speed Boat",
     description:
       "Enjoy an exclusive private speed boat experience across the beautiful Red Sea",
-    price: 200,
+    price: 180,
     duration: "Half Day",
     image: "/luxury-tours/private-speed-boat-hero.webp",
     rating: 5.0,
@@ -87,7 +87,7 @@ const luxuryTours = [
     name: "Private Boat",
     description:
       "Enjoy an exclusive private boat experience on the Red Sea with complete privacy, comfort and flexibility",
-    price: 180,
+    price: 450,
     duration: "Half Day",
     image: "/luxury-tours/private-boat-hero.webp",
     rating: 4.9,
