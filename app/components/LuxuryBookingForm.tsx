@@ -785,8 +785,10 @@ export default function LuxuryBookingForm({
     tourSlug === "private-boat" ? 30 :
     ["luxor", "cairo", "speed-boat"].includes(tourSlug) ? 8 : 25;
 
+  const minGuests = pricingTour ? 1 : 2;
+
   const isGuestsValid =
-    totalGuests >= 2 && totalGuests <= maxGuests;
+    totalGuests >= minGuests && totalGuests <= maxGuests;
 
   const allChildAgesSet = childAges.every((_, i) =>
     Boolean(childrenAgeValues[i])
@@ -1767,7 +1769,7 @@ ${notes.trim() || "-"}
                   {submitAttempted &&
                     !isGuestsValid &&
                     errorText(
-                      <HomeText en={`This booking requires 2–${maxGuests} guests for the selected experience.`} de={`Für dieses Erlebnis sind 2 bis ${maxGuests} Gäste erforderlich.`} />
+                      <HomeText en={`This booking requires ${minGuests}–${maxGuests} guests for the selected experience.`} de={`Für dieses Erlebnis sind ${minGuests} bis ${maxGuests} Gäste erforderlich.`} />
                     )}
 
                   <div className="mt-4 flex items-center justify-between rounded-2xl bg-[#071a36] px-5 py-4 text-white">
