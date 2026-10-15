@@ -605,9 +605,7 @@ export default function LuxuryBookingForm({
     () => getLocalTomorrow()
   );
 
-  const [adults, setAdults] = useState("2");
-  const [children, setChildren] = useState("0");
-  const [infants, setInfants] = useState("0");
+  const [guests, setGuests] = useState("2");
 
   const [selectedVehicle, setSelectedVehicle] = useState("limousine");
   const [selectedMuseum, setSelectedMuseum] = useState("old");
@@ -615,33 +613,14 @@ export default function LuxuryBookingForm({
 
   const [notes, setNotes] = useState("");
 
-  const [childrenAgeValues, setChildrenAgeValues] =
-    useState<string[]>([]);
-
-  const [infantAgeValues, setInfantAgeValues] =
-    useState<string[]>([]);
-
-  const [submitAttempted, setSubmitAttempted] =
+age states  const [submitAttempted, setSubmitAttempted] =
     useState(false);
 
   const [showSuccess, setShowSuccess] = useState(false);
   const [confirmationEmailSent, setConfirmationEmailSent] =
     useState(false);
 
-  const childAges = Array.from(
-    { length: Number(children || 0) },
-    (_, i) => i
-  );
-
-  const infantAges = Array.from(
-    { length: Number(infants || 0) },
-    (_, i) => i
-  );
-
-  const totalGuests =
-    Number(adults || 0) +
-    Number(children || 0) +
-    Number(infants || 0);
+  const totalGuests = Number(guests || 0);
 
   const pricingTour = ["luxor", "cairo", "speed-boat", "private-boat"].includes(tourSlug);
   const islandPrices: Record<string, number> = {
@@ -790,23 +769,13 @@ export default function LuxuryBookingForm({
   const isGuestsValid =
     totalGuests >= minGuests && totalGuests <= maxGuests;
 
-  const allChildAgesSet = childAges.every((_, i) =>
-    Boolean(childrenAgeValues[i])
-  );
-
-  const allInfantAgesSet = infantAges.every((_, i) =>
-    Boolean(infantAgeValues[i])
-  );
-
-  const isFormValid =
+age validation state  const isFormValid =
     isNameValid &&
     isPhoneValid &&
     isEmailValid &&
     isDateValid &&
     isGuestsValid &&
-    pricingValid &&
-    allChildAgesSet &&
-    allInfantAgesSet;
+    pricingValid;
 
   const inputClass = (invalid: boolean) =>
     `h-[54px] w-full rounded-2xl border bg-white px-4 text-[15px] font-medium text-slate-800 placeholder:text-slate-400 transition-all duration-200 outline-none ${
@@ -824,36 +793,6 @@ export default function LuxuryBookingForm({
     </p>
   );
 
-  const setGuestCount = (
-    type: "adults" | "children" | "infants",
-    value: number
-  ) => {
-    if (type === "adults") {
-      const next = Math.min(Math.max(value, 1), maxGuests);
-      setAdults(String(next));
-      return;
-    }
-
-    if (type === "children") {
-      const next = Math.min(Math.max(value, 0), Math.min(10, maxGuests));
-
-      setChildren(String(next));
-
-      setChildrenAgeValues((current) =>
-        current.slice(0, next)
-      );
-
-      return;
-    }
-
-    const next = Math.min(Math.max(value, 0), 10);
-
-    setInfants(String(next));
-
-    setInfantAgeValues((current) =>
-      current.slice(0, next)
-    );
-  };
 
   const handleSubmit = async () => {
   setSubmitAttempted(true);
@@ -881,19 +820,9 @@ Room Number: ${roomNumber || "Not specified"}
 
 Date: ${date}
 
-Adults: ${adults}
+Guests: ${totalGuests}
 
-Children: ${children}
-
-Infants: ${infants}
-
-Total Guests: ${totalGuests}
-
-${pricingDetails ? `${pricingDetails}; ` : ""}Children Ages:
-${childrenAgeValues.filter(Boolean).join(", ") || "-"}
-
-Infant Ages:
-${infantAgeValues.filter(Boolean).join(", ") || "-"}
+${pricingDetails ? `${pricingDetails}; ` : ""}
 
 PRIVATE TOUR PRICE: €${totalPrice}${pricingValid ? "" : " (Please select a vehicle/range that supports your group size)"}
 
