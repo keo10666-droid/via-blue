@@ -7,7 +7,7 @@ const luxuryTours = {
   luxor: {
     name: "Luxor Private Tour",
     tourType: "Private Tour",
-    adultPrice: 150,
+    adultPrice: 320,
     included: [
       "Private transportation",
       "Professional driver",
@@ -19,7 +19,7 @@ const luxuryTours = {
   cairo: {
     name: "Cairo Private Tour",
     tourType: "Private Tour",
-    adultPrice: 180,
+    adultPrice: 300,
     included: [
       "Private transportation",
       "Professional driver",
@@ -57,7 +57,7 @@ const luxuryTours = {
   "speed-boat": {
     name: "Private Speed Boat",
     tourType: "Private Boat",
-    adultPrice: 200,
+    adultPrice: 180,
     included: [
       "Private speed boat",
       "Professional crew",
@@ -93,7 +93,7 @@ const luxuryTours = {
   "private-boat": {
     name: "Private Boat",
     tourType: "Private Boat",
-    adultPrice: 180,
+    adultPrice: 450,
     included: [
       "Private boat",
       "Professional crew",
