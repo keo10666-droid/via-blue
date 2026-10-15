@@ -283,14 +283,14 @@ export default function LuxuryToursPage() {
           {luxuryTours.map((tour) => (
             <article
               key={tour.slug}
-              className="group flex h-full flex-col overflow-hidden rounded-[28px] border border-slate-200/80 bg-white shadow-sm transition duration-500 hover:-translate-y-1.5 hover:border-slate-300 hover:shadow-2xl"
+              className="group flex h-full flex-col overflow-hidden rounded-[26px] border border-slate-200/70 bg-white shadow-[0_8px_28px_rgba(7,26,54,0.045)] transition duration-500 hover:-translate-y-1 hover:border-slate-300 hover:shadow-[0_22px_60px_rgba(7,26,54,0.12)]"
             >
               {/* IMAGE */}
               <Link
                 href={`/luxury-tours/${tour.slug}`}
                 className="block"
               >
-                <div className="relative h-64 overflow-hidden bg-slate-100 md:h-68">
+                <div className="relative h-72 overflow-hidden bg-slate-100 md:h-80">
                   {/* Image alt must remain a plain string; HomeText returns an element. */}
                   <Image
                     src={tour.image}
@@ -337,97 +337,39 @@ export default function LuxuryToursPage() {
               </Link>
 
               {/* CONTENT */}
-              <div className="flex flex-1 flex-col p-6">
-                {/* RATING */}
-                <div className="flex items-center gap-2">
-                  <div className="flex items-center gap-0.5 text-orange-400">
+              <div className="flex flex-1 flex-col px-6 pb-5 pt-5 sm:px-7">
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-1 text-orange-400">
                     <StarIcon />
-                    <StarIcon />
-                    <StarIcon />
-                    <StarIcon />
-                    <StarIcon />
+                    <span className="ml-1 text-sm font-bold text-[#071a36]">{tour.rating.toFixed(1)}</span>
+                    {tour.reviews > 0 && <span className="text-xs text-slate-400">({tour.reviews} reviews)</span>}
                   </div>
-
-                  <span className="text-sm font-bold text-blue-950">
-                    {tour.rating}
-                  </span>
-
-                  <span className="text-xs text-gray-400">
-                    ({tour.reviews})
+                  <span className="rounded-full border border-slate-200 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-slate-500">
+                    <HomeText en="Private" de="Privat" />
                   </span>
                 </div>
 
                 <Link href={`/luxury-tours/${tour.slug}`}>
-                  <h3 className="mt-3 text-2xl font-semibold tracking-tight text-blue-950 transition duration-300 group-hover:text-orange-500">
+                  <h3 className="mt-4 text-xl font-semibold leading-snug tracking-tight text-[#071a36] transition duration-300 group-hover:text-orange-500 sm:text-2xl">
                     <HomeText en={tour.name} de={germanTourContent[tour.slug]?.name ?? tour.name} />
                   </h3>
                 </Link>
 
-                <p className="mt-3 text-sm leading-6 text-gray-600">
+                <p className="mt-3 line-clamp-3 text-sm leading-6 text-slate-600">
                   <HomeText en={tour.description} de={germanTourContent[tour.slug]?.description ?? tour.description} />
                 </p>
 
-                {/* FEATURES */}
-                <div className="mt-5 grid grid-cols-2 gap-2">
-                  <div className="rounded-2xl border border-slate-100 bg-slate-50 px-3 py-3">
-                    <div className="flex items-center gap-2">
-                      <span className="text-blue-900">
-                        <UsersIcon />
-                      </span>
-
-                      <div>
-                        <p className="text-[9px] font-bold uppercase tracking-wider text-gray-400">
-                          <HomeText en="Guests" de="Gäste" />
-                        </p>
-
-                        <p className="text-xs font-bold text-blue-950">
-                          <HomeText en="From 2 Guests" de="Ab 2 Gästen" />
-                        </p>
-                      </div>
-                    </div>
+                <div className="mt-auto flex items-end justify-between gap-4 border-t border-slate-100 pt-5">
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-slate-400">
+                      <HomeText en="Starting from" de="Ab" />
+                    </p>
+                    <p className="mt-1 text-xs text-slate-500">
+                      <HomeText en={tour.duration} de={tour.duration === "Full Day" ? "Ganztägig" : tour.duration === "Half Day" ? "Halbtägig" : tour.duration} /> · <HomeText en="per experience" de="pro Erlebnis" />
+                    </p>
                   </div>
-
-                  <div className="rounded-2xl border border-orange-100 bg-orange-50/50 px-3 py-3">
-                    <div className="flex items-center gap-2">
-                      <span className="text-orange-500">
-                        <ShieldIcon />
-                      </span>
-
-                      <div>
-                        <p className="text-[9px] font-bold uppercase tracking-wider text-gray-400">
-                          <HomeText en="Service" de="Service" />
-                        </p>
-
-                        <p className="text-xs font-bold text-blue-950">
-                          <HomeText en="Fully Private" de="Vollständig privat" />
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* PRICE */}
-                <div className="mt-auto pt-6">
-                  <div className="flex items-end justify-between border-t border-gray-100 pt-5">
-                    <div>
-                      <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-gray-400">
-                        <HomeText en="Starting From" de="Ab" />
-                      </p>
-
-                      <p className="mt-1 text-xs text-gray-500">
-                        <HomeText en="Private experience" de="Privates Erlebnis" />
-                      </p>
-                    </div>
-
-                    <div className="text-right">
-                      <span className="text-3xl font-bold tracking-tight text-orange-500">
-                        €{tour.price}
-                      </span>
-
-                      <span className="ml-1 text-[10px] font-medium text-gray-400">
-                        <HomeText en="/ experience" de="/ Erlebnis" />
-                      </span>
-                    </div>
+                  <div className="text-right">
+                    <span className="text-3xl font-semibold tracking-tight text-[#071a36]">€{tour.price}</span>
                   </div>
                 </div>
               </div>
