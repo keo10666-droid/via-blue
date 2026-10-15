@@ -299,7 +299,7 @@ const luxuryTours = {
     name: "Private Luxor Overday Tour",
     description:
       "Discover the wonders of ancient Luxor in complete privacy, with a dedicated private vehicle, professional Egyptologist guide and a carefully planned full-day experience from Hurghada.",
-    price: 150,
+    price: 320,
     duration: "Full Day",
     emoji: "🏛️",
     subtitle: "A Private Journey Through Ancient Egypt",
@@ -388,7 +388,7 @@ const luxuryTours = {
     description:
       "Discover the legendary Pyramids of Giza, the Great Sphinx and the highlights of Cairo on a completely private journey from Hurghada, with the flexibility to choose your preferred museum experience.",
 
-    price: 180,
+    price: 300,
 
     duration: "Full Day",
 
@@ -493,7 +493,7 @@ const luxuryTours = {
     description:
       "Enjoy an exclusive private speed boat experience across the beautiful Red Sea, with a dedicated crew, snorkeling stop, White Island visit and the freedom to choose your preferred additional island destination.",
 
-    price: 200,
+    price: 180,
 
     duration: "4 Hours",
 
@@ -1021,7 +1021,7 @@ const luxuryTours = {
     description:
       "Enjoy an exclusive 8-hour private boat charter on the Red Sea, created for families, couples and groups who want complete privacy, flexible timing and the freedom to enjoy their perfect day at sea.",
 
-    price: 180,
+    price: 450,
 
     duration: "8 Hours",
 
