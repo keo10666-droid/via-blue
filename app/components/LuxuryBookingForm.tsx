@@ -1559,496 +1559,240 @@ ${notes.trim() || "-"}
 
                 <div className="my-9 h-px bg-slate-100" />
 
-                {/* GUESTS */}
-                <div>
-                  <div className="mb-5 flex items-center justify-between gap-4">
-
-                    <div className="flex items-center gap-3">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-[#0b3a78]">
+                {/* GUEST COUNT & PREMIUM OPTIONS */}
+                <section className="my-9 overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-[0_18px_50px_rgba(7,26,54,0.06)]">
+                  <div className="relative overflow-hidden bg-[#071a36] px-6 py-6 text-white sm:px-8">
+                    <div className="absolute -right-8 -top-12 h-40 w-40 rounded-full border border-white/10" />
+                    <div className="absolute -right-1 -top-5 h-24 w-24 rounded-full border border-orange-400/20" />
+                    <div className="relative flex items-center gap-4">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-orange-300/20 bg-white/10 text-orange-300">
                         <UsersIcon />
                       </div>
-
                       <div>
-                        <h3 className="font-bold text-[#071a36]">
-                          <HomeText en="Guests" de="Gäste" />
+                        <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-orange-300">
+                          <HomeText en="Your private experience" de="Ihr privates Erlebnis" />
+                        </p>
+                        <h3 className="mt-1 text-xl font-semibold tracking-tight sm:text-2xl">
+                          <HomeText en="Build your trip" de="Gestalten Sie Ihre Reise" />
                         </h3>
-
-                        <p className="text-xs text-slate-400">
-                          <HomeText en="Private experience for your group" de="Privates Erlebnis für Ihre Gruppe" />
+                        <p className="mt-1 text-sm text-slate-300">
+                          <HomeText en="Every guest counts equally in the price." de="Jede Person wird bei der Preisberechnung gleich berücksichtigt." />
                         </p>
                       </div>
                     </div>
-
-                    <div className="hidden rounded-full bg-slate-100 px-3 py-1.5 text-xs font-bold text-slate-600 sm:block">
-                      {totalGuests} <HomeText en="guests" de="Gäste" />
-                    </div>
-
                   </div>
 
-                  <div className="overflow-hidden rounded-2xl border border-slate-200">
-
-                    {/* ADULTS */}
-                    <div className="flex items-center justify-between gap-4 border-b border-slate-100 px-4 py-4 sm:px-5">
-
-                      <div className="flex items-center gap-3">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-[#0b3a78]">
-                          <UserIcon />
-                        </div>
-
-                        <div>
-                          <p className="text-sm font-bold text-slate-800">
-                            <HomeText en="Adults" de="Erwachsene" />
-                          </p>
-
-                          <p className="text-xs text-slate-400">
-                            <HomeText en="Age 11+" de="Ab 11 Jahren" />
-                          </p>
-                        </div>
+                  <div className="space-y-8 p-5 sm:p-8">
+                    <div className="flex flex-col gap-5 rounded-2xl border border-slate-200 bg-slate-50/80 p-5 sm:flex-row sm:items-center sm:justify-between">
+                      <div>
+                        <p className="text-sm font-bold text-[#071a36]">
+                          <HomeText en="Number of guests" de="Anzahl der Gäste" />
+                        </p>
+                        <p className="mt-1 text-xs leading-5 text-slate-500">
+                          <HomeText en={`Choose between ${minGuests} and ${maxGuests} people. Children and adults are counted the same.`} de={`Wählen Sie ${minGuests} bis ${maxGuests} Personen. Kinder und Erwachsene werden gleich gezählt.`} />
+                        </p>
                       </div>
-
-                      <div className="flex items-center gap-3">
-
+                      <div className="flex items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-2 shadow-sm sm:min-w-[190px]">
                         <button
                           type="button"
-                          onClick={() =>
-                            setGuestCount(
-                              "adults",
-                              Number(adults) - 1
-                            )
-                          }
-                          disabled={Number(adults) <= 1}
-                          className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:border-[#0b3a78] hover:text-[#0b3a78] disabled:cursor-not-allowed disabled:opacity-30"
+                          aria-label="Remove one guest"
+                          onClick={() => setGuests(String(Math.max(minGuests, Number(guests) - 1)))}
+                          disabled={Number(guests) <= minGuests}
+                          className="flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 text-[#071a36] transition hover:border-orange-400 hover:bg-orange-50 disabled:cursor-not-allowed disabled:opacity-30"
                         >
                           <MinusIcon />
                         </button>
-
-                        <span className="w-7 text-center text-base font-bold text-[#071a36]">
-                          {adults}
-                        </span>
-
+                        <div className="min-w-[54px] text-center">
+                          <span className="block text-2xl font-bold tabular-nums text-[#071a36]">{totalGuests}</span>
+                          <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">
+                            <HomeText en="Guests" de="Gäste" />
+                          </span>
+                        </div>
                         <button
                           type="button"
-                          onClick={() =>
-                            setGuestCount(
-                              "adults",
-                              Number(adults) + 1
-                            )
-                          }
-                          disabled={
-                            Number(adults) >= maxGuests ||
-                            totalGuests >= maxGuests
-                          }
-                          className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:border-[#0b3a78] hover:text-[#0b3a78] disabled:cursor-not-allowed disabled:opacity-30"
+                          aria-label="Add one guest"
+                          onClick={() => setGuests(String(Math.min(maxGuests, Number(guests) + 1)))}
+                          disabled={Number(guests) >= maxGuests}
+                          className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#071a36] text-white transition hover:bg-orange-500 disabled:cursor-not-allowed disabled:opacity-30"
                         >
                           <PlusIcon />
                         </button>
-
                       </div>
                     </div>
 
-                    {/* CHILDREN */}
-                    <div className="flex items-center justify-between gap-4 border-b border-slate-100 px-4 py-4 sm:px-5">
-
-                      <div className="flex items-center gap-3">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-50 text-orange-500">
-                          <UserIcon />
-                        </div>
-
-                        <div>
-                          <p className="text-sm font-bold text-slate-800">
-                            <HomeText en="Children" de="Kinder" />
-                          </p>
-
-                          <p className="text-xs text-slate-400">
-                            <HomeText en="Ages 5–10" de="5–10 Jahre" />
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center gap-3">
-
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setGuestCount(
-                              "children",
-                              Number(children) - 1
-                            )
-                          }
-                          disabled={Number(children) <= 0}
-                          className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:border-[#0b3a78] hover:text-[#0b3a78] disabled:cursor-not-allowed disabled:opacity-30"
-                        >
-                          <MinusIcon />
-                        </button>
-
-                        <span className="w-7 text-center text-base font-bold text-[#071a36]">
-                          {children}
-                        </span>
-
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setGuestCount(
-                              "children",
-                              Number(children) + 1
-                            )
-                          }
-                          disabled={
-                            Number(children) >= 10 ||
-                            totalGuests >= maxGuests
-                          }
-                          className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:border-[#0b3a78] hover:text-[#0b3a78] disabled:cursor-not-allowed disabled:opacity-30"
-                        >
-                          <PlusIcon />
-                        </button>
-
-                      </div>
-                    </div>
-
-                    {/* INFANTS */}
-                    <div className="flex items-center justify-between gap-4 px-4 py-4 sm:px-5">
-
-                      <div className="flex items-center gap-3">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 text-slate-500">
-                          <UserIcon />
-                        </div>
-
-                        <div>
-                          <p className="text-sm font-bold text-slate-800">
-                            <HomeText en="Infants" de="Kleinkinder" />
-                          </p>
-
-                          <p className="text-xs text-slate-400">
-                            <HomeText en="Ages 1–4" de="1–4 Jahre" />
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center gap-3">
-
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setGuestCount(
-                              "infants",
-                              Number(infants) - 1
-                            )
-                          }
-                          disabled={Number(infants) <= 0}
-                          className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:border-[#0b3a78] hover:text-[#0b3a78] disabled:cursor-not-allowed disabled:opacity-30"
-                        >
-                          <MinusIcon />
-                        </button>
-
-                        <span className="w-7 text-center text-base font-bold text-[#071a36]">
-                          {infants}
-                        </span>
-
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setGuestCount(
-                              "infants",
-                              Number(infants) + 1
-                            )
-                          }
-                          disabled={
-                            Number(infants) >= 10 ||
-                            totalGuests >= maxGuests
-                          }
-                          className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:border-[#0b3a78] hover:text-[#0b3a78] disabled:cursor-not-allowed disabled:opacity-30"
-                        >
-                          <PlusIcon />
-                        </button>
-
-                      </div>
-                    </div>
-
-                  </div>
-
-                  {submitAttempted &&
-                    !isGuestsValid &&
-                    errorText(
-                      <HomeText en={`This booking requires ${minGuests}–${maxGuests} guests for the selected experience.`} de={`Für dieses Erlebnis sind ${minGuests} bis ${maxGuests} Gäste erforderlich.`} />
+                    {submitAttempted && !isGuestsValid && errorText(
+                      <HomeText en={`This experience allows ${minGuests}–${maxGuests} guests.`} de={`Dieses Erlebnis ist für ${minGuests}–${maxGuests} Gäste verfügbar.`} />
                     )}
 
-                  <div className="mt-4 flex items-center justify-between rounded-2xl bg-[#071a36] px-5 py-4 text-white">
-
-                    <div className="flex items-center gap-3">
-                      <UsersIcon />
-
-                      <span className="text-sm font-semibold text-slate-300">
-                        <HomeText en="Total guests" de="Gäste insgesamt" />
-                      </span>
-                    </div>
-
-                    <span className="text-xl font-bold">
-                      {totalGuests}
-                    </span>
-
-                  </div>
-                </div>
-
-                {/* CHILD AGES */}
-                {childAges.length > 0 && (
-                  <>
-                    <div className="my-8 h-px bg-slate-100" />
-
-                    <div>
-                      <div className="mb-4">
-                        <h3 className="font-bold text-[#071a36]">
-                          <HomeText en="Children ages" de="Alter der Kinder" />
-                        </h3>
-
-                        <p className="mt-1 text-xs text-slate-400">
-                          <HomeText en="Please provide the age of each child." de="Bitte geben Sie das Alter jedes Kindes an." />
-                        </p>
-                      </div>
-
-                      <div className="grid gap-3 sm:grid-cols-2">
-
-                        {childAges.map((_, index) => (
-                          <div key={index}>
-                            <div className="relative">
-
-                              <select
-                                value={
-                                  childrenAgeValues[index] || ""
-                                }
-                                className={`${inputClass(
-                                  submitAttempted &&
-                                    !childrenAgeValues[index]
-                                )} appearance-none pr-10`}
-                                onChange={(e) => {
-                                  const updated = [
-                                    ...childrenAgeValues,
-                                  ];
-
-                                  updated[index] =
-                                    e.target.value;
-
-                                  setChildrenAgeValues(updated);
-                                }}
-                              >
-                                <option value="">
-                                  {isGerman ? `Alter für Kind ${index + 1}` : `Select age for child ${index + 1}`}
-                                </option>
-
-                                {[5, 6, 7, 8, 9, 10].map(
-                                  (age) => (
-                                    <option
-                                      key={age}
-                                      value={age}
-                                    >
-                                      {age} {isGerman ? "Jahre" : "years"}
-                                    </option>
-                                  )
-                                )}
-                              </select>
-
-                              <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-400">
-                                <ChevronDownIcon />
-                              </div>
-
-                            </div>
-
-                            {submitAttempted &&
-                              !childrenAgeValues[index] &&
-                              errorText(
-                                <HomeText en={`Select an age for Child ${index + 1}.`} de={`Bitte wählen Sie das Alter für Kind ${index + 1} aus.`} />
-                              )}
+                    {(tourSlug === "luxor" || tourSlug === "cairo") && (
+                      <div>
+                        <div className="mb-4 flex items-end justify-between gap-3">
+                          <div>
+                            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-orange-500">
+                              <HomeText en="01 · Transportation" de="01 · Transport" />
+                            </p>
+                            <h4 className="mt-1 text-lg font-semibold text-[#071a36]">
+                              <HomeText en="Choose your private vehicle" de="Wählen Sie Ihr Privatfahrzeug" />
+                            </h4>
                           </div>
-                        ))}
-
-                      </div>
-                    </div>
-                  </>
-                )}
-
-                {/* INFANT AGES */}
-                {infantAges.length > 0 && (
-                  <>
-                    <div className="my-8 h-px bg-slate-100" />
-
-                    <div>
-                      <div className="mb-4">
-                        <h3 className="font-bold text-[#071a36]">
-                          <HomeText en="Infant ages" de="Alter der Kleinkinder" />
-                        </h3>
-
-                        <p className="mt-1 text-xs text-slate-400">
-                          <HomeText en="Please provide the age of each infant." de="Bitte geben Sie das Alter jedes Kleinkindes an." />
-                        </p>
-                      </div>
-
-                      <div className="grid gap-3 sm:grid-cols-2">
-
-                        {infantAges.map((_, index) => (
-                          <div key={index}>
-                            <div className="relative">
-
-                              <select
-                                value={
-                                  infantAgeValues[index] || ""
-                                }
-                                className={`${inputClass(
-                                  submitAttempted &&
-                                    !infantAgeValues[index]
-                                )} appearance-none pr-10`}
-                                onChange={(e) => {
-                                  const updated = [
-                                    ...infantAgeValues,
-                                  ];
-
-                                  updated[index] =
-                                    e.target.value;
-
-                                  setInfantAgeValues(updated);
-                                }}
+                          <span className="hidden text-xs text-slate-400 sm:block">
+                            <HomeText en="Price depends on group size" de="Preis abhängig von der Gruppengröße" />
+                          </span>
+                        </div>
+                        <div className="grid gap-3 sm:grid-cols-3">
+                          {[
+                            { id: "limousine", title: "Limousine", detail: "1–2 guests", symbol: "L" },
+                            { id: "xpander", title: "Xpander", detail: "2–3 guests", symbol: "X" },
+                            { id: "hiace", title: "HiAce", detail: tourSlug === "luxor" ? "4–8 guests" : "4–8 guests", symbol: "H" },
+                          ].map((vehicle) => {
+                            const active = selectedVehicle === vehicle.id;
+                            return (
+                              <button
+                                key={vehicle.id}
+                                type="button"
+                                onClick={() => setSelectedVehicle(vehicle.id)}
+                                className={`group relative rounded-2xl border p-4 text-left transition duration-200 ${active ? "border-orange-400 bg-orange-50/70 shadow-[0_8px_24px_rgba(249,115,22,0.10)] ring-1 ring-orange-300" : "border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50"}`}
                               >
-                                <option value="">
-                                  {isGerman ? `Alter für Kleinkind ${index + 1}` : `Select age for infant ${index + 1}`}
-                                </option>
-
-                                {[1, 2, 3, 4].map((age) => (
-                                  <option
-                                    key={age}
-                                    value={age}
-                                  >
-                                    {age}{" "}
-                                    {age === 1
-                                      ? (isGerman ? "Jahr" : "year")
-                                      : (isGerman ? "Jahre" : "years")}
-                                  </option>
-                                ))}
-                              </select>
-
-                              <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-400">
-                                <ChevronDownIcon />
-                              </div>
-
-                            </div>
-
-                            {submitAttempted &&
-                              !infantAgeValues[index] &&
-                              errorText(
-                                <HomeText en={`Select an age for Infant ${index + 1}.`} de={`Bitte wählen Sie das Alter für Kleinkind ${index + 1} aus.`} />
-                              )}
-                          </div>
-                        ))}
-
+                                <span className={`mb-4 flex h-10 w-10 items-center justify-center rounded-xl text-sm font-black ${active ? "bg-[#071a36] text-orange-300" : "bg-slate-100 text-slate-500"}`}>{vehicle.symbol}</span>
+                                <span className="block text-sm font-bold text-[#071a36]">{vehicle.title}</span>
+                                <span className="mt-1 block text-xs text-slate-500">{vehicle.detail}</span>
+                                <span className={`absolute right-3 top-3 flex h-5 w-5 items-center justify-center rounded-full border text-[10px] ${active ? "border-orange-500 bg-orange-500 text-white" : "border-slate-300 text-transparent"}`}>✓</span>
+                              </button>
+                            );
+                          })}
+                        </div>
                       </div>
-                    </div>
-                  </>
-                )}
+                    )}
 
-                                {pricingTour && (
-                  <>
-                    <div className="my-9 h-px bg-slate-100" />
-                    <section className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6">
-                      <div className="mb-5">
-                        <h3 className="text-lg font-bold text-[#071a36]">
-                          <HomeText en="Trip options & pricing" de="Optionen und Preise" />
-                        </h3>
-                        <p className="mt-1 text-sm text-slate-500">
-                          <HomeText en="Choose your vehicle, museum and any optional islands to calculate the total." de="Wählen Sie Fahrzeug, Museum und optionale Inseln, um den Gesamtpreis zu berechnen." />
+                    {tourSlug === "cairo" && (
+                      <div>
+                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-orange-500">
+                          <HomeText en="02 · Museum visit" de="02 · Museumsbesuch" />
                         </p>
+                        <h4 className="mt-1 text-lg font-semibold text-[#071a36]">
+                          <HomeText en="Choose your museum" de="Wählen Sie Ihr Museum" />
+                        </h4>
+                        <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                          {[
+                            { id: "old", title: "Old Egyptian Museum", subtitle: "Tahrir Square", short: "THE CLASSIC" },
+                            { id: "new", title: "Grand Egyptian Museum", subtitle: "GEM · Giza", short: "THE NEW LANDMARK" },
+                          ].map((museum) => {
+                            const active = selectedMuseum === museum.id;
+                            return (
+                              <button
+                                key={museum.id}
+                                type="button"
+                                onClick={() => setSelectedMuseum(museum.id)}
+                                className={`relative overflow-hidden rounded-2xl border p-5 text-left transition ${active ? "border-orange-400 bg-orange-50/70 ring-1 ring-orange-300" : "border-slate-200 hover:border-slate-300 hover:bg-slate-50"}`}
+                              >
+                                <span className="text-[9px] font-bold tracking-[0.18em] text-orange-500">{museum.short}</span>
+                                <span className="mt-2 block text-base font-bold text-[#071a36]">{museum.title}</span>
+                                <span className="mt-1 block text-sm text-slate-500">{museum.subtitle}</span>
+                                <span className={`absolute right-4 top-4 flex h-5 w-5 items-center justify-center rounded-full border text-[10px] ${active ? "border-orange-500 bg-orange-500 text-white" : "border-slate-300 text-transparent"}`}>✓</span>
+                              </button>
+                            );
+                          })}
+                        </div>
                       </div>
+                    )}
 
-                      {(tourSlug === "luxor" || tourSlug === "cairo") && (
-                        <div className="mb-5">
-                          <label className={labelClass}>
-                            <HomeText en="Private vehicle" de="Privatfahrzeug" />
-                          </label>
-                          <select
-                            value={selectedVehicle}
-                            onChange={(e) => setSelectedVehicle(e.target.value)}
-                            className={inputClass(false)}
-                          >
-                            <option value="limousine">Limousine</option>
-                            <option value="xpander">Xpander</option>
-                            <option value="hiace">Hiace</option>
-                          </select>
-                          <p className="mt-2 text-xs leading-5 text-slate-500">
-                            <HomeText en="Limousine: 1–2 guests; Xpander: 2–3 guests; Hiace: 4–8 guests. The price is based on the selected group size." de="Limousine: 1–2 Gäste; Xpander: 2–3 Gäste; Hiace: 4–8 Gäste. Der Preis richtet sich nach der Gruppengröße." />
-                          </p>
+                    {(tourSlug === "speed-boat" || tourSlug === "private-boat") && (
+                      <div>
+                        <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+                          <div>
+                            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-orange-500">
+                              <HomeText en="Optional experiences" de="Optionale Erlebnisse" />
+                            </p>
+                            <h4 className="mt-1 text-lg font-semibold text-[#071a36]">
+                              <HomeText en="Make it your perfect sea day" de="Gestalten Sie Ihren perfekten Tag auf dem Meer" />
+                            </h4>
+                          </div>
+                          <span className="inline-flex w-fit items-center gap-2 rounded-full bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-600">
+                            <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
+                            {selectedIslands.length} <HomeText en="selected" de="ausgewählt" />
+                          </span>
                         </div>
-                      )}
-
-                      {tourSlug === "cairo" && (
-                        <div className="mb-5">
-                          <label className={labelClass}>
-                            <HomeText en="Museum option" de="Museumsauswahl" />
-                          </label>
-                          <select
-                            value={selectedMuseum}
-                            onChange={(e) => setSelectedMuseum(e.target.value)}
-                            className={inputClass(false)}
-                          >
-                            <option value="old">Old Egyptian Museum (Tahrir)</option>
-                            <option value="new">Grand Egyptian Museum (GEM)</option>
-                          </select>
-                        </div>
-                      )}
-
-                      {(tourSlug === "speed-boat" || tourSlug === "private-boat") && (
-                        <div>
-                          <label className={labelClass}>
-                            <HomeText en="Optional islands — select any number" de="Optionale Inseln — mehrere auswählbar" />
-                          </label>
-                          <div className="grid gap-3 sm:grid-cols-2">
-                            {[
-                              { id: "paradise", name: "Paradise", price: 20 },
-                              { id: "orange", name: "Orange Bay", price: 10 },
-                              { id: "hula", name: "Hula Hula", price: 10 },
-                              { id: "magaweesh", name: "Magawish", price: 10 },
-                              { id: "amwaj", name: "Amwaj", price: 10 },
-                              { id: "eden", name: "Eden", price: 35 },
-                              { id: "ouzeria", name: "Ouzeria", price: 35 },
-                              { id: "mahmya", name: "Mahmya", price: 60 },
-                            ].map((island) => (
-                              <label key={island.id} className="flex cursor-pointer items-center justify-between gap-3 rounded-xl border border-slate-200 px-4 py-3 transition hover:border-orange-300 hover:bg-orange-50/40">
-                                <span className="flex items-center gap-3">
-                                  <input
-                                    type="checkbox"
-                                    checked={selectedIslands.includes(island.id)}
-                                    onChange={(e) => setSelectedIslands((current) =>
-                                      e.target.checked
-                                        ? [...current, island.id]
-                                        : current.filter((item) => item !== island.id)
-                                    )}
-                                    className="h-4 w-4 accent-orange-500"
-                                  />
-                                  <span className="text-sm font-semibold text-slate-700">{island.name}</span>
+                        <p className="mb-4 max-w-2xl text-sm leading-6 text-slate-500">
+                          <HomeText en="Choose one or more islands. Each selected island is charged per guest." de="Wählen Sie eine oder mehrere Inseln. Jede ausgewählte Insel wird pro Gast berechnet." />
+                        </p>
+                        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                          {[
+                            { id: "paradise", name: "Paradise Island", price: 20, category: "Island escape", tone: "from-cyan-50 to-sky-100" },
+                            { id: "orange", name: "Orange Bay", price: 10, category: "Beach club", tone: "from-orange-50 to-amber-100" },
+                            { id: "hula", name: "Hula Hula", price: 10, category: "Island vibes", tone: "from-rose-50 to-orange-100" },
+                            { id: "magaweesh", name: "Magawish", price: 10, category: "Natural beauty", tone: "from-teal-50 to-emerald-100" },
+                            { id: "amwaj", name: "Amwaj", price: 10, category: "Sea & sand", tone: "from-blue-50 to-cyan-100" },
+                            { id: "eden", name: "Eden Island", price: 35, category: "Premium beach", tone: "from-amber-50 to-yellow-100" },
+                            { id: "ouzeria", name: "Ouzeria", price: 35, category: "Private escape", tone: "from-violet-50 to-fuchsia-100" },
+                            { id: "mahmya", name: "Mahmya", price: 60, category: "Protected island", tone: "from-emerald-50 to-lime-100" },
+                          ].map((island) => {
+                            const active = selectedIslands.includes(island.id);
+                            return (
+                              <label
+                                key={island.id}
+                                className={`group relative flex min-h-[142px] cursor-pointer flex-col overflow-hidden rounded-2xl border p-4 transition duration-200 ${active ? "border-orange-400 bg-orange-50 shadow-[0_10px_25px_rgba(249,115,22,0.10)] ring-1 ring-orange-300" : "border-slate-200 bg-white hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md"}`}
+                              >
+                                <input
+                                  type="checkbox"
+                                  checked={active}
+                                  onChange={(e) => setSelectedIslands((current) =>
+                                    e.target.checked ? [...current, island.id] : current.filter((item) => item !== island.id)
+                                  )}
+                                  className="sr-only"
+                                />
+                                <span className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${island.tone} ${active ? "opacity-100" : "opacity-60"}`} />
+                                <span className="flex items-start justify-between gap-2 pt-1">
+                                  <span className={`flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br ${island.tone} text-xs font-black text-[#071a36]`}>{island.name.slice(0, 1)}</span>
+                                  <span className={`flex h-5 w-5 items-center justify-center rounded-full border text-[10px] font-bold ${active ? "border-orange-500 bg-orange-500 text-white" : "border-slate-300 bg-white text-transparent"}`}>✓</span>
                                 </span>
-                                <span className="text-sm font-bold text-[#071a36]">€{island.price} <span className="text-xs font-medium text-slate-400">/ <HomeText en="person" de="Person" /></span></span>
+                                <span className="mt-3 text-sm font-bold text-[#071a36]">{island.name}</span>
+                                <span className="mt-0.5 text-[10px] font-medium text-slate-400">{island.category}</span>
+                                <span className="mt-auto flex items-baseline gap-1 pt-3">
+                                  <span className="text-lg font-bold tracking-tight text-[#071a36]">€{island.price}</span>
+                                  <span className="text-[10px] text-slate-400"><HomeText en="/ person" de="/ Person" /></span>
+                                </span>
                               </label>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="overflow-hidden rounded-2xl bg-[#071a36] text-white">
+                      <div className="flex flex-col gap-5 p-5 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+                        <div>
+                          <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-orange-300">
+                            <HomeText en="Your trip estimate" de="Ihre Reiseübersicht" />
+                          </p>
+                          <p className="mt-1 text-sm text-slate-300">
+                            {totalGuests} <HomeText en="guests" de="Gäste" /> · <HomeText en="private experience" de="privates Erlebnis" />
+                          </p>
+                          <div className="mt-3 flex flex-wrap gap-2">
+                            {selectedIslands.map((id) => (
+                              <span key={id} className="rounded-full border border-white/15 bg-white/10 px-2.5 py-1 text-[10px] font-semibold text-slate-100">
+                                {({ paradise: "Paradise", orange: "Orange Bay", hula: "Hula Hula", magaweesh: "Magawish", amwaj: "Amwaj", eden: "Eden", ouzeria: "Ouzeria", mahmya: "Mahmya" } as Record<string, string>)[id]}
+                              </span>
                             ))}
                           </div>
-                          <p className="mt-3 text-xs text-slate-500">
-                            <HomeText en="Island prices are added per guest. You can select multiple islands." de="Die Inselpreise werden pro Gast berechnet. Sie können mehrere Inseln auswählen." />
-                          </p>
+                        </div>
+                        <div className="sm:text-right">
+                          <p className="text-xs font-medium text-slate-300"><HomeText en="Estimated total" de="Geschätzter Gesamtpreis" /></p>
+                          <p className="mt-1 text-3xl font-bold tracking-tight text-white">€{totalPrice}</p>
+                          {selectedIslands.length > 0 && (
+                            <p className="mt-1 text-xs text-slate-400">
+                              <HomeText en={`Includes €${islandExtra} island options`} de={`Enthält €${islandExtra} für Inseloptionen`} />
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                      {!pricingValid && (
+                        <div className="border-t border-white/10 px-5 py-3 text-sm font-semibold text-orange-200 sm:px-6">
+                          <HomeText en="This vehicle does not support the selected group size. Choose a different vehicle to continue." de="Dieses Fahrzeug ist für die gewählte Gruppengröße nicht geeignet. Bitte wählen Sie ein anderes Fahrzeug." />
                         </div>
                       )}
-
-                      <div className="mt-6 rounded-xl bg-[#071a36] p-4 text-white">
-                        <div className="flex items-center justify-between gap-3">
-                          <span className="text-sm font-semibold text-slate-200">
-                            <HomeText en="Calculated total" de="Berechneter Gesamtpreis" />
-                          </span>
-                          <span className="text-2xl font-black">€{totalPrice}</span>
-                        </div>
-                        {!pricingValid && (
-                          <p className="mt-2 text-sm font-semibold text-orange-200">
-                            <HomeText en="This vehicle does not have a price for the selected group size. Please choose another vehicle." de="Für diese Gruppengröße gibt es keinen Preis für dieses Fahrzeug. Bitte wählen Sie ein anderes Fahrzeug." />
-                          </p>
-                        )}
-                      </div>
-                    </section>
-                  </>
-                )}
-
-                <div className="my-9 h-px bg-slate-100" />
+                    </div>
+                  </div>
+                </section>
 
                 {/* NOTES */}
                 <div>
