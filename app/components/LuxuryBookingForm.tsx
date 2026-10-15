@@ -772,8 +772,10 @@ export default function LuxuryBookingForm({
 
   const isGuestsValid =
     chargeableGuests >= minGuests && totalGuests <= maxGuests && adults >= 1;
-  const allChildAgesSet = childAges.length === children && childAges.every((age) => age !== "");
-  const allInfantAgesSet = infantAges.length === infants && infantAges.every((age) => age !== "");
+  const allChildAgesSet =
+    childAges.length === children && childAges.every((age) => age !== "");
+  const allInfantAgesSet =
+    infantAges.length === infants && infantAges.every((age) => age !== "");
   const isFormValid =
     isNameValid &&
     isPhoneValid &&
