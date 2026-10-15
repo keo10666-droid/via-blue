@@ -18,6 +18,7 @@ import HomeText from "@/app/components/HomeText";
 
 type LuxuryBookingFormProps = {
   tourName: string;
+  tourSlug?: string;
   adultPrice?: number;
   tourType?: string;
   included?: string[];
@@ -565,6 +566,7 @@ function NoPeriods({ children }: { children: ReactNode }) {
 
 export default function LuxuryBookingForm({
   tourName,
+  tourSlug = "",
   tourType = "Private Luxury",
   included = [],
 }: LuxuryBookingFormProps) {
@@ -607,6 +609,10 @@ export default function LuxuryBookingForm({
   const [children, setChildren] = useState("0");
   const [infants, setInfants] = useState("0");
 
+  const [selectedVehicle, setSelectedVehicle] = useState("limousine");
+  const [selectedMuseum, setSelectedMuseum] = useState("old");
+  const [selectedIslands, setSelectedIslands] = useState<string[]>([]);
+
   const [notes, setNotes] = useState("");
 
   const [childrenAgeValues, setChildrenAgeValues] =
@@ -637,10 +643,82 @@ export default function LuxuryBookingForm({
     Number(children || 0) +
     Number(infants || 0);
 
-  const totalPrice =
-    privatePrices[
-      Math.min(Math.max(totalGuests, 2), 25)
-    ] ?? privatePrices[25];
+  const pricingTour = ["luxor", "cairo", "speed-boat", "private-boat"].includes(tourSlug);
+  const islandPrices: Record<string, number> = {
+    paradise: 20,
+    orange: 10,
+    hula: 10,
+    magaweesh: 10,
+    amwaj: 10,
+    eden: 35,
+    ouzeria: 35,
+    mahmya: 60,
+  };
+
+  let baseTourPrice: number | null = null;
+
+  if (tourSlug === "luxor") {
+    if (selectedVehicle === "limousine" && totalGuests === 1) baseTourPrice = 320;
+    if (selectedVehicle === "limousine" && totalGuests === 2) baseTourPrice = 350;
+    if (selectedVehicle === "xpander" && totalGuests === 2) baseTourPrice = 350;
+    if (selectedVehicle === "xpander" && totalGuests === 3) baseTourPrice = 390;
+    if (selectedVehicle === "hiace" && totalGuests >= 4 && totalGuests <= 8) {
+      baseTourPrice = 450 + (totalGuests - 4) * 40;
+    }
+  } else if (tourSlug === "cairo") {
+    if (selectedVehicle === "limousine" && totalGuests === 1) {
+      baseTourPrice = selectedMuseum === "old" ? 300 : 325;
+    }
+    if (selectedVehicle === "limousine" && totalGuests === 2) {
+      baseTourPrice = selectedMuseum === "old" ? 340 : 390;
+    }
+    if (selectedVehicle === "xpander" && totalGuests === 2) {
+      baseTourPrice = selectedMuseum === "old" ? 340 : 390;
+    }
+    if (selectedVehicle === "xpander" && totalGuests === 3) {
+      baseTourPrice = selectedMuseum === "old" ? 380 : 450;
+    }
+    if (selectedVehicle === "hiace" && totalGuests >= 4 && totalGuests <= 8) {
+      baseTourPrice =
+        (selectedMuseum === "old" ? 450 : 510) +
+        (totalGuests - 4) * (selectedMuseum === "old" ? 40 : 60);
+    }
+  } else if (tourSlug === "speed-boat") {
+    if (totalGuests >= 1 && totalGuests <= 4) baseTourPrice = 180;
+    if (totalGuests >= 5 && totalGuests <= 8) baseTourPrice = 250;
+  } else if (tourSlug === "private-boat") {
+    if (totalGuests >= 1 && totalGuests <= 15) baseTourPrice = 450;
+    if (totalGuests >= 16 && totalGuests <= 30) baseTourPrice = 600;
+  }
+
+  const islandExtra = selectedIslands.reduce(
+    (sum, island) => sum + (islandPrices[island] ?? 0),
+    0
+  ) * totalGuests;
+
+  const pricingValid = !pricingTour || baseTourPrice !== null;
+  const totalPrice = pricingTour
+    ? (baseTourPrice ?? 0) + islandExtra
+    : privatePrices[Math.min(Math.max(totalGuests, 2), 25)] ?? privatePrices[25];
+
+  const pricingDetails = [
+    pricingTour && (tourSlug === "luxor" || tourSlug === "cairo")
+      ? `Vehicle: ${selectedVehicle}`
+      : "",
+    tourSlug === "cairo" ? `Museum: ${selectedMuseum === "old" ? "Old Egyptian Museum" : "Grand Egyptian Museum"}` : "",
+    selectedIslands.length
+      ? `Islands: ${selectedIslands.map((island) => ({
+          paradise: "Paradise",
+          orange: "Orange Bay",
+          hula: "Hula Hula",
+          magaweesh: "Magawish",
+          amwaj: "Amwaj",
+          eden: "Eden",
+          ouzeria: "Ouzeria",
+          mahmya: "Mahmya",
+        }[island])).join(", ")}`
+      : "",
+  ].filter(Boolean).join("\\n");
 
   const filteredNationalities = useMemo(() => {
     if (!nationality) return [];
@@ -729,6 +807,7 @@ export default function LuxuryBookingForm({
     isEmailValid &&
     isDateValid &&
     isGuestsValid &&
+    pricingValid &&
     allChildAgesSet &&
     allInfantAgesSet;
 
@@ -813,13 +892,13 @@ Infants: ${infants}
 
 Total Guests: ${totalGuests}
 
-Children Ages:
+${pricingDetails ? `${pricingDetails}\\n\\n` : ""}Children Ages:
 ${childrenAgeValues.filter(Boolean).join(", ") || "-"}
 
 Infant Ages:
 ${infantAgeValues.filter(Boolean).join(", ") || "-"}
 
-PRIVATE TOUR PRICE: €${totalPrice}
+PRIVATE TOUR PRICE: €${totalPrice}${pricingValid ? "" : " (Please select a vehicle/range that supports your group size)"}
 
 WhatsApp: ${fullPhone}
 
@@ -1863,6 +1942,112 @@ ${notes.trim() || "-"}
 
                       </div>
                     </div>
+                  </>
+                )}
+
+                                {pricingTour && (
+                  <>
+                    <div className="my-9 h-px bg-slate-100" />
+                    <section className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6">
+                      <div className="mb-5">
+                        <h3 className="text-lg font-bold text-[#071a36]">
+                          <HomeText en="Trip options & pricing" de="Optionen und Preise" />
+                        </h3>
+                        <p className="mt-1 text-sm text-slate-500">
+                          <HomeText en="Choose your vehicle, museum and any optional islands to calculate the total." de="Wählen Sie Fahrzeug, Museum und optionale Inseln, um den Gesamtpreis zu berechnen." />
+                        </p>
+                      </div>
+
+                      {(tourSlug === "luxor" || tourSlug === "cairo") && (
+                        <div className="mb-5">
+                          <label className={labelClass}>
+                            <HomeText en="Private vehicle" de="Privatfahrzeug" />
+                          </label>
+                          <select
+                            value={selectedVehicle}
+                            onChange={(e) => setSelectedVehicle(e.target.value)}
+                            className={inputClass(false)}
+                          >
+                            <option value="limousine">Limousine</option>
+                            <option value="xpander">Xpander</option>
+                            <option value="hiace">Hiace</option>
+                          </select>
+                          <p className="mt-2 text-xs leading-5 text-slate-500">
+                            <HomeText en="Limousine: 1–2 guests; Xpander: 2–3 guests; Hiace: 4–8 guests. The price is based on the selected group size." de="Limousine: 1–2 Gäste; Xpander: 2–3 Gäste; Hiace: 4–8 Gäste. Der Preis richtet sich nach der Gruppengröße." />
+                          </p>
+                        </div>
+                      )}
+
+                      {tourSlug === "cairo" && (
+                        <div className="mb-5">
+                          <label className={labelClass}>
+                            <HomeText en="Museum option" de="Museumsauswahl" />
+                          </label>
+                          <select
+                            value={selectedMuseum}
+                            onChange={(e) => setSelectedMuseum(e.target.value)}
+                            className={inputClass(false)}
+                          >
+                            <option value="old">Old Egyptian Museum (Tahrir)</option>
+                            <option value="new">Grand Egyptian Museum (GEM)</option>
+                          </select>
+                        </div>
+                      )}
+
+                      {(tourSlug === "speed-boat" || tourSlug === "private-boat") && (
+                        <div>
+                          <label className={labelClass}>
+                            <HomeText en="Optional islands — select any number" de="Optionale Inseln — mehrere auswählbar" />
+                          </label>
+                          <div className="grid gap-3 sm:grid-cols-2">
+                            {[
+                              { id: "paradise", name: "Paradise", price: 20 },
+                              { id: "orange", name: "Orange Bay", price: 10 },
+                              { id: "hula", name: "Hula Hula", price: 10 },
+                              { id: "magaweesh", name: "Magawish", price: 10 },
+                              { id: "amwaj", name: "Amwaj", price: 10 },
+                              { id: "eden", name: "Eden", price: 35 },
+                              { id: "ouzeria", name: "Ouzeria", price: 35 },
+                              { id: "mahmya", name: "Mahmya", price: 60 },
+                            ].map((island) => (
+                              <label key={island.id} className="flex cursor-pointer items-center justify-between gap-3 rounded-xl border border-slate-200 px-4 py-3 transition hover:border-orange-300 hover:bg-orange-50/40">
+                                <span className="flex items-center gap-3">
+                                  <input
+                                    type="checkbox"
+                                    checked={selectedIslands.includes(island.id)}
+                                    onChange={(e) => setSelectedIslands((current) =>
+                                      e.target.checked
+                                        ? [...current, island.id]
+                                        : current.filter((item) => item !== island.id)
+                                    )}
+                                    className="h-4 w-4 accent-orange-500"
+                                  />
+                                  <span className="text-sm font-semibold text-slate-700">{island.name}</span>
+                                </span>
+                                <span className="text-sm font-bold text-[#071a36]">€{island.price} <span className="text-xs font-medium text-slate-400">/ <HomeText en="person" de="Person" /></span></span>
+                              </label>
+                            ))}
+                          </div>
+                          <p className="mt-3 text-xs text-slate-500">
+                            <HomeText en="Island prices are added per guest. You can select multiple islands." de="Die Inselpreise werden pro Gast berechnet. Sie können mehrere Inseln auswählen." />
+                          </p>
+                        </div>
+                      )}
+
+                      <div className="mt-6 rounded-xl bg-[#071a36] p-4 text-white">
+                        <div className="flex items-center justify-between gap-3">
+                          <span className="text-sm font-semibold text-slate-200">
+                            <HomeText en="Calculated total" de="Berechneter Gesamtpreis" />
+                          </span>
+                          <span className="text-2xl font-black">€{totalPrice}</span>
+                        </div>
+                        {!pricingValid && (
+                          <p className="mt-2 text-sm font-semibold text-orange-200">
+                            <HomeText en="This vehicle does not have a price for the selected group size. Please choose another vehicle." de="Für diese Gruppengröße gibt es keinen Preis für dieses Fahrzeug. Bitte wählen Sie ein anderes Fahrzeug." />
+                          </p>
+                        )}
+                      </div>
+                    </section>
                   </>
                 )}
 
