@@ -707,16 +707,7 @@ export default function LuxuryBookingForm({
       : "",
     tourSlug === "cairo" ? `Museum: ${selectedMuseum === "old" ? "Old Egyptian Museum" : "Grand Egyptian Museum"}` : "",
     selectedIslands.length
-      ? `Islands: ${selectedIslands.map((island) => ({
-          paradise: "Paradise",
-          orange: "Orange Bay",
-          hula: "Hula Hula",
-          magaweesh: "Magawish",
-          amwaj: "Amwaj",
-          eden: "Eden",
-          ouzeria: "Ouzeria",
-          mahmya: "Mahmya",
-        }[island])).join(", ")}`
+      ? `Islands: ${selectedIslands.join(", ")}`
       : "",
   ].filter(Boolean).join("\\n");
 
@@ -790,8 +781,12 @@ export default function LuxuryBookingForm({
   const isDateValid =
     date.length > 0 && date >= tomorrowIso;
 
+  const maxGuests =
+    tourSlug === "private-boat" ? 30 :
+    ["luxor", "cairo", "speed-boat"].includes(tourSlug) ? 8 : 25;
+
   const isGuestsValid =
-    totalGuests >= 2 && totalGuests <= 25;
+    totalGuests >= 2 && totalGuests <= maxGuests;
 
   const allChildAgesSet = childAges.every((_, i) =>
     Boolean(childrenAgeValues[i])
@@ -832,13 +827,13 @@ export default function LuxuryBookingForm({
     value: number
   ) => {
     if (type === "adults") {
-      const next = Math.min(Math.max(value, 1), 25);
+      const next = Math.min(Math.max(value, 1), maxGuests);
       setAdults(String(next));
       return;
     }
 
     if (type === "children") {
-      const next = Math.min(Math.max(value, 0), 10);
+      const next = Math.min(Math.max(value, 0), Math.min(10, maxGuests));
 
       setChildren(String(next));
 
@@ -1638,8 +1633,8 @@ ${notes.trim() || "-"}
                             )
                           }
                           disabled={
-                            Number(adults) >= 25 ||
-                            totalGuests >= 25
+                            Number(adults) >= maxGuests ||
+                            totalGuests >= maxGuests
                           }
                           className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:border-[#0b3a78] hover:text-[#0b3a78] disabled:cursor-not-allowed disabled:opacity-30"
                         >
@@ -1698,7 +1693,7 @@ ${notes.trim() || "-"}
                           }
                           disabled={
                             Number(children) >= 10 ||
-                            totalGuests >= 25
+                            totalGuests >= maxGuests
                           }
                           className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:border-[#0b3a78] hover:text-[#0b3a78] disabled:cursor-not-allowed disabled:opacity-30"
                         >
@@ -1757,7 +1752,7 @@ ${notes.trim() || "-"}
                           }
                           disabled={
                             Number(infants) >= 10 ||
-                            totalGuests >= 25
+                            totalGuests >= maxGuests
                           }
                           className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:border-[#0b3a78] hover:text-[#0b3a78] disabled:cursor-not-allowed disabled:opacity-30"
                         >
@@ -1772,7 +1767,7 @@ ${notes.trim() || "-"}
                   {submitAttempted &&
                     !isGuestsValid &&
                     errorText(
-                      <HomeText en="Private tours require a minimum of 2 guests and a maximum of 25 guests." de="Private Touren erfordern mindestens 2 und höchstens 25 Gäste." />
+                      <HomeText en={`This booking requires 2–${maxGuests} guests for the selected experience.`} de={`Für dieses Erlebnis sind 2 bis ${maxGuests} Gäste erforderlich.`} />
                     )}
 
                   <div className="mt-4 flex items-center justify-between rounded-2xl bg-[#071a36] px-5 py-4 text-white">
