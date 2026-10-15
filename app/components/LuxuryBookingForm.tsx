@@ -1516,43 +1516,75 @@ ${notes.trim() || "-"}
                   </div>
 
                   <div className="space-y-8 p-5 sm:p-8">
-                    <div className="flex flex-col gap-5 rounded-2xl border border-slate-200 bg-slate-50/80 p-5 sm:flex-row sm:items-center sm:justify-between">
-                      <div>
-                        <p className="text-sm font-bold text-[#071a36]">
-                          <HomeText en="Number of guests" de="Anzahl der Gäste" />
-                        </p>
-                        <p className="mt-1 text-xs leading-5 text-slate-500">
-                          <HomeText en={`Choose between ${minGuests} and ${maxGuests} people. Children and adults are counted the same.`} de={`Wählen Sie ${minGuests} bis ${maxGuests} Personen. Kinder und Erwachsene werden gleich gezählt.`} />
-                        </p>
+                    <div className="rounded-2xl border border-slate-200 bg-slate-50/80 p-5">
+                      <div className="mb-4">
+                        <p className="text-sm font-bold text-[#071a36]"><HomeText en="Who is travelling?" de="Wer reist mit?" /></p>
+                        <p className="mt-1 text-xs leading-5 text-slate-500"><HomeText en="Infants are free. Children are charged at the adult rate." de="Babys reisen kostenlos. Kinder zahlen den Erwachsenenpreis." /></p>
                       </div>
-                      <div className="flex items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-2 shadow-sm sm:min-w-[190px]">
-                        <button
-                          type="button"
-                          aria-label="Remove one guest"
-                          onClick={() => setGuests(String(Math.max(minGuests, Number(guests) - 1)))}
-                          disabled={Number(guests) <= minGuests}
-                          className="flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 text-[#071a36] transition hover:border-orange-400 hover:bg-orange-50 disabled:cursor-not-allowed disabled:opacity-30"
-                        >
-                          <MinusIcon />
-                        </button>
-                        <div className="min-w-[54px] text-center">
-                          <span className="block text-2xl font-bold tabular-nums text-[#071a36]">{totalGuests}</span>
-                          <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">
-                            <HomeText en="Guests" de="Gäste" />
-                          </span>
+                      <div className="grid gap-3 sm:grid-cols-3">
+                        {[
+                          { key: "adults", title: "Adults", subtitle: "Age 12+", count: adults, set: setAdults, min: 1 },
+                          { key: "children", title: "Children", subtitle: "Age 2–11", count: children, set: setChildren, min: 0 },
+                          { key: "infants", title: "Infants", subtitle: "Under 2 · Free", count: infants, set: setInfants, min: 0 },
+                        ].map((group) => (
+                          <div key={group.key} className="rounded-xl border border-slate-200 bg-white p-4">
+                            <p className="text-sm font-bold text-[#071a36]">{group.title}</p>
+                            <p className="mt-1 text-[11px] text-slate-500">{group.subtitle}</p>
+                            <div className="mt-4 flex items-center justify-between gap-3">
+                              <button type="button" aria-label={"Remove " + group.key} onClick={() => {
+                                const next = Math.max(group.min, group.count - 1);
+                                group.set(next);
+                                if (group.key === "children") setChildAges((ages) => ages.slice(0, next));
+                                if (group.key === "infants") setInfantAges((ages) => ages.slice(0, next));
+                              }} disabled={group.count <= group.min} className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 text-[#071a36] disabled:opacity-30"><MinusIcon /></button>
+                              <span className="text-xl font-bold tabular-nums text-[#071a36]">{group.count}</span>
+                              <button type="button" aria-label={"Add " + group.key} onClick={() => {
+                                if (totalGuests >= maxGuests) return;
+                                group.set(group.count + 1);
+                                if (group.key === "children") setChildAges((ages) => [...ages, ""]);
+                                if (group.key === "infants") setInfantAges((ages) => [...ages, ""]);
+                              }} disabled={totalGuests >= maxGuests} className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#071a36] text-white disabled:opacity-30"><PlusIcon /></button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      {children > 0 && (
+                        <div className="mt-4 rounded-xl border border-slate-200 bg-white p-4">
+                          <p className="mb-3 text-xs font-bold uppercase tracking-wider text-slate-500"><HomeText en="Children’s ages" de="Alter der Kinder" /></p>
+                          <div className="grid gap-3 sm:grid-cols-2">
+                            {Array.from({ length: children }, (_, index) => (
+                              <label key={index} className="text-xs font-semibold text-slate-600">
+                                <HomeText en={"Child " + (index + 1)} de={"Kind " + (index + 1)} />
+                                <select value={childAges[index] ?? ""} onChange={(e) => setChildAges((ages) => Array.from({ length: children }, (_, i) => i === index ? e.target.value : (ages[i] ?? "")))} className="mt-2 h-11 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-800">
+                                  <option value="">Select age</option>
+                                  {Array.from({ length: 10 }, (_, age) => <option key={age + 2} value={String(age + 2)}>{age + 2} years</option>)}
+                                </select>
+                              </label>
+                            ))}
+                          </div>
                         </div>
-                        <button
-                          type="button"
-                          aria-label="Add one guest"
-                          onClick={() => setGuests(String(Math.min(maxGuests, Number(guests) + 1)))}
-                          disabled={Number(guests) >= maxGuests}
-                          className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#071a36] text-white transition hover:bg-orange-500 disabled:cursor-not-allowed disabled:opacity-30"
-                        >
-                          <PlusIcon />
-                        </button>
+                      )}
+                      {infants > 0 && (
+                        <div className="mt-4 rounded-xl border border-slate-200 bg-white p-4">
+                          <p className="mb-3 text-xs font-bold uppercase tracking-wider text-slate-500"><HomeText en="Infants’ ages (free)" de="Alter der Babys (kostenlos)" /></p>
+                          <div className="grid gap-3 sm:grid-cols-2">
+                            {Array.from({ length: infants }, (_, index) => (
+                              <label key={index} className="text-xs font-semibold text-slate-600">
+                                <HomeText en={"Infant " + (index + 1)} de={"Baby " + (index + 1)} />
+                                <select value={infantAges[index] ?? ""} onChange={(e) => setInfantAges((ages) => Array.from({ length: infants }, (_, i) => i === index ? e.target.value : (ages[i] ?? "")))} className="mt-2 h-11 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-800">
+                                  <option value="">Select age</option>
+                                  {Array.from({ length: 24 }, (_, age) => <option key={age} value={String(age)}>{age} months</option>)}
+                                </select>
+                              </label>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-slate-200 pt-4 text-xs">
+                        <span className="text-slate-500">{totalGuests} <HomeText en="people total" de="Personen insgesamt" /></span>
+                        <span className="font-bold text-[#071a36]">{chargeableGuests} <HomeText en="paying guests" de="zahlende Gäste" /></span>
                       </div>
                     </div>
-
                     {submitAttempted && !isGuestsValid && errorText(
                       <HomeText en={`This experience allows ${minGuests}–${maxGuests} guests.`} de={`Dieses Erlebnis ist für ${minGuests}–${maxGuests} Gäste verfügbar.`} />
                     )}
@@ -1698,7 +1730,7 @@ ${notes.trim() || "-"}
                             <HomeText en="Your trip estimate" de="Ihre Reiseübersicht" />
                           </p>
                           <p className="mt-1 text-sm text-slate-300">
-                            {totalGuests} <HomeText en="guests" de="Gäste" /> · <HomeText en="private experience" de="privates Erlebnis" />
+                            {adults} <HomeText en="adults" de="Erwachsene" />, {children} <HomeText en="children" de="Kinder" />, {infants} <HomeText en="infants free" de="Babys kostenlos" />
                           </p>
                           <div className="mt-3 flex flex-wrap gap-2">
                             {selectedIslands.map((id) => (
@@ -1782,7 +1814,7 @@ ${notes.trim() || "-"}
                       </p>
 
                       <p className="mt-1 text-sm font-semibold text-slate-600">
-                        {totalGuests} <HomeText en="guests" de="Gäste" />
+                        {adults} <HomeText en="adults" de="Erwachsene" /> · {children} <HomeText en="children" de="Kinder" /> · {infants} <HomeText en="infants free" de="Babys kostenlos" />
                       </p>
                     </div>
 
@@ -1936,7 +1968,7 @@ ${notes.trim() || "-"}
                       </div>
 
                       <span className="text-xs font-bold text-[#071a36]">
-                        {totalGuests}
+                        {totalGuests} ({infants} <HomeText en="free infants" de="kostenlose Babys" />)
                       </span>
 
                     </div>
