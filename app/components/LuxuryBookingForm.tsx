@@ -709,7 +709,7 @@ export default function LuxuryBookingForm({
     selectedIslands.length
       ? `Islands: ${selectedIslands.join(", ")}`
       : "",
-  ].filter(Boolean).join("\\n");
+  ].filter(Boolean).join("\n");
 
   const filteredNationalities = useMemo(() => {
     if (!nationality) return [];
