@@ -1511,7 +1511,7 @@ ${notes.trim() || "-"}
                           <HomeText en="Build your trip" de="Gestalten Sie Ihre Reise" />
                         </h3>
                         <p className="mt-1 text-sm text-slate-300">
-                          <HomeText en="Every guest counts equally in the price." de="Jede Person wird bei der Preisberechnung gleich berücksichtigt." />
+                          <HomeText en="Infants are free; children pay the adult rate." de="Babys reisen kostenlos; Kinder zahlen den Erwachsenenpreis." />
                         </p>
                       </div>
                     </div>
