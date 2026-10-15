@@ -605,7 +605,11 @@ export default function LuxuryBookingForm({
     () => getLocalTomorrow()
   );
 
-  const [guests, setGuests] = useState("2");
+  const [adults, setAdults] = useState(2);
+  const [children, setChildren] = useState(0);
+  const [infants, setInfants] = useState(0);
+  const [childAges, setChildAges] = useState<string[]>([]);
+  const [infantAges, setInfantAges] = useState<string[]>([]);
 
   const [selectedVehicle, setSelectedVehicle] = useState("limousine");
   const [selectedMuseum, setSelectedMuseum] = useState("old");
@@ -613,14 +617,14 @@ export default function LuxuryBookingForm({
 
   const [notes, setNotes] = useState("");
 
-age states  const [submitAttempted, setSubmitAttempted] =
-    useState(false);
+  const [submitAttempted, setSubmitAttempted] = useState(false);
 
   const [showSuccess, setShowSuccess] = useState(false);
   const [confirmationEmailSent, setConfirmationEmailSent] =
     useState(false);
 
-  const totalGuests = Number(guests || 0);
+  const totalGuests = adults + children + infants;
+  const chargeableGuests = adults + children;
 
   const pricingTour = ["luxor", "cairo", "speed-boat", "private-boat"].includes(tourSlug);
   const islandPrices: Record<string, number> = {
@@ -637,48 +641,48 @@ age states  const [submitAttempted, setSubmitAttempted] =
   let baseTourPrice: number | null = null;
 
   if (tourSlug === "luxor") {
-    if (selectedVehicle === "limousine" && totalGuests === 1) baseTourPrice = 320;
-    if (selectedVehicle === "limousine" && totalGuests === 2) baseTourPrice = 350;
-    if (selectedVehicle === "xpander" && totalGuests === 2) baseTourPrice = 350;
-    if (selectedVehicle === "xpander" && totalGuests === 3) baseTourPrice = 390;
-    if (selectedVehicle === "hiace" && totalGuests >= 4 && totalGuests <= 8) {
-      baseTourPrice = 450 + (totalGuests - 4) * 40;
+    if (selectedVehicle === "limousine" && chargeableGuests === 1) baseTourPrice = 320;
+    if (selectedVehicle === "limousine" && chargeableGuests === 2) baseTourPrice = 350;
+    if (selectedVehicle === "xpander" && chargeableGuests === 2) baseTourPrice = 350;
+    if (selectedVehicle === "xpander" && chargeableGuests === 3) baseTourPrice = 390;
+    if (selectedVehicle === "hiace" && chargeableGuests >= 4 && chargeableGuests <= 8) {
+      baseTourPrice = 450 + (chargeableGuests - 4) * 40;
     }
   } else if (tourSlug === "cairo") {
-    if (selectedVehicle === "limousine" && totalGuests === 1) {
+    if (selectedVehicle === "limousine" && chargeableGuests === 1) {
       baseTourPrice = selectedMuseum === "old" ? 300 : 325;
     }
-    if (selectedVehicle === "limousine" && totalGuests === 2) {
+    if (selectedVehicle === "limousine" && chargeableGuests === 2) {
       baseTourPrice = selectedMuseum === "old" ? 340 : 390;
     }
-    if (selectedVehicle === "xpander" && totalGuests === 2) {
+    if (selectedVehicle === "xpander" && chargeableGuests === 2) {
       baseTourPrice = selectedMuseum === "old" ? 340 : 390;
     }
-    if (selectedVehicle === "xpander" && totalGuests === 3) {
+    if (selectedVehicle === "xpander" && chargeableGuests === 3) {
       baseTourPrice = selectedMuseum === "old" ? 380 : 450;
     }
-    if (selectedVehicle === "hiace" && totalGuests >= 4 && totalGuests <= 8) {
+    if (selectedVehicle === "hiace" && chargeableGuests >= 4 && chargeableGuests <= 8) {
       baseTourPrice =
         (selectedMuseum === "old" ? 450 : 510) +
-        (totalGuests - 4) * (selectedMuseum === "old" ? 40 : 60);
+        (chargeableGuests - 4) * (selectedMuseum === "old" ? 40 : 60);
     }
   } else if (tourSlug === "speed-boat") {
-    if (totalGuests >= 1 && totalGuests <= 4) baseTourPrice = 180;
-    if (totalGuests >= 5 && totalGuests <= 8) baseTourPrice = 250;
+    if (chargeableGuests >= 1 && chargeableGuests <= 4) baseTourPrice = 180;
+    if (chargeableGuests >= 5 && chargeableGuests <= 8) baseTourPrice = 250;
   } else if (tourSlug === "private-boat") {
-    if (totalGuests >= 1 && totalGuests <= 15) baseTourPrice = 450;
-    if (totalGuests >= 16 && totalGuests <= 30) baseTourPrice = 600;
+    if (chargeableGuests >= 1 && chargeableGuests <= 15) baseTourPrice = 450;
+    if (chargeableGuests >= 16 && chargeableGuests <= 30) baseTourPrice = 600;
   }
 
   const islandExtra = selectedIslands.reduce(
     (sum, island) => sum + (islandPrices[island] ?? 0),
     0
-  ) * totalGuests;
+  ) * chargeableGuests;
 
   const pricingValid = !pricingTour || baseTourPrice !== null;
   const totalPrice = pricingTour
     ? (baseTourPrice ?? 0) + islandExtra
-    : privatePrices[Math.min(Math.max(totalGuests, 2), 25)] ?? privatePrices[25];
+    : privatePrices[Math.min(Math.max(chargeableGuests, 2), 25)] ?? privatePrices[25];
 
   const pricingDetails = [
     pricingTour && (tourSlug === "luxor" || tourSlug === "cairo")
@@ -767,7 +771,7 @@ age states  const [submitAttempted, setSubmitAttempted] =
   const minGuests = pricingTour ? 1 : 2;
 
   const isGuestsValid =
-    totalGuests >= minGuests && totalGuests <= maxGuests;
+    chargeableGuests >= minGuests && chargeableGuests <= maxGuests;
 
 age validation state  const isFormValid =
     isNameValid &&
@@ -820,7 +824,7 @@ Room Number: ${roomNumber || "Not specified"}
 
 Date: ${date}
 
-Guests: ${totalGuests}
+Adults: ${adults}\nChildren: ${children} (ages: ${childAges.join(", ") || "not specified"})\nInfants: ${infants} (ages in months: ${infantAges.join(", ") || "not specified"})\nTotal people: ${totalGuests}
 
 ${pricingDetails ? `${pricingDetails}; ` : ""}
 
