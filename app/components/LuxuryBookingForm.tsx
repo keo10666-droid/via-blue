@@ -771,16 +771,18 @@ export default function LuxuryBookingForm({
   const minGuests = pricingTour ? 1 : 2;
 
   const isGuestsValid =
-    chargeableGuests >= minGuests && chargeableGuests <= maxGuests;
-
-age validation state  const isFormValid =
+    chargeableGuests >= minGuests && totalGuests <= maxGuests && adults >= 1;
+  const allChildAgesSet = childAges.length === children && childAges.every((age) => age !== "");
+  const allInfantAgesSet = infantAges.length === infants && infantAges.every((age) => age !== "");
+  const isFormValid =
     isNameValid &&
     isPhoneValid &&
     isEmailValid &&
     isDateValid &&
     isGuestsValid &&
+    allChildAgesSet &&
+    allInfantAgesSet &&
     pricingValid;
-
   const inputClass = (invalid: boolean) =>
     `h-[54px] w-full rounded-2xl border bg-white px-4 text-[15px] font-medium text-slate-800 placeholder:text-slate-400 transition-all duration-200 outline-none ${
       invalid
@@ -1586,7 +1588,7 @@ ${notes.trim() || "-"}
                       </div>
                     </div>
                     {submitAttempted && !isGuestsValid && errorText(
-                      <HomeText en={`This experience allows ${minGuests}–${maxGuests} guests.`} de={`Dieses Erlebnis ist für ${minGuests}–${maxGuests} Gäste verfügbar.`} />
+                      <HomeText en={"Choose at least " + minGuests + " paying guest and no more than " + maxGuests + " people total."} de={"Wählen Sie mindestens " + minGuests + " zahlenden Gast und höchstens " + maxGuests + " Personen insgesamt."} />
                     )}
 
                     {(tourSlug === "luxor" || tourSlug === "cairo") && (
