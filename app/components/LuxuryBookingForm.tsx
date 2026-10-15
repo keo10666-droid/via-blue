@@ -889,7 +889,7 @@ Infants: ${infants}
 
 Total Guests: ${totalGuests}
 
-${pricingDetails ? `${pricingDetails}\\n\\n` : ""}Children Ages:
+${pricingDetails ? `${pricingDetails}; ` : ""}Children Ages:
 ${childrenAgeValues.filter(Boolean).join(", ") || "-"}
 
 Infant Ages:
