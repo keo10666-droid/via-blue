@@ -685,6 +685,7 @@ export default function LuxuryBookingForm({
   const totalPrice = pricingTour
     ? (baseTourPrice ?? 0) + islandExtra
     : privatePrices[Math.min(Math.max(chargeableGuests, 2), 25)] ?? privatePrices[25];
+  const displayedTotalPrice = pricingValid ? `€${totalPrice}` : "—";
 
   const pricingDetails = [
     pricingTour && (tourSlug === "luxor" || tourSlug === "cairo")
@@ -1748,7 +1749,7 @@ ${notes.trim() || "-"}
                         </div>
                         <div className="sm:text-right">
                           <p className="text-xs font-medium text-slate-300"><HomeText en="Estimated total" de="Geschätzter Gesamtpreis" /></p>
-                          <p className="mt-1 text-3xl font-bold tracking-tight text-white">€{totalPrice}</p>
+                          <p className="mt-1 text-3xl font-bold tracking-tight text-white">{displayedTotalPrice}</p>
                           {selectedIslands.length > 0 && (
                             <p className="mt-1 text-xs text-slate-400">
                               <HomeText en={`Includes €${islandExtra} island options`} de={`Enthält €${islandExtra} für Inseloptionen`} />
@@ -1826,7 +1827,7 @@ ${notes.trim() || "-"}
 
                     <div className="text-right">
                       <p className="text-3xl font-black text-[#071a36]">
-                        €{totalPrice}
+                        {displayedTotalPrice}
                       </p>
 
                       <p className="text-[10px] font-semibold text-slate-400">
@@ -1926,7 +1927,7 @@ ${notes.trim() || "-"}
 
                       <div className="text-right">
                         <p className="text-3xl font-black text-[#071a36]">
-                          €{totalPrice}
+                          {displayedTotalPrice}
                         </p>
                       </div>
 
