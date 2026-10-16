@@ -1632,7 +1632,8 @@ ${notes.trim() || "-"}
                                 key={vehicle.id}
                                 type="button"
                                 onClick={() => setSelectedVehicle(vehicle.id)}
-                                className={`group relative rounded-2xl border p-4 text-left transition duration-200 ${active ? "border-orange-400 bg-orange-50/70 shadow-[0_8px_24px_rgba(249,115,22,0.10)] ring-1 ring-orange-300" : "border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50"}`}
+                                aria-pressed={active}
+                                className={`group relative min-h-[142px] rounded-2xl border p-5 text-left transition-all duration-300 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-100 ${active ? "border-[#071a36] bg-slate-50 shadow-[0_14px_34px_rgba(7,26,54,0.12)] ring-1 ring-[#071a36]" : "border-slate-200 bg-white hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-[0_12px_28px_rgba(7,26,54,0.07)]"}`}
                               >
                                 <span className={`mb-4 flex h-10 w-10 items-center justify-center rounded-xl text-sm font-black ${active ? "bg-[#071a36] text-orange-300" : "bg-slate-100 text-slate-500"}`}>{vehicle.symbol}</span>
                                 <span className="block text-sm font-bold text-[#071a36]">{vehicle.title}</span>
@@ -1664,7 +1665,8 @@ ${notes.trim() || "-"}
                                 key={museum.id}
                                 type="button"
                                 onClick={() => setSelectedMuseum(museum.id)}
-                                className={`relative overflow-hidden rounded-2xl border p-5 text-left transition ${active ? "border-orange-400 bg-orange-50/70 ring-1 ring-orange-300" : "border-slate-200 hover:border-slate-300 hover:bg-slate-50"}`}
+                                aria-pressed={active}
+                                className={`relative min-h-[132px] overflow-hidden rounded-2xl border p-5 text-left transition-all duration-300 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-100 ${active ? "border-[#071a36] bg-slate-50 shadow-[0_12px_28px_rgba(7,26,54,0.10)] ring-1 ring-[#071a36]" : "border-slate-200 bg-white hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md"}`}
                               >
                                 <span className="text-[9px] font-bold tracking-[0.18em] text-orange-500">{museum.short}</span>
                                 <span className="mt-2 block text-base font-bold text-[#071a36]">{museum.title}</span>
@@ -1711,7 +1713,7 @@ ${notes.trim() || "-"}
                             return (
                               <label
                                 key={island.id}
-                                className={`group relative flex min-h-[142px] cursor-pointer flex-col overflow-hidden rounded-2xl border p-4 transition duration-200 ${active ? "border-orange-400 bg-orange-50 shadow-[0_10px_25px_rgba(249,115,22,0.10)] ring-1 ring-orange-300" : "border-slate-200 bg-white hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md"}`}
+                                className={`group relative flex min-h-[158px] cursor-pointer flex-col overflow-hidden rounded-2xl border p-4 transition-all duration-300 focus-within:ring-4 focus-within:ring-orange-100 ${active ? "border-[#071a36] bg-slate-50 shadow-[0_14px_32px_rgba(7,26,54,0.10)] ring-1 ring-[#071a36]" : "border-slate-200 bg-white hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-[0_12px_28px_rgba(7,26,54,0.07)]"}`}
                               >
                                 <input
                                   type="checkbox"
@@ -1721,7 +1723,7 @@ ${notes.trim() || "-"}
                                   )}
                                   className="sr-only"
                                 />
-                                <span className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${island.tone} ${active ? "opacity-100" : "opacity-60"}`} />
+                                <span className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${island.tone} ${active ? "opacity-100" : "opacity-45"}`} />
                                 <span className="flex items-start justify-between gap-2 pt-1">
                                   <span className={`flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br ${island.tone} text-xs font-black text-[#071a36]`}>{island.name.slice(0, 1)}</span>
                                   <span className={`flex h-5 w-5 items-center justify-center rounded-full border text-[10px] font-bold ${active ? "border-orange-500 bg-orange-500 text-white" : "border-slate-300 bg-white text-transparent"}`}>✓</span>
