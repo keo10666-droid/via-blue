@@ -1,8 +1,10 @@
-"use client";
 
 import Image from "next/image";
 import HomeText from "@/app/components/HomeText";
 import Link from "next/link";
+import { getLuxuryPricing } from "@/lib/luxuryPricing";
+
+export const dynamic = "force-dynamic";
 
 const luxuryTours = [
   {
@@ -179,7 +181,16 @@ function CrownIcon() {
   );
 }
 
-export default function LuxuryToursPage() {
+export default async function LuxuryToursPage() {
+  const pricing = await getLuxuryPricing();
+  const displayTours = luxuryTours.map((tour) => ({
+    ...tour,
+    price: tour.slug === "luxor" ? pricing.luxor_limo_1
+      : tour.slug === "cairo" ? pricing.cairo_old_limo_1
+      : tour.slug === "speed-boat" ? pricing.speed_boat_up_to_4
+      : tour.slug === "private-boat" ? pricing.private_boat_up_to_15
+      : tour.price,
+  }));
   return (
     <main className="min-h-screen bg-slate-50">
       {/* HERO */}
@@ -280,7 +291,7 @@ export default function LuxuryToursPage() {
       {/* TOURS */}
       <section className="mx-auto max-w-7xl px-6 py-12 md:px-8 md:py-16">
         <div className="grid items-stretch gap-7 md:grid-cols-2 lg:grid-cols-3">
-          {luxuryTours.map((tour) => (
+          {displayTours.map((tour) => (
             <article
               key={tour.slug}
               className="group flex h-full flex-col overflow-hidden rounded-[28px] border border-slate-200/80 bg-white shadow-sm transition duration-500 hover:-translate-y-1.5 hover:border-slate-300 hover:shadow-2xl"
