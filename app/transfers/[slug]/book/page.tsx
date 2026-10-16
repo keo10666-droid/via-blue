@@ -2371,8 +2371,7 @@ ${notes.trim() || "-"}
                       </p>
 
                       <p className="mt-1 text-[10px] leading-5 text-white/55">
-                        Private vehicle · Fixed
-                        price
+                        <HomeText en="Private vehicle · Fixed price" de="Privatfahrzeug · Festpreis" />
                       </p>
                     </div>
 
