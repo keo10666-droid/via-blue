@@ -2366,17 +2366,17 @@ ${notes.trim() || "-"}
                 <div className="mt-5 overflow-hidden rounded-2xl border border-blue-950 bg-blue-950 p-5 shadow-[0_14px_35px_rgba(15,23,42,0.16)]">
                   <div className="flex items-end justify-between gap-4">
                     <div>
-                      <p className="text-xs font-bold text-slate-500">
+                      <p className="text-xs font-bold text-white/80">
                         <HomeText en="Total Transfer Price" de="Gesamtpreis des Transfers" />
                       </p>
 
-                      <p className="mt-1 text-[10px] text-slate-400">
+                      <p className="mt-1 text-[10px] leading-5 text-white/55">
                         Private vehicle · Fixed
                         price
                       </p>
                     </div>
 
-                    <p className="text-3xl font-bold text-orange-500">
+                    <p className="text-3xl font-black tracking-tight text-orange-300">
                       €{vehicle.price}
                     </p>
                   </div>
