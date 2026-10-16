@@ -1823,25 +1823,25 @@ ${notes.trim() || "-"}
                 )}
 
                 {/* MOBILE PRICE */}
-                <div className="mt-7 rounded-2xl border border-orange-100 bg-orange-50 p-5 lg:hidden">
+                <div className="mt-7 overflow-hidden rounded-3xl border border-blue-950 bg-blue-950 p-5 text-white shadow-[0_16px_38px_rgba(7,26,54,0.16)] lg:hidden">
                   <div className="flex items-end justify-between gap-4">
 
                     <div>
-                      <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-orange-600">
+                      <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-orange-300">
                         <HomeText en="Private tour" de="Private Tour" />
                       </p>
 
-                      <p className="mt-1 text-sm font-semibold text-slate-600">
+                      <p className="mt-1 text-sm font-semibold text-white/70">
                         {adults} <HomeText en="adults" de="Erwachsene" /> · {children} <HomeText en="children" de="Kinder" /> · {infants} <HomeText en="infants free" de="Babys kostenlos" />
                       </p>
                     </div>
 
                     <div className="text-right">
-                      <p className="text-3xl font-black text-[#071a36]">
+                      <p className="text-3xl font-black tracking-tight text-white">
                         {displayedTotalPrice}
                       </p>
 
-                      <p className="text-[10px] font-semibold text-slate-400">
+                      <p className="text-[10px] font-semibold text-orange-200/80">
                         <HomeText en="total experience" de="Gesamtes Erlebnis" />
                       </p>
                     </div>
@@ -1922,9 +1922,9 @@ ${notes.trim() || "-"}
 
                   </div>
 
-                  <div className="mt-3 overflow-hidden rounded-2xl border border-orange-100 bg-orange-50">
+                  <div className="mt-4 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
 
-                    <div className="flex items-end justify-between p-5">
+                    <div className="flex items-end justify-between gap-4 p-5 sm:p-6">
 
                       <div>
                         <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-orange-600">
@@ -1937,14 +1937,14 @@ ${notes.trim() || "-"}
                       </div>
 
                       <div className="text-right">
-                        <p className="text-3xl font-black text-[#071a36]">
+                        <p className="text-3xl font-black tracking-tight text-[#071a36] sm:text-4xl">
                           {displayedTotalPrice}
                         </p>
                       </div>
 
                     </div>
 
-                    <div className="border-t border-orange-100 px-5 py-3 text-[10px] font-semibold text-orange-700">
+                    <div className="border-t border-slate-100 bg-slate-50 px-5 py-3 text-[10px] font-semibold leading-5 text-slate-500">
                       <HomeText en="Price updates automatically with guest" de="Der Preis wird automatisch anhand der Gästeanzahl" />
                       <HomeText en="count" de="aktualisiert" />
                     </div>

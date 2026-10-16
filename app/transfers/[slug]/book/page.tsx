@@ -2183,7 +2183,7 @@ ${notes.trim() || "-"}
 
           {/* SUMMARY */}
           <aside>
-            <div className="sticky top-8 overflow-hidden rounded-[28px] border border-slate-200/80 bg-white shadow-[0_18px_55px_rgba(15,23,42,0.11)]">
+            <div className="overflow-hidden rounded-[28px] border border-slate-200/80 bg-white shadow-[0_18px_55px_rgba(15,23,42,0.11)] lg:sticky lg:top-8">
               <div className="relative overflow-hidden bg-blue-950 px-6 py-6 text-white">
                 <div className="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-orange-500/15 blur-2xl" />
 
@@ -2363,20 +2363,19 @@ ${notes.trim() || "-"}
                 )}
 
                 {/* PRICE */}
-                <div className="mt-5 rounded-2xl border border-slate-100 bg-slate-50 p-4">
+                <div className="mt-5 overflow-hidden rounded-2xl border border-blue-950 bg-blue-950 p-5 shadow-[0_14px_35px_rgba(15,23,42,0.16)]">
                   <div className="flex items-end justify-between gap-4">
                     <div>
-                      <p className="text-xs font-bold text-slate-500">
+                      <p className="text-xs font-bold text-white/80">
                         <HomeText en="Total Transfer Price" de="Gesamtpreis des Transfers" />
                       </p>
 
-                      <p className="mt-1 text-[10px] text-slate-400">
-                        Private vehicle · Fixed
-                        price
+                      <p className="mt-1 text-[10px] leading-5 text-white/55">
+                        <HomeText en="Private vehicle · Fixed price" de="Privatfahrzeug · Festpreis" />
                       </p>
                     </div>
 
-                    <p className="text-3xl font-bold text-orange-500">
+                    <p className="text-3xl font-black tracking-tight text-orange-300">
                       €{vehicle.price}
                     </p>
                   </div>
