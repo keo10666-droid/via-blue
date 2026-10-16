@@ -681,7 +681,11 @@ export default function LuxuryBookingForm({
     0
   ) * chargeableGuests;
 
-  const pricingValid = !pricingTour || baseTourPrice !== null;
+  const pricingCapacity =
+    tourSlug === "private-boat" ? 30 :
+    ["luxor", "cairo", "speed-boat"].includes(tourSlug) ? 8 : 25;
+  const pricingValid =
+    !pricingTour || (baseTourPrice !== null && totalGuests <= pricingCapacity);
   const totalPrice = pricingTour
     ? (baseTourPrice ?? 0) + islandExtra
     : privatePrices[Math.min(Math.max(chargeableGuests, 2), 25)] ?? privatePrices[25];
