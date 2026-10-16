@@ -15,6 +15,7 @@ import {
 
 import BookingSuccessModal from "@/app/components/BookingSuccessModal";
 import HomeText from "@/app/components/HomeText";
+import type { LuxuryPricing } from "@/lib/luxuryPricing";
 
 type LuxuryBookingFormProps = {
   tourName: string;
@@ -22,6 +23,7 @@ type LuxuryBookingFormProps = {
   adultPrice?: number;
   tourType?: string;
   included?: string[];
+  pricing: LuxuryPricing;
 };
 
 const privatePrices: Record<number, number> = {
@@ -569,6 +571,7 @@ export default function LuxuryBookingForm({
   tourSlug = "",
   tourType = "Private Luxury",
   included = [],
+  pricing,
 }: LuxuryBookingFormProps) {
   const [isGerman, setIsGerman] = useState(false);
   const displayTourName = isGerman ? (germanLuxuryTourNames[tourName] ?? tourName) : tourName;
@@ -630,52 +633,52 @@ export default function LuxuryBookingForm({
 
   const pricingTour = ["luxor", "cairo", "speed-boat", "private-boat"].includes(tourSlug);
   const islandPrices: Record<string, number> = {
-    paradise: 20,
-    orange: 10,
-    hula: 10,
-    magaweesh: 10,
-    amwaj: 10,
-    eden: 35,
-    ouzeria: 35,
-    mahmya: 60,
+    paradise: pricing.island_paradise,
+    orange: pricing.island_orange,
+    hula: pricing.island_hula,
+    magaweesh: pricing.island_magaweesh,
+    amwaj: pricing.island_amwaj,
+    eden: pricing.island_eden,
+    ouzeria: pricing.island_ouzeria,
+    mahmya: pricing.island_mahmya,
   };
 
   let baseTourPrice: number | null = null;
 
   if (tourSlug === "luxor") {
-    if (selectedVehicle === "limousine" && chargeableGuests === 1) baseTourPrice = 320;
-    if (selectedVehicle === "limousine" && chargeableGuests === 2) baseTourPrice = 350;
-    if (selectedVehicle === "xpander" && chargeableGuests === 2) baseTourPrice = 350;
-    if (selectedVehicle === "xpander" && chargeableGuests === 3) baseTourPrice = 390;
+    if (selectedVehicle === "limousine" && chargeableGuests === 1) baseTourPrice = pricing.luxor_limo_1;
+    if (selectedVehicle === "limousine" && chargeableGuests === 2) baseTourPrice = pricing.luxor_limo_2;
+    if (selectedVehicle === "xpander" && chargeableGuests === 2) baseTourPrice = pricing.luxor_xpander_2;
+    if (selectedVehicle === "xpander" && chargeableGuests === 3) baseTourPrice = pricing.luxor_xpander_3;
     if (selectedVehicle === "hiace" && chargeableGuests >= 4 && chargeableGuests <= 8) {
-      baseTourPrice = 450 + (chargeableGuests - 4) * 40;
+      baseTourPrice = pricing.luxor_hiace_4 + (chargeableGuests - 4) * pricing.luxor_hiace_extra;
     }
   } else if (tourSlug === "cairo") {
     if (selectedVehicle === "limousine" && chargeableGuests === 1) {
-      baseTourPrice = selectedMuseum === "old" ? 300 : 325;
+      baseTourPrice = selectedMuseum === "old" ? pricing.cairo_old_limo_1 : pricing.cairo_grand_limo_1;
     }
     if (selectedVehicle === "limousine" && chargeableGuests === 2) {
-      baseTourPrice = selectedMuseum === "old" ? 340 : 390;
+      baseTourPrice = selectedMuseum === "old" ? pricing.cairo_old_limo_2 : pricing.cairo_grand_limo_2;
     }
     if (selectedVehicle === "xpander" && chargeableGuests === 2) {
-      baseTourPrice = selectedMuseum === "old" ? 340 : 390;
+      baseTourPrice = selectedMuseum === "old" ? pricing.cairo_old_xpander_2 : pricing.cairo_grand_xpander_2;
     }
     if (selectedVehicle === "xpander" && chargeableGuests === 3) {
-      baseTourPrice = selectedMuseum === "old" ? 380 : 450;
+      baseTourPrice = selectedMuseum === "old" ? pricing.cairo_old_xpander_3 : pricing.cairo_grand_xpander_3;
     }
     if (selectedVehicle === "hiace" && chargeableGuests >= 4 && chargeableGuests <= 8) {
       baseTourPrice =
-        (selectedMuseum === "old" ? 450 : 510) +
-        (chargeableGuests - 4) * (selectedMuseum === "old" ? 40 : 60);
+        (selectedMuseum === "old" ? pricing.cairo_old_hiace_4 : pricing.cairo_grand_hiace_4) +
+        (chargeableGuests - 4) * (selectedMuseum === "old" ? pricing.cairo_old_hiace_extra : pricing.cairo_grand_hiace_extra);
     }
   } else if (tourSlug === "speed-boat") {
     // Boat capacity/size is based on adults and children; infants are recorded but excluded.
-    if (totalGuests >= 1 && totalGuests <= 4) baseTourPrice = 180;
-    if (totalGuests >= 5 && totalGuests <= 8) baseTourPrice = 250;
+    if (totalGuests >= 1 && totalGuests <= 4) baseTourPrice = pricing.speed_boat_up_to_4;
+    if (totalGuests >= 5 && totalGuests <= 8) baseTourPrice = pricing.speed_boat_up_to_8;
   } else if (tourSlug === "private-boat") {
     // Boat capacity/size is based on adults and children; infants are recorded but excluded.
-    if (totalGuests >= 1 && totalGuests <= 15) baseTourPrice = 450;
-    if (totalGuests >= 16 && totalGuests <= 30) baseTourPrice = 600;
+    if (totalGuests >= 1 && totalGuests <= 15) baseTourPrice = pricing.private_boat_up_to_15;
+    if (totalGuests >= 16 && totalGuests <= 30) baseTourPrice = pricing.private_boat_up_to_30;
   }
 
   const islandExtra = selectedIslands.reduce(
@@ -1695,14 +1698,14 @@ ${notes.trim() || "-"}
                         </p>
                         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
                           {[
-                            { id: "paradise", name: "Paradise Island", price: 20, category: "Island escape", tone: "from-cyan-50 to-sky-100" },
-                            { id: "orange", name: "Orange Bay", price: 10, category: "Beach club", tone: "from-orange-50 to-amber-100" },
-                            { id: "hula", name: "Hula Hula", price: 10, category: "Island vibes", tone: "from-rose-50 to-orange-100" },
-                            { id: "magaweesh", name: "Magawish", price: 10, category: "Natural beauty", tone: "from-teal-50 to-emerald-100" },
-                            { id: "amwaj", name: "Amwaj", price: 10, category: "Sea & sand", tone: "from-blue-50 to-cyan-100" },
-                            { id: "eden", name: "Eden Island", price: 35, category: "Premium beach", tone: "from-amber-50 to-yellow-100" },
-                            { id: "ouzeria", name: "Ouzeria", price: 35, category: "Private escape", tone: "from-violet-50 to-fuchsia-100" },
-                            { id: "mahmya", name: "Mahmya", price: 60, category: "Protected island", tone: "from-emerald-50 to-lime-100" },
+                            { id: "paradise", name: "Paradise Island", price: pricing.island_paradise, category: "Island escape", tone: "from-cyan-50 to-sky-100" },
+                            { id: "orange", name: "Orange Bay", price: pricing.island_orange, category: "Beach club", tone: "from-orange-50 to-amber-100" },
+                            { id: "hula", name: "Hula Hula", price: pricing.island_hula, category: "Island vibes", tone: "from-rose-50 to-orange-100" },
+                            { id: "magaweesh", name: "Magawish", price: pricing.island_magaweesh, category: "Natural beauty", tone: "from-teal-50 to-emerald-100" },
+                            { id: "amwaj", name: "Amwaj", price: pricing.island_amwaj, category: "Sea & sand", tone: "from-blue-50 to-cyan-100" },
+                            { id: "eden", name: "Eden Island", price: pricing.island_eden, category: "Premium beach", tone: "from-amber-50 to-yellow-100" },
+                            { id: "ouzeria", name: "Ouzeria", price: pricing.island_ouzeria, category: "Private escape", tone: "from-violet-50 to-fuchsia-100" },
+                            { id: "mahmya", name: "Mahmya", price: pricing.island_mahmya, category: "Protected island", tone: "from-emerald-50 to-lime-100" },
                           ].map((island) => {
                             const active = selectedIslands.includes(island.id);
                             return (
