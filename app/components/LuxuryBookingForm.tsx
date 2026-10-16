@@ -623,7 +623,9 @@ export default function LuxuryBookingForm({
   const [confirmationEmailSent, setConfirmationEmailSent] =
     useState(false);
 
-  const totalGuests = adults + children + infants;
+  // Infants are recorded for the booking, but never affect price or vehicle/boat capacity.
+  const totalGuests = adults + children;
+  const recordedGuests = adults + children + infants;
   const chargeableGuests = adults + children;
 
   const pricingTour = ["luxor", "cairo", "speed-boat", "private-boat"].includes(tourSlug);
@@ -667,11 +669,11 @@ export default function LuxuryBookingForm({
         (chargeableGuests - 4) * (selectedMuseum === "old" ? 40 : 60);
     }
   } else if (tourSlug === "speed-boat") {
-    // Boat capacity/size depends on everyone onboard, including free infants.
+    // Boat capacity/size is based on adults and children; infants are recorded but excluded.
     if (totalGuests >= 1 && totalGuests <= 4) baseTourPrice = 180;
     if (totalGuests >= 5 && totalGuests <= 8) baseTourPrice = 250;
   } else if (tourSlug === "private-boat") {
-    // Boat capacity/size depends on everyone onboard, including free infants.
+    // Boat capacity/size is based on adults and children; infants are recorded but excluded.
     if (totalGuests >= 1 && totalGuests <= 15) baseTourPrice = 450;
     if (totalGuests >= 16 && totalGuests <= 30) baseTourPrice = 600;
   }
@@ -835,7 +837,7 @@ Room Number: ${roomNumber || "Not specified"}
 
 Date: ${date}
 
-Adults: ${adults}\nChildren: ${children} (ages: ${childAges.join(", ") || "not specified"})\nInfants: ${infants} (ages in months: ${infantAges.join(", ") || "not specified"})\nTotal people: ${totalGuests}
+Adults: ${adults}\nChildren: ${children} (ages: ${childAges.join(", ") || "not specified"})\nInfants: ${infants} (ages in months: ${infantAges.join(", ") || "not specified"})\nTotal chargeable/capacity guests: ${totalGuests}\nTotal people including infants: ${recordedGuests}
 
 ${pricingDetails ? `${pricingDetails}; ` : ""}
 
