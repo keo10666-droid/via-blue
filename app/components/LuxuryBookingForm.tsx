@@ -18,9 +18,9 @@ import HomeText from "@/app/components/HomeText";
 
 type LuxuryBookingFormProps = {
   tourName: string;
+  tourSlug?: string;
   adultPrice?: number;
   tourType?: string;
-  tourSlug?: string;
   included?: string[];
 };
 
@@ -447,114 +447,6 @@ function SparklesIcon() {
   );
 }
 
-
-const germanNationalityNames: Record<string, string> = {
-  "Egyptian": "Ägyptisch",
-  "German": "Deutsch",
-  "British": "Britisch",
-  "French": "Französisch",
-  "Italian": "Italienisch",
-  "Polish": "Polnisch",
-  "Dutch": "Niederländisch",
-  "Belgian": "Belgisch",
-  "Swiss": "Schweizerisch",
-  "Austrian": "Österreichisch",
-  "Russian": "Russisch",
-  "Ukrainian": "Ukrainisch",
-  "Spanish": "Spanisch",
-  "Portuguese": "Portugiesisch",
-  "Turkish": "Türkisch",
-  "American": "Amerikanisch",
-  "Canadian": "Kanadisch",
-  "Brazilian": "Brasilianisch",
-  "Australian": "Australisch",
-  "Swedish": "Schwedisch",
-  "Norwegian": "Norwegisch",
-  "Danish": "Dänisch",
-  "Finnish": "Finnisch",
-  "Czech": "Tschechisch",
-  "Slovak": "Slowakisch",
-  "Romanian": "Rumänisch",
-  "Hungarian": "Ungarisch",
-  "Serbian": "Serbisch",
-  "Croatian": "Kroatisch",
-  "Slovenian": "Slowenisch",
-  "Irish": "Irisch",
-  "Greek": "Griechisch",
-  "Saudi": "Saudi-arabisch",
-  "Emirati": "Emiratisch",
-  "Kuwaiti": "Kuwaitisch",
-  "Qatari": "Katarisch",
-  "Bahraini": "Bahrainisch",
-  "Omani": "Omanisch",
-  "Jordanian": "Jordanisch",
-  "Lebanese": "Libanesisch",
-  "Moroccan": "Marokkanisch",
-  "Algerian": "Algerisch",
-  "Tunisian": "Tunesisch",
-  "Libyan": "Libysch",
-  "South African": "Südafrikanisch",
-  "Indian": "Indisch",
-  "Pakistani": "Pakistanisch",
-  "Chinese": "Chinesisch",
-  "Japanese": "Japanisch",
-  "Korean": "Koreanisch"
-};
-const germanCountryNames: Record<string, string> = {
-  "Egypt": "Ägypten",
-  "Germany": "Deutschland",
-  "United Kingdom": "Vereinigtes Königreich",
-  "France": "Frankreich",
-  "Italy": "Italien",
-  "Poland": "Polen",
-  "Netherlands": "Niederlande",
-  "Belgium": "Belgien",
-  "Switzerland": "Schweiz",
-  "Austria": "Österreich",
-  "Russia": "Russland",
-  "Ukraine": "Ukraine",
-  "Spain": "Spanien",
-  "Portugal": "Portugal",
-  "Turkey": "Türkei",
-  "United States": "Vereinigte Staaten",
-  "Canada": "Kanada",
-  "Brazil": "Brasilien",
-  "Australia": "Australien",
-  "Sweden": "Schweden",
-  "Norway": "Norwegen",
-  "Denmark": "Dänemark",
-  "Finland": "Finnland",
-  "Czech Republic": "Tschechien",
-  "Slovakia": "Slowakei",
-  "Romania": "Rumänien",
-  "Hungary": "Ungarn",
-  "Serbia": "Serbien",
-  "Croatia": "Kroatien",
-  "Slovenia": "Slowenien",
-  "Ireland": "Irland",
-  "Greece": "Griechenland",
-  "Saudi Arabia": "Saudi-Arabien",
-  "United Arab Emirates": "Vereinigte Arabische Emirate",
-  "Kuwait": "Kuwait",
-  "Qatar": "Katar",
-  "Bahrain": "Bahrain",
-  "Oman": "Oman",
-  "Jordan": "Jordanien",
-  "Lebanon": "Libanon",
-  "Morocco": "Marokko",
-  "Algeria": "Algerien",
-  "Tunisia": "Tunesien",
-  "Libya": "Libyen",
-  "South Africa": "Südafrika",
-  "India": "Indien",
-  "Pakistan": "Pakistan",
-  "China": "China",
-  "Japan": "Japan",
-  "South Korea": "Südkorea"
-};
-const displayNationality = (value: string, isGerman: boolean) => isGerman ? (germanNationalityNames[value] || value) : value;
-const displayCountryName = (value: string, isGerman: boolean) => isGerman ? (germanCountryNames[value] || value) : value;
-
 const FlagIcon = ({
   iso,
   name,
@@ -574,7 +466,7 @@ const FlagIcon = ({
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-function formatDateDisplay(value: string, isGerman = false) {
+function formatDateDisplay(value: string) {
   if (!value) return "";
 
   const [year, month, day] = value.split("-").map(Number);
@@ -583,7 +475,7 @@ function formatDateDisplay(value: string, isGerman = false) {
 
   const date = new Date(year, month - 1, day);
 
-  return date.toLocaleDateString(isGerman ? "de-DE" : "en-GB", {
+  return date.toLocaleDateString("en-GB", {
     weekday: "short",
     day: "numeric",
     month: "short",
@@ -674,8 +566,8 @@ function NoPeriods({ children }: { children: ReactNode }) {
 
 export default function LuxuryBookingForm({
   tourName,
-  tourType = "Private Luxury",
   tourSlug = "",
+  tourType = "Private Luxury",
   included = [],
 }: LuxuryBookingFormProps) {
   const [isGerman, setIsGerman] = useState(false);
@@ -713,104 +605,110 @@ export default function LuxuryBookingForm({
     () => getLocalTomorrow()
   );
 
-  const [adults, setAdults] = useState("2");
-  const [children, setChildren] = useState("0");
-  const [infants, setInfants] = useState("0");
-  const [selectedVehicle, setSelectedVehicle] = useState<"limousine" | "xpander" | "hiace">("limousine");
-  const [selectedMuseum, setSelectedMuseum] = useState<"old" | "new">("old");
-  const [selectedIsland, setSelectedIsland] = useState("none");
+  const [adults, setAdults] = useState(2);
+  const [children, setChildren] = useState(0);
+  const [infants, setInfants] = useState(0);
+  const [childAges, setChildAges] = useState<string[]>([]);
+  const [infantAges, setInfantAges] = useState<string[]>([]);
 
-  const isVehiclePricedTour = tourSlug === "luxor" || tourSlug === "cairo";
-  const isIslandPricedTour = tourSlug === "speed-boat" || tourSlug === "private-boat";
-  const isCustomPricedTour = isVehiclePricedTour || isIslandPricedTour;
-
-  const islandPrices: Record<string, number> = {
-    none: 0,
-    paradise: 20,
-    orange: 10,
-    eden: 35,
-    mahmya: 60,
-  };
-
-  const guestLimits = (() => {
-    if (tourSlug === "luxor" || tourSlug === "cairo") {
-      if (selectedVehicle === "limousine") return { min: 1, max: 2 };
-      if (selectedVehicle === "xpander") return { min: 2, max: 3 };
-      return { min: 4, max: 8 };
-    }
-    if (tourSlug === "speed-boat") return { min: 1, max: 8 };
-    if (tourSlug === "private-boat") return { min: 1, max: 30 };
-    return { min: 2, max: 25 };
-  })();
+  const [selectedVehicle, setSelectedVehicle] = useState("limousine");
+  const [selectedMuseum, setSelectedMuseum] = useState("old");
+  const [selectedIslands, setSelectedIslands] = useState<string[]>([]);
 
   const [notes, setNotes] = useState("");
 
-  const [childrenAgeValues, setChildrenAgeValues] =
-    useState<string[]>([]);
-
-  const [infantAgeValues, setInfantAgeValues] =
-    useState<string[]>([]);
-
-  const [submitAttempted, setSubmitAttempted] =
-    useState(false);
+  const [submitAttempted, setSubmitAttempted] = useState(false);
 
   const [showSuccess, setShowSuccess] = useState(false);
   const [confirmationEmailSent, setConfirmationEmailSent] =
     useState(false);
 
-  const childAges = Array.from(
-    { length: Number(children || 0) },
-    (_, i) => i
-  );
+  // Infants are recorded for the booking, but never affect price or vehicle/boat capacity.
+  const totalGuests = adults + children;
+  const recordedGuests = adults + children + infants;
+  const chargeableGuests = adults + children;
 
-  const infantAges = Array.from(
-    { length: Number(infants || 0) },
-    (_, i) => i
-  );
+  const pricingTour = ["luxor", "cairo", "speed-boat", "private-boat"].includes(tourSlug);
+  const islandPrices: Record<string, number> = {
+    paradise: 20,
+    orange: 10,
+    hula: 10,
+    magaweesh: 10,
+    amwaj: 10,
+    eden: 35,
+    ouzeria: 35,
+    mahmya: 60,
+  };
 
-  const totalGuests =
-    Number(adults || 0) +
-    Number(children || 0) +
-    Number(infants || 0);
+  let baseTourPrice: number | null = null;
 
-  const totalPrice = (() => {
-    if (tourSlug === "luxor") {
-      if (selectedVehicle === "limousine") return ({ 1: 320, 2: 350 } as Record<number, number>)[totalGuests] ?? 0;
-      if (selectedVehicle === "xpander") return ({ 2: 350, 3: 390 } as Record<number, number>)[totalGuests] ?? 0;
-      return totalGuests >= 4 && totalGuests <= 8 ? 450 + (totalGuests - 4) * 40 : 0;
+  if (tourSlug === "luxor") {
+    if (selectedVehicle === "limousine" && chargeableGuests === 1) baseTourPrice = 320;
+    if (selectedVehicle === "limousine" && chargeableGuests === 2) baseTourPrice = 350;
+    if (selectedVehicle === "xpander" && chargeableGuests === 2) baseTourPrice = 350;
+    if (selectedVehicle === "xpander" && chargeableGuests === 3) baseTourPrice = 390;
+    if (selectedVehicle === "hiace" && chargeableGuests >= 4 && chargeableGuests <= 8) {
+      baseTourPrice = 450 + (chargeableGuests - 4) * 40;
     }
-    if (tourSlug === "cairo") {
-      if (selectedVehicle === "limousine") {
-        const prices = selectedMuseum === "old" ? { 1: 300, 2: 340 } : { 1: 325, 2: 390 };
-        return (prices as Record<number, number>)[totalGuests] ?? 0;
-      }
-      if (selectedVehicle === "xpander") {
-        const prices = selectedMuseum === "old" ? { 2: 340, 3: 380 } : { 2: 390, 3: 450 };
-        return (prices as Record<number, number>)[totalGuests] ?? 0;
-      }
-      if (totalGuests < 4 || totalGuests > 8) return 0;
-      return (selectedMuseum === "old" ? 450 : 510) + (totalGuests - 4) * (selectedMuseum === "old" ? 40 : 60);
+  } else if (tourSlug === "cairo") {
+    if (selectedVehicle === "limousine" && chargeableGuests === 1) {
+      baseTourPrice = selectedMuseum === "old" ? 300 : 325;
     }
-    if (tourSlug === "speed-boat") {
-      if (totalGuests < 1 || totalGuests > 8) return 0;
-      const boatPrice = totalGuests <= 4 ? 180 : 250;
-      return boatPrice + (islandPrices[selectedIsland] ?? 0) * totalGuests;
+    if (selectedVehicle === "limousine" && chargeableGuests === 2) {
+      baseTourPrice = selectedMuseum === "old" ? 340 : 390;
     }
-    if (tourSlug === "private-boat") {
-      if (totalGuests < 1 || totalGuests > 30) return 0;
-      const boatPrice = totalGuests <= 15 ? 450 : 600;
-      return boatPrice + (islandPrices[selectedIsland] ?? 0) * totalGuests;
+    if (selectedVehicle === "xpander" && chargeableGuests === 2) {
+      baseTourPrice = selectedMuseum === "old" ? 340 : 390;
     }
-    return privatePrices[Math.min(Math.max(totalGuests, 2), 25)] ?? privatePrices[25];
-  })();
+    if (selectedVehicle === "xpander" && chargeableGuests === 3) {
+      baseTourPrice = selectedMuseum === "old" ? 380 : 450;
+    }
+    if (selectedVehicle === "hiace" && chargeableGuests >= 4 && chargeableGuests <= 8) {
+      baseTourPrice =
+        (selectedMuseum === "old" ? 450 : 510) +
+        (chargeableGuests - 4) * (selectedMuseum === "old" ? 40 : 60);
+    }
+  } else if (tourSlug === "speed-boat") {
+    // Boat capacity/size is based on adults and children; infants are recorded but excluded.
+    if (totalGuests >= 1 && totalGuests <= 4) baseTourPrice = 180;
+    if (totalGuests >= 5 && totalGuests <= 8) baseTourPrice = 250;
+  } else if (tourSlug === "private-boat") {
+    // Boat capacity/size is based on adults and children; infants are recorded but excluded.
+    if (totalGuests >= 1 && totalGuests <= 15) baseTourPrice = 450;
+    if (totalGuests >= 16 && totalGuests <= 30) baseTourPrice = 600;
+  }
+
+  const islandExtra = selectedIslands.reduce(
+    (sum, island) => sum + (islandPrices[island] ?? 0),
+    0
+  ) * chargeableGuests;
+
+  const pricingCapacity =
+    tourSlug === "private-boat" ? 30 :
+    ["luxor", "cairo", "speed-boat"].includes(tourSlug) ? 8 : 25;
+  const pricingValid =
+    !pricingTour || (baseTourPrice !== null && totalGuests <= pricingCapacity);
+  const totalPrice = pricingTour
+    ? (baseTourPrice ?? 0) + islandExtra
+    : privatePrices[Math.min(Math.max(chargeableGuests, 2), 25)] ?? privatePrices[25];
+  const displayedTotalPrice = pricingValid ? `€${totalPrice}` : "—";
+
+  const pricingDetails = [
+    pricingTour && (tourSlug === "luxor" || tourSlug === "cairo")
+      ? `Vehicle: ${selectedVehicle}`
+      : "",
+    tourSlug === "cairo" ? `Museum: ${selectedMuseum === "old" ? "Old Egyptian Museum" : "Grand Egyptian Museum"}` : "",
+    selectedIslands.length
+      ? `Islands: ${selectedIslands.join(", ")}`
+      : "",
+  ].filter(Boolean).join("\n");
 
   const filteredNationalities = useMemo(() => {
     if (!nationality) return [];
 
     return nationalities
       .filter((n) =>
-        n.toLowerCase().includes(nationality.toLowerCase()) ||
-        (germanNationalityNames[n] || n).toLowerCase().includes(nationality.toLowerCase())
+        n.toLowerCase().includes(nationality.toLowerCase())
       )
       .slice(0, 7);
   }, [nationality]);
@@ -820,8 +718,9 @@ export default function LuxuryBookingForm({
 
     return countryCodes.filter(
       (c) =>
-        c.name.toLowerCase().includes(countrySearch.toLowerCase()) ||
-        (germanCountryNames[c.name] || c.name).toLowerCase().includes(countrySearch.toLowerCase()) ||
+        c.name
+          .toLowerCase()
+          .includes(countrySearch.toLowerCase()) ||
         c.dialCode.includes(countrySearch)
     );
   }, [countrySearch]);
@@ -837,7 +736,7 @@ export default function LuxuryBookingForm({
   );
 
   const calendarMonthLabel = calendarMonth.toLocaleDateString(
-    isGerman ? "de-DE" : "en-US",
+    "en-US",
     {
       month: "long",
       year: "numeric",
@@ -874,17 +773,18 @@ export default function LuxuryBookingForm({
   const isDateValid =
     date.length > 0 && date >= tomorrowIso;
 
+  const maxGuests =
+    tourSlug === "private-boat" ? 30 :
+    ["luxor", "cairo", "speed-boat"].includes(tourSlug) ? 8 : 25;
+
+  const minGuests = pricingTour ? 1 : 2;
+
   const isGuestsValid =
-    totalGuests >= guestLimits.min && totalGuests <= guestLimits.max && (!isCustomPricedTour || totalPrice > 0);
-
-  const allChildAgesSet = childAges.every((_, i) =>
-    Boolean(childrenAgeValues[i])
-  );
-
-  const allInfantAgesSet = infantAges.every((_, i) =>
-    Boolean(infantAgeValues[i])
-  );
-
+    chargeableGuests >= minGuests && totalGuests <= maxGuests && adults >= 1;
+  const allChildAgesSet =
+    childAges.length === children && childAges.every((age) => age !== "");
+  const allInfantAgesSet =
+    infantAges.length === infants && infantAges.every((age) => age !== "");
   const isFormValid =
     isNameValid &&
     isPhoneValid &&
@@ -892,8 +792,8 @@ export default function LuxuryBookingForm({
     isDateValid &&
     isGuestsValid &&
     allChildAgesSet &&
-    allInfantAgesSet;
-
+    allInfantAgesSet &&
+    pricingValid;
   const inputClass = (invalid: boolean) =>
     `h-[54px] w-full rounded-2xl border bg-white px-4 text-[15px] font-medium text-slate-800 placeholder:text-slate-400 transition-all duration-200 outline-none ${
       invalid
@@ -910,36 +810,6 @@ export default function LuxuryBookingForm({
     </p>
   );
 
-  const setGuestCount = (
-    type: "adults" | "children" | "infants",
-    value: number
-  ) => {
-    if (type === "adults") {
-      const next = Math.min(Math.max(value, 1), guestLimits.max - Number(children || 0) - Number(infants || 0));
-      setAdults(String(Math.max(1, next)));
-      return;
-    }
-
-    if (type === "children") {
-      const next = Math.min(Math.max(value, 0), Math.min(10, guestLimits.max - Number(adults || 0) - Number(infants || 0)));
-
-      setChildren(String(next));
-
-      setChildrenAgeValues((current) =>
-        current.slice(0, next)
-      );
-
-      return;
-    }
-
-    const next = Math.min(Math.max(value, 0), Math.min(10, guestLimits.max - Number(adults || 0) - Number(children || 0)));
-
-    setInfants(String(next));
-
-    setInfantAgeValues((current) =>
-      current.slice(0, next)
-    );
-  };
 
   const handleSubmit = async () => {
   setSubmitAttempted(true);
@@ -967,27 +837,11 @@ Room Number: ${roomNumber || "Not specified"}
 
 Date: ${date}
 
-Adults: ${adults}
+Adults: ${adults}\nChildren: ${children} (ages: ${childAges.join(", ") || "not specified"})\nInfants: ${infants} (ages in months: ${infantAges.join(", ") || "not specified"})\nTotal chargeable/capacity guests: ${totalGuests}\nTotal people including infants: ${recordedGuests}
 
-Children: ${children}
+${pricingDetails ? `${pricingDetails}; ` : ""}
 
-Infants: ${infants}
-
-Total Guests: ${totalGuests}
-
-Vehicle: ${isVehiclePricedTour ? selectedVehicle : "-"}
-
-Museum: ${tourSlug === "cairo" ? selectedMuseum : "-"}
-
-Island: ${isIslandPricedTour ? selectedIsland : "-"}
-
-Children Ages:
-${childrenAgeValues.filter(Boolean).join(", ") || "-"}
-
-Infant Ages:
-${infantAgeValues.filter(Boolean).join(", ") || "-"}
-
-PRIVATE TOUR PRICE: €${totalPrice}
+PRIVATE TOUR PRICE: €${totalPrice}${pricingValid ? "" : " (Please select a vehicle/range that supports your group size)"}
 
 WhatsApp: ${fullPhone}
 
@@ -1195,7 +1049,7 @@ ${notes.trim() || "-"}
                         <input
                           type="text"
                           placeholder={isGerman ? "Nationalität auswählen" : "Select nationality"}
-                          value={displayNationality(nationality, isGerman)}
+                          value={nationality}
                           onChange={(e) => {
                             setNationality(e.target.value);
                             setIsNationalityOpen(true);
@@ -1233,7 +1087,7 @@ ${notes.trim() || "-"}
                                 <GlobeIcon />
 
                                 <span className="ml-3">
-                                  {displayNationality(item, isGerman)}
+                                  {item}
                                 </span>
                               </button>
                             ))}
@@ -1288,7 +1142,7 @@ ${notes.trim() || "-"}
                           >
                             <FlagIcon
                               iso={selectedCountry.iso}
-                              name={displayCountryName(selectedCountry.name, isGerman)}
+                              name={selectedCountry.name}
                             />
 
                             <span className="text-sm font-bold">
@@ -1338,11 +1192,11 @@ ${notes.trim() || "-"}
                                     >
                                       <FlagIcon
                                         iso={country.iso}
-                                        name={displayCountryName(country.name, isGerman)}
+                                        name={country.name}
                                       />
 
                                       <span className="flex-1 text-sm font-semibold text-slate-700">
-                                        {displayCountryName(country.name, isGerman)}
+                                        {country.name}
                                       </span>
 
                                       <span className="text-xs font-bold text-slate-400">
@@ -1504,7 +1358,7 @@ ${notes.trim() || "-"}
                           }`}
                         >
                           {date
-                            ? formatDateDisplay(date, isGerman)
+                            ? formatDateDisplay(date)
                             : <HomeText en="Select your preferred date" de="Wählen Sie Ihr Wunschdatum" />}
                         </div>
                       </div>
@@ -1651,453 +1505,272 @@ ${notes.trim() || "-"}
 
                 <div className="my-9 h-px bg-slate-100" />
 
-                {isVehiclePricedTour && (
-                  <section className="mb-7 rounded-2xl border border-slate-200 bg-white p-5">
-                    <h3 className="mb-4 text-sm font-bold text-[#071a36]">
-                      <HomeText en="Choose your vehicle" de="Fahrzeug auswählen" />
-                    </h3>
-                    <div className="grid gap-3 sm:grid-cols-3">
-                      {([
-                        ["limousine", "Limousine", "1–2 guests"],
-                        ["xpander", "Xpander", "2–3 guests"],
-                        ["hiace", "Hiace", "4–8 guests"],
-                      ] as const).map(([value, label, capacity]) => (
-                        <button key={value} type="button" onClick={() => {
-                          setSelectedVehicle(value);
-                          const limits = value === "limousine" ? { min: 1, max: 2 } : value === "xpander" ? { min: 2, max: 3 } : { min: 4, max: 8 };
-                          const otherGuests = Number(children || 0) + Number(infants || 0);
-                          const nextAdults = Math.max(1, Math.min(limits.max - otherGuests, Math.max(limits.min - otherGuests, Number(adults || 0))));
-                          setAdults(String(nextAdults));
-                        }} className={`rounded-xl border p-4 text-left transition ${selectedVehicle === value ? "border-blue-900 bg-blue-50 ring-2 ring-blue-900/10" : "border-slate-200 hover:border-slate-400"}`}>
-                          <span className="block font-bold text-slate-800">{label}</span>
-                          <span className="mt-1 block text-xs text-slate-500">{capacity}</span>
-                        </button>
-                      ))}
-                    </div>
-                    {tourSlug === "cairo" && (
-                      <div className="mt-5">
-                        <label className={labelClass}><HomeText en="Museum option" de="Museum auswählen" /></label>
-                        <div className="grid grid-cols-2 gap-3">
-                          {([{ value: "old", label: "Old Museum" }, { value: "new", label: "New Museum" }] as const).map((item) => (
-                            <button key={item.value} type="button" onClick={() => setSelectedMuseum(item.value)} className={`rounded-xl border p-3 text-sm font-bold transition ${selectedMuseum === item.value ? "border-blue-900 bg-blue-50 text-blue-950" : "border-slate-200 text-slate-600"}`}>
-                              <HomeText en={item.label} de={item.value === "old" ? "Altes Museum" : "Neues Museum"} />
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </section>
-                )}
-
-                {isIslandPricedTour && (
-                  <section className="mb-7 rounded-2xl border border-slate-200 bg-white p-5">
-                    <h3 className="mb-2 text-sm font-bold text-[#071a36]">
-                      <HomeText en="Add an island (optional)" de="Insel hinzufügen (optional)" />
-                    </h3>
-                    <p className="mb-4 text-xs text-slate-500">
-                      <HomeText en="Island prices are per person." de="Die Inselpreise gelten pro Person." />
-                    </p>
-                    <div className="grid gap-3 sm:grid-cols-2">
-                      {([
-                        ["none", "No island", "€0 / person"],
-                        ["paradise", "Paradise", "€20 / person"],
-                        ["orange", "Orange Bay, Hula Hula, Magawish or Amwaj", "€10 / person"],
-                        ["eden", "Eden or Ozirea", "€35 / person"],
-                        ["mahmya", "Mahmya", "€60 / person"],
-                      ] as const).map(([value, label, price]) => (
-                        <button key={value} type="button" onClick={() => setSelectedIsland(value)} className={`rounded-xl border p-4 text-left transition ${selectedIsland === value ? "border-blue-900 bg-blue-50 ring-2 ring-blue-900/10" : "border-slate-200 hover:border-slate-400"}`}>
-                          <span className="block text-sm font-bold text-slate-800"><HomeText en={label} de={label} /></span>
-                          <span className="mt-1 block text-xs text-slate-500">{price}</span>
-                        </button>
-                      ))}
-                    </div>
-                  </section>
-                )}
-
-                {/* GUESTS */}
-                <div>
-                  <div className="mb-5 flex items-center justify-between gap-4">
-
-                    <div className="flex items-center gap-3">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-[#0b3a78]">
+                {/* GUEST COUNT & PREMIUM OPTIONS */}
+                <section className="my-9 overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-[0_18px_50px_rgba(7,26,54,0.06)]">
+                  <div className="relative overflow-hidden bg-[#071a36] px-6 py-6 text-white sm:px-8">
+                    <div className="absolute -right-8 -top-12 h-40 w-40 rounded-full border border-white/10" />
+                    <div className="absolute -right-1 -top-5 h-24 w-24 rounded-full border border-orange-400/20" />
+                    <div className="relative flex items-center gap-4">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-orange-300/20 bg-white/10 text-orange-300">
                         <UsersIcon />
                       </div>
-
                       <div>
-                        <h3 className="font-bold text-[#071a36]">
-                          <HomeText en="Guests" de="Gäste" />
+                        <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-orange-300">
+                          <HomeText en="Your private experience" de="Ihr privates Erlebnis" />
+                        </p>
+                        <h3 className="mt-1 text-xl font-semibold tracking-tight sm:text-2xl">
+                          <HomeText en="Build your trip" de="Gestalten Sie Ihre Reise" />
                         </h3>
-
-                        <p className="text-xs text-slate-400">
-                          <HomeText en="Private experience for your group" de="Privates Erlebnis für Ihre Gruppe" />
+                        <p className="mt-1 text-sm text-slate-300">
+                          <HomeText en="Infants are free; children pay the adult rate." de="Babys reisen kostenlos; Kinder zahlen den Erwachsenenpreis." />
                         </p>
                       </div>
                     </div>
-
-                    <div className="hidden rounded-full bg-slate-100 px-3 py-1.5 text-xs font-bold text-slate-600 sm:block">
-                      {totalGuests} <HomeText en="guests" de="Gäste" />
-                    </div>
-
                   </div>
 
-                  <div className="overflow-hidden rounded-2xl border border-slate-200">
-
-                    {/* ADULTS */}
-                    <div className="flex items-center justify-between gap-4 border-b border-slate-100 px-4 py-4 sm:px-5">
-
-                      <div className="flex items-center gap-3">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-[#0b3a78]">
-                          <UserIcon />
-                        </div>
-
-                        <div>
-                          <p className="text-sm font-bold text-slate-800">
-                            <HomeText en="Adults" de="Erwachsene" />
-                          </p>
-
-                          <p className="text-xs text-slate-400">
-                            <HomeText en="Age 11+" de="Ab 11 Jahren" />
-                          </p>
-                        </div>
+                  <div className="space-y-8 p-5 sm:p-8">
+                    <div className="rounded-2xl border border-slate-200 bg-slate-50/80 p-5">
+                      <div className="mb-4">
+                        <p className="text-sm font-bold text-[#071a36]"><HomeText en="Who is travelling?" de="Wer reist mit?" /></p>
+                        <p className="mt-1 text-xs leading-5 text-slate-500"><HomeText en="Infants are free. Children are charged at the adult rate." de="Babys reisen kostenlos. Kinder zahlen den Erwachsenenpreis." /></p>
                       </div>
-
-                      <div className="flex items-center gap-3">
-
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setGuestCount(
-                              "adults",
-                              Number(adults) - 1
-                            )
-                          }
-                          disabled={Number(adults) <= 1}
-                          className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:border-[#0b3a78] hover:text-[#0b3a78] disabled:cursor-not-allowed disabled:opacity-30"
-                        >
-                          <MinusIcon />
-                        </button>
-
-                        <span className="w-7 text-center text-base font-bold text-[#071a36]">
-                          {adults}
-                        </span>
-
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setGuestCount(
-                              "adults",
-                              Number(adults) + 1
-                            )
-                          }
-                          disabled={
-                            Number(adults) >= guestLimits.max ||
-                            totalGuests >= guestLimits.max
-                          }
-                          className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:border-[#0b3a78] hover:text-[#0b3a78] disabled:cursor-not-allowed disabled:opacity-30"
-                        >
-                          <PlusIcon />
-                        </button>
-
+                      <div className="grid gap-3 sm:grid-cols-3">
+                        {[
+                          { key: "adults", title: "Adults", subtitle: "Age 12+", count: adults, set: setAdults, min: 1 },
+                          { key: "children", title: "Children", subtitle: "Age 2–11", count: children, set: setChildren, min: 0 },
+                          { key: "infants", title: "Infants", subtitle: "Under 2 · Free", count: infants, set: setInfants, min: 0 },
+                        ].map((group) => (
+                          <div key={group.key} className="rounded-xl border border-slate-200 bg-white p-4">
+                            <p className="text-sm font-bold text-[#071a36]">{group.title}</p>
+                            <p className="mt-1 text-[11px] text-slate-500">{group.subtitle}</p>
+                            <div className="mt-4 flex items-center justify-between gap-3">
+                              <button type="button" aria-label={"Remove " + group.key} onClick={() => {
+                                const next = Math.max(group.min, group.count - 1);
+                                group.set(next);
+                                if (group.key === "children") setChildAges((ages) => ages.slice(0, next));
+                                if (group.key === "infants") setInfantAges((ages) => ages.slice(0, next));
+                              }} disabled={group.count <= group.min} className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 text-[#071a36] disabled:opacity-30"><MinusIcon /></button>
+                              <span className="text-xl font-bold tabular-nums text-[#071a36]">{group.count}</span>
+                              <button type="button" aria-label={"Add " + group.key} onClick={() => {
+                                if (totalGuests >= maxGuests) return;
+                                group.set(group.count + 1);
+                                if (group.key === "children") setChildAges((ages) => [...ages, ""]);
+                                if (group.key === "infants") setInfantAges((ages) => [...ages, ""]);
+                              }} disabled={totalGuests >= maxGuests} className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#071a36] text-white disabled:opacity-30"><PlusIcon /></button>
+                            </div>
+                          </div>
+                        ))}
                       </div>
-                    </div>
-
-                    {/* CHILDREN */}
-                    <div className="flex items-center justify-between gap-4 border-b border-slate-100 px-4 py-4 sm:px-5">
-
-                      <div className="flex items-center gap-3">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-50 text-orange-500">
-                          <UserIcon />
+                      {children > 0 && (
+                        <div className="mt-4 rounded-xl border border-slate-200 bg-white p-4">
+                          <p className="mb-3 text-xs font-bold uppercase tracking-wider text-slate-500"><HomeText en="Children’s ages" de="Alter der Kinder" /></p>
+                          <div className="grid gap-3 sm:grid-cols-2">
+                            {Array.from({ length: children }, (_, index) => (
+                              <label key={index} className="text-xs font-semibold text-slate-600">
+                                <HomeText en={"Child " + (index + 1)} de={"Kind " + (index + 1)} />
+                                <select value={childAges[index] ?? ""} onChange={(e) => setChildAges((ages) => Array.from({ length: children }, (_, i) => i === index ? e.target.value : (ages[i] ?? "")))} className="mt-2 h-11 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-800">
+                                  <option value="">Select age</option>
+                                  {Array.from({ length: 10 }, (_, age) => <option key={age + 2} value={String(age + 2)}>{age + 2} years</option>)}
+                                </select>
+                              </label>
+                            ))}
+                          </div>
                         </div>
-
-                        <div>
-                          <p className="text-sm font-bold text-slate-800">
-                            <HomeText en="Children" de="Kinder" />
-                          </p>
-
-                          <p className="text-xs text-slate-400">
-                            <HomeText en="Ages 5–10" de="5–10 Jahre" />
-                          </p>
+                      )}
+                      {infants > 0 && (
+                        <div className="mt-4 rounded-xl border border-slate-200 bg-white p-4">
+                          <p className="mb-3 text-xs font-bold uppercase tracking-wider text-slate-500"><HomeText en="Infants’ ages (free)" de="Alter der Babys (kostenlos)" /></p>
+                          <div className="grid gap-3 sm:grid-cols-2">
+                            {Array.from({ length: infants }, (_, index) => (
+                              <label key={index} className="text-xs font-semibold text-slate-600">
+                                <HomeText en={"Infant " + (index + 1)} de={"Baby " + (index + 1)} />
+                                <select value={infantAges[index] ?? ""} onChange={(e) => setInfantAges((ages) => Array.from({ length: infants }, (_, i) => i === index ? e.target.value : (ages[i] ?? "")))} className="mt-2 h-11 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-800">
+                                  <option value="">Select age</option>
+                                  {Array.from({ length: 24 }, (_, age) => <option key={age} value={String(age)}>{age} months</option>)}
+                                </select>
+                              </label>
+                            ))}
+                          </div>
                         </div>
-                      </div>
-
-                      <div className="flex items-center gap-3">
-
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setGuestCount(
-                              "children",
-                              Number(children) - 1
-                            )
-                          }
-                          disabled={Number(children) <= 0}
-                          className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:border-[#0b3a78] hover:text-[#0b3a78] disabled:cursor-not-allowed disabled:opacity-30"
-                        >
-                          <MinusIcon />
-                        </button>
-
-                        <span className="w-7 text-center text-base font-bold text-[#071a36]">
-                          {children}
-                        </span>
-
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setGuestCount(
-                              "children",
-                              Number(children) + 1
-                            )
-                          }
-                          disabled={
-                            Number(children) >= 10 ||
-                            totalGuests >= guestLimits.max
-                          }
-                          className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:border-[#0b3a78] hover:text-[#0b3a78] disabled:cursor-not-allowed disabled:opacity-30"
-                        >
-                          <PlusIcon />
-                        </button>
-
+                      )}
+                      <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-slate-200 pt-4 text-xs">
+                        <span className="text-slate-500">{totalGuests} <HomeText en="people total" de="Personen insgesamt" /></span>
+                        <span className="font-bold text-[#071a36]">{chargeableGuests} <HomeText en="paying guests" de="zahlende Gäste" /></span>
                       </div>
                     </div>
-
-                    {/* INFANTS */}
-                    <div className="flex items-center justify-between gap-4 px-4 py-4 sm:px-5">
-
-                      <div className="flex items-center gap-3">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 text-slate-500">
-                          <UserIcon />
-                        </div>
-
-                        <div>
-                          <p className="text-sm font-bold text-slate-800">
-                            <HomeText en="Infants" de="Kleinkinder" />
-                          </p>
-
-                          <p className="text-xs text-slate-400">
-                            <HomeText en="Ages 1–4" de="1–4 Jahre" />
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center gap-3">
-
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setGuestCount(
-                              "infants",
-                              Number(infants) - 1
-                            )
-                          }
-                          disabled={Number(infants) <= 0}
-                          className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:border-[#0b3a78] hover:text-[#0b3a78] disabled:cursor-not-allowed disabled:opacity-30"
-                        >
-                          <MinusIcon />
-                        </button>
-
-                        <span className="w-7 text-center text-base font-bold text-[#071a36]">
-                          {infants}
-                        </span>
-
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setGuestCount(
-                              "infants",
-                              Number(infants) + 1
-                            )
-                          }
-                          disabled={
-                            Number(infants) >= 10 ||
-                            totalGuests >= guestLimits.max
-                          }
-                          className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:border-[#0b3a78] hover:text-[#0b3a78] disabled:cursor-not-allowed disabled:opacity-30"
-                        >
-                          <PlusIcon />
-                        </button>
-
-                      </div>
-                    </div>
-
-                  </div>
-
-                  {submitAttempted &&
-                    !isGuestsValid &&
-                    errorText(
-                      <HomeText en={`This option allows ${guestLimits.min}–${guestLimits.max} guests. Please adjust the guest count for your selected vehicle or boat.`} de={`Diese Option erlaubt ${guestLimits.min}–${guestLimits.max} Gäste. Bitte passen Sie die Gästezahl an das gewählte Fahrzeug oder Boot an.`} />
+                    {submitAttempted && !isGuestsValid && errorText(
+                      <HomeText en={"Choose at least " + minGuests + " paying guest and no more than " + maxGuests + " people total."} de={"Wählen Sie mindestens " + minGuests + " zahlenden Gast und höchstens " + maxGuests + " Personen insgesamt."} />
                     )}
 
-                  <div className="mt-4 flex items-center justify-between rounded-2xl bg-[#071a36] px-5 py-4 text-white">
+                    {(tourSlug === "luxor" || tourSlug === "cairo") && (
+                      <div>
+                        <div className="mb-4 flex items-end justify-between gap-3">
+                          <div>
+                            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-orange-500">
+                              <HomeText en="01 · Transportation" de="01 · Transport" />
+                            </p>
+                            <h4 className="mt-1 text-lg font-semibold text-[#071a36]">
+                              <HomeText en="Choose your private vehicle" de="Wählen Sie Ihr Privatfahrzeug" />
+                            </h4>
+                          </div>
+                          <span className="hidden text-xs text-slate-400 sm:block">
+                            <HomeText en="Price depends on group size" de="Preis abhängig von der Gruppengröße" />
+                          </span>
+                        </div>
+                        <div className="grid gap-3 sm:grid-cols-3">
+                          {[
+                            { id: "limousine", title: "Limousine", detail: "1–2 guests", symbol: "L" },
+                            { id: "xpander", title: "Xpander", detail: "2–3 guests", symbol: "X" },
+                            { id: "hiace", title: "HiAce", detail: tourSlug === "luxor" ? "4–8 guests" : "4–8 guests", symbol: "H" },
+                          ].map((vehicle) => {
+                            const active = selectedVehicle === vehicle.id;
+                            return (
+                              <button
+                                key={vehicle.id}
+                                type="button"
+                                onClick={() => setSelectedVehicle(vehicle.id)}
+                                className={`group relative rounded-2xl border p-4 text-left transition duration-200 ${active ? "border-orange-400 bg-orange-50/70 shadow-[0_8px_24px_rgba(249,115,22,0.10)] ring-1 ring-orange-300" : "border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50"}`}
+                              >
+                                <span className={`mb-4 flex h-10 w-10 items-center justify-center rounded-xl text-sm font-black ${active ? "bg-[#071a36] text-orange-300" : "bg-slate-100 text-slate-500"}`}>{vehicle.symbol}</span>
+                                <span className="block text-sm font-bold text-[#071a36]">{vehicle.title}</span>
+                                <span className="mt-1 block text-xs text-slate-500">{vehicle.detail}</span>
+                                <span className={`absolute right-3 top-3 flex h-5 w-5 items-center justify-center rounded-full border text-[10px] ${active ? "border-orange-500 bg-orange-500 text-white" : "border-slate-300 text-transparent"}`}>✓</span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
 
-                    <div className="flex items-center gap-3">
-                      <UsersIcon />
+                    {tourSlug === "cairo" && (
+                      <div>
+                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-orange-500">
+                          <HomeText en="02 · Museum visit" de="02 · Museumsbesuch" />
+                        </p>
+                        <h4 className="mt-1 text-lg font-semibold text-[#071a36]">
+                          <HomeText en="Choose your museum" de="Wählen Sie Ihr Museum" />
+                        </h4>
+                        <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                          {[
+                            { id: "old", title: "Old Egyptian Museum", subtitle: "Tahrir Square", short: "THE CLASSIC" },
+                            { id: "new", title: "Grand Egyptian Museum", subtitle: "GEM · Giza", short: "THE NEW LANDMARK" },
+                          ].map((museum) => {
+                            const active = selectedMuseum === museum.id;
+                            return (
+                              <button
+                                key={museum.id}
+                                type="button"
+                                onClick={() => setSelectedMuseum(museum.id)}
+                                className={`relative overflow-hidden rounded-2xl border p-5 text-left transition ${active ? "border-orange-400 bg-orange-50/70 ring-1 ring-orange-300" : "border-slate-200 hover:border-slate-300 hover:bg-slate-50"}`}
+                              >
+                                <span className="text-[9px] font-bold tracking-[0.18em] text-orange-500">{museum.short}</span>
+                                <span className="mt-2 block text-base font-bold text-[#071a36]">{museum.title}</span>
+                                <span className="mt-1 block text-sm text-slate-500">{museum.subtitle}</span>
+                                <span className={`absolute right-4 top-4 flex h-5 w-5 items-center justify-center rounded-full border text-[10px] ${active ? "border-orange-500 bg-orange-500 text-white" : "border-slate-300 text-transparent"}`}>✓</span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
 
-                      <span className="text-sm font-semibold text-slate-300">
-                        <HomeText en="Total guests" de="Gäste insgesamt" />
-                      </span>
+                    {(tourSlug === "speed-boat" || tourSlug === "private-boat") && (
+                      <div>
+                        <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+                          <div>
+                            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-orange-500">
+                              <HomeText en="Optional experiences" de="Optionale Erlebnisse" />
+                            </p>
+                            <h4 className="mt-1 text-lg font-semibold text-[#071a36]">
+                              <HomeText en="Make it your perfect sea day" de="Gestalten Sie Ihren perfekten Tag auf dem Meer" />
+                            </h4>
+                          </div>
+                          <span className="inline-flex w-fit items-center gap-2 rounded-full bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-600">
+                            <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
+                            {selectedIslands.length} <HomeText en="selected" de="ausgewählt" />
+                          </span>
+                        </div>
+                        <p className="mb-4 max-w-2xl text-sm leading-6 text-slate-500">
+                          <HomeText en="Choose one or more islands. Each selected island is charged per guest." de="Wählen Sie eine oder mehrere Inseln. Jede ausgewählte Insel wird pro Gast berechnet." />
+                        </p>
+                        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                          {[
+                            { id: "paradise", name: "Paradise Island", price: 20, category: "Island escape", tone: "from-cyan-50 to-sky-100" },
+                            { id: "orange", name: "Orange Bay", price: 10, category: "Beach club", tone: "from-orange-50 to-amber-100" },
+                            { id: "hula", name: "Hula Hula", price: 10, category: "Island vibes", tone: "from-rose-50 to-orange-100" },
+                            { id: "magaweesh", name: "Magawish", price: 10, category: "Natural beauty", tone: "from-teal-50 to-emerald-100" },
+                            { id: "amwaj", name: "Amwaj", price: 10, category: "Sea & sand", tone: "from-blue-50 to-cyan-100" },
+                            { id: "eden", name: "Eden Island", price: 35, category: "Premium beach", tone: "from-amber-50 to-yellow-100" },
+                            { id: "ouzeria", name: "Ouzeria", price: 35, category: "Private escape", tone: "from-violet-50 to-fuchsia-100" },
+                            { id: "mahmya", name: "Mahmya", price: 60, category: "Protected island", tone: "from-emerald-50 to-lime-100" },
+                          ].map((island) => {
+                            const active = selectedIslands.includes(island.id);
+                            return (
+                              <label
+                                key={island.id}
+                                className={`group relative flex min-h-[142px] cursor-pointer flex-col overflow-hidden rounded-2xl border p-4 transition duration-200 ${active ? "border-orange-400 bg-orange-50 shadow-[0_10px_25px_rgba(249,115,22,0.10)] ring-1 ring-orange-300" : "border-slate-200 bg-white hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md"}`}
+                              >
+                                <input
+                                  type="checkbox"
+                                  checked={active}
+                                  onChange={(e) => setSelectedIslands((current) =>
+                                    e.target.checked ? [...current, island.id] : current.filter((item) => item !== island.id)
+                                  )}
+                                  className="sr-only"
+                                />
+                                <span className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${island.tone} ${active ? "opacity-100" : "opacity-60"}`} />
+                                <span className="flex items-start justify-between gap-2 pt-1">
+                                  <span className={`flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br ${island.tone} text-xs font-black text-[#071a36]`}>{island.name.slice(0, 1)}</span>
+                                  <span className={`flex h-5 w-5 items-center justify-center rounded-full border text-[10px] font-bold ${active ? "border-orange-500 bg-orange-500 text-white" : "border-slate-300 bg-white text-transparent"}`}>✓</span>
+                                </span>
+                                <span className="mt-3 text-sm font-bold text-[#071a36]">{island.name}</span>
+                                <span className="mt-0.5 text-[10px] font-medium text-slate-400">{island.category}</span>
+                                <span className="mt-auto flex items-baseline gap-1 pt-3">
+                                  <span className="text-lg font-bold tracking-tight text-[#071a36]">€{island.price}</span>
+                                  <span className="text-[10px] text-slate-400"><HomeText en="/ person" de="/ Person" /></span>
+                                </span>
+                              </label>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="overflow-hidden rounded-2xl bg-[#071a36] text-white">
+                      <div className="flex flex-col gap-5 p-5 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+                        <div>
+                          <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-orange-300">
+                            <HomeText en="Your trip estimate" de="Ihre Reiseübersicht" />
+                          </p>
+                          <p className="mt-1 text-sm text-slate-300">
+                            {adults} <HomeText en="adults" de="Erwachsene" />, {children} <HomeText en="children" de="Kinder" />, {infants} <HomeText en="infants free" de="Babys kostenlos" />
+                          </p>
+                          <div className="mt-3 flex flex-wrap gap-2">
+                            {selectedIslands.map((id) => (
+                              <span key={id} className="rounded-full border border-white/15 bg-white/10 px-2.5 py-1 text-[10px] font-semibold text-slate-100">
+                                {({ paradise: "Paradise", orange: "Orange Bay", hula: "Hula Hula", magaweesh: "Magawish", amwaj: "Amwaj", eden: "Eden", ouzeria: "Ouzeria", mahmya: "Mahmya" } as Record<string, string>)[id]}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                        <div className="sm:text-right">
+                          <p className="text-xs font-medium text-slate-300"><HomeText en="Estimated total" de="Geschätzter Gesamtpreis" /></p>
+                          <p className="mt-1 text-3xl font-bold tracking-tight text-white">{displayedTotalPrice}</p>
+                          {pricingValid && selectedIslands.length > 0 && (
+                            <p className="mt-1 text-xs text-slate-400">
+                              <HomeText en={`Includes €${islandExtra} island options`} de={`Enthält €${islandExtra} für Inseloptionen`} />
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                      {!pricingValid && (
+                        <div className="border-t border-white/10 px-5 py-3 text-sm font-semibold text-orange-200 sm:px-6">
+                          <HomeText en={tourSlug === "luxor" || tourSlug === "cairo" ? "This vehicle does not support the selected group size. Choose a different vehicle to continue." : "This option does not support the selected number of guests. Adjust the guest count to continue."} de={tourSlug === "luxor" || tourSlug === "cairo" ? "Dieses Fahrzeug ist für die gewählte Gruppengröße nicht geeignet. Bitte wählen Sie ein anderes Fahrzeug." : "Diese Option ist für die gewählte Gästezahl nicht verfügbar. Bitte passen Sie die Gästezahl an."} />
+                        </div>
+                      )}
                     </div>
-
-                    <span className="text-xl font-bold">
-                      {totalGuests}
-                    </span>
-
                   </div>
-                </div>
-
-                {/* CHILD AGES */}
-                {childAges.length > 0 && (
-                  <>
-                    <div className="my-8 h-px bg-slate-100" />
-
-                    <div>
-                      <div className="mb-4">
-                        <h3 className="font-bold text-[#071a36]">
-                          <HomeText en="Children ages" de="Alter der Kinder" />
-                        </h3>
-
-                        <p className="mt-1 text-xs text-slate-400">
-                          <HomeText en="Please provide the age of each child." de="Bitte geben Sie das Alter jedes Kindes an." />
-                        </p>
-                      </div>
-
-                      <div className="grid gap-3 sm:grid-cols-2">
-
-                        {childAges.map((_, index) => (
-                          <div key={index}>
-                            <div className="relative">
-
-                              <select
-                                value={
-                                  childrenAgeValues[index] || ""
-                                }
-                                className={`${inputClass(
-                                  submitAttempted &&
-                                    !childrenAgeValues[index]
-                                )} appearance-none pr-10`}
-                                onChange={(e) => {
-                                  const updated = [
-                                    ...childrenAgeValues,
-                                  ];
-
-                                  updated[index] =
-                                    e.target.value;
-
-                                  setChildrenAgeValues(updated);
-                                }}
-                              >
-                                <option value="">
-                                  {isGerman ? `Alter für Kind ${index + 1}` : `Select age for child ${index + 1}`}
-                                </option>
-
-                                {[5, 6, 7, 8, 9, 10].map(
-                                  (age) => (
-                                    <option
-                                      key={age}
-                                      value={age}
-                                    >
-                                      {age} {isGerman ? "Jahre" : "years"}
-                                    </option>
-                                  )
-                                )}
-                              </select>
-
-                              <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-400">
-                                <ChevronDownIcon />
-                              </div>
-
-                            </div>
-
-                            {submitAttempted &&
-                              !childrenAgeValues[index] &&
-                              errorText(
-                                <HomeText en={`Select an age for Child ${index + 1}.`} de={`Bitte wählen Sie das Alter für Kind ${index + 1} aus.`} />
-                              )}
-                          </div>
-                        ))}
-
-                      </div>
-                    </div>
-                  </>
-                )}
-
-                {/* INFANT AGES */}
-                {infantAges.length > 0 && (
-                  <>
-                    <div className="my-8 h-px bg-slate-100" />
-
-                    <div>
-                      <div className="mb-4">
-                        <h3 className="font-bold text-[#071a36]">
-                          <HomeText en="Infant ages" de="Alter der Kleinkinder" />
-                        </h3>
-
-                        <p className="mt-1 text-xs text-slate-400">
-                          <HomeText en="Please provide the age of each infant." de="Bitte geben Sie das Alter jedes Kleinkindes an." />
-                        </p>
-                      </div>
-
-                      <div className="grid gap-3 sm:grid-cols-2">
-
-                        {infantAges.map((_, index) => (
-                          <div key={index}>
-                            <div className="relative">
-
-                              <select
-                                value={
-                                  infantAgeValues[index] || ""
-                                }
-                                className={`${inputClass(
-                                  submitAttempted &&
-                                    !infantAgeValues[index]
-                                )} appearance-none pr-10`}
-                                onChange={(e) => {
-                                  const updated = [
-                                    ...infantAgeValues,
-                                  ];
-
-                                  updated[index] =
-                                    e.target.value;
-
-                                  setInfantAgeValues(updated);
-                                }}
-                              >
-                                <option value="">
-                                  {isGerman ? `Alter für Kleinkind ${index + 1}` : `Select age for infant ${index + 1}`}
-                                </option>
-
-                                {[1, 2, 3, 4].map((age) => (
-                                  <option
-                                    key={age}
-                                    value={age}
-                                  >
-                                    {age}{" "}
-                                    {age === 1
-                                      ? (isGerman ? "Jahr" : "year")
-                                      : (isGerman ? "Jahre" : "years")}
-                                  </option>
-                                ))}
-                              </select>
-
-                              <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-400">
-                                <ChevronDownIcon />
-                              </div>
-
-                            </div>
-
-                            {submitAttempted &&
-                              !infantAgeValues[index] &&
-                              errorText(
-                                <HomeText en={`Select an age for Infant ${index + 1}.`} de={`Bitte wählen Sie das Alter für Kleinkind ${index + 1} aus.`} />
-                              )}
-                          </div>
-                        ))}
-
-                      </div>
-                    </div>
-                  </>
-                )}
-
-                <div className="my-9 h-px bg-slate-100" />
+                </section>
 
                 {/* NOTES */}
                 <div>
@@ -2154,13 +1827,13 @@ ${notes.trim() || "-"}
                       </p>
 
                       <p className="mt-1 text-sm font-semibold text-slate-600">
-                        {totalGuests} <HomeText en="guests" de="Gäste" />
+                        {adults} <HomeText en="adults" de="Erwachsene" /> · {children} <HomeText en="children" de="Kinder" /> · {infants} <HomeText en="infants free" de="Babys kostenlos" />
                       </p>
                     </div>
 
                     <div className="text-right">
                       <p className="text-3xl font-black text-[#071a36]">
-                        €{totalPrice}
+                        {displayedTotalPrice}
                       </p>
 
                       <p className="text-[10px] font-semibold text-slate-400">
@@ -2260,7 +1933,7 @@ ${notes.trim() || "-"}
 
                       <div className="text-right">
                         <p className="text-3xl font-black text-[#071a36]">
-                          €{totalPrice}
+                          {displayedTotalPrice}
                         </p>
                       </div>
 
@@ -2289,7 +1962,7 @@ ${notes.trim() || "-"}
 
                       <span className="max-w-[150px] text-right text-xs font-bold text-[#071a36]">
                         {date
-                          ? formatDateDisplay(date, isGerman)
+                          ? formatDateDisplay(date)
                           : <HomeText en="Not selected" de="Nicht ausgewählt" />}
                       </span>
 
@@ -2308,7 +1981,7 @@ ${notes.trim() || "-"}
                       </div>
 
                       <span className="text-xs font-bold text-[#071a36]">
-                        {totalGuests}
+                        {totalGuests} ({infants} <HomeText en="free infants" de="kostenlose Babys" />)
                       </span>
 
                     </div>
