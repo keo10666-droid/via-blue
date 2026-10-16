@@ -1,8 +1,10 @@
-"use client";
 
 import Image from "next/image";
 import HomeText from "@/app/components/HomeText";
 import Link from "next/link";
+import { getLuxuryPricing } from "@/lib/luxuryPricing";
+
+export const dynamic = "force-dynamic";
 
 const luxuryTours = [
   {
@@ -10,7 +12,7 @@ const luxuryTours = [
     name: "Luxor Private Tour",
     description:
       "Discover the ancient temples, monuments and history of Luxor on a premium private experience",
-    price: 150,
+    price: 320,
     duration: "Full Day",
     image: "/luxury-tours/luxor-private-hero.webp",
     rating: 4.9,
@@ -21,7 +23,7 @@ const luxuryTours = [
     name: "Cairo Private Tour",
     description:
       "Explore the Pyramids, Sphinx and the highlights of Cairo with a completely private experience",
-    price: 180,
+    price: 300,
     duration: "Full Day",
     image: "/luxury-tours/cairo-private-hero.webp",
     rating: 4.9,
@@ -54,7 +56,7 @@ const luxuryTours = [
     name: "Private Speed Boat",
     description:
       "Enjoy an exclusive private speed boat experience across the beautiful Red Sea",
-    price: 200,
+    price: 180,
     duration: "Half Day",
     image: "/luxury-tours/private-speed-boat-hero.webp",
     rating: 5.0,
@@ -87,7 +89,7 @@ const luxuryTours = [
     name: "Private Boat",
     description:
       "Enjoy an exclusive private boat experience on the Red Sea with complete privacy, comfort and flexibility",
-    price: 180,
+    price: 450,
     duration: "Half Day",
     image: "/luxury-tours/private-boat-hero.webp",
     rating: 4.9,
@@ -179,7 +181,16 @@ function CrownIcon() {
   );
 }
 
-export default function LuxuryToursPage() {
+export default async function LuxuryToursPage() {
+  const pricing = await getLuxuryPricing();
+  const displayTours = luxuryTours.map((tour) => ({
+    ...tour,
+    price: tour.slug === "luxor" ? pricing.luxor_limo_1
+      : tour.slug === "cairo" ? pricing.cairo_old_limo_1
+      : tour.slug === "speed-boat" ? pricing.speed_boat_up_to_4
+      : tour.slug === "private-boat" ? pricing.private_boat_up_to_15
+      : tour.price,
+  }));
   return (
     <main className="min-h-screen bg-slate-50">
       {/* HERO */}
@@ -280,7 +291,7 @@ export default function LuxuryToursPage() {
       {/* TOURS */}
       <section className="mx-auto max-w-7xl px-6 py-12 md:px-8 md:py-16">
         <div className="grid items-stretch gap-7 md:grid-cols-2 lg:grid-cols-3">
-          {luxuryTours.map((tour) => (
+          {displayTours.map((tour) => (
             <article
               key={tour.slug}
               className="group flex h-full flex-col overflow-hidden rounded-[28px] border border-slate-200/80 bg-white shadow-sm transition duration-500 hover:-translate-y-1.5 hover:border-slate-300 hover:shadow-2xl"

@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import LuxuryBookingForm from "@/app/components/LuxuryBookingForm";
+import { getLuxuryPricing } from "@/lib/luxuryPricing";
 
 export const dynamic = "force-dynamic";
 
@@ -110,6 +111,7 @@ export default async function LuxuryBookingPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
+  const pricing = await getLuxuryPricing();
 
   const tour =
     luxuryTours[slug as keyof typeof luxuryTours];
@@ -123,6 +125,7 @@ export default async function LuxuryBookingPage({
       tourName={tour.name}
       tourSlug={slug}
       adultPrice={tour.adultPrice}
+      pricing={pricing}
       tourType={tour.tourType}
       included={tour.included}
     />

@@ -15,6 +15,7 @@ import {
   MessageSquareText,
   Settings2,
   ShieldCheck,
+  SlidersHorizontal,
   Ship,
   Sparkles,
   TicketPercent,
@@ -92,6 +93,15 @@ const modules = [
     tag: "Available now",
     available: true,
     iconClass: "bg-blue-50 text-blue-700",
+  },
+  {
+    title: "Luxury tour pricing",
+    description: "Edit Luxor and Cairo vehicle prices, boat prices by group size, and island fees per person.",
+    href: "/admin/luxury-pricing",
+    icon: SlidersHorizontal,
+    tag: "Available now",
+    available: true,
+    iconClass: "bg-orange-50 text-orange-700",
   },
   {
     title: "Transfers & vehicles",

@@ -1541,13 +1541,14 @@ ${notes.trim() || "-"}
                       onClick={() =>
                         handleVehicleChange(index)
                       }
-                      className={`group relative overflow-hidden rounded-[22px] border text-left transition-all duration-300 ${
+                      className={`group relative overflow-hidden rounded-[24px] border text-left transition-all duration-300 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-100 ${
                         selectedVehicle === index
-                          ? "border-orange-400 bg-white shadow-[0_16px_40px_rgba(249,115,22,0.14)] ring-1 ring-orange-300"
-                          : "border-slate-200 bg-white hover:-translate-y-1 hover:border-orange-200 hover:shadow-[0_16px_40px_rgba(15,23,42,0.09)]"
+                          ? "border-[#071a36] bg-white shadow-[0_18px_44px_rgba(7,26,54,0.14)] ring-1 ring-[#071a36]"
+                          : "border-slate-200 bg-white hover:-translate-y-1 hover:border-slate-300 hover:shadow-[0_18px_42px_rgba(7,26,54,0.10)]"
                       }`}
+                      aria-pressed={selectedVehicle === index}
                     >
-                      <div className="relative h-40 overflow-hidden bg-slate-100">
+                      <div className="relative h-44 overflow-hidden bg-slate-100 sm:h-48">
                         <img
                           src={
                             vehicleImages[index] ||
@@ -1587,7 +1588,7 @@ ${notes.trim() || "-"}
                         </div>
                       </div>
 
-                      <div className="p-4">
+                      <div className="p-4 sm:p-5">
                         <div className="flex items-start justify-between gap-3">
                           <div>
                             <h3 className="text-base font-bold text-blue-950">
@@ -1617,10 +1618,10 @@ ${notes.trim() || "-"}
                         </div>
 
                         <div
-                          className={`mt-3 flex items-center justify-between rounded-xl px-3 py-2.5 text-[10px] font-bold transition ${
+                          className={`mt-4 flex items-center justify-between rounded-xl border px-3 py-3 text-[11px] font-bold transition-all ${
                             selectedVehicle === index
-                              ? "bg-orange-50 text-orange-700"
-                              : "bg-blue-50 text-blue-800"
+                              ? "border-[#071a36] bg-[#071a36] text-white"
+                              : "border-slate-100 bg-slate-50 text-slate-600 group-hover:border-slate-200 group-hover:bg-white"
                           }`}
                         >
                           <span>
@@ -2182,7 +2183,7 @@ ${notes.trim() || "-"}
 
           {/* SUMMARY */}
           <aside>
-            <div className="sticky top-8 overflow-hidden rounded-[28px] border border-slate-200/80 bg-white shadow-[0_18px_55px_rgba(15,23,42,0.11)]">
+            <div className="overflow-hidden rounded-[28px] border border-slate-200/80 bg-white shadow-[0_18px_55px_rgba(15,23,42,0.11)] lg:sticky lg:top-8">
               <div className="relative overflow-hidden bg-blue-950 px-6 py-6 text-white">
                 <div className="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-orange-500/15 blur-2xl" />
 
@@ -2362,20 +2363,19 @@ ${notes.trim() || "-"}
                 )}
 
                 {/* PRICE */}
-                <div className="mt-5 rounded-2xl border border-slate-100 bg-slate-50 p-4">
+                <div className="mt-5 overflow-hidden rounded-2xl border border-blue-950 bg-blue-950 p-5 shadow-[0_14px_35px_rgba(15,23,42,0.16)]">
                   <div className="flex items-end justify-between gap-4">
                     <div>
-                      <p className="text-xs font-bold text-slate-500">
+                      <p className="text-xs font-bold text-white/80">
                         <HomeText en="Total Transfer Price" de="Gesamtpreis des Transfers" />
                       </p>
 
-                      <p className="mt-1 text-[10px] text-slate-400">
-                        Private vehicle · Fixed
-                        price
+                      <p className="mt-1 text-[10px] leading-5 text-white/55">
+                        <HomeText en="Private vehicle · Fixed price" de="Privatfahrzeug · Festpreis" />
                       </p>
                     </div>
 
-                    <p className="text-3xl font-bold text-orange-500">
+                    <p className="text-3xl font-black tracking-tight text-orange-300">
                       €{vehicle.price}
                     </p>
                   </div>

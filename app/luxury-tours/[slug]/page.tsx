@@ -1,5 +1,6 @@
 import Link from "next/link";
 import HomeText from "@/app/components/HomeText";
+import { getLuxuryPricing } from "@/lib/luxuryPricing";
 
 const luxuryGermanText: Record<string, string> = {
   "Quad Bike Safari": "Quad-Safari",
@@ -1288,6 +1289,13 @@ export default async function LuxuryTourPage({
     );
   }
 
+  const pricing = await getLuxuryPricing();
+  const startingPrice = slug === "luxor" ? pricing.luxor_limo_1
+    : slug === "cairo" ? pricing.cairo_old_limo_1
+    : slug === "speed-boat" ? pricing.speed_boat_up_to_4
+    : slug === "private-boat" ? pricing.private_boat_up_to_15
+    : tour.price;
+
   return (
     <main className="min-h-screen bg-slate-50">
       {/* HERO */}
@@ -1554,7 +1562,7 @@ export default async function LuxuryTourPage({
 
                   <div className="mt-1 flex items-end gap-2">
                     <span className="text-4xl font-bold tracking-tight text-orange-500">
-                      €{tour.price}
+                      €{startingPrice}
                     </span>
 
                     <span className="pb-1 text-xs text-gray-400">
