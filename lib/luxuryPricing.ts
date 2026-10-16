@@ -32,7 +32,7 @@ export const luxuryPricingDefaults = {
   "island_ouzeria": 35,
   "island_mahmya": 60
 } as const;
-export type LuxuryPricing = { [K in keyof typeof luxuryPricingDefaults]: number };
+export type LuxuryPricing = { -readonly [K in keyof typeof luxuryPricingDefaults]: number };
 
 export async function getLuxuryPricing(): Promise<LuxuryPricing> {
   const pricing: LuxuryPricing = { ...luxuryPricingDefaults };
