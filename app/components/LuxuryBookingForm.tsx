@@ -1750,7 +1750,7 @@ ${notes.trim() || "-"}
                         <div className="sm:text-right">
                           <p className="text-xs font-medium text-slate-300"><HomeText en="Estimated total" de="Geschätzter Gesamtpreis" /></p>
                           <p className="mt-1 text-3xl font-bold tracking-tight text-white">{displayedTotalPrice}</p>
-                          {selectedIslands.length > 0 && (
+                          {pricingValid && selectedIslands.length > 0 && (
                             <p className="mt-1 text-xs text-slate-400">
                               <HomeText en={`Includes €${islandExtra} island options`} de={`Enthält €${islandExtra} für Inseloptionen`} />
                             </p>
@@ -1759,7 +1759,7 @@ ${notes.trim() || "-"}
                       </div>
                       {!pricingValid && (
                         <div className="border-t border-white/10 px-5 py-3 text-sm font-semibold text-orange-200 sm:px-6">
-                          <HomeText en="This vehicle does not support the selected group size. Choose a different vehicle to continue." de="Dieses Fahrzeug ist für die gewählte Gruppengröße nicht geeignet. Bitte wählen Sie ein anderes Fahrzeug." />
+                          <HomeText en={tourSlug === "luxor" || tourSlug === "cairo" ? "This vehicle does not support the selected group size. Choose a different vehicle to continue." : "This option does not support the selected number of guests. Adjust the guest count to continue."} de={tourSlug === "luxor" || tourSlug === "cairo" ? "Dieses Fahrzeug ist für die gewählte Gruppengröße nicht geeignet. Bitte wählen Sie ein anderes Fahrzeug." : "Diese Option ist für die gewählte Gästezahl nicht verfügbar. Bitte passen Sie die Gästezahl an."} />
                         </div>
                       )}
                     </div>
