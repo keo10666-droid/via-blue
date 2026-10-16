@@ -667,11 +667,13 @@ export default function LuxuryBookingForm({
         (chargeableGuests - 4) * (selectedMuseum === "old" ? 40 : 60);
     }
   } else if (tourSlug === "speed-boat") {
-    if (chargeableGuests >= 1 && chargeableGuests <= 4) baseTourPrice = 180;
-    if (chargeableGuests >= 5 && chargeableGuests <= 8) baseTourPrice = 250;
+    // Boat capacity/size depends on everyone onboard, including free infants.
+    if (totalGuests >= 1 && totalGuests <= 4) baseTourPrice = 180;
+    if (totalGuests >= 5 && totalGuests <= 8) baseTourPrice = 250;
   } else if (tourSlug === "private-boat") {
-    if (chargeableGuests >= 1 && chargeableGuests <= 15) baseTourPrice = 450;
-    if (chargeableGuests >= 16 && chargeableGuests <= 30) baseTourPrice = 600;
+    // Boat capacity/size depends on everyone onboard, including free infants.
+    if (totalGuests >= 1 && totalGuests <= 15) baseTourPrice = 450;
+    if (totalGuests >= 16 && totalGuests <= 30) baseTourPrice = 600;
   }
 
   const islandExtra = selectedIslands.reduce(
