@@ -32,7 +32,8 @@ export const luxuryPricingDefaults = {
   "island_ouzeria": 35,
   "island_mahmya": 60
 } as const;
-export type LuxuryPricing = { -readonly [K in keyof typeof luxuryPricingDefaults]: number };
+
+export type LuxuryPricing = Record<keyof typeof luxuryPricingDefaults, number>;
 
 export async function getLuxuryPricing(): Promise<LuxuryPricing> {
   const pricing: LuxuryPricing = { ...luxuryPricingDefaults };
@@ -47,10 +48,14 @@ export async function getLuxuryPricing(): Promise<LuxuryPricing> {
 
   if (error || !data?.content || typeof data.content !== "object") return pricing;
   const saved = data.content as Record<string, unknown>;
+
   for (const key of Object.keys(luxuryPricingDefaults) as Array<keyof LuxuryPricing>) {
     const value = saved[key];
     const parsed = typeof value === "number" ? value : typeof value === "string" ? Number(value) : NaN;
-    if (Number.isFinite(parsed) && parsed >= 0 && parsed <= 100000) pricing[key] = parsed;
+    if (Number.isFinite(parsed) && parsed >= 0 && parsed <= 100000) {
+      pricing[key] = parsed;
+    }
   }
+
   return pricing;
 }
