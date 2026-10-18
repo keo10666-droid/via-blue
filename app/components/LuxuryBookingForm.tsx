@@ -1625,8 +1625,8 @@ ${notes.trim() || "-"}
                           </h4>
                           <div className="mt-3 grid gap-3 sm:grid-cols-2">
                             {[
-                              { id: "1-hour" as const, title: "1 Hour", single: 40, double: 50, deTitle: "1 Stunde" },
-                              { id: "3-hours" as const, title: "3 Hours", single: 55, double: 70, deTitle: "3 Stunden" },
+                              { id: "1-hour" as const, title: "1 Hour", deTitle: "1 Stunde" },
+                              { id: "3-hours" as const, title: "3 Hours", deTitle: "3 Stunden" },
                             ].map((option) => {
                               const active = selectedQuadDuration === option.id;
                               return (
@@ -1639,12 +1639,6 @@ ${notes.trim() || "-"}
                                 >
                                   <span className="block text-base font-bold text-[#071a36]">
                                     <HomeText en={option.title} de={option.deTitle} />
-                                  </span>
-                                  <span className="mt-2 block text-xs text-slate-500">
-                                    <HomeText en={`Single: €${option.single}`} de={`Einzel: €${option.single}`} />
-                                  </span>
-                                  <span className="mt-1 block text-xs text-slate-500">
-                                    <HomeText en={`Double: €${option.double} (for 2 people)`} de={`Doppel: €${option.double} (für 2 Personen)`} />
                                   </span>
                                 </button>
                               );
