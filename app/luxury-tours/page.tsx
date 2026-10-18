@@ -189,7 +189,14 @@ export default async function LuxuryToursPage() {
       : tour.slug === "cairo" ? pricing.cairo_old_limo_1
       : tour.slug === "speed-boat" ? pricing.speed_boat_up_to_4
       : tour.slug === "private-boat" ? pricing.private_boat_up_to_15
+      : tour.slug === "quad-safari" ? pricing.quad_single_1h
+      : tour.slug === "buggy-safari" ? pricing.buggy_2_seat
       : tour.price,
+    description: tour.slug === "quad-safari"
+      ? `Private quad safari. 1 hour: Single €${pricing.quad_single_1h}, Double €${pricing.quad_double_1h}; 3 hours: Single €${pricing.quad_single_3h}, Double €${pricing.quad_double_3h}.`
+      : tour.slug === "buggy-safari"
+      ? `Private 3-hour buggy program. 2-person buggy €${pricing.buggy_2_seat} or 4-person buggy €${pricing.buggy_4_seat}.`
+      : tour.description,
   }));
   return (
     <main className="min-h-screen bg-slate-50">
