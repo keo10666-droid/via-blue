@@ -1706,7 +1706,7 @@ ${notes.trim() || "-"}
                                 <div className="mt-4 flex items-center justify-between">
                                   <button type="button" aria-label={"Remove " + option.id + " quad"} onClick={() => option.set((count) => Math.max(0, count - 1))} disabled={option.count === 0} className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 text-xl font-bold text-[#071a36] disabled:opacity-30">−</button>
                                   <span className="text-xl font-bold tabular-nums text-[#071a36]">{option.count}</span>
-                                  <button type="button" aria-label={"Add " + option.id + " quad"} onClick={() => option.set((count) => count + 1)} disabled={quadSeatsSelected >= 25 || (option.id === "single" && singleQuadCount + doubleQuadCount >= 25)} className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#071a36] text-xl font-bold text-white disabled:opacity-30">+</button>
+                                  <button type="button" aria-label={"Add " + option.id + " quad"} onClick={() => option.set((count) => count + 1)} disabled={quadSeatsSelected + option.seats > 25} className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#071a36] text-xl font-bold text-white disabled:opacity-30">+</button>
                                 </div>
                                 <p className="mt-2 text-right text-xs font-semibold text-slate-500">Subtotal: €{option.count * (option.id === "single" ? singleQuadUnitPrice : doubleQuadUnitPrice)}</p>
                               </div>
@@ -1727,7 +1727,6 @@ ${notes.trim() || "-"}
                             <HomeText en="Infants and children under 10 must ride as passengers with an adult. Choose the Single/Double mix to match your group and anyone who will not drive." de="Babys und Kinder unter 10 Jahren müssen als Beifahrer bei einem Erwachsenen mitfahren. Wählen Sie die passende Mischung aus Einzel- und Doppelquads." />
                           </p>
                         </div>
-</div>
                       </div>
                     )}
 
