@@ -66,9 +66,9 @@ const luxuryTours = [
     slug: "quad-safari",
     name: "Private Quad Safari",
     description:
-      "Experience the Egyptian desert with a premium private quad safari adventure",
-    price: 120,
-    duration: "Half Day",
+      "Private quad safari with 1-hour and 3-hour options. Choose Single and Double Quads to match your group.",
+    price: 40,
+    duration: "1–3 Hours",
     image: "/luxury-tours/private-quad-safari-hero.webp",
     rating: 4.8,
     reviews: 87,
@@ -436,7 +436,10 @@ export default async function LuxuryToursPage() {
                       </span>
 
                       <span className="ml-1 text-[10px] font-medium text-gray-400">
-                        <HomeText en="/ experience" de="/ Erlebnis" />
+                        <HomeText
+                          en={tour.slug === "quad-safari" ? "/ quad" : "/ experience"}
+                          de={tour.slug === "quad-safari" ? "/ Quad" : "/ Erlebnis"}
+                        />
                       </span>
                     </div>
                   </div>
