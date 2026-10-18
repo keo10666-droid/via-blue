@@ -644,6 +644,7 @@ export default function LuxuryBookingForm({
   const quadSeatsSelected = singleQuadCount + doubleQuadCount * 2;
   const quadAllocationValid =
     quadSeatsSelected === recordedGuests &&
+    requiredQuadCount <= adults &&
     doubleQuadCount >= infants + childrenUnderTen;
   const islandPrices: Record<string, number> = {
     paradise: pricing.island_paradise,
@@ -1720,7 +1721,9 @@ ${notes.trim() || "-"}
                             <p className="mt-2 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-xs font-semibold leading-5 text-red-700">
                               {quadSeatsSelected !== recordedGuests
                                 ? <HomeText en={`The number of seats must match all ${recordedGuests} people, including infants. Selected seats: ${quadSeatsSelected}.`} de={`Die Sitzplätze müssen allen ${recordedGuests} Personen einschließlich Babys entsprechen. Ausgewählte Plätze: ${quadSeatsSelected}.`} />
-                                : <HomeText en={`At least ${infants + childrenUnderTen} Double Quad passenger seats are needed for infants and children under 10. You selected ${doubleQuadCount} Double Quads.`} de={`Für Babys und Kinder unter 10 Jahren sind mindestens ${infants + childrenUnderTen} Beifahrerplätze in Doppelquads nötig. Ausgewählt: ${doubleQuadCount} Doppelquads.`} />}
+                                : requiredQuadCount > adults
+                                  ? <HomeText en={`You selected ${requiredQuadCount} quads, but only ${adults} adult(s) are available to drive. Reduce the number of quads or update the group details.`} de={`Sie haben ${requiredQuadCount} Quads ausgewählt, aber nur ${adults} Erwachsene können fahren. Reduzieren Sie die Quad-Anzahl oder ändern Sie die Gruppendetails.`} />
+                                  : <HomeText en={`At least ${infants + childrenUnderTen} Double Quad passenger seats are needed for infants and children under 10. You selected ${doubleQuadCount} Double Quads.`} de={`Für Babys und Kinder unter 10 Jahren sind mindestens ${infants + childrenUnderTen} Beifahrerplätze in Doppelquads nötig. Ausgewählt: ${doubleQuadCount} Doppelquads.`} />}
                             </p>
                           )}
                           <p className="mt-2 text-xs leading-5 text-slate-500">
