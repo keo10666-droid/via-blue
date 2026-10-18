@@ -634,7 +634,7 @@ export default function LuxuryBookingForm({
   const chargeableGuests = adults + children;
 
   const pricingTour = ["luxor", "cairo", "speed-boat", "private-boat", "quad-safari"].includes(tourSlug);
-  const quadPricePerPerson = selectedQuadDuration === "1-hour"
+  const quadTotalPrice = selectedQuadDuration === "1-hour"
     ? (selectedQuadType === "single" ? 40 : 50)
     : (selectedQuadType === "single" ? 55 : 70);
   const islandPrices: Record<string, number> = {
@@ -685,8 +685,8 @@ export default function LuxuryBookingForm({
     if (totalGuests >= 1 && totalGuests <= 15) baseTourPrice = pricing.private_boat_up_to_15;
     if (totalGuests >= 16 && totalGuests <= 30) baseTourPrice = pricing.private_boat_up_to_30;
   } else if (tourSlug === "quad-safari") {
-    // Quad prices are per paying guest; the selected duration and quad type set the per-person rate.
-    if (chargeableGuests >= 1 && totalGuests <= 25) baseTourPrice = quadPricePerPerson * chargeableGuests;
+    // The selected quad price is the total price for the chosen quad, not per guest.
+    if (chargeableGuests >= 1 && totalGuests <= 25) baseTourPrice = quadTotalPrice;
   }
 
   const islandExtra = selectedIslands.reduce(
@@ -708,7 +708,7 @@ export default function LuxuryBookingForm({
     pricingTour && (tourSlug === "luxor" || tourSlug === "cairo")
       ? `Vehicle: ${selectedVehicle}`
       : "",
-    tourSlug === "quad-safari" ? `Quad duration: ${selectedQuadDuration === "1-hour" ? "1 hour" : "3 hours"}\nQuad type: ${selectedQuadType === "single" ? "Single Quad (1 person per quad)" : "Double Quad (2 people per quad)"}\nPrice per person: €${quadPricePerPerson}` : "",
+    tourSlug === "quad-safari" ? `Quad duration: ${selectedQuadDuration === "1-hour" ? "1 hour" : "3 hours"}\nQuad type: ${selectedQuadType === "single" ? "Single Quad" : "Double Quad (for 2 people)"}\nTotal quad price: €${quadTotalPrice}` : "",
     tourSlug === "cairo" ? `Museum: ${selectedMuseum === "old" ? "Old Egyptian Museum" : "Grand Egyptian Museum"}` : "",
     selectedIslands.length
       ? `Islands: ${selectedIslands.join(", ")}`
@@ -1641,10 +1641,10 @@ ${notes.trim() || "-"}
                                     <HomeText en={option.title} de={option.deTitle} />
                                   </span>
                                   <span className="mt-2 block text-xs text-slate-500">
-                                    <HomeText en={`Single: €${option.single} / person`} de={`Einzel: €${option.single} / Person`} />
+                                    <HomeText en={`Single: €${option.single}`} de={`Einzel: €${option.single}`} />
                                   </span>
                                   <span className="mt-1 block text-xs text-slate-500">
-                                    <HomeText en={`Double: €${option.double} / person`} de={`Doppel: €${option.double} / Person`} />
+                                    <HomeText en={`Double: €${option.double} (for 2 people)`} de={`Doppel: €${option.double} (für 2 Personen)`} />
                                   </span>
                                 </button>
                               );
@@ -1692,7 +1692,7 @@ ${notes.trim() || "-"}
                                     <HomeText en={option.description} de={option.deDescription} />
                                   </span>
                                   <span className="mt-3 block text-lg font-bold text-orange-600">
-                                    €{optionPrice} <span className="text-xs font-medium text-slate-500"><HomeText en="/ person" de="/ Person" /></span>
+                                    €{optionPrice}{option.id === "double" && <span className="ml-1 text-xs font-medium text-slate-500"><HomeText en="(for 2 people)" de="(für 2 Personen)" /></span>}
                                   </span>
                                 </button>
                               );
