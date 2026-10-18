@@ -652,7 +652,7 @@ export default function LuxuryBookingForm({
   const buggySeatsSelected = twoSeatBuggyCount * 2 + fourSeatBuggyCount * 4;
   const buggyTotalPrice = twoSeatBuggyCount * 100 + fourSeatBuggyCount * 125;
   const buggyAllocationValid =
-    buggySeatsSelected === recordedGuests &&
+    buggySeatsSelected >= recordedGuests &&
     requiredBuggyCount <= adults;
   const islandPrices: Record<string, number> = {
     paradise: pricing.island_paradise,
@@ -1790,13 +1790,13 @@ ${notes.trim() || "-"}
                         </div>
                         {!buggyAllocationValid && (
                           <p className="rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-xs font-semibold leading-5 text-red-700">
-                            {buggySeatsSelected !== recordedGuests
-                              ? <HomeText en={`The number of seats must match all ${recordedGuests} people, including infants. Selected seats: ${buggySeatsSelected}.`} de={`Die Sitzplätze müssen allen ${recordedGuests} Personen einschließlich Babys entsprechen. Ausgewählte Plätze: ${buggySeatsSelected}.`} />
+                            {buggySeatsSelected < recordedGuests
+                              ? <HomeText en={`There must be enough seats for all ${recordedGuests} people, including infants. Selected seats: ${buggySeatsSelected}.`} de={`Es müssen genügend Sitzplätze für alle ${recordedGuests} Personen einschließlich Babys vorhanden sein. Ausgewählte Plätze: ${buggySeatsSelected}.`} />
                               : <HomeText en={`You selected ${requiredBuggyCount} buggies, but only ${adults} adult(s) are available to drive. Reduce the number of buggies or update the group details.`} de={`Sie haben ${requiredBuggyCount} Buggys ausgewählt, aber nur ${adults} Erwachsene können fahren. Reduzieren Sie die Anzahl oder ändern Sie die Gruppendetails.`} />}
                           </p>
                         )}
                         <p className="text-xs leading-5 text-slate-500">
-                          <HomeText en="Every buggy needs an adult driver. The selected seats must match the total number of people, including infants." de="Jeder Buggy benötigt einen erwachsenen Fahrer. Die ausgewählten Sitzplätze müssen der Gesamtzahl aller Personen einschließlich Babys entsprechen." />
+                          <HomeText en="Every buggy needs an adult driver. Total seats may exceed the number of people, but must be enough for everyone, including infants." de="Jeder Buggy benötigt einen erwachsenen Fahrer. Die Gesamtzahl der Sitzplätze darf die Personenzahl überschreiten, muss aber für alle Personen einschließlich Babys ausreichen." />
                         </p>
                       </div>
                     )}
