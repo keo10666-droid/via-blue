@@ -252,9 +252,9 @@ export default async function Home() {
       slug: "private-quad-safari",
       name: "Private Quad Safari",
       description:
-        "Experience the Egyptian desert with a premium private quad safari adventure",
-      price: 120,
-      duration: "Half Day",
+        "Private quad safari with 1-hour and 3-hour options. Choose Single and Double Quads to match your group.",
+      price: 40,
+      duration: "1–3 Hours",
       image: "/luxury-tours/private-quad-safari-hero.webp",
       rating: 4.8,
       reviews: 87,
@@ -791,7 +791,10 @@ export default async function Home() {
                         <div className="font-bold">
                           €{tour.price}
                           <span className="ml-1 text-xs font-normal text-blue-200">
-                            / <HomeText en="person" de="Person" />
+                            / <HomeText
+                              en={tour.slug === "private-quad-safari" ? "quad" : "person"}
+                              de={tour.slug === "private-quad-safari" ? "Quad" : "Person"}
+                            />
                           </span>
                         </div>
 
