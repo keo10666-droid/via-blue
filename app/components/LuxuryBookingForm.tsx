@@ -618,7 +618,7 @@ export default function LuxuryBookingForm({
   const [selectedMuseum, setSelectedMuseum] = useState("old");
   const [selectedQuadDuration, setSelectedQuadDuration] = useState<"1-hour" | "3-hours">("1-hour");
   const [selectedQuadStartTime, setSelectedQuadStartTime] = useState<"09:00" | "15:00">("09:00");
-  const [selectedQuadType, setSelectedQuadType] = useState<"single" | "double">("single");
+  const [selectedQuadType, setSelectedQuadType] = useState<"single" | "double">("double");
   const [selectedIslands, setSelectedIslands] = useState<string[]>([]);
 
   const [notes, setNotes] = useState("");
@@ -635,9 +635,12 @@ export default function LuxuryBookingForm({
   const chargeableGuests = adults + children;
 
   const pricingTour = ["luxor", "cairo", "speed-boat", "private-boat", "quad-safari"].includes(tourSlug);
-  const quadTotalPrice = selectedQuadDuration === "1-hour"
+  const quadUnitPrice = selectedQuadDuration === "1-hour"
     ? (selectedQuadType === "single" ? 40 : 50)
     : (selectedQuadType === "single" ? 55 : 70);
+  const quadCapacity = selectedQuadType === "single" ? 1 : 2;
+  const requiredQuadCount = Math.ceil(chargeableGuests / quadCapacity);
+  const quadTotalPrice = quadUnitPrice * requiredQuadCount;
   const islandPrices: Record<string, number> = {
     paradise: pricing.island_paradise,
     orange: pricing.island_orange,
@@ -686,7 +689,7 @@ export default function LuxuryBookingForm({
     if (totalGuests >= 1 && totalGuests <= 15) baseTourPrice = pricing.private_boat_up_to_15;
     if (totalGuests >= 16 && totalGuests <= 30) baseTourPrice = pricing.private_boat_up_to_30;
   } else if (tourSlug === "quad-safari") {
-    // The selected quad price is the total price for the chosen quad, not per guest.
+    // Price each selected quad and multiply by the number needed for the group.
     if (chargeableGuests >= 1 && totalGuests <= 25) baseTourPrice = quadTotalPrice;
   }
 
@@ -709,7 +712,7 @@ export default function LuxuryBookingForm({
     pricingTour && (tourSlug === "luxor" || tourSlug === "cairo")
       ? `Vehicle: ${selectedVehicle}`
       : "",
-    tourSlug === "quad-safari" ? `Quad duration: ${selectedQuadDuration === "1-hour" ? "1 hour" : "3 hours"}\nStart time: ${selectedQuadStartTime}\nQuad type: ${selectedQuadType === "single" ? "Single Quad" : "Double Quad (for 2 people)"}\nTotal quad price: €${quadTotalPrice}` : "",
+    tourSlug === "quad-safari" ? `Quad duration: ${selectedQuadDuration === "1-hour" ? "1 hour" : "3 hours"}\nStart time: ${selectedQuadStartTime}\nQuad type: ${selectedQuadType === "single" ? "Single Quad" : "Double Quad (up to 2 people)"}\nNumber of quads: ${requiredQuadCount}\nPrice per quad: €${quadUnitPrice}\nTotal quad price: €${quadTotalPrice}` : "",
     tourSlug === "cairo" ? `Museum: ${selectedMuseum === "old" ? "Old Egyptian Museum" : "Grand Egyptian Museum"}` : "",
     selectedIslands.length
       ? `Islands: ${selectedIslands.join(", ")}`
@@ -1718,6 +1721,12 @@ ${notes.trim() || "-"}
                               );
                             })}
                           </div>
+                          <p className="mt-3 rounded-xl border border-orange-200 bg-white px-3 py-2 text-xs font-semibold leading-5 text-slate-600">
+                            <HomeText
+                              en={`${requiredQuadCount} ${selectedQuadType === "double" ? "double" : "single"} quad(s) required for ${chargeableGuests} guest(s). Total: €${quadTotalPrice}`}
+                              de={`${requiredQuadCount} ${selectedQuadType === "double" ? "Doppel" : "Einzel"}quad(s) für ${chargeableGuests} Gäste erforderlich. Gesamt: €${quadTotalPrice}`}
+                            />
+                          </p>
                         </div>
                       </div>
                     )}
