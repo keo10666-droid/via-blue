@@ -616,6 +616,8 @@ export default function LuxuryBookingForm({
 
   const [selectedVehicle, setSelectedVehicle] = useState("limousine");
   const [selectedMuseum, setSelectedMuseum] = useState("old");
+  const [selectedQuadDuration, setSelectedQuadDuration] = useState<"1-hour" | "3-hours">("1-hour");
+  const [selectedQuadType, setSelectedQuadType] = useState<"single" | "double">("single");
   const [selectedIslands, setSelectedIslands] = useState<string[]>([]);
 
   const [notes, setNotes] = useState("");
@@ -631,7 +633,10 @@ export default function LuxuryBookingForm({
   const recordedGuests = adults + children + infants;
   const chargeableGuests = adults + children;
 
-  const pricingTour = ["luxor", "cairo", "speed-boat", "private-boat"].includes(tourSlug);
+  const pricingTour = ["luxor", "cairo", "speed-boat", "private-boat", "quad-safari"].includes(tourSlug);
+  const quadPricePerPerson = selectedQuadDuration === "1-hour"
+    ? (selectedQuadType === "single" ? 40 : 50)
+    : (selectedQuadType === "single" ? 55 : 70);
   const islandPrices: Record<string, number> = {
     paradise: pricing.island_paradise,
     orange: pricing.island_orange,
@@ -679,6 +684,9 @@ export default function LuxuryBookingForm({
     // Boat capacity/size is based on adults and children; infants are recorded but excluded.
     if (totalGuests >= 1 && totalGuests <= 15) baseTourPrice = pricing.private_boat_up_to_15;
     if (totalGuests >= 16 && totalGuests <= 30) baseTourPrice = pricing.private_boat_up_to_30;
+  } else if (tourSlug === "quad-safari") {
+    // Quad prices are per paying guest; the selected duration and quad type set the per-person rate.
+    if (chargeableGuests >= 1 && totalGuests <= 25) baseTourPrice = quadPricePerPerson * chargeableGuests;
   }
 
   const islandExtra = selectedIslands.reduce(
@@ -700,6 +708,7 @@ export default function LuxuryBookingForm({
     pricingTour && (tourSlug === "luxor" || tourSlug === "cairo")
       ? `Vehicle: ${selectedVehicle}`
       : "",
+    tourSlug === "quad-safari" ? `Quad duration: ${selectedQuadDuration === "1-hour" ? "1 hour" : "3 hours"}\nQuad type: ${selectedQuadType === "single" ? "Single Quad (1 person per quad)" : "Double Quad (2 people per quad)"}\nPrice per person: €${quadPricePerPerson}` : "",
     tourSlug === "cairo" ? `Museum: ${selectedMuseum === "old" ? "Old Egyptian Museum" : "Grand Egyptian Museum"}` : "",
     selectedIslands.length
       ? `Islands: ${selectedIslands.join(", ")}`
@@ -1603,6 +1612,94 @@ ${notes.trim() || "-"}
                     </div>
                     {submitAttempted && !isGuestsValid && errorText(
                       <HomeText en={"Choose at least " + minGuests + " paying guest and no more than " + maxGuests + " people total."} de={"Wählen Sie mindestens " + minGuests + " zahlenden Gast und höchstens " + maxGuests + " Personen insgesamt."} />
+                    )}
+
+                    {tourSlug === "quad-safari" && (
+                      <div className="space-y-5 rounded-2xl border border-orange-100 bg-orange-50/40 p-5">
+                        <div>
+                          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-orange-500">
+                            <HomeText en="01 · Duration" de="01 · Dauer" />
+                          </p>
+                          <h4 className="mt-1 text-lg font-semibold text-[#071a36]">
+                            <HomeText en="Choose your quad experience" de="Wählen Sie Ihr Quad-Erlebnis" />
+                          </h4>
+                          <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                            {[
+                              { id: "1-hour" as const, title: "1 Hour", single: 40, double: 50, deTitle: "1 Stunde" },
+                              { id: "3-hours" as const, title: "3 Hours", single: 55, double: 70, deTitle: "3 Stunden" },
+                            ].map((option) => {
+                              const active = selectedQuadDuration === option.id;
+                              return (
+                                <button
+                                  key={option.id}
+                                  type="button"
+                                  onClick={() => setSelectedQuadDuration(option.id)}
+                                  aria-pressed={active}
+                                  className={`rounded-2xl border p-4 text-left transition-all ${active ? "border-[#071a36] bg-white shadow-md ring-1 ring-[#071a36]" : "border-slate-200 bg-white/70 hover:border-slate-300"}`}
+                                >
+                                  <span className="block text-base font-bold text-[#071a36]">
+                                    <HomeText en={option.title} de={option.deTitle} />
+                                  </span>
+                                  <span className="mt-2 block text-xs text-slate-500">
+                                    <HomeText en={`Single: €${option.single} / person`} de={`Einzel: €${option.single} / Person`} />
+                                  </span>
+                                  <span className="mt-1 block text-xs text-slate-500">
+                                    <HomeText en={`Double: €${option.double} / person`} de={`Doppel: €${option.double} / Person`} />
+                                  </span>
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </div>
+
+                        <div>
+                          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-orange-500">
+                            <HomeText en="02 · Quad type" de="02 · Quad-Typ" />
+                          </p>
+                          <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                            {[
+                              {
+                                id: "single" as const,
+                                title: "Single Quad",
+                                description: "1 person on the quad",
+                                deTitle: "Einzelquad",
+                                deDescription: "1 Person auf dem Quad",
+                              },
+                              {
+                                id: "double" as const,
+                                title: "Double Quad",
+                                description: "2 people on the quad",
+                                deTitle: "Doppelquad",
+                                deDescription: "2 Personen auf dem Quad",
+                              },
+                            ].map((option) => {
+                              const active = selectedQuadType === option.id;
+                              const optionPrice = selectedQuadDuration === "1-hour"
+                                ? (option.id === "single" ? 40 : 50)
+                                : (option.id === "single" ? 55 : 70);
+                              return (
+                                <button
+                                  key={option.id}
+                                  type="button"
+                                  onClick={() => setSelectedQuadType(option.id)}
+                                  aria-pressed={active}
+                                  className={`rounded-2xl border p-4 text-left transition-all ${active ? "border-[#071a36] bg-white shadow-md ring-1 ring-[#071a36]" : "border-slate-200 bg-white hover:border-slate-300"}`}
+                                >
+                                  <span className="block text-sm font-bold text-[#071a36]">
+                                    <HomeText en={option.title} de={option.deTitle} />
+                                  </span>
+                                  <span className="mt-1 block text-xs text-slate-500">
+                                    <HomeText en={option.description} de={option.deDescription} />
+                                  </span>
+                                  <span className="mt-3 block text-lg font-bold text-orange-600">
+                                    €{optionPrice} <span className="text-xs font-medium text-slate-500"><HomeText en="/ person" de="/ Person" /></span>
+                                  </span>
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      </div>
                     )}
 
                     {(tourSlug === "luxor" || tourSlug === "cairo") && (
