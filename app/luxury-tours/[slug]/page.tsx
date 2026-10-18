@@ -1296,6 +1296,8 @@ export default async function LuxuryTourPage({
     : slug === "cairo" ? pricing.cairo_old_limo_1
     : slug === "speed-boat" ? pricing.speed_boat_up_to_4
     : slug === "private-boat" ? pricing.private_boat_up_to_15
+    : slug === "quad-safari" ? pricing.quad_single_1h
+    : slug === "buggy-safari" ? pricing.buggy_2_seat
     : tour.price;
 
   return (
