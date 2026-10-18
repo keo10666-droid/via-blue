@@ -791,7 +791,7 @@ const luxuryTours = {
     description:
       "Enjoy an exciting guided buggy adventure through the Egyptian desert, riding as part of a dedicated group with a professional guide leading the way throughout the experience.",
 
-    price: 160,
+    price: 100,
 
     duration: "3 Hours",
 
@@ -804,6 +804,8 @@ const luxuryTours = {
     returnTime: "Morning / Evening",
 
     highlights: [
+      "2-person buggy — €100",
+      "4-person buggy — €125",
       "Guided buggy adventure",
       "Dedicated group experience",
       "Professional desert guide",
