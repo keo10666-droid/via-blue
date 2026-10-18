@@ -617,6 +617,7 @@ export default function LuxuryBookingForm({
   const [selectedVehicle, setSelectedVehicle] = useState("limousine");
   const [selectedMuseum, setSelectedMuseum] = useState("old");
   const [selectedQuadDuration, setSelectedQuadDuration] = useState<"1-hour" | "3-hours">("1-hour");
+  const [selectedQuadStartTime, setSelectedQuadStartTime] = useState<"09:00" | "15:00">("09:00");
   const [selectedQuadType, setSelectedQuadType] = useState<"single" | "double">("single");
   const [selectedIslands, setSelectedIslands] = useState<string[]>([]);
 
@@ -708,7 +709,7 @@ export default function LuxuryBookingForm({
     pricingTour && (tourSlug === "luxor" || tourSlug === "cairo")
       ? `Vehicle: ${selectedVehicle}`
       : "",
-    tourSlug === "quad-safari" ? `Quad duration: ${selectedQuadDuration === "1-hour" ? "1 hour" : "3 hours"}\nQuad type: ${selectedQuadType === "single" ? "Single Quad" : "Double Quad (for 2 people)"}\nTotal quad price: €${quadTotalPrice}` : "",
+    tourSlug === "quad-safari" ? `Quad duration: ${selectedQuadDuration === "1-hour" ? "1 hour" : "3 hours"}\nStart time: ${selectedQuadStartTime}\nQuad type: ${selectedQuadType === "single" ? "Single Quad" : "Double Quad (for 2 people)"}\nTotal quad price: €${quadTotalPrice}` : "",
     tourSlug === "cairo" ? `Museum: ${selectedMuseum === "old" ? "Old Egyptian Museum" : "Grand Egyptian Museum"}` : "",
     selectedIslands.length
       ? `Islands: ${selectedIslands.join(", ")}`
@@ -1648,7 +1649,32 @@ ${notes.trim() || "-"}
 
                         <div>
                           <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-orange-500">
-                            <HomeText en="02 · Quad type" de="02 · Quad-Typ" />
+                            <HomeText en="02 · Start time" de="02 · Startzeit" />
+                          </p>
+                          <h4 className="mt-1 text-base font-semibold text-[#071a36]">
+                            <HomeText en="Choose your start time" de="Wählen Sie Ihre Startzeit" />
+                          </h4>
+                          <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                            {(["09:00", "15:00"] as const).map((time) => {
+                              const active = selectedQuadStartTime === time;
+                              return (
+                                <button
+                                  key={time}
+                                  type="button"
+                                  onClick={() => setSelectedQuadStartTime(time)}
+                                  aria-pressed={active}
+                                  className={`rounded-2xl border p-4 text-left transition-all ${active ? "border-[#071a36] bg-white shadow-md ring-1 ring-[#071a36]" : "border-slate-200 bg-white/70 hover:border-slate-300"}`}
+                                >
+                                  <span className="block text-base font-bold text-[#071a36]">{time}</span>
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </div>
+
+                        <div>
+                          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-orange-500">
+                            <HomeText en="03 · Quad type" de="03 · Quad-Typ" />
                           </p>
                           <div className="mt-3 grid gap-3 sm:grid-cols-2">
                             {[
