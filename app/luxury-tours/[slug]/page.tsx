@@ -791,9 +791,9 @@ const luxuryTours = {
     description:
       "Enjoy an exciting guided buggy adventure through the Egyptian desert, riding as part of a dedicated group with a professional guide leading the way throughout the experience.",
 
-    price: 160,
+    price: 100,
 
-    duration: "2–3 Hours",
+    duration: "3 Hours",
 
     emoji: "🏎️",
 
@@ -804,6 +804,8 @@ const luxuryTours = {
     returnTime: "Morning / Evening",
 
     highlights: [
+      "2-person buggy — €100",
+      "4-person buggy — €125",
       "Guided buggy adventure",
       "Dedicated group experience",
       "Professional desert guide",
@@ -879,7 +881,7 @@ const luxuryTours = {
       "The experience is operated as a dedicated group with a professional guide leading the group throughout the ride.",
       "Guests must follow the guide and remain within the group for safety.",
       "Actual driving time is approximately 45–60 minutes.",
-      "Total experience duration is approximately 2–3 hours including preparation, transfers and rest stops.",
+      "The private buggy program lasts approximately 3 hours, including preparation, driving and rest stops.",
       "Trips are available daily in the morning or around sunset.",
       "Closed shoes are recommended.",
       "Comfortable outdoor clothing, sunglasses and sunscreen are recommended.",

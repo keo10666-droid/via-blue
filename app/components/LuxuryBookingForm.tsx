@@ -620,6 +620,8 @@ export default function LuxuryBookingForm({
   const [selectedQuadStartTime, setSelectedQuadStartTime] = useState<"09:00" | "15:00">("09:00");
   const [singleQuadCount, setSingleQuadCount] = useState(0);
   const [doubleQuadCount, setDoubleQuadCount] = useState(1);
+  const [twoSeatBuggyCount, setTwoSeatBuggyCount] = useState(1);
+  const [fourSeatBuggyCount, setFourSeatBuggyCount] = useState(0);
   const [selectedIslands, setSelectedIslands] = useState<string[]>([]);
 
   const [notes, setNotes] = useState("");
@@ -635,7 +637,7 @@ export default function LuxuryBookingForm({
   const recordedGuests = adults + children + infants;
   const chargeableGuests = adults + children;
 
-  const pricingTour = ["luxor", "cairo", "speed-boat", "private-boat", "quad-safari"].includes(tourSlug);
+  const pricingTour = ["luxor", "cairo", "speed-boat", "private-boat", "quad-safari", "buggy-safari"].includes(tourSlug);
   const singleQuadUnitPrice = selectedQuadDuration === "1-hour" ? 40 : 55;
   const doubleQuadUnitPrice = selectedQuadDuration === "1-hour" ? 50 : 70;
   const requiredQuadCount = singleQuadCount + doubleQuadCount;
@@ -646,6 +648,12 @@ export default function LuxuryBookingForm({
     quadSeatsSelected === recordedGuests &&
     requiredQuadCount <= adults &&
     doubleQuadCount >= infants + childrenUnderTen;
+  const requiredBuggyCount = twoSeatBuggyCount + fourSeatBuggyCount;
+  const buggySeatsSelected = twoSeatBuggyCount * 2 + fourSeatBuggyCount * 4;
+  const buggyTotalPrice = twoSeatBuggyCount * 100 + fourSeatBuggyCount * 125;
+  const buggyAllocationValid =
+    buggySeatsSelected === recordedGuests &&
+    requiredBuggyCount <= adults;
   const islandPrices: Record<string, number> = {
     paradise: pricing.island_paradise,
     orange: pricing.island_orange,
@@ -696,6 +704,9 @@ export default function LuxuryBookingForm({
   } else if (tourSlug === "quad-safari") {
     // Price each selected quad and multiply by the number needed for the group.
     if (chargeableGuests >= 1 && totalGuests <= 25) baseTourPrice = quadTotalPrice;
+  } else if (tourSlug === "buggy-safari") {
+    // One fixed 3-hour private buggy program; price each selected vehicle.
+    if (recordedGuests >= 1 && recordedGuests <= 25) baseTourPrice = buggyTotalPrice;
   }
 
   const islandExtra = selectedIslands.reduce(
@@ -707,7 +718,11 @@ export default function LuxuryBookingForm({
     tourSlug === "private-boat" ? 30 :
     ["luxor", "cairo", "speed-boat"].includes(tourSlug) ? 8 : 25;
   const pricingValid =
-    !pricingTour || (baseTourPrice !== null && totalGuests <= pricingCapacity && (tourSlug !== "quad-safari" || quadAllocationValid));
+    !pricingTour ||
+    (baseTourPrice !== null &&
+      totalGuests <= pricingCapacity &&
+      (tourSlug !== "quad-safari" || quadAllocationValid) &&
+      (tourSlug !== "buggy-safari" || buggyAllocationValid));
   const totalPrice = pricingTour
     ? (baseTourPrice ?? 0) + islandExtra
     : privatePrices[Math.min(Math.max(chargeableGuests, 2), 25)] ?? privatePrices[25];
@@ -718,6 +733,7 @@ export default function LuxuryBookingForm({
       ? `Vehicle: ${selectedVehicle}`
       : "",
     tourSlug === "quad-safari" ? `Quad duration: ${selectedQuadDuration === "1-hour" ? "1 hour" : "3 hours"}\nStart time: ${selectedQuadStartTime}\nSingle Quads: ${singleQuadCount} × €${singleQuadUnitPrice}\nDouble Quads: ${doubleQuadCount} × €${doubleQuadUnitPrice}\nTotal quads: ${requiredQuadCount}\nTotal quad price: €${quadTotalPrice}\nGuest seats selected: ${quadSeatsSelected}/${recordedGuests}\nChildren under 10 and infants must be passengers on Double Quads.` : "",
+    tourSlug === "buggy-safari" ? `Program duration: 3 hours\n2-person buggies: ${twoSeatBuggyCount} × €100\n4-person buggies: ${fourSeatBuggyCount} × €125\nTotal buggies: ${requiredBuggyCount}\nTotal buggy price: €${buggyTotalPrice}\nGuest seats selected: ${buggySeatsSelected}/${recordedGuests}` : "",
     tourSlug === "cairo" ? `Museum: ${selectedMuseum === "old" ? "Old Egyptian Museum" : "Grand Egyptian Museum"}` : "",
     selectedIslands.length
       ? `Islands: ${selectedIslands.join(", ")}`
@@ -1730,6 +1746,58 @@ ${notes.trim() || "-"}
                             <HomeText en="Infants and children under 10 must ride as passengers with an adult. Choose the Single/Double mix to match your group and anyone who will not drive." de="Babys und Kinder unter 10 Jahren müssen als Beifahrer bei einem Erwachsenen mitfahren. Wählen Sie die passende Mischung aus Einzel- und Doppelquads." />
                           </p>
                         </div>
+                      </div>
+                    )}
+
+                    {tourSlug === "buggy-safari" && (
+                      <div className="space-y-5 rounded-2xl border border-orange-100 bg-orange-50/40 p-5">
+                        <div>
+                          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-orange-500">
+                            <HomeText en="01 · 3-hour program" de="01 · 3-Stunden-Programm" />
+                          </p>
+                          <h4 className="mt-1 text-lg font-semibold text-[#071a36]">
+                            <HomeText en="Choose your buggy vehicles" de="Wählen Sie Ihre Buggy-Fahrzeuge" />
+                          </h4>
+                          <p className="mt-1 text-sm leading-6 text-slate-600">
+                            <HomeText en="One fixed 3-hour program. Select the number of 2-person and 4-person buggies to match everyone in your group." de="Ein festes 3-Stunden-Programm. Wählen Sie die Anzahl der 2- und 4-Personen-Buggys passend für Ihre Gruppe." />
+                          </p>
+                        </div>
+                        <div className="grid gap-3 sm:grid-cols-2">
+                          {[
+                            { id: "two" as const, title: "2-person buggy", deTitle: "Buggy für 2 Personen", detail: "2 seats · €100 per buggy", deDetail: "2 Plätze · 100 € pro Buggy", count: twoSeatBuggyCount, set: setTwoSeatBuggyCount, seats: 2, price: 100 },
+                            { id: "four" as const, title: "4-person buggy", deTitle: "Buggy für 4 Personen", detail: "4 seats · €125 per buggy", deDetail: "4 Plätze · 125 € pro Buggy", count: fourSeatBuggyCount, set: setFourSeatBuggyCount, seats: 4, price: 125 },
+                          ].map((option) => (
+                            <div key={option.id} className="rounded-2xl border border-slate-200 bg-white p-4">
+                              <div className="flex items-start justify-between gap-3">
+                                <div>
+                                  <span className="block text-sm font-bold text-[#071a36]"><HomeText en={option.title} de={option.deTitle} /></span>
+                                  <span className="mt-1 block text-xs text-slate-500"><HomeText en={option.detail} de={option.deDetail} /></span>
+                                </div>
+                                <span className="text-lg font-bold text-orange-600">€{option.price}</span>
+                              </div>
+                              <div className="mt-4 flex items-center justify-between">
+                                <button type="button" aria-label={"Remove " + option.id + " buggy"} onClick={() => option.set((count) => Math.max(0, count - 1))} disabled={option.count === 0} className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 text-xl font-bold text-[#071a36] disabled:opacity-30">−</button>
+                                <span className="text-xl font-bold tabular-nums text-[#071a36]">{option.count}</span>
+                                <button type="button" aria-label={"Add " + option.id + " buggy"} onClick={() => option.set((count) => count + 1)} disabled={buggySeatsSelected + option.seats > 25} className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#071a36] text-xl font-bold text-white disabled:opacity-30">+</button>
+                              </div>
+                              <p className="mt-2 text-right text-xs font-semibold text-slate-500">Subtotal: €{option.count * option.price}</p>
+                            </div>
+                          ))}
+                        </div>
+                        <div className="rounded-xl border border-orange-200 bg-white px-3 py-3 text-sm">
+                          <div className="flex justify-between gap-3"><span className="text-slate-600"><HomeText en="Seats selected" de="Ausgewählte Plätze" /></span><span className="font-bold text-[#071a36]">{buggySeatsSelected} / {recordedGuests}</span></div>
+                          <div className="mt-1 flex justify-between gap-3"><span className="text-slate-600"><HomeText en="Total buggy price" de="Buggy-Gesamtpreis" /></span><span className="font-bold text-orange-600">€{buggyTotalPrice}</span></div>
+                        </div>
+                        {!buggyAllocationValid && (
+                          <p className="rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-xs font-semibold leading-5 text-red-700">
+                            {buggySeatsSelected !== recordedGuests
+                              ? <HomeText en={`The number of seats must match all ${recordedGuests} people, including infants. Selected seats: ${buggySeatsSelected}.`} de={`Die Sitzplätze müssen allen ${recordedGuests} Personen einschließlich Babys entsprechen. Ausgewählte Plätze: ${buggySeatsSelected}.`} />
+                              : <HomeText en={`You selected ${requiredBuggyCount} buggies, but only ${adults} adult(s) are available to drive. Reduce the number of buggies or update the group details.`} de={`Sie haben ${requiredBuggyCount} Buggys ausgewählt, aber nur ${adults} Erwachsene können fahren. Reduzieren Sie die Anzahl oder ändern Sie die Gruppendetails.`} />}
+                          </p>
+                        )}
+                        <p className="text-xs leading-5 text-slate-500">
+                          <HomeText en="Every buggy needs an adult driver. The selected seats must match the total number of people, including infants." de="Jeder Buggy benötigt einen erwachsenen Fahrer. Die ausgewählten Sitzplätze müssen der Gesamtzahl aller Personen einschließlich Babys entsprechen." />
+                        </p>
                       </div>
                     )}
 
