@@ -32,7 +32,7 @@ export async function saveLuxuryPricing(formData: FormData) {
     console.error("Luxury pricing update failed:", error.message);
     redirect("/admin/luxury-pricing?error=save");
   }
-  for (const path of ["/luxury-tours", "/luxury-tours/luxor", "/luxury-tours/luxor/book", "/luxury-tours/cairo", "/luxury-tours/cairo/book", "/luxury-tours/speed-boat", "/luxury-tours/speed-boat/book", "/luxury-tours/private-boat", "/luxury-tours/private-boat/book"]) revalidatePath(path);
+  for (const path of ["/luxury-tours", "/luxury-tours/luxor", "/luxury-tours/luxor/book", "/luxury-tours/cairo", "/luxury-tours/cairo/book", "/luxury-tours/speed-boat", "/luxury-tours/speed-boat/book", "/luxury-tours/private-boat", "/luxury-tours/private-boat/book", "/luxury-tours/quad-safari", "/luxury-tours/quad-safari/book", "/luxury-tours/buggy-safari", "/luxury-tours/buggy-safari/book"]) revalidatePath(path);
   revalidatePath("/admin/luxury-pricing");
   redirect("/admin/luxury-pricing?saved=1");
 }
