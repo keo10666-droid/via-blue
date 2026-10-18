@@ -638,8 +638,8 @@ export default function LuxuryBookingForm({
   const chargeableGuests = adults + children;
 
   const pricingTour = ["luxor", "cairo", "speed-boat", "private-boat", "quad-safari", "buggy-safari"].includes(tourSlug);
-  const singleQuadUnitPrice = selectedQuadDuration === "1-hour" ? 40 : 55;
-  const doubleQuadUnitPrice = selectedQuadDuration === "1-hour" ? 50 : 70;
+  const singleQuadUnitPrice = selectedQuadDuration === "1-hour" ? pricing.quad_single_1h : pricing.quad_single_3h;
+  const doubleQuadUnitPrice = selectedQuadDuration === "1-hour" ? pricing.quad_double_1h : pricing.quad_double_3h;
   const requiredQuadCount = singleQuadCount + doubleQuadCount;
   const quadTotalPrice = singleQuadCount * singleQuadUnitPrice + doubleQuadCount * doubleQuadUnitPrice;
   const childrenUnderTen = childAges.filter((age) => age !== "" && Number(age) < 10).length;
@@ -650,7 +650,7 @@ export default function LuxuryBookingForm({
     doubleQuadCount >= infants + childrenUnderTen;
   const requiredBuggyCount = twoSeatBuggyCount + fourSeatBuggyCount;
   const buggySeatsSelected = twoSeatBuggyCount * 2 + fourSeatBuggyCount * 4;
-  const buggyTotalPrice = twoSeatBuggyCount * 100 + fourSeatBuggyCount * 125;
+  const buggyTotalPrice = twoSeatBuggyCount * pricing.buggy_2_seat + fourSeatBuggyCount * pricing.buggy_4_seat;
   const buggyAllocationValid =
     buggySeatsSelected >= recordedGuests &&
     requiredBuggyCount <= adults;
@@ -733,7 +733,7 @@ export default function LuxuryBookingForm({
       ? `Vehicle: ${selectedVehicle}`
       : "",
     tourSlug === "quad-safari" ? `Quad duration: ${selectedQuadDuration === "1-hour" ? "1 hour" : "3 hours"}\nStart time: ${selectedQuadStartTime}\nSingle Quads: ${singleQuadCount} × €${singleQuadUnitPrice}\nDouble Quads: ${doubleQuadCount} × €${doubleQuadUnitPrice}\nTotal quads: ${requiredQuadCount}\nTotal quad price: €${quadTotalPrice}\nGuest seats selected: ${quadSeatsSelected}/${recordedGuests}\nChildren under 10 and infants must be passengers on Double Quads.` : "",
-    tourSlug === "buggy-safari" ? `Program duration: 3 hours\n2-person buggies: ${twoSeatBuggyCount} × €100\n4-person buggies: ${fourSeatBuggyCount} × €125\nTotal buggies: ${requiredBuggyCount}\nTotal buggy price: €${buggyTotalPrice}\nGuest seats selected: ${buggySeatsSelected}/${recordedGuests}` : "",
+    tourSlug === "buggy-safari" ? `Program duration: 3 hours\n2-person buggies: ${twoSeatBuggyCount} × €${pricing.buggy_2_seat}\n4-person buggies: ${fourSeatBuggyCount} × €${pricing.buggy_4_seat}\nTotal buggies: ${requiredBuggyCount}\nTotal buggy price: €${buggyTotalPrice}\nGuest seats selected: ${buggySeatsSelected}/${recordedGuests}` : "",
     tourSlug === "cairo" ? `Museum: ${selectedMuseum === "old" ? "Old Egyptian Museum" : "Grand Egyptian Museum"}` : "",
     selectedIslands.length
       ? `Islands: ${selectedIslands.join(", ")}`
@@ -1764,8 +1764,8 @@ ${notes.trim() || "-"}
                         </div>
                         <div className="grid gap-3 sm:grid-cols-2">
                           {[
-                            { id: "two" as const, title: "2-person buggy", deTitle: "Buggy für 2 Personen", detail: "2 seats · €100 per buggy", deDetail: "2 Plätze · 100 € pro Buggy", count: twoSeatBuggyCount, set: setTwoSeatBuggyCount, seats: 2, price: 100 },
-                            { id: "four" as const, title: "4-person buggy", deTitle: "Buggy für 4 Personen", detail: "4 seats · €125 per buggy", deDetail: "4 Plätze · 125 € pro Buggy", count: fourSeatBuggyCount, set: setFourSeatBuggyCount, seats: 4, price: 125 },
+                            { id: "two" as const, title: "2-person buggy", deTitle: "Buggy für 2 Personen", detail: "2 seats · €" + pricing.buggy_2_seat + " per buggy", deDetail: "2 Plätze · " + pricing.buggy_2_seat + " € pro Buggy", count: twoSeatBuggyCount, set: setTwoSeatBuggyCount, seats: 2, price: pricing.buggy_2_seat },
+                            { id: "four" as const, title: "4-person buggy", deTitle: "Buggy für 4 Personen", detail: "4 seats · €" + pricing.buggy_4_seat + " per buggy", deDetail: "4 Plätze · " + pricing.buggy_4_seat + " € pro Buggy", count: fourSeatBuggyCount, set: setFourSeatBuggyCount, seats: 4, price: pricing.buggy_4_seat },
                           ].map((option) => (
                             <div key={option.id} className="rounded-2xl border border-slate-200 bg-white p-4">
                               <div className="flex items-start justify-between gap-3">
