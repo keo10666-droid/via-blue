@@ -618,7 +618,8 @@ export default function LuxuryBookingForm({
   const [selectedMuseum, setSelectedMuseum] = useState("old");
   const [selectedQuadDuration, setSelectedQuadDuration] = useState<"1-hour" | "3-hours">("1-hour");
   const [selectedQuadStartTime, setSelectedQuadStartTime] = useState<"09:00" | "15:00">("09:00");
-  const [selectedQuadType, setSelectedQuadType] = useState<"single" | "double">("double");
+  const [singleQuadCount, setSingleQuadCount] = useState(0);
+  const [doubleQuadCount, setDoubleQuadCount] = useState(1);
   const [selectedIslands, setSelectedIslands] = useState<string[]>([]);
 
   const [notes, setNotes] = useState("");
@@ -635,12 +636,16 @@ export default function LuxuryBookingForm({
   const chargeableGuests = adults + children;
 
   const pricingTour = ["luxor", "cairo", "speed-boat", "private-boat", "quad-safari"].includes(tourSlug);
-  const quadUnitPrice = selectedQuadDuration === "1-hour"
-    ? (selectedQuadType === "single" ? 40 : 50)
-    : (selectedQuadType === "single" ? 55 : 70);
-  const quadCapacity = selectedQuadType === "single" ? 1 : 2;
-  const requiredQuadCount = Math.ceil(chargeableGuests / quadCapacity);
-  const quadTotalPrice = quadUnitPrice * requiredQuadCount;
+  const singleQuadUnitPrice = selectedQuadDuration === "1-hour" ? 40 : 55;
+  const doubleQuadUnitPrice = selectedQuadDuration === "1-hour" ? 50 : 70;
+  const requiredQuadCount = singleQuadCount + doubleQuadCount;
+  const quadTotalPrice = singleQuadCount * singleQuadUnitPrice + doubleQuadCount * doubleQuadUnitPrice;
+  const childrenUnderTen = childAges.filter((age) => age !== "" && Number(age) < 10).length;
+  const quadSeatsSelected = singleQuadCount + doubleQuadCount * 2;
+  const quadAllocationValid =
+    quadSeatsSelected === recordedGuests &&
+    requiredQuadCount <= adults &&
+    doubleQuadCount >= infants + childrenUnderTen;
   const islandPrices: Record<string, number> = {
     paradise: pricing.island_paradise,
     orange: pricing.island_orange,
@@ -702,7 +707,7 @@ export default function LuxuryBookingForm({
     tourSlug === "private-boat" ? 30 :
     ["luxor", "cairo", "speed-boat"].includes(tourSlug) ? 8 : 25;
   const pricingValid =
-    !pricingTour || (baseTourPrice !== null && totalGuests <= pricingCapacity);
+    !pricingTour || (baseTourPrice !== null && totalGuests <= pricingCapacity && (tourSlug !== "quad-safari" || quadAllocationValid));
   const totalPrice = pricingTour
     ? (baseTourPrice ?? 0) + islandExtra
     : privatePrices[Math.min(Math.max(chargeableGuests, 2), 25)] ?? privatePrices[25];
@@ -712,7 +717,7 @@ export default function LuxuryBookingForm({
     pricingTour && (tourSlug === "luxor" || tourSlug === "cairo")
       ? `Vehicle: ${selectedVehicle}`
       : "",
-    tourSlug === "quad-safari" ? `Quad duration: ${selectedQuadDuration === "1-hour" ? "1 hour" : "3 hours"}\nStart time: ${selectedQuadStartTime}\nQuad type: ${selectedQuadType === "single" ? "Single Quad" : "Double Quad (up to 2 people)"}\nNumber of quads: ${requiredQuadCount}\nPrice per quad: €${quadUnitPrice}\nTotal quad price: €${quadTotalPrice}` : "",
+    tourSlug === "quad-safari" ? `Quad duration: ${selectedQuadDuration === "1-hour" ? "1 hour" : "3 hours"}\nStart time: ${selectedQuadStartTime}\nSingle Quads: ${singleQuadCount} × €${singleQuadUnitPrice}\nDouble Quads: ${doubleQuadCount} × €${doubleQuadUnitPrice}\nTotal quads: ${requiredQuadCount}\nTotal quad price: €${quadTotalPrice}\nGuest seats selected: ${quadSeatsSelected}/${recordedGuests}\nChildren under 10 and infants must be passengers on Double Quads.` : "",
     tourSlug === "cairo" ? `Museum: ${selectedMuseum === "old" ? "Old Egyptian Museum" : "Grand Egyptian Museum"}` : "",
     selectedIslands.length
       ? `Islands: ${selectedIslands.join(", ")}`
@@ -1677,55 +1682,52 @@ ${notes.trim() || "-"}
 
                         <div>
                           <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-orange-500">
-                            <HomeText en="03 · Quad type" de="03 · Quad-Typ" />
+                            <HomeText en="03 · Quad allocation" de="03 · Quad-Aufteilung" />
                           </p>
+                          <h4 className="mt-1 text-base font-semibold text-[#071a36]">
+                            <HomeText en="Choose how many Single and Double Quads" de="Anzahl der Einzel- und Doppelquads wählen" />
+                          </h4>
                           <div className="mt-3 grid gap-3 sm:grid-cols-2">
                             {[
-                              {
-                                id: "single" as const,
-                                title: "Single Quad",
-                                description: "1 person on the quad",
-                                deTitle: "Einzelquad",
-                                deDescription: "1 Person auf dem Quad",
-                              },
-                              {
-                                id: "double" as const,
-                                title: "Double Quad",
-                                description: "2 people on the quad",
-                                deTitle: "Doppelquad",
-                                deDescription: "2 Personen auf dem Quad",
-                              },
-                            ].map((option) => {
-                              const active = selectedQuadType === option.id;
-                              const optionPrice = selectedQuadDuration === "1-hour"
-                                ? (option.id === "single" ? 40 : 50)
-                                : (option.id === "single" ? 55 : 70);
-                              return (
-                                <button
-                                  key={option.id}
-                                  type="button"
-                                  onClick={() => setSelectedQuadType(option.id)}
-                                  aria-pressed={active}
-                                  className={`rounded-2xl border p-4 text-left transition-all ${active ? "border-[#071a36] bg-white shadow-md ring-1 ring-[#071a36]" : "border-slate-200 bg-white hover:border-slate-300"}`}
-                                >
-                                  <span className="block text-sm font-bold text-[#071a36]">
-                                    <HomeText en={option.title} de={option.deTitle} />
-                                  </span>
-                                  <span className="mt-1 block text-xs text-slate-500">
-                                    <HomeText en={option.description} de={option.deDescription} />
-                                  </span>
-                                  <span className="mt-3 block text-lg font-bold text-orange-600">
-                                    €{optionPrice}{option.id === "double" && <span className="ml-1 text-xs font-medium text-slate-500"><HomeText en="(for 2 people)" de="(für 2 Personen)" /></span>}
-                                  </span>
-                                </button>
-                              );
-                            })}
+                              { id: "single" as const, title: "Single Quad", deTitle: "Einzelquad", detail: "1 person · €" + singleQuadUnitPrice, deDetail: "1 Person · €" + singleQuadUnitPrice, count: singleQuadCount, set: setSingleQuadCount, seats: 1 },
+                              { id: "double" as const, title: "Double Quad", deTitle: "Doppelquad", detail: "2 people · €" + doubleQuadUnitPrice, deDetail: "2 Personen · €" + doubleQuadUnitPrice, count: doubleQuadCount, set: setDoubleQuadCount, seats: 2 },
+                            ].map((option) => (
+                              <div key={option.id} className="rounded-2xl border border-slate-200 bg-white p-4">
+                                <div className="flex items-start justify-between gap-3">
+                                  <div>
+                                    <span className="block text-sm font-bold text-[#071a36]">
+                                      <HomeText en={option.title} de={option.deTitle} />
+                                    </span>
+                                    <span className="mt-1 block text-xs text-slate-500">
+                                      <HomeText en={option.detail} de={option.deDetail} />
+                                    </span>
+                                  </div>
+                                  <span className="text-lg font-bold text-orange-600">€{option.id === "single" ? singleQuadUnitPrice : doubleQuadUnitPrice}</span>
+                                </div>
+                                <div className="mt-4 flex items-center justify-between">
+                                  <button type="button" aria-label={"Remove " + option.id + " quad"} onClick={() => option.set((count) => Math.max(0, count - 1))} disabled={option.count === 0} className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 text-xl font-bold text-[#071a36] disabled:opacity-30">−</button>
+                                  <span className="text-xl font-bold tabular-nums text-[#071a36]">{option.count}</span>
+                                  <button type="button" aria-label={"Add " + option.id + " quad"} onClick={() => option.set((count) => count + 1)} disabled={quadSeatsSelected + option.seats > 25} className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#071a36] text-xl font-bold text-white disabled:opacity-30">+</button>
+                                </div>
+                                <p className="mt-2 text-right text-xs font-semibold text-slate-500">Subtotal: €{option.count * (option.id === "single" ? singleQuadUnitPrice : doubleQuadUnitPrice)}</p>
+                              </div>
+                            ))}
                           </div>
-                          <p className="mt-3 rounded-xl border border-orange-200 bg-white px-3 py-2 text-xs font-semibold leading-5 text-slate-600">
-                            <HomeText
-                              en={`${requiredQuadCount} ${selectedQuadType === "double" ? "double" : "single"} quad(s) required for ${chargeableGuests} guest(s). Total: €${quadTotalPrice}`}
-                              de={`${requiredQuadCount} ${selectedQuadType === "double" ? "Doppel" : "Einzel"}quad(s) für ${chargeableGuests} Gäste erforderlich. Gesamt: €${quadTotalPrice}`}
-                            />
+                          <div className="mt-3 rounded-xl border border-orange-200 bg-white px-3 py-3 text-sm">
+                            <div className="flex justify-between gap-3"><span className="text-slate-600"><HomeText en="Seats selected" de="Ausgewählte Plätze" /></span><span className="font-bold text-[#071a36]">{quadSeatsSelected} / {recordedGuests}</span></div>
+                            <div className="mt-1 flex justify-between gap-3"><span className="text-slate-600"><HomeText en="Total quad price" de="Quad-Gesamtpreis" /></span><span className="font-bold text-orange-600">€{quadTotalPrice}</span></div>
+                          </div>
+                          {!quadAllocationValid && (
+                            <p className="mt-2 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-xs font-semibold leading-5 text-red-700">
+                              {quadSeatsSelected !== recordedGuests
+                                ? <HomeText en={`The number of seats must match all ${recordedGuests} people, including infants. Selected seats: ${quadSeatsSelected}.`} de={`Die Sitzplätze müssen allen ${recordedGuests} Personen einschließlich Babys entsprechen. Ausgewählte Plätze: ${quadSeatsSelected}.`} />
+                                : requiredQuadCount > adults
+                                  ? <HomeText en={`You selected ${requiredQuadCount} quads, but only ${adults} adult(s) are available to drive. Reduce the number of quads or update the group details.`} de={`Sie haben ${requiredQuadCount} Quads ausgewählt, aber nur ${adults} Erwachsene können fahren. Reduzieren Sie die Quad-Anzahl oder ändern Sie die Gruppendetails.`} />
+                                  : <HomeText en={`At least ${infants + childrenUnderTen} Double Quad passenger seats are needed for infants and children under 10. You selected ${doubleQuadCount} Double Quads.`} de={`Für Babys und Kinder unter 10 Jahren sind mindestens ${infants + childrenUnderTen} Beifahrerplätze in Doppelquads nötig. Ausgewählt: ${doubleQuadCount} Doppelquads.`} />}
+                            </p>
+                          )}
+                          <p className="mt-2 text-xs leading-5 text-slate-500">
+                            <HomeText en="Infants and children under 10 must ride as passengers with an adult. Choose the Single/Double mix to match your group and anyone who will not drive." de="Babys und Kinder unter 10 Jahren müssen als Beifahrer bei einem Erwachsenen mitfahren. Wählen Sie die passende Mischung aus Einzel- und Doppelquads." />
                           </p>
                         </div>
                       </div>
