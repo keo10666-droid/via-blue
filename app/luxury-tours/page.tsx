@@ -77,9 +77,9 @@ const luxuryTours = [
     slug: "buggy-safari",
     name: "Private Buggy Safari",
     description:
-      "Enjoy an exciting private buggy adventure through the Egyptian desert",
-    price: 160,
-    duration: "Half Day",
+      "Private 3-hour buggy program. Choose 2-person buggies for €100 or 4-person buggies for €125.",
+    price: 100,
+    duration: "3 Hours",
     image: "/luxury-tours/private-buggy-safari-hero.webp",
     rating: 4.9,
     reviews: 76,
@@ -437,8 +437,8 @@ export default async function LuxuryToursPage() {
 
                       <span className="ml-1 text-[10px] font-medium text-gray-400">
                         <HomeText
-                          en={tour.slug === "quad-safari" ? "/ quad" : "/ experience"}
-                          de={tour.slug === "quad-safari" ? "/ Quad" : "/ Erlebnis"}
+                          en={tour.slug === "quad-safari" ? "/ quad" : tour.slug === "buggy-safari" ? "/ buggy" : "/ experience"}
+                          de={tour.slug === "quad-safari" ? "/ Quad" : tour.slug === "buggy-safari" ? "/ Buggy" : "/ Erlebnis"}
                         />
                       </span>
                     </div>
