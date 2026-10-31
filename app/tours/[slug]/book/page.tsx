@@ -209,8 +209,6 @@ export default function BookingPage() {
           price: tourOverride.price ?? 0,
           childPrice: tourOverride.childPrice ?? 0,
           infantPrice: tourOverride.infantPrice ?? 0,
-          rating: 0,
-          reviews: 0,
           badge: "New Experience",
           available: tourOverride.available ?? true,
           type: tourOverride.category,
