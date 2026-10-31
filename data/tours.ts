@@ -279,9 +279,9 @@ export const tours = {
 
   infantPrice: 0,
 
-  rating: 4.9,
+  rating: 0,
 
-  reviews: 128,
+  reviews: 0,
 
   badge: "Popular",
 
@@ -360,8 +360,8 @@ export const tours = {
   childPrice: 15,
   infantPrice: 0,
 
-  rating: 4.7,
-  reviews: 154,
+  rating: 0,
+  reviews: 0,
 
   badge: "Popular",
 
@@ -438,8 +438,8 @@ export const tours = {
   childPrice: 45,
   infantPrice: 0,
 
-  rating: 4.9,
-  reviews: 181,
+  rating: 0,
+  reviews: 0,
 
   badge: "Island",
 
@@ -518,8 +518,8 @@ export const tours = {
   price: 70,
   childPrice: 35,
   infantPrice: 0,
-  rating: 4.8,
-  reviews: 123,
+  rating: 0,
+  reviews: 0,
   badge: "Popular",
   available: true,
   type: "Island Boat Trip",
@@ -617,8 +617,8 @@ export const tours = {
   price: 30,
   childPrice: 15,
   infantPrice: 0,
-  rating: 4.3,
-  reviews: 24,
+  rating: 0,
+  reviews: 0,
   badge: "Popular",
   available: true,
   type: "Island Boat Trip",
@@ -714,9 +714,9 @@ export const tours = {
 
   infantPrice: 0,
 
-  rating: 4.5,
+  rating: 0,
 
-  reviews: 25,
+  reviews: 0,
 
   badge: "Popular",
 
@@ -799,9 +799,9 @@ export const tours = {
 
   infantPrice: 0,
 
-  rating: 4.6,
+  rating: 0,
 
-  reviews: 36,
+  reviews: 0,
 
   badge: "Popular",
 
@@ -884,8 +884,8 @@ export const tours = {
   childPrice: 40,
   infantPrice: 0,
 
-  rating: 4.9,
-  reviews: 174,
+  rating: 0,
+  reviews: 0,
 
   badge: "Popular",
   available: true,
@@ -971,9 +971,9 @@ export const tours = {
 
   infantPrice: 0,
 
-  rating: 4.8,
+  rating: 0,
 
-  reviews: 85,
+  reviews: 0,
 
   badge: "Popular",
 
@@ -1035,8 +1035,8 @@ export const tours = {
   price: 140,
   childPrice: 140,
   infantPrice: 0,
-  rating: 4.9,
-  reviews: 369,
+  rating: 0,
+  reviews: 0,
   badge: "Adventure",
   available: true,
   type: "Speedboat Tour",
@@ -1119,8 +1119,8 @@ export const tours = {
   childPrice: 15,
   infantPrice: 0,
 
-  rating: 4.5,
-  reviews: 61,
+  rating: 0,
+  reviews: 0,
 
   badge: "Adventure",
 
@@ -1205,9 +1205,9 @@ export const tours = {
 
   infantPrice: 0,
 
-  rating: 4.8,
+  rating: 0,
 
-  reviews: 67,
+  reviews: 0,
 
   badge: "Popular",
 
@@ -1295,9 +1295,9 @@ export const tours = {
 
   infantPrice: 0,
 
-  rating: 4.8,
+  rating: 0,
 
-  reviews: 102,
+  reviews: 0,
 
   badge: "Popular",
 
@@ -1391,9 +1391,9 @@ export const tours = {
 
   infantPrice: 0,
 
-  rating: 4.8,
+  rating: 0,
 
-  reviews: 122,
+  reviews: 0,
 
   badge: "VIP",
 
@@ -1476,8 +1476,8 @@ export const tours = {
   childPrice: 35,
   infantPrice: 0,
 
-  rating: 4.7,
-  reviews: 31,
+  rating: 0,
+  reviews: 0,
 
   badge: "Plus",
 
@@ -1560,8 +1560,8 @@ export const tours = {
   childPrice: 15,
   infantPrice: 0,
 
-  rating: 4.8,
-  reviews: 96,
+  rating: 0,
+  reviews: 0,
 
   badge: "Best Seller",
 
@@ -1642,8 +1642,8 @@ export const tours = {
   childPrice: 15,
   infantPrice: 0,
 
-  rating: 4.7,
-  reviews: 44,
+  rating: 0,
+  reviews: 0,
 
   badge: "Popular",
 
@@ -1728,8 +1728,8 @@ export const tours = {
   childPrice: 20,
   infantPrice: 0,
 
-  rating: 4.9,
-  reviews: 201,
+  rating: 0,
+  reviews: 0,
 
   badge: "Adventure",
 
@@ -1811,8 +1811,8 @@ export const tours = {
   childPrice: 35,
   infantPrice: 0,
 
-  rating: 4.5,
-  reviews: 50,
+  rating: 0,
+  reviews: 0,
 
   badge: "Popular",
 
@@ -1903,8 +1903,8 @@ export const tours = {
   childPrice: 10,
   infantPrice: 0,
 
-  rating: 4.6,
-  reviews: 157,
+  rating: 0,
+  reviews: 0,
 
   badge: "Popular",
 
@@ -1988,8 +1988,8 @@ export const tours = {
   childPrice: 10,
   infantPrice: 0,
 
-  rating: 4.4,
-  reviews: 64,
+  rating: 0,
+  reviews: 0,
 
   badge: "Popular",
 
@@ -2073,8 +2073,8 @@ export const tours = {
   childPrice: 10,
   infantPrice: 0,
 
-  rating: 4.5,
-  reviews: 54,
+  rating: 0,
+  reviews: 0,
 
   badge: "Popular",
 
@@ -2156,8 +2156,8 @@ export const tours = {
   childPrice: 35,
   infantPrice: 0,
 
-  rating: 4.8,
-  reviews: 120,
+  rating: 0,
+  reviews: 0,
 
   badge: "Popular",
 
@@ -2246,8 +2246,8 @@ export const tours = {
   childPrice: 40,
   infantPrice: 0,
 
-  rating: 4.9,
-  reviews: 165,
+  rating: 0,
+  reviews: 0,
 
   badge: "Adventure",
 
@@ -2331,8 +2331,8 @@ export const tours = {
   childPrice: 25,
   infantPrice: 0,
 
-  rating: 4.8,
-  reviews: 87,
+  rating: 0,
+  reviews: 0,
 
   badge: "Adventure",
 
@@ -2412,8 +2412,8 @@ export const tours = {
   childPrice: 20,
   infantPrice: 0,
 
-  rating: 4.7,
-  reviews: 84,
+  rating: 0,
+  reviews: 0,
 
   badge: "Adventure",
 
@@ -2491,8 +2491,8 @@ export const tours = {
   childPrice: 20,
   infantPrice: 0,
 
-  rating: 4.7,
-  reviews: 94,
+  rating: 0,
+  reviews: 0,
 
   badge: "Adventure",
 
@@ -2573,8 +2573,8 @@ export const tours = {
   childPrice: 25,
   infantPrice: 0,
 
-  rating: 4.9,
-  reviews: 84,
+  rating: 0,
+  reviews: 0,
 
   badge: "Adventure",
 
@@ -2658,8 +2658,8 @@ export const tours = {
   childPrice: 10,
   infantPrice: 0,
 
-  rating: 4.8,
-  reviews: 87,
+  rating: 0,
+  reviews: 0,
 
   badge: "Family",
 
@@ -2744,8 +2744,8 @@ export const tours = {
   childPrice: 55,
   infantPrice: 0,
 
-  rating: 4.8,
-  reviews: 49,
+  rating: 0,
+  reviews: 0,
 
   badge: "Family",
 
@@ -2831,7 +2831,7 @@ export const tours = {
   childPrice: 45,
   infantPrice: 0,
 
-  rating: 95,
+  rating: 0,
   reviews: 0,
 
   badge: "Popular",
@@ -2927,9 +2927,9 @@ export const tours = {
 
   infantPrice: 0,
 
-  rating: 4.7,
+  rating: 0,
 
-  reviews: 84,
+  reviews: 0,
 
   badge: "Adventure",
 
@@ -3014,8 +3014,8 @@ export const tours = {
   childPrice: 15,
   infantPrice: 0,
 
-  rating: 4.8,
-  reviews: 66,
+  rating: 0,
+  reviews: 0,
 
   badge: "Adventure",
 
@@ -3121,8 +3121,8 @@ export const tours = {
   childPrice: 15,
   infantPrice: 0,
 
-  rating: 4.9,
-  reviews: 352,
+  rating: 0,
+  reviews: 0,
 
   badge: "Adventure",
 
@@ -3215,8 +3215,8 @@ export const tours = {
   childPrice: 35,
   infantPrice: 0,
 
-  rating: 4.9,
-  reviews: 106,
+  rating: 0,
+  reviews: 0,
 
   badge: "Adventure",
 
@@ -3308,9 +3308,9 @@ export const tours = {
 
   infantPrice: 0,
 
-  rating: 4.9,
+  rating: 0,
 
-  reviews: 300,
+  reviews: 0,
 
   badge: "Romantic",
 
@@ -3397,9 +3397,9 @@ export const tours = {
 
   infantPrice: 0,
 
-  rating: 4.9,
+  rating: 0,
 
-  reviews: 19,
+  reviews: 0,
 
   badge: "Private",
 
@@ -3491,9 +3491,9 @@ export const tours = {
 
   infantPrice: 0,
 
-  rating: 4.8,
+  rating: 0,
 
-  reviews: 91,
+  reviews: 0,
 
   badge: "Popular",
 
@@ -3583,8 +3583,8 @@ export const tours = {
   price: 70,
 childPrice: 40,
 infantPrice: 20,
-rating: 4.9,
-reviews: 209,
+rating: 0,
+reviews: 0,
 badge: "Excursion",
 available: true,
 type: "Cairo Overday Tour",
@@ -3719,9 +3719,9 @@ cairoOptions: {
 
   infantPrice: 20,
 
-  rating: 4.9,
+  rating: 0,
 
-  reviews: 178,
+  reviews: 0,
 
   badge: "Excursion",
 
@@ -3852,9 +3852,9 @@ cairoOptions: {
   },
 },
 
-  rating: 4.9,
+  rating: 0,
 
-  reviews: 101,
+  reviews: 0,
 
   badge: "Excursion",
 
@@ -3978,9 +3978,9 @@ cairoOptions: {
     },
   },
 
-  rating: 4.9,
+  rating: 0,
 
-  reviews: 197,
+  reviews: 0,
 
   badge: "Excursion",
 
@@ -4069,9 +4069,9 @@ cairoOptions: {
 
   infantPrice: 0,
 
-  rating: 4.9,
+  rating: 0,
 
-  reviews: 345,
+  reviews: 0,
 
   badge: "Experience",
 
@@ -4158,9 +4158,9 @@ cairoOptions: {
 
   infantPrice: 0,
 
-  rating: 4.9,
+  rating: 0,
 
-  reviews: 77,
+  reviews: 0,
 
   badge: "Family",
 
@@ -4249,9 +4249,9 @@ cairoOptions: {
 
   infantPrice: 0,
 
-  rating: 4.6,
+  rating: 0,
 
-  reviews: 45,
+  reviews: 0,
 
   badge: "Family",
 
@@ -4340,9 +4340,9 @@ cairoOptions: {
 
   infantPrice: 0,
 
-  rating: 4.3,
+  rating: 0,
 
-  reviews: 39,
+  reviews: 0,
 
   badge: "Family",
 
@@ -4432,9 +4432,9 @@ cairoOptions: {
 
   infantPrice: 0,
 
-  rating: 4.5,
+  rating: 0,
 
-  reviews: 27,
+  reviews: 0,
 
   badge: "Family",
 
@@ -4517,8 +4517,8 @@ cairoOptions: {
   price: 40,
   childPrice: 20,
   infantPrice: 0,
-  rating: 4.8,
-  reviews: 1,
+  rating: 0,
+  reviews: 0,
   badge: "Culture",
   available: true,
   type: "Museum",
@@ -4596,8 +4596,8 @@ cairoOptions: {
   price: 40,
   childPrice: 40,
   infantPrice: 0,
-  rating: 4.9,
-  reviews: 39,
+  rating: 0,
+  reviews: 0,
   badge: "Relaxation",
   available: true,
   type: "Spa & Massage",
