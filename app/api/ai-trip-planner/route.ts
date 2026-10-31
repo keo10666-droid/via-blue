@@ -20,8 +20,6 @@ type PackageTour = {
   category: Tour["category"];
   image: string;
   duration: string;
-  rating: number;
-  reviews: number;
   price: number;
   childPrice: number;
   estimatedTotal: number;
@@ -131,8 +129,6 @@ function buildItinerary(tours: Tour[], days: number, request: PlannerRequest) {
       category: tour.category,
       image: tour.image,
       duration: tour.duration,
-      rating: tour.rating,
-      reviews: tour.reviews,
       price: tour.price,
       childPrice: tour.childPrice,
       estimatedTotal: convertCurrency(tourCost(tour, request), request.currency),
@@ -163,11 +159,9 @@ function createPackage(
   const rotated = candidates.map((tour, index) => ({ tour, index })).sort((a, b) => {
     const aCost = tourCost(a.tour, request);
     const bCost = tourCost(b.tour, request);
-    const aRating = a.tour.rating ?? 0;
-    const bRating = b.tour.rating ?? 0;
-    if (styleIndex === 0) return aCost - bCost || bRating - aRating || a.index - b.index;
-    if (styleIndex === 2) return bCost - aCost || bRating - aRating || a.index - b.index;
-    return bRating - aRating || aCost - bCost || a.index - b.index;
+    if (styleIndex === 0) return aCost - bCost || a.index - b.index;
+    if (styleIndex === 2) return bCost - aCost || a.index - b.index;
+    return Math.abs(targetSpend - aCost) - Math.abs(targetSpend - bCost) || a.index - b.index;
   }).map((item) => item.tour);
 
   while (selected.length < maxActivities) {
@@ -180,15 +174,14 @@ function createPackage(
       if (!buildItinerary([...selected, tour], request.days, request)) continue;
 
       const categoryCount = categoryCounts.get(tour.category) ?? 0;
-      const rating = tour.rating ?? 0;
       const remainingAfter = budgetEUR - newTotal;
       let score: number;
       if (styleIndex === 0) {
-        score = -cost + rating * 4 - categoryCount * 12;
+        score = -cost - categoryCount * 12;
       } else if (styleIndex === 1) {
-        score = rating * 10 - Math.abs(targetSpend - newTotal) * 0.04 - categoryCount * 10;
+        score = -Math.abs(targetSpend - newTotal) * 0.04 - categoryCount * 10;
       } else {
-        score = cost * 0.55 + rating * 5 - Math.max(0, newTotal - targetSpend) * 0.12 - categoryCount * 8;
+        score = cost * 0.55 - Math.max(0, newTotal - targetSpend) * 0.12 - categoryCount * 8;
       }
       // Avoid spending everything on one activity if it prevents a useful itinerary.
       score -= remainingAfter < budgetEUR * 0.03 ? 3 : 0;
@@ -304,8 +297,6 @@ export async function POST(request: Request) {
       category: tour.category,
       image: tour.image,
       duration: tour.duration,
-      rating: tour.rating,
-      reviews: tour.reviews,
       price: tour.price,
       childPrice: tour.childPrice,
       estimatedTotal: convertCurrency(tourCost(tour, plannerRequest), plannerRequest.currency),
