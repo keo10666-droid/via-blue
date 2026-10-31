@@ -192,6 +192,8 @@ export default async function Home() {
   tourReviews?.forEach((review) => {
     if (!tourStats[review.tour_slug]) {
       tourStats[review.tour_slug] = {
+        rating: 0,
+        reviews: 0,
       };
     }
 
