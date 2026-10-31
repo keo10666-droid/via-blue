@@ -28,19 +28,6 @@ const germanTourCategories: Record<string, string> = {
    ICONS
 ========================================================= */
 
-function StarIcon({ className = "h-4 w-4" }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      className={className}
-      aria-hidden="true"
-    >
-      <path d="M12 2.8l2.84 5.75 6.35.92-4.59 4.47 1.08 6.32L12 17.27l-5.68 2.99 1.08-6.32-4.59-4.47 6.35-.92L12 2.8z" />
-    </svg>
-  );
-}
-
 function ClockIcon({ className = "h-4 w-4" }: { className?: string }) {
   return (
     <svg
@@ -476,7 +463,7 @@ function ToursPageContent() {
   const [customTours, setCustomTours] = useState<Array<{
     slug: string; category: string; name: string; description: string; image: string;
     price: number; childPrice: number; infantPrice: number; available: boolean;
-    badge: string; rating: number; reviews: number; type: string;
+    badge: string; type: string;
   }>>([]);
 
   useEffect(() => {
@@ -629,26 +616,6 @@ function ToursPageContent() {
           </p>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-
-            <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.08] px-4 py-2.5 text-xs font-semibold text-white shadow-lg shadow-blue-950/10 backdrop-blur-xl">
-
-              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-orange-500/15">
-                <SparklesIcon className="h-3.5 w-3.5 text-orange-400" />
-              </span>
-
-              <HomeText en="Carefully Selected Experiences" de="Sorgfältig ausgewählte Erlebnisse" />
-
-            </div>
-
-            <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.08] px-4 py-2.5 text-xs font-semibold text-white shadow-lg shadow-blue-950/10 backdrop-blur-xl">
-
-              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-orange-500/15">
-                <StarIcon className="h-3.5 w-3.5 text-orange-400" />
-              </span>
-
-              <HomeText en="Great Guest Experiences" de="Unvergessliche Erlebnisse für unsere Gäste" />
-
-            </div>
 
           </div>
 
@@ -833,21 +800,6 @@ function ToursPageContent() {
                   </div>
 
 
-                  {/* Rating */}
-
-                  {tour.rating > 0 && (
-
-                    <div className="absolute right-5 top-5 flex items-center gap-1.5 rounded-full border border-white/30 bg-white/95 px-3 py-1.5 text-xs font-bold text-gray-900 shadow-lg backdrop-blur-md">
-
-                      <StarIcon className="h-3.5 w-3.5 text-orange-500" />
-
-                      {tour.rating}
-
-                    </div>
-
-                  )}
-
-
                   {/* Bottom information */}
 
                   <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between gap-4">
@@ -897,42 +849,6 @@ function ToursPageContent() {
                   <h3 className="line-clamp-2 min-h-[56px] text-xl font-bold leading-7 text-blue-950 transition-colors duration-300 group-hover:text-orange-500">
                     <TourText slug={tour.slug} value={tour.name} field="name" />
                   </h3>
-
-
-                  {/* Rating */}
-
-                  <div className="mt-3 flex items-center gap-2">
-
-                    {tour.rating > 0 ? (
-
-                      <>
-
-                        <div className="flex items-center gap-1">
-
-                          <StarIcon className="h-4 w-4 text-orange-500" />
-
-                          <span className="text-sm font-bold text-gray-900">
-                            {tour.rating}
-                          </span>
-
-                        </div>
-
-                        <span className="text-xs text-gray-300">
-                          •
-                        </span>
-
-                        <span className="text-sm text-gray-500">
-                          {tour.reviews}{" "}
-                          {tour.reviews === 1
-                            ? "Bewertung"
-                            : "Bewertungen"}
-                        </span>
-
-                      </>
-
-                    ) : null}
-
-                  </div>
 
 
                   {/* Description */}
