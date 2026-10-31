@@ -273,7 +273,6 @@ export default async function AdminDashboardPage() {
                 <MetricCard label="Confirmed bookings" value={confirmedBookings ?? "—"} note="Requests marked as confirmed" icon={ArrowUpRight} tone="green" />
                 <MetricCard label="Published tour catalog" value={tourCount} note={`Tours currently stored in the website code · ${transferCount} transfer routes`} icon={Ship} tone="purple" />
               </div>
-              )}
             </section>
 
             <section>
