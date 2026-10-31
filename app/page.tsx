@@ -192,8 +192,6 @@ export default async function Home() {
   tourReviews?.forEach((review) => {
     if (!tourStats[review.tour_slug]) {
       tourStats[review.tour_slug] = {
-        rating: 0,
-        reviews: 0,
       };
     }
 
@@ -214,87 +212,7 @@ export default async function Home() {
     tourList.find((tour) => tour.slug === "mahmya-island"),
   ].filter((tour) => tour !== undefined);
 
-  const mobileLuxuryTours = [
-    {
-      slug: "luxor-private",
-      name: "Luxor Private Tour",
-      description:
-        "Discover the ancient temples and history of Luxor on a premium private experience",
-      price: 150,
-      duration: "Full Day",
-      image: "/luxury-tours/luxor-private-hero.webp",
-      rating: 4.9,
-      reviews: 128,
-    },
-    {
-      slug: "cairo-private",
-      name: "Cairo Private Tour",
-      description:
-        "Explore the Pyramids, Sphinx and Cairo with a completely private experience",
-      price: 180,
-      duration: "Full Day",
-      image: "/luxury-tours/cairo-private-hero.webp",
-      rating: 4.9,
-      reviews: 156,
-    },
-    {
-      slug: "private-speed-boat",
-      name: "Private Speed Boat",
-      description:
-        "Enjoy an exclusive private speed boat experience across the beautiful Red Sea",
-      price: 200,
-      duration: "4 Hours",
-      image: "/luxury-tours/private-speed-boat-hero.webp",
-      rating: 5.0,
-      reviews: 94,
-    },
-    {
-      slug: "private-quad-safari",
-      name: "Private Quad Safari",
-      description:
-        "Private quad safari with 1-hour and 3-hour options. Choose Single and Double Quads to match your group.",
-      price: 40,
-      duration: "1–3 Hours",
-      image: "/luxury-tours/private-quad-safari-hero.webp",
-      rating: 4.8,
-      reviews: 87,
-    },
-    {
-      slug: "private-buggy-safari",
-      name: "Private Buggy Safari",
-      description:
-        "Enjoy an exciting private buggy adventure through the Egyptian desert",
-      price: 160,
-      duration: "Half Day",
-      image: "/luxury-tours/private-buggy-safari-hero.webp",
-      rating: 4.9,
-      reviews: 76,
-    },
-    {
-      slug: "aswan-private",
-      name: "Aswan Private Tour",
-      description:
-        "Discover the beauty and history of Aswan with a premium private tour",
-      price: 250,
-      duration: "Full Day",
-      image: "/luxury-tours/aswan-private-hero.webp",
-      rating: 4.9,
-      reviews: 63,
-    },
-    {
-      slug: "private-boat",
-      name: "Private Boat",
-      description:
-        "Enjoy an exclusive private boat experience on the Red Sea with complete privacy",
-      price: 180,
-      duration: "Half Day",
-      image: "/luxury-tours/private-boat-hero.webp",
-      rating: 4.9,
-      reviews: 82,
-    },
-  ];
-
-  return (
+    return (
     <main id="top" className="min-h-screen bg-white">
 
       {/* =====================================================
@@ -745,14 +663,6 @@ export default async function Home() {
 
               const stats = tourStats[tour.slug];
 
-              const rating = stats
-                ? stats.rating
-                : tour.rating;
-
-              const reviewCount = stats
-                ? stats.reviews
-                : tour.reviews;
-
               return (
 
                 <article
@@ -808,157 +718,8 @@ export default async function Home() {
                         <TourText slug={tour.slug} value={tour.name} field="name" />
                       </h3>
 
-                      <div className="mt-3 flex items-center gap-2">
-
-                        <div className="flex items-center gap-0.5">
-
-                          {Array.from({ length: 5 }).map((_, index) => (
-
-                            <StarIcon
-                              key={index}
-                              className={`h-4 w-4 ${
-                                index < Math.round(rating)
-                                  ? "text-yellow-400"
-                                  : "text-gray-200"
-                              }`}
-                            />
-
-                          ))}
-
-                        </div>
-
-                        <span className="font-bold text-gray-900">
-                          {rating}
-                        </span>
-
-                        <span className="text-xs text-gray-500">
-                          ({reviewCount}{" "}
-                          {reviewCount === 1 ? <HomeText en="review" de="Bewertung" /> : <HomeText en="reviews" de="Bewertungen" />})
-                        </span>
-
-                      </div>
-
-                      <p className="mt-4 line-clamp-3 text-sm leading-7 text-gray-600">
-                        <TourText slug={tour.slug} value={tour.description} field="description" />
-                      </p>
-
-                      <div className="mt-auto flex items-center justify-between pt-7">
-
-                        <span className="rounded-full bg-slate-100 px-3 py-1.5 text-xs font-semibold text-gray-600">
-                          <TourText slug={tour.slug} value={tour.type} />
-                        </span>
-
-                        <span className="flex items-center gap-1 text-sm font-bold text-blue-950 transition group-hover:text-orange-500">
-                          <HomeText en="Explore" de="Entdecken" />
-                          <ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                        </span>
-
-                      </div>
-
-                    </div>
-
-                  </Link>
-
-                  <div className="grid grid-cols-2 gap-3 px-6 pb-6">
-
-                    <Link
-                      href={`/tours/${tour.slug}`}
-                      className="rounded-xl border-2 border-blue-950 py-3 text-center text-sm font-bold text-blue-950 transition hover:bg-blue-950 hover:text-white"
-                    >
-                      <HomeText en="View Tour" de="Ausflug ansehen" />
-                    </Link>
-
-                    {tour.available ? (
-                      <Link
-                        href={`/tours/${tour.slug}/book`}
-                        className="rounded-xl bg-orange-500 py-3 text-center text-sm font-bold text-white shadow-md transition hover:bg-orange-600"
-                      >
-                        <HomeText en="Book Now" de="Jetzt buchen" />
-                      </Link>
-                    ) : (
-                      <div className="rounded-xl bg-gray-100 py-3 text-center text-sm font-bold text-gray-400">
-                        <HomeText en="Coming Soon" de="Demnächst verfügbar" />
-                      </div>
-                    )}
-
-                  </div>
-
-                </article>
-
-              );
-            })}
-
-            {/* =================================================
-                TRANSFERS CARD
-            ================================================= */}
-
-            <article className="group flex h-full flex-col overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-md transition duration-500 hover:-translate-y-2 hover:border-orange-100 hover:shadow-2xl">
-
-              <Link
-                href="/transfers"
-                className="flex flex-1 flex-col"
-              >
-
-                <div className="relative h-64 overflow-hidden">
-
-                  <Image
-                    src="/transfers/transfers-hero.webp"
-                    alt="Private airport transfers in Hurghada"
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    className="object-cover transition duration-700 group-hover:scale-110"
-                  />
-
-                  <div className="absolute inset-0 bg-gradient-to-t from-blue-950/80 via-transparent to-transparent" />
-
-                  <div className="absolute left-5 top-5 rounded-full border border-white/20 bg-orange-500 px-3.5 py-2 text-xs font-bold text-white shadow-xl">
-                    <HomeText en="PRIVATE TRANSFER" de="PRIVATER TRANSFER" />
-                  </div>
-
-                  <div className="absolute bottom-5 right-5 rounded-2xl border border-white/20 bg-blue-950/85 px-4 py-2.5 text-white shadow-xl backdrop-blur-md">
-
-                    <span className="text-[10px] uppercase tracking-wider text-blue-200">
-                      <HomeText en="Service" de="Leistung" />
-                    </span>
-
-                    <div className="font-bold">
-                      <HomeText en="Private & Comfortable" de="Privat und komfortabel" />
-                    </div>
-
-                  </div>
-
-                </div>
-
-                <div className="flex flex-1 flex-col p-6">
-
-                  <h3 className="text-xl font-bold text-blue-950 transition group-hover:text-orange-500">
-                    <HomeText en="Airport & Hotel Transfers" de="Flughafen- und Hoteltransfers" />
-                  </h3>
-
-                  <div className="mt-3 flex items-center gap-2">
-
-                    <div className="flex items-center gap-0.5">
-
-                      {Array.from({ length: 5 }).map((_, index) => (
-                        <StarIcon
-                          key={index}
-                          className="h-4 w-4 text-yellow-400"
-                        />
-                      ))}
-
-                    </div>
-
-                    <span className="font-bold text-gray-900">
-                      4.9
-                    </span>
-
-                    <span className="text-xs text-gray-500">
-                      <HomeText en="Trusted service" de="Zuverlässiger Service" />
-                    </span>
-
-                  </div>
-
-                  <p className="mt-4 text-sm leading-7 text-gray-600">
+                      {stats && stats.reviews > 0 && (
+                        <p className="mt-4 text-sm leading-7 text-gray-600">
                     <HomeText en="Travel comfortably between Hurghada Airport, hotels and surrounding destinations with a reliable private transfer" de="Reise bequem zwischen dem Flughafen Hurghada, Hotels und umliegenden Reisezielen mit einem zuverlässigen privaten Transfer" />
                   </p>
 
@@ -1080,11 +841,11 @@ export default async function Home() {
             <div className="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-xl backdrop-blur-md">
 
               <p className="text-4xl font-bold text-orange-400">
-                5★
+                24/7
               </p>
 
               <p className="mt-2 text-sm font-medium text-blue-100">
-                <HomeText en="Guest Experience" de="Gästeerlebnis" />
+                <HomeText en="Guest Support" de="Gästeservice" />
               </p>
 
             </div>
