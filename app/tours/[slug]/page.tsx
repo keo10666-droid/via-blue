@@ -4,7 +4,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { tours, type TourCategory } from "@/data/tours";
-import { getSampleReviews } from "@/data/sampleReviews";
 import { supabase } from "@/lib/supabase";
 import { createSupabaseAdminClient } from "@/lib/supabaseAdmin";
 
@@ -858,37 +857,15 @@ export default async function TourDetailsPage({
     reviews && reviews.length > 0
   );
 
-  const sampleReviews = getSampleReviews(
-    tour.slug,
-    tour.name
-  );
-
-  const sampleAverageRating =
-    sampleReviews.length > 0
-      ? (
-          sampleReviews.reduce(
-            (total, review) => total + Number(review.rating),
-            0
-          ) / sampleReviews.length
-        ).toFixed(1)
-      : "0.0";
-
-  const displayReviewCount = hasLiveReviews
-    ? reviews!.length
-    : tour.reviews > 0
-      ? tour.reviews
-      : sampleReviews.length;
-
-  const displayAverageRating = hasLiveReviews
+  const liveReviewCount = reviews?.length ?? 0;
+  const liveAverageRating = hasLiveReviews
     ? (
         reviews!.reduce(
           (total, review) => total + Number(review.rating),
           0
-        ) / reviews!.length
+        ) / liveReviewCount
       ).toFixed(1)
-    : tour.rating > 0
-      ? tour.rating.toFixed(1)
-      : sampleAverageRating;
+    : null;
 
   /* =========================================================
      STRUCTURED DATA / JSON-LD
@@ -922,7 +899,7 @@ export default async function TourDetailsPage({
       ? {
           aggregateRating: {
             "@type": "AggregateRating",
-            ratingValue: Number(displayAverageRating),
+            ratingValue: Number(liveAverageRating),
             reviewCount: reviews!.length,
             bestRating: 5,
             worstRating: 1,
@@ -1019,32 +996,22 @@ export default async function TourDetailsPage({
 
             <div className="mt-8 flex flex-wrap justify-center gap-3">
 
-              <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.08] px-4 py-2.5 shadow-lg shadow-blue-950/10 backdrop-blur-xl">
-
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-orange-500/15">
-                  <StarIcon className="h-3.5 w-3.5 text-orange-400" />
-                </span>
-
-                <span className="font-bold">
-                  {displayAverageRating}
-                </span>
-
-              </div>
-
-              <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.08] px-4 py-2.5 shadow-lg shadow-blue-950/10 backdrop-blur-xl">
-
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/10">
-                  <UsersIcon className="h-3.5 w-3.5 text-white" />
-                </span>
-
-                <span className="font-bold">
-                  {displayReviewCount}{" "}
-                  {displayReviewCount === 1
-                    ? <HomeText en="Review" de="Bewertung" />
-                    : <HomeText en="Reviews" de="Bewertungen" />}
-                </span>
-
-              </div>
+              {hasLiveReviews && (
+                <>
+                  <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.08] px-4 py-2.5 shadow-lg shadow-blue-950/10 backdrop-blur-xl">
+                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-orange-500/15">
+                      <StarIcon className="h-3.5 w-3.5 text-orange-400" />
+                    </span>
+                    <span className="font-bold">{liveAverageRating}</span>
+                  </div>
+                  <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.08] px-4 py-2.5 shadow-lg shadow-blue-950/10 backdrop-blur-xl">
+                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/10">
+                      <UsersIcon className="h-3.5 w-3.5 text-white" />
+                    </span>
+                    <span className="font-bold">{liveReviewCount} {liveReviewCount === 1 ? <HomeText en="Review" de="Bewertung" /> : <HomeText en="Reviews" de="Bewertungen" />}</span>
+                  </div>
+                </>
+              )}
 
               <div className="rounded-full bg-orange-500 px-5 py-2.5 font-bold shadow-lg shadow-orange-950/20">
                 <TourText slug={tour.slug} value={tour.type} />
@@ -1215,8 +1182,7 @@ export default async function TourDetailsPage({
 
                   <TourGallery
                     images={tour.gallery}
-                    tourName={tour.name}
-                    heroImage={tour.image}
+                        heroImage={tour.image}
                   />
 
                 </div>
@@ -1544,61 +1510,28 @@ export default async function TourDetailsPage({
 
                 <div className="space-y-1">
 
-                  {/* Rating */}
-
-                  <div className="flex items-center justify-between border-b border-gray-100 py-4">
-
-                    <div className="flex items-center gap-3 text-gray-600">
-
-                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-50 text-orange-500">
-
-                        <StarIcon className="h-4 w-4" />
-
+                  {hasLiveReviews && (
+                    <>
+                      <div className="flex items-center justify-between border-b border-gray-100 py-4">
+                        <div className="flex items-center gap-3 text-gray-600">
+                          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-50 text-orange-500">
+                            <StarIcon className="h-4 w-4" />
+                          </div>
+                          <span className="text-sm font-medium"><HomeText en="Rating" de="Bewertung" /></span>
+                        </div>
+                        <span className="font-bold text-blue-950">{liveAverageRating}</span>
                       </div>
-
-                      <span className="text-sm font-medium">
-
-                        <HomeText en="Rating" de="Bewertung" />
-
-                      </span>
-
-                    </div>
-
-                    <span className="font-bold text-blue-950">
-
-                      {displayAverageRating}
-
-                    </span>
-
-                  </div>
-
-                  {/* Reviews */}
-
-                  <div className="flex items-center justify-between border-b border-gray-100 py-4">
-
-                    <div className="flex items-center gap-3 text-gray-600">
-
-                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-700">
-
-                        <UsersIcon className="h-4 w-4" />
-
+                      <div className="flex items-center justify-between border-b border-gray-100 py-4">
+                        <div className="flex items-center gap-3 text-gray-600">
+                          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-700">
+                            <UsersIcon className="h-4 w-4" />
+                          </div>
+                          <span className="text-sm font-medium"><HomeText en="Reviews" de="Bewertungen" /></span>
+                        </div>
+                        <span className="font-bold text-blue-950">{liveReviewCount}</span>
                       </div>
-
-                      <span className="text-sm font-medium">
-
-                        <HomeText en="Reviews" de="Bewertungen" />
-
-                      </span>
-
-                    </div>
-
-                    <span className="font-bold text-blue-950">
-
-                      {displayReviewCount}
-
-                    </span>
-
-                  </div>
+                    </>
+                  )}
 
                   {/* Type */}
 
