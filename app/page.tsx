@@ -18,19 +18,6 @@ export const metadata: Metadata = {
   },
 };
 
-function StarIcon({ className = "h-5 w-5" }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      className={className}
-      aria-hidden="true"
-    >
-      <path d="M12 2.5l2.9 5.88 6.49.94-4.7 4.58 1.11 6.47L12 17.32l-5.8 3.05 1.11-6.47-4.7-.94 6.49-.94L12 2.5z" />
-    </svg>
-  );
-}
-
 function ArrowRightIcon({ className = "h-5 w-5" }: { className?: string }) {
   return (
     <svg
@@ -170,129 +157,16 @@ export default async function Home() {
   const { data: reviews } = await supabase
     .from("reviews")
     .select(
-      "id, tour_slug, tour_name, guest_name, rating, comment"
+      "id, tour_slug, tour_name, guest_name, comment"
     )
     .eq("is_visible", true)
     .order("id", { ascending: false })
     .limit(6);
 
-  const { data: tourReviews } = await supabase
-    .from("reviews")
-    .select("tour_slug, rating")
-    .eq("is_visible", true);
-
-  const tourStats: Record<
-    string,
-    {
-      rating: number;
-      reviews: number;
-    }
-  > = {};
-
-  tourReviews?.forEach((review) => {
-    if (!tourStats[review.tour_slug]) {
-      tourStats[review.tour_slug] = {
-        rating: 0,
-        reviews: 0,
-      };
-    }
-
-    tourStats[review.tour_slug].rating += Number(review.rating);
-    tourStats[review.tour_slug].reviews += 1;
-  });
-
-  Object.keys(tourStats).forEach((slug) => {
-    const stats = tourStats[slug];
-
-    stats.rating = Number(
-      (stats.rating / stats.reviews).toFixed(1)
-    );
-  });
-
   const featuredTours = [
     tourList.find((tour) => tour.slug === "speed-boat"),
     tourList.find((tour) => tour.slug === "mahmya-island"),
   ].filter((tour) => tour !== undefined);
-
-  const mobileLuxuryTours = [
-    {
-      slug: "luxor-private",
-      name: "Luxor Private Tour",
-      description:
-        "Discover the ancient temples and history of Luxor on a premium private experience",
-      price: 150,
-      duration: "Full Day",
-      image: "/luxury-tours/luxor-private-hero.webp",
-      rating: 4.9,
-      reviews: 128,
-    },
-    {
-      slug: "cairo-private",
-      name: "Cairo Private Tour",
-      description:
-        "Explore the Pyramids, Sphinx and Cairo with a completely private experience",
-      price: 180,
-      duration: "Full Day",
-      image: "/luxury-tours/cairo-private-hero.webp",
-      rating: 4.9,
-      reviews: 156,
-    },
-    {
-      slug: "private-speed-boat",
-      name: "Private Speed Boat",
-      description:
-        "Enjoy an exclusive private speed boat experience across the beautiful Red Sea",
-      price: 200,
-      duration: "4 Hours",
-      image: "/luxury-tours/private-speed-boat-hero.webp",
-      rating: 5.0,
-      reviews: 94,
-    },
-    {
-      slug: "private-quad-safari",
-      name: "Private Quad Safari",
-      description:
-        "Private quad safari with 1-hour and 3-hour options. Choose Single and Double Quads to match your group.",
-      price: 40,
-      duration: "1–3 Hours",
-      image: "/luxury-tours/private-quad-safari-hero.webp",
-      rating: 4.8,
-      reviews: 87,
-    },
-    {
-      slug: "private-buggy-safari",
-      name: "Private Buggy Safari",
-      description:
-        "Enjoy an exciting private buggy adventure through the Egyptian desert",
-      price: 160,
-      duration: "Half Day",
-      image: "/luxury-tours/private-buggy-safari-hero.webp",
-      rating: 4.9,
-      reviews: 76,
-    },
-    {
-      slug: "aswan-private",
-      name: "Aswan Private Tour",
-      description:
-        "Discover the beauty and history of Aswan with a premium private tour",
-      price: 250,
-      duration: "Full Day",
-      image: "/luxury-tours/aswan-private-hero.webp",
-      rating: 4.9,
-      reviews: 63,
-    },
-    {
-      slug: "private-boat",
-      name: "Private Boat",
-      description:
-        "Enjoy an exclusive private boat experience on the Red Sea with complete privacy",
-      price: 180,
-      duration: "Half Day",
-      image: "/luxury-tours/private-boat-hero.webp",
-      rating: 4.9,
-      reviews: 82,
-    },
-  ];
 
   return (
     <main id="top" className="min-h-screen bg-white">
@@ -743,16 +617,6 @@ export default async function Home() {
 
             {featuredTours.map((tour) => {
 
-              const stats = tourStats[tour.slug];
-
-              const rating = stats
-                ? stats.rating
-                : tour.rating;
-
-              const reviewCount = stats
-                ? stats.reviews
-                : tour.reviews;
-
               return (
 
                 <article
@@ -807,36 +671,6 @@ export default async function Home() {
                       <h3 className="text-xl font-bold leading-7 text-blue-950 transition group-hover:text-orange-500">
                         <TourText slug={tour.slug} value={tour.name} field="name" />
                       </h3>
-
-                      <div className="mt-3 flex items-center gap-2">
-
-                        <div className="flex items-center gap-0.5">
-
-                          {Array.from({ length: 5 }).map((_, index) => (
-
-                            <StarIcon
-                              key={index}
-                              className={`h-4 w-4 ${
-                                index < Math.round(rating)
-                                  ? "text-yellow-400"
-                                  : "text-gray-200"
-                              }`}
-                            />
-
-                          ))}
-
-                        </div>
-
-                        <span className="font-bold text-gray-900">
-                          {rating}
-                        </span>
-
-                        <span className="text-xs text-gray-500">
-                          ({reviewCount}{" "}
-                          {reviewCount === 1 ? <HomeText en="review" de="Bewertung" /> : <HomeText en="reviews" de="Bewertungen" />})
-                        </span>
-
-                      </div>
 
                       <p className="mt-4 line-clamp-3 text-sm leading-7 text-gray-600">
                         <TourText slug={tour.slug} value={tour.description} field="description" />
@@ -934,29 +768,6 @@ export default async function Home() {
                   <h3 className="text-xl font-bold text-blue-950 transition group-hover:text-orange-500">
                     <HomeText en="Airport & Hotel Transfers" de="Flughafen- und Hoteltransfers" />
                   </h3>
-
-                  <div className="mt-3 flex items-center gap-2">
-
-                    <div className="flex items-center gap-0.5">
-
-                      {Array.from({ length: 5 }).map((_, index) => (
-                        <StarIcon
-                          key={index}
-                          className="h-4 w-4 text-yellow-400"
-                        />
-                      ))}
-
-                    </div>
-
-                    <span className="font-bold text-gray-900">
-                      4.9
-                    </span>
-
-                    <span className="text-xs text-gray-500">
-                      <HomeText en="Trusted service" de="Zuverlässiger Service" />
-                    </span>
-
-                  </div>
 
                   <p className="mt-4 text-sm leading-7 text-gray-600">
                     <HomeText en="Travel comfortably between Hurghada Airport, hotels and surrounding destinations with a reliable private transfer" de="Reise bequem zwischen dem Flughafen Hurghada, Hotels und umliegenden Reisezielen mit einem zuverlässigen privaten Transfer" />
@@ -1080,11 +891,11 @@ export default async function Home() {
             <div className="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-xl backdrop-blur-md">
 
               <p className="text-4xl font-bold text-orange-400">
-                5★
+                Local
               </p>
 
               <p className="mt-2 text-sm font-medium text-blue-100">
-                <HomeText en="Guest Experience" de="Gästeerlebnis" />
+                <HomeText en="Local Guides" de="Lokale Guides" />
               </p>
 
             </div>
@@ -1181,23 +992,7 @@ export default async function Home() {
 
                     </div>
 
-                    <div className="flex items-center gap-0.5">
-
-                      {Array.from({ length: 5 }).map((_, index) => (
-
-                        <StarIcon
-                          key={index}
-                          className={`h-4 w-4 ${
-                            index < Number(review.rating)
-                              ? "text-yellow-400"
-                              : "text-gray-200"
-                          }`}
-                        />
-
-                      ))}
-
-                    </div>
-
+                    
                   </div>
 
                   <div className="mt-6 flex-1">

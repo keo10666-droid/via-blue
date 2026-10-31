@@ -157,20 +157,17 @@ export default async function AdminDashboardPage() {
   let totalBookings: number | null = null;
   let newBookings: number | null = null;
   let confirmedBookings: number | null = null;
-  let totalReviews: number | null = null;
 
   if (supabase) {
-    const [all, received, confirmed, reviews] = await Promise.all([
+    const [all, received, confirmed] = await Promise.all([
       supabase.from("booking_requests").select("id", { count: "exact", head: true }),
       supabase.from("booking_requests").select("id", { count: "exact", head: true }).eq("status", "received"),
       supabase.from("booking_requests").select("id", { count: "exact", head: true }).eq("status", "confirmed"),
-      supabase.from("reviews").select("id", { count: "exact", head: true }),
     ]);
 
     totalBookings = all.error ? null : all.count ?? 0;
     newBookings = received.error ? null : received.count ?? 0;
     confirmedBookings = confirmed.error ? null : confirmed.count ?? 0;
-    totalReviews = reviews.error ? null : reviews.count ?? 0;
   }
 
   const tourCount = Object.keys(tours).length;
@@ -276,9 +273,6 @@ export default async function AdminDashboardPage() {
                 <MetricCard label="Confirmed bookings" value={confirmedBookings ?? "—"} note="Requests marked as confirmed" icon={ArrowUpRight} tone="green" />
                 <MetricCard label="Published tour catalog" value={tourCount} note={`Tours currently stored in the website code · ${transferCount} transfer routes`} icon={Ship} tone="purple" />
               </div>
-              {totalReviews !== null && (
-                <p className="mt-3 text-xs text-slate-500">Customer reviews in the database: <strong className="text-slate-700">{totalReviews}</strong></p>
-              )}
             </section>
 
             <section>

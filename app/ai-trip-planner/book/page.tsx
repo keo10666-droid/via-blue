@@ -11,8 +11,6 @@ type PackageTour = {
   category: string;
   image: string;
   duration: string;
-  rating: number;
-  reviews: number;
   price: number;
   childPrice: number;
   estimatedTotal: number;
@@ -659,8 +657,6 @@ export default function AITripBookingPage() {
             name: tour.name,
             category: tour.category,
             duration: tour.duration,
-            rating: tour.rating,
-            reviews: tour.reviews,
             adult_price: tour.price,
             child_price: tour.childPrice,
             estimated_total: tour.estimatedTotal,
@@ -1844,13 +1840,6 @@ Via Blue AI Trip Planner
                                 <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-gray-500">
                                   <span>
                                     {tour.duration}
-                                  </span>
-
-                                  <span>
-                                    ★{" "}
-                                    {tour.rating.toFixed(
-                                      1,
-                                    )}
                                   </span>
                                 </div>
                               </div>

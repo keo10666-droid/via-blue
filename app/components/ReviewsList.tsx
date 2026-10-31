@@ -2,30 +2,23 @@
 
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
-import { getSampleReviews } from "@/data/sampleReviews";
 import HomeText from "@/app/components/HomeText";
 
 type Review = {
   id: string;
   guest_name: string;
-  rating: number;
   comment: string;
   created_at: string;
 };
 
 type ReviewsListProps = {
   tourSlug: string;
-  tourName?: string;
 };
 
-export default function ReviewsList({
-  tourSlug,
-  tourName = tourSlug,
-}: ReviewsListProps) {
+export default function ReviewsList({ tourSlug }: ReviewsListProps) {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isSample, setIsSample] = useState(false);
   const [isGerman, setIsGerman] = useState(false);
 
   useEffect(() => {
@@ -40,7 +33,7 @@ export default function ReviewsList({
       const { data, error } = await supabase
         .from("reviews")
         .select(
-          "id, guest_name, rating, comment, created_at"
+          "id, guest_name, comment, created_at"
         )
         .eq("tour_slug", tourSlug)
         .eq("is_visible", true)
@@ -48,24 +41,16 @@ export default function ReviewsList({
 
       if (error) {
         console.error("REVIEWS LOAD ERROR:", error);
-
-        const sampleReviews = getSampleReviews(tourSlug, tourName);
-        setReviews(sampleReviews);
-        setIsSample(true);
-      } else if (data && data.length > 0) {
-        setReviews(data);
-        setIsSample(false);
+        setReviews([]);
       } else {
-        const sampleReviews = getSampleReviews(tourSlug, tourName);
-        setReviews(sampleReviews);
-        setIsSample(true);
+        setReviews(data ?? []);
       }
 
       setLoading(false);
     }
 
     loadReviews();
-  }, [tourSlug, tourName]);
+  }, [tourSlug]);
 
   useEffect(() => {
     setCurrentIndex(0);
@@ -117,24 +102,12 @@ export default function ReviewsList({
             </p>
           </div>
 
-          {isSample && (
-            <div className="inline-flex items-center rounded-full border border-blue-100 bg-blue-50 px-4 py-2 shadow-sm">
-              <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-blue-700">
-                <HomeText en="Sample Reviews" de="Beispielbewertungen" />
-              </p>
-            </div>
-          )}
         </div>
 
         <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-blue-950 md:text-4xl">
           <HomeText en="What Our Guests Say" de="Das sagen unsere Gäste" />
         </h2>
 
-        {isSample && (
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-500">
-            <HomeText en="Temporary sample content shown until real customer reviews are available for this tour" de="Vorübergehende Beispielbewertungen, bis echte Kundenbewertungen für diese Tour verfügbar sind" />
-          </p>
-        )}
       </div>
 
       {/* EMPTY STATE */}
@@ -144,7 +117,7 @@ export default function ReviewsList({
 
           <div className="relative">
             <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-orange-50 text-2xl text-orange-500 shadow-sm">
-              ★
+              “
             </div>
 
             <p className="mt-5 font-semibold text-slate-500">
@@ -186,21 +159,7 @@ export default function ReviewsList({
                     </div>
                   </div>
 
-                  <div className="inline-flex w-fit items-center rounded-full border border-orange-100 bg-orange-50 px-4 py-2 shadow-sm">
-                    <div className="text-lg tracking-wide">
-                      <span className="text-orange-400">
-                        {"★".repeat(
-                          reviews[currentIndex].rating
-                        )}
-                      </span>
 
-                      <span className="text-slate-300">
-                        {"★".repeat(
-                          5 - reviews[currentIndex].rating
-                        )}
-                      </span>
-                    </div>
-                  </div>
                 </div>
 
                 <div className="mt-7 rounded-2xl bg-slate-50/80 p-5">
@@ -235,24 +194,6 @@ export default function ReviewsList({
             </>
           )}
 
-          {/* DOTS */}
-          {reviews.length > 1 && (
-            <div className="mt-6 flex justify-center gap-2">
-              {reviews.map((review, index) => (
-                <button
-                  key={review.id}
-                  type="button"
-                  onClick={() => setCurrentIndex(index)}
-                  aria-label={isGerman ? `Zu Bewertung ${index + 1}` : `Go to review ${index + 1}`}
-                  className={`h-2.5 rounded-full transition-all duration-300 ${
-                    index === currentIndex
-                      ? "w-8 bg-orange-500 shadow-sm"
-                      : "w-2.5 bg-slate-300 hover:bg-slate-400"
-                  }`}
-                />
-              ))}
-            </div>
-          )}
         </div>
       )}
     </div>

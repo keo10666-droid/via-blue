@@ -65,8 +65,6 @@ type PackageTour = {
   category: string;
   image: string;
   duration: string;
-  rating: number;
-  reviews: number;
   price: number;
   childPrice: number;
   estimatedTotal: number;
@@ -225,18 +223,6 @@ function WalletIcon({ className = "h-6 w-6" }: { className?: string }) {
         d="M4 7h14.5A2.5 2.5 0 0121 9.5v4H16a2.5 2.5 0 110-5h5"
       />
       <circle cx="16" cy="11.5" r=".7" fill="currentColor" stroke="none" />
-    </svg>
-  );
-}
-
-function StarIcon({ className = "h-4 w-4" }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      className={className}
-    >
-      <path d="M12 3.8l2.45 4.96 5.47.8-3.96 3.86.94 5.45L12 16.3l-4.9 2.57.94-5.45-3.96-3.86 5.47-.8L12 3.8z" />
     </svg>
   );
 }
@@ -974,13 +960,6 @@ export default function AITripPlannerPage() {
                                           <ClockIcon className="h-3.5 w-3.5" />
                                           {tour.duration}
                                         </span>
-
-                                        {tour.rating > 0 && (
-                                          <span className="flex items-center gap-1 text-orange-500">
-                                            <StarIcon className="h-3.5 w-3.5" />
-                                            {tour.rating.toFixed(1)}
-                                          </span>
-                                        )}
                                       </div>
 
                                       <div className="mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-gray-200 pt-3">

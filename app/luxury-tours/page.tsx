@@ -15,8 +15,6 @@ const luxuryTours = [
     price: 320,
     duration: "Full Day",
     image: "/luxury-tours/luxor-private-hero.webp",
-    rating: 4.9,
-    reviews: 128,
   },
   {
     slug: "cairo",
@@ -26,8 +24,6 @@ const luxuryTours = [
     price: 300,
     duration: "Full Day",
     image: "/luxury-tours/cairo-private-hero.webp",
-    rating: 4.9,
-    reviews: 156,
   },
   {
     slug: "alexandria",
@@ -37,8 +33,6 @@ const luxuryTours = [
     price: 120,
     duration: "Full Day",
     image: "/luxury-tours/alexandria-over-day-hero.webp",
-    rating: 4.9,
-    reviews: 0,
   },
   {
     slug: "aswan",
@@ -48,8 +42,6 @@ const luxuryTours = [
     price: 250,
     duration: "Full Day",
     image: "/luxury-tours/aswan-private-hero.webp",
-    rating: 4.9,
-    reviews: 63,
   },
   {
     slug: "speed-boat",
@@ -59,8 +51,6 @@ const luxuryTours = [
     price: 180,
     duration: "Half Day",
     image: "/luxury-tours/private-speed-boat-hero.webp",
-    rating: 5.0,
-    reviews: 94,
   },
   {
     slug: "quad-safari",
@@ -70,8 +60,6 @@ const luxuryTours = [
     price: 40,
     duration: "1–3 Hours",
     image: "/luxury-tours/private-quad-safari-hero.webp",
-    rating: 4.8,
-    reviews: 87,
   },
   {
     slug: "buggy-safari",
@@ -81,8 +69,6 @@ const luxuryTours = [
     price: 100,
     duration: "3 Hours",
     image: "/luxury-tours/private-buggy-safari-hero.webp",
-    rating: 4.9,
-    reviews: 76,
   },
   {
     slug: "private-boat",
@@ -92,8 +78,6 @@ const luxuryTours = [
     price: 450,
     duration: "Half Day",
     image: "/luxury-tours/private-boat-hero.webp",
-    rating: 4.9,
-    reviews: 82,
   },
 ];
 
@@ -107,18 +91,6 @@ const germanTourContent: Record<string, { name: string; description: string }> =
   "buggy-safari": { name: "Private Buggy-Safari", description: "Erleben Sie ein aufregendes privates Buggy-Abenteuer in der ägyptischen Wüste." },
   "private-boat": { name: "Privates Boot", description: "Genießen Sie eine exklusive private Bootstour am Roten Meer mit maximaler Privatsphäre, Komfort und Flexibilität." },
 };
-
-function StarIcon() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      className="h-4 w-4"
-    >
-      <path d="m12 3 2.78 5.63 6.22.9-4.5 4.39 1.06 6.2L12 17.2l-5.56 2.92 1.06-6.2L3 9.53l6.22-.9L12 3Z" />
-    </svg>
-  );
-}
 
 function UsersIcon() {
   return (
@@ -356,26 +328,7 @@ export default async function LuxuryToursPage() {
 
               {/* CONTENT */}
               <div className="flex flex-1 flex-col p-6">
-                {/* RATING */}
-                <div className="flex items-center gap-2">
-                  <div className="flex items-center gap-0.5 text-orange-400">
-                    <StarIcon />
-                    <StarIcon />
-                    <StarIcon />
-                    <StarIcon />
-                    <StarIcon />
-                  </div>
-
-                  <span className="text-sm font-bold text-blue-950">
-                    {tour.rating}
-                  </span>
-
-                  <span className="text-xs text-gray-400">
-                    ({tour.reviews})
-                  </span>
-                </div>
-
-                <Link href={`/luxury-tours/${tour.slug}`}>
+                  <Link href={`/luxury-tours/${tour.slug}`}>
                   <h3 className="mt-3 text-2xl font-semibold tracking-tight text-blue-950 transition duration-300 group-hover:text-orange-500">
                     <HomeText en={tour.name} de={germanTourContent[tour.slug]?.name ?? tour.name} />
                   </h3>
