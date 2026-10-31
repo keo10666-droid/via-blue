@@ -1113,7 +1113,8 @@ export default async function TourDetailsPage({
 
                   <TourGallery
                     images={tour.gallery}
-                        heroImage={tour.image}
+                    heroImage={tour.image}
+                    tourName={tour.name}
                   />
 
                 </div>
