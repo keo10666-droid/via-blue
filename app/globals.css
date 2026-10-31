@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #eaf1f8;
+  --background: #eaf2fa;
   --foreground: #172033;
 
   --primary: #0b3d70;
@@ -14,7 +14,7 @@
 
   --muted: #667085;
   --border: #d4e2f0;
-  --surface: #fbfdff;
+  --surface: #ffffff;
 
   color-scheme: light;
 }
@@ -43,7 +43,7 @@
 }
 
 main section.bg-white {
-  background-color: #e7f0f9 !important;
+  background-color: #e2edf8 !important;
 }
 
 main {
