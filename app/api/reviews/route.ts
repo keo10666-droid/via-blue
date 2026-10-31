@@ -88,7 +88,6 @@ export async function POST(request: Request) {
       typeof body.guestName === "string" ? body.guestName.trim() : "";
     const comment =
       typeof body.comment === "string" ? body.comment.trim() : "";
-    const rating = typeof body.rating === "number" ? body.rating : Number.NaN;
     const tour = getTourBySlug(tourSlug);
 
     if (!tour || !guestName || !comment) {
@@ -109,13 +108,6 @@ export async function POST(request: Request) {
       );
     }
 
-    if (!Number.isInteger(rating) || rating < 1 || rating > 5) {
-      return NextResponse.json(
-        { error: "Rating must be between 1 and 5." },
-        { status: 400 }
-      );
-    }
-
     const supabaseAdmin = createSupabaseAdminClient();
 
     if (!supabaseAdmin) {
@@ -132,7 +124,6 @@ export async function POST(request: Request) {
         tour_slug: tourSlug,
         tour_name: tour.name,
         guest_name: guestName,
-        rating,
         comment,
         is_visible: false,
       });
