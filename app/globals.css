@@ -386,3 +386,38 @@ main article.group.flex.h-full.cursor-pointer.flex-col.overflow-hidden[class*="r
 main article.group.flex.h-full.cursor-pointer.flex-col.overflow-hidden[class*="rounded-[30px]"] > a.block > div.flex.flex-1.flex-col.p-6 {
   padding: 0.75rem !important;
 }
+
+
+/* Restore natural card widths while keeping a modestly shorter profile. */
+main article.group.flex.h-full.flex-col.overflow-hidden.rounded-3xl {
+  max-width: 22.5rem;
+}
+
+main article.group.flex.h-full.cursor-pointer.flex-col.overflow-hidden[class*="rounded-[30px]"] {
+  width: 100%;
+  max-width: none;
+}
+
+main article.group.flex.h-full.flex-col.overflow-hidden.rounded-3xl > a > div.relative.h-64 {
+  height: 12rem !important;
+}
+
+main article.group.flex.h-full.cursor-pointer.flex-col.overflow-hidden[class*="rounded-[30px]"] > a.block > div.relative.h-64 {
+  height: 11rem !important;
+}
+
+main article.group.flex.h-full.flex-col.overflow-hidden.rounded-3xl > a > div.flex.flex-1.flex-col.p-6,
+main article.group.flex.h-full.cursor-pointer.flex-col.overflow-hidden[class*="rounded-[30px]"] > a.block > div.flex.flex-1.flex-col.p-6 {
+  padding: 1rem !important;
+}
+
+main article.group.flex.h-full.flex-col.overflow-hidden.rounded-3xl > div.grid.grid-cols-2.gap-3.px-6.pb-6,
+main article.group.flex.h-full.cursor-pointer.flex-col.overflow-hidden[class*="rounded-[30px]"] > div.grid.grid-cols-2.gap-3.px-6.pb-6 {
+  padding: 0 1rem 1rem !important;
+}
+
+@media (max-width: 767px) {
+  main article.group.flex.h-full.flex-col.overflow-hidden.rounded-3xl {
+    max-width: 22rem;
+  }
+}
