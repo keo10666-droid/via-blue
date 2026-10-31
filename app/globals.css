@@ -1,20 +1,20 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f7f8fa;
+  --background: #f2f6fa;
   --foreground: #172033;
 
   --primary: #0b3d70;
   --primary-dark: #071d49;
-  --primary-soft: #eef3fa;
+  --primary-soft: #eaf2f9;
 
   --accent: #f59a23;
   --accent-dark: #df8413;
   --accent-soft: #fff5e7;
 
   --muted: #667085;
-  --border: #e6e9ef;
-  --surface: #ffffff;
+  --border: #e0e9f2;
+  --surface: #f8fbfe;
 
   color-scheme: light;
 }
@@ -38,6 +38,17 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
+.bg-white {
+  background-color: var(--surface) !important;
+}
+
+main section.bg-white {
+  background-color: #f1f6fb !important;
+}
+
+main {
+  background: var(--background);
+}
 
 html {
   color-scheme: light;
@@ -56,21 +67,28 @@ body {
 }
 
 /* Bring oversized section spacing into a tighter, more consistent rhythm. */
+main section[class~="py-12"]:not([class*="min-h-"]) {
+  padding-block: 2.5rem !important;
+}
+
+main section[class~="py-14"]:not([class*="min-h-"]),
 main section[class~="py-16"]:not([class*="min-h-"]),
 main section[class~="py-20"]:not([class*="min-h-"]),
 main section[class~="py-24"]:not([class*="min-h-"]),
 main section[class~="py-28"]:not([class*="min-h-"]),
 main section[class~="py-32"]:not([class*="min-h-"]) {
-  padding-block: clamp(3rem, 5vw, 4.5rem) !important;
+  padding-block: clamp(2.5rem, 4vw, 4rem) !important;
 }
 
 @media (max-width: 767px) {
+  main section[class~="py-12"]:not([class*="min-h-"]),
+  main section[class~="py-14"]:not([class*="min-h-"]),
   main section[class~="py-16"]:not([class*="min-h-"]),
   main section[class~="py-20"]:not([class*="min-h-"]),
   main section[class~="py-24"]:not([class*="min-h-"]),
   main section[class~="py-28"]:not([class*="min-h-"]),
   main section[class~="py-32"]:not([class*="min-h-"]) {
-    padding-block: 2.75rem !important;
+    padding-block: 2.25rem !important;
   }
 }
 
@@ -78,22 +96,22 @@ main section[class~="py-32"]:not([class*="min-h-"]) {
 main section > div > [class~="mt-12"],
 main section > div > [class~="mt-14"],
 main section > div > [class~="mt-16"] {
-  margin-top: clamp(2rem, 3vw, 3rem) !important;
+  margin-top: clamp(1.75rem, 2.5vw, 2.5rem) !important;
 }
 
 main section > div > [class~="mt-20"] {
-  margin-top: clamp(2.75rem, 3.5vw, 3.5rem) !important;
+  margin-top: clamp(2.25rem, 3vw, 3rem) !important;
 }
 
 @media (max-width: 767px) {
   main section > div > [class~="mt-12"],
   main section > div > [class~="mt-14"],
   main section > div > [class~="mt-16"] {
-    margin-top: 2rem !important;
+    margin-top: 1.75rem !important;
   }
 
   main section > div > [class~="mt-20"] {
-    margin-top: 2.5rem !important;
+    margin-top: 2.25rem !important;
   }
 }
 
