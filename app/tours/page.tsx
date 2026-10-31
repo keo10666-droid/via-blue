@@ -930,13 +930,7 @@ function ToursPageContent() {
 
                       </>
 
-                    ) : (
-
-                      <span className="rounded-full border border-blue-100 bg-blue-50 px-3 py-1 text-xs font-bold text-blue-700">
-                        <HomeText en="New Experience" de="Neues Erlebnis" />
-                      </span>
-
-                    )}
+                    ) : null}
 
                   </div>
 
