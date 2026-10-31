@@ -16,7 +16,6 @@ export default function ReviewForm({
   const router = useRouter();
 
   const [name, setName] = useState("");
-  const [rating, setRating] = useState(5);
   const [comment, setComment] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -50,7 +49,6 @@ export default function ReviewForm({
           tourSlug,
           tourName,
           guestName: name.trim(),
-          rating,
           comment: comment.trim(),
         }),
       });
@@ -62,7 +60,6 @@ export default function ReviewForm({
       }
 
       setName("");
-      setRating(5);
       setComment("");
       setMessage("REVIEW_SUBMITTED");
 
@@ -117,31 +114,6 @@ export default function ReviewForm({
               required
               className="w-full rounded-2xl border border-slate-200 bg-slate-50/70 px-4 py-4 text-slate-900 shadow-sm outline-none transition duration-300 placeholder:text-slate-400 focus:border-orange-400 focus:bg-white focus:ring-4 focus:ring-orange-500/10"
             />
-          </div>
-
-          {/* Rating */}
-          <div>
-            <label className="mb-3 block text-sm font-extrabold text-blue-950">
-              <HomeText en="Your Rating" de="Deine Bewertung" />
-            </label>
-
-            <div className="inline-flex items-center gap-1 rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3 shadow-sm">
-              {[1, 2, 3, 4, 5].map((star) => (
-                <button
-                  key={star}
-                  type="button"
-                  onClick={() => setRating(star)}
-                  aria-label={isGerman ? `${star} ${star === 1 ? "Stern" : "Sterne"}` : `${star} star${star > 1 ? "s" : ""}`}
-                  className={`text-4xl leading-none transition duration-200 hover:scale-110 ${
-                    star <= rating
-                      ? "text-orange-400 drop-shadow-sm"
-                      : "text-slate-300"
-                  }`}
-                >
-                  ★
-                </button>
-              ))}
-            </div>
           </div>
 
           {/* Comment */}
