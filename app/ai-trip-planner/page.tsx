@@ -960,8 +960,6 @@ export default function AITripPlannerPage() {
                                           <ClockIcon className="h-3.5 w-3.5" />
                                           {tour.duration}
                                         </span>
-
-                                        )}
                                       </div>
 
                                       <div className="mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-gray-200 pt-3">
