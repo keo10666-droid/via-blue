@@ -335,3 +335,54 @@ main article.group.flex.h-full.cursor-pointer.flex-col.overflow-hidden[class*="r
     max-width: min(20rem, calc(100vw - 2rem));
   }
 }
+
+
+/* Shorten tour cards vertically across the homepage and category listings. */
+main article.group.flex.h-full.flex-col.overflow-hidden.rounded-3xl > a > div.relative.h-64 {
+  height: 10rem !important;
+}
+
+main article.group.flex.h-full.cursor-pointer.flex-col.overflow-hidden[class*="rounded-[30px]"] > a.block > div.relative.h-64 {
+  height: 8.5rem !important;
+}
+
+main article.group.flex.h-full.flex-col.overflow-hidden.rounded-3xl p.mt-4,
+main article.group.flex.h-full.cursor-pointer.flex-col.overflow-hidden[class*="rounded-[30px]"] p.mt-4 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  margin-top: 0.375rem !important;
+  line-height: 1.25rem !important;
+  max-height: 2.5rem;
+}
+
+main article.group.flex.h-full.cursor-pointer.flex-col.overflow-hidden[class*="rounded-[30px]"] .mt-6.grid.grid-cols-2 {
+  margin-top: 0.5rem !important;
+  gap: 0.375rem;
+}
+
+main article.group.flex.h-full.cursor-pointer.flex-col.overflow-hidden[class*="rounded-[30px]"] .mt-6.border-t {
+  margin-top: 0.5rem !important;
+  padding-top: 0.5rem !important;
+}
+
+main article.group.flex.h-full.flex-col.overflow-hidden.rounded-3xl .mt-auto.flex.items-center.justify-between.pt-7 {
+  padding-top: 0.5rem !important;
+}
+
+main article.group.flex.h-full.flex-col.overflow-hidden.rounded-3xl > div.grid.grid-cols-2.gap-3.px-6.pb-6,
+main article.group.flex.h-full.cursor-pointer.flex-col.overflow-hidden[class*="rounded-[30px]"] > div.grid.grid-cols-2.gap-3.px-6.pb-6 {
+  padding: 0 0.75rem 0.75rem !important;
+  gap: 0.375rem;
+}
+
+main article.group.flex.h-full.flex-col.overflow-hidden.rounded-3xl > div.grid.grid-cols-2.gap-3.px-6.pb-6 > a,
+main article.group.flex.h-full.cursor-pointer.flex-col.overflow-hidden[class*="rounded-[30px]"] > div.grid.grid-cols-2.gap-3.px-6.pb-6 > a {
+  padding: 0.375rem 0.5rem !important;
+  min-height: 2.25rem;
+}
+
+main article.group.flex.h-full.cursor-pointer.flex-col.overflow-hidden[class*="rounded-[30px]"] > a.block > div.flex.flex-1.flex-col.p-6 {
+  padding: 0.75rem !important;
+}
