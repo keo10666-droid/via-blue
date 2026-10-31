@@ -14,7 +14,7 @@
 
   --muted: #64748b;
   --border: #e2eaf1;
-  --surface: #ffffff;
+  --surface: #fcfdff;
 
   color-scheme: light;
 }
@@ -35,8 +35,21 @@
   --color-border: var(--border);
   --color-surface: var(--surface);
 
+  /* A quieter sand accent that still reads clearly against white surfaces. */
+  --color-orange-300: #efc28a;
+  --color-orange-400: #d99a5b;
+  --color-orange-500: #b66e32;
+  --color-orange-600: #985524;
+  --color-amber-300: #f0c985;
+  --color-amber-400: #dca65c;
+  --color-amber-500: #b87531;
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+}
+
+.bg-white {
+  background-color: var(--surface) !important;
 }
 
 html {
