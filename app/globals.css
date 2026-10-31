@@ -217,3 +217,52 @@ main article.group.flex.h-full.flex-col.overflow-hidden.rounded-3xl > div.grid.g
     max-width: 22rem;
   }
 }
+
+
+/* Compact the detailed tour-list cards as well as the homepage experience cards. */
+main article.group.flex.h-full.cursor-pointer.flex-col.overflow-hidden[class*="rounded-[30px]"] {
+  border-radius: 1.25rem;
+  box-shadow: 0 10px 24px -18px rgba(7, 29, 73, 0.38);
+  transition-duration: 300ms;
+}
+
+main article.group.flex.h-full.cursor-pointer.flex-col.overflow-hidden[class*="rounded-[30px]"]:hover {
+  transform: translateY(-3px);
+}
+
+main article.group.flex.h-full.cursor-pointer.flex-col.overflow-hidden[class*="rounded-[30px]"] > a.block > div.relative.h-64 {
+  height: 12rem !important;
+}
+
+main article.group.flex.h-full.cursor-pointer.flex-col.overflow-hidden[class*="rounded-[30px]"] > a.block > div.flex.flex-1.flex-col.p-6 {
+  padding: 1.125rem !important;
+}
+
+main article.group.flex.h-full.cursor-pointer.flex-col.overflow-hidden[class*="rounded-[30px]"] h3 {
+  min-height: 0 !important;
+  font-size: 1.125rem;
+  line-height: 1.5rem;
+}
+
+main article.group.flex.h-full.cursor-pointer.flex-col.overflow-hidden[class*="rounded-[30px]"] p.mt-4 {
+  margin-top: 0.75rem !important;
+  line-height: 1.5rem;
+}
+
+main article.group.flex.h-full.cursor-pointer.flex-col.overflow-hidden[class*="rounded-[30px]"] .mt-6.grid.grid-cols-2 {
+  margin-top: 1rem !important;
+}
+
+main article.group.flex.h-full.cursor-pointer.flex-col.overflow-hidden[class*="rounded-[30px]"] .mt-6.border-t {
+  margin-top: 1rem !important;
+  padding-top: 1rem !important;
+}
+
+main article.group.flex.h-full.cursor-pointer.flex-col.overflow-hidden[class*="rounded-[30px]"] > div.grid.grid-cols-2.gap-3.px-6.pb-6 {
+  gap: 0.625rem;
+  padding: 0 1.125rem 1.125rem !important;
+}
+
+main article.group.h-full.cursor-pointer.flex-col.overflow-hidden[class*="rounded-[30px]"] > div.grid.grid-cols-2.gap-3.px-6.pb-6 > a {
+  padding-block: 0.625rem !important;
+}
