@@ -7,7 +7,6 @@ import HomeText from "@/app/components/HomeText";
 type Review = {
   id: string;
   guest_name: string;
-  rating: number;
   comment: string;
   created_at: string;
 };
@@ -34,7 +33,7 @@ export default function ReviewsList({ tourSlug }: ReviewsListProps) {
       const { data, error } = await supabase
         .from("reviews")
         .select(
-          "id, guest_name, rating, comment, created_at"
+          "id, guest_name, comment, created_at"
         )
         .eq("tour_slug", tourSlug)
         .eq("is_visible", true)
@@ -118,7 +117,7 @@ export default function ReviewsList({ tourSlug }: ReviewsListProps) {
 
           <div className="relative">
             <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-orange-50 text-2xl text-orange-500 shadow-sm">
-              ★
+              “
             </div>
 
             <p className="mt-5 font-semibold text-slate-500">
@@ -160,21 +159,7 @@ export default function ReviewsList({ tourSlug }: ReviewsListProps) {
                     </div>
                   </div>
 
-                  <div className="inline-flex w-fit items-center rounded-full border border-orange-100 bg-orange-50 px-4 py-2 shadow-sm">
-                    <div className="text-lg tracking-wide">
-                      <span className="text-orange-400">
-                        {"★".repeat(
-                          reviews[currentIndex].rating
-                        )}
-                      </span>
 
-                      <span className="text-slate-300">
-                        {"★".repeat(
-                          5 - reviews[currentIndex].rating
-                        )}
-                      </span>
-                    </div>
-                  </div>
                 </div>
 
                 <div className="mt-7 rounded-2xl bg-slate-50/80 p-5">
@@ -209,24 +194,6 @@ export default function ReviewsList({ tourSlug }: ReviewsListProps) {
             </>
           )}
 
-          {/* DOTS */}
-          {reviews.length > 1 && (
-            <div className="mt-6 flex justify-center gap-2">
-              {reviews.map((review, index) => (
-                <button
-                  key={review.id}
-                  type="button"
-                  onClick={() => setCurrentIndex(index)}
-                  aria-label={isGerman ? `Zu Bewertung ${index + 1}` : `Go to review ${index + 1}`}
-                  className={`h-2.5 rounded-full transition-all duration-300 ${
-                    index === currentIndex
-                      ? "w-8 bg-orange-500 shadow-sm"
-                      : "w-2.5 bg-slate-300 hover:bg-slate-400"
-                  }`}
-                />
-              ))}
-            </div>
-          )}
         </div>
       )}
     </div>
