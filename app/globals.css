@@ -1,20 +1,20 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f2f6fa;
+  --background: #eaf1f8;
   --foreground: #172033;
 
   --primary: #0b3d70;
   --primary-dark: #071d49;
-  --primary-soft: #eaf2f9;
+  --primary-soft: #e3eef9;
 
   --accent: #f59a23;
   --accent-dark: #df8413;
   --accent-soft: #fff5e7;
 
   --muted: #667085;
-  --border: #e0e9f2;
-  --surface: #f8fbfe;
+  --border: #d4e2f0;
+  --surface: #fbfdff;
 
   color-scheme: light;
 }
@@ -43,7 +43,7 @@
 }
 
 main section.bg-white {
-  background-color: #f1f6fb !important;
+  background-color: #e7f0f9 !important;
 }
 
 main {
@@ -68,7 +68,7 @@ body {
 
 /* Bring oversized section spacing into a tighter, more consistent rhythm. */
 main section[class~="py-12"]:not([class*="min-h-"]) {
-  padding-block: 2.5rem !important;
+  padding-block: 2rem !important;
 }
 
 main section[class~="py-14"]:not([class*="min-h-"]),
@@ -77,7 +77,7 @@ main section[class~="py-20"]:not([class*="min-h-"]),
 main section[class~="py-24"]:not([class*="min-h-"]),
 main section[class~="py-28"]:not([class*="min-h-"]),
 main section[class~="py-32"]:not([class*="min-h-"]) {
-  padding-block: clamp(2.5rem, 4vw, 4rem) !important;
+  padding-block: clamp(2rem, 3.5vw, 3rem) !important;
 }
 
 @media (max-width: 767px) {
@@ -88,7 +88,7 @@ main section[class~="py-32"]:not([class*="min-h-"]) {
   main section[class~="py-24"]:not([class*="min-h-"]),
   main section[class~="py-28"]:not([class*="min-h-"]),
   main section[class~="py-32"]:not([class*="min-h-"]) {
-    padding-block: 2.25rem !important;
+    padding-block: 1.75rem !important;
   }
 }
 
@@ -96,22 +96,22 @@ main section[class~="py-32"]:not([class*="min-h-"]) {
 main section > div > [class~="mt-12"],
 main section > div > [class~="mt-14"],
 main section > div > [class~="mt-16"] {
-  margin-top: clamp(1.75rem, 2.5vw, 2.5rem) !important;
+  margin-top: clamp(1.5rem, 2vw, 2rem) !important;
 }
 
 main section > div > [class~="mt-20"] {
-  margin-top: clamp(2.25rem, 3vw, 3rem) !important;
+  margin-top: clamp(1.75rem, 2.5vw, 2.5rem) !important;
 }
 
 @media (max-width: 767px) {
   main section > div > [class~="mt-12"],
   main section > div > [class~="mt-14"],
   main section > div > [class~="mt-16"] {
-    margin-top: 1.75rem !important;
+    margin-top: 1.5rem !important;
   }
 
   main section > div > [class~="mt-20"] {
-    margin-top: 2.25rem !important;
+    margin-top: 1.75rem !important;
   }
 }
 
