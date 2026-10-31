@@ -18,19 +18,6 @@ export const metadata: Metadata = {
   },
 };
 
-function StarIcon({ className = "h-5 w-5" }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      className={className}
-      aria-hidden="true"
-    >
-      <path d="M12 2.5l2.9 5.88 6.49.94-4.7 4.58 1.11 6.47L12 17.32l-5.8 3.05 1.11-6.47-4.7-.94 6.49-.94L12 2.5z" />
-    </svg>
-  );
-}
-
 function ArrowRightIcon({ className = "h-5 w-5" }: { className?: string }) {
   return (
     <svg
@@ -170,51 +157,18 @@ export default async function Home() {
   const { data: reviews } = await supabase
     .from("reviews")
     .select(
-      "id, tour_slug, tour_name, guest_name, rating, comment"
+      "id, tour_slug, tour_name, guest_name, comment"
     )
     .eq("is_visible", true)
     .order("id", { ascending: false })
     .limit(6);
-
-  const { data: tourReviews } = await supabase
-    .from("reviews")
-    .select("tour_slug, rating")
-    .eq("is_visible", true);
-
-  const tourStats: Record<
-    string,
-    {
-      rating: number;
-      reviews: number;
-    }
-  > = {};
-
-  tourReviews?.forEach((review) => {
-    if (!tourStats[review.tour_slug]) {
-      tourStats[review.tour_slug] = {
-        rating: 0,
-        reviews: 0,
-      };
-    }
-
-    tourStats[review.tour_slug].rating += Number(review.rating);
-    tourStats[review.tour_slug].reviews += 1;
-  });
-
-  Object.keys(tourStats).forEach((slug) => {
-    const stats = tourStats[slug];
-
-    stats.rating = Number(
-      (stats.rating / stats.reviews).toFixed(1)
-    );
-  });
 
   const featuredTours = [
     tourList.find((tour) => tour.slug === "speed-boat"),
     tourList.find((tour) => tour.slug === "mahmya-island"),
   ].filter((tour) => tour !== undefined);
 
-    return (
+  return (
     <main id="top" className="min-h-screen bg-white">
 
       {/* =====================================================
@@ -663,8 +617,6 @@ export default async function Home() {
 
             {featuredTours.map((tour) => {
 
-              const stats = tourStats[tour.slug];
-
               return (
 
                 <article
@@ -720,8 +672,104 @@ export default async function Home() {
                         <TourText slug={tour.slug} value={tour.name} field="name" />
                       </h3>
 
-                      {stats && stats.reviews > 0 && (
-                        <p className="mt-4 text-sm leading-7 text-gray-600">
+                      <p className="mt-4 line-clamp-3 text-sm leading-7 text-gray-600">
+                        <TourText slug={tour.slug} value={tour.description} field="description" />
+                      </p>
+
+                      <div className="mt-auto flex items-center justify-between pt-7">
+
+                        <span className="rounded-full bg-slate-100 px-3 py-1.5 text-xs font-semibold text-gray-600">
+                          <TourText slug={tour.slug} value={tour.type} />
+                        </span>
+
+                        <span className="flex items-center gap-1 text-sm font-bold text-blue-950 transition group-hover:text-orange-500">
+                          <HomeText en="Explore" de="Entdecken" />
+                          <ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                        </span>
+
+                      </div>
+
+                    </div>
+
+                  </Link>
+
+                  <div className="grid grid-cols-2 gap-3 px-6 pb-6">
+
+                    <Link
+                      href={`/tours/${tour.slug}`}
+                      className="rounded-xl border-2 border-blue-950 py-3 text-center text-sm font-bold text-blue-950 transition hover:bg-blue-950 hover:text-white"
+                    >
+                      <HomeText en="View Tour" de="Ausflug ansehen" />
+                    </Link>
+
+                    {tour.available ? (
+                      <Link
+                        href={`/tours/${tour.slug}/book`}
+                        className="rounded-xl bg-orange-500 py-3 text-center text-sm font-bold text-white shadow-md transition hover:bg-orange-600"
+                      >
+                        <HomeText en="Book Now" de="Jetzt buchen" />
+                      </Link>
+                    ) : (
+                      <div className="rounded-xl bg-gray-100 py-3 text-center text-sm font-bold text-gray-400">
+                        <HomeText en="Coming Soon" de="Demnächst verfügbar" />
+                      </div>
+                    )}
+
+                  </div>
+
+                </article>
+
+              );
+            })}
+
+            {/* =================================================
+                TRANSFERS CARD
+            ================================================= */}
+
+            <article className="group flex h-full flex-col overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-md transition duration-500 hover:-translate-y-2 hover:border-orange-100 hover:shadow-2xl">
+
+              <Link
+                href="/transfers"
+                className="flex flex-1 flex-col"
+              >
+
+                <div className="relative h-64 overflow-hidden">
+
+                  <Image
+                    src="/transfers/transfers-hero.webp"
+                    alt="Private airport transfers in Hurghada"
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover transition duration-700 group-hover:scale-110"
+                  />
+
+                  <div className="absolute inset-0 bg-gradient-to-t from-blue-950/80 via-transparent to-transparent" />
+
+                  <div className="absolute left-5 top-5 rounded-full border border-white/20 bg-orange-500 px-3.5 py-2 text-xs font-bold text-white shadow-xl">
+                    <HomeText en="PRIVATE TRANSFER" de="PRIVATER TRANSFER" />
+                  </div>
+
+                  <div className="absolute bottom-5 right-5 rounded-2xl border border-white/20 bg-blue-950/85 px-4 py-2.5 text-white shadow-xl backdrop-blur-md">
+
+                    <span className="text-[10px] uppercase tracking-wider text-blue-200">
+                      <HomeText en="Service" de="Leistung" />
+                    </span>
+
+                    <div className="font-bold">
+                      <HomeText en="Private & Comfortable" de="Privat und komfortabel" />
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <div className="flex flex-1 flex-col p-6">
+
+                  <h3 className="text-xl font-bold text-blue-950 transition group-hover:text-orange-500">
+                    <HomeText en="Airport & Hotel Transfers" de="Flughafen- und Hoteltransfers" />
+                  </h3>
+
+                  <p className="mt-4 text-sm leading-7 text-gray-600">
                     <HomeText en="Travel comfortably between Hurghada Airport, hotels and surrounding destinations with a reliable private transfer" de="Reise bequem zwischen dem Flughafen Hurghada, Hotels und umliegenden Reisezielen mit einem zuverlässigen privaten Transfer" />
                   </p>
 
@@ -843,11 +891,11 @@ export default async function Home() {
             <div className="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-xl backdrop-blur-md">
 
               <p className="text-4xl font-bold text-orange-400">
-                24/7
+                Local
               </p>
 
               <p className="mt-2 text-sm font-medium text-blue-100">
-                <HomeText en="Guest Support" de="Gästeservice" />
+                <HomeText en="Local Guides" de="Lokale Guides" />
               </p>
 
             </div>
@@ -944,23 +992,7 @@ export default async function Home() {
 
                     </div>
 
-                    <div className="flex items-center gap-0.5">
-
-                      {Array.from({ length: 5 }).map((_, index) => (
-
-                        <StarIcon
-                          key={index}
-                          className={`h-4 w-4 ${
-                            index < Number(review.rating)
-                              ? "text-yellow-400"
-                              : "text-gray-200"
-                          }`}
-                        />
-
-                      ))}
-
-                    </div>
-
+                    
                   </div>
 
                   <div className="mt-6 flex-1">
