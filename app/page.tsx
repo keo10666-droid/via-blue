@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import HomeText from "@/app/components/HomeText";
 import TourText from "@/app/components/TourText";
+import TourRating from "@/app/components/TourRating";
 
 import { tourList } from "@/data/tours";
 import { supabase } from "@/lib/supabase";
@@ -671,6 +672,7 @@ export default async function Home() {
                       <h3 className="text-xl font-bold leading-7 text-blue-950 transition group-hover:text-orange-500">
                         <TourText slug={tour.slug} value={tour.name} field="name" />
                       </h3>
+                      <TourRating tourSlug={tour.slug} />
 
                       <p className="mt-4 line-clamp-3 text-sm leading-7 text-gray-600">
                         <TourText slug={tour.slug} value={tour.description} field="description" />

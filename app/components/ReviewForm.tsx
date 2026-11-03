@@ -17,6 +17,7 @@ export default function ReviewForm({
 
   const [name, setName] = useState("");
   const [comment, setComment] = useState("");
+  const [rating, setRating] = useState(0);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [isGerman, setIsGerman] = useState(false);
@@ -36,6 +37,11 @@ export default function ReviewForm({
       return;
     }
 
+    if (!Number.isInteger(rating) || rating < 1 || rating > 5) {
+      setMessage("REVIEW_RATING_REQUIRED");
+      return;
+    }
+
     setLoading(true);
     setMessage("");
 
@@ -50,6 +56,7 @@ export default function ReviewForm({
           tourName,
           guestName: name.trim(),
           comment: comment.trim(),
+          rating,
         }),
       });
 
@@ -116,6 +123,29 @@ export default function ReviewForm({
             />
           </div>
 
+          {/* Star rating */}
+          <div>
+            <p className="mb-2 block text-sm font-extrabold text-blue-950">
+              <HomeText en="Your Rating" de="Deine Bewertung" />
+            </p>
+            <div className="flex items-center gap-1" role="radiogroup" aria-label={isGerman ? "Deine Bewertung" : "Your rating"}>
+              {[1, 2, 3, 4, 5].map((value) => (
+                <button
+                  key={value}
+                  type="button"
+                  role="radio"
+                  aria-checked={rating === value}
+                  aria-label={`${value} ${isGerman ? "von 5 Sternen" : "out of 5 stars"}`}
+                  onClick={() => setRating(value)}
+                  className={`rounded-lg px-1 text-3xl transition focus:outline-none focus:ring-2 focus:ring-orange-400 ${value <= rating ? "text-amber-400" : "text-slate-300"}`}
+                >
+                  ★
+                </button>
+              ))}
+              <span className="ml-2 text-sm font-bold text-slate-600">{rating}/5</span>
+            </div>
+          </div>
+
           {/* Comment */}
           <div>
             <label
@@ -163,6 +193,8 @@ export default function ReviewForm({
                 <HomeText en="Thank you! Your review has been submitted and is awaiting moderation" de="Vielen Dank! Deine Bewertung wurde übermittelt und wartet auf Freigabe" />
               ) : message === "REVIEW_REQUIRED" ? (
                 <HomeText en="Please enter your name and review" de="Bitte gib deinen Namen und deine Bewertung ein" />
+              ) : message === "REVIEW_RATING_REQUIRED" ? (
+                <HomeText en="Please choose a star rating" de="Bitte wähle eine Sternebewertung" />
               ) : (
                 <HomeText en="Something went wrong. Please try again." de="Es ist ein Fehler aufgetreten. Bitte versuche es erneut." />
               )}

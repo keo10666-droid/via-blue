@@ -13,6 +13,7 @@ type ReviewRow = {
   tour_name: string;
   guest_name: string;
   comment: string;
+  rating: number;
   is_visible: boolean;
   created_at: string;
 };
@@ -50,7 +51,7 @@ export default async function AdminReviewsPage({
 
   const { data, error } = await supabase
     .from("reviews")
-    .select("id,tour_slug,tour_name,guest_name,comment,is_visible,created_at")
+    .select("id,tour_slug,tour_name,guest_name,comment,rating,is_visible,created_at")
     .order("created_at", { ascending: false })
     .limit(200);
 
@@ -91,6 +92,7 @@ export default async function AdminReviewsPage({
                       <span className={`rounded-full px-2.5 py-1 text-[10px] font-extrabold ${review.is_visible ? "bg-emerald-50 text-emerald-700" : "bg-slate-100 text-slate-500"}`}>{review.is_visible ? "Visible" : "Hidden"}</span>
                     </div>
                     <p className="mt-1 text-xs font-semibold text-slate-400">{review.tour_name || review.tour_slug} · {new Date(review.created_at).toLocaleDateString("en-GB", { dateStyle: "medium" })}</p>
+                    <p className="mt-2 text-sm tracking-wide text-amber-400" aria-label={`${review.rating} out of 5 stars`}>{"★".repeat(review.rating)}{"☆".repeat(5 - review.rating)} <span className="ml-1 text-xs font-semibold text-slate-500">{review.rating}/5</span></p>
                     <p className="mt-3 whitespace-pre-wrap text-sm leading-6 text-slate-600">{review.comment}</p>
                   </div>
                   <form action={updateReviewVisibility} className="shrink-0">

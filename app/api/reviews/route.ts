@@ -88,9 +88,10 @@ export async function POST(request: Request) {
       typeof body.guestName === "string" ? body.guestName.trim() : "";
     const comment =
       typeof body.comment === "string" ? body.comment.trim() : "";
+    const rating = Number(body.rating);
     const tour = getTourBySlug(tourSlug);
 
-    if (!tour || !guestName || !comment) {
+    if (!tour || !guestName || !comment || !Number.isInteger(rating) || rating < 1 || rating > 5) {
       return NextResponse.json(
         { error: "Please fill in all fields." },
         { status: 400 }
@@ -125,6 +126,7 @@ export async function POST(request: Request) {
         tour_name: tour.name,
         guest_name: guestName,
         comment,
+        rating,
         is_visible: false,
       });
 
