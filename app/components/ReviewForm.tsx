@@ -17,7 +17,7 @@ export default function ReviewForm({
 
   const [name, setName] = useState("");
   const [comment, setComment] = useState("");
-  const [rating, setRating] = useState(5);
+  const [rating, setRating] = useState(0);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [isGerman, setIsGerman] = useState(false);
@@ -34,6 +34,11 @@ export default function ReviewForm({
 
     if (!name.trim() || !comment.trim()) {
       setMessage("REVIEW_REQUIRED");
+      return;
+    }
+
+    if (!Number.isInteger(rating) || rating < 1 || rating > 5) {
+      setMessage("REVIEW_RATING_REQUIRED");
       return;
     }
 
@@ -188,6 +193,8 @@ export default function ReviewForm({
                 <HomeText en="Thank you! Your review has been submitted and is awaiting moderation" de="Vielen Dank! Deine Bewertung wurde übermittelt und wartet auf Freigabe" />
               ) : message === "REVIEW_REQUIRED" ? (
                 <HomeText en="Please enter your name and review" de="Bitte gib deinen Namen und deine Bewertung ein" />
+              ) : message === "REVIEW_RATING_REQUIRED" ? (
+                <HomeText en="Please choose a star rating" de="Bitte wähle eine Sternebewertung" />
               ) : (
                 <HomeText en="Something went wrong. Please try again." de="Es ist ein Fehler aufgetreten. Bitte versuche es erneut." />
               )}
