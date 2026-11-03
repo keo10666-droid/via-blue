@@ -7,6 +7,7 @@ import { useSearchParams } from "next/navigation";
 
 import HomeText from "@/app/components/HomeText";
 import TourText from "@/app/components/TourText";
+import TourRating from "@/app/components/TourRating";
 
 import {
   tours,
@@ -849,6 +850,7 @@ function ToursPageContent() {
                   <h3 className="line-clamp-2 min-h-[56px] text-xl font-bold leading-7 text-blue-950 transition-colors duration-300 group-hover:text-orange-500">
                     <TourText slug={tour.slug} value={tour.name} field="name" />
                   </h3>
+                  <TourRating tourSlug={tour.slug} />
 
 
                   {/* Description */}
