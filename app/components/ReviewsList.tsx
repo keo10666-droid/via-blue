@@ -8,6 +8,7 @@ type Review = {
   id: string;
   guest_name: string;
   comment: string;
+  rating: number;
   created_at: string;
 };
 
@@ -33,7 +34,7 @@ export default function ReviewsList({ tourSlug }: ReviewsListProps) {
       const { data, error } = await supabase
         .from("reviews")
         .select(
-          "id, guest_name, comment, created_at"
+          "id, guest_name, comment, rating, created_at"
         )
         .eq("tour_slug", tourSlug)
         .eq("is_visible", true)
@@ -150,6 +151,9 @@ export default function ReviewsList({ tourSlug }: ReviewsListProps) {
                           {reviews[currentIndex].guest_name}
                         </h3>
 
+                        <p className="mt-1 text-sm tracking-wide text-amber-400" aria-label={`${reviews[currentIndex].rating} out of 5 stars`}>
+                          {"★".repeat(reviews[currentIndex].rating)}{"☆".repeat(5 - reviews[currentIndex].rating)}
+                        </p>
                         <p className="mt-0.5 text-sm text-slate-400">
                           {new Date(
                             reviews[currentIndex].created_at
