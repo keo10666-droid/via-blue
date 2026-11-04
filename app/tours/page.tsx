@@ -460,6 +460,14 @@ function ToursPageContent() {
   const activeCategoryCardRef = useRef<HTMLButtonElement | null>(null);
   const categoryCarouselRef = useRef<HTMLDivElement | null>(null);
 
+  useEffect(() => {
+    activeCategoryCardRef.current?.scrollIntoView({
+      behavior: "instant",
+      block: "nearest",
+      inline: "center",
+    });
+  }, []);
+
   const syncCategoryFromScroll = () => {
     const container = categoryCarouselRef.current;
     if (!container) return;
