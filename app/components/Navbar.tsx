@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { Crown } from "lucide-react";
+import { Crown, Home, Compass, CarFront, MessageCircle, UserRound } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
 export default function Navbar() {
@@ -152,11 +152,12 @@ export default function Navbar() {
   }
 
   return (
+    <>
     <header className="sticky top-0 z-50 border-b border-slate-200/60 bg-white/65 shadow-[0_8px_35px_rgba(15,23,42,0.08)] backdrop-blur-2xl">
 
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-orange-400/70 to-transparent" />
 
-      <div className="mx-auto flex h-[82px] max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-[68px] max-w-7xl items-center justify-between px-4 sm:h-[82px] sm:px-6 lg:px-8">
 
         {/* Logo */}
         <Link
@@ -171,10 +172,10 @@ export default function Navbar() {
             <img
               src="/logo/logo.svg"
               alt="Via Blue"
-              className="relative h-[58px] w-auto object-contain transition-all duration-500 group-hover:scale-[1.035]"
+              className="relative h-[46px] w-auto object-contain transition-all duration-500 group-hover:scale-[1.035] sm:h-[58px]"
             />
 
-            <div className="ml-1.5 flex flex-col justify-center">
+            <div className="ml-1.5 hidden flex-col justify-center sm:flex">
 
               <div className="relative">
                 <p className="bg-gradient-to-r from-[#03112a] via-[#082d62] to-[#03112a] bg-clip-text text-[21px] font-black leading-[0.95] tracking-[-0.055em] text-transparent">
@@ -472,5 +473,34 @@ export default function Navbar() {
       )}
 
     </header>
+
+    {!pathname.startsWith("/admin") && (
+      <nav
+        aria-label="Mobile quick navigation"
+        className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 border-t border-slate-200/80 bg-white/95 px-1 pb-[max(env(safe-area-inset-bottom),0.35rem)] pt-2 shadow-[0_-8px_30px_rgba(3,17,42,0.10)] backdrop-blur-2xl lg:hidden"
+      >
+        {[
+          { href: "/", label: "Home", Icon: Home },
+          { href: "/tours", label: language === "de" ? "Ausflüge" : "Tours", Icon: Compass },
+          { href: "/transfers", label: "Transfer", Icon: CarFront },
+          { href: "/contact", label: language === "de" ? "Kontakt" : "Contact", Icon: MessageCircle },
+          { href: userName ? "/account" : "/login", label: userName ? (language === "de" ? "Konto" : "Account") : "Login", Icon: UserRound },
+        ].map(({ href, label, Icon }) => {
+          const active = href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
+          return (
+            <Link
+              key={href}
+              href={href}
+              aria-current={active ? "page" : undefined}
+              className={`flex min-h-12 flex-col items-center justify-center gap-1 rounded-xl px-1 text-[10px] font-bold transition-colors ${active ? "text-orange-600" : "text-slate-500 hover:text-blue-950"}`}
+            >
+              <Icon size={19} strokeWidth={active ? 2.5 : 2} />
+              <span>{label}</span>
+            </Link>
+          );
+        })}
+      </nav>
+    )}
+    </>
   );
 }

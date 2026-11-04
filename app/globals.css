@@ -421,3 +421,69 @@ main article.group.flex.h-full.cursor-pointer.flex-col.overflow-hidden[class*="r
     max-width: 22rem;
   }
 }
+
+
+/* Mobile-first polish: keep desktop styling intact while improving phone usability. */
+@media (max-width: 767px) {
+  html { scroll-padding-top: 5rem; }
+  body:has(nav[aria-label="Mobile quick navigation"]) {
+    padding-bottom: calc(5.25rem + env(safe-area-inset-bottom));
+  }
+  body { overflow-x: hidden; }
+  header.sticky {
+    background: rgba(255, 255, 255, 0.94) !important;
+    box-shadow: 0 5px 22px rgba(3, 17, 42, 0.07) !important;
+    backdrop-filter: blur(22px);
+  }
+  main section { scroll-margin-top: 5rem; }
+  main section[class*="py-24"],
+  main section[class*="py-28"],
+  main section[class*="py-32"] {
+    padding-top: 2.75rem !important;
+    padding-bottom: 2.75rem !important;
+  }
+  main section > div[class*="max-w-7xl"] { max-width: 100%; }
+  main h1 { overflow-wrap: anywhere; }
+  main h2 {
+    font-size: clamp(1.65rem, 7vw, 2.25rem);
+    line-height: 1.12;
+  }
+  main p { text-wrap: pretty; }
+  main a, main button { -webkit-tap-highlight-color: transparent; }
+  main input, main select, main textarea {
+    min-height: 2.9rem;
+    font-size: 16px;
+  }
+  main article.group.flex.h-full.cursor-pointer.flex-col.overflow-hidden[class*="rounded-[30px]"] {
+    border-radius: 1.35rem;
+    box-shadow: 0 12px 28px rgba(3, 17, 42, 0.08);
+  }
+  main article.group.flex.h-full.cursor-pointer.flex-col.overflow-hidden[class*="rounded-[30px]"] > a.block > div.relative.h-64 {
+    height: 12.5rem !important;
+  }
+  main article.group.flex.h-full.cursor-pointer.flex-col.overflow-hidden[class*="rounded-[30px]"] > a.block > div.flex.flex-1.flex-col.p-6 {
+    padding: 1rem 1rem 0.75rem !important;
+  }
+  main article.group.flex.h-full.cursor-pointer.flex-col.overflow-hidden[class*="rounded-[30px]"] > div.grid.grid-cols-2.gap-3.px-6.pb-6 {
+    padding: 0 1rem 1rem !important;
+  }
+  footer .max-w-7xl {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+}
+@media (max-width: 380px) {
+  main h1 { font-size: 2.35rem !important; }
+  main article.group.flex.h-full.cursor-pointer.flex-col.overflow-hidden[class*="rounded-[30px]"] > a.block > div.relative.h-64 {
+    height: 11rem !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

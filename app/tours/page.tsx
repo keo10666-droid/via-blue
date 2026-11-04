@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Suspense, useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 import HomeText from "@/app/components/HomeText";
@@ -457,6 +457,43 @@ function ToursPageContent() {
       validUrlCategory ?? "islands-boat-trips"
     );
 
+  const categoryCarouselRef = useRef<HTMLDivElement | null>(null);
+  const repeatedCategoryKeys = [...categoryKeys, ...categoryKeys, ...categoryKeys];
+
+  useEffect(() => {
+    const el = categoryCarouselRef.current;
+    if (!el) return;
+    const initial = categoryKeys.indexOf(activeCategory);
+    const item = el.querySelector<HTMLButtonElement>(`[data-carousel-index="${categoryKeys.length + Math.max(initial, 0)}"]`);
+    if (item) el.scrollLeft = item.offsetLeft - (el.clientWidth - item.offsetWidth) / 2;
+  }, []);
+
+  const syncCategoryFromScroll = () => {
+    const el = categoryCarouselRef.current;
+    if (!el) return;
+    const items = Array.from(el.querySelectorAll<HTMLButtonElement>("[data-carousel-index]"));
+    const center = el.getBoundingClientRect().left + el.clientWidth / 2;
+    let nearest = 0;
+    let distance = Infinity;
+    items.forEach((item, index) => {
+      const rect = item.getBoundingClientRect();
+      const d = Math.abs(rect.left + rect.width / 2 - center);
+      if (d < distance) { distance = d; nearest = index; }
+    });
+    const count = categoryKeys.length;
+    const category = categoryKeys[nearest % count];
+    setActiveCategory((current) => current === category ? current : category);
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("category") !== category) {
+      params.set("category", category);
+      window.history.replaceState(null, "", `${window.location.pathname}?${params.toString()}`);
+    }
+    if (nearest < count || nearest >= count * 2) {
+      const target = items[count + (nearest % count)];
+      if (target) el.scrollLeft = target.offsetLeft - (el.clientWidth - target.offsetWidth) / 2;
+    }
+  };
+
   const [tourOverrides, setTourOverrides] = useState<Record<string, {
     name?: string; description?: string; image?: string; price?: number;
     childPrice?: number; infantPrice?: number; available?: boolean;
@@ -534,10 +571,7 @@ function ToursPageContent() {
       `${window.location.pathname}?${params.toString()}`
     );
 
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    // Keep the page position steady; the carousel itself handles category navigation.
   };
 
 
@@ -629,73 +663,56 @@ function ToursPageContent() {
           CATEGORY NAVIGATION
       ===================================================== */}
 
-      <section className="border-b border-slate-200/80 bg-white/90 px-3 py-2 shadow-[0_8px_30px_rgba(15,23,42,0.06)] backdrop-blur-xl">
+      {/* =====================================================
+          CATEGORY NAVIGATION
+      ===================================================== */}
 
-        <div className="mx-auto max-w-7xl">
-
-          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7">
-
-            {categoryKeys.map((category) => {
-
-              const isActive =
-                activeCategory === category;
-
-              return (
-                <button
-                  key={category}
-                  type="button"
-                  onClick={() =>
-                    handleCategoryChange(category)
-                  }
-                  className={`group flex min-h-[46px] w-full items-center justify-center gap-2 rounded-2xl border px-3 py-2.5 text-xs font-bold transition-all duration-300 active:scale-[0.98] sm:min-h-[52px] ${
-                    isActive
-                      ? "border-blue-950 bg-blue-950 text-white shadow-lg shadow-blue-950/20"
-                      : "border-slate-200 bg-white text-blue-950 shadow-sm hover:-translate-y-0.5 hover:border-orange-300 hover:bg-orange-50 hover:shadow-md"
-                  }`}
-                >
-
-                  <span
-                    className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-xl transition-all ${
-                      isActive
-                        ? "bg-white/10"
-                        : "bg-blue-50 group-hover:bg-orange-100"
-                    }`}
-                  >
-                    <TourTypeIcon
-                      tour={{
-                        name: tourCategories[category],
-                        type: tourCategories[category],
-                        slug: category,
-                      }}
-                      className={`h-3.5 w-3.5 ${
-                        isActive
-                          ? "text-orange-400"
-                          : "text-blue-700 group-hover:text-orange-500"
-                      }`}
-                    />
-                  </span>
-
-                  <span className="truncate">
-                    <HomeText en={tourCategories[category]} de={germanTourCategories[category] ?? tourCategories[category]} />
-                  </span>
-
-                </button>
-              );
-
-            })}
-
-          </div>
-
-        </div>
-
-      </section>
-
+      <section className="relative overflow-hidden border-b border-blue-950 bg-[#071d49] py-7 md:border-slate-200/80 md:bg-white md:py-2">
+  <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_15%_0%,rgba(37,99,235,0.35),transparent_45%),radial-gradient(ellipse_at_90%_100%,rgba(249,115,22,0.14),transparent_42%)] md:hidden" />
+  <div className="relative mx-auto max-w-7xl">
+    <div className="mb-5 flex items-end justify-between px-4 md:hidden">
+      <div><p className="text-[10px] font-extrabold uppercase tracking-[0.25em] text-orange-300"><HomeText en="Explore experiences" de="Erlebnisse entdecken" /></p><p className="mt-1 text-xl font-bold tracking-tight text-white"><HomeText en="Find your next escape" de="Finde dein nächstes Erlebnis" /></p></div>
+      <span className="pb-1 text-[10px] font-semibold tracking-wide text-blue-200/75"><HomeText en="Swipe to explore" de="Wischen zum Entdecken" /></span>
+    </div>
+    <div ref={categoryCarouselRef} onScroll={syncCategoryFromScroll} className="relative flex snap-x snap-mandatory items-center gap-1 overflow-x-auto px-[calc(50%-76px)] py-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:hidden">
+      {repeatedCategoryKeys.map((category, index) => {
+        const isActive = activeCategory === category && index >= categoryKeys.length && index < categoryKeys.length * 2;
+        return (
+          <button
+            key={`${category}-${index}`}
+            data-carousel-index={index}
+            type="button"
+            onClick={() => {
+              const el = categoryCarouselRef.current;
+              const target = el?.querySelector<HTMLButtonElement>(`[data-carousel-index="${index}"]`);
+              if (el && target) el.scrollTo({ left: target.offsetLeft - (el.clientWidth - target.offsetWidth) / 2, behavior: "smooth" });
+            }}
+            aria-pressed={isActive}
+            className={isActive
+              ? "relative z-20 flex h-[46px] min-w-[152px] shrink-0 snap-center items-center gap-2 rounded-full border border-orange-300/80 bg-white px-2.5 text-left text-blue-950 shadow-[0_4px_14px_rgba(0,0,0,0.16)] transition-colors duration-200"
+              : "relative z-10 flex h-[46px] min-w-[152px] shrink-0 snap-center items-center gap-2 rounded-full border border-white/15 bg-white/10 px-2.5 text-left text-white/75 opacity-45 blur-[1px] transition-colors duration-200"}
+          >
+            <span className={isActive ? "flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-950 text-orange-400" : "flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/10 text-white"}>
+              <TourTypeIcon tour={{ name: tourCategories[category], type: tourCategories[category], slug: category }} className="h-4 w-4" />
+            </span>
+            <span className={isActive ? "min-w-0 text-xs font-extrabold leading-tight" : "min-w-0 text-xs font-bold leading-tight"}>
+              <HomeText en={tourCategories[category]} de={germanTourCategories[category] ?? tourCategories[category]} />
+            </span>
+          </button>
+        );
+      })}
+    </div>
+    <div className="hidden grid-cols-2 gap-2.5 sm:grid-cols-3 md:grid md:grid-cols-4 lg:grid-cols-7">
+      {categoryKeys.map((category) => { const isActive = activeCategory === category; return <button key={category} type="button" onClick={() => handleCategoryChange(category)} aria-pressed={isActive} className={isActive ? "flex min-h-[52px] items-center justify-center gap-2 rounded-xl border border-blue-950 bg-blue-950 px-3 py-2.5 text-xs font-extrabold text-white" : "flex min-h-[52px] items-center justify-center gap-2 rounded-xl border border-slate-200 bg-slate-50/70 px-3 py-2.5 text-xs font-extrabold text-blue-950"}><TourTypeIcon tour={{ name: tourCategories[category], type: tourCategories[category], slug: category }} className="h-3.5 w-3.5" /><HomeText en={tourCategories[category]} de={germanTourCategories[category] ?? tourCategories[category]} /></button>; })}
+    </div>
+  </div>
+</section>
 
       {/* =====================================================
           TOURS
       ===================================================== */}
 
-      <section className="mx-auto max-w-7xl px-5 py-14 md:px-6 md:py-20">
+      <section className="mx-auto max-w-7xl px-4 py-10 sm:px-5 md:px-6 md:py-20">
 
         {/* CATEGORY HEADER */}
 
@@ -753,7 +770,7 @@ function ToursPageContent() {
             TOURS GRID
         ===================================================== */}
 
-        <div className="grid gap-7 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-5 md:gap-7 md:grid-cols-2 lg:grid-cols-3">
 
           {categoryTours.map((tour, index) => (
 

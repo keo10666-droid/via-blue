@@ -176,7 +176,7 @@ export default async function Home() {
           HERO
       ===================================================== */}
 
-      <section className="relative min-h-[760px] overflow-hidden bg-[#03112a]">
+      <section className="relative min-h-[660px] overflow-hidden bg-[#03112a] sm:min-h-[760px]">
 
         <Image
           src="/images/via-blue-hero.webp"
@@ -184,10 +184,10 @@ export default async function Home() {
           fill
           priority
           sizes="100vw"
-          className="object-cover object-center"
+          className="object-cover object-[58%_center] sm:object-center"
         />
 
-        <div className="absolute inset-0 bg-gradient-to-r from-[#03112a] via-[#03112a]/80 to-[#03112a]/15" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#03112a]/95 via-[#03112a]/75 to-[#03112a]/35 sm:from-[#03112a] sm:via-[#03112a]/80 sm:to-[#03112a]/15" />
 
         <div className="absolute inset-0 bg-gradient-to-t from-[#03112a] via-transparent to-[#03112a]/20" />
 
@@ -197,11 +197,11 @@ export default async function Home() {
 
         <div className="absolute inset-0 border-b border-white/10" />
 
-        <div className="relative z-10 mx-auto flex min-h-[760px] max-w-7xl items-center px-6 py-28">
+        <div className="relative z-10 mx-auto flex min-h-[660px] max-w-7xl items-center px-5 py-20 sm:min-h-[760px] sm:px-6 sm:py-28">
 
           <div className="max-w-4xl text-white">
 
-            <div className="mb-7 inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/10 px-4 py-2.5 backdrop-blur-md">
+            <div className="mb-6 inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/10 px-4 py-2.5 backdrop-blur-md sm:mb-7">
 
               <span className="h-2 w-2 rounded-full bg-orange-400 shadow-lg shadow-orange-400/60" />
 
@@ -211,7 +211,7 @@ export default async function Home() {
 
             </div>
 
-            <h1 className="max-w-4xl text-5xl font-bold leading-[0.96] tracking-[-0.04em] sm:text-6xl md:text-7xl lg:text-8xl">
+            <h1 className="max-w-4xl text-[2.65rem] font-bold leading-[0.98] tracking-[-0.045em] sm:text-6xl md:text-7xl lg:text-8xl">
 
               <HomeText en="Your Holiday" de="Dein Urlaub" />
 
@@ -221,11 +221,11 @@ export default async function Home() {
 
             </h1>
 
-            <p className="mt-8 max-w-2xl text-lg leading-8 text-blue-50/90 sm:text-xl">
+            <p className="mt-6 max-w-2xl text-base leading-7 text-blue-50/90 sm:mt-8 sm:text-xl sm:leading-8">
               <HomeText en="Discover the Red Sea with unforgettable boat trips, island escapes, desert adventures and reliable private transfers — all from Hurghada" de="Entdecke das Rote Meer mit unvergesslichen Bootstouren, Insel-Ausflügen, Wüstenabenteuern und zuverlässigen privaten Transfers ab Hurghada" />
             </p>
 
-            <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+            <div className="mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:gap-4">
 
               <Link
                 href="/tours"
@@ -245,7 +245,7 @@ export default async function Home() {
 
             </div>
 
-            <div className="mt-10 flex flex-wrap gap-x-7 gap-y-3 text-sm text-white/85">
+            <div className="mt-7 flex flex-wrap gap-x-5 gap-y-3 text-xs text-white/85 sm:mt-10 sm:gap-x-7 sm:text-sm">
 
               <div className="flex items-center gap-2">
                 <CheckIcon className="h-4 w-4 text-orange-400" />
@@ -293,11 +293,11 @@ export default async function Home() {
 
       <section className="relative z-20 -mt-1 bg-[#03112a] text-white">
 
-        <div className="mx-auto grid max-w-7xl divide-y divide-white/10 px-6 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+        <div className="mx-auto grid max-w-7xl grid-cols-3 divide-x divide-white/10 px-2 sm:px-6 sm:divide-x sm:divide-y-0">
 
-          <div className="flex items-center gap-4 px-2 py-8 sm:px-8">
+          <div className="flex flex-col items-center gap-2 px-1 py-5 text-center sm:flex-row sm:items-center sm:gap-4 sm:px-8 sm:py-8 sm:text-left">
 
-            <div className="flex h-13 w-13 shrink-0 items-center justify-center rounded-2xl border border-orange-400/20 bg-orange-400/10 text-orange-400">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-orange-400/20 bg-orange-400/10 text-orange-400 sm:h-13 sm:w-13 sm:rounded-2xl">
               <CompassIcon />
             </div>
 
@@ -306,16 +306,16 @@ export default async function Home() {
                 <HomeText en="Local Knowledge" de="Lokale Ortskenntnis" />
               </p>
 
-              <p className="mt-1 text-sm text-blue-200">
+              <p className="mt-1 hidden text-sm text-blue-200 sm:block">
                 <HomeText en="Experiences built around Hurghada" de="Erlebnisse rund um Hurghada" />
               </p>
             </div>
 
           </div>
 
-          <div className="flex items-center gap-4 px-2 py-8 sm:px-8">
+          <div className="flex flex-col items-center gap-2 px-1 py-5 text-center sm:flex-row sm:items-center sm:gap-4 sm:px-8 sm:py-8 sm:text-left">
 
-            <div className="flex h-13 w-13 shrink-0 items-center justify-center rounded-2xl border border-orange-400/20 bg-orange-400/10 text-orange-400">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-orange-400/20 bg-orange-400/10 text-orange-400 sm:h-13 sm:w-13 sm:rounded-2xl">
               <ShieldIcon />
             </div>
 
@@ -324,16 +324,16 @@ export default async function Home() {
                 <HomeText en="Reliable Service" de="Zuverlässiger Service" />
               </p>
 
-              <p className="mt-1 text-sm text-blue-200">
+              <p className="mt-1 hidden text-sm text-blue-200 sm:block">
                 <HomeText en="Clear booking & dependable support" de="Einfache Buchung und verlässliche Unterstützung" />
               </p>
             </div>
 
           </div>
 
-          <div className="flex items-center gap-4 px-2 py-8 sm:px-8">
+          <div className="flex flex-col items-center gap-2 px-1 py-5 text-center sm:flex-row sm:items-center sm:gap-4 sm:px-8 sm:py-8 sm:text-left">
 
-            <div className="flex h-13 w-13 shrink-0 items-center justify-center rounded-2xl border border-orange-400/20 bg-orange-400/10 text-orange-400">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-orange-400/20 bg-orange-400/10 text-orange-400 sm:h-13 sm:w-13 sm:rounded-2xl">
               <HeadphonesIcon />
             </div>
 
@@ -342,7 +342,7 @@ export default async function Home() {
                 <HomeText en="Guest Support" de="Gästeservice" />
               </p>
 
-              <p className="mt-1 text-sm text-blue-200">
+              <p className="mt-1 hidden text-sm text-blue-200 sm:block">
                 <HomeText en="We’re here when you need us" de="Wir sind für dich da, wenn du uns brauchst" />
               </p>
             </div>
@@ -358,77 +358,74 @@ export default async function Home() {
           MOBILE LUXURY EXPERIENCES
       ===================================================== */}
 
-      <section className="bg-[#f7f7f5] px-5 py-12 md:hidden">
-
+      <section className="bg-[#f7f7f5] px-4 py-10 md:hidden">
         <div className="mx-auto max-w-7xl">
-
-          <div className="relative overflow-hidden rounded-[30px] bg-[#03112a] shadow-[0_24px_70px_rgba(3,17,42,0.2)]">
-
-            <Image
-              src="/luxury-tours/private-speed-boat-hero.webp"
-              alt="Private luxury experience in Hurghada"
-              fill
-              sizes="100vw"
-              className="object-cover object-center"
-            />
-
-            <div className="absolute inset-0 bg-gradient-to-b from-[#03112a]/45 via-[#03112a]/70 to-[#03112a]/95" />
-
-            <div className="absolute -right-24 -top-24 h-56 w-56 rounded-full bg-orange-500/15 blur-3xl" />
-
-            <div className="absolute -bottom-20 -left-20 h-56 w-56 rounded-full bg-blue-500/20 blur-3xl" />
-
-            <div className="relative z-10 px-6 py-10 text-white">
-
-              <div className="inline-flex items-center gap-2 rounded-full border border-orange-300/20 bg-white/10 px-3.5 py-2 text-[10px] font-bold uppercase tracking-[0.22em] text-orange-300 backdrop-blur-md">
-
-                <span className="h-1.5 w-1.5 rounded-full bg-orange-400 shadow-lg shadow-orange-400/70" />
-
-                <HomeText en="Private Collection" de="Private Erlebnisse" />
-
-              </div>
-
-              <h2 className="mt-6 max-w-[320px] text-3xl font-bold leading-[1.05] tracking-tight sm:text-4xl">
-                <HomeText en="Looking for something truly special?" de="Suchst du etwas ganz Besonderes?" />
-              </h2>
-
-              <p className="mt-5 max-w-[330px] text-sm leading-7 text-blue-100/90">
-                <HomeText en="If you value privacy, comfort and a more personal way to discover Hurghada, explore our private experiences designed around you" de="Wenn du Privatsphäre, Komfort und eine persönliche Art bevorzugst, Hurghada zu entdecken, sind unsere privaten Erlebnisse genau das Richtige für dich" />
+          <div className="mb-5 flex items-end justify-between gap-3">
+            <div>
+              <p className="text-[10px] font-extrabold uppercase tracking-[0.28em] text-orange-600">
+                <HomeText en="The Via Blue Collection" de="Die Via Blue Kollektion" />
               </p>
-
-              <div className="mt-7 flex flex-col gap-3">
-
-                <Link
-                  href="/luxury-tours"
-                  className="group flex items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 px-6 py-4 text-sm font-bold text-white shadow-xl shadow-orange-950/30 transition duration-300 hover:-translate-y-1 hover:from-orange-400 hover:to-amber-400"
-                >
-                  <HomeText en="Explore Private Experiences" de="Private Erlebnisse entdecken" />
-
-                  <ArrowRightIcon className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-                </Link>
-
-                <div className="flex items-center justify-center gap-2 text-[9px] font-semibold uppercase tracking-[0.18em] text-white/50">
-
-                  <span><HomeText en="Private Tours" de="Private Ausflüge" /></span>
-
-                  <span className="h-1 w-1 rounded-full bg-orange-400" />
-
-                  <span><HomeText en="Private Boats" de="Private Boote" /></span>
-
-                  <span className="h-1 w-1 rounded-full bg-orange-400" />
-
-                  <span><HomeText en="Private Adventures" de="Private Abenteuer" /></span>
-
-                </div>
-
-              </div>
-
+              <p className="mt-1 text-sm font-medium text-blue-950/65">
+                <HomeText en="For moments that deserve more" de="Für Momente, die mehr verdienen" />
+              </p>
             </div>
-
+            <span className="mb-1 h-px w-12 bg-orange-400" />
           </div>
 
-        </div>
+          <Link
+            href="/luxury-tours"
+            className="group relative isolate flex min-h-[540px] overflow-hidden rounded-[30px] bg-[#03112a] text-white shadow-[0_24px_65px_rgba(3,17,42,0.24)]"
+          >
+            <Image
+              src="/luxury-tours/private-speed-boat-hero.webp"
+              alt="Private speed boat experience on the Red Sea"
+              fill
+              sizes="(max-width: 767px) 100vw, 50vw"
+              className="absolute inset-0 z-0 object-cover object-[52%_center] transition-transform duration-700 group-hover:scale-[1.04]"
+            />
+            <div className="absolute inset-0 z-10 bg-gradient-to-b from-[#03112a]/5 via-[#03112a]/15 to-[#03112a]/95" />
+            <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#03112a]/25 via-transparent to-transparent" />
 
+            <div className="absolute left-5 right-5 top-5 z-20 flex items-center justify-between gap-3">
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-[#03112a]/45 px-3.5 py-2 text-[9px] font-extrabold uppercase tracking-[0.2em] text-white shadow-lg backdrop-blur-md">
+                <span className="h-1.5 w-1.5 rounded-full bg-orange-400 shadow-[0_0_12px_rgba(251,146,60,0.9)]" />
+                <HomeText en="Private Collection" de="Private Kollektion" />
+              </span>
+              <span className="rounded-full border border-white/20 bg-white/15 px-3 py-2 text-[9px] font-bold uppercase tracking-[0.16em] text-white backdrop-blur-md">
+                Hurghada · Red Sea
+              </span>
+            </div>
+
+            <div className="relative z-20 mt-auto w-full px-6 pb-7 pt-64">
+              <p className="mb-3 text-[10px] font-extrabold uppercase tracking-[0.25em] text-orange-300">
+                <HomeText en="A more exclusive escape" de="Ein exklusiveres Erlebnis" />
+              </p>
+              <h2 className="max-w-[330px] text-[2.15rem] font-extrabold leading-[1.02] tracking-[-0.04em] text-white">
+                <HomeText en="Your own escape on the Red Sea" de="Dein privater Rückzugsort am Roten Meer" />
+              </h2>
+              <p className="mt-4 max-w-[330px] text-[13px] leading-6 text-white/80">
+                <HomeText en="Private boats and tailor-made experiences, designed around you" de="Private Boote und maßgeschneiderte Erlebnisse, ganz nach deinen Wünschen" />
+              </p>
+
+              <div className="mt-6 flex items-center justify-between gap-3 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 px-5 py-4 shadow-[0_12px_30px_rgba(249,115,22,0.28)] transition-all duration-300 group-hover:from-orange-400 group-hover:to-amber-400">
+                <span className="text-sm font-extrabold">
+                  <HomeText en="Discover Luxury Tours" de="Luxury Tours entdecken" />
+                </span>
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/20">
+                  <ArrowRightIcon className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+                </span>
+              </div>
+
+              <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-[9px] font-bold uppercase tracking-[0.15em] text-white/55">
+                <span><HomeText en="Private Tours" de="Private Ausflüge" /></span>
+                <span className="h-1 w-1 rounded-full bg-orange-400" />
+                <span><HomeText en="Private Boats" de="Private Boote" /></span>
+                <span className="h-1 w-1 rounded-full bg-orange-400" />
+                <span><HomeText en="Tailor-made" de="Individuell" /></span>
+              </div>
+            </div>
+          </Link>
+        </div>
       </section>
 
 
@@ -614,7 +611,7 @@ export default async function Home() {
 
           </div>
 
-          <div className="mt-14 hidden gap-7 md:grid md:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-8 grid gap-4 sm:mt-14 sm:gap-7 md:grid-cols-2 lg:grid-cols-3">
 
             {featuredTours.map((tour) => {
 
