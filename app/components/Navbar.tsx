@@ -152,6 +152,7 @@ export default function Navbar() {
   }
 
   return (
+    <>
     <header className="sticky top-0 z-50 border-b border-slate-200/60 bg-white/65 shadow-[0_8px_35px_rgba(15,23,42,0.08)] backdrop-blur-2xl">
 
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-orange-400/70 to-transparent" />
@@ -500,5 +501,6 @@ export default function Navbar() {
         })}
       </nav>
     )}
+    </>
   );
 }
