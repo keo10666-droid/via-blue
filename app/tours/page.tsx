@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Suspense, useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 import HomeText from "@/app/components/HomeText";
@@ -457,6 +457,11 @@ function ToursPageContent() {
       validUrlCategory ?? "islands-boat-trips"
     );
 
+  const activeCategoryCardRef = useRef<HTMLButtonElement | null>(null);
+  useEffect(() => {
+    activeCategoryCardRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+  }, [activeCategory]);
+
   const [tourOverrides, setTourOverrides] = useState<Record<string, {
     name?: string; description?: string; image?: string; price?: number;
     childPrice?: number; infantPrice?: number; available?: boolean;
@@ -633,78 +638,30 @@ function ToursPageContent() {
           CATEGORY NAVIGATION
       ===================================================== */}
 
-      <section className="border-b border-slate-200/80 bg-white py-5 shadow-[0_8px_30px_rgba(15,23,42,0.05)] md:px-3 md:py-2">
-        <div className="mx-auto max-w-7xl">
-          <div className="mb-4 px-4 md:hidden">
-            <p className="text-[10px] font-extrabold uppercase tracking-[0.25em] text-orange-600">
-              <HomeText en="Browse experiences" de="Erlebnisse entdecken" />
-            </p>
-            <p className="mt-1 text-lg font-extrabold tracking-tight text-blue-950">
-              <HomeText en="Choose your kind of escape" de="Finde dein Urlaubserlebnis" />
-            </p>
-          </div>
-
-          <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:hidden">
-            {categoryKeys.map((category) => {
-              const isActive = activeCategory === category;
-              return (
-                <button
-                  key={category}
-                  type="button"
-                  onClick={() => handleCategoryChange(category)}
-                  aria-pressed={isActive}
-                  className="group flex w-[76px] shrink-0 snap-start flex-col items-center gap-2 text-center"
-                >
-                  <span className={`relative flex h-[62px] w-[62px] items-center justify-center rounded-full border transition-all duration-300 active:scale-95 ${
-                    isActive
-                      ? "border-blue-950 bg-blue-950 text-white shadow-[0_8px_20px_rgba(7,29,73,0.22)] ring-4 ring-orange-100"
-                      : "border-slate-200 bg-slate-50 text-blue-800 group-hover:border-orange-300 group-hover:bg-orange-50"
-                  }`}>
-                    <TourTypeIcon
-                      tour={{
-                        name: tourCategories[category],
-                        type: tourCategories[category],
-                        slug: category,
-                      }}
-                      className={`h-6 w-6 ${isActive ? "text-orange-300" : "text-blue-800"}`}
-                    />
-                    {isActive && <span className="absolute -bottom-1 h-2.5 w-2.5 rounded-full border-2 border-white bg-orange-500" />}
-                  </span>
-                  <span className={`w-full text-[10px] font-bold leading-tight ${isActive ? "text-blue-950" : "text-slate-500"}`}>
-                    <HomeText en={tourCategories[category]} de={germanTourCategories[category] ?? tourCategories[category]} />
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-
-          <div className="hidden grid-cols-2 gap-2.5 sm:grid-cols-3 md:grid md:grid-cols-4 lg:grid-cols-7">
-            {categoryKeys.map((category) => {
-              const isActive = activeCategory === category;
-              return (
-                <button
-                  key={category}
-                  type="button"
-                  onClick={() => handleCategoryChange(category)}
-                  aria-pressed={isActive}
-                  className={`group flex min-h-[52px] w-full items-center justify-center gap-2 rounded-xl border px-3 py-2.5 text-center text-xs font-extrabold transition-all duration-300 ${
-                    isActive
-                      ? "border-blue-950 bg-blue-950 text-white shadow-[0_10px_24px_rgba(7,29,73,0.18)]"
-                      : "border-slate-200 bg-slate-50/70 text-blue-950 hover:border-orange-300 hover:bg-orange-50"
-                  }`}
-                >
-                  <TourTypeIcon
-                    tour={{ name: tourCategories[category], type: tourCategories[category], slug: category }}
-                    className={`h-3.5 w-3.5 ${isActive ? "text-orange-400" : "text-blue-700 group-hover:text-orange-500"}`}
-                  />
-                  <HomeText en={tourCategories[category]} de={germanTourCategories[category] ?? tourCategories[category]} />
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
+      <section className="relative overflow-hidden border-b border-blue-950 bg-[#071d49] py-7 md:border-slate-200/80 md:bg-white md:py-2">
+  <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_15%_0%,rgba(37,99,235,0.35),transparent_45%),radial-gradient(ellipse_at_90%_100%,rgba(249,115,22,0.14),transparent_42%)] md:hidden" />
+  <div className="relative mx-auto max-w-7xl">
+    <div className="mb-5 flex items-end justify-between px-4 md:hidden">
+      <div><p className="text-[10px] font-extrabold uppercase tracking-[0.25em] text-orange-300"><HomeText en="Explore experiences" de="Erlebnisse entdecken" /></p><p className="mt-1 text-xl font-bold tracking-tight text-white"><HomeText en="Find your next escape" de="Finde dein nächstes Erlebnis" /></p></div>
+      <span className="pb-1 text-[10px] font-semibold tracking-wide text-blue-200/75"><HomeText en="Swipe to explore" de="Wischen zum Entdecken" /></span>
+    </div>
+    <div className="flex snap-x snap-mandatory items-center gap-3 overflow-x-auto px-4 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:hidden">
+      {categoryKeys.map((category) => {
+        const isActive = activeCategory === category;
+        const categoryImage = Object.values(tours).find((tour) => tourCategoryMap[tour.slug as keyof typeof tourCategoryMap] === category)?.image;
+        return <button key={category} ref={isActive ? activeCategoryCardRef : null} type="button" onClick={() => handleCategoryChange(category)} aria-pressed={isActive} className={isActive ? "relative h-[190px] w-[154px] shrink-0 snap-center overflow-hidden rounded-[22px] border border-white shadow-[0_14px_35px_rgba(0,0,0,0.38)]" : "relative h-[174px] w-[136px] shrink-0 snap-center overflow-hidden rounded-[22px] border border-white/20 opacity-75"}>
+          {categoryImage && <Image src={categoryImage} alt={tourCategories[category]} fill sizes="154px" className="object-cover" /> }
+          <span className="absolute inset-0 bg-gradient-to-t from-[#06152f] via-[#06152f]/15 to-transparent" />
+          <span className="absolute inset-x-3 bottom-4 text-center font-bold leading-tight text-white"><HomeText en={tourCategories[category]} de={germanTourCategories[category] ?? tourCategories[category]} /><span className={isActive ? "mx-auto mt-2 block h-[3px] w-10 rounded-full bg-orange-400" : "mx-auto mt-2 block h-[3px] w-0 rounded-full bg-orange-400"} /></span>
+          {isActive && <span className="absolute right-3 top-3 h-2 w-2 rounded-full bg-orange-400 shadow-[0_0_12px_rgba(251,146,60,0.9)]" /> }
+        </button>;
+      })}
+    </div>
+    <div className="hidden grid-cols-2 gap-2.5 sm:grid-cols-3 md:grid md:grid-cols-4 lg:grid-cols-7">
+      {categoryKeys.map((category) => { const isActive = activeCategory === category; return <button key={category} type="button" onClick={() => handleCategoryChange(category)} aria-pressed={isActive} className={isActive ? "flex min-h-[52px] items-center justify-center gap-2 rounded-xl border border-blue-950 bg-blue-950 px-3 py-2.5 text-xs font-extrabold text-white" : "flex min-h-[52px] items-center justify-center gap-2 rounded-xl border border-slate-200 bg-slate-50/70 px-3 py-2.5 text-xs font-extrabold text-blue-950"}><TourTypeIcon tour={{ name: tourCategories[category], type: tourCategories[category], slug: category }} className="h-3.5 w-3.5" /><HomeText en={tourCategories[category]} de={germanTourCategories[category] ?? tourCategories[category]} /></button>; })}
+    </div>
+  </div>
+</section>
 
       {/* =====================================================
           TOURS
