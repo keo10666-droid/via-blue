@@ -487,3 +487,27 @@ main article.group.flex.h-full.cursor-pointer.flex-col.overflow-hidden[class*="r
     scroll-behavior: auto !important;
   }
 }
+
+/* Via Blue dark theme: activated by the persisted .dark class on <html>. */
+html.dark { color-scheme: dark; --background:#081321; --foreground:#e7edf6; --primary:#8db9e8; --primary-dark:#d7e8fb; --primary-soft:#172b43; --accent:#f6a33b; --accent-dark:#ffb85c; --accent-soft:#392817; --muted:#9aa9bc; --border:#29394d; --surface:#111f31; background:var(--background); }
+html.dark, html.dark body, html.dark main { background:var(--background) !important; color:var(--foreground); }
+html.dark main section.bg-white { background:#0d1a2a !important; }
+html.dark .bg-white, html.dark [class*="bg-white/"] { background-color:#111f31 !important; }
+html.dark [class~="bg-slate-50"], html.dark [class~="hover:bg-slate-50"]:hover, html.dark [class~="bg-gray-50"] { background-color:#17263a !important; }
+html.dark [class~="bg-slate-100"], html.dark [class~="bg-gray-100"] { background-color:#1c2d42 !important; }
+html.dark [class~="bg-blue-50"], html.dark [class~="bg-blue-100"] { background-color:#172d49 !important; }
+html.dark [class~="bg-orange-50"], html.dark [class~="bg-orange-100"] { background-color:#392817 !important; }
+html.dark [class*="text-slate-"], html.dark [class*="text-gray-"] { color:#b7c4d5 !important; }
+html.dark [class~="text-blue-950"], html.dark [class~="text-blue-900"], html.dark [class~="text-blue-800"] { color:#d8e8fa !important; }
+html.dark [class*="border-slate-"], html.dark [class*="border-gray-"], html.dark [class*="border-blue-100"] { border-color:#2a3b50 !important; }
+html.dark header.sticky { background:rgba(12,26,43,.94) !important; border-color:rgba(83,108,139,.28) !important; }
+html.dark footer { background-color:#0a1727; color:#c6d2e1; }
+html.dark input, html.dark textarea, html.dark select { color:#e7edf6; background-color:#132238; border-color:#34465d; }
+html.dark input::placeholder, html.dark textarea::placeholder { color:#8293a9; }
+html.dark table, html.dark th, html.dark td { border-color:#29394d; }
+html.dark ::-webkit-scrollbar-track { background:#101e30; }
+html.dark ::-webkit-scrollbar-thumb { background:#40516a; }
+html.dark ::selection { background:rgba(245,154,35,.3); color:#fff; }
+html.dark .shadow-sm, html.dark .shadow-md, html.dark .shadow-lg { --tw-shadow-color:rgb(0 0 0 / .22); }
+html.dark [class*="bg-gradient-to-r"][class*="to-white"] { background-image:linear-gradient(to right,#241f1a,#17263a) !important; }
+@media (max-width:767px) { html.dark header.sticky { background:rgba(12,26,43,.96) !important; } }

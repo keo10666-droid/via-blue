@@ -63,8 +63,16 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try { if (localStorage.getItem("via-blue-theme") === "dark") document.documentElement.classList.add("dark"); } catch {}`,
+          }}
+        />
+      </head>
       <body className="min-h-full flex flex-col">
         <Navbar />
         <ScrollToTop />
