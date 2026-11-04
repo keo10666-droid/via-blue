@@ -381,12 +381,12 @@ export default async function Home() {
               alt="Private speed boat experience on the Red Sea"
               fill
               sizes="(max-width: 767px) 100vw, 50vw"
-              className="absolute inset-0 -z-20 object-cover object-[52%_center] transition-transform duration-700 group-hover:scale-[1.04]"
+              className="absolute inset-0 z-0 object-cover object-[52%_center] transition-transform duration-700 group-hover:scale-[1.04]"
             />
-            <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[#03112a]/5 via-[#03112a]/15 to-[#03112a]/95" />
-            <div className="absolute inset-0 -z-10 bg-gradient-to-r from-[#03112a]/25 via-transparent to-transparent" />
+            <div className="absolute inset-0 z-10 bg-gradient-to-b from-[#03112a]/5 via-[#03112a]/15 to-[#03112a]/95" />
+            <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#03112a]/25 via-transparent to-transparent" />
 
-            <div className="absolute left-5 right-5 top-5 flex items-center justify-between gap-3">
+            <div className="absolute left-5 right-5 top-5 z-20 flex items-center justify-between gap-3">
               <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-[#03112a]/45 px-3.5 py-2 text-[9px] font-extrabold uppercase tracking-[0.2em] text-white shadow-lg backdrop-blur-md">
                 <span className="h-1.5 w-1.5 rounded-full bg-orange-400 shadow-[0_0_12px_rgba(251,146,60,0.9)]" />
                 <HomeText en="Private Collection" de="Private Kollektion" />
@@ -396,7 +396,7 @@ export default async function Home() {
               </span>
             </div>
 
-            <div className="mt-auto w-full px-6 pb-7 pt-64">
+            <div className="relative z-20 mt-auto w-full px-6 pb-7 pt-64">
               <p className="mb-3 text-[10px] font-extrabold uppercase tracking-[0.25em] text-orange-300">
                 <HomeText en="A more exclusive escape" de="Ein exklusiveres Erlebnis" />
               </p>
