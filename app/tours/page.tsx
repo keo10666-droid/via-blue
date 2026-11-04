@@ -633,7 +633,7 @@ function ToursPageContent() {
 
         <div className="mx-auto max-w-7xl">
 
-          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7">
+          <div className="flex gap-2 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:grid sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7">
 
             {categoryKeys.map((category) => {
 
@@ -647,7 +647,7 @@ function ToursPageContent() {
                   onClick={() =>
                     handleCategoryChange(category)
                   }
-                  className={`group flex min-h-[46px] w-full items-center justify-center gap-2 rounded-2xl border px-3 py-2.5 text-xs font-bold transition-all duration-300 active:scale-[0.98] sm:min-h-[52px] ${
+                  className={`group flex min-h-[44px] min-w-max shrink-0 items-center justify-center gap-2 rounded-2xl border px-4 py-2.5 text-xs font-bold transition-all duration-300 active:scale-[0.98] sm:min-h-[52px] sm:w-full sm:min-w-0 ${
                     isActive
                       ? "border-blue-950 bg-blue-950 text-white shadow-lg shadow-blue-950/20"
                       : "border-slate-200 bg-white text-blue-950 shadow-sm hover:-translate-y-0.5 hover:border-orange-300 hover:bg-orange-50 hover:shadow-md"
@@ -695,7 +695,7 @@ function ToursPageContent() {
           TOURS
       ===================================================== */}
 
-      <section className="mx-auto max-w-7xl px-5 py-14 md:px-6 md:py-20">
+      <section className="mx-auto max-w-7xl px-4 py-10 sm:px-5 md:px-6 md:py-20">
 
         {/* CATEGORY HEADER */}
 
@@ -753,7 +753,7 @@ function ToursPageContent() {
             TOURS GRID
         ===================================================== */}
 
-        <div className="grid gap-7 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-5 md:gap-7 md:grid-cols-2 lg:grid-cols-3">
 
           {categoryTours.map((tour, index) => (
 
