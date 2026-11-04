@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { Crown, Home, Compass, CarFront, MessageCircle, UserRound } from "lucide-react";
+import { Crown, Home, Compass, CarFront, MessageCircle, UserRound, Moon, Sun } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
 export default function Navbar() {
@@ -13,8 +13,10 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [userName, setUserName] = useState<string | null>(null);
   const [language, setLanguage] = useState<"en" | "de">("en");
+  const [theme, setTheme] = useState<"light" | "dark">("light");
 
   useEffect(() => {
+    setTheme(document.documentElement.classList.contains("dark") ? "dark" : "light");
     try {
       const savedLanguage = window.localStorage.getItem("via-blue-language");
       if (savedLanguage === "de" || savedLanguage === "en") {
@@ -25,6 +27,13 @@ export default function Navbar() {
       // Keep English as the safe default if browser storage is unavailable.
     }
   }, []);
+
+  function toggleTheme() {
+    const nextTheme = theme === "dark" ? "light" : "dark";
+    setTheme(nextTheme);
+    document.documentElement.classList.toggle("dark", nextTheme === "dark");
+    try { window.localStorage.setItem("via-blue-theme", nextTheme); } catch { /* Current-page toggle remains available. */ }
+  }
 
   function toggleLanguage() {
     const nextLanguage = language === "en" ? "de" : "en";
@@ -53,6 +62,8 @@ export default function Navbar() {
         New: "Neu",
         Greeting: "Hallo,",
         "Toggle menu": "Menü öffnen",
+        "Dark mode": "Dunkelmodus aktivieren",
+        "Light mode": "Hellmodus aktivieren",
       }
     : {
         Home: "Home",
@@ -68,6 +79,8 @@ export default function Navbar() {
         New: "New",
         Greeting: "Hi,",
         "Toggle menu": "Toggle menu",
+        "Dark mode": "Enable dark mode",
+        "Light mode": "Enable light mode",
       };
 
   useEffect(() => {
@@ -275,6 +288,17 @@ export default function Navbar() {
 
         <button
           type="button"
+          onClick={toggleTheme}
+          aria-label={theme === "dark" ? labels["Light mode"] : labels["Dark mode"]}
+          aria-pressed={theme === "dark"}
+          title={theme === "dark" ? labels["Light mode"] : labels["Dark mode"]}
+          className="ml-2 hidden h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white text-blue-950 transition hover:border-orange-300 hover:bg-orange-50 lg:inline-flex"
+        >
+          {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+        </button>
+
+        <button
+          type="button"
           onClick={toggleLanguage}
           aria-label={language === "en" ? "Switch to German" : "Auf Englisch wechseln"}
           className="hidden shrink-0 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-extrabold text-blue-950 transition hover:border-orange-300 hover:bg-orange-50 lg:inline-flex"
@@ -331,6 +355,16 @@ export default function Navbar() {
 
         </div>
 
+        <button
+          type="button"
+          onClick={toggleTheme}
+          aria-label={theme === "dark" ? labels["Light mode"] : labels["Dark mode"]}
+          aria-pressed={theme === "dark"}
+          className="mr-2 flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-slate-200 bg-white text-blue-950 shadow-sm transition hover:border-orange-200 hover:bg-orange-50 lg:hidden"
+        >
+          {theme === "dark" ? <Sun size={19} /> : <Moon size={19} />}
+        </button>
+
         {/* Mobile Button */}
         <button
           type="button"
@@ -353,6 +387,16 @@ export default function Navbar() {
         <div className="border-t border-slate-100 bg-white/95 px-4 pb-5 pt-3 shadow-[0_18px_35px_rgba(15,23,42,0.08)] backdrop-blur-xl lg:hidden">
 
           <nav className="flex flex-col gap-1.5">
+            <button
+              type="button"
+              onClick={toggleTheme}
+              aria-pressed={theme === "dark"}
+              className="mb-2 flex w-full items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-extrabold text-blue-950 transition hover:border-orange-300 hover:bg-orange-50"
+            >
+              {theme === "dark" ? <Sun size={17} /> : <Moon size={17} />}
+              {theme === "dark" ? labels["Light mode"] : labels["Dark mode"]}
+            </button>
+
             <button
               type="button"
               onClick={toggleLanguage}
