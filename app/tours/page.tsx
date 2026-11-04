@@ -629,65 +629,67 @@ function ToursPageContent() {
           CATEGORY NAVIGATION
       ===================================================== */}
 
-      <section className="border-b border-slate-200/80 bg-white/90 px-3 py-2 shadow-[0_8px_30px_rgba(15,23,42,0.06)] backdrop-blur-xl">
+      {/* =====================================================
+          CATEGORY NAVIGATION
+      ===================================================== */}
 
+      <section className="border-b border-slate-200/80 bg-white px-4 py-5 shadow-[0_8px_30px_rgba(15,23,42,0.05)] md:px-3 md:py-2">
         <div className="mx-auto max-w-7xl">
+          <div className="mb-4 md:hidden">
+            <p className="text-[10px] font-extrabold uppercase tracking-[0.25em] text-orange-600">
+              <HomeText en="Browse experiences" de="Erlebnisse entdecken" />
+            </p>
+            <p className="mt-1 text-lg font-extrabold tracking-tight text-blue-950">
+              <HomeText en="What would you love to do?" de="Worauf hast du Lust?" />
+            </p>
+          </div>
 
-          <div className="flex gap-2 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:grid sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7">
-
+          <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 md:gap-2">
             {categoryKeys.map((category) => {
-
-              const isActive =
-                activeCategory === category;
+              const isActive = activeCategory === category;
 
               return (
                 <button
                   key={category}
                   type="button"
-                  onClick={() =>
-                    handleCategoryChange(category)
-                  }
-                  className={`group flex min-h-[44px] min-w-max shrink-0 items-center justify-center gap-2 rounded-2xl border px-4 py-2.5 text-xs font-bold transition-all duration-300 active:scale-[0.98] sm:min-h-[52px] sm:w-full sm:min-w-0 ${
+                  onClick={() => handleCategoryChange(category)}
+                  aria-pressed={isActive}
+                  className={`group relative flex min-h-[88px] w-full min-w-0 flex-col items-start justify-between overflow-hidden rounded-2xl border p-3 text-left transition-all duration-300 active:scale-[0.98] md:min-h-[52px] md:flex-row md:items-center md:justify-center md:gap-2 md:rounded-xl md:px-3 md:py-2.5 md:text-center ${
                     isActive
-                      ? "border-blue-950 bg-blue-950 text-white shadow-lg shadow-blue-950/20"
-                      : "border-slate-200 bg-white text-blue-950 shadow-sm hover:-translate-y-0.5 hover:border-orange-300 hover:bg-orange-50 hover:shadow-md"
+                      ? "border-blue-950 bg-blue-950 text-white shadow-[0_10px_24px_rgba(7,29,73,0.18)]"
+                      : "border-slate-200 bg-slate-50/70 text-blue-950 hover:border-orange-300 hover:bg-orange-50"
                   }`}
                 >
-
-                  <span
-                    className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-xl transition-all ${
-                      isActive
-                        ? "bg-white/10"
-                        : "bg-blue-50 group-hover:bg-orange-100"
-                    }`}
-                  >
-                    <TourTypeIcon
-                      tour={{
-                        name: tourCategories[category],
-                        type: tourCategories[category],
-                        slug: category,
-                      }}
-                      className={`h-3.5 w-3.5 ${
-                        isActive
-                          ? "text-orange-400"
-                          : "text-blue-700 group-hover:text-orange-500"
-                      }`}
-                    />
+                  <span className="flex w-full items-center justify-between gap-2 md:w-auto">
+                    <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl transition-colors md:h-7 md:w-7 md:rounded-lg ${
+                      isActive ? "bg-white/10" : "bg-white text-blue-700 group-hover:bg-orange-100"
+                    }`}>
+                      <TourTypeIcon
+                        tour={{
+                          name: tourCategories[category],
+                          type: tourCategories[category],
+                          slug: category,
+                        }}
+                        className={`h-4 w-4 md:h-3.5 md:w-3.5 ${isActive ? "text-orange-400" : "text-blue-700 group-hover:text-orange-500"}`}
+                      />
+                    </span>
+                    <span className={`text-[9px] font-extrabold uppercase tracking-[0.14em] md:hidden ${isActive ? "text-orange-300" : "text-slate-400"}`}>
+                      {isActive ? <HomeText en="Selected" de="Ausgewählt" /> : <HomeText en="Explore" de="Entdecken" />}
+                    </span>
                   </span>
 
-                  <span className="truncate">
+                  <span className="mt-2 line-clamp-2 text-[11px] font-extrabold leading-[1.25] md:mt-0 md:truncate md:text-xs">
                     <HomeText en={tourCategories[category]} de={germanTourCategories[category] ?? tourCategories[category]} />
                   </span>
 
+                  {isActive && (
+                    <span className="absolute bottom-0 left-3 right-3 h-[3px] rounded-t-full bg-orange-400 md:hidden" />
+                  )}
                 </button>
               );
-
             })}
-
           </div>
-
         </div>
-
       </section>
 
 
