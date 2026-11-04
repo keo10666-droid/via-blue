@@ -645,16 +645,40 @@ function ToursPageContent() {
       <div><p className="text-[10px] font-extrabold uppercase tracking-[0.25em] text-orange-300"><HomeText en="Explore experiences" de="Erlebnisse entdecken" /></p><p className="mt-1 text-xl font-bold tracking-tight text-white"><HomeText en="Find your next escape" de="Finde dein nächstes Erlebnis" /></p></div>
       <span className="pb-1 text-[10px] font-semibold tracking-wide text-blue-200/75"><HomeText en="Swipe to explore" de="Wischen zum Entdecken" /></span>
     </div>
-    <div className="flex snap-x snap-mandatory items-center gap-3 overflow-x-auto px-4 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:hidden">
+    <div className="relative flex snap-x snap-mandatory items-center gap-[-8px] overflow-x-auto px-[calc(50%-118px)] py-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:hidden">
       {categoryKeys.map((category) => {
         const isActive = activeCategory === category;
-        const categoryImage = Object.values(tours).find((tour) => tourCategoryMap[tour.slug as keyof typeof tourCategoryMap] === category)?.image;
-        return <button key={category} ref={isActive ? activeCategoryCardRef : null} type="button" onClick={() => handleCategoryChange(category)} aria-pressed={isActive} className={isActive ? "relative h-[190px] w-[154px] shrink-0 snap-center overflow-hidden rounded-[22px] border border-white shadow-[0_14px_35px_rgba(0,0,0,0.38)]" : "relative h-[174px] w-[136px] shrink-0 snap-center overflow-hidden rounded-[22px] border border-white/20 opacity-75"}>
-          {categoryImage && <Image src={categoryImage} alt={tourCategories[category]} fill sizes="154px" className="object-cover" /> }
-          <span className="absolute inset-0 bg-gradient-to-t from-[#06152f] via-[#06152f]/15 to-transparent" />
-          <span className="absolute inset-x-3 bottom-4 text-center font-bold leading-tight text-white"><HomeText en={tourCategories[category]} de={germanTourCategories[category] ?? tourCategories[category]} /><span className={isActive ? "mx-auto mt-2 block h-[3px] w-10 rounded-full bg-orange-400" : "mx-auto mt-2 block h-[3px] w-0 rounded-full bg-orange-400"} /></span>
-          {isActive && <span className="absolute right-3 top-3 h-2 w-2 rounded-full bg-orange-400 shadow-[0_0_12px_rgba(251,146,60,0.9)]" /> }
-        </button>;
+        return (
+          <button
+            key={category}
+            ref={isActive ? activeCategoryCardRef : null}
+            type="button"
+            onClick={() => handleCategoryChange(category)}
+            aria-pressed={isActive}
+            className={isActive
+              ? "relative z-20 flex h-[72px] min-w-[226px] shrink-0 snap-center items-center gap-3 rounded-full border border-orange-300/80 bg-white px-3.5 pr-6 text-left text-blue-950 shadow-[0_10px_30px_rgba(0,0,0,0.28)] transition-all duration-500"
+              : "relative z-10 -mx-2 flex h-[64px] min-w-[190px] shrink-0 snap-center items-center gap-3 rounded-full border border-white/20 bg-white/10 px-3.5 pr-5 text-left text-white/80 opacity-45 blur-[1.5px] scale-[0.88] transition-all duration-500"}
+          >
+            <span className={isActive
+              ? "flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-blue-950 text-orange-400"
+              : "flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/10 text-white"}
+            >
+              <TourTypeIcon
+                tour={{ name: tourCategories[category], type: tourCategories[category], slug: category }}
+                className={isActive ? "h-5 w-5" : "h-4 w-4"}
+              />
+            </span>
+            <span className="min-w-0">
+              <span className={isActive ? "block text-[9px] font-bold uppercase tracking-[0.2em] text-orange-500" : "hidden"}>
+                <HomeText en="Explore" de="Entdecken" />
+              </span>
+              <span className={isActive ? "mt-0.5 block text-sm font-extrabold leading-tight" : "block text-xs font-bold leading-tight"}>
+                <HomeText en={tourCategories[category]} de={germanTourCategories[category] ?? tourCategories[category]} />
+              </span>
+            </span>
+            {isActive && <span className="ml-auto h-2 w-2 shrink-0 rounded-full bg-orange-500 shadow-[0_0_12px_rgba(249,115,22,0.8)]" />}
+          </button>
+        );
       })}
     </div>
     <div className="hidden grid-cols-2 gap-2.5 sm:grid-cols-3 md:grid md:grid-cols-4 lg:grid-cols-7">
