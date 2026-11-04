@@ -401,10 +401,10 @@ export default async function Home() {
                 <HomeText en="A more exclusive escape" de="Ein exklusiveres Erlebnis" />
               </p>
               <h2 className="max-w-[330px] text-[2.15rem] font-extrabold leading-[1.02] tracking-[-0.04em] text-white">
-                <HomeText en="Make it private. Make it unforgettable." de="Privat erleben. Unvergesslich genießen." />
+                <HomeText en="Your own escape on the Red Sea" de="Dein privater Rückzugsort am Roten Meer" />
               </h2>
               <p className="mt-4 max-w-[330px] text-[13px] leading-6 text-white/80">
-                <HomeText en="Private boats, tailored adventures and premium day trips — made around you, not the crowd." de="Private Boote, individuelle Abenteuer und besondere Tagesausflüge — ganz nach deinen Wünschen." />
+                <HomeText en="Private boats and tailor-made experiences, designed around you" de="Private Boote und maßgeschneiderte Erlebnisse, ganz nach deinen Wünschen" />
               </p>
 
               <div className="mt-6 flex items-center justify-between gap-3 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 px-5 py-4 shadow-[0_12px_30px_rgba(249,115,22,0.28)] transition-all duration-300 group-hover:from-orange-400 group-hover:to-amber-400">
