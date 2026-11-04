@@ -645,7 +645,7 @@ function ToursPageContent() {
       <div><p className="text-[10px] font-extrabold uppercase tracking-[0.25em] text-orange-300"><HomeText en="Explore experiences" de="Erlebnisse entdecken" /></p><p className="mt-1 text-xl font-bold tracking-tight text-white"><HomeText en="Find your next escape" de="Finde dein nächstes Erlebnis" /></p></div>
       <span className="pb-1 text-[10px] font-semibold tracking-wide text-blue-200/75"><HomeText en="Swipe to explore" de="Wischen zum Entdecken" /></span>
     </div>
-    <div className="relative flex snap-x snap-mandatory items-center gap-[-8px] overflow-x-auto px-[calc(50%-118px)] py-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:hidden">
+    <div className="relative flex snap-x snap-mandatory items-center gap-0 overflow-x-auto px-[calc(50%-118px)] py-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:hidden">
       {categoryKeys.map((category) => {
         const isActive = activeCategory === category;
         return (
