@@ -457,39 +457,41 @@ function ToursPageContent() {
       validUrlCategory ?? "islands-boat-trips"
     );
 
-  const activeCategoryCardRef = useRef<HTMLButtonElement | null>(null);
   const categoryCarouselRef = useRef<HTMLDivElement | null>(null);
+  const repeatedCategoryKeys = [...categoryKeys, ...categoryKeys, ...categoryKeys];
 
   useEffect(() => {
-    activeCategoryCardRef.current?.scrollIntoView({
-      behavior: "instant",
-      block: "nearest",
-      inline: "center",
-    });
+    const el = categoryCarouselRef.current;
+    if (!el) return;
+    const initial = categoryKeys.indexOf(activeCategory);
+    const item = el.querySelector<HTMLButtonElement>(`[data-carousel-index="${categoryKeys.length + Math.max(initial, 0)}"]`);
+    if (item) el.scrollLeft = item.offsetLeft - (el.clientWidth - item.offsetWidth) / 2;
   }, []);
 
   const syncCategoryFromScroll = () => {
-    const container = categoryCarouselRef.current;
-    if (!container) return;
-    const items = Array.from(container.querySelectorAll<HTMLButtonElement>("[data-category]"));
-    if (!items.length) return;
-    const center = container.getBoundingClientRect().left + container.clientWidth / 2;
-    let nearest = items[0];
-    let nearestDistance = Number.POSITIVE_INFINITY;
-    for (const item of items) {
+    const el = categoryCarouselRef.current;
+    if (!el) return;
+    const items = Array.from(el.querySelectorAll<HTMLButtonElement>("[data-carousel-index]"));
+    const center = el.getBoundingClientRect().left + el.clientWidth / 2;
+    let nearest = 0;
+    let distance = Infinity;
+    items.forEach((item, index) => {
       const rect = item.getBoundingClientRect();
-      const distance = Math.abs(rect.left + rect.width / 2 - center);
-      if (distance < nearestDistance) {
-        nearest = item;
-        nearestDistance = distance;
-      }
-    }
-    const category = nearest.dataset.category as keyof typeof tourCategories | undefined;
-    if (!category || !categoryKeys.includes(category)) return;
-    setActiveCategory(category);
+      const d = Math.abs(rect.left + rect.width / 2 - center);
+      if (d < distance) { distance = d; nearest = index; }
+    });
+    const count = categoryKeys.length;
+    const category = categoryKeys[nearest % count];
+    setActiveCategory((current) => current === category ? current : category);
     const params = new URLSearchParams(window.location.search);
-    params.set("category", category);
-    window.history.replaceState(null, "", `${window.location.pathname}?${params.toString()}`);
+    if (params.get("category") !== category) {
+      params.set("category", category);
+      window.history.replaceState(null, "", `${window.location.pathname}?${params.toString()}`);
+    }
+    if (nearest < count || nearest >= count * 2) {
+      const target = items[count + (nearest % count)];
+      if (target) el.scrollLeft = target.offsetLeft - (el.clientWidth - target.offsetWidth) / 2;
+    }
   };
 
   const [tourOverrides, setTourOverrides] = useState<Record<string, {
@@ -672,39 +674,30 @@ function ToursPageContent() {
       <div><p className="text-[10px] font-extrabold uppercase tracking-[0.25em] text-orange-300"><HomeText en="Explore experiences" de="Erlebnisse entdecken" /></p><p className="mt-1 text-xl font-bold tracking-tight text-white"><HomeText en="Find your next escape" de="Finde dein nächstes Erlebnis" /></p></div>
       <span className="pb-1 text-[10px] font-semibold tracking-wide text-blue-200/75"><HomeText en="Swipe to explore" de="Wischen zum Entdecken" /></span>
     </div>
-    <div ref={categoryCarouselRef} onScroll={syncCategoryFromScroll} className="relative flex snap-x snap-mandatory items-center gap-0 overflow-x-auto px-[calc(50%-94px)] py-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:hidden">
-      {categoryKeys.map((category) => {
-        const isActive = activeCategory === category;
+    <div ref={categoryCarouselRef} onScroll={syncCategoryFromScroll} className="relative flex snap-x snap-mandatory items-center gap-1 overflow-x-auto px-[calc(50%-76px)] py-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:hidden">
+      {repeatedCategoryKeys.map((category, index) => {
+        const isActive = activeCategory === category && index >= categoryKeys.length && index < categoryKeys.length * 2;
         return (
           <button
-            key={category}
-            ref={isActive ? activeCategoryCardRef : null}
-            data-category={category}
+            key={`${category}-${index}`}
+            data-carousel-index={index}
             type="button"
-            onClick={() => handleCategoryChange(category)}
+            onClick={() => {
+              const el = categoryCarouselRef.current;
+              const target = el?.querySelector<HTMLButtonElement>(`[data-carousel-index="${index}"]`);
+              if (el && target) el.scrollTo({ left: target.offsetLeft - (el.clientWidth - target.offsetWidth) / 2, behavior: "smooth" });
+            }}
             aria-pressed={isActive}
             className={isActive
-              ? "relative z-20 flex h-[58px] min-w-[188px] shrink-0 snap-center items-center gap-2.5 rounded-full border border-orange-300/80 bg-white px-2.5 pr-4 text-left text-blue-950 shadow-[0_8px_22px_rgba(0,0,0,0.24)] transition-all duration-300"
-              : "relative z-10 -mx-3 flex h-[52px] min-w-[166px] shrink-0 snap-center items-center gap-2 rounded-full border border-white/20 bg-white/10 px-2.5 pr-3 text-left text-white/75 opacity-40 blur-[1.5px] scale-[0.86] transition-all duration-300"}
+              ? "relative z-20 flex h-[46px] min-w-[152px] shrink-0 snap-center items-center gap-2 rounded-full border border-orange-300/80 bg-white px-2.5 text-left text-blue-950 shadow-[0_4px_14px_rgba(0,0,0,0.16)] transition-colors duration-200"
+              : "relative z-10 flex h-[46px] min-w-[152px] shrink-0 snap-center items-center gap-2 rounded-full border border-white/15 bg-white/10 px-2.5 text-left text-white/75 opacity-45 blur-[1px] transition-colors duration-200"}
           >
-            <span className={isActive
-              ? "flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-950 text-orange-400"
-              : "flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/10 text-white"}
-            >
-              <TourTypeIcon
-                tour={{ name: tourCategories[category], type: tourCategories[category], slug: category }}
-                className={isActive ? "h-[18px] w-[18px]" : "h-4 w-4"}
-              />
+            <span className={isActive ? "flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-950 text-orange-400" : "flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/10 text-white"}>
+              <TourTypeIcon tour={{ name: tourCategories[category], type: tourCategories[category], slug: category }} className="h-4 w-4" />
             </span>
-            <span className="min-w-0">
-              <span className={isActive ? "block text-[9px] font-bold uppercase tracking-[0.2em] text-orange-500" : "hidden"}>
-                <HomeText en="Explore" de="Entdecken" />
-              </span>
-              <span className={isActive ? "mt-0.5 block text-sm font-extrabold leading-tight" : "block text-xs font-bold leading-tight"}>
-                <HomeText en={tourCategories[category]} de={germanTourCategories[category] ?? tourCategories[category]} />
-              </span>
+            <span className={isActive ? "min-w-0 text-xs font-extrabold leading-tight" : "min-w-0 text-xs font-bold leading-tight"}>
+              <HomeText en={tourCategories[category]} de={germanTourCategories[category] ?? tourCategories[category]} />
             </span>
-            {isActive && <span className="ml-auto h-2 w-2 shrink-0 rounded-full bg-orange-500 shadow-[0_0_12px_rgba(249,115,22,0.8)]" />}
           </button>
         );
       })}
