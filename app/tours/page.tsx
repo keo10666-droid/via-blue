@@ -458,9 +458,31 @@ function ToursPageContent() {
     );
 
   const activeCategoryCardRef = useRef<HTMLButtonElement | null>(null);
-  useEffect(() => {
-    activeCategoryCardRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
-  }, [activeCategory]);
+  const categoryCarouselRef = useRef<HTMLDivElement | null>(null);
+
+  const syncCategoryFromScroll = () => {
+    const container = categoryCarouselRef.current;
+    if (!container) return;
+    const items = Array.from(container.querySelectorAll<HTMLButtonElement>("[data-category]"));
+    if (!items.length) return;
+    const center = container.getBoundingClientRect().left + container.clientWidth / 2;
+    let nearest = items[0];
+    let nearestDistance = Number.POSITIVE_INFINITY;
+    for (const item of items) {
+      const rect = item.getBoundingClientRect();
+      const distance = Math.abs(rect.left + rect.width / 2 - center);
+      if (distance < nearestDistance) {
+        nearest = item;
+        nearestDistance = distance;
+      }
+    }
+    const category = nearest.dataset.category as keyof typeof tourCategories | undefined;
+    if (!category || !categoryKeys.includes(category)) return;
+    setActiveCategory(category);
+    const params = new URLSearchParams(window.location.search);
+    params.set("category", category);
+    window.history.replaceState(null, "", `${window.location.pathname}?${params.toString()}`);
+  };
 
   const [tourOverrides, setTourOverrides] = useState<Record<string, {
     name?: string; description?: string; image?: string; price?: number;
@@ -539,10 +561,7 @@ function ToursPageContent() {
       `${window.location.pathname}?${params.toString()}`
     );
 
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    // Keep the page position steady; the carousel itself handles category navigation.
   };
 
 
@@ -645,27 +664,28 @@ function ToursPageContent() {
       <div><p className="text-[10px] font-extrabold uppercase tracking-[0.25em] text-orange-300"><HomeText en="Explore experiences" de="Erlebnisse entdecken" /></p><p className="mt-1 text-xl font-bold tracking-tight text-white"><HomeText en="Find your next escape" de="Finde dein nächstes Erlebnis" /></p></div>
       <span className="pb-1 text-[10px] font-semibold tracking-wide text-blue-200/75"><HomeText en="Swipe to explore" de="Wischen zum Entdecken" /></span>
     </div>
-    <div className="relative flex snap-x snap-mandatory items-center gap-0 overflow-x-auto px-[calc(50%-118px)] py-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:hidden">
+    <div ref={categoryCarouselRef} onScroll={syncCategoryFromScroll} className="relative flex snap-x snap-mandatory items-center gap-0 overflow-x-auto px-[calc(50%-94px)] py-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:hidden">
       {categoryKeys.map((category) => {
         const isActive = activeCategory === category;
         return (
           <button
             key={category}
             ref={isActive ? activeCategoryCardRef : null}
+            data-category={category}
             type="button"
             onClick={() => handleCategoryChange(category)}
             aria-pressed={isActive}
             className={isActive
-              ? "relative z-20 flex h-[72px] min-w-[226px] shrink-0 snap-center items-center gap-3 rounded-full border border-orange-300/80 bg-white px-3.5 pr-6 text-left text-blue-950 shadow-[0_10px_30px_rgba(0,0,0,0.28)] transition-all duration-500"
-              : "relative z-10 -mx-2 flex h-[64px] min-w-[190px] shrink-0 snap-center items-center gap-3 rounded-full border border-white/20 bg-white/10 px-3.5 pr-5 text-left text-white/80 opacity-45 blur-[1.5px] scale-[0.88] transition-all duration-500"}
+              ? "relative z-20 flex h-[58px] min-w-[188px] shrink-0 snap-center items-center gap-2.5 rounded-full border border-orange-300/80 bg-white px-2.5 pr-4 text-left text-blue-950 shadow-[0_8px_22px_rgba(0,0,0,0.24)] transition-all duration-300"
+              : "relative z-10 -mx-3 flex h-[52px] min-w-[166px] shrink-0 snap-center items-center gap-2 rounded-full border border-white/20 bg-white/10 px-2.5 pr-3 text-left text-white/75 opacity-40 blur-[1.5px] scale-[0.86] transition-all duration-300"}
           >
             <span className={isActive
-              ? "flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-blue-950 text-orange-400"
-              : "flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/10 text-white"}
+              ? "flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-950 text-orange-400"
+              : "flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/10 text-white"}
             >
               <TourTypeIcon
                 tour={{ name: tourCategories[category], type: tourCategories[category], slug: category }}
-                className={isActive ? "h-5 w-5" : "h-4 w-4"}
+                className={isActive ? "h-[18px] w-[18px]" : "h-4 w-4"}
               />
             </span>
             <span className="min-w-0">
