@@ -66,7 +66,7 @@ const luxuryTours = [
     slug: "buggy-safari",
     name: "Private Buggy Safari",
     description:
-      "Private 3-hour buggy program. Choose 2-person buggies for €100 or 4-person buggies for €125.",
+      "Private 3-hour buggy program with 2-person and 4-person buggy options.",
     price: 100,
     duration: "3 Hours",
     image: "/luxury-tours/private-buggy-safari-hero.webp",
