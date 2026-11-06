@@ -2194,11 +2194,7 @@ ${notes.trim() || "-"}
                         Adults × {formatCurrency(tour.price)}
                       </span>
 
-                      <span className="font-semibold text-slate-800">
-                        €
-                        {Number(adults || 0) *
-                          tour.price}
-                      </span>
+                      <span className="font-semibold text-slate-800">{formatCurrency(Number(adults || 0) * tour.price)}</span>
 
                     </div>
 
@@ -2208,11 +2204,7 @@ ${notes.trim() || "-"}
                         Children × {formatCurrency(tour.childPrice)}
                       </span>
 
-                      <span className="font-semibold text-slate-800">
-                        €
-                        {Number(children || 0) *
-                          tour.childPrice}
-                      </span>
+                      <span className="font-semibold text-slate-800">{formatCurrency(Number(children || 0) * tour.childPrice)}</span>
 
                     </div>
 
@@ -2222,11 +2214,7 @@ ${notes.trim() || "-"}
                         Infants × {formatCurrency(tour.infantPrice)}
                       </span>
 
-                      <span className="font-semibold text-slate-800">
-                        €
-                        {Number(infants || 0) *
-                          tour.infantPrice}
-                      </span>
+                      <span className="font-semibold text-slate-800">{formatCurrency(Number(infants || 0) * tour.infantPrice)}</span>
 
                     </div>
 
@@ -2243,7 +2231,7 @@ ${notes.trim() || "-"}
                       <p className="mt-1 text-xs leading-5 text-slate-500">
                         {hotelAreaSurchargePerPerson === 0
                           ? <HomeText en="Hurghada pickup included" de="Abholung in Hurghada inklusive" />
-                          : <HomeText en={`${chargeableGuests} guests × €${hotelAreaSurchargePerPerson} per adult/child`} de={`${chargeableGuests} Gäste × ${hotelAreaSurchargePerPerson} € pro Erwachsenem/Kind`} />}
+                          : <HomeText en={`${chargeableGuests} guests × ${formatCurrency(hotelAreaSurchargePerPerson)} per adult/child`} de={`${chargeableGuests} Gäste × ${formatCurrency(hotelAreaSurchargePerPerson)} pro Erwachsenem/Kind`} />}
                       </p>
                     </div>
                     <span className="shrink-0 text-base font-extrabold tabular-nums text-blue-950">
@@ -2419,7 +2407,7 @@ ${notes.trim() || "-"}
                     </p>
 
                     <p className="text-3xl font-bold text-blue-950">
-                      €{finalTotalPrice}
+                      {formatCurrency(finalTotalPrice)}
                     </p>
 
                   </div>
