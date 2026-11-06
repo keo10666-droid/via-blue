@@ -564,6 +564,10 @@ export async function POST(request: Request) {
       fields,
       [
         "Total Price",
+        "Original EUR Total",
+        "Currency",
+        "Exchange Rate (EUR to USD)",
+        "Exchange Rate (EUR to GBP)",
         "Total Before Discount",
         "Discount",
         "Promo Code",
@@ -602,6 +606,10 @@ export async function POST(request: Request) {
         "PRIVATE TOUR PRICE",
         "Price"
       );
+    const originalEurText = getField(fields, "Original EUR Total", "EUR Base Total");
+    const originalEurValue = originalEurText
+      ? Number(originalEurText.replace(/[^0-9.\\-]/g, ""))
+      : null;
 
     const formattedTitle =
       title
@@ -1299,7 +1307,7 @@ export async function POST(request: Request) {
             pickup_time:
               pickupTime || null,
             total_price:
-              priceValue || null,
+              originalEurValue !== null && Number.isFinite(originalEurValue) ? originalEurValue : priceValue || null,
             notes:
               notesValue || null,
             status:
