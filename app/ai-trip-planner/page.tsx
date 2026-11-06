@@ -244,7 +244,7 @@ function ClockIcon({ className = "h-4 w-4" }: { className?: string }) {
 }
 
 export default function AITripPlannerPage() {
-  const { currency, setCurrency, rate, convertFromEur } = useCurrency();
+  const { currency, setCurrency, rate, rates, convertFromEur } = useCurrency();
   const [step, setStep] = useState(1);
   const [language, setLanguage] = useState<"en" | "de">("en");
   const processingSectionRef = useRef<HTMLDivElement>(null);
@@ -917,7 +917,7 @@ export default function AITripPlannerPage() {
                             </p>
 
                             <p className="mt-1 text-3xl font-bold text-blue-950">
-                              {pkg.currency === "EUR" ? "€" : "$"}
+                              {currencySymbol}
                               {pkg.totalCost.toFixed(2)}
                             </p>
                           </div>
@@ -928,7 +928,7 @@ export default function AITripPlannerPage() {
                             </p>
 
                             <p className="mt-1 text-sm font-bold text-orange-500">
-                              {pkg.currency === "EUR" ? "€" : "$"}
+                              {currencySymbol}
                               {pkg.remainingBudget.toFixed(2)}
                             </p>
                           </div>
@@ -998,7 +998,7 @@ export default function AITripPlannerPage() {
                                             )
                                             .map((option) => (
                                               <option key={option.slug} value={option.slug}>
-                                                {option.name} · {pkg.currency === "EUR" ? "€" : "$"}{option.estimatedTotal.toFixed(2)}
+                                                {option.name} · {currencySymbol}{option.estimatedTotal.toFixed(2)}
                                               </option>
                                             ))}
                                         </select>
@@ -1051,7 +1051,7 @@ export default function AITripPlannerPage() {
 
                       <p className="mt-1 text-sm text-blue-200">
                         {selectedPackage.activities} <HomeText en="experiences" de="Erlebnisse" /> ·{" "}
-                        {selectedPackage.currency === "EUR" ? "€" : "$"}
+                        {currencySymbol}
                         {selectedPackage.totalCost.toFixed(2)}
                       </p>
                     </div>
@@ -1335,6 +1335,7 @@ export default function AITripPlannerPage() {
                             key={item}
                             type="button"
                             onClick={() => setCurrency(item)}
+                            disabled={item !== "EUR" && rates[item] <= 0}
                             className={`rounded-2xl border p-5 text-left transition ${
                               selected
                                 ? "border-blue-950 bg-blue-950 text-white"
