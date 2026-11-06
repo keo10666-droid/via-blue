@@ -512,8 +512,8 @@ export async function POST(request: Request) {
         maximumFractionDigits: 2,
       }).format(amount * displayRate);
       const discountDescription = redeemed.discount_percent !== null && redeemed.discount_percent !== undefined
-        ? \`\${redeemed.discount_percent}%\`
-        : \`\${formatMoney(Number(redeemed.discount_amount))} fixed discount\`;
+        ? `${redeemed.discount_percent}%`
+        : `${formatMoney(Number(redeemed.discount_amount))} fixed discount`;
       for (let index = fields.length - 1; index >= 0; index--) {
         if (["promo code", "discount", "total price", "original eur total", "eur base total"].includes(fields[index].label.toLowerCase())) fields.splice(index, 1);
       }
