@@ -15,6 +15,7 @@ import {
 
 import BookingSuccessModal from "@/app/components/BookingSuccessModal";
 import HomeText from "@/app/components/HomeText";
+import { useCurrency } from "@/app/components/CurrencyProvider";
 import type { LuxuryPricing } from "@/lib/luxuryPricing";
 
 type LuxuryBookingFormProps = {
@@ -573,6 +574,7 @@ export default function LuxuryBookingForm({
   included = [],
   pricing,
 }: LuxuryBookingFormProps) {
+  const { currency, formatCurrency, rate } = useCurrency();
   const [isGerman, setIsGerman] = useState(false);
   const displayTourName = isGerman ? (germanLuxuryTourNames[tourName] ?? tourName) : tourName;
   const displayTourType = isGerman ? (germanLuxuryTourTypes[tourType] ?? tourType) : tourType;
@@ -726,14 +728,14 @@ export default function LuxuryBookingForm({
   const totalPrice = pricingTour
     ? (baseTourPrice ?? 0) + islandExtra
     : privatePrices[Math.min(Math.max(chargeableGuests, 2), 25)] ?? privatePrices[25];
-  const displayedTotalPrice = pricingValid ? `€${totalPrice}` : "—";
+  const displayedTotalPrice = pricingValid ? formatCurrency(totalPrice) : "—";
 
   const pricingDetails = [
     pricingTour && (tourSlug === "luxor" || tourSlug === "cairo")
       ? `Vehicle: ${selectedVehicle}`
       : "",
-    tourSlug === "quad-safari" ? `Quad duration: ${selectedQuadDuration === "1-hour" ? "1 hour" : "3 hours"}\nStart time: ${selectedQuadStartTime}\nSingle Quads: ${singleQuadCount} × €${singleQuadUnitPrice}\nDouble Quads: ${doubleQuadCount} × €${doubleQuadUnitPrice}\nTotal quads: ${requiredQuadCount}\nTotal quad price: €${quadTotalPrice}\nGuest seats selected: ${quadSeatsSelected}/${recordedGuests}\nChildren under 10 and infants must be passengers on Double Quads.` : "",
-    tourSlug === "buggy-safari" ? `Program duration: 3 hours\n2-person buggies: ${twoSeatBuggyCount} × €${pricing.buggy_2_seat}\n4-person buggies: ${fourSeatBuggyCount} × €${pricing.buggy_4_seat}\nTotal buggies: ${requiredBuggyCount}\nTotal buggy price: €${buggyTotalPrice}\nGuest seats selected: ${buggySeatsSelected}/${recordedGuests}` : "",
+    tourSlug === "quad-safari" ? `Quad duration: ${selectedQuadDuration === "1-hour" ? "1 hour" : "3 hours"}\nStart time: ${selectedQuadStartTime}\nSingle Quads: ${singleQuadCount} × ${formatCurrency(singleQuadUnitPrice)}\nDouble Quads: ${doubleQuadCount} × ${formatCurrency(doubleQuadUnitPrice)}\nTotal quads: ${requiredQuadCount}\nTotal quad price: ${formatCurrency(quadTotalPrice)}\nGuest seats selected: ${quadSeatsSelected}/${recordedGuests}\nChildren under 10 and infants must be passengers on Double Quads.` : "",
+    tourSlug === "buggy-safari" ? `Program duration: 3 hours\n2-person buggies: ${twoSeatBuggyCount} × ${formatCurrency(pricing.buggy_2_seat)}\n4-person buggies: ${fourSeatBuggyCount} × ${formatCurrency(pricing.buggy_4_seat)}\nTotal buggies: ${requiredBuggyCount}\nTotal buggy price: ${formatCurrency(buggyTotalPrice)}\nGuest seats selected: ${buggySeatsSelected}/${recordedGuests}` : "",
     tourSlug === "cairo" ? `Museum: ${selectedMuseum === "old" ? "Old Egyptian Museum" : "Grand Egyptian Museum"}` : "",
     selectedIslands.length
       ? `Islands: ${selectedIslands.join(", ")}`
@@ -878,7 +880,7 @@ Adults: ${adults}\nChildren: ${children} (ages: ${childAges.join(", ") || "not s
 
 ${pricingDetails ? `${pricingDetails}; ` : ""}
 
-PRIVATE TOUR PRICE: €${totalPrice}${pricingValid ? "" : " (Please select a vehicle/range that supports your group size)"}
+PRIVATE TOUR PRICE: ${formatCurrency(totalPrice)}\n\nOriginal EUR Total: €${totalPrice}\n\nCurrency: ${currency}\n\nExchange Rate (EUR to ${currency}): ${rate || "unavailable"}${pricingValid ? "" : " (Please select a vehicle/range that supports your group size)"}
 
 WhatsApp: ${fullPhone}
 
@@ -1705,8 +1707,8 @@ ${notes.trim() || "-"}
                           </h4>
                           <div className="mt-3 grid gap-3 sm:grid-cols-2">
                             {[
-                              { id: "single" as const, title: "Single Quad", deTitle: "Einzelquad", detail: "1 person · €" + singleQuadUnitPrice, deDetail: "1 Person · €" + singleQuadUnitPrice, count: singleQuadCount, set: setSingleQuadCount, seats: 1 },
-                              { id: "double" as const, title: "Double Quad", deTitle: "Doppelquad", detail: "2 people · €" + doubleQuadUnitPrice, deDetail: "2 Personen · €" + doubleQuadUnitPrice, count: doubleQuadCount, set: setDoubleQuadCount, seats: 2 },
+                              { id: "single" as const, title: "Single Quad", deTitle: "Einzelquad", detail: "1 person · " + formatCurrency(singleQuadUnitPrice), deDetail: "1 Person · " + formatCurrency(singleQuadUnitPrice), count: singleQuadCount, set: setSingleQuadCount, seats: 1 },
+                              { id: "double" as const, title: "Double Quad", deTitle: "Doppelquad", detail: "2 people · " + formatCurrency(doubleQuadUnitPrice), deDetail: "2 Personen · " + formatCurrency(doubleQuadUnitPrice), count: doubleQuadCount, set: setDoubleQuadCount, seats: 2 },
                             ].map((option) => (
                               <div key={option.id} className="rounded-2xl border border-slate-200 bg-white p-4">
                                 <div className="flex items-start justify-between gap-3">
@@ -1718,20 +1720,20 @@ ${notes.trim() || "-"}
                                       <HomeText en={option.detail} de={option.deDetail} />
                                     </span>
                                   </div>
-                                  <span className="text-lg font-bold text-orange-600">€{option.id === "single" ? singleQuadUnitPrice : doubleQuadUnitPrice}</span>
+                                  <span className="text-lg font-bold text-orange-600">{formatCurrency(option.id === "single" ? singleQuadUnitPrice : doubleQuadUnitPrice)}</span>
                                 </div>
                                 <div className="mt-4 flex items-center justify-between">
                                   <button type="button" aria-label={"Remove " + option.id + " quad"} onClick={() => option.set((count) => Math.max(0, count - 1))} disabled={option.count === 0} className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 text-xl font-bold text-[#071a36] disabled:opacity-30">−</button>
                                   <span className="text-xl font-bold tabular-nums text-[#071a36]">{option.count}</span>
                                   <button type="button" aria-label={"Add " + option.id + " quad"} onClick={() => option.set((count) => count + 1)} disabled={quadSeatsSelected + option.seats > 25} className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#071a36] text-xl font-bold text-white disabled:opacity-30">+</button>
                                 </div>
-                                <p className="mt-2 text-right text-xs font-semibold text-slate-500">Subtotal: €{option.count * (option.id === "single" ? singleQuadUnitPrice : doubleQuadUnitPrice)}</p>
+                                <p className="mt-2 text-right text-xs font-semibold text-slate-500">Subtotal: {formatCurrency(option.count * (option.id === "single" ? singleQuadUnitPrice : doubleQuadUnitPrice))}</p>
                               </div>
                             ))}
                           </div>
                           <div className="mt-3 rounded-xl border border-orange-200 bg-white px-3 py-3 text-sm">
                             <div className="flex justify-between gap-3"><span className="text-slate-600"><HomeText en="Seats selected" de="Ausgewählte Plätze" /></span><span className="font-bold text-[#071a36]">{quadSeatsSelected} / {recordedGuests}</span></div>
-                            <div className="mt-1 flex justify-between gap-3"><span className="text-slate-600"><HomeText en="Total quad price" de="Quad-Gesamtpreis" /></span><span className="font-bold text-orange-600">€{quadTotalPrice}</span></div>
+                            <div className="mt-1 flex justify-between gap-3"><span className="text-slate-600"><HomeText en="Total quad price" de="Quad-Gesamtpreis" /></span><span className="font-bold text-orange-600">{formatCurrency(quadTotalPrice)}</span></div>
                           </div>
                           {!quadAllocationValid && (
                             <p className="mt-2 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-xs font-semibold leading-5 text-red-700">
@@ -1764,8 +1766,8 @@ ${notes.trim() || "-"}
                         </div>
                         <div className="grid gap-3 sm:grid-cols-2">
                           {[
-                            { id: "two" as const, title: "2-person buggy", deTitle: "Buggy für 2 Personen", detail: "2 seats · €" + pricing.buggy_2_seat + " per buggy", deDetail: "2 Plätze · " + pricing.buggy_2_seat + " € pro Buggy", count: twoSeatBuggyCount, set: setTwoSeatBuggyCount, seats: 2, price: pricing.buggy_2_seat },
-                            { id: "four" as const, title: "4-person buggy", deTitle: "Buggy für 4 Personen", detail: "4 seats · €" + pricing.buggy_4_seat + " per buggy", deDetail: "4 Plätze · " + pricing.buggy_4_seat + " € pro Buggy", count: fourSeatBuggyCount, set: setFourSeatBuggyCount, seats: 4, price: pricing.buggy_4_seat },
+                            { id: "two" as const, title: "2-person buggy", deTitle: "Buggy für 2 Personen", detail: "2 seats · " + formatCurrency(pricing.buggy_2_seat) + " per buggy", deDetail: "2 Plätze · " + formatCurrency(pricing.buggy_2_seat) + " pro Buggy", count: twoSeatBuggyCount, set: setTwoSeatBuggyCount, seats: 2, price: pricing.buggy_2_seat },
+                            { id: "four" as const, title: "4-person buggy", deTitle: "Buggy für 4 Personen", detail: "4 seats · " + formatCurrency(pricing.buggy_4_seat) + " per buggy", deDetail: "4 Plätze · " + formatCurrency(pricing.buggy_4_seat) + " pro Buggy", count: fourSeatBuggyCount, set: setFourSeatBuggyCount, seats: 4, price: pricing.buggy_4_seat },
                           ].map((option) => (
                             <div key={option.id} className="rounded-2xl border border-slate-200 bg-white p-4">
                               <div className="flex items-start justify-between gap-3">
@@ -1773,20 +1775,20 @@ ${notes.trim() || "-"}
                                   <span className="block text-sm font-bold text-[#071a36]"><HomeText en={option.title} de={option.deTitle} /></span>
                                   <span className="mt-1 block text-xs text-slate-500"><HomeText en={option.detail} de={option.deDetail} /></span>
                                 </div>
-                                <span className="text-lg font-bold text-orange-600">€{option.price}</span>
+                                <span className="text-lg font-bold text-orange-600">{formatCurrency(option.price)}</span>
                               </div>
                               <div className="mt-4 flex items-center justify-between">
                                 <button type="button" aria-label={"Remove " + option.id + " buggy"} onClick={() => option.set((count) => Math.max(0, count - 1))} disabled={option.count === 0} className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 text-xl font-bold text-[#071a36] disabled:opacity-30">−</button>
                                 <span className="text-xl font-bold tabular-nums text-[#071a36]">{option.count}</span>
                                 <button type="button" aria-label={"Add " + option.id + " buggy"} onClick={() => option.set((count) => count + 1)} disabled={buggySeatsSelected + option.seats > 25} className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#071a36] text-xl font-bold text-white disabled:opacity-30">+</button>
                               </div>
-                              <p className="mt-2 text-right text-xs font-semibold text-slate-500">Subtotal: €{option.count * option.price}</p>
+                              <p className="mt-2 text-right text-xs font-semibold text-slate-500">Subtotal: {formatCurrency(option.count * option.price)}</p>
                             </div>
                           ))}
                         </div>
                         <div className="rounded-xl border border-orange-200 bg-white px-3 py-3 text-sm">
                           <div className="flex justify-between gap-3"><span className="text-slate-600"><HomeText en="Seats selected" de="Ausgewählte Plätze" /></span><span className="font-bold text-[#071a36]">{buggySeatsSelected} / {recordedGuests}</span></div>
-                          <div className="mt-1 flex justify-between gap-3"><span className="text-slate-600"><HomeText en="Total buggy price" de="Buggy-Gesamtpreis" /></span><span className="font-bold text-orange-600">€{buggyTotalPrice}</span></div>
+                          <div className="mt-1 flex justify-between gap-3"><span className="text-slate-600"><HomeText en="Total buggy price" de="Buggy-Gesamtpreis" /></span><span className="font-bold text-orange-600">{formatCurrency(buggyTotalPrice)}</span></div>
                         </div>
                         {!buggyAllocationValid && (
                           <p className="rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-xs font-semibold leading-5 text-red-700">
@@ -1927,7 +1929,7 @@ ${notes.trim() || "-"}
                                 <span className="mt-3 text-sm font-bold text-[#071a36]">{island.name}</span>
                                 <span className="mt-0.5 text-[10px] font-medium text-slate-400">{island.category}</span>
                                 <span className="mt-auto flex items-baseline gap-1 pt-3">
-                                  <span className="text-lg font-bold tracking-tight text-[#071a36]">€{island.price}</span>
+                                  <span className="text-lg font-bold tracking-tight text-[#071a36]">{formatCurrency(island.price)}</span>
                                   <span className="text-[10px] text-slate-400"><HomeText en="/ person" de="/ Person" /></span>
                                 </span>
                               </label>
@@ -1959,7 +1961,7 @@ ${notes.trim() || "-"}
                           <p className="mt-1 text-3xl font-bold tracking-tight text-white">{displayedTotalPrice}</p>
                           {pricingValid && selectedIslands.length > 0 && (
                             <p className="mt-1 text-xs text-slate-400">
-                              <HomeText en={`Includes €${islandExtra} island options`} de={`Enthält €${islandExtra} für Inseloptionen`} />
+                              <HomeText en={`Includes ${formatCurrency(islandExtra)} island options`} de={`Enthält ${formatCurrency(islandExtra)} für Inseloptionen`} />
                             </p>
                           )}
                         </div>
