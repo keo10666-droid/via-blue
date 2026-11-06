@@ -1,5 +1,7 @@
 "use client";
 
+import CurrencyPrice from "@/app/components/CurrencyPrice";
+
 import Link from "next/link";
 import {
   ChangeEvent,
@@ -1850,7 +1852,7 @@ export default function AccountPage() {
                           {booking.total_price !==
                             null && (
                             <p className="text-xl font-semibold text-orange-500">
-                              €{booking.total_price}
+                              <CurrencyPrice amount={booking.total_price} />
                             </p>
                           )}
                         </div>
