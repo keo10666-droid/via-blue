@@ -1425,7 +1425,7 @@ ${notes.trim() || "-"}`;
                   </p>
 
                   <p className="mt-1 text-3xl font-black text-orange-500">
-                    €{totalPrice}
+                    {formatCurrency(totalPrice)}
                   </p>
                 </div>
 
