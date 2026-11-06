@@ -577,6 +577,7 @@ export async function POST(request: Request) {
         "Total Price",
         "Original EUR Total",
         "Currency",
+        "Exchange Rate",
         "Exchange Rate (EUR to USD)",
         "Exchange Rate (EUR to GBP)",
         "Total Before Discount",
