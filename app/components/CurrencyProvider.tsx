@@ -27,14 +27,18 @@ export function CurrencyProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     try {
       const savedCurrency = localStorage.getItem(STORAGE_KEY);
-      if (savedCurrency === "EUR" || savedCurrency === "USD" || savedCurrency === "GBP") setCurrencyState(savedCurrency);
       const savedRates = localStorage.getItem(RATES_STORAGE_KEY);
+      let hasCachedRates = false;
       if (savedRates) {
         const parsed = JSON.parse(savedRates) as { rates?: Rates; date?: string };
         if (parsed.rates && parsed.rates.USD > 0 && parsed.rates.GBP > 0) {
           setRates(parsed.rates);
           setRatesDate(parsed.date || null);
+          hasCachedRates = true;
         }
+      }
+      if (savedCurrency === "EUR" || ((savedCurrency === "USD" || savedCurrency === "GBP") && hasCachedRates)) {
+        setCurrencyState(savedCurrency);
       }
     } catch {
       // Keep the default currency and fetch fresh rates below.
@@ -47,6 +51,8 @@ export function CurrencyProvider({ children }: { children: ReactNode }) {
         if (!active || !data.rates || !(data.rates.USD > 0) || !(data.rates.GBP > 0)) return;
         setRates({ EUR: 1, USD: data.rates.USD, GBP: data.rates.GBP });
         setRatesDate(data.date || null);
+        const savedCurrency = localStorage.getItem(STORAGE_KEY);
+        if (savedCurrency === "EUR" || savedCurrency === "USD" || savedCurrency === "GBP") setCurrencyState(savedCurrency);
         try { localStorage.setItem(RATES_STORAGE_KEY, JSON.stringify({ rates: data.rates, date: data.date })); } catch { /* Cache is optional. */ }
       })
       .catch(() => {
