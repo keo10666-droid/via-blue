@@ -1,5 +1,7 @@
 "use client";
 
+import CurrencyPrice from "@/app/components/CurrencyPrice";
+
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -437,7 +439,7 @@ export default function TransfersPage() {
                       <div className="mt-1 flex items-baseline gap-1">
 
                         <span className="text-3xl font-black tracking-[-0.04em] text-slate-900">
-                          €{lowestPrice}
+                          <CurrencyPrice amount={lowestPrice} />
                         </span>
 
                         <span className="text-sm font-medium text-slate-500">
