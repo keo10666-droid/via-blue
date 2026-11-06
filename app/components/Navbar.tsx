@@ -10,7 +10,7 @@ import { useCurrency, type CurrencyCode } from "@/app/components/CurrencyProvide
 export default function Navbar() {
   const router = useRouter();
   const pathname = usePathname();
-  const { currency, setCurrency } = useCurrency();
+  const { currency, setCurrency, rates } = useCurrency();
 
   const [isOpen, setIsOpen] = useState(false);
   const [userName, setUserName] = useState<string | null>(null);
@@ -329,8 +329,8 @@ export default function Navbar() {
           className="ml-2 hidden h-10 rounded-xl border border-slate-200 bg-white px-2 text-xs font-extrabold text-blue-950 outline-none transition hover:border-orange-300 lg:inline-flex"
         >
           <option value="EUR">EUR €</option>
-          <option value="USD">USD $</option>
-          <option value="GBP">GBP £</option>
+          <option value="USD" disabled={rates.USD <= 0}>USD $</option>
+          <option value="GBP" disabled={rates.GBP <= 0}>GBP £</option>
         </select>
 
         <button
