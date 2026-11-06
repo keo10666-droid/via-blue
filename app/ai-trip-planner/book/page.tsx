@@ -24,7 +24,7 @@ type PackageOption = {
   totalCost: number;
   budget: number;
   remainingBudget: number;
-  currency: "EUR" | "USD";
+  currency: "EUR" | "USD" | "GBP";
   activities: number;
   itinerary: {
     day: number;
@@ -38,7 +38,7 @@ type BookingData = {
   children: number;
   area: string;
   days: number;
-  currency: "EUR" | "USD";
+  currency: "EUR" | "USD" | "GBP";
   budget: number;
 };
 
