@@ -501,16 +501,27 @@ export async function POST(request: Request) {
         ? Math.min(subtotal, Number(redeemed.discount_amount))
         : Math.round(subtotal * Number(redeemed.discount_percent)) / 100;
       const finalTotal = Math.max(0, Math.round((subtotal - discountAmount) * 100) / 100);
+      const selectedCurrency = getField(fields, "Currency") || "EUR";
+      const exchangeRateField = fields.find((field) => field.label.toLowerCase().startsWith("exchange rate"));
+      const exchangeRateValue = Number(exchangeRateField?.value || 1);
+      const displayRate = selectedCurrency === "EUR" ? 1 : Number.isFinite(exchangeRateValue) && exchangeRateValue > 0 ? exchangeRateValue : 1;
+      const formatMoney = (amount: number) => new Intl.NumberFormat("en-GB", {
+        style: "currency",
+        currency: selectedCurrency,
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2,
+      }).format(amount * displayRate);
       const discountDescription = redeemed.discount_percent !== null && redeemed.discount_percent !== undefined
-        ? `${redeemed.discount_percent}%`
-        : `€${Number(redeemed.discount_amount).toFixed(2)} fixed discount`;
+        ? \`\${redeemed.discount_percent}%\`
+        : \`\${formatMoney(Number(redeemed.discount_amount))} fixed discount\`;
       for (let index = fields.length - 1; index >= 0; index--) {
-        if (["promo code", "discount", "total price"].includes(fields[index].label.toLowerCase())) fields.splice(index, 1);
+        if (["promo code", "discount", "total price", "original eur total", "eur base total"].includes(fields[index].label.toLowerCase())) fields.splice(index, 1);
       }
       fields.push(
         { label: "Promo Code", value: redeemed.code },
-        { label: "Discount", value: `€${discountAmount.toFixed(2)} (${discountDescription})` },
-        { label: "Total Price", value: `€${finalTotal.toFixed(2)}` },
+        { label: "Discount", value: \`\${formatMoney(discountAmount)} (\${discountDescription})\` },
+        { label: "Total Price", value: formatMoney(finalTotal) },
+        { label: "Original EUR Total", value: \`€\${finalTotal.toFixed(2)}\` },
       );
     }
 
@@ -608,7 +619,7 @@ export async function POST(request: Request) {
       );
     const originalEurText = getField(fields, "Original EUR Total", "EUR Base Total");
     const originalEurValue = originalEurText
-      ? Number(originalEurText.replace(/[^0-9.\\-]/g, ""))
+      ? Number(originalEurText.replace(/[^0-9.-]/g, ""))
       : null;
 
     const formattedTitle =
