@@ -434,14 +434,28 @@ export default function Navbar() {
         <div className="max-h-[calc(100dvh-68px)] overflow-y-auto overscroll-contain touch-pan-y border-t border-slate-100 bg-white/95 px-4 pb-5 pt-3 shadow-[0_18px_35px_rgba(15,23,42,0.08)] backdrop-blur-xl lg:hidden">
 
           <nav className="flex flex-col gap-1.5">
-            <label className="mb-2 flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs font-extrabold text-blue-950">
-              <span>Currency</span>
-              <select aria-label="Select currency" value={currency} onChange={(event) => setCurrency(event.target.value as CurrencyCode)} className="rounded-lg bg-transparent px-2 py-1 text-sm font-black outline-none">
-                <option value="EUR">EUR €</option>
-                <option value="USD">USD $</option>
-                <option value="GBP">GBP £</option>
-              </select>
-            </label>
+            <div className="mb-2 grid grid-cols-3 gap-2" role="group" aria-label="Select currency">
+              {(["EUR", "USD", "GBP"] as CurrencyCode[]).map((item) => {
+                const disabled = item !== "EUR" && rates[item] <= 0;
+                const active = currency === item;
+                return (
+                  <button
+                    key={item}
+                    type="button"
+                    onClick={() => setCurrency(item)}
+                    disabled={disabled}
+                    aria-pressed={active}
+                    className={`flex h-11 items-center justify-center rounded-xl border text-sm font-black transition-all disabled:cursor-not-allowed disabled:opacity-40 ${
+                      active
+                        ? "border-orange-500 bg-orange-500 text-white shadow-sm"
+                        : "border-slate-200 bg-white text-blue-950 hover:border-orange-300 hover:bg-orange-50"
+                    }`}
+                  >
+                    {item === "EUR" ? "EUR €" : item === "USD" ? "USD $" : "GBP £"}
+                  </button>
+                );
+              })}
+            </div>
             <button
               type="button"
               onClick={toggleTheme}
