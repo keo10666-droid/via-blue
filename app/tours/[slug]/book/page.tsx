@@ -9,6 +9,7 @@ import { useParams, notFound } from "next/navigation";
 import { tours } from "@/data/tours";
 import BookingSuccessModal from "@/app/components/BookingSuccessModal";
 import HomeText from "@/app/components/HomeText";
+import { useCurrency } from "@/app/components/CurrencyProvider";
 import { germanTourCopy } from "@/lib/germanTourCopy";
 
 const nationalities = [
@@ -137,6 +138,7 @@ const FlagIcon = ({
 const EMAIL_REGEX = /^(?!.*\.\.)[a-zA-Z0-9](?:[a-zA-Z0-9.]{4,28}[a-zA-Z0-9])@gmail\.com$/i;
 
 export default function BookingPage() {
+  const { currency, formatCurrency, rate } = useCurrency();
   const [isGerman, setIsGerman] = useState(false);
 
   useEffect(() => {
@@ -387,8 +389,8 @@ const selectedCairoVehicleOption =
       setPromoFixedAmount(hasFixedDiscount ? result.discountAmount : null);
       setPromoMessage(
         isGerman
-          ? (hasPercentDiscount ? `Gutscheincode angewendet: ${result.discountPercent}% Rabatt.` : `Gutscheincode angewendet: €${Number(result.discountAmount).toFixed(2)} Rabatt.`)
-          : (hasPercentDiscount ? `Code applied — ${result.discountPercent}% discount added.` : `Code applied — €${Number(result.discountAmount).toFixed(2)} off.`)
+          ? (hasPercentDiscount ? `Gutscheincode angewendet: ${result.discountPercent}% Rabatt.` : `Gutscheincode angewendet: ${formatCurrency(Number(result.discountAmount))} Rabatt.`)
+          : (hasPercentDiscount ? `Code applied — ${result.discountPercent}% discount added.` : `Code applied — ${formatCurrency(Number(result.discountAmount))} off.`)
       );
       setPromoMessageType("success");
     } catch {
@@ -677,13 +679,13 @@ Hotel: ${hotel || "Not specified"}
 
 Hotel Area: ${hotelArea}
 
-Hotel Area Surcharge: €${hotelAreaSurcharge}
+Hotel Area Surcharge: ${formatCurrency(hotelAreaSurcharge)}
 
 Promo Code: ${promoDiscountPercent !== null ? promoCode.trim().toUpperCase() : "Not used"}
 
 Total Before Discount: €${totalPrice}
 
-Discount: €${promoDiscountAmount.toFixed(2)}
+Discount: ${formatCurrency(promoDiscountAmount)}
 
 Room Number: ${roomNumber || "Not specified"}
 
@@ -709,7 +711,7 @@ Infant Ages: ${
       .join(", ") || "-"
   }
 
-Total Price: €${finalTotalPrice.toFixed(2)}
+Total Price: ${formatCurrency(finalTotalPrice)}\n\nOriginal EUR Total: €${finalTotalPrice.toFixed(2)}\n\nCurrency: ${currency}\n\nExchange Rate: ${rate || "unavailable"}
 
 WhatsApp: ${fullPhone}
 
@@ -1232,7 +1234,7 @@ ${notes.trim() || "-"}
                   <div className="mt-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs leading-5 text-slate-600">
                     {hotelAreaSurchargePerPerson === 0
                       ? <HomeText en="Hotel pickup in Hurghada is included." de="Hotelabholung in Hurghada ist inklusive." />
-                      : <HomeText en={`Additional pickup fee: €${hotelAreaSurchargePerPerson} per adult or child.`} de={`Zusätzliche Abholgebühr: ${hotelAreaSurchargePerPerson} € pro Erwachsenem oder Kind.`} />}
+                      : <HomeText en={`Additional pickup fee: ${formatCurrency(hotelAreaSurchargePerPerson)} per adult or child.`} de={`Zusätzliche Abholgebühr: ${formatCurrency(hotelAreaSurchargePerPerson)} pro Erwachsenem oder Kind.`} />}
                   </div>
                 </div>
 
@@ -2088,7 +2090,7 @@ ${notes.trim() || "-"}
 </span>
 
                     <span className="font-semibold text-slate-800">
-                      €{baseTotalPrice}
+                      {formatCurrency(baseTotalPrice)}
                     </span>
 
                   </div>
@@ -2108,28 +2110,28 @@ ${notes.trim() || "-"}
 
                     <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                       <span className="text-slate-500">
-                        <HomeText en={`Adults × €${selectedVehicleOption.adultPrice}`} de={`Erwachsene × €${selectedVehicleOption.adultPrice}`} />
+                        <HomeText en={`Adults × ${formatCurrency(selectedVehicleOption.adultPrice)}`} de={`Erwachsene × ${formatCurrency(selectedVehicleOption.adultPrice)}`} />
                       </span>
                       <span className="font-semibold text-slate-800">
-                        €{Number(adults || 0) * selectedVehicleOption.adultPrice}
+                        {formatCurrency(Number(adults || 0) * selectedVehicleOption.adultPrice)}
                       </span>
                     </div>
 
                     <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                       <span className="text-slate-500">
-                        <HomeText en={`Children × €${selectedVehicleOption.childPrice}`} de={`Kinder × €${selectedVehicleOption.childPrice}`} />
+                        <HomeText en={`Children × ${formatCurrency(selectedVehicleOption.childPrice)}`} de={`Kinder × ${formatCurrency(selectedVehicleOption.childPrice)}`} />
                       </span>
                       <span className="font-semibold text-slate-800">
-                        €{Number(children || 0) * selectedVehicleOption.childPrice}
+                        {formatCurrency(Number(children || 0) * selectedVehicleOption.childPrice)}
                       </span>
                     </div>
 
                     <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                       <span className="text-slate-500">
-                        <HomeText en={`Infants × €${selectedVehicleOption.infantPrice}`} de={`Kleinkinder × €${selectedVehicleOption.infantPrice}`} />
+                        <HomeText en={`Infants × ${formatCurrency(selectedVehicleOption.infantPrice)}`} de={`Kleinkinder × ${formatCurrency(selectedVehicleOption.infantPrice)}`} />
                       </span>
                       <span className="font-semibold text-slate-800">
-                        €{Number(infants || 0) * selectedVehicleOption.infantPrice}
+                        {formatCurrency(Number(infants || 0) * selectedVehicleOption.infantPrice)}
                       </span>
                     </div>
                   </>
@@ -2157,28 +2159,28 @@ ${notes.trim() || "-"}
 
                     <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                       <span className="text-slate-500">
-                        <HomeText en={`Adults × €${selectedCairoVehicleOption.adultPrice}`} de={`Erwachsene × €${selectedCairoVehicleOption.adultPrice}`} />
+                        <HomeText en={`Adults × ${formatCurrency(selectedCairoVehicleOption.adultPrice)}`} de={`Erwachsene × ${formatCurrency(selectedCairoVehicleOption.adultPrice)}`} />
                       </span>
                       <span className="font-semibold text-slate-800">
-                        €{Number(adults || 0) * selectedCairoVehicleOption.adultPrice}
+                        {formatCurrency(Number(adults || 0) * selectedCairoVehicleOption.adultPrice)}
                       </span>
                     </div>
 
                     <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                       <span className="text-slate-500">
-                        <HomeText en={`Children × €${selectedCairoVehicleOption.childPrice}`} de={`Kinder × €${selectedCairoVehicleOption.childPrice}`} />
+                        <HomeText en={`Children × ${formatCurrency(selectedCairoVehicleOption.childPrice)}`} de={`Kinder × ${formatCurrency(selectedCairoVehicleOption.childPrice)}`} />
                       </span>
                       <span className="font-semibold text-slate-800">
-                        €{Number(children || 0) * selectedCairoVehicleOption.childPrice}
+                        {formatCurrency(Number(children || 0) * selectedCairoVehicleOption.childPrice)}
                       </span>
                     </div>
 
                     <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                       <span className="text-slate-500">
-                        <HomeText en={`Infants × €${selectedCairoVehicleOption.infantPrice}`} de={`Kleinkinder × €${selectedCairoVehicleOption.infantPrice}`} />
+                        <HomeText en={`Infants × ${formatCurrency(selectedCairoVehicleOption.infantPrice)}`} de={`Kleinkinder × ${formatCurrency(selectedCairoVehicleOption.infantPrice)}`} />
                       </span>
                       <span className="font-semibold text-slate-800">
-                        €{Number(infants || 0) * selectedCairoVehicleOption.infantPrice}
+                        {formatCurrency(Number(infants || 0) * selectedCairoVehicleOption.infantPrice)}
                       </span>
                     </div>
                   </>
@@ -2189,7 +2191,7 @@ ${notes.trim() || "-"}
                     <div className="flex items-center justify-between border-b border-slate-100 pb-3">
 
                       <span className="text-slate-500">
-                        Adults × €{tour.price}
+                        Adults × {formatCurrency(tour.price)}
                       </span>
 
                       <span className="font-semibold text-slate-800">
@@ -2203,7 +2205,7 @@ ${notes.trim() || "-"}
                     <div className="flex items-center justify-between border-b border-slate-100 pb-3">
 
                       <span className="text-slate-500">
-                        Children × €{tour.childPrice}
+                        Children × {formatCurrency(tour.childPrice)}
                       </span>
 
                       <span className="font-semibold text-slate-800">
@@ -2217,7 +2219,7 @@ ${notes.trim() || "-"}
                     <div className="flex items-center justify-between border-b border-slate-100 pb-3">
 
                       <span className="text-slate-500">
-                        Infants × €{tour.infantPrice}
+                        Infants × {formatCurrency(tour.infantPrice)}
                       </span>
 
                       <span className="font-semibold text-slate-800">
@@ -2245,7 +2247,7 @@ ${notes.trim() || "-"}
                       </p>
                     </div>
                     <span className="shrink-0 text-base font-extrabold tabular-nums text-blue-950">
-                      {hotelAreaSurcharge === 0 ? <HomeText en="Included" de="Inklusive" /> : `€${hotelAreaSurcharge}`}
+                      {hotelAreaSurcharge === 0 ? <HomeText en="Included" de="Inklusive" /> : formatCurrency(hotelAreaSurcharge)}
                     </span>
                   </div>
                 </div>
@@ -2257,7 +2259,7 @@ ${notes.trim() || "-"}
                   </span>
 
                   <span className="text-2xl font-bold text-orange-500">
-                    €{finalTotalPrice}
+                    {formatCurrency(finalTotalPrice)}
                   </span>
 
                 </div>
@@ -2278,7 +2280,7 @@ ${notes.trim() || "-"}
                   <button type="button" onClick={() => void applyPromoCode()} disabled={promoLoading || !promoCode.trim()} className="min-h-[50px] rounded-xl bg-blue-950 px-6 text-sm font-extrabold text-white shadow-sm transition hover:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-50">{promoLoading ? (isGerman ? "Prüfen…" : "Checking…") : (isGerman ? "Code anwenden" : "Apply code")}</button>
                 </div>
                 {promoMessage && <p className={`mt-3 flex items-center gap-2 text-xs font-bold ${promoMessageType === "success" ? "text-emerald-700" : "text-red-600"}`}><span className={`flex h-5 w-5 items-center justify-center rounded-full ${promoMessageType === "success" ? "bg-emerald-100" : "bg-red-100"}`}>{promoMessageType === "success" ? "✓" : "!"}</span>{promoMessage}</p>}
-                {(promoDiscountPercent !== null || promoFixedAmount !== null) && <><div className="mt-4 flex items-center justify-between rounded-xl border border-emerald-100 bg-emerald-50 px-3.5 py-3"><span className="text-sm font-semibold text-emerald-800">{promoCode} · {promoDiscountPercent !== null ? `${promoDiscountPercent}% off` : `€${Number(promoFixedAmount).toFixed(2)} off`}</span><button type="button" onClick={() => { setPromoCode(""); setPromoDiscountPercent(null); setPromoFixedAmount(null); setPromoMessage(""); setPromoMessageType(""); }} className="text-xs font-bold text-emerald-800 underline underline-offset-2"><HomeText en="Remove" de="Entfernen" /></button></div><div className="mt-4 space-y-2 border-t border-dashed border-slate-200 pt-4 text-sm"><div className="flex items-center justify-between text-slate-500"><span><HomeText en="Subtotal" de="Zwischensumme" /></span><span>€{totalPrice.toFixed(2)}</span></div><div className="flex items-center justify-between font-semibold text-emerald-700"><span>{promoCode} ({promoDiscountPercent !== null ? `${promoDiscountPercent}%` : `€${Number(promoFixedAmount).toFixed(2)}`} <HomeText en="off" de="Rabatt" />)</span><span>−€{promoDiscountAmount.toFixed(2)}</span></div></div></>}
+                {(promoDiscountPercent !== null || promoFixedAmount !== null) && <><div className="mt-4 flex items-center justify-between rounded-xl border border-emerald-100 bg-emerald-50 px-3.5 py-3"><span className="text-sm font-semibold text-emerald-800">{promoCode} · {promoDiscountPercent !== null ? `${promoDiscountPercent}% off` : `${formatCurrency(Number(promoFixedAmount))} off`}</span><button type="button" onClick={() => { setPromoCode(""); setPromoDiscountPercent(null); setPromoFixedAmount(null); setPromoMessage(""); setPromoMessageType(""); }} className="text-xs font-bold text-emerald-800 underline underline-offset-2"><HomeText en="Remove" de="Entfernen" /></button></div><div className="mt-4 space-y-2 border-t border-dashed border-slate-200 pt-4 text-sm"><div className="flex items-center justify-between text-slate-500"><span><HomeText en="Subtotal" de="Zwischensumme" /></span><span>{formatCurrency(totalPrice)}</span></div><div className="flex items-center justify-between font-semibold text-emerald-700"><span>{promoCode} ({promoDiscountPercent !== null ? `${promoDiscountPercent}%` : `${formatCurrency(Number(promoFixedAmount))}`} <HomeText en="off" de="Rabatt" />)</span><span>−{formatCurrency(promoDiscountAmount)}</span></div></div></>}
               </div>
             </section>
 
