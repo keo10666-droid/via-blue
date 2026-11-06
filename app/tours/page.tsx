@@ -1,5 +1,7 @@
 "use client";
 
+import CurrencyPrice from "@/app/components/CurrencyPrice";
+
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense, useEffect, useMemo, useRef, useState } from "react";
@@ -847,7 +849,7 @@ function ToursPageContent() {
 
                       <p className="text-base font-extrabold">
                         {tour.price > 0
-                          ? `€${tour.price}`
+                          ? <CurrencyPrice amount={tour.price} />
                           : <HomeText en="On request" de="Auf Anfrage" />}
                       </p>
 
@@ -945,7 +947,7 @@ function ToursPageContent() {
 
                           <span className="text-2xl font-extrabold text-orange-500">
                             {tour.price > 0
-                              ? `€${tour.price}`
+                              ? <CurrencyPrice amount={tour.price} />
                               : <HomeText en="On request" de="Auf Anfrage" />}
                           </span>
 
