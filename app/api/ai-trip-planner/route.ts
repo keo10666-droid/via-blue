@@ -2,13 +2,14 @@ import { NextResponse } from "next/server";
 import { isRateLimited } from "@/lib/apiRateLimit";
 import { tourList } from "@/data/tours";
 
-type Currency = "EUR" | "USD";
+type Currency = "EUR" | "USD" | "GBP";
 type PlannerRequest = {
   adults: number;
   children: number;
   area: string;
   days: number;
   currency: Currency;
+  exchangeRate: number;
   budget: number;
   selectedCategories: string[];
   surpriseMe: boolean;
@@ -37,7 +38,6 @@ type PackageOption = {
   itinerary: { day: number; tours: PackageTour[] }[];
 };
 
-const EUR_TO_USD = 1.17;
 const AREA_KEYWORDS: Record<string, string[]> = {
   Hurghada: ["hurghada", "dahar", "magawish", "makadi", "sahl hasheesh", "red sea"],
   "Sahl Hasheesh": ["sahl hasheesh", "hurghada", "red sea"],
@@ -100,9 +100,8 @@ function tourCost(tour: Tour, request: PlannerRequest) {
   return tour.price * request.adults + tour.childPrice * request.children;
 }
 
-function convertCurrency(amount: number, currency: Currency) {
-  const converted = currency === "USD" ? amount * EUR_TO_USD : amount;
-  return Math.round(converted * 100) / 100;
+function convertCurrency(amount: number, request: PlannerRequest) {
+  return Math.round(amount * (request.currency === "EUR" ? 1 : request.exchangeRate) * 100) / 100;
 }
 
 function buildItinerary(tours: Tour[], days: number, request: PlannerRequest) {
@@ -131,7 +130,7 @@ function buildItinerary(tours: Tour[], days: number, request: PlannerRequest) {
       duration: tour.duration,
       price: tour.price,
       childPrice: tour.childPrice,
-      estimatedTotal: convertCurrency(tourCost(tour, request), request.currency),
+      estimatedTotal: convertCurrency(tourCost(tour, request), request),
       day: day.day,
     });
     day.hours += hours;
@@ -147,7 +146,7 @@ function createPackage(
   styleIndex: number,
 ): PackageOption | null {
   const style = PACKAGE_STYLES[styleIndex];
-  const budgetEUR = request.currency === "USD" ? request.budget / EUR_TO_USD : request.budget;
+  const budgetEUR = request.currency === "EUR" ? request.budget : request.budget / request.exchangeRate;
   const maxActivities = Math.min(5, request.days);
   const targetSpend = budgetEUR * (styleIndex === 0 ? 0.7 : styleIndex === 1 ? 0.88 : 0.97);
   const selected: Tour[] = [];
@@ -199,7 +198,7 @@ function createPackage(
   const actualEUR = itinerary.reduce((sum, day) =>
     sum + day.tours.reduce((daySum, item) =>
       daySum + tourCost(selected.find((tour) => tour.slug === item.slug)!, request), 0), 0);
-  const totalCost = convertCurrency(actualEUR, request.currency);
+  const totalCost = convertCurrency(actualEUR, request);
 
   return {
     id: style.id,
@@ -222,7 +221,9 @@ function validateRequest(body: unknown): PlannerRequest {
   const days = typeof data.days === "number" ? data.days : NaN;
   const budget = typeof data.budget === "number" ? data.budget : NaN;
   const area = typeof data.area === "string" ? data.area.trim() : "";
-  if (data.currency !== "EUR" && data.currency !== "USD") throw new Error("Currency must be EUR or USD.");
+  if (data.currency !== "EUR" && data.currency !== "USD" && data.currency !== "GBP") throw new Error("Currency must be EUR, USD or GBP.");
+  const exchangeRate = typeof data.exchangeRate === "number" ? data.exchangeRate : NaN;
+  if (!Number.isFinite(exchangeRate) || exchangeRate <= 0 || exchangeRate > 10) throw new Error("A valid daily exchange rate is required.");
   if (!Number.isInteger(adults) || adults < 1 || adults > 20) throw new Error("Adults must be between 1 and 20.");
   if (!Number.isInteger(children) || children < 0 || children > 20) throw new Error("Children must be between 0 and 20.");
   if (!AREA_KEYWORDS[area]) throw new Error("Please select a supported destination.");
@@ -241,7 +242,7 @@ function validateRequest(body: unknown): PlannerRequest {
   if (!surpriseMe && selectedCategories.length === 0) {
     throw new Error("Select at least one experience category or choose Surprise Me.");
   }
-  return { adults, children, area, days, currency: data.currency, budget, selectedCategories, surpriseMe };
+  return { adults, children, area, days, currency: data.currency, exchangeRate: data.currency === "EUR" ? 1 : exchangeRate, budget, selectedCategories, surpriseMe };
 }
 
 export async function POST(request: Request) {
@@ -299,7 +300,7 @@ export async function POST(request: Request) {
       duration: tour.duration,
       price: tour.price,
       childPrice: tour.childPrice,
-      estimatedTotal: convertCurrency(tourCost(tour, plannerRequest), plannerRequest.currency),
+      estimatedTotal: convertCurrency(tourCost(tour, plannerRequest), plannerRequest),
       day: 0,
     }));
 
