@@ -1,3 +1,4 @@
+import CurrencyPrice from "@/app/components/CurrencyPrice";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -1408,7 +1409,7 @@ export default async function TourDetailsPage({
                     <span className="text-5xl font-extrabold text-orange-400">
 
                       {tour.price > 0
-                        ? `€${tour.price}`
+                        ? <CurrencyPrice amount={tour.price} />
                         : <HomeText en="On Request" de="Auf Anfrage" />}
 
                     </span>
