@@ -8,6 +8,7 @@ import { useParams } from "next/navigation";
 import { transfers } from "@/data/transfers";
 import BookingSuccessModal from "@/app/components/BookingSuccessModal";
 import HomeText from "@/app/components/HomeText";
+import { useCurrency } from "@/app/components/CurrencyProvider";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -954,6 +955,7 @@ function CustomTimePicker({
 }
 
 export default function TransferBookingPage() {
+  const { currency, formatCurrency, rate } = useCurrency();
   const [isGerman, setIsGerman] = useState(false);
 
   useEffect(() => {
@@ -1211,7 +1213,7 @@ From: ${route.from}
 To: ${route.to}
 
 Vehicle: ${vehicle.type}
-Price: EUR ${vehicle.price}
+Price: ${formatCurrency(vehicle.price)}\n\nOriginal EUR Total: €${vehicle.price}\n\nCurrency: ${currency}\n\nExchange Rate: ${rate || "unavailable"}
 
 Full Name: ${name.trim()}
 Email: ${email.trim()}
@@ -1583,7 +1585,7 @@ ${notes.trim() || "-"}
                           </div>
 
                           <p className="text-xl font-bold text-orange-300">
-                            €{item.price}
+                            {formatCurrency(item.price)}
                           </p>
                         </div>
                       </div>
@@ -1631,7 +1633,7 @@ ${notes.trim() || "-"}
                               : <HomeText en="Select Vehicle" de="Fahrzeug auswählen" />}
                           </span>
 
-                          <span>€{item.price}</span>
+                          <span>{formatCurrency(item.price)}</span>
                         </div>
                       </div>
                     </button>
@@ -2282,7 +2284,7 @@ ${notes.trim() || "-"}
                       </div>
 
                       <p className="text-lg font-bold text-orange-300">
-                        €{vehicle.price}
+                        {formatCurrency(vehicle.price)}
                       </p>
                     </div>
                   </div>
@@ -2376,7 +2378,7 @@ ${notes.trim() || "-"}
                     </div>
 
                     <p className="text-3xl font-black tracking-tight text-orange-300">
-                      €{vehicle.price}
+                      {formatCurrency(vehicle.price)}
                     </p>
                   </div>
                 </div>
