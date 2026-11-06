@@ -1,5 +1,7 @@
 "use client";
 
+import CurrencyPrice from "@/app/components/CurrencyPrice";
+
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -437,7 +439,7 @@ export default function TransfersPage() {
                       <div className="mt-1 flex items-baseline gap-1">
 
                         <span className="text-3xl font-black tracking-[-0.04em] text-slate-900">
-                          €{lowestPrice}
+                          <CurrencyPrice amount={lowestPrice} />
                         </span>
 
                         <span className="text-sm font-medium text-slate-500">
@@ -565,8 +567,8 @@ export default function TransfersPage() {
 
             <div className="group rounded-[1.75rem] border border-slate-200/80 bg-slate-50/80 p-7 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:bg-white hover:shadow-xl">
 
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-orange-100 bg-orange-100 text-xl transition-transform duration-300 group-hover:scale-105">
-                €
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-orange-100 bg-orange-100 text-xl font-black text-orange-600 transition-transform duration-300 group-hover:scale-105">
+                ✓
               </div>
 
               <h3 className="mt-5 text-xl font-black tracking-[-0.02em] text-slate-900">

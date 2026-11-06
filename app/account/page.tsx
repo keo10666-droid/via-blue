@@ -1,5 +1,7 @@
 "use client";
 
+import CurrencyPrice from "@/app/components/CurrencyPrice";
+
 import Link from "next/link";
 import {
   ChangeEvent,
@@ -40,6 +42,7 @@ type Booking = {
   tour_date: string | null;
   guests: number | null;
   total_price: number | null;
+  booking_details?: { selected_currency?: string; displayed_total_price?: string } | null;
   status: string;
   created_at: string;
 };
@@ -347,7 +350,7 @@ export default function AccountPage() {
         supabase
           .from("bookings")
           .select(
-            "id, booking_type, tour_name, tour_date, guests, total_price, status, created_at"
+            "id, booking_type, tour_name, tour_date, guests, total_price, booking_details, status, created_at"
           )
           .eq("user_id", user.id)
           .order("created_at", {
@@ -1850,7 +1853,7 @@ export default function AccountPage() {
                           {booking.total_price !==
                             null && (
                             <p className="text-xl font-semibold text-orange-500">
-                              €{booking.total_price}
+                              {booking.booking_details?.displayed_total_price || <CurrencyPrice amount={booking.total_price} />}
                             </p>
                           )}
                         </div>

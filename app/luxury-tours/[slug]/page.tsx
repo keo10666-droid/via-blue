@@ -1,3 +1,4 @@
+import CurrencyPrice from "@/app/components/CurrencyPrice";
 import Link from "next/link";
 import HomeText from "@/app/components/HomeText";
 import { getLuxuryPricing } from "@/lib/luxuryPricing";
@@ -804,8 +805,8 @@ const luxuryTours = {
     returnTime: "Morning / Evening",
 
     highlights: [
-      "2-person buggy — €100",
-      "4-person buggy — €125",
+      "2-person buggy",
+      "4-person buggy",
       "Guided buggy adventure",
       "Dedicated group experience",
       "Professional desert guide",
@@ -1566,7 +1567,7 @@ export default async function LuxuryTourPage({
 
                   <div className="mt-1 flex items-end gap-2">
                     <span className="text-4xl font-bold tracking-tight text-orange-500">
-                      €{startingPrice}
+                      <CurrencyPrice amount={startingPrice} />
                     </span>
 
                     <span className="pb-1 text-xs text-gray-400">

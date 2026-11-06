@@ -1,3 +1,4 @@
+import CurrencyPrice from "@/app/components/CurrencyPrice";
 
 import Image from "next/image";
 import HomeText from "@/app/components/HomeText";
@@ -65,7 +66,7 @@ const luxuryTours = [
     slug: "buggy-safari",
     name: "Private Buggy Safari",
     description:
-      "Private 3-hour buggy program. Choose 2-person buggies for €100 or 4-person buggies for €125.",
+      "Private 3-hour buggy program with 2-person and 4-person buggy options.",
     price: 100,
     duration: "3 Hours",
     image: "/luxury-tours/private-buggy-safari-hero.webp",
@@ -165,9 +166,9 @@ export default async function LuxuryToursPage() {
       : tour.slug === "buggy-safari" ? pricing.buggy_2_seat
       : tour.price,
     description: tour.slug === "quad-safari"
-      ? `Private quad safari. 1 hour: Single €${pricing.quad_single_1h}, Double €${pricing.quad_double_1h}; 3 hours: Single €${pricing.quad_single_3h}, Double €${pricing.quad_double_3h}.`
+      ? "Private quad safari with flexible 1-hour and 3-hour options for single and double quads."
       : tour.slug === "buggy-safari"
-      ? `Private 3-hour buggy program. 2-person buggy €${pricing.buggy_2_seat} or 4-person buggy €${pricing.buggy_4_seat}.`
+      ? "Private 3-hour buggy program with 2-person and 4-person vehicle options."
       : tour.description,
   }));
   return (
@@ -392,7 +393,7 @@ export default async function LuxuryToursPage() {
 
                     <div className="text-right">
                       <span className="text-3xl font-bold tracking-tight text-orange-500">
-                        €{tour.price}
+                        <CurrencyPrice amount={tour.price} />
                       </span>
 
                       <span className="ml-1 text-[10px] font-medium text-gray-400">

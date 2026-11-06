@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState, type ReactNode } from "react";
 
 import { supabase } from "@/lib/supabase";
 import HomeText from "@/app/components/HomeText";
+import { useCurrency } from "@/app/components/CurrencyProvider";
 
 type BookingFormProps = {
   tourName: string;
@@ -254,6 +255,7 @@ export default function BookingForm({
   included,
 }: BookingFormProps) {
   const childPrice = adultPrice / 2;
+  const { currency, formatCurrency, rate } = useCurrency();
 
   const [isGerman, setIsGerman] = useState(false);
   useEffect(() => {
@@ -505,6 +507,9 @@ export default function BookingForm({
           adult_price: adultPrice,
           child_price: childPrice,
           infant_price: infantPrice,
+          selected_currency: currency,
+          exchange_rate: rate,
+          displayed_total_price: formatCurrency(totalPrice),
           notes: notes.trim(),
         },
       };
@@ -624,13 +629,13 @@ export default function BookingForm({
         infantAgeValues.filter(Boolean).join(", ") || "-"
       }
 
-💰 Adult Price: €${adultPrice}
+💰 Adult Price: ${formatCurrency(adultPrice)}
 
-💰 Child Price: €${childPrice}
+💰 Child Price: ${formatCurrency(childPrice)}
 
-💰 Infant Price: €${infantPrice}
+💰 Infant Price: ${formatCurrency(infantPrice)}
 
-💰 Total Price: €${totalPrice}
+💰 Total Price: ${formatCurrency(totalPrice)}\n\n💶 Original EUR Total: €${totalPrice}\n\nCurrency: ${currency} (rate: ${rate || "unavailable"})
 
 📱 WhatsApp: ${fullPhone}
 
@@ -722,7 +727,7 @@ ${notes.trim() || "-"}`;
               </div>
 
               <div className="rounded-full border border-orange-400/20 bg-orange-500/10 px-4 py-2 text-sm font-bold text-orange-300 backdrop-blur-md">
-                €{adultPrice} <HomeText en="per adult" de="pro Erwachsenem" />
+                {formatCurrency(adultPrice)} <HomeText en="per adult" de="pro Erwachsenem" />
               </div>
             </div>
           </div>
@@ -1309,18 +1314,18 @@ ${notes.trim() || "-"}`;
 
               <div className="mt-5 space-y-3 text-gray-700">
                 <p className="font-bold">
-                  <HomeText en="Adults" de="Erwachsene" />: {adults} × €{adultPrice} = €
-                  {Number(adults) * adultPrice}
+                  <HomeText en="Adults" de="Erwachsene" />: {adults} × {formatCurrency(adultPrice)} = 
+                  {formatCurrency(Number(adults) * adultPrice)}
                 </p>
 
                 <p className="font-bold">
-                  <HomeText en="Children" de="Kinder" />: {children} × €{childPrice} = €
-                  {Number(children) * childPrice}
+                  <HomeText en="Children" de="Kinder" />: {children} × {formatCurrency(childPrice)} = 
+                  {formatCurrency(Number(children) * childPrice)}
                 </p>
 
                 <p className="font-bold">
-                  <HomeText en="Infants" de="Kleinkinder" />: {infants} × €{infantPrice} = €
-                  {Number(infants) * infantPrice}
+                  <HomeText en="Infants" de="Kleinkinder" />: {infants} × {formatCurrency(infantPrice)} = 
+                  {formatCurrency(Number(infants) * infantPrice)}
                 </p>
               </div>
 
@@ -1330,7 +1335,7 @@ ${notes.trim() || "-"}`;
                 </span>
 
                 <span className="text-3xl font-black text-[#071a36]">
-                  €{totalPrice}
+                  {formatCurrency(totalPrice)}
                 </span>
               </div>
             </div>
@@ -1420,7 +1425,7 @@ ${notes.trim() || "-"}`;
                   </p>
 
                   <p className="mt-1 text-3xl font-black text-orange-500">
-                    €{totalPrice}
+                    {formatCurrency(totalPrice)}
                   </p>
                 </div>
 

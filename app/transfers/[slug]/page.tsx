@@ -1,3 +1,4 @@
+import CurrencyPrice from "@/app/components/CurrencyPrice";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -269,7 +270,7 @@ export default async function TransferPage({ params }: Props) {
                         <div className="mt-0.5 flex items-baseline justify-end gap-1">
 
                           <span className="text-2xl font-extrabold tracking-tight text-orange-500">
-                            €{vehicle.price}
+                            <CurrencyPrice amount={vehicle.price} />
                           </span>
 
                         </div>
@@ -445,7 +446,7 @@ export default async function TransferPage({ params }: Props) {
                     <div className="mt-1 flex items-end gap-2">
 
                       <span className="text-3xl font-extrabold tracking-tight text-blue-950">
-                        €{lowestPrice}
+                        <CurrencyPrice amount={lowestPrice} />
                       </span>
 
                       <span className="mb-1 text-xs font-medium text-slate-500">

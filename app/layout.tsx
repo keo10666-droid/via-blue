@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
+import { CurrencyProvider } from "./components/CurrencyProvider";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 import { createSupabaseAdminClient } from "@/lib/supabaseAdmin";
@@ -74,10 +75,12 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col">
+        <CurrencyProvider>
         <Navbar />
         <ScrollToTop />
         {children}
         <Footer />
+        </CurrencyProvider>
       </body>
     </html>
   );

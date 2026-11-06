@@ -5,10 +5,12 @@ import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { Crown, Home, Compass, CarFront, MessageCircle, UserRound, Moon, Sun } from "lucide-react";
 import { supabase } from "@/lib/supabase";
+import { useCurrency, type CurrencyCode } from "@/app/components/CurrencyProvider";
 
 export default function Navbar() {
   const router = useRouter();
   const pathname = usePathname();
+  const { currency, setCurrency, rates } = useCurrency();
 
   const [isOpen, setIsOpen] = useState(false);
   const [userName, setUserName] = useState<string | null>(null);
@@ -320,6 +322,17 @@ export default function Navbar() {
 
         </nav>
 
+        <select
+          aria-label="Select currency"
+          value={currency}
+          onChange={(event) => setCurrency(event.target.value as CurrencyCode)}
+          className="ml-2 hidden h-10 rounded-xl border border-slate-200 bg-white px-2 text-xs font-extrabold text-blue-950 outline-none transition hover:border-orange-300 lg:inline-flex"
+        >
+          <option value="EUR">EUR €</option>
+          <option value="USD" disabled={rates.USD <= 0}>USD $</option>
+          <option value="GBP" disabled={rates.GBP <= 0}>GBP £</option>
+        </select>
+
         <button
           type="button"
           onClick={toggleTheme}
@@ -421,6 +434,14 @@ export default function Navbar() {
         <div className="max-h-[calc(100dvh-68px)] overflow-y-auto overscroll-contain touch-pan-y border-t border-slate-100 bg-white/95 px-4 pb-5 pt-3 shadow-[0_18px_35px_rgba(15,23,42,0.08)] backdrop-blur-xl lg:hidden">
 
           <nav className="flex flex-col gap-1.5">
+            <label className="mb-2 flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs font-extrabold text-blue-950">
+              <span>Currency</span>
+              <select aria-label="Select currency" value={currency} onChange={(event) => setCurrency(event.target.value as CurrencyCode)} className="rounded-lg bg-transparent px-2 py-1 text-sm font-black outline-none">
+                <option value="EUR">EUR €</option>
+                <option value="USD">USD $</option>
+                <option value="GBP">GBP £</option>
+              </select>
+            </label>
             <button
               type="button"
               onClick={toggleTheme}
