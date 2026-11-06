@@ -1,3 +1,4 @@
+import CurrencyPrice from "@/app/components/CurrencyPrice";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -651,7 +652,7 @@ export default async function Home() {
                         </span>
 
                         <div className="font-bold">
-                          €{tour.price}
+                          <CurrencyPrice amount={tour.price} />
                           <span className="ml-1 text-xs font-normal text-blue-200">
                             / <HomeText
                               en={tour.slug === "private-quad-safari" ? "quad" : "person"}
