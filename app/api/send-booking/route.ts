@@ -519,9 +519,9 @@ export async function POST(request: Request) {
       }
       fields.push(
         { label: "Promo Code", value: redeemed.code },
-        { label: "Discount", value: \`\${formatMoney(discountAmount)} (\${discountDescription})\` },
+        { label: "Discount", value: `${formatMoney(discountAmount)} (${discountDescription})` },
         { label: "Total Price", value: formatMoney(finalTotal) },
-        { label: "Original EUR Total", value: \`€\${finalTotal.toFixed(2)}\` },
+        { label: "Original EUR Total", value: `€${finalTotal.toFixed(2)}` },
       );
     }
 
