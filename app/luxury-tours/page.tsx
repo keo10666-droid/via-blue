@@ -88,8 +88,8 @@ const germanTourContent: Record<string, { name: string; description: string }> =
   alexandria: { name: "Private Alexandria-Tour", description: "Entdecken Sie die historische Stadt Alexandria mit ihren berühmten Sehenswürdigkeiten, mediterranem Flair und faszinierender Geschichte." },
   aswan: { name: "Private Assuan-Tour", description: "Entdecken Sie die Schönheit und Geschichte Assuans bei einer exklusiven privaten Tour ab Hurghada." },
   "speed-boat": { name: "Privates Schnellboot", description: "Genießen Sie eine exklusive Fahrt mit einem privaten Schnellboot über das wunderschöne Rote Meer." },
-  "quad-safari": { name: "Private Quad-Safari", description: "Erleben Sie die ägyptische Wüste bei einem exklusiven Quad-Abenteuer." },
-  "buggy-safari": { name: "Private Buggy-Safari", description: "Erleben Sie ein aufregendes privates Buggy-Abenteuer in der ägyptischen Wüste." },
+  "quad-safari": { name: "Private Quad-Safari", description: "Erleben Sie eine private Quad-Safari mit flexiblen Optionen für 1 oder 3 Stunden. Wählen Sie Einzel- und Doppelquads passend zu Ihrer Gruppe." },
+  "buggy-safari": { name: "Private Buggy-Safari", description: "Erleben Sie ein privates 3-stündiges Buggy-Abenteuer mit Fahrzeugoptionen für 2 oder 4 Personen." },
   "private-boat": { name: "Privates Boot", description: "Genießen Sie eine exklusive private Bootstour am Roten Meer mit maximaler Privatsphäre, Komfort und Flexibilität." },
 };
 
@@ -305,7 +305,7 @@ export default async function LuxuryToursPage() {
 
                   {/* DURATION */}
                   <div className="absolute right-4 top-4 rounded-full border border-white/30 bg-white/90 px-3.5 py-2 text-[10px] font-bold uppercase tracking-wider text-blue-950 shadow-lg backdrop-blur-md">
-                    <HomeText en={tour.duration} de={tour.duration === "Full Day" ? "Ganztägig" : tour.duration === "Half Day" ? "Halbtägig" : tour.duration} />
+                    <HomeText en={tour.duration} de={tour.duration === "Full Day" ? "Ganztägig" : tour.duration === "Half Day" ? "Halbtägig" : tour.duration === "1–3 Hours" ? "1–3 Stunden" : tour.duration === "3 Hours" ? "3 Stunden" : tour.duration} />
                   </div>
 
                   {/* IMAGE BOTTOM */}
