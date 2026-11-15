@@ -1353,7 +1353,7 @@ ${notes.trim() || "-"}
                           ? formatSelectedDate(
                               date
                             )
-                          : "Select your tour date"}
+                          : (isGerman ? "Wählen Sie Ihr Tourdatum" : "Select your tour date")}
                       </p>
 
                       <p className="text-xs text-slate-400">
@@ -1601,9 +1601,7 @@ ${notes.trim() || "-"}
 
               {submitAttempted &&
                 !isDateValid &&
-                errorText(
-                  "Please select a valid tour date"
-                )}
+                errorText(isGerman ? "Bitte wählen Sie ein gültiges Tourdatum" : "Please select a valid tour date")}
 
             </div>
 
@@ -1927,29 +1925,17 @@ ${notes.trim() || "-"}
                             {isGerman ? `Alter von Kind ${index + 1} auswählen` : `Select Child ${index + 1} Age`}
                           </option>
 
-                          <option value="5">
-                            5 years
-                          </option>
+                          <option value="5">{isGerman ? "5 Jahre" : "5 years"}</option>
 
-                          <option value="6">
-                            6 years
-                          </option>
+                          <option value="6">{isGerman ? "6 Jahre" : "6 years"}</option>
 
-                          <option value="7">
-                            7 years
-                          </option>
+                          <option value="7">{isGerman ? "7 Jahre" : "7 years"}</option>
 
-                          <option value="8">
-                            8 years
-                          </option>
+                          <option value="8">{isGerman ? "8 Jahre" : "8 years"}</option>
 
-                          <option value="9">
-                            9 years
-                          </option>
+                          <option value="9">{isGerman ? "9 Jahre" : "9 years"}</option>
 
-                          <option value="10">
-                            10 years
-                          </option>
+                          <option value="10">{isGerman ? "10 Jahre" : "10 years"}</option>
 
                         </select>
 
@@ -2021,21 +2007,13 @@ ${notes.trim() || "-"}
                             {isGerman ? `Alter von Baby ${index + 1} auswählen` : `Select Infant ${index + 1} Age`}
                           </option>
 
-                          <option value="1">
-                            1 year
-                          </option>
+                          <option value="1">{isGerman ? "1 Jahr" : "1 year"}</option>
 
-                          <option value="2">
-                            2 years
-                          </option>
+                          <option value="2">{isGerman ? "2 Jahre" : "2 years"}</option>
 
-                          <option value="3">
-                            3 years
-                          </option>
+                          <option value="3">{isGerman ? "3 Jahre" : "3 years"}</option>
 
-                          <option value="4">
-                            4 years
-                          </option>
+                          <option value="4">{isGerman ? "4 Jahre" : "4 years"}</option>
 
                         </select>
 
