@@ -224,7 +224,7 @@ export default function Navbar() {
               className="relative h-[46px] w-auto object-contain transition-all duration-500 group-hover:scale-[1.035] sm:h-[58px]"
             />
 
-            <div className="ml-1.5 hidden flex-col justify-center sm:flex">
+            <div className="ml-1.5 hidden flex-col justify-center xl:flex">
 
               <div className="relative">
                 <p className="bg-gradient-to-r from-[#03112a] via-[#082d62] to-[#03112a] bg-clip-text text-[21px] font-black leading-[0.95] tracking-[-0.055em] text-transparent">
@@ -245,7 +245,7 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden items-center gap-0.5 lg:flex">
+        <nav className="hidden min-w-0 items-center gap-0 lg:flex">
 
           {navItems.map((item) => {
             const active = isActive(item.href);
@@ -255,7 +255,7 @@ export default function Navbar() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`group relative mx-1 flex items-center gap-2.5 overflow-hidden rounded-2xl border px-4 py-2.5 text-[13px] font-extrabold tracking-[-0.015em] transition-all duration-300 ${
+                  className={`group relative mx-0.5 flex shrink-0 items-center gap-1.5 whitespace-nowrap overflow-hidden rounded-xl border px-2.5 py-2 text-[11px] font-bold tracking-[-0.01em] transition-all duration-300 xl:gap-2 xl:px-3 xl:text-xs ${
                     active
                       ? "border-blue-950 bg-blue-950 text-white shadow-[0_8px_24px_rgba(3,17,42,0.22)]"
                       : "border-orange-100/80 bg-gradient-to-r from-orange-50/80 to-white text-blue-950 shadow-sm hover:-translate-y-0.5 hover:border-orange-200 hover:shadow-md"
@@ -286,7 +286,7 @@ export default function Navbar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`group relative mx-0.5 rounded-2xl px-3.5 py-3 text-[13px] font-extrabold tracking-[-0.015em] transition-all duration-300 ${
+                className={`group relative mx-0.5 shrink-0 whitespace-nowrap rounded-xl px-2.5 py-2.5 text-[11px] font-bold tracking-[-0.01em] transition-all duration-300 xl:px-3 xl:text-xs ${
                   active
                     ? "bg-slate-50 text-blue-950 shadow-sm"
                     : "text-slate-600 hover:-translate-y-0.5 hover:bg-slate-50 hover:text-blue-950"
@@ -326,7 +326,7 @@ export default function Navbar() {
           aria-label="Select currency"
           value={currency}
           onChange={(event) => setCurrency(event.target.value as CurrencyCode)}
-          className="ml-2 hidden h-10 rounded-xl border border-slate-200 bg-white px-2 text-xs font-extrabold text-blue-950 outline-none transition hover:border-orange-300 lg:inline-flex"
+          className="ml-1.5 hidden h-9 shrink-0 rounded-lg border border-slate-200 bg-white px-1.5 text-[10px] font-bold text-blue-950 outline-none transition hover:border-orange-300 lg:inline-flex xl:ml-2 xl:px-2 xl:text-xs"
         >
           <option value="EUR">EUR €</option>
           <option value="USD" disabled={rates.USD <= 0}>USD $</option>
@@ -339,7 +339,7 @@ export default function Navbar() {
           aria-label={theme === "dark" ? labels["Light mode"] : labels["Dark mode"]}
           aria-pressed={theme === "dark"}
           title={theme === "dark" ? labels["Light mode"] : labels["Dark mode"]}
-          className="ml-2 hidden h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white text-blue-950 transition hover:border-orange-300 hover:bg-orange-50 lg:inline-flex"
+          className="ml-1.5 hidden h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-slate-200 bg-white text-blue-950 transition hover:border-orange-300 hover:bg-orange-50 lg:inline-flex xl:ml-2"
         >
           {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
         </button>
@@ -348,20 +348,20 @@ export default function Navbar() {
           type="button"
           onClick={toggleLanguage}
           aria-label={language === "en" ? "Switch to German" : "Auf Englisch wechseln"}
-          className="hidden shrink-0 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-extrabold text-blue-950 transition hover:border-orange-300 hover:bg-orange-50 lg:inline-flex"
+          className="ml-1.5 hidden shrink-0 whitespace-nowrap rounded-lg border border-slate-200 bg-white px-2 py-2 text-[10px] font-bold text-blue-950 transition hover:border-orange-300 hover:bg-orange-50 lg:inline-flex xl:ml-2 xl:px-2.5 xl:text-xs"
         >
           {language === "en" ? "DE" : "EN"}
         </button>
 
         {/* Desktop Account */}
-        <div className="hidden items-center lg:flex">
+        <div className="ml-1.5 hidden shrink-0 items-center lg:flex xl:ml-2">
 
           {userName ? (
             <div className="flex items-center gap-2">
 
               <Link
                 href="/account"
-                className={`group flex items-center gap-2.5 rounded-2xl border px-3 py-2 transition-all duration-300 ${
+                className={`group flex items-center gap-2 rounded-xl border px-2 py-1.5 transition-all duration-300 ${
                   pathname.startsWith("/account")
                     ? "border-blue-100 bg-blue-50 text-blue-950"
                     : "border-transparent text-blue-900 hover:border-slate-200 hover:bg-slate-50"
@@ -389,10 +389,10 @@ export default function Navbar() {
             </div>
           ) : (
             <div className="ml-3 flex items-center gap-2">
-              <Link href="/login?mode=register" className="rounded-2xl border border-blue-950/15 bg-white px-4 py-3 text-[13px] font-black text-blue-950 transition-all duration-300 hover:border-blue-950 hover:bg-blue-50">
+              <Link href="/login?mode=register" className="whitespace-nowrap rounded-xl border border-blue-950/15 bg-white px-2.5 py-2 text-[11px] font-bold text-blue-950 transition-all duration-300 hover:border-blue-950 hover:bg-blue-50 xl:px-3 xl:text-xs">
                 {labels.Register}
               </Link>
-              <Link href="/login" className="group relative flex items-center gap-2 overflow-hidden rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 px-5 py-3 text-[13px] font-black text-white shadow-[0_8px_25px_rgba(249,115,22,0.22)] transition-all duration-300 hover:-translate-y-0.5 hover:from-orange-600 hover:to-amber-500 hover:shadow-[0_12px_30px_rgba(249,115,22,0.28)]">
+              <Link href="/login" className="group relative flex items-center gap-1.5 overflow-hidden whitespace-nowrap rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 px-3 py-2 text-[11px] font-bold text-white shadow-[0_8px_25px_rgba(249,115,22,0.22)] transition-all duration-300 hover:-translate-y-0.5 hover:from-orange-600 hover:to-amber-500 hover:shadow-[0_12px_30px_rgba(249,115,22,0.28)] xl:px-3.5 xl:text-xs">
                 <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
                 <span className="relative">{labels["Log In"]}</span>
                 <span className="relative text-base transition-transform duration-300 group-hover:translate-x-1">→</span>
