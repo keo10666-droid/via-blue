@@ -971,7 +971,7 @@ export default function AITripPlannerPage() {
                                         <select
                                           key={`${pkg.id}-${tour.slug}`}
                                           defaultValue=""
-                                          aria-label={language === "de" ? `Erlebnis ersetzen: ${tour.name}` : `Replace experience: ${tour.name}`}
+                                          aria-label={language === "de" ? `Erlebnis ersetzen: ${tour.name}` : language === "fr" ? `Remplacer l’expérience : ${tour.name}` : `Replace experience: ${tour.name}`}
                                           onChange={(event) => {
                                             if (event.target.value) {
                                               replacePackageTour(
@@ -1375,7 +1375,7 @@ export default function AITripPlannerPage() {
                         min="0"
                         value={budget}
                         onChange={(e) => setBudget(e.target.value)}
-                        placeholder={language === "de" ? "Betrag eingeben" : "Enter amount"}
+                        placeholder={language === "de" ? "Betrag eingeben" : language === "fr" ? "Saisir le montant" : "Enter amount"}
                         className="h-16 w-full rounded-2xl border border-gray-200 bg-white pl-12 pr-5 text-xl font-bold text-blue-950 outline-none transition placeholder:text-base placeholder:font-normal placeholder:text-gray-300 focus:border-blue-950 focus:ring-4 focus:ring-blue-950/5"
                       />
                     </div>
