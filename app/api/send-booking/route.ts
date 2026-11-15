@@ -468,6 +468,40 @@ export async function POST(request: Request) {
       fields,
     } = parseBookingHtml(validHtml);
 
+    const requestedTour = typeof tourSlug === "string"
+      ? tours[tourSlug as keyof typeof tours]
+      : undefined;
+    if (requestedTour?.category === "desert-adventures") {
+      const photoChoice = getField(fields, "Lion Photo").toLowerCase();
+      const photoQuantityText = getField(fields, "Lion Photo Quantity");
+      const photoQuantity = Number(photoQuantityText);
+      const totalGuests = Number(getField(fields, "Total Guests"));
+      const selectedCurrency = getField(fields, "Currency");
+      const exchangeRate = Number(getField(fields, "Exchange Rate") || 1);
+      const displayRate = selectedCurrency === "EUR" ? 1 : Number.isFinite(exchangeRate) && exchangeRate > 0 ? exchangeRate : 1;
+      const parseMoney = (value: string) => Number(value.replace(/,/g, "").replace(/[^\d.-]/g, ""));
+      const unitPrice = parseMoney(getField(fields, "Lion Photo Unit Price"));
+      const reportedPhotoTotal = parseMoney(getField(fields, "Lion Photo Total"));
+      const subtotalText = getField(fields, "Total Before Discount");
+      const subtotal = parseMoney(subtotalText);
+      const expectedUnitPrice = Math.round(10 * displayRate * 100) / 100;
+      const expectedPhotoTotal = Math.round(photoQuantity * expectedUnitPrice * 100) / 100;
+      const selectionValid = photoChoice === "yes" || photoChoice === "no";
+      const quantityValid = Number.isInteger(photoQuantity) &&
+        photoQuantity >= 0 &&
+        photoQuantity <= totalGuests &&
+        (photoChoice === "yes" ? photoQuantity >= 1 : photoQuantity === 0);
+      const pricesValid = Number.isFinite(unitPrice) &&
+        Math.abs(unitPrice - expectedUnitPrice) < 0.011 &&
+        Number.isFinite(reportedPhotoTotal) &&
+        Math.abs(reportedPhotoTotal - expectedPhotoTotal) < 0.011 &&
+        Number.isFinite(subtotal) &&
+        subtotal >= photoQuantity * 10;
+      if (!selectionValid || !quantityValid || !pricesValid) {
+        return Response.json({ success: false, error: "Invalid safari lion photo add-on details." }, { status: 400 });
+      }
+    }
+
     const emailForRateLimit = getField(fields, "Email").trim();
     if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailForRateLimit) &&
       await isIdentifierRateLimited(emailForRateLimit.toLowerCase(), "booking-confirmation-email", 3, 3600)) {
@@ -544,6 +578,7 @@ export async function POST(request: Request) {
         "Transfer Type",
         "Museum",
         "Vehicle",
+        "Lion Photo",
       ]
     );
 
@@ -566,6 +601,7 @@ export async function POST(request: Request) {
         "Total Guests",
         "Children Ages",
         "Infant Ages",
+        "Lion Photo Quantity",
         "Passengers",
         "Luggage",
       ]
@@ -581,6 +617,8 @@ export async function POST(request: Request) {
         "Exchange Rate (EUR to USD)",
         "Exchange Rate (EUR to GBP)",
         "Total Before Discount",
+        "Lion Photo Unit Price",
+        "Lion Photo Total",
         "Discount",
         "Promo Code",
         "PRIVATE TOUR PRICE",
