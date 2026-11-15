@@ -256,6 +256,8 @@ export default function BookingPage() {
   const [adults, setAdults] = useState("1");
   const [children, setChildren] = useState("0");
   const [infants, setInfants] = useState("0");
+  const [lionPhotoSelected, setLionPhotoSelected] = useState(false);
+  const [lionPhotoCount, setLionPhotoCount] = useState("1");
 
   const [selectedVehicle, setSelectedVehicle] =
   useState<"bus" | "van">("bus");
@@ -318,6 +320,10 @@ const selectedCairoVehicleOption =
     ? selectedCairoOption[selectedVehicle]
     : null;
 
+  const hasLionPhotoOption = tour.category === "desert-adventures";
+  const lionPhotoQuantity = lionPhotoSelected ? Number(lionPhotoCount || 0) : 0;
+  const lionPhotoTotal = lionPhotoQuantity * 10;
+
   const baseTotalPrice =
   slug === "speed-boat"
     ? tour.price +
@@ -354,7 +360,7 @@ const selectedCairoVehicleOption =
   const hotelAreaSurcharge =
     (Number(adults || 0) + Number(children || 0)) * hotelAreaSurchargePerPerson;
 
-  const totalPrice = baseTotalPrice + hotelAreaSurcharge;
+  const totalPrice = baseTotalPrice + hotelAreaSurcharge + lionPhotoTotal;
   const promoDiscountAmount = promoFixedAmount !== null ? Math.min(totalPrice, promoFixedAmount) : promoDiscountPercent === null ? 0 : Math.round(totalPrice * promoDiscountPercent) / 100;
   const finalTotalPrice = Math.max(0, Math.round((totalPrice - promoDiscountAmount) * 100) / 100);
 
@@ -614,7 +620,8 @@ const selectedCairoVehicleOption =
     isEmailValid &&
     isDateValid &&
     allChildAgesSet &&
-    allInfantAgesSet;
+    allInfantAgesSet &&
+    (!hasLionPhotoOption || !lionPhotoSelected || (lionPhotoQuantity >= 1 && lionPhotoQuantity <= totalGuests));
 
   const inputClass = (
     invalid: boolean
@@ -680,6 +687,14 @@ Hotel: ${hotel || "Not specified"}
 Hotel Area: ${hotelArea}
 
 Hotel Area Surcharge: ${formatCurrency(hotelAreaSurcharge)}
+
+Lion Photo: ${lionPhotoSelected ? "Yes" : "No"}
+
+Lion Photo Quantity: ${lionPhotoQuantity}
+
+Lion Photo Unit Price: €10.00
+
+Lion Photo Total: €${lionPhotoTotal.toFixed(2)}
 
 Promo Code: ${promoDiscountPercent !== null ? promoCode.trim().toUpperCase() : "Not used"}
 
