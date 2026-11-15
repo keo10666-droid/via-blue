@@ -86,8 +86,8 @@ export default function SimCardSection() {
         body: JSON.stringify({ ...form, whatsapp: whatsappCountryCode + form.whatsapp.replace(/^0+/, "").replace(/[\s()-]/g, ""), network: selectedNetwork.id, packageId: selectedPackage.id, delivery, currency }),
       });
       const result = await response.json();
-      if (!response.ok || !result.success) { setOrderError(result.error || isGerman ? "Ihre Bestellung konnte nicht gesendet werden. Bitte versuchen Sie es erneut." : "We couldn't submit your order. Please try again."); return; }
-      setOrderReference(result.referenceCode || isGerman ? "Ihre Bestellung ist eingegangen" : "Your order has been received");
+      if (!response.ok || !result.success) { setOrderError(result.error || (isGerman ? "Ihre Bestellung konnte nicht gesendet werden. Bitte versuchen Sie es erneut." : "We couldn't submit your order. Please try again.")); return; }
+      setOrderReference(result.referenceCode || (isGerman ? "Ihre Bestellung ist eingegangen" : "Your order has been received"));
       setForm({ fullName: "", whatsapp: "", arrivalDate: "", hotel: "", roomNumber: "" });
     } catch { setOrderError(isGerman ? "Verbindungsproblem. Bitte versuchen Sie es erneut." : "Connection problem. Please try again."); }
     finally { setSubmitting(false); }
