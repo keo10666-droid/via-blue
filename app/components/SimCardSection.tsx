@@ -73,7 +73,7 @@ export default function SimCardSection() {
     try {
       const response = await fetch("/api/sim-card-order", {
         method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, whatsapp: whatsappCountryCode + form.whatsapp.replace(/^0+/, "").replace(/[\\s()-]/g, ""), network: selectedNetwork.id, packageId: selectedPackage.id, delivery, currency }),
+        body: JSON.stringify({ ...form, whatsapp: whatsappCountryCode + form.whatsapp.replace(/^0+/, "").replace(/[\s()-]/g, ""), network: selectedNetwork.id, packageId: selectedPackage.id, delivery, currency }),
       });
       const result = await response.json();
       if (!response.ok || !result.success) { setOrderError(result.error || "We couldn't submit your order. Please try again."); return; }
