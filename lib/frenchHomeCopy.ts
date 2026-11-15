@@ -605,6 +605,14 @@ const frenchCopy: Record<string, string> = {
   "Van": "Van",
   "Luxury": "Luxe",
   "Coster": "Minibus",
+  "Islands & Boat Trips": "Îles et excursions en bateau",
+  "Snorkeling & Diving": "Snorkeling et plongée",
+  "Sea & Water Activities": "Activités nautiques",
+  "Dolphin Experiences": "Expériences avec les dauphins",
+  "Egypt Tours & Excursions": "Excursions en Égypte",
+  "Family & Attractions": "Famille et attractions",
+  "Comfortable airport and hotel transfers with dependable service across Hurghada and the Red Sea": "Transferts confortables depuis l’aéroport et les hôtels, avec un service fiable à Hurghada et sur la mer Rouge",
+  "Explore Egypt": "Découvrez l’Égypte",
 };
 
 export function frenchHomeText(value: string): string {
