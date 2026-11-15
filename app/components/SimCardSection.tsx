@@ -92,6 +92,7 @@ export default function SimCardSection() {
                 <p className="text-[10px] font-bold uppercase tracking-widest text-blue-100/60">From</p>
                 <p className="text-3xl font-black text-orange-300">{symbol}10</p>
               </div>
+            </div>
             <div className="relative mt-5 border-t border-white/15 pt-4">
               <p className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-blue-100/80">Choose how to receive your SIM</p>
               <div className="mt-3 grid grid-cols-2 gap-2">
@@ -104,7 +105,6 @@ export default function SimCardSection() {
                   <span className="mt-1 block text-[11px] font-semibold text-orange-200">+ {symbol}5</span>
                 </button>
               </div>
-            </div>
             </div>
           </div>
 
