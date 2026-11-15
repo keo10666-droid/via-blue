@@ -19,6 +19,7 @@ import {
   Ship,
   Sparkles,
   TicketPercent,
+  Smartphone,
 } from "lucide-react";
 
 import { logoutAdmin } from "@/app/admin/login/actions";
@@ -84,6 +85,15 @@ const modules = [
     tag: "Available now",
     available: true,
     iconClass: "bg-orange-50 text-orange-600",
+  },
+  {
+    title: "SIM card orders",
+    description: "Review customer SIM card orders, selected network, delivery and contact details.",
+    href: "/admin/sim-cards",
+    icon: Smartphone,
+    tag: "Available now",
+    available: true,
+    iconClass: "bg-orange-50 text-orange-700",
   },
   {
     title: "Tours & experiences",
