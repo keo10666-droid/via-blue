@@ -21,9 +21,10 @@ export default function ReviewsList({ tourSlug }: ReviewsListProps) {
   const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isGerman, setIsGerman] = useState(false);
+  const [isFrench, setIsFrench] = useState(false);
 
   useEffect(() => {
-    const syncLanguage = () => setIsGerman(window.localStorage.getItem("via-blue-language") === "de");
+    const syncLanguage = () => { const language = window.localStorage.getItem("via-blue-language"); setIsGerman(language === "de"); setIsFrench(language === "fr"); };
     syncLanguage();
     window.addEventListener("via-blue-language-change", syncLanguage);
     return () => window.removeEventListener("via-blue-language-change", syncLanguage);
@@ -157,7 +158,7 @@ export default function ReviewsList({ tourSlug }: ReviewsListProps) {
                         <p className="mt-0.5 text-sm text-slate-400">
                           {new Date(
                             reviews[currentIndex].created_at
-                          ).toLocaleDateString(isGerman ? "de-DE" : "en-GB")}
+                          ).toLocaleDateString(isGerman ? "de-DE" : isFrench ? "fr-FR" : "en-GB")}
                         </p>
                       </div>
                     </div>
@@ -181,7 +182,7 @@ export default function ReviewsList({ tourSlug }: ReviewsListProps) {
               <button
                 type="button"
                 onClick={goToPrevious}
-                aria-label={isGerman ? "Vorherige Bewertung" : "Previous review"} title={isGerman ? "Vorherige Bewertung" : "Previous review"}
+                aria-label={isGerman ? "Vorherige Bewertung" : isFrench ? "Avis précédent" : "Previous review"} title={isGerman ? "Vorherige Bewertung" : isFrench ? "Avis précédent" : "Previous review"}
                 className="absolute left-1 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white text-xl font-bold text-blue-950 shadow-[0_10px_30px_rgba(7,26,54,0.12)] transition duration-300 hover:-translate-x-0.5 hover:bg-blue-950 hover:text-white hover:shadow-[0_14px_35px_rgba(7,26,54,0.2)] sm:left-2"
               >
                 ←
@@ -190,7 +191,7 @@ export default function ReviewsList({ tourSlug }: ReviewsListProps) {
               <button
                 type="button"
                 onClick={goToNext}
-                aria-label={isGerman ? "Nächste Bewertung" : "Next review"} title={isGerman ? "Nächste Bewertung" : "Next review"}
+                aria-label={isGerman ? "Nächste Bewertung" : isFrench ? "Avis suivant" : "Next review"} title={isGerman ? "Nächste Bewertung" : isFrench ? "Avis suivant" : "Next review"}
                 className="absolute right-1 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white text-xl font-bold text-blue-950 shadow-[0_10px_30px_rgba(7,26,54,0.12)] transition duration-300 hover:translate-x-0.5 hover:bg-blue-950 hover:text-white hover:shadow-[0_14px_35px_rgba(7,26,54,0.2)] sm:right-2"
               >
                 →
