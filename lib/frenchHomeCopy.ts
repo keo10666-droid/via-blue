@@ -1016,6 +1016,17 @@ const frenchCopy: Record<string, string> = {
   "Private boat": "Bateau privé",
   "Exclusive private experience": "Expérience privée exclusive",
   "Flexible timing": "Horaires flexibles",
+  "Island escape": "Évasion insulaire",
+  "Beach club": "Club de plage",
+  "Island vibes": "Ambiance insulaire",
+  "Natural beauty": "Beauté naturelle",
+  "Sea & sand": "Mer et sable",
+  "Premium beach": "Plage haut de gamme",
+  "Private escape": "Escapade privée",
+  "Protected island": "Île protégée",
+  "Paradise Island": "Île Paradise",
+  "Eden Island": "Île Eden",
+  "Paradise": "Paradise",
   "What's Not Included": "Ce qui n’est pas inclus",
 };
 
