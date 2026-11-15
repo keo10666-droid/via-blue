@@ -11,9 +11,9 @@ type OrderBody = {
   network?: unknown;
   delivery?: unknown;
   currency?: unknown;
+  packageId?: unknown;
 };
 
-const NETWORKS = ["Orange", "Vodafone", "Etisalat", "WE"] as const;
 const CURRENCIES = ["EUR", "USD", "GBP"] as const;
 
 function clean(value: unknown, max = 180) {
@@ -43,6 +43,7 @@ export async function POST(request: Request) {
     const network = clean(body.network, 30);
     const delivery = clean(body.delivery, 20);
     const currency = clean(body.currency, 3);
+    const packageId = clean(body.packageId, 80);
 
     if (!fullName || !whatsapp || !arrivalDate || !hotel) {
       return Response.json({ success: false, error: "Please complete your name, WhatsApp number, arrival date and hotel." }, { status: 400 });
@@ -53,38 +54,47 @@ export async function POST(request: Request) {
     if (!/^\d{4}-\d{2}-\d{2}$/.test(arrivalDate) || Number.isNaN(Date.parse(arrivalDate))) {
       return Response.json({ success: false, error: "Please select a valid arrival date." }, { status: 400 });
     }
-    if (!(NETWORKS as readonly string[]).includes(network) || !["airport", "hotel"].includes(delivery) || !(CURRENCIES as readonly string[]).includes(currency)) {
+    if (!["airport", "hotel"].includes(delivery) || !(CURRENCIES as readonly string[]).includes(currency) || !packageId) {
       return Response.json({ success: false, error: "Invalid SIM card selection." }, { status: 400 });
     }
 
+    const supabase = createSupabaseAdminClient();
+    if (!supabase) return Response.json({ success: false, error: "Orders are temporarily unavailable. Please try again shortly." }, { status: 503 });
+    const { data: configRow, error: configError } = await supabase.from("sim_card_settings").select("settings").eq("id", "default").maybeSingle();
+    if (configError || !configRow?.settings) return Response.json({ success: false, error: "SIM packages are temporarily unavailable." }, { status: 503 });
+    const config = configRow.settings as {
+      packages: Array<{ id: string; name: string; dataGb: number; active: boolean; prices: Record<string, number> }>;
+      networks: Array<{ id: string; name: string; active: boolean }>;
+      deliveryPrices: Record<string, number>;
+    };
+    const selectedPackage = config.packages?.find((item) => item.id === packageId && item.active);
+    const selectedNetwork = config.networks?.find((item) => item.id === network && item.active);
+    if (!selectedPackage || !selectedNetwork) return Response.json({ success: false, error: "This package or network is no longer available. Please refresh the page." }, { status: 400 });
     const symbol = currency === "EUR" ? "€" : currency === "USD" ? "$" : "£";
-    const total = delivery === "hotel" ? 15 : 10;
-    const totalPrice = symbol + total;
-    const deliveryLabel = delivery === "hotel" ? "Hotel delivery (+5)" : "Airport pickup (Free)";
+    const basePrice = Number(selectedPackage.prices?.[currency]);
+    const deliveryFee = delivery === "hotel" ? Number(config.deliveryPrices?.[currency]) : 0;
+    if (!Number.isFinite(basePrice) || !Number.isFinite(deliveryFee)) return Response.json({ success: false, error: "Pricing is temporarily unavailable." }, { status: 503 });
+    const total = basePrice + deliveryFee;
+    const totalPrice = symbol + total.toFixed(2).replace(/\\.00$/, "");
+    const deliveryLabel = delivery === "hotel" ? "Hotel delivery (+" + symbol + deliveryFee + ")" : "Airport pickup (Free)";
     const fields = [
       { label: "Full Name", value: fullName },
       { label: "WhatsApp", value: whatsapp },
       { label: "Arrival Date", value: arrivalDate },
       { label: "Hotel", value: hotel },
       { label: "Room Number", value: roomNumber || "Not provided" },
-      { label: "SIM Network", value: network },
-      { label: "Package", value: "25 GB Data + Calls" },
+      { label: "SIM Network", value: selectedNetwork.name },
+      { label: "Package", value: selectedPackage.name + " (" + selectedPackage.dataGb + " GB)" },
       { label: "Delivery", value: deliveryLabel },
       { label: "Currency", value: currency },
       { label: "Total Price", value: totalPrice },
     ];
 
-    const supabase = createSupabaseAdminClient();
-    if (!supabase) {
-      console.error("SIM order could not be saved: admin database client is unavailable.");
-      return Response.json({ success: false, error: "Orders are temporarily unavailable. Please try again shortly." }, { status: 503 });
-    }
-
     const referenceCode = "VB-SIM-" + new Date().getFullYear() + "-" + crypto.randomUUID().slice(0, 8).toUpperCase();
     const { error: saveError } = await supabase.from("booking_requests").insert({
       reference_code: referenceCode,
       booking_type: "sim_card",
-      booking_name: "Egypt SIM Card - " + network,
+      booking_name: "Egypt SIM Card - " + selectedNetwork.name + " - " + selectedPackage.name,
       customer_name: fullName,
       customer_email: null,
       customer_whatsapp: whatsapp,
