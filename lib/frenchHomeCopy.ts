@@ -848,6 +848,7 @@ const frenchCopy: Record<string, string> = {
   "Edit email": "Modifier l’adresse e-mail",
   "Date to be confirmed": "Date à confirmer",
   "Add a caption (optional)": "Ajouter une légende (facultatif)",
+  "you@example.com": "vous@exemple.fr",
   "What's Not Included": "Ce qui n’est pas inclus",
 };
 
