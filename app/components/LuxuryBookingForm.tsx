@@ -576,13 +576,14 @@ export default function LuxuryBookingForm({
 }: LuxuryBookingFormProps) {
   const { currency, formatCurrency, rate } = useCurrency();
   const [isGerman, setIsGerman] = useState(false);
+  const [isFrench, setIsFrench] = useState(false);
   const displayTourName = isGerman ? (germanLuxuryTourNames[tourName] ?? tourName) : tourName;
   const displayTourType = isGerman ? (germanLuxuryTourTypes[tourType] ?? tourType) : tourType;
   const displayIncluded = isGerman
     ? included.map((item) => germanLuxuryIncluded[item] ?? item)
     : included;
   useEffect(() => {
-    const syncLanguage = () => setIsGerman(localStorage.getItem("via-blue-language") === "de");
+    const syncLanguage = () => { const language = localStorage.getItem("via-blue-language"); setIsGerman(language === "de"); setIsFrench(language === "fr"); };
     syncLanguage();
     window.addEventListener("via-blue-language-change", syncLanguage);
     return () => window.removeEventListener("via-blue-language-change", syncLanguage);
@@ -960,7 +961,7 @@ ${notes.trim() || "-"}
         email={email.trim()}
         emailSent={confirmationEmailSent}
         backHref="/luxury-tours"
-        backLabel={isGerman ? "Zurück zu den Luxus-Ausflügen" : "Back to Luxury Tours"}
+        backLabel={isGerman ? "Zurück zu den Luxus-Ausflügen" : isFrench ? "Retour aux excursions VIP" : "Back to Luxury Tours"}
         onClose={() => setShowSuccess(false)}
       />
       <main className="min-h-screen bg-[#f5f7fa] px-4 py-8 sm:px-6 lg:py-12">
@@ -1065,7 +1066,7 @@ ${notes.trim() || "-"}
 
                         <input
                           type="text"
-                          placeholder={isGerman ? "Vollständigen Namen eingeben" : "Enter full name"}
+                          placeholder={isGerman ? "Vollständigen Namen eingeben" : isFrench ? "Saisir le nom complet" : "Enter full name"}
                           value={name}
                           onChange={(e) =>
                             setName(e.target.value)
@@ -1095,7 +1096,7 @@ ${notes.trim() || "-"}
 
                         <input
                           type="text"
-                          placeholder={isGerman ? "Nationalität auswählen" : "Select nationality"}
+                          placeholder={isGerman ? "Nationalität auswählen" : isFrench ? "Choisir la nationalité" : "Select nationality"}
                           value={nationality}
                           onChange={(e) => {
                             setNationality(e.target.value);
@@ -1154,7 +1155,7 @@ ${notes.trim() || "-"}
 
                         <input
                           type="email"
-                          placeholder={isGerman ? "du@beispiel.de" : "you@example.com"}
+                          placeholder={isGerman ? "du@beispiel.de" : isFrench ? "vous@exemple.com" : "you@example.com"}
                           value={email}
                           onChange={(e) =>
                             setEmail(e.target.value)
@@ -1207,7 +1208,7 @@ ${notes.trim() || "-"}
                               <div className="border-b border-slate-100 p-3">
                                 <input
                                   type="text"
-                                  placeholder={isGerman ? "Land oder Vorwahl suchen..." : "Search country or dial code..."}
+                                  placeholder={isGerman ? "Land oder Vorwahl suchen..." : isFrench ? "Rechercher un pays ou un indicatif..." : "Search country or dial code..."}
                                   value={countrySearch}
                                   onChange={(e) =>
                                     setCountrySearch(
@@ -1264,7 +1265,7 @@ ${notes.trim() || "-"}
 
                           <input
                             type="tel"
-                            placeholder={isGerman ? "WhatsApp-Nummer" : "WhatsApp number"}
+                            placeholder={isGerman ? "WhatsApp-Nummer" : isFrench ? "Numéro WhatsApp" : "WhatsApp number"}
                             value={phone}
                             onChange={(e) =>
                               setPhone(e.target.value)
@@ -1320,7 +1321,7 @@ ${notes.trim() || "-"}
 
                         <input
                           type="text"
-                          placeholder={isGerman ? "Name Ihres Hotels" : "Hotel name"}
+                          placeholder={isGerman ? "Name Ihres Hotels" : isFrench ? "Nom de l’hôtel" : "Hotel name"}
                           value={hotel}
                           onChange={(e) =>
                             setHotel(e.target.value)
@@ -1342,7 +1343,7 @@ ${notes.trim() || "-"}
 
                         <input
                           type="text"
-                          placeholder={isGerman ? "Zimmernummer" : "Room number"}
+                          placeholder={isGerman ? "Zimmernummer" : isFrench ? "Numéro de chambre" : "Room number"}
                           value={roomNumber}
                           onChange={(e) =>
                             setRoomNumber(e.target.value)
@@ -1616,8 +1617,8 @@ ${notes.trim() || "-"}
                               <label key={index} className="text-xs font-semibold text-slate-600">
                                 <HomeText en={"Child " + (index + 1)} de={"Kind " + (index + 1)} />
                                 <select value={childAges[index] ?? ""} onChange={(e) => setChildAges((ages) => Array.from({ length: children }, (_, i) => i === index ? e.target.value : (ages[i] ?? "")))} className="mt-2 h-11 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-800">
-                                  <option value="">{isGerman ? "Alter auswählen" : "Select age"}</option>
-                                  {Array.from({ length: 10 }, (_, age) => <option key={age + 2} value={String(age + 2)}>{age + 2} {isGerman ? "Jahre" : "years"}</option>)}
+                                  <option value="">{isGerman ? "Alter auswählen" : isFrench ? "Choisir l’âge" : "Select age"}</option>
+                                  {Array.from({ length: 10 }, (_, age) => <option key={age + 2} value={String(age + 2)}>{age + 2} {isGerman ? "Jahre" : isFrench ? "ans" : "years"}</option>)}
                                 </select>
                               </label>
                             ))}
@@ -1633,7 +1634,7 @@ ${notes.trim() || "-"}
                                 <HomeText en={"Infant " + (index + 1)} de={"Baby " + (index + 1)} />
                                 <select value={infantAges[index] ?? ""} onChange={(e) => setInfantAges((ages) => Array.from({ length: infants }, (_, i) => i === index ? e.target.value : (ages[i] ?? "")))} className="mt-2 h-11 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-800">
                                   <option value="">Select age</option>
-                                  {Array.from({ length: 24 }, (_, age) => <option key={age} value={String(age)}>{age} {isGerman ? (age === 1 ? "Monat" : "Monate") : "months"}</option>)}
+                                  {Array.from({ length: 24 }, (_, age) => <option key={age} value={String(age)}>{age} {isGerman ? (age === 1 ? "Monat" : "Monate") : isFrench ? "mois" : "months"}</option>)}
                                 </select>
                               </label>
                             ))}
@@ -2029,7 +2030,7 @@ ${notes.trim() || "-"}
 
                   <textarea
                     rows={5}
-                    placeholder={isGerman ? "Teilen Sie uns besondere Wünsche, Vorlieben oder wichtige Details mit..." : "Tell us any special requests, preferences, or important details..."}
+                    placeholder={isGerman ? "Teilen Sie uns besondere Wünsche, Vorlieben oder wichtige Details mit..." : isFrench ? "Indiquez vos demandes particulières, préférences ou toute information importante..." : "Tell us any special requests, preferences, or important details..."}
                     value={notes}
                     onChange={(e) =>
                       setNotes(e.target.value)
