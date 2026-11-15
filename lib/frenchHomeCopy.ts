@@ -953,6 +953,23 @@ const frenchCopy: Record<string, string> = {
   "Matching real Via Blue experiences": "Sélection des expériences Via Blue adaptées",
   "Optimizing your days and activities": "Optimisation de vos journées et activités",
   "Building 3 personalized packages": "Création de 3 forfaits personnalisés",
+  "The Red Sea Is Waiting": "La mer Rouge vous attend",
+  "Swim": "Nagez",
+  "Make Memories": "Créez des souvenirs",
+  "From crystal-clear waters and beautiful islands to unforgettable desert landscapes, Hurghada has an experience waiting for you": "Des eaux cristallines aux îles magnifiques, en passant par des paysages désertiques inoubliables, Hurghada vous réserve de belles expériences",
+  "Find Your Experience": "Trouvez votre expérience",
+  "Your Hurghada Adventure Starts Here": "Votre aventure à Hurghada commence ici",
+  "Don't Just Visit Hurghada": "Ne faites pas que visiter Hurghada",
+  "Experience It": "Vivez-la",
+  "Choose your next adventure, book with confidence and get ready for an unforgettable Red Sea experience": "Choisissez votre prochaine aventure, réservez en toute confiance et préparez-vous à vivre une expérience inoubliable en mer Rouge",
+  "Passenger": "Passager",
+  "Bag": "Bagage",
+  "Old Museum": "Ancien musée",
+  "Egyptian Museum in Tahrir": "Musée égyptien de la place Tahrir",
+  "New Museum": "Nouveau musée",
+  "Grand Egyptian Museum (GEM)": "Grand Musée égyptien (GEM)",
+  "Comfortable group transport": "Transport de groupe confortable",
+  "Smaller group, more flexible": "Petit groupe, plus de flexibilité",
   "What's Not Included": "Ce qui n’est pas inclus",
 };
 
@@ -962,6 +979,18 @@ export function frenchHomeText(value: string): string {
 
   // Preserve dynamic names, locations, and totals while translating the surrounding copy.
   if (value.startsWith("Book ")) return `Réserver ${value.slice(5)}`;
+  if (value.startsWith("Additional pickup fee: ")) {
+    return value.replace("Additional pickup fee: ", "Supplément de prise en charge : ").replace(" per adult or child.", " par adulte ou enfant.");
+  }
+  if (value.startsWith("Speedboat: ") && value.endsWith(" chargeable guests")) {
+    return value.replace("Speedboat: ", "Bateau rapide : ").replace(" chargeable guests", " voyageurs payants");
+  }
+  if (value.startsWith("Adults × ")) return value.replace("Adults × ", "Adultes × ");
+  if (value.startsWith("Children × ")) return value.replace("Children × ", "Enfants × ");
+  if (value.startsWith("Infants × ")) return value.replace("Infants × ", "Bébés × ");
+  if (value.includes(" guests × ") && value.endsWith(" per adult/child")) {
+    return value.replace(" guests × ", " voyageurs × ").replace(" per adult/child", " par adulte/enfant");
+  }
   if (value.startsWith("Enter the 6-digit password reset code we sent to ")) {
     return value.replace("Enter the 6-digit password reset code we sent to ", "Saisissez le code de réinitialisation à 6 chiffres envoyé à ");
   }
