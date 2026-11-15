@@ -692,9 +692,9 @@ Lion Photo: ${lionPhotoSelected ? "Yes" : "No"}
 
 Lion Photo Quantity: ${lionPhotoQuantity}
 
-Lion Photo Unit Price: €10.00
+Lion Photo Unit Price: ${formatCurrency(10)}
 
-Lion Photo Total: €${lionPhotoTotal.toFixed(2)}
+Lion Photo Total: ${formatCurrency(lionPhotoTotal)}
 
 Promo Code: ${promoDiscountPercent !== null ? promoCode.trim().toUpperCase() : "Not used"}
 
