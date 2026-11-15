@@ -1880,9 +1880,9 @@ ${notes.trim() || "-"}
                                 aria-pressed={active}
                                 className={`relative min-h-[132px] overflow-hidden rounded-2xl border p-5 text-left transition-all duration-300 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-100 ${active ? "border-[#071a36] bg-slate-50 shadow-[0_12px_28px_rgba(7,26,54,0.10)] ring-1 ring-[#071a36]" : "border-slate-200 bg-white hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md"}`}
                               >
-                                <span className="text-[9px] font-bold tracking-[0.18em] text-orange-500">{museum.short}</span>
-                                <span className="mt-2 block text-base font-bold text-[#071a36]">{museum.title}</span>
-                                <span className="mt-1 block text-sm text-slate-500">{museum.subtitle}</span>
+                                <span className="text-[9px] font-bold tracking-[0.18em] text-orange-500">{isFrench ? frenchHomeText(museum.short) : museum.short}</span>
+                                <span className="mt-2 block text-base font-bold text-[#071a36]">{isFrench ? frenchHomeText(museum.title) : museum.title}</span>
+                                <span className="mt-1 block text-sm text-slate-500">{isFrench ? frenchHomeText(museum.subtitle) : museum.subtitle}</span>
                                 <span className={`absolute right-4 top-4 flex h-5 w-5 items-center justify-center rounded-full border text-[10px] ${active ? "border-orange-500 bg-orange-500 text-white" : "border-slate-300 text-transparent"}`}>✓</span>
                               </button>
                             );
@@ -1940,8 +1940,8 @@ ${notes.trim() || "-"}
                                   <span className={`flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br ${island.tone} text-xs font-black text-[#071a36]`}>{island.name.slice(0, 1)}</span>
                                   <span className={`flex h-5 w-5 items-center justify-center rounded-full border text-[10px] font-bold ${active ? "border-orange-500 bg-orange-500 text-white" : "border-slate-300 bg-white text-transparent"}`}>✓</span>
                                 </span>
-                                <span className="mt-3 text-sm font-bold text-[#071a36]">{island.name}</span>
-                                <span className="mt-0.5 text-[10px] font-medium text-slate-400">{island.category}</span>
+                                <span className="mt-3 text-sm font-bold text-[#071a36]">{isFrench ? frenchHomeText(island.name) : island.name}</span>
+                                <span className="mt-0.5 text-[10px] font-medium text-slate-400">{isFrench ? frenchHomeText(island.category) : island.category}</span>
                                 <span className="mt-auto flex items-baseline gap-1 pt-3">
                                   <span className="text-lg font-bold tracking-tight text-[#071a36]">{formatCurrency(island.price)}</span>
                                   <span className="text-[10px] text-slate-400"><HomeText en="/ person" de="/ Person" /></span>
@@ -1985,7 +1985,7 @@ ${notes.trim() || "-"}
                           <div className="mt-3 flex flex-wrap gap-2">
                             {selectedIslands.map((id) => (
                               <span key={id} className="rounded-full border border-white/15 bg-white/10 px-2.5 py-1 text-[10px] font-semibold text-slate-100">
-                                {({ paradise: "Paradise", orange: "Orange Bay", hula: "Hula Hula", magaweesh: "Magawish", amwaj: "Amwaj", eden: "Eden", ouzeria: "Ouzeria", mahmya: "Mahmya" } as Record<string, string>)[id]}
+                                {isFrench ? frenchHomeText(({ paradise: "Paradise", orange: "Orange Bay", hula: "Hula Hula", magaweesh: "Magawish", amwaj: "Amwaj", eden: "Eden", ouzeria: "Ouzeria", mahmya: "Mahmya" } as Record<string, string>)[id]) : ({ paradise: "Paradise", orange: "Orange Bay", hula: "Hula Hula", magaweesh: "Magawish", amwaj: "Amwaj", eden: "Eden", ouzeria: "Ouzeria", mahmya: "Mahmya" } as Record<string, string>)[id]}
                               </span>
                             ))}
                           </div>
