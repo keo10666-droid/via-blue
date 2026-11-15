@@ -1,46 +1,54 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { useCurrency } from "@/app/components/CurrencyProvider";
 
 const networks = [
-  {
-    id: "orange",
-    name: "Orange",
-    logo: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Orange_logo.svg",
-    logoClass: "h-9 w-9 rounded-lg",
-    popular: true,
-  },
-  {
-    id: "vodafone",
-    name: "Vodafone",
-    logo: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Vodafone_icon.svg",
-    logoClass: "h-9 w-9 object-contain",
-    popular: false,
-  },
-  {
-    id: "etisalat",
-    name: "Etisalat",
-    logo: "https://www.eand.com.eg/StaticFiles/portal2/etisalat/images/logo/etisalat_logo.svg",
-    logoClass: "h-9 w-14 object-contain",
-    popular: false,
-  },
-  {
-    id: "we",
-    name: "WE",
-    logo: "https://commons.wikimedia.org/wiki/Special:Redirect/file/We_logo.svg",
-    logoClass: "h-9 w-9 object-contain",
-    popular: false,
-  },
+  { id: "Orange", name: "Orange", logo: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Orange_logo.svg", logoClass: "h-9 w-9 rounded-lg", popular: true },
+  { id: "Vodafone", name: "Vodafone", logo: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Vodafone_icon.svg", logoClass: "h-9 w-9 object-contain", popular: false },
+  { id: "Etisalat", name: "Etisalat", logo: "https://www.eand.com.eg/StaticFiles/portal2/etisalat/images/logo/etisalat_logo.svg", logoClass: "h-9 w-14 object-contain", popular: false },
+  { id: "WE", name: "WE", logo: "https://commons.wikimedia.org/wiki/Special:Redirect/file/We_logo.svg", logoClass: "h-9 w-9 object-contain", popular: false },
 ] as const;
 
 export default function SimCardSection() {
   const { currency } = useCurrency();
-  const [network, setNetwork] = useState<(typeof networks)[number]["id"]>("orange");
+  const [network, setNetwork] = useState<(typeof networks)[number]["id"]>("Orange");
   const [delivery, setDelivery] = useState<"airport" | "hotel">("airport");
   const [showForm, setShowForm] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [orderError, setOrderError] = useState("");
+  const [orderReference, setOrderReference] = useState("");
+  const [form, setForm] = useState({ fullName: "", whatsapp: "", arrivalDate: "", hotel: "", roomNumber: "" });
   const symbol = currency === "EUR" ? "€" : currency === "USD" ? "$" : "£";
   const total = 10 + (delivery === "hotel" ? 5 : 0);
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setSubmitting(true);
+    setOrderError("");
+    setOrderReference("");
+
+    try {
+      const response = await fetch("/api/sim-card-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...form, network, delivery, currency }),
+      });
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        setOrderError(result.error || "We couldn't submit your order. Please try again.");
+        return;
+      }
+
+      setOrderReference(result.referenceCode || "Your order has been received");
+      setForm({ fullName: "", whatsapp: "", arrivalDate: "", hotel: "", roomNumber: "" });
+    } catch {
+      setOrderError("Connection problem. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  }
 
   return (
     <section id="sim-card" className="relative overflow-hidden bg-[#f7f7f5] px-5 py-16 sm:px-6 sm:py-24">
@@ -101,13 +109,7 @@ export default function SimCardSection() {
               {networks.map((item) => {
                 const selected = network === item.id;
                 return (
-                  <button
-                    key={item.id}
-                    type="button"
-                    onClick={() => setNetwork(item.id)}
-                    aria-pressed={selected}
-                    className={`relative flex min-h-[105px] flex-col items-center justify-center gap-2 rounded-2xl border-2 px-3 py-3 transition-all ${selected ? "border-orange-500 bg-orange-50 shadow-[0_8px_22px_rgba(249,115,22,0.12)]" : "border-slate-100 bg-white hover:border-slate-300"}`}
-                  >
+                  <button key={item.id} type="button" onClick={() => setNetwork(item.id)} aria-pressed={selected} className={`relative flex min-h-[105px] flex-col items-center justify-center gap-2 rounded-2xl border-2 px-3 py-3 transition-all ${selected ? "border-orange-500 bg-orange-50 shadow-[0_8px_22px_rgba(249,115,22,0.12)]" : "border-slate-100 bg-white hover:border-slate-300"}`}>
                     {item.popular && <span className="absolute -top-2.5 rounded-full bg-orange-500 px-2.5 py-1 text-[8px] font-extrabold uppercase tracking-wider text-white shadow">Best seller</span>}
                     <img src={item.logo} alt={item.name + " logo"} className={item.logoClass} />
                     <span className={`text-xs font-extrabold ${selected ? "text-[#03112a]" : "text-slate-600"}`}>{item.name}</span>
@@ -134,27 +136,40 @@ export default function SimCardSection() {
             <div className="mt-5 flex items-center justify-between rounded-xl bg-[#03112a] px-4 py-3.5 text-white">
               <div>
                 <p className="text-[10px] font-semibold text-blue-100/65">Total price</p>
-                <p className="mt-0.5 text-[10px] text-blue-100/65">{network.charAt(0).toUpperCase() + network.slice(1)} · {delivery === "airport" ? "Airport pickup" : "Hotel delivery"}</p>
+                <p className="mt-0.5 text-[10px] text-blue-100/65">{network} · {delivery === "airport" ? "Airport pickup" : "Hotel delivery"}</p>
               </div>
               <p className="text-2xl font-black text-orange-300">{symbol}{total}</p>
             </div>
 
-            <button type="button" onClick={() => setShowForm((value) => !value)} className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 px-5 py-4 text-sm font-extrabold text-white shadow-lg shadow-orange-500/20 transition hover:-translate-y-0.5 hover:from-orange-400 hover:to-amber-400">
-              {showForm ? "Hide order details" : "Continue to order"}
-              <span aria-hidden="true">→</span>
+            <button type="button" onClick={() => { setShowForm((value) => !value); setOrderError(""); setOrderReference(""); }} className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 px-5 py-4 text-sm font-extrabold text-white shadow-lg shadow-orange-500/20 transition hover:-translate-y-0.5 hover:from-orange-400 hover:to-amber-400">
+              {showForm ? "Hide order details" : "Continue to order"} <span aria-hidden="true">→</span>
             </button>
 
             {showForm && (
               <div className="mt-5 rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                <p className="mb-3 text-sm font-extrabold text-[#03112a]">Your details</p>
-                <div className="grid gap-3 sm:grid-cols-2">
-                  <input required placeholder="Full name" className="min-w-0 rounded-lg border border-slate-200 bg-white px-3 py-3 text-xs text-slate-900 outline-none focus:border-orange-400" />
-                  <input required type="tel" placeholder="WhatsApp number" className="min-w-0 rounded-lg border border-slate-200 bg-white px-3 py-3 text-xs text-slate-900 outline-none focus:border-orange-400" />
-                  <input required type="date" aria-label="Arrival date" className="min-w-0 rounded-lg border border-slate-200 bg-white px-3 py-3 text-xs text-slate-900 outline-none focus:border-orange-400" />
-                  <input required placeholder="Hotel name" className="min-w-0 rounded-lg border border-slate-200 bg-white px-3 py-3 text-xs text-slate-900 outline-none focus:border-orange-400" />
-                  <input placeholder="Room number (if available)" className="min-w-0 rounded-lg border border-slate-200 bg-white px-3 py-3 text-xs text-slate-900 outline-none focus:border-orange-400 sm:col-span-2" />
-                </div>
-                <p className="mt-3 text-[11px] leading-5 text-slate-500">Selected network: <strong>{network}</strong>. Delivery: <strong>{delivery === "airport" ? "Airport pickup" : "Hotel delivery"}</strong>. Order submission will be connected after confirming where you want to receive orders.</p>
+                {orderReference ? (
+                  <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-center">
+                    <p className="text-sm font-extrabold text-emerald-800">Your order has been received!</p>
+                    <p className="mt-2 text-xs text-emerald-700">Reference: {orderReference}</p>
+                    <p className="mt-2 text-xs text-emerald-700">Our team will contact you on WhatsApp to confirm the details</p>
+                  </div>
+                ) : (
+                  <form onSubmit={handleSubmit}>
+                    <p className="mb-3 text-sm font-extrabold text-[#03112a]">Your details</p>
+                    <div className="grid gap-3 sm:grid-cols-2">
+                      <input required maxLength={120} value={form.fullName} onChange={(event) => setForm({ ...form, fullName: event.target.value })} placeholder="Full name" autoComplete="name" className="min-w-0 rounded-lg border border-slate-200 bg-white px-3 py-3 text-xs text-slate-900 outline-none focus:border-orange-400" />
+                      <input required type="tel" maxLength={40} value={form.whatsapp} onChange={(event) => setForm({ ...form, whatsapp: event.target.value })} placeholder="WhatsApp number" autoComplete="tel" className="min-w-0 rounded-lg border border-slate-200 bg-white px-3 py-3 text-xs text-slate-900 outline-none focus:border-orange-400" />
+                      <input required type="date" value={form.arrivalDate} onChange={(event) => setForm({ ...form, arrivalDate: event.target.value })} aria-label="Arrival date" className="min-w-0 rounded-lg border border-slate-200 bg-white px-3 py-3 text-xs text-slate-900 outline-none focus:border-orange-400" />
+                      <input required maxLength={160} value={form.hotel} onChange={(event) => setForm({ ...form, hotel: event.target.value })} placeholder="Hotel name" className="min-w-0 rounded-lg border border-slate-200 bg-white px-3 py-3 text-xs text-slate-900 outline-none focus:border-orange-400" />
+                      <input maxLength={40} value={form.roomNumber} onChange={(event) => setForm({ ...form, roomNumber: event.target.value })} placeholder="Room number (if available)" className="min-w-0 rounded-lg border border-slate-200 bg-white px-3 py-3 text-xs text-slate-900 outline-none focus:border-orange-400 sm:col-span-2" />
+                    </div>
+                    {orderError && <p role="alert" className="mt-3 rounded-lg bg-red-50 px-3 py-2 text-xs font-semibold text-red-700">{orderError}</p>}
+                    <button type="submit" disabled={submitting} className="mt-4 flex w-full items-center justify-center rounded-xl bg-[#03112a] px-5 py-3.5 text-sm font-extrabold text-white transition hover:bg-blue-900 disabled:cursor-not-allowed disabled:opacity-60">
+                      {submitting ? "Submitting order..." : "Confirm SIM order · " + symbol + total}
+                    </button>
+                    <p className="mt-3 text-center text-[10px] leading-5 text-slate-500">Your order details will be sent securely to Via Blue for confirmation</p>
+                  </form>
+                )}
               </div>
             )}
           </div>
