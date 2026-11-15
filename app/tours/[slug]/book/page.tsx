@@ -256,6 +256,8 @@ export default function BookingPage() {
   const [adults, setAdults] = useState("1");
   const [children, setChildren] = useState("0");
   const [infants, setInfants] = useState("0");
+  const [lionPhotoSelected, setLionPhotoSelected] = useState(false);
+  const [lionPhotoCount, setLionPhotoCount] = useState(1);
 
   const [selectedVehicle, setSelectedVehicle] =
   useState<"bus" | "van">("bus");
@@ -354,7 +356,10 @@ const selectedCairoVehicleOption =
   const hotelAreaSurcharge =
     (Number(adults || 0) + Number(children || 0)) * hotelAreaSurchargePerPerson;
 
-  const totalPrice = baseTotalPrice + hotelAreaSurcharge;
+  const hasLionPhotoOption = ["desert-safari", "quad-bike", "super-safari"].includes(String(slug)) || /safari/i.test(String(tour.type || tour.name || ""));
+  const effectiveLionPhotoCount = hasLionPhotoOption && lionPhotoSelected ? Math.min(lionPhotoCount, totalGuests) : 0;
+  const lionPhotoTotal = effectiveLionPhotoCount * 10;
+  const totalPrice = baseTotalPrice + hotelAreaSurcharge + lionPhotoTotal;
   const promoDiscountAmount = promoFixedAmount !== null ? Math.min(totalPrice, promoFixedAmount) : promoDiscountPercent === null ? 0 : Math.round(totalPrice * promoDiscountPercent) / 100;
   const finalTotalPrice = Math.max(0, Math.round((totalPrice - promoDiscountAmount) * 100) / 100);
 
@@ -681,6 +686,8 @@ Hotel Area: ${hotelArea}
 
 Hotel Area Surcharge: ${formatCurrency(hotelAreaSurcharge)}
 
+Lion Photo with the Lion: ${effectiveLionPhotoCount > 0 ? `${effectiveLionPhotoCount} people × €10 = ${formatCurrency(lionPhotoTotal)}` : "Not selected"}
+
 Promo Code: ${promoDiscountPercent !== null ? promoCode.trim().toUpperCase() : "Not used"}
 
 Total Before Discount: €${totalPrice}
@@ -698,6 +705,8 @@ Children: ${children}
 Infants: ${infants}
 
 Total Guests: ${totalGuests}
+
+Lion Photo with the Lion: ${effectiveLionPhotoCount > 0 ? `${effectiveLionPhotoCount} people × €10 = ${formatCurrency(lionPhotoTotal)}` : "Not selected"}
 
 Children Ages: ${
     childrenAgeValues
@@ -2053,6 +2062,26 @@ ${notes.trim() || "-"}
 
             )}
 
+            {hasLionPhotoOption && (
+              <div className="mb-6 rounded-[22px] border border-orange-200 bg-gradient-to-r from-orange-50 to-white p-5 shadow-sm">
+                <label className="flex cursor-pointer items-start gap-3">
+                  <input type="checkbox" checked={lionPhotoSelected} onChange={(event) => { setLionPhotoSelected(event.target.checked); if (event.target.checked && lionPhotoCount < 1) setLionPhotoCount(1); }} className="mt-1 h-5 w-5 rounded border-orange-300 accent-orange-500" />
+                  <span className="flex-1">
+                    <span className="block text-sm font-bold text-[#071a36]"><HomeText en="Photo with the Lion" de="Foto mit dem Löwen" /></span>
+                    <span className="mt-1 block text-xs leading-5 text-slate-500"><HomeText en="Optional experience · €10 per person. Adults, children and infants are charged equally." de="Optionales Erlebnis · 10 € pro Person. Erwachsene, Kinder und Babys zahlen den gleichen Preis." /></span>
+                  </span>
+                  <span className="whitespace-nowrap text-sm font-black text-orange-600">{formatCurrency(10)} <span className="text-xs font-semibold">/ <HomeText en="person" de="Person" /></span></span>
+                </label>
+                {lionPhotoSelected && (
+                  <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-orange-100 pt-4">
+                    <label htmlFor="lion-photo-count" className="text-sm font-semibold text-slate-700"><HomeText en="People taking the photo" de="Personen für das Foto" /></label>
+                    <input id="lion-photo-count" type="number" min="1" max={Math.max(totalGuests, 1)} value={effectiveLionPhotoCount || 1} onChange={(event) => setLionPhotoCount(Math.max(1, Math.min(totalGuests, Number(event.target.value) || 1)))} className="h-11 w-24 rounded-xl border border-orange-200 bg-white px-3 text-center font-bold text-[#071a36] outline-none focus:border-orange-400" />
+                    <span className="w-full text-right text-sm font-black text-orange-600">{formatCurrency(lionPhotoTotal)}</span>
+                  </div>
+                )}
+              </div>
+            )}
+
             {/* Total Guests */}
 
             <div className="mb-6 flex items-center justify-between rounded-[22px] border border-blue-100 bg-gradient-to-r from-blue-50 to-orange-50/30 px-5 py-4 shadow-sm">
@@ -2080,6 +2109,13 @@ ${notes.trim() || "-"}
               </div>
 
               <div className="space-y-3 p-5 text-sm">
+
+                {effectiveLionPhotoCount > 0 && (
+                  <div className="flex items-center justify-between rounded-xl bg-orange-50 px-3 py-2">
+                    <span className="font-semibold text-orange-700">Lion photo · {effectiveLionPhotoCount} × {formatCurrency(10)}</span>
+                    <span className="font-bold text-orange-700">{formatCurrency(lionPhotoTotal)}</span>
+                  </div>
+                )}
 
                 {slug === "speed-boat" ? (
 
