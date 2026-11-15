@@ -987,6 +987,11 @@ const frenchCopy: Record<string, string> = {
   "THE NEW LANDMARK": "LE NOUVEAU SITE EMBLÉMATIQUE",
   "This vehicle does not support the selected group size. Choose a different vehicle to continue.": "Ce véhicule ne convient pas à la taille du groupe sélectionnée. Choisissez un autre véhicule pour continuer.",
   "This option does not support the selected number of guests. Adjust the guest count to continue.": "Cette option ne convient pas au nombre de voyageurs sélectionné. Modifiez le nombre de voyageurs pour continuer.",
+  "Lithuania": "Lituanie",
+  "Latvia": "Lettonie",
+  "Estonia": "Estonie",
+  "Belarus": "Biélorussie",
+  "Czechia": "Tchéquie",
   "What's Not Included": "Ce qui n’est pas inclus",
 };
 
