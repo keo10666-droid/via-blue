@@ -7,7 +7,7 @@ const networks = [
   { id: "Orange", name: "Orange", logo: "https://cdn.simpleicons.org/orange/FF7900", logoClass: "h-9 w-9 rounded-lg", popular: true },
   { id: "Vodafone", name: "Vodafone", logo: "https://cdn.simpleicons.org/vodafone/E60000", logoClass: "h-9 w-9 object-contain", popular: false },
   { id: "Etisalat", name: "e&", logo: "https://cdn.simpleicons.org/eand/000000", logoClass: "h-9 w-12 object-contain", popular: false },
-  { id: "WE", name: "WE", logo: "https://upload.wikimedia.org/wikipedia/commons/4/4e/We_logo.svg", logoClass: "h-10 w-10 object-contain", popular: false },
+  { id: "WE", name: "WE", logo: "https://upload.wikimedia.org/wikipedia/commons/0/0f/We_logo.svg", logoClass: "h-10 w-10 object-contain", popular: false },
 ] as const;
 
 export default function SimCardSection() {
