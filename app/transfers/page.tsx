@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { transfers } from "@/data/transfers";
 import HomeText from "@/app/components/HomeText";
 import { germanTransferLocation, germanTransferVehicle } from "@/lib/germanTransferCopy";
+import { frenchTransferLocation, frenchTransferVehicle } from "@/lib/frenchTransferCopy";
 
 type TransferOverride = {
   from?: string; to?: string; available?: boolean;
@@ -372,13 +373,13 @@ export default function TransfersPage() {
                   <div className="absolute bottom-5 left-5 right-5">
 
                     <p className="mb-1.5 text-xs font-bold uppercase tracking-[0.14em] text-orange-300">
-                      <HomeText en={transfer.from} de={germanTransferLocation(transfer.from)} />
+                      <HomeText en={transfer.from} de={germanTransferLocation(transfer.from)} fr={frenchTransferLocation(transfer.from)} />
                     </p>
 
                     <div className="flex items-center gap-2">
 
                       <h3 className="text-2xl font-black tracking-[-0.025em] text-white">
-                        <HomeText en={transfer.to} de={germanTransferLocation(transfer.to)} />
+                        <HomeText en={transfer.to} de={germanTransferLocation(transfer.to)} fr={frenchTransferLocation(transfer.to)} />
                       </h3>
 
                       <span className="text-lg text-white/70 transition-transform duration-300 group-hover:translate-x-1">
@@ -410,7 +411,7 @@ export default function TransfersPage() {
                       <div className="mt-1 flex items-center gap-2 text-sm font-bold text-slate-800">
 
                         <span className="truncate">
-                          <HomeText en={transfer.from} de={germanTransferLocation(transfer.from)} />
+                          <HomeText en={transfer.from} de={germanTransferLocation(transfer.from)} fr={frenchTransferLocation(transfer.from)} />
                         </span>
 
                         <span className="shrink-0 text-base font-bold text-orange-500">
@@ -418,7 +419,7 @@ export default function TransfersPage() {
                         </span>
 
                         <span className="truncate">
-                          <HomeText en={transfer.to} de={germanTransferLocation(transfer.to)} />
+                          <HomeText en={transfer.to} de={germanTransferLocation(transfer.to)} fr={frenchTransferLocation(transfer.to)} />
                         </span>
 
                       </div>
@@ -480,7 +481,7 @@ export default function TransfersPage() {
                             key={vehicle.type}
                             className="rounded-full border border-slate-200 bg-slate-100 px-3 py-1.5 text-xs font-bold text-slate-700 transition-all duration-300 group-hover:border-orange-100 group-hover:bg-orange-50 group-hover:text-orange-700"
                           >
-                            <HomeText en={vehicle.type} de={germanTransferVehicle(vehicle.type)} />
+                            <HomeText en={vehicle.type} de={germanTransferVehicle(vehicle.type)} fr={frenchTransferVehicle(vehicle.type)} />
                           </span>
 
                         )
