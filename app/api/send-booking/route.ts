@@ -585,6 +585,8 @@ export async function POST(request: Request) {
         "Promo Code",
         "PRIVATE TOUR PRICE",
         "Price",
+        "Lion Photo with the Lion",
+        "Lion photo with the lion",
       ]
     );
 
