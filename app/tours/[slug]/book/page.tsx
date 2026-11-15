@@ -1290,7 +1290,7 @@ ${notes.trim() || "-"}
               </div>
 
               <label className={labelClass}>
-                Tour Date{" "}
+                <HomeText en="Tour Date" de="Tourdatum" />{" "}
                 <span className="text-red-500">
                   *
                 </span>
@@ -1408,7 +1408,7 @@ ${notes.trim() || "-"}
                             ? formatSelectedDate(
                                 date
                               )
-                            : "Choose a date"}
+                            : (isGerman ? "Datum auswählen" : "Choose a date")}
                         </p>
 
                       </div>
@@ -1924,7 +1924,7 @@ ${notes.trim() || "-"}
                         >
 
                           <option value="">
-                            Select Child {index + 1} Age
+                            {isGerman ? `Alter von Kind ${index + 1} auswählen` : `Select Child ${index + 1} Age`}
                           </option>
 
                           <option value="5">
@@ -1958,9 +1958,7 @@ ${notes.trim() || "-"}
                             index
                           ] &&
                           errorText(
-                            `Please select an age for Child ${
-                              index + 1
-                            }`
+                            isGerman ? `Bitte wählen Sie das Alter für Kind ${index + 1}` : `Please select an age for Child ${index + 1}`
                           )}
 
                       </div>
@@ -2020,7 +2018,7 @@ ${notes.trim() || "-"}
                         >
 
                           <option value="">
-                            Select Infant {index + 1} Age
+                            {isGerman ? `Alter von Baby ${index + 1} auswählen` : `Select Infant ${index + 1} Age`}
                           </option>
 
                           <option value="1">
@@ -2046,9 +2044,7 @@ ${notes.trim() || "-"}
                             index
                           ] &&
                           errorText(
-                            `Please select an age for Infant ${
-                              index + 1
-                            }`
+                            isGerman ? `Bitte wählen Sie das Alter für Baby ${index + 1}` : `Please select an age for Infant ${index + 1}`
                           )}
 
                       </div>
@@ -2112,7 +2108,7 @@ ${notes.trim() || "-"}
 
                 {effectiveLionPhotoCount > 0 && (
                   <div className="flex items-center justify-between rounded-xl bg-orange-50 px-3 py-2">
-                    <span className="font-semibold text-orange-700">Lion photo · {effectiveLionPhotoCount} × {formatCurrency(10)}</span>
+                    <span className="font-semibold text-orange-700"><HomeText en="Lion photo" de="Löwenfoto" /> · {effectiveLionPhotoCount} × {formatCurrency(10)}</span>
                     <span className="font-bold text-orange-700">{formatCurrency(lionPhotoTotal)}</span>
                   </div>
                 )}
