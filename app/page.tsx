@@ -5,7 +5,7 @@ import Link from "next/link";
 import HomeText from "@/app/components/HomeText";
 import TourText from "@/app/components/TourText";
 import TourRating from "@/app/components/TourRating";
-import SimCardSection from "@/app/components/SimCardSection";
+import SimCardCard from "@/app/components/SimCardCard";
 
 import { tourList } from "@/data/tours";
 import { supabase } from "@/lib/supabase";
@@ -431,7 +431,7 @@ export default async function Home() {
       </section>
 
 
-      <SimCardSection />
+      <SimCardCard />
 
       {/* =====================================================
           WHY VIA BLUE
