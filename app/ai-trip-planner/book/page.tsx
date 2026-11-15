@@ -188,6 +188,8 @@ const GERMAN_MONTH_NAMES = [
   "Juli", "August", "September", "Oktober", "November", "Dezember",
 ];
 const GERMAN_WEEK_DAYS = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
+const FRENCH_MONTH_NAMES = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
+const FRENCH_WEEK_DAYS = ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"];
 
 const parseDateInput = (value: string) => {
   if (!value) return null;
@@ -205,14 +207,14 @@ const toIsoDate = (date: Date) => {
   return `${yyyy}-${mm}-${dd}`;
 };
 
-const formatDateLabel = (value: string, isGerman = false) => {
-  if (!value) return isGerman ? "Wählen Sie Ihr Reisedatum" : "Select your trip start date";
+const formatDateLabel = (value: string, isGerman = false, isFrench = false) => {
+  if (!value) return isGerman ? "Wählen Sie Ihr Reisedatum" : isFrench ? "Choisissez la date de début de votre voyage" : "Select your trip start date";
 
   const parsedDate = parseDateInput(value);
 
   if (!parsedDate) return isGerman ? "Wählen Sie Ihr Reisedatum" : "Select your trip start date";
 
-  return new Intl.DateTimeFormat(isGerman ? "de-DE" : "en-US", {
+  return new Intl.DateTimeFormat(isGerman ? "de-DE" : isFrench ? "fr-FR" : "en-US", {
     weekday: "short",
     month: "short",
     day: "numeric",
@@ -223,6 +225,7 @@ const formatDateLabel = (value: string, isGerman = false) => {
 export default function AITripBookingPage() {
   const [booking, setBooking] = useState<BookingData | null>(null);
   const [isGerman, setIsGerman] = useState(false);
+  const [isFrench, setIsFrench] = useState(false);
   const [loading, setLoading] = useState(true);
   const [name, setName] = useState("");
   const [nationality, setNationality] = useState("");
@@ -256,7 +259,7 @@ export default function AITripBookingPage() {
   });
 
   useEffect(() => {
-    const syncLanguage = () => setIsGerman(localStorage.getItem("via-blue-language") === "de");
+    const syncLanguage = () => { const language = localStorage.getItem("via-blue-language"); setIsGerman(language === "de"); setIsFrench(language === "fr"); };
     syncLanguage();
     window.addEventListener("via-blue-language-change", syncLanguage);
     return () => window.removeEventListener("via-blue-language-change", syncLanguage);
@@ -478,7 +481,7 @@ export default function AITripBookingPage() {
           <div className="text-center">
             <div className="mx-auto mb-5 h-10 w-10 animate-spin rounded-full border-4 border-slate-200 border-t-orange-500" />
             <p className="text-sm font-semibold text-gray-600">
-              {isGerman ? "Ihre Reise wird vorbereitet..." : "Preparing your trip..."}
+              {isGerman ? "Ihre Reise wird vorbereitet..." : isFrench ? "Préparation de votre voyage…" : "Preparing your trip..."}
             </p>
           </div>
         </main>
@@ -493,7 +496,7 @@ export default function AITripBookingPage() {
           </div>
 
           <h1 className="text-2xl font-bold text-blue-950">
-            {isGerman ? "Reisepaket nicht gefunden" : "Trip Package Not Found"}
+            {isGerman ? "Reisepaket nicht gefunden" : isFrench ? "Forfait de voyage introuvable" : "Trip Package Not Found"}
           </h1>
 
           <p className="mt-3 text-gray-600">
@@ -506,7 +509,7 @@ export default function AITripBookingPage() {
             href="/ai-trip-planner"
             className="mt-7 inline-flex rounded-xl bg-blue-950 px-6 py-3 font-semibold text-white transition hover:bg-blue-900"
           >
-            {isGerman ? "Zurück zum KI-Reiseplaner" : "Back to AI Trip Planner"}
+            {isGerman ? "Zurück zum KI-Reiseplaner" : isFrench ? "Retour au planificateur de voyage" : "Back to AI Trip Planner"}
           </a>
         </div>
       </main>
@@ -602,7 +605,7 @@ export default function AITripBookingPage() {
         );
 
         alert(
-          (isGerman ? "Dein Konto konnte nicht überprüft werden. Bitte versuche es erneut." : "Unable to verify your account. Please try again."),
+          (isGerman ? "Dein Konto konnte nicht überprüft werden. Bitte versuche es erneut." : isFrench ? "Impossible de vérifier votre compte. Veuillez réessayer." : "Unable to verify your account. Please try again."),
         );
 
         return;
@@ -635,7 +638,7 @@ export default function AITripBookingPage() {
           );
 
           alert(
-            (isGerman ? "Deine Buchungssitzung konnte nicht gestartet werden. Bitte versuche es erneut." : "Unable to start your booking session. Please try again."),
+            (isGerman ? "Deine Buchungssitzung konnte nicht gestartet werden. Bitte versuche es erneut." : isFrench ? "Impossible de démarrer votre session de réservation. Veuillez réessayer." : "Unable to start your booking session. Please try again."),
           );
 
           return;
@@ -753,7 +756,7 @@ export default function AITripBookingPage() {
         );
 
         alert(
-          (isGerman ? "Deine Buchung konnte nicht gespeichert werden. Bitte versuche es erneut." : "Your booking could not be saved. Please try again."),
+          (isGerman ? "Deine Buchung konnte nicht gespeichert werden. Bitte versuche es erneut." : isFrench ? "Votre réservation n’a pas pu être enregistrée. Veuillez réessayer." : "Your booking could not be saved. Please try again."),
         );
 
         return;
@@ -872,7 +875,7 @@ Via Blue AI Trip Planner
         "noopener,noreferrer",
       );
 
-      alert(isGerman ? "Buchung erfolgreich gespeichert!" : "Booking saved successfully!");
+      alert(isGerman ? "Buchung erfolgreich gespeichert!" : isFrench ? "Réservation enregistrée avec succès !" : "Booking saved successfully!");
 
       sessionStorage.removeItem(
         "viaBlueAITripBooking",
@@ -898,7 +901,7 @@ Via Blue AI Trip Planner
           : "Unknown error";
 
       alert(
-        `${isGerman ? "Ein Fehler ist aufgetreten." : "Something went wrong."}\n\n${errorMessage}`,
+        `${isGerman ? "Ein Fehler ist aufgetreten." : isFrench ? "Une erreur s’est produite." : "Something went wrong."}\n\n${errorMessage}`,
       );
     } finally {
       setIsSubmitting(false);
@@ -960,7 +963,7 @@ Via Blue AI Trip Planner
 
                 <input
                   type="text"
-                  placeholder={isGerman ? "Vollständiger Name *" : "Full Name *"}
+                  placeholder={isGerman ? "Vollständiger Name *" : isFrench ? "Nom complet *" : "Full Name *"}
                   value={name}
                   onChange={(event) =>
                     setName(event.target.value)
@@ -985,7 +988,7 @@ Via Blue AI Trip Planner
 
                 <input
                   type="text"
-                  placeholder={isGerman ? "Nationalität" : "Nationality"}
+                  placeholder={isGerman ? "Nationalität" : isFrench ? "Nationalité" : "Nationality"}
                   value={nationality}
                   onChange={(event) => {
                     setNationality(
@@ -1046,7 +1049,7 @@ Via Blue AI Trip Planner
 
                 <input
                   type="email"
-                  placeholder={isGerman ? "E-Mail *" : "Email *"}
+                  placeholder={isGerman ? "E-Mail *" : isFrench ? "E-mail *" : "Email *"}
                   value={email}
                   onChange={(event) =>
                     setEmail(event.target.value)
@@ -1098,7 +1101,7 @@ Via Blue AI Trip Planner
                       <div className="absolute left-0 top-full z-40 mt-1 w-72 rounded-xl border bg-white shadow-xl">
                         <input
                           type="text"
-                          placeholder={isGerman ? "Land suchen..." : "Search country..."}
+                          placeholder={isGerman ? "Land suchen..." : isFrench ? "Rechercher un pays..." : "Search country..."}
                           value={countrySearch}
                           onChange={(event) =>
                             setCountrySearch(
@@ -1159,7 +1162,7 @@ Via Blue AI Trip Planner
 
                   <input
                     type="tel"
-                    placeholder={isGerman ? "Telefonnummer" : "Number"}
+                    placeholder={isGerman ? "Telefonnummer" : isFrench ? "Numéro" : "Number"}
                     value={phone}
                     onChange={(event) =>
                       setPhone(
@@ -1197,7 +1200,7 @@ Via Blue AI Trip Planner
 
                 <input
                   type="text"
-                  placeholder={isGerman ? "Hotelname" : "Hotel Name"}
+                  placeholder={isGerman ? "Hotelname" : isFrench ? "Nom de l’hôtel" : "Hotel Name"}
                   value={hotel}
                   onChange={(event) =>
                     setHotel(
@@ -1215,7 +1218,7 @@ Via Blue AI Trip Planner
 
                 <input
                   type="text"
-                  placeholder={isGerman ? "Zimmernummer" : "Room Number"}
+                  placeholder={isGerman ? "Zimmernummer" : isFrench ? "Numéro de chambre" : "Room Number"}
                   value={roomNumber}
                   onChange={(event) =>
                     setRoomNumber(
@@ -1305,7 +1308,7 @@ Via Blue AI Trip Planner
                             : "text-gray-400"
                         }`}
                       >
-                        {formatDateLabel(date, isGerman)}
+                        {formatDateLabel(date, isGerman, isFrench)}
                       </span>
 
                       <svg
@@ -1368,7 +1371,7 @@ Via Blue AI Trip Planner
 
                           <p className="mt-1 text-xl font-bold text-white">
                             {
-                              (isGerman ? GERMAN_MONTH_NAMES : MONTH_NAMES)[
+                              (isGerman ? GERMAN_MONTH_NAMES : isFrench ? FRENCH_MONTH_NAMES : MONTH_NAMES)[
                                 calendarMonth.getMonth()
                               ]
                             }{" "}
@@ -1383,7 +1386,7 @@ Via Blue AI Trip Planner
                               goToPreviousMonth
                             }
                             disabled={!canGoPrev}
-                            aria-label={isGerman ? "Vorheriger Monat" : "Previous month"}
+                            aria-label={isGerman ? "Vorheriger Monat" : isFrench ? "Mois précédent" : "Previous month"}
                             className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white transition-all duration-200 hover:border-orange-400/50 hover:bg-orange-500 disabled:cursor-not-allowed disabled:opacity-30"
                           >
                             <svg
@@ -1406,7 +1409,7 @@ Via Blue AI Trip Planner
                             onClick={
                               goToNextMonth
                             }
-                            aria-label={isGerman ? "Nächster Monat" : "Next month"}
+                            aria-label={isGerman ? "Nächster Monat" : isFrench ? "Mois suivant" : "Next month"}
                             className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white transition-all duration-200 hover:border-orange-400/50 hover:bg-orange-500"
                           >
                             <svg
@@ -1439,7 +1442,7 @@ Via Blue AI Trip Planner
                               key={day}
                               className="py-2 text-center text-[11px] font-bold uppercase tracking-wide text-gray-400"
                             >
-                              {isGerman ? GERMAN_WEEK_DAYS[index] : day}
+                              {isGerman ? GERMAN_WEEK_DAYS[index] : isFrench ? FRENCH_WEEK_DAYS[index] : day}
                             </div>
                           ),
                         )}
@@ -1606,31 +1609,31 @@ Via Blue AI Trip Planner
                           }}
                         >
                           <option value="">
-                            {isGerman ? `Alter für Kind ${index + 1} auswählen` : `Select Child ${index + 1} Age`}
+                            {isGerman ? `Alter für Kind ${index + 1} auswählen` : isFrench ? `Choisir l’âge de l’enfant ${index + 1}` : `Select Child ${index + 1} Age`}
                           </option>
 
                           <option value="5">
-                            {isGerman ? "5 Jahre" : "5 years"}
+                            {isGerman ? "5 Jahre" : isFrench ? "5 ans" : "5 years"}
                           </option>
 
                           <option value="6">
-                            {isGerman ? "6 Jahre" : "6 years"}
+                            {isGerman ? "6 Jahre" : isFrench ? "6 ans" : "6 years"}
                           </option>
 
                           <option value="7">
-                            {isGerman ? "7 Jahre" : "7 years"}
+                            {isGerman ? "7 Jahre" : isFrench ? "7 ans" : "7 years"}
                           </option>
 
                           <option value="8">
-                            {isGerman ? "8 Jahre" : "8 years"}
+                            {isGerman ? "8 Jahre" : isFrench ? "8 ans" : "8 years"}
                           </option>
 
                           <option value="9">
-                            {isGerman ? "9 Jahre" : "9 years"}
+                            {isGerman ? "9 Jahre" : isFrench ? "9 ans" : "9 years"}
                           </option>
 
                           <option value="10">
-                            {isGerman ? "10 Jahre" : "10 years"}
+                            {isGerman ? "10 Jahre" : isFrench ? "10 ans" : "10 years"}
                           </option>
                         </select>
 
@@ -1711,7 +1714,7 @@ Via Blue AI Trip Planner
 
             <textarea
               rows={3}
-              placeholder={isGerman ? "Besondere Wünsche / Hinweise" : "Special Requests / Notes"}
+              placeholder={isGerman ? "Besondere Wünsche / Hinweise" : isFrench ? "Demandes particulières / remarques" : "Special Requests / Notes"}
               className={inputClass(false)}
             />
 
@@ -1790,7 +1793,7 @@ Via Blue AI Trip Planner
                     <p className="mt-1 font-bold text-blue-900">
                       {adults} <HomeText en="Adults" de="Erwachsene" />
                       {children > 0
-                        ? ` · ${children} ${isGerman ? "Kinder" : "Children"}`
+                        ? ` · ${children} ${isGerman ? "Kinder" : isFrench ? "enfants" : "Children"}`
                         : ""}
                     </p>
                   </div>
