@@ -582,7 +582,7 @@ export default function ContactPage() {
                         name="email"
                         type="email"
                         required
-                        placeholder={isGerman ? "ihre@email.de" : "you@example.com"}
+                        placeholder={isGerman ? "ihre@email.de" : isFrench ? "vous@exemple.fr" : "you@example.com"}
                         className="h-12 w-full rounded-xl border border-[#dfe3ea] bg-[#fbfcfd] px-4 text-sm text-[#172033] outline-none transition placeholder:text-[#98a2b3] focus:border-[#f59a23] focus:bg-white focus:ring-4 focus:ring-[#f59a23]/10"
                       />
                     </div>
