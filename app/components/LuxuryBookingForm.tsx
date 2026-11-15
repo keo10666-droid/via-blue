@@ -1617,7 +1617,7 @@ ${notes.trim() || "-"}
                                 <HomeText en={"Child " + (index + 1)} de={"Kind " + (index + 1)} />
                                 <select value={childAges[index] ?? ""} onChange={(e) => setChildAges((ages) => Array.from({ length: children }, (_, i) => i === index ? e.target.value : (ages[i] ?? "")))} className="mt-2 h-11 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-800">
                                   <option value="">{isGerman ? "Alter auswählen" : "Select age"}</option>
-                                  {Array.from({ length: 10 }, (_, age) => <option key={age + 2} value={String(age + 2)}>{isGerman ? (age + 2 === 1 ? "Jahr" : "Jahre") : "years"}</option>)}
+                                  {Array.from({ length: 10 }, (_, age) => <option key={age + 2} value={String(age + 2)}>{age + 2} {isGerman ? "Jahre" : "years"}</option>)}
                                 </select>
                               </label>
                             ))}
@@ -1633,7 +1633,7 @@ ${notes.trim() || "-"}
                                 <HomeText en={"Infant " + (index + 1)} de={"Baby " + (index + 1)} />
                                 <select value={infantAges[index] ?? ""} onChange={(e) => setInfantAges((ages) => Array.from({ length: infants }, (_, i) => i === index ? e.target.value : (ages[i] ?? "")))} className="mt-2 h-11 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-800">
                                   <option value="">Select age</option>
-                                  {Array.from({ length: 24 }, (_, age) => <option key={age} value={String(age)}>{isGerman ? (age === 1 ? "Monat" : "Monate") : "months"}</option>)}
+                                  {Array.from({ length: 24 }, (_, age) => <option key={age} value={String(age)}>{age} {isGerman ? (age === 1 ? "Monat" : "Monate") : "months"}</option>)}
                                 </select>
                               </label>
                             ))}
