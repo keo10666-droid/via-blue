@@ -757,7 +757,8 @@ export default function LuxuryBookingForm({
 
     return nationalities
       .filter((n) =>
-        n.toLowerCase().includes(nationality.toLowerCase())
+        n.toLowerCase().includes(nationality.toLowerCase()) ||
+        frenchHomeText(n).toLowerCase().includes(nationality.toLowerCase())
       )
       .slice(0, 7);
   }, [nationality]);
@@ -770,6 +771,7 @@ export default function LuxuryBookingForm({
         c.name
           .toLowerCase()
           .includes(countrySearch.toLowerCase()) ||
+        frenchHomeText(c.name).toLowerCase().includes(countrySearch.toLowerCase()) ||
         c.dialCode.includes(countrySearch)
     );
   }, [countrySearch]);
@@ -1138,7 +1140,7 @@ ${notes.trim() || "-"}
                                 <GlobeIcon />
 
                                 <span className="ml-3">
-                                  {item}
+                                  {isFrench ? frenchHomeText(item) : item}
                                 </span>
                               </button>
                             ))}
@@ -1193,7 +1195,7 @@ ${notes.trim() || "-"}
                           >
                             <FlagIcon
                               iso={selectedCountry.iso}
-                              name={selectedCountry.name}
+                              name={isFrench ? frenchHomeText(selectedCountry.name) : selectedCountry.name}
                             />
 
                             <span className="text-sm font-bold">
@@ -1243,11 +1245,11 @@ ${notes.trim() || "-"}
                                     >
                                       <FlagIcon
                                         iso={country.iso}
-                                        name={country.name}
+                                        name={isFrench ? frenchHomeText(country.name) : country.name}
                                       />
 
                                       <span className="flex-1 text-sm font-semibold text-slate-700">
-                                        {country.name}
+                                        {isFrench ? frenchHomeText(country.name) : country.name}
                                       </span>
 
                                       <span className="text-xs font-bold text-slate-400">
