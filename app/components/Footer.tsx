@@ -224,26 +224,51 @@ function TripadvisorIcon() {
 }
 
 export default function Footer() {
-  const [language, setLanguage] = useState<"en" | "de">("en");
+  const [language, setLanguage] = useState<"en" | "de" | "fr">("en");
 
   useEffect(() => {
     try {
       const saved = window.localStorage.getItem("via-blue-language");
-      if (saved === "de" || saved === "en") setLanguage(saved);
+      if (saved === "de" || saved === "en" || saved === "fr") setLanguage(saved);
     } catch {
       // English remains the fallback if browser storage is unavailable.
     }
 
     const handleLanguageChange = (event: Event) => {
-      const nextLanguage = (event as CustomEvent<"en" | "de">).detail;
-      if (nextLanguage === "en" || nextLanguage === "de") setLanguage(nextLanguage);
+      const nextLanguage = (event as CustomEvent<"en" | "de" | "fr">).detail;
+      if (nextLanguage === "en" || nextLanguage === "de" || nextLanguage === "fr") setLanguage(nextLanguage);
     };
 
     window.addEventListener("via-blue-language-change", handleLanguageChange);
     return () => window.removeEventListener("via-blue-language-change", handleLanguageChange);
   }, []);
 
-  const text = language === "de"
+  const text = language === "fr"
+    ? {
+        intro: "Votre expérience en mer Rouge",
+        headline: "Découvrez Hurghada autrement",
+        description: "Découvrez des excursions inoubliables, des sorties en bateau, des aventures de snorkeling et des transferts privés à Hurghada",
+        exploreEgypt: "Découvrez l’Égypte",
+        follow: "Suivez Via Blue",
+        reputation: "Avis de voyageurs",
+        comingSoon: "Bientôt disponible",
+        quickLinks: "Liens rapides",
+        home: "Accueil",
+        tours: "Excursions",
+        airportTransfers: "Transferts aéroport",
+        contact: "Contact",
+        experiences: "Expériences populaires",
+        privateTransfer: "Transfert privé",
+        luxuryTours: "Excursions VIP",
+        contactUs: "Contactez-nous",
+        location: "Adresse",
+        email: "E-mail",
+        closing: "Votre voyage commence au bord de la mer Rouge",
+        privacy: "Politique de confidentialité",
+        terms: "Conditions générales",
+        rights: "Tous droits réservés",
+      }
+    : language === "de"
     ? {
         intro: "Dein Erlebnis am Roten Meer",
         headline: "Entdecke Hurghada auf besondere Weise",
@@ -353,7 +378,7 @@ export default function Footer() {
               </p>
 
               <p className="mt-2 text-sm font-medium text-slate-200">
-                {language === "de" ? "Ausflüge • Meer • Wüste • Transfers" : "Tours • Sea • Desert • Transfers"}
+                {language === "fr" ? "Excursions • Mer • Désert • Transferts" : language === "de" ? "Ausflüge • Meer • Wüste • Transfers" : "Tours • Sea • Desert • Transfers"}
               </p>
             </div>
           </div>
@@ -417,7 +442,7 @@ export default function Footer() {
                 {/* Gmail */}
                 <a
                   href="mailto:viabluetours@gmail.com"
-                  aria-label={language === "de" ? "E-Mail" : "Email"}
+                  aria-label={language === "fr" ? "E-mail" : language === "de" ? "E-Mail" : "Email"}
                   className="group flex h-11 w-11 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.045] text-slate-300 shadow-xl shadow-black/20 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-red-400/40 hover:bg-red-500 hover:text-white hover:shadow-red-500/20"
                 >
                   <GmailIcon />
