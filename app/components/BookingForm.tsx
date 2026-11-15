@@ -1413,7 +1413,7 @@ ${notes.trim() || "-"}`;
                   </p>
 
                   <p className="mt-2 font-black leading-6 text-[#071a36]">
-                    {tourName}
+                    {displayTourName}
                   </p>
                 </div>
 
