@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { supabase } from "@/lib/supabase";
 import HomeText from "@/app/components/HomeText";
 import { frenchHomeText } from "@/lib/frenchHomeCopy";
+import { frenchTourValue } from "@/lib/frenchTourCopy";
 import { useCurrency } from "@/app/components/CurrencyProvider";
 
 type BookingFormProps = {
@@ -260,6 +261,7 @@ export default function BookingForm({
 
   const [isGerman, setIsGerman] = useState(false);
   const [isFrench, setIsFrench] = useState(false);
+  const displayTourName = isFrench ? frenchTourValue(tourName) : tourName;
   useEffect(() => {
     const syncLanguage = () => { const language = localStorage.getItem("via-blue-language"); setIsGerman(language === "de"); setIsFrench(language === "fr"); };
     syncLanguage();
@@ -705,7 +707,7 @@ ${notes.trim() || "-"}`;
 
           <div className="relative p-7 sm:p-9 md:p-12">
             <div className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.07] px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-orange-400 shadow-lg backdrop-blur-md">
-              {tourName.toUpperCase()}
+              {displayTourName.toUpperCase()}
             </div>
 
             <h1 className="mt-5 max-w-3xl text-4xl font-black tracking-tight text-white sm:text-5xl md:text-6xl">
@@ -713,7 +715,7 @@ ${notes.trim() || "-"}`;
             </h1>
 
             <p className="mt-5 max-w-2xl text-base leading-7 text-blue-100/80 sm:text-lg">
-              <HomeText en={`Reserve your ${tourName} experience quickly and securely`} de={`Buchen Sie Ihr ${tourName}-Erlebnis schnell und sicher`} />
+              <HomeText en={`Reserve your ${displayTourName} experience quickly and securely`} de={`Buchen Sie Ihr ${tourName}-Erlebnis schnell und sicher`} />
               <HomeText en="through WhatsApp" de="über WhatsApp" />
             </p>
 
@@ -1462,7 +1464,7 @@ ${notes.trim() || "-"}`;
                           </span>
 
                           <span>
-                            {item}
+                            {isFrench ? frenchTourValue(item) : item}
                           </span>
                         </li>
                       )
