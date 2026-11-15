@@ -31,6 +31,14 @@ export async function PUT(request: Request) {
       return Response.json({ success: false, error: "Keep between 1 and 20 packages and networks." }, { status: 400 });
     }
     const currencies = ["EUR", "USD", "GBP"];
+    if (!settings.packages.some((item: { active?: boolean }) => item.active) || !settings.networks.some((item: { active?: boolean }) => item.active)) {
+      return Response.json({ success: false, error: "Keep at least one active package and one active network." }, { status: 400 });
+    }
+    const packageIds = settings.packages.map((item: { id: string }) => item.id);
+    const networkIds = settings.networks.map((item: { id: string }) => item.id);
+    if (new Set(packageIds).size !== packageIds.length || new Set(networkIds).size !== networkIds.length) {
+      return Response.json({ success: false, error: "Package and network IDs must be unique." }, { status: 400 });
+    }
     for (const item of settings.packages) {
       if (typeof item.id !== "string" || !item.id.trim() || typeof item.name !== "string" || !item.name.trim() ||
           !Number.isFinite(Number(item.dataGb)) || Number(item.dataGb) <= 0 ||
