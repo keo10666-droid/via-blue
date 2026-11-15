@@ -27,9 +27,6 @@ export default function SimCardCard() {
               <span className="inline-flex items-center rounded-full border border-white/25 bg-white/10 px-3.5 py-2 text-[9px] font-extrabold uppercase tracking-[0.22em] text-white/90 backdrop-blur-md">
                 EGYPT SIM CARD
               </span>
-              <span className="rounded-full bg-orange-500 px-3.5 py-2 text-[9px] font-extrabold uppercase tracking-[0.16em] text-white shadow-lg">
-                25 GB + Calls
-              </span>
             </div>
 
             <div className="max-w-xl">
