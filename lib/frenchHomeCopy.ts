@@ -857,6 +857,9 @@ export function frenchHomeText(value: string): string {
 
   // Preserve dynamic names, locations, and totals while translating the surrounding copy.
   if (value.startsWith("Book ")) return `Réserver ${value.slice(5)}`;
+  if (value.startsWith("Enter the 6-digit password reset code we sent to ")) {
+    return value.replace("Enter the 6-digit password reset code we sent to ", "Saisissez le code de réinitialisation à 6 chiffres envoyé à ");
+  }
   if (value.startsWith("Comfortable private transfer from ")) {
     return value.replace("Comfortable private transfer from ", "Transfert privé confortable de ").replace(" to your destination", " vers votre destination");
   }
