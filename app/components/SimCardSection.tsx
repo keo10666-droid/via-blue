@@ -64,7 +64,7 @@ export default function SimCardSection() {
       const response = await fetch("/api/sim-card-order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, whatsapp: whatsappCountryCode + form.whatsapp.replace(/^0+/, "").replace(/[\\s()-]/g, ""), network, delivery, currency }),
+        body: JSON.stringify({ ...form, whatsapp: whatsappCountryCode + form.whatsapp.replace(/^0+/, "").replace(/[\s()-]/g, ""), network, delivery, currency }),
       });
       const result = await response.json();
 
