@@ -598,6 +598,13 @@ const frenchCopy: Record<string, string> = {
   "Website language": "Langue du site",
   "Choose your preferred language": "Choisissez votre langue préférée",
   "Select language": "Choisir la langue",
+  "Hurghada International Airport": "Aéroport international d’Hurghada",
+  "Hurghada City": "Centre-ville d’Hurghada",
+  "Sedan": "Berline",
+  "X-Pander": "X-Pander",
+  "Van": "Van",
+  "Luxury": "Luxe",
+  "Coster": "Minibus",
 };
 
 export function frenchHomeText(value: string): string {
