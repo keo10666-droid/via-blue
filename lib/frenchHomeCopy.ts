@@ -308,6 +308,37 @@ const frenchCopy: Record<string, string> = {
   "Upload your first Hurghada memory above": "Ajoutez votre premier souvenir d’Hurghada ci-dessus",
   "Delete Photo": "Supprimer la photo",
 
+
+  "Back to homepage": "Retour à l’accueil",
+  "Stay connected in Egypt": "Restez connecté en Égypte",
+  "Get online, stay in touch and enjoy your holiday without roaming worries": "Restez connecté et profitez de vos vacances sans vous soucier des frais d’itinérance",
+  "Your trip. Your connection.": "Votre voyage. Votre connexion.",
+  "Reliable mobile connection while exploring Egypt": "Une connexion mobile fiable pendant votre découverte de l’Égypte",
+  "Your selected package": "Votre forfait sélectionné",
+  "Choose your network": "Choisissez votre réseau",
+  "Select your SIM provider": "Choisissez votre opérateur SIM",
+  "networks": "réseaux",
+  "Best seller": "Meilleure vente",
+  "Choose your package": "Choisissez votre forfait",
+  "Total price": "Prix total",
+  "Hide order details": "Masquer les détails de la commande",
+  "Continue to order": "Continuer la commande",
+  "Your order has been received!": "Votre commande a bien été reçue !",
+  "Reference:": "Référence :",
+  "Our team will contact you on WhatsApp to confirm the details": "Notre équipe vous contactera sur WhatsApp pour confirmer les détails",
+  "Your details": "Vos coordonnées",
+  "Choose delivery option": "Choisissez le mode de livraison",
+  "Airport pickup": "Retrait à l’aéroport",
+  "Free": "Gratuit",
+  "Hotel delivery": "Livraison à l’hôtel",
+  "Submitting order...": "Envoi de la commande…",
+  "Confirm SIM order": "Confirmer la commande SIM",
+  "Your order details will be sent securely to Via Blue for confirmation": "Les détails de votre commande seront transmis en toute sécurité à Via Blue pour confirmation",
+  "Network availability and package activation are subject to confirmation": "La disponibilité du réseau et l’activation du forfait doivent être confirmées",
+  "EGYPT SIM CARD": "CARTE SIM ÉGYPTE",
+  "Stay Connected": "Restez connecté",
+  "Explore SIM Card": "Découvrir la carte SIM",
+
 };
 
 export function frenchHomeText(value: string): string {
