@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { frenchHomeText } from "@/lib/frenchHomeCopy";
 
 type HomeTextProps = {
   en: string;
@@ -29,5 +30,5 @@ export default function HomeText({ en, de, fr, className }: HomeTextProps) {
     return () => window.removeEventListener("via-blue-language-change", handleLanguageChange);
   }, []);
 
-  return <span className={className}>{language === "de" ? de : language === "fr" ? (fr ?? en) : en}</span>;
+  return <span className={className}>{language === "de" ? de : language === "fr" ? (fr ?? frenchHomeText(en)) : en}</span>;
 }
