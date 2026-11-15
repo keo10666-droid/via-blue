@@ -15,6 +15,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [userName, setUserName] = useState<string | null>(null);
   const [language, setLanguage] = useState<"en" | "de" | "fr">("en");
+  const [languageMenuOpen, setLanguageMenuOpen] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">("light");
 
   useEffect(() => {
@@ -37,9 +38,9 @@ export default function Navbar() {
     try { window.localStorage.setItem("via-blue-theme", nextTheme); } catch { /* Current-page toggle remains available. */ }
   }
 
-  function toggleLanguage() {
-    const nextLanguage = language === "en" ? "de" : language === "de" ? "fr" : "en";
+  function changeLanguage(nextLanguage: "en" | "de" | "fr") {
     setLanguage(nextLanguage);
+    setLanguageMenuOpen(false);
     document.documentElement.lang = nextLanguage;
     try {
       window.localStorage.setItem("via-blue-language", nextLanguage);
@@ -48,6 +49,12 @@ export default function Navbar() {
     }
     window.dispatchEvent(new CustomEvent("via-blue-language-change", { detail: nextLanguage }));
   }
+
+  const languageOptions = [
+    { value: "en" as const, label: "English" },
+    { value: "de" as const, label: "Deutsch" },
+    { value: "fr" as const, label: "Français" },
+  ];
 
   const labels = language === "fr"
     ? {
@@ -362,14 +369,34 @@ export default function Navbar() {
           {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
         </button>
 
-        <button
-          type="button"
-          onClick={toggleLanguage}
-          aria-label={language === "en" ? "Switch language to German" : language === "de" ? "Passer au français" : "Switch language to English"}
-          className="ml-1.5 hidden shrink-0 whitespace-nowrap rounded-lg border border-slate-200 bg-white px-2 py-2 text-[10px] font-bold text-blue-950 transition hover:border-orange-300 hover:bg-orange-50 lg:inline-flex xl:ml-2 xl:px-2.5 xl:text-xs"
-        >
-          {language === "en" ? "DE" : language === "de" ? "FR" : "EN"}
-        </button>
+        <div className="relative ml-1.5 hidden shrink-0 lg:block xl:ml-2" onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setLanguageMenuOpen(false); }}>
+          <button
+            type="button"
+            onClick={() => setLanguageMenuOpen((open) => !open)}
+            aria-label="Choose language"
+            aria-haspopup="menu"
+            aria-expanded={languageMenuOpen}
+            className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg border border-slate-200 bg-white px-2 py-2 text-[10px] font-bold text-blue-950 transition hover:border-orange-300 hover:bg-orange-50 xl:px-2.5 xl:text-xs"
+          >
+            {language.toUpperCase()} <span aria-hidden="true">⌄</span>
+          </button>
+          {languageMenuOpen && (
+            <div role="menu" aria-label="Choose language" className="absolute right-0 top-full z-[100] mt-2 min-w-36 overflow-hidden rounded-xl border border-slate-200 bg-white p-1.5 shadow-xl">
+              {languageOptions.map((option) => (
+                <button
+                  key={option.value}
+                  type="button"
+                  role="menuitem"
+                  onClick={() => changeLanguage(option.value)}
+                  className={`flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-left text-sm font-semibold transition hover:bg-orange-50 hover:text-orange-700 ${language === option.value ? "bg-blue-50 text-blue-950" : "text-slate-700"}`}
+                >
+                  {option.label}
+                  {language === option.value && <span aria-hidden="true">✓</span>}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
 
         {/* Desktop Account */}
         <div className="ml-1.5 hidden shrink-0 items-center lg:flex xl:ml-2">
@@ -484,13 +511,35 @@ export default function Navbar() {
               {theme === "dark" ? labels["Light mode"] : labels["Dark mode"]}
             </button>
 
-            <button
-              type="button"
-              onClick={toggleLanguage}
-              className="mb-2 self-start rounded-xl border border-slate-200 bg-white px-4 py-2 text-xs font-extrabold text-blue-950 transition hover:border-orange-300 hover:bg-orange-50"
-            >
-              {language === "en" ? "Deutsch" : language === "de" ? "Français" : "English"}
-            </button>
+            <div className="relative mb-2 self-start" onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setLanguageMenuOpen(false); }}>
+              <button
+                type="button"
+                onClick={() => setLanguageMenuOpen((open) => !open)}
+                aria-label="Choose language"
+                aria-haspopup="menu"
+                aria-expanded={languageMenuOpen}
+                className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-xs font-extrabold text-blue-950 transition hover:border-orange-300 hover:bg-orange-50"
+              >
+                {languageOptions.find((option) => option.value === language)?.label}
+                <span aria-hidden="true">⌄</span>
+              </button>
+              {languageMenuOpen && (
+                <div role="menu" aria-label="Choose language" className="absolute left-0 top-full z-[100] mt-2 min-w-40 overflow-hidden rounded-xl border border-slate-200 bg-white p-1.5 shadow-xl">
+                  {languageOptions.map((option) => (
+                    <button
+                      key={option.value}
+                      type="button"
+                      role="menuitem"
+                      onClick={() => changeLanguage(option.value)}
+                      className={`flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-left text-sm font-semibold transition hover:bg-orange-50 hover:text-orange-700 ${language === option.value ? "bg-blue-50 text-blue-950" : "text-slate-700"}`}
+                    >
+                      {option.label}
+                      {language === option.value && <span aria-hidden="true">✓</span>}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
 
             {navItems.map((item) => {
               const active = isActive(item.href);
