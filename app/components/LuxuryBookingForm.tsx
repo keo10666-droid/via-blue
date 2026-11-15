@@ -613,6 +613,8 @@ export default function LuxuryBookingForm({
   const [adults, setAdults] = useState(2);
   const [children, setChildren] = useState(0);
   const [infants, setInfants] = useState(0);
+  const [lionPhotoSelected, setLionPhotoSelected] = useState(false);
+  const [lionPhotoCount, setLionPhotoCount] = useState(1);
   const [childAges, setChildAges] = useState<string[]>([]);
   const [infantAges, setInfantAges] = useState<string[]>([]);
 
@@ -725,9 +727,12 @@ export default function LuxuryBookingForm({
       totalGuests <= pricingCapacity &&
       (tourSlug !== "quad-safari" || quadAllocationValid) &&
       (tourSlug !== "buggy-safari" || buggyAllocationValid));
-  const totalPrice = pricingTour
+  const hasLionPhotoOption = ["quad-safari", "buggy-safari"].includes(tourSlug);
+  const effectiveLionPhotoCount = hasLionPhotoOption && lionPhotoSelected ? Math.min(lionPhotoCount, recordedGuests) : 0;
+  const lionPhotoTotal = effectiveLionPhotoCount * 10;
+  const totalPrice = (pricingTour
     ? (baseTourPrice ?? 0) + islandExtra
-    : privatePrices[Math.min(Math.max(chargeableGuests, 2), 25)] ?? privatePrices[25];
+    : privatePrices[Math.min(Math.max(chargeableGuests, 2), 25)] ?? privatePrices[25]) + lionPhotoTotal;
   const displayedTotalPrice = pricingValid ? formatCurrency(totalPrice) : "—";
 
   const pricingDetails = [
@@ -740,6 +745,7 @@ export default function LuxuryBookingForm({
     selectedIslands.length
       ? `Islands: ${selectedIslands.join(", ")}`
       : "",
+    effectiveLionPhotoCount > 0 ? `Photo with the lion: ${effectiveLionPhotoCount} people × €10 = ${formatCurrency(lionPhotoTotal)} (adults, children and infants charged equally)` : "",
   ].filter(Boolean).join("\n");
 
   const filteredNationalities = useMemo(() => {
@@ -877,6 +883,8 @@ Room Number: ${roomNumber || "Not specified"}
 Date: ${date}
 
 Adults: ${adults}\nChildren: ${children} (ages: ${childAges.join(", ") || "not specified"})\nInfants: ${infants} (ages in months: ${infantAges.join(", ") || "not specified"})\nTotal chargeable/capacity guests: ${totalGuests}\nTotal people including infants: ${recordedGuests}
+
+Lion photo with the lion: ${effectiveLionPhotoCount > 0 ? `${effectiveLionPhotoCount} people × €10 = ${formatCurrency(lionPhotoTotal)}` : "Not selected"}
 
 ${pricingDetails ? `${pricingDetails}; ` : ""}
 
@@ -1936,6 +1944,26 @@ ${notes.trim() || "-"}
                             );
                           })}
                         </div>
+                      </div>
+                    )}
+
+                    {hasLionPhotoOption && (
+                      <div className="rounded-2xl border border-orange-200 bg-gradient-to-r from-orange-50 to-white p-5 shadow-sm">
+                        <label className="flex cursor-pointer items-start gap-3">
+                          <input type="checkbox" checked={lionPhotoSelected} onChange={(event) => { setLionPhotoSelected(event.target.checked); if (event.target.checked && lionPhotoCount < 1) setLionPhotoCount(1); }} className="mt-1 h-5 w-5 rounded border-orange-300 accent-orange-500" />
+                          <span className="flex-1">
+                            <span className="block text-sm font-bold text-[#071a36]"><HomeText en="Photo with the Lion" de="Foto mit dem Löwen" /></span>
+                            <span className="mt-1 block text-xs leading-5 text-slate-500"><HomeText en="Optional experience · €10 per person. Adults, children and infants are charged equally." de="Optionales Erlebnis · 10 € pro Person. Erwachsene, Kinder und Babys zahlen den gleichen Preis." /></span>
+                          </span>
+                          <span className="whitespace-nowrap text-sm font-black text-orange-600">{formatCurrency(10)} <span className="text-xs font-semibold">/ <HomeText en="person" de="Person" /></span></span>
+                        </label>
+                        {lionPhotoSelected && (
+                          <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-orange-100 pt-4">
+                            <label htmlFor="luxury-lion-photo-count" className="text-sm font-semibold text-slate-700"><HomeText en="People taking the photo" de="Personen für das Foto" /></label>
+                            <input id="luxury-lion-photo-count" type="number" min="1" max={Math.max(recordedGuests, 1)} value={effectiveLionPhotoCount || 1} onChange={(event) => setLionPhotoCount(Math.max(1, Math.min(recordedGuests, Number(event.target.value) || 1)))} className="h-11 w-24 rounded-xl border border-orange-200 bg-white px-3 text-center font-bold text-[#071a36] outline-none focus:border-orange-400" />
+                            <span className="w-full text-right text-sm font-black text-orange-600">{formatCurrency(lionPhotoTotal)}</span>
+                          </div>
+                        )}
                       </div>
                     )}
 
