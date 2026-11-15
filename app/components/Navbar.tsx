@@ -51,11 +51,11 @@ export default function Navbar() {
 
   const labels = language === "de"
     ? {
-        Home: "Startseite",
+        Home: "Start",
         Tours: "Ausflüge",
         Transfers: "Transfers",
-        "Luxury Tours": "Luxus-Ausflüge",
-        "AI Trip Planner": "KI-Reiseplaner",
+        "Luxury Tours": "Luxus",
+        "AI Trip Planner": "Reiseplaner",
         "About Us": "Über uns",
         Contact: "Kontakt",
         Register: "Registrieren",
@@ -245,7 +245,7 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className={`hidden min-w-0 items-center gap-0 ${language === "de" ? "2xl:flex" : "lg:flex"}`}>
+        <nav className="hidden min-w-0 items-center gap-0 lg:flex">
 
           {navItems.map((item) => {
             const active = isActive(item.href);
@@ -326,7 +326,7 @@ export default function Navbar() {
           aria-label="Select currency"
           value={currency}
           onChange={(event) => setCurrency(event.target.value as CurrencyCode)}
-          className={`ml-1.5 hidden h-9 shrink-0 rounded-lg border border-slate-200 bg-white px-1.5 text-[10px] font-bold text-blue-950 outline-none transition hover:border-orange-300 xl:ml-2 xl:px-2 xl:text-xs ${language === "de" ? "2xl:inline-flex" : "lg:inline-flex"}`}
+          className="ml-1.5 hidden h-9 shrink-0 rounded-lg border border-slate-200 bg-white px-1.5 text-[10px] font-bold text-blue-950 outline-none transition hover:border-orange-300 lg:inline-flex xl:ml-2 xl:px-2 xl:text-xs"
         >
           <option value="EUR">EUR €</option>
           <option value="USD" disabled={rates.USD <= 0}>USD $</option>
@@ -339,7 +339,7 @@ export default function Navbar() {
           aria-label={theme === "dark" ? labels["Light mode"] : labels["Dark mode"]}
           aria-pressed={theme === "dark"}
           title={theme === "dark" ? labels["Light mode"] : labels["Dark mode"]}
-          className={`ml-1.5 hidden h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-slate-200 bg-white text-blue-950 transition hover:border-orange-300 hover:bg-orange-50 xl:ml-2 ${language === "de" ? "2xl:inline-flex" : "lg:inline-flex"}`}
+          className="ml-1.5 hidden h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-slate-200 bg-white text-blue-950 transition hover:border-orange-300 hover:bg-orange-50 lg:inline-flex xl:ml-2"
         >
           {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
         </button>
@@ -348,13 +348,13 @@ export default function Navbar() {
           type="button"
           onClick={toggleLanguage}
           aria-label={language === "en" ? "Switch to German" : "Auf Englisch wechseln"}
-          className={`ml-1.5 hidden shrink-0 whitespace-nowrap rounded-lg border border-slate-200 bg-white px-2 py-2 text-[10px] font-bold text-blue-950 transition hover:border-orange-300 hover:bg-orange-50 xl:ml-2 xl:px-2.5 xl:text-xs ${language === "de" ? "2xl:inline-flex" : "lg:inline-flex"}`}
+          className="ml-1.5 hidden shrink-0 whitespace-nowrap rounded-lg border border-slate-200 bg-white px-2 py-2 text-[10px] font-bold text-blue-950 transition hover:border-orange-300 hover:bg-orange-50 lg:inline-flex xl:ml-2 xl:px-2.5 xl:text-xs"
         >
           {language === "en" ? "DE" : "EN"}
         </button>
 
         {/* Desktop Account */}
-        <div className={`ml-1.5 hidden shrink-0 items-center xl:ml-2 ${language === "de" ? "2xl:flex" : "lg:flex"}`}>
+        <div className="ml-1.5 hidden shrink-0 items-center lg:flex xl:ml-2">
 
           {userName ? (
             <div className="flex items-center gap-2">
@@ -407,7 +407,7 @@ export default function Navbar() {
           onClick={toggleTheme}
           aria-label={theme === "dark" ? labels["Light mode"] : labels["Dark mode"]}
           aria-pressed={theme === "dark"}
-          className={`mr-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white text-blue-950 shadow-sm transition hover:border-orange-200 hover:bg-orange-50 ${language === "de" ? "2xl:hidden" : "lg:hidden"}`}
+          className="mr-2 flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-slate-200 bg-white text-blue-950 shadow-sm transition hover:border-orange-200 hover:bg-orange-50 lg:hidden"
         >
           {theme === "dark" ? <Sun size={19} /> : <Moon size={19} />}
         </button>
@@ -416,7 +416,7 @@ export default function Navbar() {
         <button
           type="button"
           onClick={() => setIsOpen((value) => !value)}
-          className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border text-lg font-bold shadow-sm transition-all duration-300 ${language === "de" ? "2xl:hidden" : "lg:hidden"} ${
+          className={`flex h-11 w-11 items-center justify-center rounded-2xl border text-lg font-bold shadow-sm transition-all duration-300 lg:hidden ${
             isOpen
               ? "border-blue-950 bg-blue-950 text-white shadow-blue-950/20"
               : "border-slate-200 bg-white text-blue-950 hover:border-orange-200 hover:bg-orange-50"
@@ -431,7 +431,7 @@ export default function Navbar() {
 
       {/* Mobile Navigation */}
       {isOpen && (
-        <div className={`max-h-[calc(100dvh-68px)] overflow-y-auto overscroll-contain touch-pan-y border-t border-slate-100 bg-white/95 px-4 pb-5 pt-3 shadow-[0_18px_35px_rgba(15,23,42,0.08)] backdrop-blur-xl ${language === "de" ? "2xl:hidden" : "lg:hidden"}`}>
+        <div className="max-h-[calc(100dvh-68px)] overflow-y-auto overscroll-contain touch-pan-y border-t border-slate-100 bg-white/95 px-4 pb-5 pt-3 shadow-[0_18px_35px_rgba(15,23,42,0.08)] backdrop-blur-xl lg:hidden">
 
           <nav className="flex flex-col gap-1.5">
             <div className="mb-2 grid grid-cols-3 gap-2" role="group" aria-label="Select currency">
@@ -590,7 +590,7 @@ export default function Navbar() {
     {!pathname.startsWith("/admin") && (
       <nav
         aria-label="Mobile quick navigation"
-        className={`fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 border-t border-slate-200/80 bg-white/95 px-1 pb-[max(env(safe-area-inset-bottom),0.35rem)] pt-2 shadow-[0_-8px_30px_rgba(3,17,42,0.10)] backdrop-blur-2xl ${language === "de" ? "2xl:hidden" : "lg:hidden"}`}
+        className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 border-t border-slate-200/80 bg-white/95 px-1 pb-[max(env(safe-area-inset-bottom),0.35rem)] pt-2 shadow-[0_-8px_30px_rgba(3,17,42,0.10)] backdrop-blur-2xl lg:hidden"
       >
         {[
           { href: "/", label: language === "de" ? "Startseite" : "Home", Icon: Home },
