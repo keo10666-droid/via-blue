@@ -12,13 +12,14 @@ import {
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import HomeText from "@/app/components/HomeText";
+import { frenchHomeText } from "@/lib/frenchHomeCopy";
 
 function accountText(en: string, de: string) {
   try {
-    return typeof window !== "undefined" &&
-      window.localStorage.getItem("via-blue-language") === "de"
-      ? de
-      : en;
+    const language = typeof window !== "undefined"
+      ? window.localStorage.getItem("via-blue-language")
+      : "en";
+    return language === "de" ? de : language === "fr" ? frenchHomeText(en) : en;
   } catch {
     return en;
   }
@@ -173,6 +174,38 @@ const COUNTRY_CODES = [
 ];
 
 function translateAccountMessage(message: string) {
+  let language = "en";
+  try {
+    language = window.localStorage.getItem("via-blue-language") || "en";
+  } catch {
+    // Keep English as the fallback.
+  }
+
+  if (language === "fr") {
+    const translations: Record<string, string> = {
+      "Please select a JPG, PNG, WebP or GIF image": "Veuillez sélectionner une image JPG, PNG, WebP ou GIF",
+      "Image size must be 5 MB or smaller": "L’image ne doit pas dépasser 5 Mo",
+      "Each memory image must be 5 MB or smaller": "Chaque photo souvenir ne doit pas dépasser 5 Mo",
+      "Please choose a photo first": "Veuillez d’abord choisir une photo",
+      "You have reached the maximum of 25 travel memories": "Vous avez atteint la limite de 25 souvenirs de voyage",
+      "Could not upload your profile photo. Please try again.": "Impossible de télécharger votre photo de profil. Veuillez réessayer.",
+      "Your profile could not be saved. Please try again.": "Impossible d’enregistrer votre profil. Veuillez réessayer.",
+      "Your email address could not be updated. Please try again.": "Impossible de mettre à jour votre adresse e-mail. Veuillez réessayer.",
+      "Could not upload this travel memory. Please try again.": "Impossible de télécharger ce souvenir de voyage. Veuillez réessayer.",
+      "Could not save this memory. Please try again.": "Impossible d’enregistrer ce souvenir. Veuillez réessayer.",
+      "Your travel memory has been added": "Votre souvenir de voyage a été ajouté",
+      "Are you sure you want to delete this travel memory?": "Voulez-vous vraiment supprimer ce souvenir de voyage ?",
+      "Could not delete this memory. Please try again.": "Impossible de supprimer ce souvenir. Veuillez réessayer.",
+      "Travel memory deleted": "Souvenir de voyage supprimé",
+      "Could not delete this memory": "Impossible de supprimer ce souvenir",
+      "Your profile has been saved": "Votre profil a été enregistré",
+      " Please check your email to confirm the new address": " Veuillez consulter votre e-mail pour confirmer la nouvelle adresse",
+    };
+    return Object.entries(translations).reduce((text, [english, french]) => text.split(english).join(french), message);
+  }
+
+  if (language !== "de") return message;
+
   const translations: Record<string, string> = {
     "Please select a JPG, PNG, WebP or GIF image": "Bitte wähle ein JPG-, PNG-, WebP- oder GIF-Bild aus",
     "Image size must be 5 MB or smaller": "Das Bild darf höchstens 5 MB groß sein",
@@ -190,6 +223,13 @@ function translateAccountMessage(message: string) {
 
 export default function AccountPage() {
   const router = useRouter();
+  const [, setLanguageRevision] = useState(0);
+
+  useEffect(() => {
+    const refreshLanguage = () => setLanguageRevision((revision) => revision + 1);
+    window.addEventListener("via-blue-language-change", refreshLanguage);
+    return () => window.removeEventListener("via-blue-language-change", refreshLanguage);
+  }, []);
 
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loyalty, setLoyalty] =
