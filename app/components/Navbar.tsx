@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { Crown, Home, Compass, CarFront, MessageCircle, UserRound, Moon, Sun } from "lucide-react";
+import { Crown, Home, Compass, CarFront, MessageCircle, UserRound, Moon, Sun, Globe2, ChevronDown, Check } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { useCurrency, type CurrencyCode } from "@/app/components/CurrencyProvider";
 
@@ -376,24 +376,34 @@ export default function Navbar() {
             aria-label="Choose language"
             aria-haspopup="menu"
             aria-expanded={languageMenuOpen}
-            className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg border border-slate-200 bg-white px-2 py-2 text-[10px] font-bold text-blue-950 transition hover:border-orange-300 hover:bg-orange-50 xl:px-2.5 xl:text-xs"
+            className={`group inline-flex h-10 items-center gap-2 rounded-full border px-3 text-[11px] font-bold transition-all duration-200 ${languageMenuOpen ? "border-blue-950 bg-blue-950 text-white shadow-lg shadow-blue-950/15" : "border-slate-200/90 bg-white/90 text-slate-700 hover:border-blue-200 hover:bg-blue-50/70"}`}
           >
-            {language.toUpperCase()} <span aria-hidden="true">⌄</span>
+            <Globe2 size={15} className={languageMenuOpen ? "text-orange-300" : "text-orange-500"} />
+            <span>{language.toUpperCase()}</span>
+            <ChevronDown size={13} className={`transition-transform duration-200 ${languageMenuOpen ? "rotate-180" : ""}`} />
           </button>
           {languageMenuOpen && (
-            <div role="menu" aria-label="Choose language" className="absolute right-0 top-full z-[100] mt-2 min-w-36 overflow-hidden rounded-xl border border-slate-200 bg-white p-1.5 shadow-xl">
-              {languageOptions.map((option) => (
-                <button
-                  key={option.value}
-                  type="button"
-                  role="menuitem"
-                  onClick={() => changeLanguage(option.value)}
-                  className={`flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-left text-sm font-semibold transition hover:bg-orange-50 hover:text-orange-700 ${language === option.value ? "bg-blue-50 text-blue-950" : "text-slate-700"}`}
-                >
-                  {option.label}
-                  {language === option.value && <span aria-hidden="true">✓</span>}
-                </button>
-              ))}
+            <div role="menu" aria-label="Choose language" className="absolute right-0 top-full z-[100] mt-3 w-56 overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-2 shadow-[0_18px_55px_rgba(3,17,42,0.18)] ring-1 ring-black/[0.03]">
+              <div className="px-3 pb-2 pt-1">
+                <p className="text-[9px] font-black uppercase tracking-[0.2em] text-slate-400">Website language</p>
+                <p className="mt-0.5 text-xs font-semibold text-slate-700">Choose your preferred language</p>
+              </div>
+              <div className="h-px bg-slate-100" />
+              <div className="mt-1 space-y-1">
+                {languageOptions.map((option) => (
+                  <button
+                    key={option.value}
+                    type="button"
+                    role="menuitem"
+                    onClick={() => changeLanguage(option.value)}
+                    className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-all duration-200 ${language === option.value ? "bg-blue-50 text-blue-950" : "text-slate-600 hover:bg-slate-50 hover:text-blue-950"}`}
+                  >
+                    <span className={`flex h-8 w-8 items-center justify-center rounded-lg text-[10px] font-black tracking-wide ${language === option.value ? "bg-blue-950 text-white" : "bg-slate-100 text-slate-500"}`}>{option.value.toUpperCase()}</span>
+                    <span className="flex-1 text-sm font-semibold">{option.label}</span>
+                    {language === option.value && <Check size={16} className="text-orange-500" />}
+                  </button>
+                ))}
+              </div>
             </div>
           )}
         </div>
@@ -518,23 +528,26 @@ export default function Navbar() {
                 aria-label="Choose language"
                 aria-haspopup="menu"
                 aria-expanded={languageMenuOpen}
-                className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-xs font-extrabold text-blue-950 transition hover:border-orange-300 hover:bg-orange-50"
+                className={`flex items-center gap-3 rounded-2xl border px-4 py-3 text-sm font-bold transition-all ${languageMenuOpen ? "border-blue-950 bg-blue-950 text-white" : "border-slate-200 bg-white text-blue-950 hover:border-blue-200"}`}
               >
-                {languageOptions.find((option) => option.value === language)?.label}
-                <span aria-hidden="true">⌄</span>
+                <Globe2 size={17} className={languageMenuOpen ? "text-orange-300" : "text-orange-500"} />
+                <span>{languageOptions.find((option) => option.value === language)?.label}</span>
+                <ChevronDown size={15} className={`transition-transform duration-200 ${languageMenuOpen ? "rotate-180" : ""}`} />
               </button>
               {languageMenuOpen && (
-                <div role="menu" aria-label="Choose language" className="absolute left-0 top-full z-[100] mt-2 min-w-40 overflow-hidden rounded-xl border border-slate-200 bg-white p-1.5 shadow-xl">
+                <div role="menu" aria-label="Choose language" className="absolute left-0 top-full z-[100] mt-2 w-56 overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-2 shadow-[0_18px_45px_rgba(3,17,42,0.16)]">
+                  <p className="px-3 pb-2 pt-1 text-[9px] font-black uppercase tracking-[0.2em] text-slate-400">Select language</p>
                   {languageOptions.map((option) => (
                     <button
                       key={option.value}
                       type="button"
                       role="menuitem"
                       onClick={() => changeLanguage(option.value)}
-                      className={`flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-left text-sm font-semibold transition hover:bg-orange-50 hover:text-orange-700 ${language === option.value ? "bg-blue-50 text-blue-950" : "text-slate-700"}`}
+                      className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-all ${language === option.value ? "bg-blue-50 text-blue-950" : "text-slate-600 hover:bg-slate-50 hover:text-blue-950"}`}
                     >
-                      {option.label}
-                      {language === option.value && <span aria-hidden="true">✓</span>}
+                      <span className={`flex h-8 w-8 items-center justify-center rounded-lg text-[10px] font-black ${language === option.value ? "bg-blue-950 text-white" : "bg-slate-100 text-slate-500"}`}>{option.value.toUpperCase()}</span>
+                      <span className="flex-1 text-sm font-semibold">{option.label}</span>
+                      {language === option.value && <Check size={16} className="text-orange-500" />}
                     </button>
                   ))}
                 </div>
