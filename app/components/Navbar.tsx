@@ -206,7 +206,7 @@ export default function Navbar() {
 
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-orange-400/70 to-transparent" />
 
-      <div className="mx-auto flex h-[68px] max-w-7xl items-center justify-between px-4 sm:h-[82px] sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-[68px] max-w-7xl items-center justify-between gap-2 px-4 sm:h-[82px] sm:px-6 lg:px-8">
 
         {/* Logo */}
         <Link
@@ -224,7 +224,7 @@ export default function Navbar() {
               className="relative h-[46px] w-auto object-contain transition-all duration-500 group-hover:scale-[1.035] sm:h-[58px]"
             />
 
-            <div className="ml-1.5 hidden flex-col justify-center xl:flex">
+            <div className="ml-1.5 hidden flex-col justify-center 2xl:flex">
 
               <div className="relative">
                 <p className="bg-gradient-to-r from-[#03112a] via-[#082d62] to-[#03112a] bg-clip-text text-[21px] font-black leading-[0.95] tracking-[-0.055em] text-transparent">
@@ -245,7 +245,7 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden min-w-0 items-center gap-0 lg:flex">
+        <nav className="hidden min-w-0 flex-1 items-center justify-center gap-0 xl:flex">
 
           {navItems.map((item) => {
             const active = isActive(item.href);
@@ -255,7 +255,7 @@ export default function Navbar() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`group relative mx-0.5 flex shrink-0 items-center gap-1.5 whitespace-nowrap overflow-hidden rounded-xl border px-2.5 py-2 text-[11px] font-bold tracking-[-0.01em] transition-all duration-300 xl:gap-2 xl:px-3 xl:text-xs ${
+                  className={`group relative mx-0.5 flex shrink-0 items-center gap-1.5 whitespace-nowrap overflow-hidden rounded-xl border px-2.5 py-2 text-[10px] font-bold tracking-[-0.02em] transition-all duration-300 2xl:gap-1.5 2xl:px-2.5 2xl:text-[11px] ${
                     active
                       ? "border-blue-950 bg-blue-950 text-white shadow-[0_8px_24px_rgba(3,17,42,0.22)]"
                       : "border-orange-100/80 bg-gradient-to-r from-orange-50/80 to-white text-blue-950 shadow-sm hover:-translate-y-0.5 hover:border-orange-200 hover:shadow-md"
@@ -286,7 +286,7 @@ export default function Navbar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`group relative mx-0.5 shrink-0 whitespace-nowrap rounded-xl px-2.5 py-2.5 text-[11px] font-bold tracking-[-0.01em] transition-all duration-300 xl:px-3 xl:text-xs ${
+                className={`group relative mx-0.5 shrink-0 whitespace-nowrap rounded-xl px-1.5 py-2.5 text-[10px] font-bold tracking-[-0.02em] transition-all duration-300 2xl:px-2 2xl:text-[11px] ${
                   active
                     ? "bg-slate-50 text-blue-950 shadow-sm"
                     : "text-slate-600 hover:-translate-y-0.5 hover:bg-slate-50 hover:text-blue-950"
@@ -326,7 +326,7 @@ export default function Navbar() {
           aria-label="Select currency"
           value={currency}
           onChange={(event) => setCurrency(event.target.value as CurrencyCode)}
-          className="ml-1.5 hidden h-9 shrink-0 rounded-lg border border-slate-200 bg-white px-1.5 text-[10px] font-bold text-blue-950 outline-none transition hover:border-orange-300 lg:inline-flex xl:ml-2 xl:px-2 xl:text-xs"
+          className="ml-1.5 hidden h-9 shrink-0 rounded-lg border border-slate-200 bg-white px-1.5 text-[10px] font-bold text-blue-950 outline-none transition hover:border-orange-300 xl:inline-flex 2xl:ml-2 2xl:px-2 2xl:text-xs"
         >
           <option value="EUR">EUR €</option>
           <option value="USD" disabled={rates.USD <= 0}>USD $</option>
@@ -339,7 +339,7 @@ export default function Navbar() {
           aria-label={theme === "dark" ? labels["Light mode"] : labels["Dark mode"]}
           aria-pressed={theme === "dark"}
           title={theme === "dark" ? labels["Light mode"] : labels["Dark mode"]}
-          className="ml-1.5 hidden h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-slate-200 bg-white text-blue-950 transition hover:border-orange-300 hover:bg-orange-50 lg:inline-flex xl:ml-2"
+          className="ml-1.5 hidden h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-slate-200 bg-white text-blue-950 transition hover:border-orange-300 hover:bg-orange-50 xl:inline-flex 2xl:ml-2"
         >
           {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
         </button>
@@ -348,13 +348,13 @@ export default function Navbar() {
           type="button"
           onClick={toggleLanguage}
           aria-label={language === "en" ? "Switch to German" : "Auf Englisch wechseln"}
-          className="ml-1.5 hidden shrink-0 whitespace-nowrap rounded-lg border border-slate-200 bg-white px-2 py-2 text-[10px] font-bold text-blue-950 transition hover:border-orange-300 hover:bg-orange-50 lg:inline-flex xl:ml-2 xl:px-2.5 xl:text-xs"
+          className="ml-1.5 hidden shrink-0 whitespace-nowrap rounded-lg border border-slate-200 bg-white px-2 py-2 text-[10px] font-bold text-blue-950 transition hover:border-orange-300 hover:bg-orange-50 xl:inline-flex 2xl:ml-2 2xl:px-2.5 2xl:text-xs"
         >
           {language === "en" ? "DE" : "EN"}
         </button>
 
         {/* Desktop Account */}
-        <div className="ml-1.5 hidden shrink-0 items-center lg:flex xl:ml-2">
+        <div className="ml-1.5 hidden shrink-0 items-center xl:flex 2xl:ml-2">
 
           {userName ? (
             <div className="flex items-center gap-2">
@@ -407,7 +407,7 @@ export default function Navbar() {
           onClick={toggleTheme}
           aria-label={theme === "dark" ? labels["Light mode"] : labels["Dark mode"]}
           aria-pressed={theme === "dark"}
-          className="mr-2 flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-slate-200 bg-white text-blue-950 shadow-sm transition hover:border-orange-200 hover:bg-orange-50 lg:hidden"
+          className="mr-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white text-blue-950 shadow-sm transition hover:border-orange-200 hover:bg-orange-50 xl:hidden"
         >
           {theme === "dark" ? <Sun size={19} /> : <Moon size={19} />}
         </button>
@@ -416,7 +416,7 @@ export default function Navbar() {
         <button
           type="button"
           onClick={() => setIsOpen((value) => !value)}
-          className={`flex h-11 w-11 items-center justify-center rounded-2xl border text-lg font-bold shadow-sm transition-all duration-300 lg:hidden ${
+          className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border text-lg font-bold shadow-sm transition-all duration-300 xl:hidden ${
             isOpen
               ? "border-blue-950 bg-blue-950 text-white shadow-blue-950/20"
               : "border-slate-200 bg-white text-blue-950 hover:border-orange-200 hover:bg-orange-50"
@@ -431,7 +431,7 @@ export default function Navbar() {
 
       {/* Mobile Navigation */}
       {isOpen && (
-        <div className="max-h-[calc(100dvh-68px)] overflow-y-auto overscroll-contain touch-pan-y border-t border-slate-100 bg-white/95 px-4 pb-5 pt-3 shadow-[0_18px_35px_rgba(15,23,42,0.08)] backdrop-blur-xl lg:hidden">
+        <div className="max-h-[calc(100dvh-68px)] overflow-y-auto overscroll-contain touch-pan-y border-t border-slate-100 bg-white/95 px-4 pb-5 pt-3 shadow-[0_18px_35px_rgba(15,23,42,0.08)] backdrop-blur-xl xl:hidden">
 
           <nav className="flex flex-col gap-1.5">
             <div className="mb-2 grid grid-cols-3 gap-2" role="group" aria-label="Select currency">
@@ -590,12 +590,12 @@ export default function Navbar() {
     {!pathname.startsWith("/admin") && (
       <nav
         aria-label="Mobile quick navigation"
-        className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 border-t border-slate-200/80 bg-white/95 px-1 pb-[max(env(safe-area-inset-bottom),0.35rem)] pt-2 shadow-[0_-8px_30px_rgba(3,17,42,0.10)] backdrop-blur-2xl lg:hidden"
+        className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 border-t border-slate-200/80 bg-white/95 px-1 pb-[max(env(safe-area-inset-bottom),0.35rem)] pt-2 shadow-[0_-8px_30px_rgba(3,17,42,0.10)] backdrop-blur-2xl xl:hidden"
       >
         {[
-          { href: "/", label: "Home", Icon: Home },
+          { href: "/", label: language === "de" ? "Startseite" : "Home", Icon: Home },
           { href: "/tours", label: language === "de" ? "Ausflüge" : "Tours", Icon: Compass },
-          { href: "/transfers", label: "Transfer", Icon: CarFront },
+          { href: "/transfers", label: language === "de" ? "Transfer" : "Transfer", Icon: CarFront },
           { href: "/contact", label: language === "de" ? "Kontakt" : "Contact", Icon: MessageCircle },
           { href: userName ? "/account" : "/login", label: userName ? (language === "de" ? "Konto" : "Account") : "Login", Icon: UserRound },
         ].map(({ href, label, Icon }) => {
