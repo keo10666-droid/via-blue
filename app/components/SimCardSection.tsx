@@ -22,6 +22,14 @@ const defaults: SimSettings = {
 
 export default function SimCardSection() {
   const { currency } = useCurrency();
+  const [isGerman, setIsGerman] = useState(false);
+  useEffect(() => {
+    const sync = () => { try { setIsGerman(window.localStorage.getItem("via-blue-language") === "de"); } catch { setIsGerman(false); } };
+    sync();
+    const handle = (event: Event) => { const next = (event as CustomEvent<"en" | "de">).detail; if (next === "en" || next === "de") setIsGerman(next === "de"); };
+    window.addEventListener("via-blue-language-change", handle);
+    return () => window.removeEventListener("via-blue-language-change", handle);
+  }, []);
   const currentCurrency = currency as Currency;
   const symbol = currency === "EUR" ? "€" : currency === "USD" ? "$" : "£";
   const [settings, setSettings] = useState<SimSettings>(defaults);
@@ -46,6 +54,7 @@ export default function SimCardSection() {
     { name: "Norway", code: "+47", flag: "🇳🇴" }, { name: "Finland", code: "+358", flag: "🇫🇮" }, { name: "Turkey", code: "+90", flag: "🇹🇷" },
     { name: "Saudi Arabia", code: "+966", flag: "🇸🇦" }, { name: "United Arab Emirates", code: "+971", flag: "🇦🇪" },
   ];
+  const germanCountryNames: Record<string, string> = { Egypt: "Ägypten", "United Kingdom": "Vereinigtes Königreich", Germany: "Deutschland", Russia: "Russland", Poland: "Polen", Romania: "Rumänien", Czechia: "Tschechien", Hungary: "Ungarn", Lithuania: "Litauen", Latvia: "Lettland", Estonia: "Estland", Belarus: "Belarus", Ukraine: "Ukraine", Netherlands: "Niederlande", France: "Frankreich", Italy: "Italien", Spain: "Spanien", "United States": "USA", Ireland: "Irland", Austria: "Österreich", Switzerland: "Schweiz", Belgium: "Belgien", Denmark: "Dänemark", Sweden: "Schweden", Norway: "Norwegen", Finland: "Finnland", Turkey: "Türkei", "Saudi Arabia": "Saudi-Arabien", "United Arab Emirates": "Vereinigte Arabische Emirate" };
 
   useEffect(() => {
     fetch("/api/sim-card-settings", { cache: "no-store" }).then((response) => response.json()).then((result) => {
@@ -77,10 +86,10 @@ export default function SimCardSection() {
         body: JSON.stringify({ ...form, whatsapp: whatsappCountryCode + form.whatsapp.replace(/^0+/, "").replace(/[\s()-]/g, ""), network: selectedNetwork.id, packageId: selectedPackage.id, delivery, currency }),
       });
       const result = await response.json();
-      if (!response.ok || !result.success) { setOrderError(result.error || "We couldn't submit your order. Please try again."); return; }
-      setOrderReference(result.referenceCode || "Your order has been received");
+      if (!response.ok || !result.success) { setOrderError(result.error || isGerman ? "Ihre Bestellung konnte nicht gesendet werden. Bitte versuchen Sie es erneut." : "We couldn't submit your order. Please try again."); return; }
+      setOrderReference(result.referenceCode || isGerman ? "Ihre Bestellung ist eingegangen" : "Your order has been received");
       setForm({ fullName: "", whatsapp: "", arrivalDate: "", hotel: "", roomNumber: "" });
-    } catch { setOrderError("Connection problem. Please try again."); }
+    } catch { setOrderError(isGerman ? "Verbindungsproblem. Bitte versuchen Sie es erneut." : "Connection problem. Please try again."); }
     finally { setSubmitting(false); }
   }
 
@@ -118,17 +127,17 @@ export default function SimCardSection() {
               })}
             </div>
             {activePackages.length > 1 && <div className="mt-5"><p className="mb-2 text-xs font-extrabold text-[#03112a]"><HomeText en="Choose your package" de="Wählen Sie Ihr Paket" /></p><div className="grid gap-2 sm:grid-cols-2">{activePackages.map((item) => <button type="button" key={item.id} onClick={() => setPackageId(item.id)} className={`rounded-xl border-2 p-3 text-left ${selectedPackage.id === item.id ? "border-orange-500 bg-orange-50" : "border-slate-200 bg-white"}`}><span className="block text-sm font-extrabold text-[#03112a]">{item.name}</span><span className="mt-1 block text-xs text-slate-500">{item.description}</span><span className="mt-2 block text-sm font-black text-orange-600">{symbol}{item.prices[currentCurrency]}</span></button>)}</div></div>}
-            <div className="mt-5 flex items-center justify-between rounded-xl bg-[#03112a] px-4 py-3.5 text-white"><div><p className="text-[10px] font-semibold text-blue-100/65"><HomeText en="Total price" de="Gesamtpreis" /></p><p className="mt-0.5 text-[10px] text-blue-100/65">{selectedNetwork.name} · {delivery === "airport" ? "Airport pickup" : "Hotel delivery"}</p></div><p className="text-2xl font-black text-orange-300">{symbol}{total}</p></div>
+            <div className="mt-5 flex items-center justify-between rounded-xl bg-[#03112a] px-4 py-3.5 text-white"><div><p className="text-[10px] font-semibold text-blue-100/65"><HomeText en="Total price" de="Gesamtpreis" /></p><p className="mt-0.5 text-[10px] text-blue-100/65">{selectedNetwork.name} · {delivery === "airport" ? (isGerman ? "Abholung am Flughafen" : "Airport pickup") : (isGerman ? "Lieferung zum Hotel" : "Hotel delivery")}</p></div><p className="text-2xl font-black text-orange-300">{symbol}{total}</p></div>
             <button type="button" onClick={() => { setShowForm((value) => !value); setOrderError(""); setOrderReference(""); }} className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 px-5 py-4 text-sm font-extrabold text-white shadow-lg shadow-orange-500/20 transition hover:-translate-y-0.5 hover:from-orange-400 hover:to-amber-400"><HomeText en={showForm ? "Hide order details" : "Continue to order"} de={showForm ? "Bestelldetails ausblenden" : "Weiter zur Bestellung"} /> <span aria-hidden="true">→</span></button>
             {showForm && <div className="mt-5 rounded-2xl border border-slate-200 bg-slate-50 p-4">
               {orderReference ? <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-center"><p className="text-sm font-extrabold text-emerald-800"><HomeText en="Your order has been received!" de="Ihre Bestellung ist eingegangen!" /></p><p className="mt-2 text-xs text-emerald-700">Reference: {orderReference}</p><p className="mt-2 text-xs text-emerald-700"><HomeText en="Our team will contact you on WhatsApp to confirm the details" de="Unser Team wird Sie per WhatsApp kontaktieren, um die Details zu bestätigen" /></p></div> : <form onSubmit={handleSubmit}>
                 <p className="mb-3 text-sm font-extrabold text-[#03112a]"><HomeText en="Your details" de="Ihre Angaben" /></p>
                 <div className="grid gap-3 sm:grid-cols-2">
-                  <input required maxLength={120} value={form.fullName} onChange={(event) => setForm({ ...form, fullName: event.target.value })} placeholder="Full name" autoComplete="name" className="min-w-0 rounded-lg border border-slate-200 bg-white px-3 py-3 text-xs text-slate-900 outline-none focus:border-orange-400" />
-                  <div className="flex min-w-0 gap-2 sm:col-span-2"><select aria-label="WhatsApp country code" value={whatsappCountryCode} onChange={(event) => setWhatsappCountryCode(event.target.value)} className="w-[42%] min-w-0 rounded-lg border border-slate-200 bg-white px-2 py-3 text-xs text-slate-900 outline-none focus:border-orange-400 sm:w-[38%]">{countryCodes.map((country) => <option key={country.code + country.name} value={country.code}>{country.flag} {country.code} · {country.name}</option>)}</select><input required type="tel" maxLength={25} value={form.whatsapp} onChange={(event) => setForm({ ...form, whatsapp: event.target.value })} placeholder="WhatsApp number" autoComplete="tel-national" className="min-w-0 flex-1 rounded-lg border border-slate-200 bg-white px-3 py-3 text-xs text-slate-900 outline-none focus:border-orange-400" /></div>
-                  <input required type="date" value={form.arrivalDate} onChange={(event) => setForm({ ...form, arrivalDate: event.target.value })} aria-label="Arrival date" className="min-w-0 rounded-lg border border-slate-200 bg-white px-3 py-3 text-xs text-slate-900 outline-none focus:border-orange-400" />
-                  <input required maxLength={160} value={form.hotel} onChange={(event) => setForm({ ...form, hotel: event.target.value })} placeholder="Hotel name" className="min-w-0 rounded-lg border border-slate-200 bg-white px-3 py-3 text-xs text-slate-900 outline-none focus:border-orange-400" />
-                  <input maxLength={40} value={form.roomNumber} onChange={(event) => setForm({ ...form, roomNumber: event.target.value })} placeholder="Room number (if available)" className="min-w-0 rounded-lg border border-slate-200 bg-white px-3 py-3 text-xs text-slate-900 outline-none focus:border-orange-400 sm:col-span-2" />
+                  <input required maxLength={120} value={form.fullName} onChange={(event) => setForm({ ...form, fullName: event.target.value })} placeholder={isGerman ? "Vollständiger Name" : "Full name"} autoComplete="name" className="min-w-0 rounded-lg border border-slate-200 bg-white px-3 py-3 text-xs text-slate-900 outline-none focus:border-orange-400" />
+                  <div className="flex min-w-0 gap-2 sm:col-span-2"><select aria-label={isGerman ? "WhatsApp-Ländervorwahl" : "WhatsApp country code"} value={whatsappCountryCode} onChange={(event) => setWhatsappCountryCode(event.target.value)} className="w-[42%] min-w-0 rounded-lg border border-slate-200 bg-white px-2 py-3 text-xs text-slate-900 outline-none focus:border-orange-400 sm:w-[38%]">{countryCodes.map((country) => <option key={country.code + country.name} value={country.code}>{country.flag} {country.code} · {isGerman ? (germanCountryNames[country.name] || country.name) : country.name}</option>)}</select><input required type="tel" maxLength={25} value={form.whatsapp} onChange={(event) => setForm({ ...form, whatsapp: event.target.value })} placeholder={isGerman ? "WhatsApp-Nummer" : "WhatsApp number"} autoComplete="tel-national" className="min-w-0 flex-1 rounded-lg border border-slate-200 bg-white px-3 py-3 text-xs text-slate-900 outline-none focus:border-orange-400" /></div>
+                  <input required type="date" value={form.arrivalDate} onChange={(event) => setForm({ ...form, arrivalDate: event.target.value })} aria-label={isGerman ? "Ankunftsdatum" : "Arrival date"} className="min-w-0 rounded-lg border border-slate-200 bg-white px-3 py-3 text-xs text-slate-900 outline-none focus:border-orange-400" />
+                  <input required maxLength={160} value={form.hotel} onChange={(event) => setForm({ ...form, hotel: event.target.value })} placeholder={isGerman ? "Hotelname" : "Hotel name"} className="min-w-0 rounded-lg border border-slate-200 bg-white px-3 py-3 text-xs text-slate-900 outline-none focus:border-orange-400" />
+                  <input maxLength={40} value={form.roomNumber} onChange={(event) => setForm({ ...form, roomNumber: event.target.value })} placeholder={isGerman ? "Zimmernummer (falls vorhanden)" : "Room number (if available)"} className="min-w-0 rounded-lg border border-slate-200 bg-white px-3 py-3 text-xs text-slate-900 outline-none focus:border-orange-400 sm:col-span-2" />
                 </div>
                 <div className="mt-4"><p className="mb-2 text-xs font-extrabold text-[#03112a]"><HomeText en="Choose delivery option" de="Wählen Sie die Zustelloption" /></p><div className="grid grid-cols-2 gap-2">
                   <button type="button" onClick={() => setDelivery("airport")} className={`rounded-xl border px-3 py-3 text-left transition ${delivery === "airport" ? "border-orange-400 bg-orange-50 ring-1 ring-orange-200" : "border-slate-200 bg-white hover:border-slate-300"}`}><span className="block text-xs font-extrabold text-[#03112a]"><HomeText en="Airport pickup" de="Abholung am Flughafen" /></span><span className="mt-1 block text-[11px] font-semibold text-emerald-600">Free</span></button>
