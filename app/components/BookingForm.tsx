@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState, type ReactNode } from "react";
 
 import { supabase } from "@/lib/supabase";
 import HomeText from "@/app/components/HomeText";
+import { frenchHomeText } from "@/lib/frenchHomeCopy";
 import { useCurrency } from "@/app/components/CurrencyProvider";
 
 type BookingFormProps = {
@@ -225,8 +226,8 @@ const germanCountryNames: Record<string, string> = {
   "Japan": "Japan",
   "South Korea": "Südkorea"
 };
-const displayNationality = (value: string, isGerman: boolean) => isGerman ? (germanNationalityNames[value] || value) : value;
-const displayCountryName = (value: string, isGerman: boolean) => isGerman ? (germanCountryNames[value] || value) : value;
+const displayNationality = (value: string, isGerman: boolean, isFrench: boolean) => isGerman ? (germanNationalityNames[value] || value) : isFrench ? frenchHomeText(value) : value;
+const displayCountryName = (value: string, isGerman: boolean, isFrench: boolean) => isGerman ? (germanCountryNames[value] || value) : isFrench ? frenchHomeText(value) : value;
 
 const FlagIcon = ({
   iso,
@@ -314,7 +315,8 @@ export default function BookingForm({
     return nationalities
       .filter((n) =>
         n.toLowerCase().includes(nationality.toLowerCase()) ||
-        (germanNationalityNames[n] || n).toLowerCase().includes(nationality.toLowerCase())
+        (germanNationalityNames[n] || n).toLowerCase().includes(nationality.toLowerCase()) ||
+        frenchHomeText(n).toLowerCase().includes(nationality.toLowerCase())
       )
       .slice(0, 6);
   }, [nationality]);
@@ -328,6 +330,7 @@ export default function BookingForm({
       (c) =>
         c.name.toLowerCase().includes(countrySearch.toLowerCase()) ||
         (germanCountryNames[c.name] || c.name).toLowerCase().includes(countrySearch.toLowerCase()) ||
+        frenchHomeText(c.name).toLowerCase().includes(countrySearch.toLowerCase()) ||
         c.dialCode.includes(countrySearch)
     );
   }, [countrySearch]);
@@ -780,7 +783,7 @@ ${notes.trim() || "-"}`;
                 <input
                   type="text"
                   placeholder={isGerman ? "Nationalität" : isFrench ? "Nationalité" : "Nationality"}
-                  value={displayNationality(nationality, isGerman)}
+                  value={displayNationality(nationality, isGerman, isFrench)}
                   onChange={(e) => {
                     setNationality(e.target.value);
                     setIsNationalityOpen(true);
@@ -815,7 +818,7 @@ ${notes.trim() || "-"}`;
                             }}
                             className="block w-full px-4 py-3 text-left text-gray-900 transition hover:bg-blue-50"
                           >
-                            {displayNationality(item, isGerman)}
+                            {displayNationality(item, isGerman, isFrench)}
                           </button>
                         )
                       )}
@@ -872,7 +875,7 @@ ${notes.trim() || "-"}`;
                     >
                       <FlagIcon
                         iso={selectedCountry.iso}
-                        name={displayCountryName(selectedCountry.name, isGerman)}
+                        name={displayCountryName(selectedCountry.name, isGerman, isFrench)}
                       />
 
                       <span className="font-bold">
@@ -917,7 +920,7 @@ ${notes.trim() || "-"}`;
                               >
                                 <FlagIcon
                                   iso={c.iso}
-                                  name={displayCountryName(c.name, isGerman)}
+                                  name={displayCountryName(c.name, isGerman, isFrench)}
                                 />
 
                                 <span className="flex-1">
