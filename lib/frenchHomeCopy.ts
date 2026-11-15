@@ -970,6 +970,23 @@ const frenchCopy: Record<string, string> = {
   "Grand Egyptian Museum (GEM)": "Grand Musée égyptien (GEM)",
   "Comfortable group transport": "Transport de groupe confortable",
   "Smaller group, more flexible": "Petit groupe, plus de flexibilité",
+  "Age 12+": "12 ans et plus",
+  "Age 2–11": "De 2 à 11 ans",
+  "Under 2 · Free": "Moins de 2 ans · Gratuit",
+  "1 Hour": "1 heure",
+  "3 Hours": "3 heures",
+  "Single Quad": "Quad simple",
+  "Double Quad": "Quad double",
+  "2-person buggy": "Buggy 2 places",
+  "4-person buggy": "Buggy 4 places",
+  "Old Egyptian Museum": "Ancien musée égyptien",
+  "Grand Egyptian Museum": "Grand Musée égyptien",
+  "Tahrir Square": "Place Tahrir",
+  "GEM · Giza": "GEM · Gizeh",
+  "THE CLASSIC": "LE CLASSIQUE",
+  "THE NEW LANDMARK": "LE NOUVEAU SITE EMBLÉMATIQUE",
+  "This vehicle does not support the selected group size. Choose a different vehicle to continue.": "Ce véhicule ne convient pas à la taille du groupe sélectionnée. Choisissez un autre véhicule pour continuer.",
+  "This option does not support the selected number of guests. Adjust the guest count to continue.": "Cette option ne convient pas au nombre de voyageurs sélectionné. Modifiez le nombre de voyageurs pour continuer.",
   "What's Not Included": "Ce qui n’est pas inclus",
 };
 
@@ -986,6 +1003,16 @@ export function frenchHomeText(value: string): string {
     return value.replace("Speedboat: ", "Bateau rapide : ").replace(" chargeable guests", " voyageurs payants");
   }
   if (value.startsWith("Adults × ")) return value.replace("Adults × ", "Adultes × ");
+  if (value.startsWith("Choose at least ") && value.includes(" paying guest and no more than ") && value.endsWith(" people total.")) {
+    return value.replace("Choose at least ", "Choisissez au moins ").replace(" paying guest and no more than ", " voyageur payant et au maximum ").replace(" people total.", " personnes au total.");
+  }
+  if (value.startsWith("Child ")) return value.replace("Child ", "Enfant ");
+  if (value.startsWith("Infant ")) return value.replace("Infant ", "Bébé ");
+  if (value.startsWith("1 person · ")) return value.replace("1 person · ", "1 personne · ");
+  if (value.startsWith("2 people · ")) return value.replace("2 people · ", "2 personnes · ");
+  if (value.startsWith("2 seats · ")) return value.replace("2 seats · ", "2 places · ").replace(" per buggy", " par buggy");
+  if (value.startsWith("4 seats · ")) return value.replace("4 seats · ", "4 places · ").replace(" per buggy", " par buggy");
+  if (/^\d+[–-]\d+ guests$/.test(value)) return value.replace(" guests", " voyageurs");
   if (value.startsWith("Children × ")) return value.replace("Children × ", "Enfants × ");
   if (value.startsWith("Infants × ")) return value.replace("Infants × ", "Bébés × ");
   if (value.includes(" guests × ") && value.endsWith(" per adult/child")) {
