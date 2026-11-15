@@ -1,5 +1,6 @@
 "use client";
 
+import { frenchHomeText } from "@/lib/frenchHomeCopy";
 import { supabase } from "@/lib/supabase";
 
 import {
@@ -577,11 +578,13 @@ export default function LuxuryBookingForm({
   const { currency, formatCurrency, rate } = useCurrency();
   const [isGerman, setIsGerman] = useState(false);
   const [isFrench, setIsFrench] = useState(false);
-  const displayTourName = isGerman ? (germanLuxuryTourNames[tourName] ?? tourName) : tourName;
-  const displayTourType = isGerman ? (germanLuxuryTourTypes[tourType] ?? tourType) : tourType;
+  const displayTourName = isGerman ? (germanLuxuryTourNames[tourName] ?? tourName) : isFrench ? frenchHomeText(tourName) : tourName;
+  const displayTourType = isGerman ? (germanLuxuryTourTypes[tourType] ?? tourType) : isFrench ? frenchHomeText(tourType) : tourType;
   const displayIncluded = isGerman
     ? included.map((item) => germanLuxuryIncluded[item] ?? item)
-    : included;
+    : isFrench
+      ? included.map((item) => frenchHomeText(item))
+      : included;
   useEffect(() => {
     const syncLanguage = () => { const language = localStorage.getItem("via-blue-language"); setIsGerman(language === "de"); setIsFrench(language === "fr"); };
     syncLanguage();
