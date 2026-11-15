@@ -75,7 +75,7 @@ export async function POST(request: Request) {
     const deliveryFee = delivery === "hotel" ? Number(config.deliveryPrices?.[currency]) : 0;
     if (!Number.isFinite(basePrice) || !Number.isFinite(deliveryFee)) return Response.json({ success: false, error: "Pricing is temporarily unavailable." }, { status: 503 });
     const total = basePrice + deliveryFee;
-    const totalPrice = symbol + total.toFixed(2).replace(/\\.00$/, "");
+    const totalPrice = symbol + total.toFixed(2).replace(/\.00$/, "");
     const deliveryLabel = delivery === "hotel" ? "Hotel delivery (+" + symbol + deliveryFee + ")" : "Airport pickup (Free)";
     const fields = [
       { label: "Full Name", value: fullName },
