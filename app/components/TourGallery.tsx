@@ -150,7 +150,7 @@ export default function TourGallery({
             >
               <Image
                 src={image}
-                alt={`${tourName} - ${language === "fr" ? "image" : language === "de" ? "Bild" : "image"} ${index + 1}`}
+                alt={`${tourName} - ${language === "fr" ? "photo" : language === "de" ? "Bild" : "image"} ${index + 1}`}
                 fill
                 sizes={
                   index === 0
