@@ -601,5 +601,42 @@ const frenchCopy: Record<string, string> = {
 };
 
 export function frenchHomeText(value: string): string {
-  return frenchCopy[value] ?? value;
+  const exact = frenchCopy[value];
+  if (exact) return exact;
+
+  // Preserve dynamic names, locations, and totals while translating the surrounding copy.
+  if (value.startsWith("Book ")) return `Réserver ${value.slice(5)}`;
+  if (value.startsWith("Comfortable private transfer from ")) {
+    return value.replace("Comfortable private transfer from ", "Transfert privé confortable de ").replace(" to your destination", " vers votre destination");
+  }
+  if (value.startsWith("Reserve your ")) {
+    return value.replace("Reserve your ", "Réservez votre ").replace(" experience and enjoy an unforgettable day in Hurghada with Via Blue", " et profitez d’une journée inoubliable à Hurghada avec Via Blue");
+  }
+  if (value.startsWith("Reserve your ") && value.includes(" experience quickly and securely")) {
+    return value.replace("Reserve your ", "Réservez votre ").replace(" experience quickly and securely", " en toute simplicité et sécurité");
+  }
+  if (value.startsWith("Select an age for Child ")) return value.replace("Select an age for Child ", "Sélectionnez l’âge de l’enfant ");
+  if (value.startsWith("Select an age for Infant ")) return value.replace("Select an age for Infant ", "Sélectionnez l’âge du bébé ");
+  if (value.startsWith("Tell other guests about your experience with ")) {
+    return value.replace("Tell other guests about your experience with ", "Partagez votre expérience de ");
+  }
+  if (value.startsWith("The number of seats must match all ")) {
+    return value.replace("The number of seats must match all ", "Le nombre de places doit correspondre aux ").replace(" people, including infants. Selected seats: ", " voyageurs, bébés compris. Places sélectionnées : ");
+  }
+  if (value.startsWith("You selected ") && value.includes(" quads, but only ")) {
+    return value.replace("You selected ", "Vous avez sélectionné ").replace(" quads, but only ", " quads, mais seuls ").replace(" adult(s) are available to drive. Reduce the number of quads or update the group details.", " adulte(s) peuvent conduire. Réduisez le nombre de quads ou modifiez les informations du groupe.");
+  }
+  if (value.startsWith("At least ") && value.includes(" Double Quad passenger seats")) {
+    return value.replace("At least ", "Il faut au moins ").replace(" Double Quad passenger seats are needed for infants and children under 10. You selected ", " places passager sur des quads doubles pour les bébés et les enfants de moins de 10 ans. Vous avez sélectionné ").replace(" Double Quads.", " quads doubles.");
+  }
+  if (value.startsWith("There must be enough seats for all ")) {
+    return value.replace("There must be enough seats for all ", "Le nombre de places doit être suffisant pour les ").replace(" people, including infants. Selected seats: ", " voyageurs, bébés compris. Places sélectionnées : ");
+  }
+  if (value.startsWith("You selected ") && value.includes(" buggies, but only ")) {
+    return value.replace("You selected ", "Vous avez sélectionné ").replace(" buggies, but only ", " buggys, mais seuls ").replace(" adult(s) are available to drive. Reduce the number of buggies or update the group details.", " adulte(s) peuvent conduire. Réduisez le nombre de buggys ou modifiez les informations du groupe.");
+  }
+  if (value.startsWith("Includes ") && value.endsWith(" island options")) {
+    return value.replace("Includes ", "Comprend ").replace(" island options", " options d’îles");
+  }
+  return value;
 }
