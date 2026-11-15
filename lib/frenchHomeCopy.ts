@@ -825,6 +825,8 @@ const frenchCopy: Record<string, string> = {
   "Your package contains real": "Votre forfait comprend de véritables expériences",
   "Your Egypt SIM Card": "Votre carte SIM pour l’Égypte",
   "Your booking request has been received successfully. Our team will review the details and contact you shortly to confirm the reservation and final arrangements.": "Votre demande de réservation a bien été reçue. Notre équipe examinera les informations et vous contactera rapidement pour confirmer la réservation et les derniers détails.",
+  "Password": "Mot de passe",
+  "or": "ou",
   "What's Not Included": "Ce qui n’est pas inclus",
 };
 
