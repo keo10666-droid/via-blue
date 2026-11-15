@@ -4,10 +4,10 @@ import { useState, type FormEvent } from "react";
 import { useCurrency } from "@/app/components/CurrencyProvider";
 
 const networks = [
-  { id: "Orange", name: "Orange", logo: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Orange_logo.svg", logoClass: "h-9 w-9 rounded-lg", popular: true },
-  { id: "Vodafone", name: "Vodafone", logo: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Vodafone_icon.svg", logoClass: "h-9 w-9 object-contain", popular: false },
-  { id: "Etisalat", name: "Etisalat", logo: "https://www.eand.com.eg/StaticFiles/portal2/etisalat/images/logo/etisalat_logo.svg", logoClass: "h-9 w-14 object-contain", popular: false },
-  { id: "WE", name: "WE", logo: "https://commons.wikimedia.org/wiki/Special:Redirect/file/We_logo.svg", logoClass: "h-9 w-9 object-contain", popular: false },
+  { id: "Orange", name: "Orange", logo: "https://cdn.simpleicons.org/orange/FF7900", logoClass: "h-9 w-9 rounded-lg", popular: true },
+  { id: "Vodafone", name: "Vodafone", logo: "https://cdn.simpleicons.org/vodafone/E60000", logoClass: "h-9 w-9 object-contain", popular: false },
+  { id: "Etisalat", name: "Etisalat", logo: "https://cdn.simpleicons.org/etisalat/92C83E", logoClass: "h-9 w-14 object-contain", popular: false },
+  { id: "WE", name: "WE", logo: "", logoClass: "h-9 w-9 object-contain", popular: false },
 ] as const;
 
 export default function SimCardSection() {
@@ -71,20 +71,32 @@ export default function SimCardSection() {
             <div className="absolute -right-16 -top-16 h-64 w-64 rounded-full border border-white/10" />
             <div className="absolute -right-4 -top-4 h-40 w-40 rounded-full border border-white/10" />
             <div className="absolute -bottom-24 -left-12 h-64 w-64 rounded-full bg-orange-500/15 blur-3xl" />
-            <div className="relative">
-              <span className="inline-flex rounded-full border border-orange-300/30 bg-orange-400/10 px-3 py-1.5 text-[9px] font-extrabold uppercase tracking-[0.2em] text-orange-200">Made for your holiday</span>
-              <div className="mt-10 flex h-36 w-56 rotate-[-5deg] flex-col justify-between rounded-2xl border border-white/20 bg-gradient-to-br from-white/20 via-white/10 to-white/5 p-5 shadow-2xl backdrop-blur-sm">
-                <div className="flex items-start justify-between">
-                  <span className="text-xs font-bold tracking-[0.22em] text-white/75">VIA BLUE</span>
-                  <span className="rounded-md border border-white/30 px-2 py-1 text-[9px] font-bold">EGYPT</span>
-                </div>
-                <div>
-                  <p className="text-4xl font-black tracking-tight">25<span className="ml-1 text-lg font-bold text-orange-300">GB</span></p>
-                  <p className="mt-1 text-[9px] font-semibold uppercase tracking-[0.22em] text-white/65">Data + Calls</p>
-                </div>
+            <div className="relative mt-2 overflow-hidden rounded-2xl">
+              <img
+                src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=1100&q=85"
+                alt="Smartphone ready for your Egypt trip"
+                className="h-48 w-full rounded-2xl object-cover sm:h-56"
+              />
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-[#03112a]/80 via-transparent to-transparent" />
+              <div className="absolute bottom-4 left-4 right-4">
+                <p className="text-lg font-extrabold text-white drop-shadow">Your trip. Your connection.</p>
+                <p className="mt-1 text-xs font-medium text-white/85">Reliable mobile connection while exploring Egypt</p>
               </div>
             </div>
-            <div className="relative mt-9 flex items-end justify-between gap-4">
+            <div className="relative mt-5 border-t border-white/15 pt-4">
+              <p className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-blue-100/80">Choose how to receive your SIM</p>
+              <div className="mt-3 grid grid-cols-2 gap-2">
+                <button type="button" onClick={() => setDelivery("airport")} className={`rounded-xl border px-3 py-3 text-left transition ${delivery === "airport" ? "border-orange-300 bg-orange-500/20" : "border-white/20 bg-white/5 hover:bg-white/10"}`}>
+                  <span className="block text-xs font-extrabold text-white">Airport pickup</span>
+                  <span className="mt-1 block text-[11px] font-semibold text-emerald-300">Free</span>
+                </button>
+                <button type="button" onClick={() => setDelivery("hotel")} className={`rounded-xl border px-3 py-3 text-left transition ${delivery === "hotel" ? "border-orange-300 bg-orange-500/20" : "border-white/20 bg-white/5 hover:bg-white/10"}`}>
+                  <span className="block text-xs font-extrabold text-white">Hotel delivery</span>
+                  <span className="mt-1 block text-[11px] font-semibold text-orange-200">+ {symbol}5</span>
+                </button>
+              </div>
+            </div>
+            <div className="relative mt-5 flex items-end justify-between gap-4">
               <div>
                 <p className="text-xs text-blue-100/70">One simple holiday package</p>
                 <p className="mt-1 text-2xl font-extrabold">25 GB + Calls</p>
@@ -111,7 +123,7 @@ export default function SimCardSection() {
                 return (
                   <button key={item.id} type="button" onClick={() => setNetwork(item.id)} aria-pressed={selected} className={`relative flex min-h-[105px] flex-col items-center justify-center gap-2 rounded-2xl border-2 px-3 py-3 transition-all ${selected ? "border-orange-500 bg-orange-50 shadow-[0_8px_22px_rgba(249,115,22,0.12)]" : "border-slate-100 bg-white hover:border-slate-300"}`}>
                     {item.popular && <span className="absolute -top-2.5 rounded-full bg-orange-500 px-2.5 py-1 text-[8px] font-extrabold uppercase tracking-wider text-white shadow">Best seller</span>}
-                    <img src={item.logo} alt={item.name + " logo"} className={item.logoClass} />
+                    {item.logo ? <img src={item.logo} alt={item.name + " logo"} className={item.logoClass} onError={(event) => { event.currentTarget.style.display = "none"; }} /> : <span aria-label="WE logo" className="flex h-9 w-12 items-center justify-center rounded-md bg-[#5b2b82] text-xl font-black italic text-white">WE</span>}
                     <span className={`text-xs font-extrabold ${selected ? "text-[#03112a]" : "text-slate-600"}`}>{item.name}</span>
                     {selected && <span className="absolute right-2 top-2 flex h-4 w-4 items-center justify-center rounded-full bg-orange-500 text-[10px] text-white">✓</span>}
                   </button>
@@ -119,19 +131,7 @@ export default function SimCardSection() {
               })}
             </div>
 
-            <div className="mt-6 border-t border-slate-100 pt-5">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-orange-600">Choose delivery</p>
-              <div className="mt-3 grid grid-cols-2 gap-3">
-                <button type="button" onClick={() => setDelivery("airport")} className={`rounded-xl border p-3 text-left transition ${delivery === "airport" ? "border-orange-500 bg-orange-50" : "border-slate-200 bg-white"}`}>
-                  <span className="block text-xs font-extrabold text-[#03112a]">Airport pickup</span>
-                  <span className="mt-1 block text-[11px] font-semibold text-emerald-600">Free</span>
-                </button>
-                <button type="button" onClick={() => setDelivery("hotel")} className={`rounded-xl border p-3 text-left transition ${delivery === "hotel" ? "border-orange-500 bg-orange-50" : "border-slate-200 bg-white"}`}>
-                  <span className="block text-xs font-extrabold text-[#03112a]">Hotel delivery</span>
-                  <span className="mt-1 block text-[11px] font-semibold text-slate-500">+ {symbol}5</span>
-                </button>
-              </div>
-            </div>
+
 
             <div className="mt-5 flex items-center justify-between rounded-xl bg-[#03112a] px-4 py-3.5 text-white">
               <div>
