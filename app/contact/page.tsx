@@ -265,9 +265,11 @@ export default function ContactPage() {
       form.reset();
     } catch (error) {
       setErrorMessage(
-        isGerman
-          ? "Ihre Nachricht konnte nicht gesendet werden. Bitte versuchen Sie es erneut oder kontaktieren Sie uns über WhatsApp."
-          : "We couldn't send your message. Please try again or contact us on WhatsApp.",
+        isFrench
+          ? "Votre message n’a pas pu être envoyé. Veuillez réessayer ou nous contacter sur WhatsApp."
+          : isGerman
+            ? "Ihre Nachricht konnte nicht gesendet werden. Bitte versuchen Sie es erneut oder kontaktieren Sie uns über WhatsApp."
+            : "We couldn't send your message. Please try again or contact us on WhatsApp.",
       );
     } finally {
       setIsSending(false);
