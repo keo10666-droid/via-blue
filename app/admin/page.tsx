@@ -87,6 +87,15 @@ const modules = [
     iconClass: "bg-orange-50 text-orange-600",
   },
   {
+    title: "SIM card settings",
+    description: "Edit SIM packages, prices, delivery fees and mobile providers.",
+    href: "/admin/sim-card-settings",
+    icon: Smartphone,
+    tag: "Available now",
+    available: true,
+    iconClass: "bg-violet-50 text-violet-700",
+  },
+  {
     title: "SIM card orders",
     description: "Review customer SIM card orders, selected network, delivery and contact details.",
     href: "/admin/sim-cards",
