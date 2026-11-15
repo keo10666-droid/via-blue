@@ -2255,6 +2255,53 @@ ${notes.trim() || "-"}
                   </div>
                 </div>
 
+                {hasLionPhotoOption && (
+                  <div className="rounded-xl border border-orange-200 bg-orange-50/70 p-4">
+                    <label className="flex cursor-pointer items-start gap-3">
+                      <input
+                        type="checkbox"
+                        checked={lionPhotoSelected}
+                        onChange={(event) => {
+                          setLionPhotoSelected(event.target.checked);
+                          if (event.target.checked && Number(lionPhotoCount) < 1) setLionPhotoCount("1");
+                        }}
+                        className="mt-1 h-4 w-4 accent-orange-500"
+                      />
+                      <span className="min-w-0 flex-1">
+                        <span className="block font-bold text-blue-950">
+                          <HomeText en="Lion photo experience" de="Löwenfoto-Erlebnis" />
+                        </span>
+                        <span className="mt-1 block text-xs text-slate-600">
+                          <HomeText en="Optional · €10 per person, same price for adults, children and infants" de="Optional · 10 € pro Person, gleicher Preis für Erwachsene, Kinder und Kleinkinder" />
+                        </span>
+                      </span>
+                      <span className="shrink-0 text-sm font-bold text-orange-600">{formatCurrency(10)} / <HomeText en="person" de="Person" /></span>
+                    </label>
+                    {lionPhotoSelected && (
+                      <div className="mt-4 border-t border-orange-200 pt-4">
+                        <label htmlFor="lion-photo-count" className="mb-2 block text-sm font-semibold text-slate-800">
+                          <HomeText en="People taking photos" de="Personen für das Löwenfoto" />
+                        </label>
+                        <input
+                          id="lion-photo-count"
+                          type="number"
+                          min="1"
+                          max={totalGuests}
+                          step="1"
+                          value={lionPhotoCount}
+                          onChange={(event) => setLionPhotoCount(event.target.value)}
+                          className={inputClass(submitAttempted && !(lionPhotoQuantity >= 1 && lionPhotoQuantity <= totalGuests))}
+                        />
+                        <div className="mt-3 flex items-center justify-between text-sm">
+                          <span className="text-slate-600">{lionPhotoQuantity} × {formatCurrency(10)}</span>
+                          <span className="font-bold text-blue-950">{formatCurrency(lionPhotoTotal)}</span>
+                        </div>
+                        {submitAttempted && !(lionPhotoQuantity >= 1 && lionPhotoQuantity <= totalGuests) && errorText(isGerman ? "Bitte wählen Sie eine gültige Personenzahl." : "Choose a valid number of people for the lion photo.")}
+                      </div>
+                    )}
+                  </div>
+                )}
+
                 <div className="mt-4 flex items-center justify-between border-t border-slate-200 pt-4">
 
                   <span className="text-base font-bold text-slate-900">
