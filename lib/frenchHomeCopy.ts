@@ -724,6 +724,7 @@ const frenchCopy: Record<string, string> = {
   "Your booking request will be sent securely to our reservations team for confirmation": "Votre demande de réservation sera transmise en toute sécurité à notre équipe pour confirmation",
   "Your Reservation": "Votre réservation",
   "Your request will be reviewed by our team and confirmed with you shortly": "Notre équipe examinera votre demande et vous confirmera rapidement les détails",
+  "Anything else we should know": "Avez-vous d’autres informations à nous communiquer?",
 };
 
 export function frenchHomeText(value: string): string {
