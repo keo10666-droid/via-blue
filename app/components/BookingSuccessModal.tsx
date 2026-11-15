@@ -62,7 +62,7 @@ export default function BookingSuccessModal({
               id="booking-success-title"
               className="mt-2 text-3xl font-extrabold tracking-tight sm:text-4xl"
             >
-              <HomeText en={`Thank you${guestName ? ", " + guestName : ""}`} de={`Vielen Dank${guestName ? ", " + guestName : ""}`} />
+              <HomeText en={`Thank you${guestName ? ", " + guestName : ""}`} de={`Vielen Dank${guestName ? ", " + guestName : ""}`} fr={`Merci${guestName ? ", " + guestName : ""}`} />
             </h2>
 
             <p className="mt-4 max-w-lg text-sm leading-7 text-blue-100 sm:text-base">
@@ -127,7 +127,7 @@ export default function BookingSuccessModal({
 
                 <p className="mt-1 text-xs leading-5 text-slate-600">
                   {emailSent
-                    ? <HomeText en={"We sent a confirmation message to " + email} de={"Wir haben eine Bestätigungsnachricht an " + email + " gesendet"} />
+                    ? <HomeText en={"We sent a confirmation message to " + email} de={"Wir haben eine Bestätigungsnachricht an " + email + " gesendet"} fr={"Nous avons envoyé un e-mail de confirmation à " + email} />
                     : <HomeText en="We will still contact you using the details you provided" de="Wir werden Sie weiterhin über die von Ihnen angegebenen Kontaktdaten erreichen" />}
                 </p>
               </div>
