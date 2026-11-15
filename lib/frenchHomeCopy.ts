@@ -643,7 +643,7 @@ export function frenchHomeText(value: string): string {
   if (value.startsWith("Comfortable private transfer from ")) {
     return value.replace("Comfortable private transfer from ", "Transfert privé confortable de ").replace(" to your destination", " vers votre destination");
   }
-  if (value.startsWith("Reserve your ")) {
+  if (value.startsWith("Reserve your ") && value.includes(" experience and enjoy an unforgettable day")) {
     return value.replace("Reserve your ", "Réservez votre ").replace(" experience and enjoy an unforgettable day in Hurghada with Via Blue", " et profitez d’une journée inoubliable à Hurghada avec Via Blue");
   }
   if (value.startsWith("Reserve your ") && value.includes(" experience quickly and securely")) {
