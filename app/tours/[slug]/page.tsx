@@ -1006,7 +1006,7 @@ export default async function TourDetailsPage({
               </h2>
 
               <p className="mt-5 text-lg leading-8 text-gray-600">
-                <TourText slug={tour.slug} value={tour.overview} />
+                <TourText slug={tour.slug} value={tour.overview} field="description" />
               </p>
 
             </section>
