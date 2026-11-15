@@ -6,7 +6,7 @@ import { useCurrency } from "@/app/components/CurrencyProvider";
 const networks = [
   { id: "Orange", name: "Orange", logo: "https://cdn.simpleicons.org/orange/FF7900", logoClass: "h-9 w-9 rounded-lg", popular: true },
   { id: "Vodafone", name: "Vodafone", logo: "https://cdn.simpleicons.org/vodafone/E60000", logoClass: "h-9 w-9 object-contain", popular: false },
-  { id: "Etisalat", name: "Etisalat", logo: "https://cdn.simpleicons.org/etisalat/92C83E", logoClass: "h-9 w-14 object-contain", popular: false },
+  { id: "Etisalat", name: "Etisalat", logo: "", logoClass: "h-9 w-14 object-contain", popular: false },
   { id: "WE", name: "WE", logo: "", logoClass: "h-9 w-9 object-contain", popular: false },
 ] as const;
 
@@ -93,19 +93,7 @@ export default function SimCardSection() {
                 <p className="text-3xl font-black text-orange-300">{symbol}10</p>
               </div>
             </div>
-            <div className="relative mt-5 border-t border-white/15 pt-4">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-blue-100/80">Choose how to receive your SIM</p>
-              <div className="mt-3 grid grid-cols-2 gap-2">
-                <button type="button" onClick={() => setDelivery("airport")} className={`rounded-xl border px-3 py-3 text-left transition ${delivery === "airport" ? "border-orange-300 bg-orange-500/20" : "border-white/20 bg-white/5 hover:bg-white/10"}`}>
-                  <span className="block text-xs font-extrabold text-white">Airport pickup</span>
-                  <span className="mt-1 block text-[11px] font-semibold text-emerald-300">Free</span>
-                </button>
-                <button type="button" onClick={() => setDelivery("hotel")} className={`rounded-xl border px-3 py-3 text-left transition ${delivery === "hotel" ? "border-orange-300 bg-orange-500/20" : "border-white/20 bg-white/5 hover:bg-white/10"}`}>
-                  <span className="block text-xs font-extrabold text-white">Hotel delivery</span>
-                  <span className="mt-1 block text-[11px] font-semibold text-orange-200">+ {symbol}5</span>
-                </button>
-              </div>
-            </div>
+
           </div>
 
           <div className="p-6 sm:p-9">
@@ -123,7 +111,7 @@ export default function SimCardSection() {
                 return (
                   <button key={item.id} type="button" onClick={() => setNetwork(item.id)} aria-pressed={selected} className={`relative flex min-h-[105px] flex-col items-center justify-center gap-2 rounded-2xl border-2 px-3 py-3 transition-all ${selected ? "border-orange-500 bg-orange-50 shadow-[0_8px_22px_rgba(249,115,22,0.12)]" : "border-slate-100 bg-white hover:border-slate-300"}`}>
                     {item.popular && <span className="absolute -top-2.5 rounded-full bg-orange-500 px-2.5 py-1 text-[8px] font-extrabold uppercase tracking-wider text-white shadow">Best seller</span>}
-                    {item.logo ? <img src={item.logo} alt={item.name + " logo"} className={item.logoClass} onError={(event) => { event.currentTarget.style.display = "none"; event.currentTarget.insertAdjacentHTML("afterend", `<span class="text-sm font-black text-slate-700">${item.name}</span>`); }} /> : <span aria-label="WE logo" className="flex h-9 w-12 items-center justify-center rounded-md bg-[#5b2b82] text-xl font-black italic text-white">WE</span>}
+                    {item.logo ? <img src={item.logo} alt={item.name + " logo"} className={item.logoClass} onError={(event) => { event.currentTarget.style.display = "none"; event.currentTarget.insertAdjacentHTML("afterend", `<span class="text-sm font-black text-slate-700">${item.name}</span>`); }} /> : item.id === "Etisalat" ? <span aria-label="e& Etisalat logo" className="flex h-10 min-w-14 items-center justify-center rounded-lg bg-[#e9f8ed] px-2 text-2xl font-black tracking-tight text-[#159447]">e&amp;</span> : <span aria-label="WE logo" className="flex h-9 w-12 items-center justify-center rounded-md bg-[#5b2b82] text-xl font-black italic text-white">WE</span>}
                     <span className={`text-xs font-extrabold ${selected ? "text-[#03112a]" : "text-slate-600"}`}>{item.name}</span>
                     {selected && <span className="absolute right-2 top-2 flex h-4 w-4 items-center justify-center rounded-full bg-orange-500 text-[10px] text-white">✓</span>}
                   </button>
@@ -162,6 +150,19 @@ export default function SimCardSection() {
                       <input required type="date" value={form.arrivalDate} onChange={(event) => setForm({ ...form, arrivalDate: event.target.value })} aria-label="Arrival date" className="min-w-0 rounded-lg border border-slate-200 bg-white px-3 py-3 text-xs text-slate-900 outline-none focus:border-orange-400" />
                       <input required maxLength={160} value={form.hotel} onChange={(event) => setForm({ ...form, hotel: event.target.value })} placeholder="Hotel name" className="min-w-0 rounded-lg border border-slate-200 bg-white px-3 py-3 text-xs text-slate-900 outline-none focus:border-orange-400" />
                       <input maxLength={40} value={form.roomNumber} onChange={(event) => setForm({ ...form, roomNumber: event.target.value })} placeholder="Room number (if available)" className="min-w-0 rounded-lg border border-slate-200 bg-white px-3 py-3 text-xs text-slate-900 outline-none focus:border-orange-400 sm:col-span-2" />
+                    </div>
+                    <div className="mt-4">
+                      <p className="mb-2 text-xs font-extrabold text-[#03112a]">Choose delivery option</p>
+                      <div className="grid grid-cols-2 gap-2">
+                        <button type="button" onClick={() => setDelivery("airport")} className={`rounded-xl border px-3 py-3 text-left transition ${delivery === "airport" ? "border-orange-400 bg-orange-50 ring-1 ring-orange-200" : "border-slate-200 bg-white hover:border-slate-300"}`}>
+                          <span className="block text-xs font-extrabold text-[#03112a]">Airport pickup</span>
+                          <span className="mt-1 block text-[11px] font-semibold text-emerald-600">Free</span>
+                        </button>
+                        <button type="button" onClick={() => setDelivery("hotel")} className={`rounded-xl border px-3 py-3 text-left transition ${delivery === "hotel" ? "border-orange-400 bg-orange-50 ring-1 ring-orange-200" : "border-slate-200 bg-white hover:border-slate-300"}`}>
+                          <span className="block text-xs font-extrabold text-[#03112a]">Hotel delivery</span>
+                          <span className="mt-1 block text-[11px] font-semibold text-orange-600">+ {symbol}5</span>
+                        </button>
+                      </div>
                     </div>
                     {orderError && <p role="alert" className="mt-3 rounded-lg bg-red-50 px-3 py-2 text-xs font-semibold text-red-700">{orderError}</p>}
                     <button type="submit" disabled={submitting} className="mt-4 flex w-full items-center justify-center rounded-xl bg-[#03112a] px-5 py-3.5 text-sm font-extrabold text-white transition hover:bg-blue-900 disabled:cursor-not-allowed disabled:opacity-60">
