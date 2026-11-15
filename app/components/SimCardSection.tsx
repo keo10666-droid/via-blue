@@ -6,8 +6,8 @@ import { useCurrency } from "@/app/components/CurrencyProvider";
 const networks = [
   { id: "Orange", name: "Orange", logo: "https://cdn.simpleicons.org/orange/FF7900", logoClass: "h-9 w-9 rounded-lg", popular: true },
   { id: "Vodafone", name: "Vodafone", logo: "https://cdn.simpleicons.org/vodafone/E60000", logoClass: "h-9 w-9 object-contain", popular: false },
-  { id: "Etisalat", name: "Etisalat", logo: "", logoClass: "h-9 w-14 object-contain", popular: false },
-  { id: "WE", name: "WE", logo: "", logoClass: "h-9 w-9 object-contain", popular: false },
+  { id: "Etisalat", name: "e&", logo: "https://cdn.simpleicons.org/eand/000000", logoClass: "h-9 w-12 object-contain", popular: false },
+  { id: "WE", name: "WE", logo: "https://upload.wikimedia.org/wikipedia/commons/4/4e/We_logo.svg", logoClass: "h-10 w-10 object-contain", popular: false },
 ] as const;
 
 export default function SimCardSection() {
@@ -19,6 +19,38 @@ export default function SimCardSection() {
   const [orderError, setOrderError] = useState("");
   const [orderReference, setOrderReference] = useState("");
   const [form, setForm] = useState({ fullName: "", whatsapp: "", arrivalDate: "", hotel: "", roomNumber: "" });
+  const [whatsappCountryCode, setWhatsappCountryCode] = useState("+20");
+  const countryCodes = [
+    { name: "Egypt", code: "+20", flag: "🇪🇬" },
+    { name: "United Kingdom", code: "+44", flag: "🇬🇧" },
+    { name: "Germany", code: "+49", flag: "🇩🇪" },
+    { name: "Russia", code: "+7", flag: "🇷🇺" },
+    { name: "Poland", code: "+48", flag: "🇵🇱" },
+    { name: "Romania", code: "+40", flag: "🇷🇴" },
+    { name: "Czechia", code: "+420", flag: "🇨🇿" },
+    { name: "Hungary", code: "+36", flag: "🇭🇺" },
+    { name: "Lithuania", code: "+370", flag: "🇱🇹" },
+    { name: "Latvia", code: "+371", flag: "🇱🇻" },
+    { name: "Estonia", code: "+372", flag: "🇪🇪" },
+    { name: "Belarus", code: "+375", flag: "🇧🇾" },
+    { name: "Ukraine", code: "+380", flag: "🇺🇦" },
+    { name: "Netherlands", code: "+31", flag: "🇳🇱" },
+    { name: "France", code: "+33", flag: "🇫🇷" },
+    { name: "Italy", code: "+39", flag: "🇮🇹" },
+    { name: "Spain", code: "+34", flag: "🇪🇸" },
+    { name: "United States", code: "+1", flag: "🇺🇸" },
+    { name: "Ireland", code: "+353", flag: "🇮🇪" },
+    { name: "Austria", code: "+43", flag: "🇦🇹" },
+    { name: "Switzerland", code: "+41", flag: "🇨🇭" },
+    { name: "Belgium", code: "+32", flag: "🇧🇪" },
+    { name: "Denmark", code: "+45", flag: "🇩🇰" },
+    { name: "Sweden", code: "+46", flag: "🇸🇪" },
+    { name: "Norway", code: "+47", flag: "🇳🇴" },
+    { name: "Finland", code: "+358", flag: "🇫🇮" },
+    { name: "Turkey", code: "+90", flag: "🇹🇷" },
+    { name: "Saudi Arabia", code: "+966", flag: "🇸🇦" },
+    { name: "United Arab Emirates", code: "+971", flag: "🇦🇪" },
+  ];
   const symbol = currency === "EUR" ? "€" : currency === "USD" ? "$" : "£";
   const total = 10 + (delivery === "hotel" ? 5 : 0);
 
@@ -32,7 +64,7 @@ export default function SimCardSection() {
       const response = await fetch("/api/sim-card-order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, network, delivery, currency }),
+        body: JSON.stringify({ ...form, whatsapp: whatsappCountryCode + form.whatsapp.replace(/^0+/, "").replace(/[\\s()-]/g, ""), network, delivery, currency }),
       });
       const result = await response.json();
 
@@ -111,7 +143,7 @@ export default function SimCardSection() {
                 return (
                   <button key={item.id} type="button" onClick={() => setNetwork(item.id)} aria-pressed={selected} className={`relative flex min-h-[105px] flex-col items-center justify-center gap-2 rounded-2xl border-2 px-3 py-3 transition-all ${selected ? "border-orange-500 bg-orange-50 shadow-[0_8px_22px_rgba(249,115,22,0.12)]" : "border-slate-100 bg-white hover:border-slate-300"}`}>
                     {item.popular && <span className="absolute -top-2.5 rounded-full bg-orange-500 px-2.5 py-1 text-[8px] font-extrabold uppercase tracking-wider text-white shadow">Best seller</span>}
-                    {item.logo ? <img src={item.logo} alt={item.name + " logo"} className={item.logoClass} onError={(event) => { event.currentTarget.style.display = "none"; event.currentTarget.insertAdjacentHTML("afterend", `<span class="text-sm font-black text-slate-700">${item.name}</span>`); }} /> : item.id === "Etisalat" ? <span aria-label="e& Etisalat logo" className="flex h-10 min-w-14 items-center justify-center rounded-lg bg-[#e9f8ed] px-2 text-2xl font-black tracking-tight text-[#159447]">e&amp;</span> : <span aria-label="WE logo" className="flex h-9 w-12 items-center justify-center rounded-md bg-[#5b2b82] text-xl font-black italic text-white">WE</span>}
+                    <img src={item.logo} alt={item.name + " official logo"} className={item.logoClass} onError={(event) => { event.currentTarget.style.display = "none"; event.currentTarget.insertAdjacentHTML("afterend", `<span class="text-sm font-black text-slate-700">${item.name}</span>`); }} />
                     <span className={`text-xs font-extrabold ${selected ? "text-[#03112a]" : "text-slate-600"}`}>{item.name}</span>
                     {selected && <span className="absolute right-2 top-2 flex h-4 w-4 items-center justify-center rounded-full bg-orange-500 text-[10px] text-white">✓</span>}
                   </button>
@@ -146,7 +178,12 @@ export default function SimCardSection() {
                     <p className="mb-3 text-sm font-extrabold text-[#03112a]">Your details</p>
                     <div className="grid gap-3 sm:grid-cols-2">
                       <input required maxLength={120} value={form.fullName} onChange={(event) => setForm({ ...form, fullName: event.target.value })} placeholder="Full name" autoComplete="name" className="min-w-0 rounded-lg border border-slate-200 bg-white px-3 py-3 text-xs text-slate-900 outline-none focus:border-orange-400" />
-                      <input required type="tel" maxLength={40} value={form.whatsapp} onChange={(event) => setForm({ ...form, whatsapp: event.target.value })} placeholder="WhatsApp number" autoComplete="tel" className="min-w-0 rounded-lg border border-slate-200 bg-white px-3 py-3 text-xs text-slate-900 outline-none focus:border-orange-400" />
+                      <div className="flex min-w-0 gap-2 sm:col-span-2">
+                        <select aria-label="WhatsApp country code" value={whatsappCountryCode} onChange={(event) => setWhatsappCountryCode(event.target.value)} className="w-[42%] min-w-0 rounded-lg border border-slate-200 bg-white px-2 py-3 text-xs text-slate-900 outline-none focus:border-orange-400 sm:w-[38%]">
+                          {countryCodes.map((country) => <option key={country.code + country.name} value={country.code}>{country.flag} {country.code} · {country.name}</option>)}
+                        </select>
+                        <input required type="tel" maxLength={25} value={form.whatsapp} onChange={(event) => setForm({ ...form, whatsapp: event.target.value })} placeholder="WhatsApp number" autoComplete="tel-national" className="min-w-0 flex-1 rounded-lg border border-slate-200 bg-white px-3 py-3 text-xs text-slate-900 outline-none focus:border-orange-400" />
+                      </div>
                       <input required type="date" value={form.arrivalDate} onChange={(event) => setForm({ ...form, arrivalDate: event.target.value })} aria-label="Arrival date" className="min-w-0 rounded-lg border border-slate-200 bg-white px-3 py-3 text-xs text-slate-900 outline-none focus:border-orange-400" />
                       <input required maxLength={160} value={form.hotel} onChange={(event) => setForm({ ...form, hotel: event.target.value })} placeholder="Hotel name" className="min-w-0 rounded-lg border border-slate-200 bg-white px-3 py-3 text-xs text-slate-900 outline-none focus:border-orange-400" />
                       <input maxLength={40} value={form.roomNumber} onChange={(event) => setForm({ ...form, roomNumber: event.target.value })} placeholder="Room number (if available)" className="min-w-0 rounded-lg border border-slate-200 bg-white px-3 py-3 text-xs text-slate-900 outline-none focus:border-orange-400 sm:col-span-2" />
