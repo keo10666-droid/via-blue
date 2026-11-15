@@ -949,6 +949,10 @@ const frenchCopy: Record<string, string> = {
   "China": "Chine",
   "Japan": "Japon",
   "South Korea": "Corée du Sud",
+  "Understanding your travel style": "Compréhension de votre style de voyage",
+  "Matching real Via Blue experiences": "Sélection des expériences Via Blue adaptées",
+  "Optimizing your days and activities": "Optimisation de vos journées et activités",
+  "Building 3 personalized packages": "Création de 3 forfaits personnalisés",
   "What's Not Included": "Ce qui n’est pas inclus",
 };
 
