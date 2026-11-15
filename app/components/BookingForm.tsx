@@ -258,8 +258,9 @@ export default function BookingForm({
   const { currency, formatCurrency, rate } = useCurrency();
 
   const [isGerman, setIsGerman] = useState(false);
+  const [isFrench, setIsFrench] = useState(false);
   useEffect(() => {
-    const syncLanguage = () => setIsGerman(localStorage.getItem("via-blue-language") === "de");
+    const syncLanguage = () => { const language = localStorage.getItem("via-blue-language"); setIsGerman(language === "de"); setIsFrench(language === "fr"); };
     syncLanguage();
     window.addEventListener("via-blue-language-change", syncLanguage);
     return () => window.removeEventListener("via-blue-language-change", syncLanguage);
@@ -422,9 +423,7 @@ export default function BookingForm({
         );
 
         alert(
-          localStorage.getItem("via-blue-language") === "de"
-            ? "Dein Konto konnte nicht überprüft werden. Bitte versuche es erneut."
-            : "Unable to verify your account. Please try again."
+          localStorage.getItem("via-blue-language") === "de" ? "Dein Konto konnte nicht überprüft werden. Bitte versuche es erneut." : localStorage.getItem("via-blue-language") === "fr" ? "Impossible de vérifier votre compte. Veuillez réessayer." : "Unable to verify your account. Please try again."
         );
 
         return;
@@ -457,9 +456,7 @@ export default function BookingForm({
           );
 
           alert(
-            localStorage.getItem("via-blue-language") === "de"
-              ? "Deine Buchungssitzung konnte nicht gestartet werden. Bitte versuche es erneut."
-              : "Unable to start your booking session. Please try again."
+            localStorage.getItem("via-blue-language") === "de" ? "Deine Buchungssitzung konnte nicht gestartet werden. Bitte versuche es erneut." : localStorage.getItem("via-blue-language") === "fr" ? "Impossible de démarrer votre session de réservation. Veuillez réessayer." : "Unable to start your booking session. Please try again."
           );
 
           return;
@@ -570,9 +567,7 @@ export default function BookingForm({
         );
 
         alert(
-          localStorage.getItem("via-blue-language") === "de"
-            ? "Deine Buchung konnte nicht gespeichert werden. Bitte versuche es erneut."
-            : "Your booking could not be saved. Please try again."
+          localStorage.getItem("via-blue-language") === "de" ? "Deine Buchung konnte nicht gespeichert werden. Bitte versuche es erneut." : localStorage.getItem("via-blue-language") === "fr" ? "Votre réservation n’a pas pu être enregistrée. Veuillez réessayer." : "Your booking could not be saved. Please try again."
         );
 
         return;
@@ -665,7 +660,7 @@ ${notes.trim() || "-"}`;
        * 10. Success
        */
       alert(
-        (localStorage.getItem("via-blue-language") === "de" ? "Buchung erfolgreich gespeichert!" : "Booking saved successfully!")
+        (localStorage.getItem("via-blue-language") === "de" ? "Buchung erfolgreich gespeichert!" : localStorage.getItem("via-blue-language") === "fr" ? "Réservation enregistrée avec succès !" : "Booking saved successfully!")
       );
     } catch (error) {
       console.error(
@@ -685,9 +680,7 @@ ${notes.trim() || "-"}`;
       );
 
       alert(
-        localStorage.getItem("via-blue-language") === "de"
-          ? "Beim Senden Ihrer Buchung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
-          : "Something went wrong while submitting your booking. Please try again."
+        localStorage.getItem("via-blue-language") === "de" ? "Beim Senden Ihrer Buchung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut." : localStorage.getItem("via-blue-language") === "fr" ? "Une erreur s’est produite lors de l’envoi de votre réservation. Veuillez réessayer." : "Something went wrong while submitting your booking. Please try again."
       );
     } finally {
       setIsSubmitting(false);
@@ -761,7 +754,7 @@ ${notes.trim() || "-"}`;
 
                 <input
                   type="text"
-                  placeholder={isGerman ? "Vollständigen Namen eingeben *" : "Enter full name *"}
+                  placeholder={isGerman ? "Vollständigen Namen eingeben *" : isFrench ? "Saisir le nom complet *" : "Enter full name *"}
                   value={name}
                   onChange={(e) =>
                     setName(e.target.value)
@@ -786,7 +779,7 @@ ${notes.trim() || "-"}`;
 
                 <input
                   type="text"
-                  placeholder={isGerman ? "Nationalität" : "Nationality"}
+                  placeholder={isGerman ? "Nationalität" : isFrench ? "Nationalité" : "Nationality"}
                   value={displayNationality(nationality, isGerman)}
                   onChange={(e) => {
                     setNationality(e.target.value);
@@ -842,7 +835,7 @@ ${notes.trim() || "-"}`;
 
                 <input
                   type="email"
-                  placeholder={isGerman ? "E-Mail *" : "Email *"}
+                  placeholder={isGerman ? "E-Mail *" : isFrench ? "E-mail *" : "Email *"}
                   value={email}
                   onChange={(e) =>
                     setEmail(e.target.value)
@@ -895,7 +888,7 @@ ${notes.trim() || "-"}`;
                       <div className="absolute z-30 mt-2 w-72 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-[0_20px_50px_rgba(7,26,54,0.14)]">
                         <input
                           type="text"
-                          placeholder={isGerman ? "Land suchen..." : "Search country..."}
+                          placeholder={isGerman ? "Land suchen..." : isFrench ? "Rechercher un pays..." : "Search country..."}
                           value={countrySearch}
                           onChange={(e) =>
                             setCountrySearch(
@@ -944,7 +937,7 @@ ${notes.trim() || "-"}`;
 
                   <input
                     type="tel"
-                    placeholder={isGerman ? "Nummer" : "Number"}
+                    placeholder={isGerman ? "Nummer" : isFrench ? "Numéro" : "Number"}
                     value={phone}
                     onChange={(e) =>
                       setPhone(e.target.value)
@@ -985,7 +978,7 @@ ${notes.trim() || "-"}`;
 
                 <input
                   type="text"
-                  placeholder={isGerman ? "Hotelname" : "Hotel name"}
+                  placeholder={isGerman ? "Hotelname" : isFrench ? "Nom de l’hôtel" : "Hotel name"}
                   value={hotel}
                   onChange={(e) =>
                     setHotel(e.target.value)
@@ -1001,7 +994,7 @@ ${notes.trim() || "-"}`;
 
                 <input
                   type="text"
-                  placeholder={isGerman ? "Zimmernummer" : "Room number"}
+                  placeholder={isGerman ? "Zimmernummer" : isFrench ? "Numéro de chambre" : "Room number"}
                   value={roomNumber}
                   onChange={(e) =>
                     setRoomNumber(e.target.value)
@@ -1191,31 +1184,31 @@ ${notes.trim() || "-"}`;
                         }}
                       >
                         <option value="">
-                          {isGerman ? `Alter für Kind ${index + 1} auswählen` : `Select Child ${index + 1} Age`}
+                          {isGerman ? `Alter für Kind ${index + 1} auswählen` : isFrench ? `Choisir l’âge de l’enfant ${index + 1}` : `Select Child ${index + 1} Age`}
                         </option>
 
                         <option value="5">
-                          {isGerman ? "5 Jahre" : "5 years"}
+                          {isGerman ? "5 Jahre" : isFrench ? "5 ans" : "5 years"}
                         </option>
 
                         <option value="6">
-                          {isGerman ? "6 Jahre" : "6 years"}
+                          {isGerman ? "6 Jahre" : isFrench ? "6 ans" : "6 years"}
                         </option>
 
                         <option value="7">
-                          {isGerman ? "7 Jahre" : "7 years"}
+                          {isGerman ? "7 Jahre" : isFrench ? "7 ans" : "7 years"}
                         </option>
 
                         <option value="8">
-                          {isGerman ? "8 Jahre" : "8 years"}
+                          {isGerman ? "8 Jahre" : isFrench ? "8 ans" : "8 years"}
                         </option>
 
                         <option value="9">
-                          {isGerman ? "9 Jahre" : "9 years"}
+                          {isGerman ? "9 Jahre" : isFrench ? "9 ans" : "9 years"}
                         </option>
 
                         <option value="10">
-                          {isGerman ? "10 Jahre" : "10 years"}
+                          {isGerman ? "10 Jahre" : isFrench ? "10 ans" : "10 years"}
                         </option>
                       </select>
 
@@ -1262,23 +1255,23 @@ ${notes.trim() || "-"}`;
                         }}
                       >
                         <option value="">
-                          {isGerman ? `Alter für Kleinkind ${index + 1} auswählen` : `Select Infant ${index + 1} Age`}
+                          {isGerman ? `Alter für Kleinkind ${index + 1} auswählen` : isFrench ? `Choisir l’âge du bébé ${index + 1}` : `Select Infant ${index + 1} Age`}
                         </option>
 
                         <option value="1">
-                          {isGerman ? "1 Jahr" : "1 year"}
+                          {isGerman ? "1 Jahr" : isFrench ? "1 an" : "1 year"}
                         </option>
 
                         <option value="2">
-                          {isGerman ? "2 Jahre" : "2 years"}
+                          {isGerman ? "2 Jahre" : isFrench ? "2 ans" : "2 years"}
                         </option>
 
                         <option value="3">
-                          {isGerman ? "3 Jahre" : "3 years"}
+                          {isGerman ? "3 Jahre" : isFrench ? "3 ans" : "3 years"}
                         </option>
 
                         <option value="4">
-                          {isGerman ? "4 Jahre" : "4 years"}
+                          {isGerman ? "4 Jahre" : isFrench ? "4 ans" : "4 years"}
                         </option>
                       </select>
 
@@ -1357,7 +1350,7 @@ ${notes.trim() || "-"}`;
 
             <textarea
               rows={5}
-              placeholder={isGerman ? "Besondere Wünsche / Anmerkungen" : "Special requests / notes"}
+              placeholder={isGerman ? "Besondere Wünsche / Anmerkungen" : isFrench ? "Demandes particulières / remarques" : "Special requests / notes"}
               value={notes}
               onChange={(e) =>
                 setNotes(e.target.value)
