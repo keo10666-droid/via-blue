@@ -212,7 +212,7 @@ const formatDateLabel = (value: string, isGerman = false, isFrench = false) => {
 
   const parsedDate = parseDateInput(value);
 
-  if (!parsedDate) return isGerman ? "Wählen Sie Ihr Reisedatum" : "Select your trip start date";
+  if (!parsedDate) return isGerman ? "Wählen Sie Ihr Reisedatum" : isFrench ? "Choisissez la date de début de votre voyage" : "Select your trip start date";
 
   return new Intl.DateTimeFormat(isGerman ? "de-DE" : isFrench ? "fr-FR" : "en-US", {
     weekday: "short",
@@ -691,13 +691,13 @@ export default function AITripBookingPage() {
           itinerary,
           name: name.trim(),
           nationality:
-            nationality.trim() || "Not specified",
+            nationality.trim() || isFrench ? "Non précisé" : "Not specified",
           email: email.trim(),
           phone: fullPhone,
           hotel:
-            hotel.trim() || "Not specified",
+            hotel.trim() || isFrench ? "Non précisé" : "Not specified",
           room_number:
-            roomNumber.trim() || "Not specified",
+            roomNumber.trim() || isFrench ? "Non précisé" : "Not specified",
           adults,
           children,
           children_ages:
@@ -784,77 +784,77 @@ export default function AITripBookingPage() {
               )
               .join("\n");
 
-            return `DAY ${day.day}\n${tours}`;
+            return `${isFrench ? "JOUR" : "DAY"} ${day.day}\n${tours}`;
           })
           .join("\n\n");
 
-      const message = `🌴 ${isGerman ? "NEUE KI-REISEPAKETBUCHUNG" : "NEW AI TRIP PACKAGE BOOKING"}
+      const message = `🌴 ${isGerman ? "NEUE KI-REISEPAKETBUCHUNG" : isFrench ? "NOUVELLE RÉSERVATION DE VOYAGE IA" : "NEW AI TRIP PACKAGE BOOKING"}
 
-🤖 ${isGerman ? "Buchungsquelle" : "Booking Source"}: AI Trip Planner
+🤖 ${isGerman ? "Buchungsquelle" : isFrench ? "Source de réservation" : "Booking Source"}: AI Trip Planner
 
 📦 Package: ${selectedPackage.title}
 
-📝 ${isGerman ? "Paketbeschreibung" : "Package Summary"}:
+📝 ${isGerman ? "Paketbeschreibung" : isFrench ? "Description du forfait" : "Package Summary"}:
 
 ${selectedPackage.summary}
 
-📍 ${isGerman ? "Region" : "Area"}: ${booking.area}
+📍 ${isGerman ? "Region" : isFrench ? "Région" : "Area"}: ${booking.area}
 
-📅 ${isGerman ? "Reisebeginn" : "Trip Start Date"}: ${date}
+📅 ${isGerman ? "Reisebeginn" : isFrench ? "Date de début du voyage" : "Trip Start Date"}: ${date}
 
-🗓️ ${isGerman ? "Dauer" : "Duration"}: ${booking.days} ${isGerman ? "Tage" : "Days"}
+🗓️ ${isGerman ? "Dauer" : isFrench ? "Durée" : "Duration"}: ${booking.days} ${isGerman ? "Tage" : isFrench ? "jours" : "Days"}
 
-👨 ${isGerman ? "Erwachsene" : "Adults"}: ${adults}
+👨 ${isGerman ? "Erwachsene" : isFrench ? "Adultes" : "Adults"}: ${adults}
 
-🧒 ${isGerman ? "Kinder" : "Children"}: ${children}
+🧒 ${isGerman ? "Kinder" : isFrench ? "Enfants" : "Children"}: ${children}
 
-👥 ${isGerman ? "Gäste insgesamt" : "Total Guests"}: ${totalGuests}
+👥 ${isGerman ? "Gäste insgesamt" : isFrench ? "Nombre total de voyageurs" : "Total Guests"}: ${totalGuests}
 
-🌍 ${isGerman ? "Nationalität" : "Nationality"}: ${
-        nationality.trim() || "Not specified"
+🌍 ${isGerman ? "Nationalität" : isFrench ? "Nationalité" : "Nationality"}: ${
+        nationality.trim() || isFrench ? "Non précisé" : "Not specified"
       }
 
-👤 ${isGerman ? "Vollständiger Name" : "Full Name"}: ${name.trim()}
+👤 ${isGerman ? "Vollständiger Name" : isFrench ? "Nom complet" : "Full Name"}: ${name.trim()}
 
-✉️ ${isGerman ? "E-Mail" : "Email"}: ${email.trim()}
+✉️ ${isGerman ? "E-Mail" : isFrench ? "E-mail" : "Email"}: ${email.trim()}
 
 📱 WhatsApp: ${fullPhone}
 
 🏨 ${isGerman ? "Hotel" : "Hotel"}: ${
-        hotel.trim() || "Not specified"
+        hotel.trim() || isFrench ? "Non précisé" : "Not specified"
       }
 
-🚪 ${isGerman ? "Zimmernummer" : "Room Number"}: ${
-        roomNumber.trim() || "Not specified"
+🚪 ${isGerman ? "Zimmernummer" : isFrench ? "Numéro de chambre" : "Room Number"}: ${
+        roomNumber.trim() || isFrench ? "Non précisé" : "Not specified"
       }
 
 💰 Budget: ${formatPrice(
         booking.budget,
       )} ${booking.currency}
 
-💰 ${isGerman ? "Paketgesamtpreis" : "Package Total"}: ${formatPrice(
+💰 ${isGerman ? "Paketgesamtpreis" : isFrench ? "Prix total du forfait" : "Package Total"}: ${formatPrice(
         selectedPackage.totalCost,
       )} ${booking.currency}
 
-💰 ${isGerman ? "Verbleibendes Budget" : "Remaining Budget"}: ${formatPrice(
+💰 ${isGerman ? "Verbleibendes Budget" : isFrench ? "Budget restant" : "Remaining Budget"}: ${formatPrice(
         selectedPackage.remainingBudget,
       )} ${booking.currency}
 
-🎯 ${isGerman ? "Erlebnisse" : "Experiences"}: ${
+🎯 ${isGerman ? "Erlebnisse" : isFrench ? "Expériences" : "Experiences"}: ${
         selectedPackage.activities
       }
 
-🧒 ${isGerman ? "Alter der Kinder" : "Children Ages"}:
+🧒 ${isGerman ? "Alter der Kinder" : isFrench ? "Âge des enfants" : "Children Ages"}:
 
 ${
   childrenAgeValues.filter(Boolean).join(", ") || "-"
 }
 
-🗺️ ${isGerman ? "REISEPLAN" : "ITINERARY"}
+🗺️ ${isGerman ? "REISEPLAN" : isFrench ? "ITINÉRAIRE" : "ITINERARY"}
 
 ${itineraryMessage}
 
-📝 ${isGerman ? "Besondere Wünsche" : "Special Requests"}:
+📝 ${isGerman ? "Besondere Wünsche" : isFrench ? "Demandes particulières" : "Special Requests"}:
 
 -
 
