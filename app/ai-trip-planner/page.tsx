@@ -246,19 +246,20 @@ function ClockIcon({ className = "h-4 w-4" }: { className?: string }) {
 export default function AITripPlannerPage() {
   const { currency, setCurrency, rate, rates, convertFromEur } = useCurrency();
   const [step, setStep] = useState(1);
-  const [language, setLanguage] = useState<"en" | "de">("en");
+  const [language, setLanguage] = useState<"en" | "de" | "fr">("en");
   const processingSectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const syncLanguage = (event?: Event) => {
-      const requestedLanguage = (event as CustomEvent<"en" | "de"> | undefined)?.detail;
-      if (requestedLanguage === "en" || requestedLanguage === "de") {
+      const requestedLanguage = (event as CustomEvent<"en" | "de" | "fr"> | undefined)?.detail;
+      if (requestedLanguage === "en" || requestedLanguage === "de" || requestedLanguage === "fr") {
         setLanguage(requestedLanguage);
         return;
       }
 
       try {
-        setLanguage(window.localStorage.getItem("via-blue-language") === "de" ? "de" : "en");
+        const savedLanguage = window.localStorage.getItem("via-blue-language");
+        setLanguage(savedLanguage === "de" || savedLanguage === "fr" ? savedLanguage : "en");
       } catch {
         setLanguage("en");
       }
@@ -425,9 +426,7 @@ export default function AITripPlannerPage() {
       console.error("AI Trip Planner:", err);
 
       setError(
-        localStorage.getItem("via-blue-language") === "de"
-          ? "Dein Reiseplan konnte nicht erstellt werden. Bitte versuche es erneut."
-          : "Something went wrong while creating your trip. Please try again."
+        localStorage.getItem("via-blue-language") === "de" ? "Dein Reiseplan konnte nicht erstellt werden. Bitte versuche es erneut." : localStorage.getItem("via-blue-language") === "fr" ? "Impossible de créer votre itinéraire. Veuillez réessayer." : "Something went wrong while creating your trip. Please try again."
       );
 
       setStep(6);
@@ -550,6 +549,8 @@ export default function AITripPlannerPage() {
                 {[1, 2, 3, 4, 5].map((item, index) => {
                   const labels = language === "de"
                     ? ["Reisende", "Reiseziel", "Dauer", "Budget", "Erlebnisse"]
+                    : language === "fr"
+                    ? ["Voyageurs", "Destination", "Durée", "Budget", "Expériences"]
                     : ["Travelers", "Location", "Duration", "Budget", "Experiences"];
 
                   const active = step === item;
