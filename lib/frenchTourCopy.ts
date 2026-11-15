@@ -1,3 +1,5 @@
+import { frenchHomeText } from "@/lib/frenchHomeCopy";
+
 export type FrenchTourCopy = { name: string; description: string };
 
 const copy: Record<string, FrenchTourCopy> = {
@@ -181,5 +183,5 @@ export function frenchTourValue(value: string): string {
     "Culture": "Culture",
     "Relaxation": "Détente",
   };
-  return exact[value] ?? value;
+  return exact[value] ?? frenchHomeText(value);
 }
