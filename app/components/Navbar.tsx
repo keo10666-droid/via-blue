@@ -14,14 +14,14 @@ export default function Navbar() {
 
   const [isOpen, setIsOpen] = useState(false);
   const [userName, setUserName] = useState<string | null>(null);
-  const [language, setLanguage] = useState<"en" | "de">("en");
+  const [language, setLanguage] = useState<"en" | "de" | "fr">("en");
   const [theme, setTheme] = useState<"light" | "dark">("light");
 
   useEffect(() => {
     setTheme(document.documentElement.classList.contains("dark") ? "dark" : "light");
     try {
       const savedLanguage = window.localStorage.getItem("via-blue-language");
-      if (savedLanguage === "de" || savedLanguage === "en") {
+      if (savedLanguage === "de" || savedLanguage === "en" || savedLanguage === "fr") {
         setLanguage(savedLanguage);
         document.documentElement.lang = savedLanguage;
       }
@@ -38,7 +38,7 @@ export default function Navbar() {
   }
 
   function toggleLanguage() {
-    const nextLanguage = language === "en" ? "de" : "en";
+    const nextLanguage = language === "en" ? "de" : language === "de" ? "fr" : "en";
     setLanguage(nextLanguage);
     document.documentElement.lang = nextLanguage;
     try {
@@ -49,7 +49,25 @@ export default function Navbar() {
     window.dispatchEvent(new CustomEvent("via-blue-language-change", { detail: nextLanguage }));
   }
 
-  const labels = language === "de"
+  const labels = language === "fr"
+    ? {
+        Home: "Accueil",
+        Tours: "Excursions",
+        Transfers: "Transferts",
+        "Luxury Tours": "Excursions VIP",
+        "AI Trip Planner": "Planificateur de voyage",
+        "About Us": "À propos",
+        Contact: "Contact",
+        Register: "S’inscrire",
+        "Log In": "Connexion",
+        "Log Out": "Déconnexion",
+        New: "Nouveau",
+        Greeting: "Bonjour,",
+        "Toggle menu": "Ouvrir le menu",
+        "Dark mode": "Activer le mode sombre",
+        "Light mode": "Activer le mode clair",
+      }
+    : language === "de"
     ? {
         Home: "Start",
         Tours: "Ausflüge",
@@ -347,10 +365,10 @@ export default function Navbar() {
         <button
           type="button"
           onClick={toggleLanguage}
-          aria-label={language === "en" ? "Switch to German" : "Auf Englisch wechseln"}
+          aria-label={language === "en" ? "Switch language to German" : language === "de" ? "Passer au français" : "Switch language to English"}
           className="ml-1.5 hidden shrink-0 whitespace-nowrap rounded-lg border border-slate-200 bg-white px-2 py-2 text-[10px] font-bold text-blue-950 transition hover:border-orange-300 hover:bg-orange-50 lg:inline-flex xl:ml-2 xl:px-2.5 xl:text-xs"
         >
-          {language === "en" ? "DE" : "EN"}
+          {language === "en" ? "DE" : language === "de" ? "FR" : "EN"}
         </button>
 
         {/* Desktop Account */}
@@ -471,7 +489,7 @@ export default function Navbar() {
               onClick={toggleLanguage}
               className="mb-2 self-start rounded-xl border border-slate-200 bg-white px-4 py-2 text-xs font-extrabold text-blue-950 transition hover:border-orange-300 hover:bg-orange-50"
             >
-              {language === "en" ? "Deutsch" : "English"}
+              {language === "en" ? "Deutsch" : language === "de" ? "Français" : "English"}
             </button>
 
             {navItems.map((item) => {
@@ -593,11 +611,11 @@ export default function Navbar() {
         className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 border-t border-slate-200/80 bg-white/95 px-1 pb-[max(env(safe-area-inset-bottom),0.35rem)] pt-2 shadow-[0_-8px_30px_rgba(3,17,42,0.10)] backdrop-blur-2xl lg:hidden"
       >
         {[
-          { href: "/", label: language === "de" ? "Startseite" : "Home", Icon: Home },
-          { href: "/tours", label: language === "de" ? "Ausflüge" : "Tours", Icon: Compass },
-          { href: "/transfers", label: language === "de" ? "Transfer" : "Transfer", Icon: CarFront },
-          { href: "/contact", label: language === "de" ? "Kontakt" : "Contact", Icon: MessageCircle },
-          { href: userName ? "/account" : "/login", label: userName ? (language === "de" ? "Konto" : "Account") : "Login", Icon: UserRound },
+          { href: "/", label: language === "fr" ? "Accueil" : language === "de" ? "Startseite" : "Home", Icon: Home },
+          { href: "/tours", label: language === "fr" ? "Excursions" : language === "de" ? "Ausflüge" : "Tours", Icon: Compass },
+          { href: "/transfers", label: language === "fr" ? "Transferts" : language === "de" ? "Transfer" : "Transfer", Icon: CarFront },
+          { href: "/contact", label: language === "fr" ? "Contact" : language === "de" ? "Kontakt" : "Contact", Icon: MessageCircle },
+          { href: userName ? "/account" : "/login", label: userName ? (language === "fr" ? "Compte" : language === "de" ? "Konto" : "Account") : (language === "fr" ? "Connexion" : "Login"), Icon: UserRound },
         ].map(({ href, label, Icon }) => {
           const active = href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
           return (
