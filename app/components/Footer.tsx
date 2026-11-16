@@ -224,26 +224,28 @@ function TripadvisorIcon() {
 }
 
 export default function Footer() {
-  const [language, setLanguage] = useState<"en" | "de" | "fr">("en");
+  const [language, setLanguage] = useState<"en" | "de" | "fr" | "ro">("en");
 
   useEffect(() => {
     try {
       const saved = window.localStorage.getItem("via-blue-language");
-      if (saved === "de" || saved === "en" || saved === "fr") setLanguage(saved);
+      if (saved === "de" || saved === "en" || saved === "fr" || saved === "ro") setLanguage(saved);
     } catch {
       // English remains the fallback if browser storage is unavailable.
     }
 
     const handleLanguageChange = (event: Event) => {
-      const nextLanguage = (event as CustomEvent<"en" | "de" | "fr">).detail;
-      if (nextLanguage === "en" || nextLanguage === "de" || nextLanguage === "fr") setLanguage(nextLanguage);
+      const nextLanguage = (event as CustomEvent<"en" | "de" | "fr" | "ro">).detail;
+      if (nextLanguage === "en" || nextLanguage === "de" || nextLanguage === "fr" || nextLanguage === "ro") setLanguage(nextLanguage);
     };
 
     window.addEventListener("via-blue-language-change", handleLanguageChange);
     return () => window.removeEventListener("via-blue-language-change", handleLanguageChange);
   }, []);
 
-  const text = language === "fr"
+  const text = language === "ro"
+    ? { intro: "Experiența ta la Marea Roșie", headline: "Descoperă Hurghada într-un mod special", description: "Descoperă excursii de neuitat, plimbări cu barca, aventuri de snorkeling și transferuri private în Hurghada", exploreEgypt: "Descoperă Egiptul", follow: "Urmărește Via Blue", reputation: "Păreri ale călătorilor", comingSoon: "În curând", quickLinks: "Linkuri rapide", home: "Acasă", tours: "Excursii", airportTransfers: "Transferuri de la aeroport", contact: "Contact", experiences: "Experiențe populare", privateTransfer: "Transfer privat", luxuryTours: "Excursii VIP", contactUs: "Contactează-ne", location: "Locație", email: "E-mail", closing: "Călătoria ta începe la Marea Roșie", privacy: "Politica de confidențialitate", terms: "Termeni și condiții", rights: "Toate drepturile rezervate" }
+    : language === "fr"
     ? {
         intro: "Votre expérience en mer Rouge",
         headline: "Découvrez Hurghada autrement",
