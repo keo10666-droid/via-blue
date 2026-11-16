@@ -828,6 +828,11 @@ const romanianCopy: Record<string, string> = {
   "Children Ages (5-10 years)": "Vârstele copiilor (5–10 ani)",
   "Infant Ages (1-4 years)": "Vârstele bebelușilor (1–4 ani)",
   "📱 Send Booking Request": "📱 Trimite cererea de rezervare",
+  "Professional Driver": "Șofer profesionist",
+  "Your Transfer": "Transferul tău",
+  "Private vehicle": "Vehicul privat",
+  "Professional driver": "Șofer profesionist",
+  "Fixed price": "Preț fix",
 };
 
 export function romanianHomeText(value: string): string {
