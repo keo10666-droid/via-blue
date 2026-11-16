@@ -1464,15 +1464,7 @@ ${notes.trim() || "-"}
 
                       <div className="mb-2 grid grid-cols-7">
 
-                        {[
-                          "Sun",
-                          "Mon",
-                          "Tue",
-                          "Wed",
-                          "Thu",
-                          "Fri",
-                          "Sat",
-                        ].map((day) => (
+                        {(isFrench ? ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"] : isGerman ? ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"] : ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]).map((day) => (
 
                           <div
                             key={day}
