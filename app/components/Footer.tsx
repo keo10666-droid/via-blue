@@ -380,7 +380,7 @@ export default function Footer() {
               </p>
 
               <p className="mt-2 text-sm font-medium text-slate-200">
-                {language === "fr" ? "Excursions • Mer • Désert • Transferts" : language === "de" ? "Ausflüge • Meer • Wüste • Transfers" : "Tours • Sea • Desert • Transfers"}
+                {language === "ro" ? "Excursii • Mare • Deșert • Transferuri" : language === "fr" ? "Excursions • Mer • Désert • Transferts" : language === "de" ? "Ausflüge • Meer • Wüste • Transfers" : "Tours • Sea • Desert • Transfers"}
               </p>
             </div>
           </div>
@@ -444,7 +444,7 @@ export default function Footer() {
                 {/* Gmail */}
                 <a
                   href="mailto:viabluetours@gmail.com"
-                  aria-label={language === "fr" ? "E-mail" : language === "de" ? "E-Mail" : "Email"}
+                  aria-label={language === "ro" ? "E-mail" : language === "fr" ? "E-mail" : language === "de" ? "E-Mail" : "Email"}
                   className="group flex h-11 w-11 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.045] text-slate-300 shadow-xl shadow-black/20 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-red-400/40 hover:bg-red-500 hover:text-white hover:shadow-red-500/20"
                 >
                   <GmailIcon />
