@@ -928,6 +928,11 @@ const romanianCopy: Record<string, string> = {
 };
 
 export function romanianHomeText(value: string): string {
+  if (value.startsWith("Tell other guests about your experience with ")) return value.replace("Tell other guests about your experience with ", "Spune-le și altor oaspeți despre experiența ta cu ");
+  if (value.startsWith("Reserve your ") && value.includes(" experience and enjoy an unforgettable day")) return value.replace("Reserve your ", "Rezervă ").replace(" experience and enjoy an unforgettable day in Hurghada with Via Blue", " și bucură-te de o zi de neuitat în Hurghada alături de Via Blue");
+  if (value.startsWith("Reserve your ") && value.includes(" experience quickly and securely")) return value.replace("Reserve your ", "Rezervă ").replace(" experience quickly and securely", " rapid și în siguranță");
+  if (value.startsWith("Select an age for Child ")) return value.replace("Select an age for Child ", "Selectează vârsta copilului ");
+  if (value.startsWith("Select an age for Infant ")) return value.replace("Select an age for Infant ", "Selectează vârsta bebelușului ");
   if (value.startsWith("Enter the 6-digit password reset code we sent to ")) return value.replace("Enter the 6-digit password reset code we sent to ", "Introdu codul de resetare din 6 cifre trimis la ");
   return romanianCopy[value] ?? value;
 }
