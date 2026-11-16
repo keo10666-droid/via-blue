@@ -664,6 +664,17 @@ const germanCopy: Record<string, string> = {
   "Minute": "Minute",
   "Hotel → Hotel": "Hotel → Hotel",
   "Optional": "Optional",
+  "Islands & Boat Trips": "Inseln & Bootstouren",
+  "Snorkeling & Diving": "Schnorcheln & Tauchen",
+  "Sea & Water Activities": "Meer- & Wasseraktivitäten",
+  "Dolphin Experiences": "Delfin-Erlebnisse",
+  "Desert Adventures": "Wüstenabenteuer",
+  "Egypt Tours & Excursions": "Ägypten-Touren & Ausflüge",
+  "Family & Attractions": "Familie & Attraktionen",
+  "Hurghada": "Hurghada",
+  "Luxor": "Luxor",
+  "Cairo": "Kairo",
+  "Sharm El Sheikh": "Sharm El Sheikh",
 };
 
 export function germanHomeText(value: string): string {
