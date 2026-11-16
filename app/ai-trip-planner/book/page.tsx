@@ -931,7 +931,7 @@ ${isGerman ? "Via Blue KI-Reiseplaner" : isFrench ? "Planificateur de voyage IA 
             </a>
 
             <p className="font-bold uppercase tracking-wider text-orange-400">
-              {selectedPackage.title}
+              <HomeText en={selectedPackage.title} de={selectedPackage.title} />
             </p>
 
             <h1 className="mt-2 text-4xl font-bold md:text-5xl">
@@ -1757,7 +1757,7 @@ ${isGerman ? "Via Blue KI-Reiseplaner" : isFrench ? "Planificateur de voyage IA 
                 </p>
 
                 <h3 className="mt-2 text-2xl font-bold">
-                  {selectedPackage.title}
+                  <HomeText en={selectedPackage.title} de={selectedPackage.title} />
                 </h3>
 
                 <p className="mt-3 text-sm leading-6 text-blue-100">
@@ -1841,7 +1841,7 @@ ${isGerman ? "Via Blue KI-Reiseplaner" : isFrench ? "Planificateur de voyage IA 
                                 className="rounded-2xl border border-gray-100 bg-slate-50 p-4"
                               >
                                 <p className="font-bold text-gray-900">
-                                  {tour.name}
+                                  {isFrench ? frenchTourCopy(tour.slug, "name", tour.name) : tour.name}
                                 </p>
 
                                 <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-gray-500">
