@@ -13,6 +13,8 @@ import { useCurrency } from "@/app/components/CurrencyProvider";
 import { germanTourCopy } from "@/lib/germanTourCopy";
 import { frenchTourCopy } from "@/lib/frenchTourCopy";
 import { frenchHomeText } from "@/lib/frenchHomeCopy";
+import { romanianHomeText } from "@/lib/romanianHomeCopy";
+import { romanianTourCopy, romanianTourValue } from "@/lib/romanianTourCopy";
 
 const nationalities = [
   "Egyptian",
@@ -143,9 +145,10 @@ export default function BookingPage() {
   const { currency, formatCurrency, rate } = useCurrency();
   const [isGerman, setIsGerman] = useState(false);
   const [isFrench, setIsFrench] = useState(false);
+  const [isRomanian, setIsRomanian] = useState(false);
 
   useEffect(() => {
-    const syncLanguage = () => { const language = window.localStorage.getItem("via-blue-language"); setIsGerman(language === "de"); setIsFrench(language === "fr"); };
+    const syncLanguage = () => { const language = window.localStorage.getItem("via-blue-language"); setIsGerman(language === "de"); setIsFrench(language === "fr"); setIsRomanian(language === "ro"); };
     syncLanguage();
     window.addEventListener("via-blue-language-change", syncLanguage);
     return () => window.removeEventListener("via-blue-language-change", syncLanguage);
@@ -369,7 +372,7 @@ const selectedCairoVehicleOption =
   const applyPromoCode = async () => {
     const code = promoCode.trim().toUpperCase();
     if (!code) {
-      setPromoMessage(isGerman ? "Bitte geben Sie einen Gutscheincode ein." : isFrench ? "Veuillez saisir un code promo." : "Please enter a promo code.");
+      setPromoMessage(isGerman ? "Bitte geben Sie einen Gutscheincode ein." : isFrench ? "Veuillez saisir un code promo." : isRomanian ? "Introdu codul promoțional." : "Please enter a promo code.");
       setPromoMessageType("error");
       return;
     }
@@ -388,7 +391,7 @@ const selectedCairoVehicleOption =
       if (!response.ok || !result.valid || (!hasPercentDiscount && !hasFixedDiscount)) {
         setPromoDiscountPercent(null);
         setPromoFixedAmount(null);
-        setPromoMessage(result.error ? (isFrench ? frenchHomeText(result.error) : result.error) : (isGerman ? "Dieser Gutscheincode ist ungültig." : isFrench ? "Ce code promo n’est pas valide." : "This promo code is not valid."));
+        setPromoMessage(result.error ? (isFrench ? frenchHomeText(result.error) : isRomanian ? romanianHomeText(result.error) : result.error) : (isGerman ? "Dieser Gutscheincode ist ungültig." : isFrench ? "Ce code promo n’est pas valide." : isRomanian ? "Acest cod promoțional nu este valid." : "This promo code is not valid."));
         setPromoMessageType("error");
         return;
       }
@@ -404,7 +407,7 @@ const selectedCairoVehicleOption =
     } catch {
       setPromoDiscountPercent(null);
       setPromoFixedAmount(null);
-      setPromoMessage(isGerman ? "Code konnte nicht geprüft werden. Bitte erneut versuchen." : isFrench ? "Impossible de vérifier le code. Veuillez réessayer." : "Could not check the code. Please try again.");
+      setPromoMessage(isGerman ? "Code konnte nicht geprüft werden. Bitte erneut versuchen." : isFrench ? "Impossible de vérifier le code. Veuillez réessayer." : isRomanian ? "Codul nu a putut fi verificat. Încearcă din nou." : "Could not check the code. Please try again.");
       setPromoMessageType("error");
     } finally {
       setPromoLoading(false);
@@ -493,7 +496,7 @@ const selectedCairoVehicleOption =
 
   const monthTitle =
     calendarMonth.toLocaleDateString(
-      isGerman ? "de-DE" : isFrench ? "fr-FR" : "en-US",
+      isGerman ? "de-DE" : isFrench ? "fr-FR" : isRomanian ? "ro-RO" : "en-US",
       {
         month: "long",
         year: "numeric",
@@ -524,7 +527,7 @@ const selectedCairoVehicleOption =
     );
 
     return d.toLocaleDateString(
-      isGerman ? "de-DE" : isFrench ? "fr-FR" : "en-US",
+      isGerman ? "de-DE" : isFrench ? "fr-FR" : isRomanian ? "ro-RO" : "en-US",
       {
         weekday: "short",
         month: "short",
@@ -638,7 +641,7 @@ const selectedCairoVehicleOption =
 
   const errorText = (msg: string) => (
     <p className="mt-1.5 text-xs font-semibold text-red-600">
-      {isFrench ? frenchHomeText(msg) : msg}
+      {isFrench ? frenchHomeText(msg) : isRomanian ? romanianHomeText(msg) : msg}
     </p>
   );
 
@@ -653,7 +656,7 @@ const selectedCairoVehicleOption =
   const message = `
 NEW BOOKING REQUEST
 
-Tour: ${isFrench ? frenchTourCopy(tour.slug, "name", tour.name) : tour.name}
+Tour: ${isFrench ? frenchTourCopy(tour.slug, "name", tour.name) : isRomanian ? romanianTourCopy(tour.slug, "name", tour.name) : tour.name}
 
 Museum: ${
     (slug === "cairo-over-day" ||
@@ -794,7 +797,7 @@ ${notes.trim() || "-"}
 };
 
   if (!baseTour && !tourOverride.category && catalogLoaded) notFound();
-  if (!baseTour && !tourOverride.category) return <main className="min-h-screen p-8 text-center text-blue-950">{isGerman ? "Ausflugsdetails werden geladen…" : isFrench ? "Chargement des détails de l’excursion…" : "Loading tour details…"}</main>;
+  if (!baseTour && !tourOverride.category) return <main className="min-h-screen p-8 text-center text-blue-950">{isGerman ? "Ausflugsdetails werden geladen…" : isFrench ? "Chargement des détails de l’excursion…" : isRomanian ? "Se încarcă detaliile excursiei…" : "Loading tour details…"}</main>;
   if (tour.available === false) notFound();
 
   return (
@@ -802,11 +805,11 @@ ${notes.trim() || "-"}
       <BookingSuccessModal
         open={showSuccess}
         guestName={name.trim()}
-        bookingName={isGerman ? germanTourCopy(tour.slug, "name", tour.name) : isFrench ? frenchTourCopy(tour.slug, "name", tour.name) : tour.name}
+        bookingName={isGerman ? germanTourCopy(tour.slug, "name", tour.name) : isFrench ? frenchTourCopy(tour.slug, "name", tour.name) : isRomanian ? romanianTourCopy(tour.slug, "name", tour.name) : tour.name}
         email={email.trim()}
         emailSent={confirmationEmailSent}
         backHref="/tours"
-        backLabel={isGerman ? "Zurück zu den Ausflügen" : isFrench ? "Retour aux excursions" : "Back to Tours"}
+        backLabel={isGerman ? "Zurück zu den Ausflügen" : isFrench ? "Retour aux excursions" : isRomanian ? "Înapoi la excursii" : "Back to Tours"}
         onClose={() => setShowSuccess(false)}
       />
       <div className="mx-auto max-w-7xl">
@@ -910,7 +913,7 @@ ${notes.trim() || "-"}
 
                   <input
                     type="text"
-                    placeholder={isGerman ? "Vollständiger Name" : isFrench ? "Saisissez votre nom complet" : "Enter your full name"}
+                    placeholder={isGerman ? "Vollständiger Name" : isFrench ? "Saisissez votre nom complet" : isRomanian ? "Introdu numele complet" : "Enter your full name"}
                     value={name}
                     onChange={(e) =>
                       setName(e.target.value)
@@ -939,7 +942,7 @@ ${notes.trim() || "-"}
 
                   <input
                     type="text"
-                    placeholder={isGerman ? "Nationalität auswählen" : isFrench ? "Choisissez votre nationalité" : "Select your nationality"}
+                    placeholder={isGerman ? "Nationalität auswählen" : isFrench ? "Choisissez votre nationalité" : isRomanian ? "Selectează naționalitatea" : "Select your nationality"}
                     value={nationality}
                     onChange={(e) => {
                       setNationality(
@@ -1010,7 +1013,7 @@ ${notes.trim() || "-"}
                 <div>
 
                   <label className={labelClass}>
-                    {isGerman ? "E-Mail-Adresse (nur Gmail)" : isFrench ? "Adresse e-mail (Gmail uniquement)" : "Email Address (Gmail only)"}{" "}
+                    {isGerman ? "E-Mail-Adresse (nur Gmail)" : isFrench ? "Adresse e-mail (Gmail uniquement)" : isRomanian ? "Adresă de e-mail (doar Gmail)" : "Email Address (Gmail only)"}{" "}
                     <span className="text-red-500">
                       *
                     </span>
@@ -1031,7 +1034,7 @@ ${notes.trim() || "-"}
                     )}
                   />
 
-                  <p className="mt-1.5 text-xs text-slate-500">{isGerman ? "Verwenden Sie eine Gmail-Adresse mit der Endung @gmail.com" : isFrench ? "Utilisez une adresse Gmail se terminant par @gmail.com" : "Use a Gmail address ending in @gmail.com"}</p>
+                  <p className="mt-1.5 text-xs text-slate-500">{isGerman ? "Verwenden Sie eine Gmail-Adresse mit der Endung @gmail.com" : isFrench ? "Utilisez une adresse Gmail se terminant par @gmail.com" : isRomanian ? "Folosește o adresă Gmail care se termină în @gmail.com" : "Use a Gmail address ending in @gmail.com"}</p>
 
                   {(emailTouched || submitAttempted) &&
                     !isEmailValid &&
@@ -1094,7 +1097,7 @@ ${notes.trim() || "-"}
 
                             <input
                               type="text"
-                              placeholder={isGerman ? "Land suchen..." : isFrench ? "Rechercher un pays..." : "Search country..."}
+                              placeholder={isGerman ? "Land suchen..." : isFrench ? "Rechercher un pays..." : isRomanian ? "Caută țara..." : "Search country..."}
                               value={countrySearch}
                               onChange={(e) =>
                                 setCountrySearch(
@@ -1112,7 +1115,7 @@ ${notes.trim() || "-"}
                             {filteredCountryCodes.map(
                               (c) => (
                                 <button
-                                  key={isFrench ? frenchHomeText(c.name) : c.name}
+                                  key={isFrench ? frenchHomeText(c.name) : isRomanian ? romanianHomeText(c.name) : c.name}
                                   type="button"
                                   onMouseDown={(e) =>
                                     e.preventDefault()
@@ -1133,7 +1136,7 @@ ${notes.trim() || "-"}
 
                                   <FlagIcon
                                     iso={c.iso}
-                                    name={isFrench ? frenchHomeText(c.name) : c.name}
+                                    name={isFrench ? frenchHomeText(c.name) : isRomanian ? romanianHomeText(c.name) : c.name}
                                   />
 
                                   <span className="flex-1">
@@ -1157,7 +1160,7 @@ ${notes.trim() || "-"}
 
                     <input
                       type="tel"
-                      placeholder={isGerman ? "Telefonnummer" : isFrench ? "Numéro de téléphone" : "Phone number"}
+                      placeholder={isGerman ? "Telefonnummer" : isFrench ? "Numéro de téléphone" : isRomanian ? "Număr de telefon" : "Phone number"}
                       value={phone}
                       onChange={(e) =>
                         setPhone(
@@ -1222,7 +1225,7 @@ ${notes.trim() || "-"}
                   </label>
                   <input
                     type="text"
-                    placeholder={isGerman ? "Name Ihres Hotels" : isFrench ? "Nom de votre hôtel" : "Your hotel name"}
+                    placeholder={isGerman ? "Name Ihres Hotels" : isFrench ? "Nom de votre hôtel" : isRomanian ? "Numele hotelului tău" : "Your hotel name"}
                     value={hotel}
                     onChange={(e) => setHotel(e.target.value)}
                     className={inputClass(false)}
@@ -1258,7 +1261,7 @@ ${notes.trim() || "-"}
                   </label>
                   <input
                     type="text"
-                    placeholder={isGerman ? "Zimmernummer" : isFrench ? "Numéro de chambre" : "Room number"}
+                    placeholder={isGerman ? "Zimmernummer" : isFrench ? "Numéro de chambre" : isRomanian ? "Numărul camerei" : "Room number"}
                     value={roomNumber}
                     onChange={(e) => setRoomNumber(e.target.value)}
                     className={inputClass(false)}
@@ -1358,7 +1361,7 @@ ${notes.trim() || "-"}
                           ? formatSelectedDate(
                               date
                             )
-                          : (isGerman ? "Wählen Sie Ihr Tourdatum" : isFrench ? "Choisissez la date de votre excursion" : "Select your tour date")}
+                          : (isGerman ? "Wählen Sie Ihr Tourdatum" : isFrench ? "Choisissez la date de votre excursion" : isRomanian ? "Selectează data excursiei" : "Select your tour date")}
                       </p>
 
                       <p className="text-xs text-slate-400">
@@ -1413,7 +1416,7 @@ ${notes.trim() || "-"}
                             ? formatSelectedDate(
                                 date
                               )
-                            : (isGerman ? "Datum auswählen" : isFrench ? "Choisir une date" : "Choose a date")}
+                            : (isGerman ? "Datum auswählen" : isFrench ? "Choisir une date" : isRomanian ? "Alege o dată" : "Choose a date")}
                         </p>
 
                       </div>
@@ -1464,7 +1467,7 @@ ${notes.trim() || "-"}
 
                       <div className="mb-2 grid grid-cols-7">
 
-                        {(isFrench ? ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"] : isGerman ? ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"] : ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]).map((day) => (
+                        {(isRomanian ? ["Du", "Lu", "Ma", "Mi", "Jo", "Vi", "Sâ"] : isFrench ? ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"] : isGerman ? ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"] : ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]).map((day) => (
 
                           <div
                             key={day}
@@ -1598,7 +1601,7 @@ ${notes.trim() || "-"}
 
               {submitAttempted &&
                 !isDateValid &&
-                errorText(isGerman ? "Bitte wählen Sie ein gültiges Tourdatum" : isFrench ? "Veuillez choisir une date d’excursion valide" : "Please select a valid tour date")}
+                errorText(isGerman ? "Bitte wählen Sie ein gültiges Tourdatum" : isFrench ? "Veuillez choisir une date d’excursion valide" : isRomanian ? "Selectează o dată validă pentru excursie" : "Please select a valid tour date")}
 
             </div>
 
@@ -2111,7 +2114,7 @@ ${notes.trim() || "-"}
                         <HomeText en="Vehicle" de="Fahrzeug" />
                       </span>
                       <span className="font-semibold text-slate-800">
-                        {isFrench ? frenchHomeText(selectedVehicleOption.name) : selectedVehicleOption.name}
+                        {isFrench ? frenchHomeText(selectedVehicleOption.name) : isRomanian ? romanianHomeText(selectedVehicleOption.name) : selectedVehicleOption.name}
                       </span>
                     </div>
 
@@ -2151,7 +2154,7 @@ ${notes.trim() || "-"}
                         <HomeText en="Museum" de="Museum" />
                       </span>
                       <span className="font-semibold text-slate-800">
-                        {isFrench ? frenchHomeText(selectedCairoOption?.name || "") : selectedCairoOption?.name}
+                        {isFrench ? frenchHomeText(selectedCairoOption?.name || "") : isRomanian ? romanianHomeText(selectedCairoOption?.name || "") : selectedCairoOption?.name}
                       </span>
                     </div>
 
@@ -2271,8 +2274,8 @@ ${notes.trim() || "-"}
               </div>
               <div className="p-4 sm:p-5">
                 <div className="flex flex-col gap-2 sm:flex-row">
-                  <div className="relative min-w-0 flex-1"><input type="text" value={promoCode} onChange={(e) => { setPromoCode(e.target.value.toUpperCase()); setPromoDiscountPercent(null); setPromoFixedAmount(null); setPromoMessage(""); setPromoMessageType(""); }} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); void applyPromoCode(); } }} placeholder={isGerman ? "Gutscheincode eingeben" : isFrench ? "Saisir le code promo" : "Enter promo code"} maxLength={40} autoComplete="off" className="min-h-[50px] w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm font-bold uppercase tracking-wider text-blue-950 outline-none transition placeholder:font-medium placeholder:normal-case placeholder:tracking-normal placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100" /></div>
-                  <button type="button" onClick={() => void applyPromoCode()} disabled={promoLoading || !promoCode.trim()} className="min-h-[50px] rounded-xl bg-blue-950 px-6 text-sm font-extrabold text-white shadow-sm transition hover:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-50">{promoLoading ? (isGerman ? "Prüfen…" : isFrench ? "Vérification…" : "Checking…") : (isGerman ? "Code anwenden" : isFrench ? "Appliquer le code" : "Apply code")}</button>
+                  <div className="relative min-w-0 flex-1"><input type="text" value={promoCode} onChange={(e) => { setPromoCode(e.target.value.toUpperCase()); setPromoDiscountPercent(null); setPromoFixedAmount(null); setPromoMessage(""); setPromoMessageType(""); }} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); void applyPromoCode(); } }} placeholder={isGerman ? "Gutscheincode eingeben" : isFrench ? "Saisir le code promo" : isRomanian ? "Introdu codul promoțional" : "Enter promo code"} maxLength={40} autoComplete="off" className="min-h-[50px] w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm font-bold uppercase tracking-wider text-blue-950 outline-none transition placeholder:font-medium placeholder:normal-case placeholder:tracking-normal placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100" /></div>
+                  <button type="button" onClick={() => void applyPromoCode()} disabled={promoLoading || !promoCode.trim()} className="min-h-[50px] rounded-xl bg-blue-950 px-6 text-sm font-extrabold text-white shadow-sm transition hover:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-50">{promoLoading ? (isGerman ? "Prüfen…" : isFrench ? "Vérification…" : isRomanian ? "Se verifică…" : "Checking…") : (isGerman ? "Code anwenden" : isFrench ? "Appliquer le code" : isRomanian ? "Aplică codul" : "Apply code")}</button>
                 </div>
                 {promoMessage && <p className={`mt-3 flex items-center gap-2 text-xs font-bold ${promoMessageType === "success" ? "text-emerald-700" : "text-red-600"}`}><span className={`flex h-5 w-5 items-center justify-center rounded-full ${promoMessageType === "success" ? "bg-emerald-100" : "bg-red-100"}`}>{promoMessageType === "success" ? "✓" : "!"}</span>{promoMessage}</p>}
                 {(promoDiscountPercent !== null || promoFixedAmount !== null) && <><div className="mt-4 flex items-center justify-between rounded-xl border border-emerald-100 bg-emerald-50 px-3.5 py-3"><span className="text-sm font-semibold text-emerald-800">{promoCode} · {promoDiscountPercent !== null ? `${promoDiscountPercent}% off` : `${formatCurrency(Number(promoFixedAmount))} off`}</span><button type="button" onClick={() => { setPromoCode(""); setPromoDiscountPercent(null); setPromoFixedAmount(null); setPromoMessage(""); setPromoMessageType(""); }} className="text-xs font-bold text-emerald-800 underline underline-offset-2"><HomeText en="Remove" de="Entfernen" /></button></div><div className="mt-4 space-y-2 border-t border-dashed border-slate-200 pt-4 text-sm"><div className="flex items-center justify-between text-slate-500"><span><HomeText en="Subtotal" de="Zwischensumme" /></span><span>{formatCurrency(totalPrice)}</span></div><div className="flex items-center justify-between font-semibold text-emerald-700"><span>{promoCode} ({promoDiscountPercent !== null ? `${promoDiscountPercent}%` : `${formatCurrency(Number(promoFixedAmount))}`} <HomeText en="off" de="Rabatt" />)</span><span>−{formatCurrency(promoDiscountAmount)}</span></div></div></>}
@@ -2313,7 +2316,7 @@ ${notes.trim() || "-"}
 
               <textarea
                 rows={5}
-                placeholder={isGerman ? "Haben Sie besondere Wünsche?" : isFrench ? "Indiquez-nous vos demandes particulières…" : "Let us know if you have any special requests..."}
+                placeholder={isGerman ? "Haben Sie besondere Wünsche?" : isFrench ? "Indiquez-nous vos demandes particulières…" : isRomanian ? "Spune-ne dacă ai solicitări speciale..." : "Let us know if you have any special requests..."}
                 value={notes}
                 onChange={(e) =>
                   setNotes(
