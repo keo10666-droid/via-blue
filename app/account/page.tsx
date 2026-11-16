@@ -13,13 +13,14 @@ import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import HomeText from "@/app/components/HomeText";
 import { frenchHomeText } from "@/lib/frenchHomeCopy";
+import { romanianHomeText } from "@/lib/romanianHomeCopy";
 
 function accountText(en: string, de: string) {
   try {
     const language = typeof window !== "undefined"
       ? window.localStorage.getItem("via-blue-language")
       : "en";
-    return language === "de" ? de : language === "fr" ? frenchHomeText(en) : en;
+    return language === "de" ? de : language === "fr" ? frenchHomeText(en) : language === "ro" ? romanianHomeText(en) : en;
   } catch {
     return en;
   }
@@ -202,6 +203,29 @@ function translateAccountMessage(message: string) {
       " Please check your email to confirm the new address": " Veuillez consulter votre e-mail pour confirmer la nouvelle adresse",
     };
     return Object.entries(translations).reduce((text, [english, french]) => text.split(english).join(french), message);
+  }
+
+  if (language === "ro") {
+    const translations: Record<string, string> = {
+      "Please select a JPG, PNG, WebP or GIF image": "Selectează o imagine JPG, PNG, WebP sau GIF",
+      "Image size must be 5 MB or smaller": "Imaginea trebuie să aibă maximum 5 MB",
+      "Each memory image must be 5 MB or smaller": "Fiecare fotografie trebuie să aibă maximum 5 MB",
+      "Please choose a photo first": "Alege mai întâi o fotografie",
+      "You have reached the maximum of 25 travel memories": "Ai atins limita de 25 de amintiri din călătorii",
+      "Could not upload your profile photo. Please try again.": "Fotografia de profil nu a putut fi încărcată. Încearcă din nou.",
+      "Your profile could not be saved. Please try again.": "Profilul nu a putut fi salvat. Încearcă din nou.",
+      "Your email address could not be updated. Please try again.": "Adresa de e-mail nu a putut fi actualizată. Încearcă din nou.",
+      "Could not upload this travel memory. Please try again.": "Fotografia nu a putut fi încărcată. Încearcă din nou.",
+      "Could not save this memory. Please try again.": "Amintirea nu a putut fi salvată. Încearcă din nou.",
+      "Your travel memory has been added": "Amintirea ta a fost adăugată",
+      "Are you sure you want to delete this travel memory?": "Sigur dorești să ștergi această amintire?",
+      "Could not delete this memory. Please try again.": "Amintirea nu a putut fi ștearsă. Încearcă din nou.",
+      "Travel memory deleted": "Amintirea a fost ștearsă",
+      "Could not delete this memory": "Amintirea nu a putut fi ștearsă",
+      "Your profile has been saved": "Profilul tău a fost salvat",
+      " Please check your email to confirm the new address": " Verifică e-mailul pentru a confirma noua adresă",
+    };
+    return Object.entries(translations).reduce((text, [english, romanian]) => text.split(english).join(romanian), message);
   }
 
   if (language !== "de") return message;
