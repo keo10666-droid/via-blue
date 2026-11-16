@@ -10,6 +10,8 @@ import BookingSuccessModal from "@/app/components/BookingSuccessModal";
 import HomeText from "@/app/components/HomeText";
 import { useCurrency } from "@/app/components/CurrencyProvider";
 import { frenchHomeText } from "@/lib/frenchHomeCopy";
+import { romanianHomeText } from "@/lib/romanianHomeCopy";
+import { romanianTransferLocation, romanianTransferVehicle } from "@/lib/romanianTransferCopy";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -381,19 +383,20 @@ function CustomDatePicker({
   const [isOpen, setIsOpen] = useState(false);
   const [isGerman, setIsGerman] = useState(false);
   const [isFrench, setIsFrench] = useState(false);
+  const [isRomanian, setIsRomanian] = useState(false);
 
   useEffect(() => {
     try {
       const language = window.localStorage.getItem("via-blue-language");
       setIsGerman(language === "de");
-      setIsFrench(language === "fr");
+      setIsFrench(language === "fr"); setIsRomanian(language === "ro");
     } catch {
       setIsGerman(false);
     }
 
     const handleLanguageChange = (event: Event) => {
-      const next = (event as CustomEvent<"en" | "de" | "fr">).detail;
-      if (next === "en" || next === "de" || next === "fr") { setIsGerman(next === "de"); setIsFrench(next === "fr"); }
+      const next = (event as CustomEvent<"en" | "de" | "fr" | "ro">).detail;
+      if (next === "en" || next === "de" || next === "fr" || next === "ro") { setIsGerman(next === "de"); setIsFrench(next === "fr"); }
     };
 
     window.addEventListener("via-blue-language-change", handleLanguageChange);
@@ -418,7 +421,7 @@ function CustomDatePicker({
   );
 
   const monthName = visibleMonth.toLocaleDateString(
-    isGerman ? "de-DE" : isFrench ? "fr-FR" : "en-US",
+    isGerman ? "de-DE" : isFrench ? "fr-FR" : isRomanian ? "ro-RO" : "en-US",
     {
       month: "long",
       year: "numeric",
@@ -529,8 +532,8 @@ function CustomDatePicker({
               }
             >
               {value
-                ? formatDateForDisplay(value, isGerman ? "de-DE" : isFrench ? "fr-FR" : "en-GB")
-                : isFrench ? "Choisir la date du transfert" : "Select transfer date"}
+                ? formatDateForDisplay(value, isGerman ? "de-DE" : isFrench ? "fr-FR" : isRomanian ? "ro-RO" : "en-GB")
+                : isFrench ? "Choisir la date du transfert" : isRomanian ? "Selectează data transferului" : "Select transfer date"}
             </span>
           </span>
         </div>
@@ -553,7 +556,7 @@ function CustomDatePicker({
               type="button"
               onClick={previousMonth}
               className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-100 bg-white text-slate-500 transition-all hover:border-orange-100 hover:bg-orange-50 hover:text-orange-600"
-              aria-label={isGerman ? "Vorheriger Monat" : isFrench ? "Mois précédent" : "Previous month"}
+              aria-label={isGerman ? "Vorheriger Monat" : isFrench ? "Mois précédent" : isRomanian ? "Luna precedentă" : "Previous month"}
             >
               <ChevronLeftIcon />
             </button>
@@ -570,7 +573,7 @@ function CustomDatePicker({
               type="button"
               onClick={nextMonth}
               className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-100 bg-white text-slate-500 transition-all hover:border-orange-100 hover:bg-orange-50 hover:text-orange-600"
-              aria-label={isGerman ? "Nächster Monat" : isFrench ? "Mois suivant" : "Next month"}
+              aria-label={isGerman ? "Nächster Monat" : isFrench ? "Mois suivant" : isRomanian ? "Luna următoare" : "Next month"}
             >
               <ChevronRightIcon />
             </button>
@@ -579,7 +582,7 @@ function CustomDatePicker({
           <div className="my-4 h-px bg-slate-100" />
 
           <div className="grid grid-cols-7 gap-1.5">
-            {(isFrench ? ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"] : isGerman ? ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"] : ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]).map((day) => (
+            {(isRomanian ? ["Du", "Lu", "Ma", "Mi", "Jo", "Vi", "Sâ"] : isFrench ? ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"] : isGerman ? ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"] : ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]).map((day) => (
               <div
                 key={day}
                 className="py-2 text-center text-[9px] font-bold uppercase tracking-wider text-slate-400"
@@ -673,9 +676,10 @@ function CustomTimePicker({
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isFrench, setIsFrench] = useState(false);
+  const [isRomanian, setIsRomanian] = useState(false);
 
   useEffect(() => {
-    const syncLanguage = () => setIsFrench(window.localStorage.getItem("via-blue-language") === "fr");
+    const syncLanguage = () => { const language = window.localStorage.getItem("via-blue-language"); setIsFrench(language === "fr"); setIsRomanian(language === "ro"); };
     syncLanguage();
     window.addEventListener("via-blue-language-change", syncLanguage);
     return () => window.removeEventListener("via-blue-language-change", syncLanguage);
@@ -798,7 +802,7 @@ function CustomTimePicker({
             >
               {value
                 ? formatTimeForDisplay(value)
-                : isFrench ? "Choisir l’heure de prise en charge" : "Select pickup time"}
+                : isFrench ? "Choisir l’heure de prise en charge" : isRomanian ? "Selectează ora preluării" : "Select pickup time"}
             </span>
           </span>
         </div>
@@ -963,9 +967,10 @@ export default function TransferBookingPage() {
   const { currency, formatCurrency, rate } = useCurrency();
   const [isGerman, setIsGerman] = useState(false);
   const [isFrench, setIsFrench] = useState(false);
+  const [isRomanian, setIsRomanian] = useState(false);
 
   useEffect(() => {
-    const syncLanguage = () => { const language = window.localStorage.getItem("via-blue-language"); setIsGerman(language === "de"); setIsFrench(language === "fr"); };
+    const syncLanguage = () => { const language = window.localStorage.getItem("via-blue-language"); setIsGerman(language === "de"); setIsFrench(language === "fr"); setIsRomanian(language === "ro"); };
     syncLanguage();
     window.addEventListener("via-blue-language-change", syncLanguage);
     return () => window.removeEventListener("via-blue-language-change", syncLanguage);
@@ -1116,7 +1121,7 @@ export default function TransferBookingPage() {
 
   const errorText = (message: string) => (
     <p className="mt-1.5 text-xs font-semibold text-red-600">
-      {isFrench ? frenchHomeText(message) : message}
+      {isFrench ? frenchHomeText(message) : isRomanian ? romanianHomeText(message) : message}
     </p>
   );
 
@@ -1313,11 +1318,11 @@ ${notes.trim() || "-"}
       <BookingSuccessModal
         open={showSuccess}
         guestName={name.trim()}
-        bookingName={isGerman ? transfer?.name || "Privater Transfer" : isFrench ? frenchHomeText(transfer?.name || "Private Transfer") : transfer?.name || "Private Transfer"}
+        bookingName={isGerman ? transfer?.name || "Privater Transfer" : isFrench ? frenchHomeText(transfer?.name || "Private Transfer") : isRomanian ? romanianHomeText(transfer?.name || "Private Transfer") : transfer?.name || "Private Transfer"}
         email={email.trim()}
         emailSent={confirmationEmailSent}
         backHref="/transfers"
-        backLabel={isGerman ? "Zurück zu den Transfers" : isFrench ? "Retour aux transferts" : "Back to Transfers"}
+        backLabel={isGerman ? "Zurück zu den Transfers" : isFrench ? "Retour aux transferts" : isRomanian ? "Înapoi la transferuri" : "Back to Transfers"}
         onClose={() => setShowSuccess(false)}
       />
       {/* HEADER */}
@@ -1683,7 +1688,7 @@ ${notes.trim() || "-"}
 
                     <input
                       type="text"
-                      placeholder={isGerman ? "Vollständiger Name" : isFrench ? "Saisissez votre nom complet" : "Enter your full name"}
+                      placeholder={isGerman ? "Vollständiger Name" : isFrench ? "Saisissez votre nom complet" : isRomanian ? "Introdu numele complet" : "Enter your full name"}
                       value={name}
                       onChange={(e) =>
                         setName(e.target.value)
@@ -1704,7 +1709,7 @@ ${notes.trim() || "-"}
 
                 <div>
                   <label className={labelClass}>
-                    {isGerman ? "E-Mail-Adresse *" : isFrench ? "Adresse e-mail *" : "Email Address *"}
+                    {isGerman ? "E-Mail-Adresse *" : isFrench ? "Adresse e-mail *" : isRomanian ? "Adresă de e-mail *" : "Email Address *"}
                   </label>
 
                   <div className="relative">
@@ -1714,7 +1719,7 @@ ${notes.trim() || "-"}
 
                     <input
                       type="email"
-                      placeholder={isGerman ? "ihre@email.com" : isFrench ? "vous@email.com" : "your@email.com"}
+                      placeholder={isGerman ? "ihre@email.com" : isFrench ? "vous@email.com" : isRomanian ? "nume@email.com" : "your@email.com"}
                       value={email}
                       onChange={(e) =>
                         setEmail(e.target.value)
@@ -1825,7 +1830,7 @@ ${notes.trim() || "-"}
 
                     <input
                       type="tel"
-                      placeholder={isGerman ? "WhatsApp-Nummer" : isFrench ? "Numéro WhatsApp" : "WhatsApp Number"}
+                      placeholder={isGerman ? "WhatsApp-Nummer" : isFrench ? "Numéro WhatsApp" : isRomanian ? "Număr WhatsApp" : "WhatsApp Number"}
                       value={phone}
                       onChange={(e) =>
                         setPhone(e.target.value)
@@ -1879,7 +1884,7 @@ ${notes.trim() || "-"}
 
                       <input
                         type="text"
-                        placeholder={isGerman ? "Name des Abholhotels" : isFrench ? "Nom de l’hôtel de prise en charge" : "Pickup hotel name"}
+                        placeholder={isGerman ? "Name des Abholhotels" : isFrench ? "Nom de l’hôtel de prise en charge" : isRomanian ? "Numele hotelului de preluare" : "Pickup hotel name"}
                         value={fromHotel}
                         onChange={(e) =>
                           setFromHotel(
@@ -1906,7 +1911,7 @@ ${notes.trim() || "-"}
 
                       <input
                         type="text"
-                        placeholder={isGerman ? "Name des Zielhotels" : isFrench ? "Nom de l’hôtel de destination" : "Destination hotel name"}
+                        placeholder={isGerman ? "Name des Zielhotels" : isFrench ? "Nom de l’hôtel de destination" : isRomanian ? "Numele hotelului de destinație" : "Destination hotel name"}
                         value={toHotel}
                         onChange={(e) =>
                           setToHotel(
@@ -1934,7 +1939,7 @@ ${notes.trim() || "-"}
 
                     <input
                       type="text"
-                      placeholder={isGerman ? "Name Ihres Hotels" : isFrench ? "Nom de votre hôtel" : "Your hotel name"}
+                      placeholder={isGerman ? "Name Ihres Hotels" : isFrench ? "Nom de votre hôtel" : isRomanian ? "Numele hotelului tău" : "Your hotel name"}
                       value={hotel}
                       onChange={(e) =>
                         setHotel(e.target.value)
@@ -1962,7 +1967,7 @@ ${notes.trim() || "-"}
 
                   <input
                     type="text"
-                    placeholder={isGerman ? "Zimmernummer" : isFrench ? "Numéro de chambre" : "Room number"}
+                    placeholder={isGerman ? "Zimmernummer" : isFrench ? "Numéro de chambre" : isRomanian ? "Numărul camerei" : "Room number"}
                     value={roomNumber}
                     onChange={(e) =>
                       setRoomNumber(
@@ -1982,7 +1987,7 @@ ${notes.trim() || "-"}
 
                     <input
                       type="text"
-                      placeholder={isGerman ? "Beispiel: MS042" : isFrench ? "Exemple : MS042" : "Example: MS042"}
+                      placeholder={isGerman ? "Beispiel: MS042" : isFrench ? "Exemple : MS042" : isRomanian ? "Exemplu: MS042" : "Example: MS042"}
                       value={flightNumber}
                       onChange={(e) =>
                         setFlightNumber(
@@ -2152,7 +2157,7 @@ ${notes.trim() || "-"}
 
               <textarea
                 rows={4}
-                placeholder={isGerman ? "Besondere Wünsche, Kindersitze, zusätzliches Gepäck oder Sonstiges..." : isFrench ? "Demandes particulières, sièges enfants, bagages supplémentaires ou autres…" : "Special requests, child seats, extra luggage or anything else..."}
+                placeholder={isGerman ? "Besondere Wünsche, Kindersitze, zusätzliches Gepäck oder Sonstiges..." : isFrench ? "Demandes particulières, sièges enfants, bagages supplémentaires ou autres…" : isRomanian ? "Solicitări speciale, scaune pentru copii, bagaje suplimentare sau alte detalii..." : "Special requests, child seats, extra luggage or anything else..."}
                 value={notes}
                 onChange={(e) =>
                   setNotes(e.target.value)
@@ -2350,9 +2355,9 @@ ${notes.trim() || "-"}
                           {date
                             ? formatDateForDisplay(
                                 date,
-                                isGerman ? "de-DE" : isFrench ? "fr-FR" : "en-GB"
+                                isGerman ? "de-DE" : isFrench ? "fr-FR" : isRomanian ? "ro-RO" : "en-GB"
                               )
-                            : isFrench ? "Non sélectionnée" : isGerman ? "Nicht ausgewählt" : "Not selected"}
+                            : isFrench ? "Non sélectionnée" : isGerman ? "Nicht ausgewählt" : isRomanian ? "Neselectat" : "Not selected"}
                         </p>
                       </div>
 
