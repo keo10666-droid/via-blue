@@ -614,7 +614,7 @@ export default function AITripBookingPage() {
         );
 
         alert(
-          (isGerman ? "Dein Konto konnte nicht überprüft werden. Bitte versuche es erneut." : isFrench ? "Impossible de vérifier votre compte. Veuillez réessayer." : "Unable to verify your account. Please try again."),
+          (isGerman ? "Dein Konto konnte nicht überprüft werden. Bitte versuche es erneut." : isFrench ? "Impossible de vérifier votre compte. Veuillez réessayer." : isRomanian ? "Contul nu a putut fi verificat. Încearcă din nou." : "Unable to verify your account. Please try again."),
         );
 
         return;
@@ -647,7 +647,7 @@ export default function AITripBookingPage() {
           );
 
           alert(
-            (isGerman ? "Deine Buchungssitzung konnte nicht gestartet werden. Bitte versuche es erneut." : isFrench ? "Impossible de démarrer votre session de réservation. Veuillez réessayer." : "Unable to start your booking session. Please try again."),
+            (isGerman ? "Deine Buchungssitzung konnte nicht gestartet werden. Bitte versuche es erneut." : isFrench ? "Impossible de démarrer votre session de réservation. Veuillez réessayer." : isRomanian ? "Sesiunea de rezervare nu a putut fi pornită. Încearcă din nou." : "Unable to start your booking session. Please try again."),
           );
 
           return;
@@ -765,7 +765,7 @@ export default function AITripBookingPage() {
         );
 
         alert(
-          (isGerman ? "Deine Buchung konnte nicht gespeichert werden. Bitte versuche es erneut." : isFrench ? "Votre réservation n’a pas pu être enregistrée. Veuillez réessayer." : "Your booking could not be saved. Please try again."),
+          (isGerman ? "Deine Buchung konnte nicht gespeichert werden. Bitte versuche es erneut." : isFrench ? "Votre réservation n’a pas pu être enregistrée. Veuillez réessayer." : isRomanian ? "Rezervarea nu a putut fi salvată. Încearcă din nou." : "Your booking could not be saved. Please try again."),
         );
 
         return;
@@ -807,7 +807,7 @@ export default function AITripBookingPage() {
 
 ${isFrench ? frenchHomeText(selectedPackage.summary) : isRomanian ? romanianHomeText(selectedPackage.summary) : selectedPackage.summary}
 
-📍 ${isGerman ? "Region" : isFrench ? "Région" : "Area"}: ${booking.area}
+📍 ${isGerman ? "Region" : isFrench ? "Région" : isRomanian ? "Zonă" : "Area"}: ${booking.area}
 
 📅 ${isGerman ? "Reisebeginn" : isFrench ? "Date de début du voyage" : isRomanian ? "Data începerii călătoriei" : "Trip Start Date"}: ${date}
 
@@ -849,11 +849,11 @@ ${isFrench ? frenchHomeText(selectedPackage.summary) : isRomanian ? romanianHome
         selectedPackage.remainingBudget,
       )} ${booking.currency}
 
-🎯 ${isGerman ? "Erlebnisse" : isFrench ? "Expériences" : "Experiences"}: ${
+🎯 ${isGerman ? "Erlebnisse" : isFrench ? "Expériences" : isRomanian ? "Experiențe" : "Experiences"}: ${
         selectedPackage.activities
       }
 
-🧒 ${isGerman ? "Alter der Kinder" : isFrench ? "Âge des enfants" : "Children Ages"}:
+🧒 ${isGerman ? "Alter der Kinder" : isFrench ? "Âge des enfants" : isRomanian ? "Vârstele copiilor" : "Children Ages"}:
 
 ${
   childrenAgeValues.filter(Boolean).join(", ") || "-"
@@ -869,7 +869,7 @@ ${itineraryMessage}
 
 ━━━━━━━━━━━━━━━━━━
 
-${isGerman ? "Via Blue KI-Reiseplaner" : isFrench ? "Planificateur de voyage IA Via Blue" : "Via Blue AI Trip Planner"}
+${isGerman ? "Via Blue KI-Reiseplaner" : isFrench ? "Planificateur de voyage IA Via Blue" : isRomanian ? "Planificatorul de călătorie AI Via Blue" : "Via Blue AI Trip Planner"}
 
 ━━━━━━━━━━━━━━━━━━`;
 
