@@ -1,4 +1,5 @@
 const romanianCopy: Record<string, string> = {
+  "Nothing says more about an experience than the people who have already enjoyed it": "Nimic nu spune mai multe despre o experiență decât oamenii care s-au bucurat deja de ea",
   "Discover Hurghada": "Descoperă Hurghada",
   "Your Holiday": "Vacanța ta",
   "Your Adventure": "Aventura ta",
