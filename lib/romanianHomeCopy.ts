@@ -941,6 +941,9 @@ const romanianCopy: Record<string, string> = {
   "Luxor": "Luxor",
   "Cairo": "Cairo",
   "Sharm El Sheikh": "Sharm El Sheikh",
+  "What&apos;s Included": "Ce este inclus",
+  "What&apos;s Not Included": "Ce nu este inclus",
+  "Date": "Data",
 };
 
 export function romanianHomeText(value: string): string {
