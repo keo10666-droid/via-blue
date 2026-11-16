@@ -1109,7 +1109,7 @@ export default function TransferBookingPage() {
 
   const errorText = (message: string) => (
     <p className="mt-1.5 text-xs font-semibold text-red-600">
-      {message}
+      {isFrench ? frenchHomeText(message) : message}
     </p>
   );
 
