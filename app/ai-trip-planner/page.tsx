@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import HomeText from "@/app/components/HomeText";
 import TourText from "@/app/components/TourText";
 import { frenchTourCopy, frenchTourValue } from "@/lib/frenchTourCopy";
+import { frenchHomeText } from "@/lib/frenchHomeCopy";
 import { useCurrency, type CurrencyCode } from "@/app/components/CurrencyProvider";
 
 const areas = [
@@ -875,7 +876,7 @@ export default function AITripPlannerPage() {
                         {pkg.itinerary[0]?.tours[0]?.image ? (
                           <img
                             src={pkg.itinerary[0].tours[0].image}
-                            alt=<HomeText en={pkg.title} de={pkg.title} />
+                            alt={language === "fr" ? frenchHomeText(pkg.title) : pkg.title}
                             className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
                           />
                         ) : (
