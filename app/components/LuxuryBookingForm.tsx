@@ -1253,7 +1253,7 @@ ${notes.trim() || "-"}
                                       />
 
                                       <span className="flex-1 text-sm font-semibold text-slate-700">
-                                        {isFrench ? frenchHomeText(country.name) : country.name}
+                                        {isFrench ? frenchHomeText(country.name) : isRomanian ? romanianHomeText(country.name) : country.name}
                                       </span>
 
                                       <span className="text-xs font-bold text-slate-400">
