@@ -786,6 +786,8 @@ ${notes.trim() || "-"}
       ? error.message
       : isGerman
         ? "Beim Absenden Ihrer Buchung ist ein Fehler aufgetreten."
+        : isFrench
+        ? "Une erreur s’est produite lors de l’envoi de votre réservation."
         : "Something went wrong while submitting your booking"
   );
 }
