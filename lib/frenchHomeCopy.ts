@@ -1096,6 +1096,17 @@ const frenchCopy: Record<string, string> = {
   "One special character": "Un caractère spécial",
   "Password requirements": "Exigences du mot de passe",
   "Passwords match": "Les mots de passe correspondent",
+  "Islands & Boat Trips": "Îles et excursions en bateau",
+  "Snorkeling & Diving": "Snorkeling et plongée",
+  "Sea & Water Activities": "Activités nautiques",
+  "Dolphin Experiences": "Expériences avec les dauphins",
+  "Desert Adventures": "Aventures dans le désert",
+  "Egypt Tours & Excursions": "Circuits et excursions en Égypte",
+  "Family & Attractions": "Famille et attractions",
+  "Hurghada": "Hurghada",
+  "Luxor": "Louxor",
+  "Cairo": "Le Caire",
+  "Sharm El Sheikh": "Charm el-Cheikh",
 };
 
 export function frenchHomeText(value: string): string {
