@@ -401,7 +401,11 @@ const selectedCairoVehicleOption =
       setPromoMessage(
         isGerman
           ? (hasPercentDiscount ? `Gutscheincode angewendet: ${result.discountPercent}% Rabatt.` : `Gutscheincode angewendet: ${formatCurrency(Number(result.discountAmount))} Rabatt.`)
-          : (hasPercentDiscount ? `Code applied — ${result.discountPercent}% discount added.` : `Code applied — ${formatCurrency(Number(result.discountAmount))} off.`)
+          : isFrench
+            ? (hasPercentDiscount ? `Code promo appliqué : ${result.discountPercent}% de réduction.` : `Code promo appliqué : ${formatCurrency(Number(result.discountAmount))} de réduction.`)
+            : isRomanian
+              ? (hasPercentDiscount ? `Cod promoțional aplicat: reducere de ${result.discountPercent}%.` : `Cod promoțional aplicat: reducere de ${formatCurrency(Number(result.discountAmount))}.`)
+              : (hasPercentDiscount ? `Code applied — ${result.discountPercent}% discount added.` : `Code applied — ${formatCurrency(Number(result.discountAmount))} off.`)
       );
       setPromoMessageType("success");
     } catch {
