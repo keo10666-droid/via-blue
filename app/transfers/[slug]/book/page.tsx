@@ -672,6 +672,14 @@ function CustomTimePicker({
   invalid: boolean;
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isFrench, setIsFrench] = useState(false);
+
+  useEffect(() => {
+    const syncLanguage = () => setIsFrench(window.localStorage.getItem("via-blue-language") === "fr");
+    syncLanguage();
+    window.addEventListener("via-blue-language-change", syncLanguage);
+    return () => window.removeEventListener("via-blue-language-change", syncLanguage);
+  }, []);
 
   const getInitialTime = () => {
     if (!value) {
@@ -2344,7 +2352,7 @@ ${notes.trim() || "-"}
                                 date,
                                 isGerman ? "de-DE" : isFrench ? "fr-FR" : "en-GB"
                               )
-                            : isFrench ? "Non sélectionnée" : isFrench ? "Non sélectionné" : "Not selected"}
+                            : isFrench ? "Non sélectionnée" : isGerman ? "Nicht ausgewählt" : "Not selected"}
                         </p>
                       </div>
 
