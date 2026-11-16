@@ -1073,7 +1073,11 @@ const frenchCopy: Record<string, string> = {
   "The Balanced Escape": "L’escapade équilibrée",
   "A thoughtful mix of highly rated experiences, variety and value for your stay.": "Un mélange harmonieux d’expériences très appréciées, de variété et de bon rapport qualité-prix pour votre séjour.",
   "The Signature Experience": "L’expérience signature",
-  "A more premium selection of memorable experiences, while staying within your budget.": "Une sélection plus haut de gamme d’expériences mémorables, tout en respectant votre budget.",
+  "A more premium selection of memorable experiences, while staying within your budget.": "Une sélection plus haut de gamme d’expériences mémorables, tout en respectant votre budget.",,
+  "It's The Experience": "C’est l’expérience qui compte",
+  "Let's talk about": "Parlons de",
+  "We're just a message away": "Nous sommes à un message de vous",
+  "We'll use your details only to respond to your enquiry": "Vos coordonnées seront utilisées uniquement pour répondre à votre demande",
 };
 
 export function frenchHomeText(value: string): string {
