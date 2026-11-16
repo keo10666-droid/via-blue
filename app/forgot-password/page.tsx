@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Eye, EyeOff, ArrowLeft } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { frenchHomeText } from "@/lib/frenchHomeCopy";
+import { romanianHomeText } from "@/lib/romanianHomeCopy";
 
 type Step = "email" | "code" | "password" | "success";
 
@@ -22,20 +23,21 @@ export default function ForgotPasswordPage() {
   const [step, setStep] = useState<Step>("email");
   const [isGerman, setIsGerman] = useState(false);
   const [isFrench, setIsFrench] = useState(false);
+  const [isRomanian, setIsRomanian] = useState(false);
 
   useEffect(() => {
     try { const language = window.localStorage.getItem("via-blue-language");
       setIsGerman(language === "de");
-      setIsFrench(language === "fr"); } catch { /* English fallback */ }
+      setIsFrench(language === "fr"); setIsRomanian(language === "ro"); } catch { /* English fallback */ }
     const handleLanguageChange = (event: Event) => {
-      const next = (event as CustomEvent<"en" | "de" | "fr">).detail;
-      if (next === "en" || next === "de" || next === "fr") { setIsGerman(next === "de"); setIsFrench(next === "fr"); }
+      const next = (event as CustomEvent<"en" | "de" | "fr" | "ro">).detail;
+      if (next === "en" || next === "de" || next === "fr" || next === "ro") { setIsGerman(next === "de"); setIsFrench(next === "fr"); }
     };
     window.addEventListener("via-blue-language-change", handleLanguageChange);
     return () => window.removeEventListener("via-blue-language-change", handleLanguageChange);
   }, []);
 
-  const text = (en: string, de: string) => isGerman ? de : isFrench ? frenchHomeText(en) : en;
+  const text = (en: string, de: string) => isGerman ? de : isFrench ? frenchHomeText(en) : isRomanian ? romanianHomeText(en) : en;
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [password, setPassword] = useState("");
@@ -61,7 +63,7 @@ export default function ForgotPasswordPage() {
     setMessage(
       isGerman
         ? (messages[value] || "Etwas ist schiefgelaufen. Bitte versuche es erneut.")
-        : isFrench ? (frenchHomeText(value) === value ? "Une erreur s’est produite. Veuillez réessayer." : frenchHomeText(value))
+        : isFrench ? (frenchHomeText(value) === value ? "Une erreur s’est produite. Veuillez réessayer." : frenchHomeText(value)) : isRomanian ? (romanianHomeText(value) === value ? "A apărut o eroare. Te rugăm să încerci din nou." : romanianHomeText(value))
         : "Something went wrong. Please try again."
     );
   }
@@ -70,7 +72,7 @@ export default function ForgotPasswordPage() {
     const messages: Record<string, string> = {
       "A verification code has been sent to your email address.": "Ein Bestätigungscode wurde an deine E-Mail-Adresse gesendet."
     };
-    return isGerman ? (messages[value] || value) : isFrench ? frenchHomeText(value) : value;
+    return isGerman ? (messages[value] || value) : isFrench ? frenchHomeText(value) : isRomanian ? romanianHomeText(value) : value;
   }
 
   async function handleSendCode(event: FormEvent<HTMLFormElement>) {
