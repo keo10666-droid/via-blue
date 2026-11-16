@@ -14,7 +14,7 @@ export default function Navbar() {
 
   const [isOpen, setIsOpen] = useState(false);
   const [userName, setUserName] = useState<string | null>(null);
-  const [language, setLanguage] = useState<"en" | "de" | "fr">("en");
+  const [language, setLanguage] = useState<"en" | "de" | "fr" | "ro">("en");
   const [languageMenuOpen, setLanguageMenuOpen] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">("light");
 
@@ -22,7 +22,7 @@ export default function Navbar() {
     setTheme(document.documentElement.classList.contains("dark") ? "dark" : "light");
     try {
       const savedLanguage = window.localStorage.getItem("via-blue-language");
-      if (savedLanguage === "de" || savedLanguage === "en" || savedLanguage === "fr") {
+      if (savedLanguage === "de" || savedLanguage === "en" || savedLanguage === "fr" || savedLanguage === "ro") {
         setLanguage(savedLanguage);
         document.documentElement.lang = savedLanguage;
       }
@@ -38,7 +38,7 @@ export default function Navbar() {
     try { window.localStorage.setItem("via-blue-theme", nextTheme); } catch { /* Current-page toggle remains available. */ }
   }
 
-  function changeLanguage(nextLanguage: "en" | "de" | "fr") {
+  function changeLanguage(nextLanguage: "en" | "de" | "fr" | "ro") {
     setLanguage(nextLanguage);
     setLanguageMenuOpen(false);
     document.documentElement.lang = nextLanguage;
@@ -54,9 +54,12 @@ export default function Navbar() {
     { value: "en" as const, label: "English" },
     { value: "de" as const, label: "Deutsch" },
     { value: "fr" as const, label: "Français" },
+    { value: "ro" as const, label: "Română" },
   ];
 
-  const labels = language === "fr"
+  const labels = language === "ro"
+    ? { Home: "Acasă", Tours: "Excursii", Transfers: "Transferuri", "Luxury Tours": "VIP", "AI Trip Planner": "Planificator AI", "About Us": "Despre noi", Contact: "Contact", Register: "Înregistrare", "Log In": "Autentificare", "Log Out": "Deconectare", New: "Nou", Greeting: "Salut,", "Toggle menu": "Deschide meniul", "Dark mode": "Activează modul întunecat", "Light mode": "Activează modul luminos" }
+    : language === "fr"
     ? {
         Home: "Accueil",
         Tours: "Excursions",
@@ -674,10 +677,10 @@ export default function Navbar() {
       >
         {[
           { href: "/", label: language === "fr" ? "Accueil" : language === "de" ? "Startseite" : "Home", Icon: Home },
-          { href: "/tours", label: language === "fr" ? "Excursions" : language === "de" ? "Ausflüge" : "Tours", Icon: Compass },
-          { href: "/transfers", label: language === "fr" ? "Transferts" : language === "de" ? "Transfer" : "Transfer", Icon: CarFront },
-          { href: "/contact", label: language === "fr" ? "Contact" : language === "de" ? "Kontakt" : "Contact", Icon: MessageCircle },
-          { href: userName ? "/account" : "/login", label: userName ? (language === "fr" ? "Compte" : language === "de" ? "Konto" : "Account") : (language === "fr" ? "Connexion" : "Login"), Icon: UserRound },
+          { href: "/tours", label: language === "ro" ? "Excursii" : language === "fr" ? "Excursions" : language === "de" ? "Ausflüge" : "Tours", Icon: Compass },
+          { href: "/transfers", label: language === "ro" ? "Transferuri" : language === "fr" ? "Transferts" : language === "de" ? "Transfer" : "Transfer", Icon: CarFront },
+          { href: "/contact", label: language === "ro" ? "Contact" : language === "fr" ? "Contact" : language === "de" ? "Kontakt" : "Contact", Icon: MessageCircle },
+          { href: userName ? "/account" : "/login", label: userName ? (language === "ro" ? "Cont" : language === "fr" ? "Compte" : language === "de" ? "Konto" : "Account") : (language === "ro" ? "Autentificare" : language === "fr" ? "Connexion" : "Login"), Icon: UserRound },
         ].map(({ href, label, Icon }) => {
           const active = href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
           return (
