@@ -64,7 +64,7 @@ export default function TourRating({ tourSlug }: { tourSlug: string }) {
 
   if (!summary || summary.count === 0) return null;
 
-  const ariaLabel = language === "ro" ? "Evaluare" : language === "fr"
+  const ariaLabel = language === "ro" ? `${summary.average.toFixed(1)} din 5 stele din ${summary.count} recenzii` : language === "fr"
     ? `${summary.average.toFixed(1)} sur 5 étoiles parmi ${summary.count} avis`
     : language === "de"
       ? `${summary.average.toFixed(1)} von 5 Sternen aus ${summary.count} Bewertungen`
