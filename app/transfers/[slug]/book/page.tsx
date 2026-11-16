@@ -350,7 +350,7 @@ function formatDateForDisplay(dateString: string, locale = "en-GB") {
   });
 }
 
-function formatTimeForDisplay(timeString: string) {
+function formatTimeForDisplay(timeString: string, french = false) {
   if (!timeString) return "";
 
   const [hourString, minute] = timeString.split(":");
@@ -360,6 +360,7 @@ function formatTimeForDisplay(timeString: string) {
     return timeString;
   }
 
+  if (french) return `${String(hour).padStart(2, "0")}:${minute}`;
   const period = hour >= 12 ? "PM" : "AM";
   const displayHour = hour % 12 || 12;
 
@@ -789,7 +790,7 @@ function CustomTimePicker({
             >
               {value
                 ? formatTimeForDisplay(value)
-                : "Select pickup time"}
+                : isFrench ? "Choisir l’heure de prise en charge" : "Select pickup time"}
             </span>
           </span>
         </div>
@@ -2340,9 +2341,10 @@ ${notes.trim() || "-"}
                         <p className="mt-1 text-sm font-bold text-blue-950">
                           {date
                             ? formatDateForDisplay(
-                                date
+                                date,
+                                isGerman ? "de-DE" : isFrench ? "fr-FR" : "en-GB"
                               )
-                            : "Not selected"}
+                            : isFrench ? "Non sélectionnée" : isFrench ? "Non sélectionné" : "Not selected"}
                         </p>
                       </div>
 
@@ -2354,7 +2356,8 @@ ${notes.trim() || "-"}
                         <p className="mt-1 text-sm font-bold text-blue-950">
                           {time
                             ? formatTimeForDisplay(
-                                time
+                                time,
+                                isFrench
                               )
                             : "Not selected"}
                         </p>
