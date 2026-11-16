@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import HomeText from "@/app/components/HomeText";
+import TourText from "@/app/components/TourText";
+import { frenchTourValue } from "@/lib/frenchTourCopy";
 import { useCurrency, type CurrencyCode } from "@/app/components/CurrencyProvider";
 
 const areas = [
@@ -873,7 +875,7 @@ export default function AITripPlannerPage() {
                         {pkg.itinerary[0]?.tours[0]?.image ? (
                           <img
                             src={pkg.itinerary[0].tours[0].image}
-                            alt={pkg.title}
+                            alt=<HomeText en={pkg.title} de={pkg.title} />
                             className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
                           />
                         ) : (
@@ -896,7 +898,7 @@ export default function AITripPlannerPage() {
 
                         <div className="absolute bottom-5 left-5 right-5">
                           <h3 className="text-2xl font-bold text-white">
-                            {pkg.title}
+                            <HomeText en={pkg.title} de={pkg.title} />
                           </h3>
 
                           <p className="mt-1 text-sm text-blue-100">
@@ -908,7 +910,7 @@ export default function AITripPlannerPage() {
 
                       <div className="p-6">
                         <p className="min-h-[72px] text-sm leading-6 text-gray-500">
-                          {pkg.summary}
+                          <HomeText en={pkg.summary} de={pkg.summary} />
                         </p>
 
                         <div className="mt-6 flex items-end justify-between border-b border-gray-100 pb-5">
@@ -954,13 +956,13 @@ export default function AITripPlannerPage() {
                                       className="rounded-xl bg-slate-50 p-3"
                                     >
                                       <p className="text-sm font-bold text-blue-950">
-                                        {tour.name}
+                                        <TourText slug={tour.slug} value={tour.name} field="name" />
                                       </p>
 
                                       <div className="mt-1 flex flex-wrap items-center gap-3 text-[11px] font-medium text-gray-400">
                                         <span className="flex items-center gap-1">
                                           <ClockIcon className="h-3.5 w-3.5" />
-                                          {tour.duration}
+                                          {language === "fr" ? frenchTourValue(tour.duration) : tour.duration}
                                         </span>
                                       </div>
 
@@ -971,7 +973,7 @@ export default function AITripPlannerPage() {
                                         <select
                                           key={`${pkg.id}-${tour.slug}`}
                                           defaultValue=""
-                                          aria-label={language === "de" ? `Erlebnis ersetzen: ${tour.name}` : language === "fr" ? `Remplacer l’expérience : ${tour.name}` : `Replace experience: ${tour.name}`}
+                                          aria-label={language === "de" ? `Erlebnis ersetzen: $<TourText slug={tour.slug} value={tour.name} field="name" />` : language === "fr" ? `Remplacer l’expérience : $<TourText slug={tour.slug} value={tour.name} field="name" />` : `Replace experience: $<TourText slug={tour.slug} value={tour.name} field="name" />`}
                                           onChange={(event) => {
                                             if (event.target.value) {
                                               replacePackageTour(
@@ -1047,7 +1049,7 @@ export default function AITripPlannerPage() {
                       </p>
 
                       <p className="mt-1 text-lg font-bold">
-                        {selectedPackage.title}
+                        <HomeText en={selectedPackage.title} de={selectedPackage.title} />
                       </p>
 
                       <p className="mt-1 text-sm text-blue-200">
