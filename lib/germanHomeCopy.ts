@@ -654,6 +654,11 @@ const germanCopy: Record<string, string> = {
   "Hotel delivery": "Lieferung zum Hotel",
   "Your order details will be sent securely to Via Blue for confirmation": "Ihre Bestelldaten werden sicher zur Bestätigung an Via Blue gesendet",
   "Network availability and package activation are subject to confirmation": "Die Netzverfügbarkeit und Aktivierung des Pakets müssen noch bestätigt werden"
+  "Private Transfers": "Private Transfers",
+  "Fair": "Faire",
+  "Euro": "Euro",
+  "Budget:": "Budget:",
+  "Service": "Service",
 };
 
 export function germanHomeText(value: string): string {
