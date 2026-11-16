@@ -333,5 +333,5 @@ export function germanTourValue(value: string): string {
     "Mask and fins": "Maske und Flossen",
   };
   if (exact[value]) return exact[value];
-  return value;
+  return germanHomeText(value);
 }
