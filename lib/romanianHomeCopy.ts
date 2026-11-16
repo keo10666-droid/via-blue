@@ -560,7 +560,6 @@ const romanianCopy: Record<string, string> = {
   "Experience More": "Trăiește mai mult",
   "Looking for something more personalized? Our private experiences can be arranged around your preferences and schedule": "Îți dorești ceva mai personalizat? Experiențele noastre private pot fi organizate în funcție de preferințele și programul tău",
   "Reserve This Experience": "Rezervă această experiență",
-  "Reserve Your Experience": "Rezervă-ți experiența",
   "1–3 Hours": "1–3 ore",
   "3 Hours": "3 ore",
   "Full Day": "O zi întreagă",
