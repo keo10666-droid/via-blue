@@ -1356,7 +1356,7 @@ ${notes.trim() || "-"}
                           ? formatSelectedDate(
                               date
                             )
-                          : (isGerman ? "Wählen Sie Ihr Tourdatum" : "Select your tour date")}
+                          : (isGerman ? "Wählen Sie Ihr Tourdatum" : isFrench ? "Choisissez la date de votre excursion" : "Select your tour date")}
                       </p>
 
                       <p className="text-xs text-slate-400">
@@ -1411,7 +1411,7 @@ ${notes.trim() || "-"}
                             ? formatSelectedDate(
                                 date
                               )
-                            : (isGerman ? "Datum auswählen" : "Choose a date")}
+                            : (isGerman ? "Datum auswählen" : isFrench ? "Choisir une date" : "Choose a date")}
                         </p>
 
                       </div>
@@ -1925,20 +1925,20 @@ ${notes.trim() || "-"}
                         >
 
                           <option value="">
-                            {isGerman ? `Alter von Kind ${index + 1} auswählen` : `Select Child ${index + 1} Age`}
+                            {isGerman ? `Alter von Kind ${index + 1} auswählen` : isFrench ? `Choisir l’âge de l’enfant ${index + 1}` : `Select Child ${index + 1} Age`}
                           </option>
 
-                          <option value="5">{isGerman ? "5 Jahre" : "5 years"}</option>
+                          <option value="5">{isGerman ? "5 Jahre" : isFrench ? "5 ans" : "5 years"}</option>
 
-                          <option value="6">{isGerman ? "6 Jahre" : "6 years"}</option>
+                          <option value="6">{isGerman ? "6 Jahre" : isFrench ? "6 ans" : "6 years"}</option>
 
-                          <option value="7">{isGerman ? "7 Jahre" : "7 years"}</option>
+                          <option value="7">{isGerman ? "7 Jahre" : isFrench ? "7 ans" : "7 years"}</option>
 
-                          <option value="8">{isGerman ? "8 Jahre" : "8 years"}</option>
+                          <option value="8">{isGerman ? "8 Jahre" : isFrench ? "8 ans" : "8 years"}</option>
 
-                          <option value="9">{isGerman ? "9 Jahre" : "9 years"}</option>
+                          <option value="9">{isGerman ? "9 Jahre" : isFrench ? "9 ans" : "9 years"}</option>
 
-                          <option value="10">{isGerman ? "10 Jahre" : "10 years"}</option>
+                          <option value="10">{isGerman ? "10 Jahre" : isFrench ? "10 ans" : "10 years"}</option>
 
                         </select>
 
@@ -1947,7 +1947,7 @@ ${notes.trim() || "-"}
                             index
                           ] &&
                           errorText(
-                            isGerman ? `Bitte wählen Sie das Alter für Kind ${index + 1}` : `Please select an age for Child ${index + 1}`
+                            isGerman ? `Bitte wählen Sie das Alter für Kind ${index + 1}` : isFrench ? `Veuillez choisir l’âge de l’enfant ${index + 1}` : `Please select an age for Child ${index + 1}`
                           )}
 
                       </div>
@@ -2007,16 +2007,16 @@ ${notes.trim() || "-"}
                         >
 
                           <option value="">
-                            {isGerman ? `Alter von Baby ${index + 1} auswählen` : `Select Infant ${index + 1} Age`}
+                            {isGerman ? `Alter von Baby ${index + 1} auswählen` : isFrench ? `Choisir l’âge du bébé ${index + 1}` : `Select Infant ${index + 1} Age`}
                           </option>
 
-                          <option value="1">{isGerman ? "1 Jahr" : "1 year"}</option>
+                          <option value="1">{isGerman ? "1 Jahr" : isFrench ? "1 an" : "1 year"}</option>
 
-                          <option value="2">{isGerman ? "2 Jahre" : "2 years"}</option>
+                          <option value="2">{isGerman ? "2 Jahre" : isFrench ? "2 ans" : "2 years"}</option>
 
-                          <option value="3">{isGerman ? "3 Jahre" : "3 years"}</option>
+                          <option value="3">{isGerman ? "3 Jahre" : isFrench ? "3 ans" : "3 years"}</option>
 
-                          <option value="4">{isGerman ? "4 Jahre" : "4 years"}</option>
+                          <option value="4">{isGerman ? "4 Jahre" : isFrench ? "4 ans" : "4 years"}</option>
 
                         </select>
 
@@ -2278,7 +2278,7 @@ ${notes.trim() || "-"}
               <div className="p-4 sm:p-5">
                 <div className="flex flex-col gap-2 sm:flex-row">
                   <div className="relative min-w-0 flex-1"><input type="text" value={promoCode} onChange={(e) => { setPromoCode(e.target.value.toUpperCase()); setPromoDiscountPercent(null); setPromoFixedAmount(null); setPromoMessage(""); setPromoMessageType(""); }} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); void applyPromoCode(); } }} placeholder={isGerman ? "Gutscheincode eingeben" : isFrench ? "Saisir le code promo" : "Enter promo code"} maxLength={40} autoComplete="off" className="min-h-[50px] w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm font-bold uppercase tracking-wider text-blue-950 outline-none transition placeholder:font-medium placeholder:normal-case placeholder:tracking-normal placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100" /></div>
-                  <button type="button" onClick={() => void applyPromoCode()} disabled={promoLoading || !promoCode.trim()} className="min-h-[50px] rounded-xl bg-blue-950 px-6 text-sm font-extrabold text-white shadow-sm transition hover:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-50">{promoLoading ? (isGerman ? "Prüfen…" : "Checking…") : (isGerman ? "Code anwenden" : "Apply code")}</button>
+                  <button type="button" onClick={() => void applyPromoCode()} disabled={promoLoading || !promoCode.trim()} className="min-h-[50px] rounded-xl bg-blue-950 px-6 text-sm font-extrabold text-white shadow-sm transition hover:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-50">{promoLoading ? (isGerman ? "Prüfen…" : isFrench ? "Vérification…" : "Checking…") : (isGerman ? "Code anwenden" : isFrench ? "Appliquer le code" : "Apply code")}</button>
                 </div>
                 {promoMessage && <p className={`mt-3 flex items-center gap-2 text-xs font-bold ${promoMessageType === "success" ? "text-emerald-700" : "text-red-600"}`}><span className={`flex h-5 w-5 items-center justify-center rounded-full ${promoMessageType === "success" ? "bg-emerald-100" : "bg-red-100"}`}>{promoMessageType === "success" ? "✓" : "!"}</span>{promoMessage}</p>}
                 {(promoDiscountPercent !== null || promoFixedAmount !== null) && <><div className="mt-4 flex items-center justify-between rounded-xl border border-emerald-100 bg-emerald-50 px-3.5 py-3"><span className="text-sm font-semibold text-emerald-800">{promoCode} · {promoDiscountPercent !== null ? `${promoDiscountPercent}% off` : `${formatCurrency(Number(promoFixedAmount))} off`}</span><button type="button" onClick={() => { setPromoCode(""); setPromoDiscountPercent(null); setPromoFixedAmount(null); setPromoMessage(""); setPromoMessageType(""); }} className="text-xs font-bold text-emerald-800 underline underline-offset-2"><HomeText en="Remove" de="Entfernen" /></button></div><div className="mt-4 space-y-2 border-t border-dashed border-slate-200 pt-4 text-sm"><div className="flex items-center justify-between text-slate-500"><span><HomeText en="Subtotal" de="Zwischensumme" /></span><span>{formatCurrency(totalPrice)}</span></div><div className="flex items-center justify-between font-semibold text-emerald-700"><span>{promoCode} ({promoDiscountPercent !== null ? `${promoDiscountPercent}%` : `${formatCurrency(Number(promoFixedAmount))}`} <HomeText en="off" de="Rabatt" />)</span><span>−{formatCurrency(promoDiscountAmount)}</span></div></div></>}
