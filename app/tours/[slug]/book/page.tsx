@@ -2111,7 +2111,7 @@ ${notes.trim() || "-"}
                         <HomeText en="Vehicle" de="Fahrzeug" />
                       </span>
                       <span className="font-semibold text-slate-800">
-                        {selectedVehicleOption.name}
+                        {isFrench ? frenchHomeText(selectedVehicleOption.name) : selectedVehicleOption.name}
                       </span>
                     </div>
 
@@ -2151,7 +2151,7 @@ ${notes.trim() || "-"}
                         <HomeText en="Museum" de="Museum" />
                       </span>
                       <span className="font-semibold text-slate-800">
-                        {selectedCairoOption?.name}
+                        {isFrench ? frenchHomeText(selectedCairoOption?.name || "") : selectedCairoOption?.name}
                       </span>
                     </div>
 
