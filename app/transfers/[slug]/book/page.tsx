@@ -1307,7 +1307,9 @@ ${notes.trim() || "-"}
         ? "Beim Absenden Ihrer Transferbuchung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
         : isFrench
         ? "Une erreur s’est produite lors de l’envoi de votre réservation de transfert. Veuillez réessayer."
-        : "Something went wrong while submitting your transfer booking. Please try again"
+        : isRomanian
+          ? "A apărut o eroare la trimiterea rezervării transferului. Te rugăm să încerci din nou."
+          : "Something went wrong while submitting your transfer booking. Please try again"
     );
   }
 };
