@@ -794,8 +794,10 @@ ${notes.trim() || "-"}
       : isGerman
         ? "Beim Absenden Ihrer Buchung ist ein Fehler aufgetreten."
         : isFrench
-        ? "Une erreur s’est produite lors de l’envoi de votre réservation."
-        : "Something went wrong while submitting your booking"
+          ? "Une erreur s’est produite lors de l’envoi de votre réservation."
+          : isRomanian
+            ? "A apărut o eroare la trimiterea rezervării."
+            : "Something went wrong while submitting your booking"
   );
 }
 };
