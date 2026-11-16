@@ -2019,7 +2019,7 @@ ${notes.trim() || "-"}
                             index
                           ] &&
                           errorText(
-                            isGerman ? `Bitte wählen Sie das Alter für Baby ${index + 1}` : `Please select an age for Infant ${index + 1}`
+                            isGerman ? `Bitte wählen Sie das Alter für Baby ${index + 1}` : isFrench ? `Veuillez choisir l’âge du bébé ${index + 1}` : `Please select an age for Infant ${index + 1}`
                           )}
 
                       </div>
