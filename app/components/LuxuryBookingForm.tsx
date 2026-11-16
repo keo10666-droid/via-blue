@@ -1989,7 +1989,7 @@ ${notes.trim() || "-"}
                           <div className="mt-3 flex flex-wrap gap-2">
                             {selectedIslands.map((id) => (
                               <span key={id} className="rounded-full border border-white/15 bg-white/10 px-2.5 py-1 text-[10px] font-semibold text-slate-100">
-                                {isFrench ? frenchHomeText(({ paradise: "Paradise", orange: "Orange Bay", hula: "Hula Hula", magaweesh: "Magawish", amwaj: "Amwaj", eden: "Eden", ouzeria: "Ouzeria", mahmya: "Mahmya" } as Record<string, string>)[id]) : ({ paradise: "Paradise", orange: "Orange Bay", hula: "Hula Hula", magaweesh: "Magawish", amwaj: "Amwaj", eden: "Eden", ouzeria: "Ouzeria", mahmya: "Mahmya" } as Record<string, string>)[id]}
+                                {isFrench ? frenchHomeText(({ paradise: "Paradise", orange: "Orange Bay", hula: "Hula Hula", magaweesh: "Magawish", amwaj: "Amwaj", eden: "Eden", ouzeria: "Ouzeria", mahmya: "Mahmya" } as Record<string, string>)[id]) : isRomanian ? romanianHomeText(({ paradise: "Paradise", orange: "Orange Bay", hula: "Hula Hula", magaweesh: "Magawish", amwaj: "Amwaj", eden: "Eden", ouzeria: "Ouzeria", mahmya: "Mahmya" } as Record<string, string>)[id]) : ({ paradise: "Paradise", orange: "Orange Bay", hula: "Hula Hula", magaweesh: "Magawish", amwaj: "Amwaj", eden: "Eden", ouzeria: "Ouzeria", mahmya: "Mahmya" } as Record<string, string>)[id]}
                               </span>
                             ))}
                           </div>
@@ -2039,7 +2039,7 @@ ${notes.trim() || "-"}
 
                   <textarea
                     rows={5}
-                    placeholder={isGerman ? "Teilen Sie uns besondere Wünsche, Vorlieben oder wichtige Details mit..." : isFrench ? "Indiquez vos demandes particulières, préférences ou toute information importante..." : "Tell us any special requests, preferences, or important details..."}
+                    placeholder={isGerman ? "Teilen Sie uns besondere Wünsche, Vorlieben oder wichtige Details mit..." : isFrench ? "Indiquez vos demandes particulières, préférences ou toute information importante..." : isRomanian ? "Menționează solicitările speciale, preferințele sau orice detalii importante..." : "Tell us any special requests, preferences, or important details..."}
                     value={notes}
                     onChange={(e) =>
                       setNotes(e.target.value)
