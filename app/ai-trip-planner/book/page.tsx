@@ -570,7 +570,7 @@ export default function AITripBookingPage() {
   );
 
   const formatPrice = (value: number) => {
-    return new Intl.NumberFormat("en-US", {
+    return new Intl.NumberFormat(isGerman ? "de-DE" : isFrench ? "fr-FR" : "en-US", {
       minimumFractionDigits: 0,
       maximumFractionDigits: 2,
     }).format(value);
@@ -784,7 +784,7 @@ export default function AITripBookingPage() {
             const tours = day.tours
               .map(
                 (tour) =>
-                  `• ${tour.name} (${tour.duration})`,
+                  `• ${isFrench ? frenchTourCopy(tour.slug, "name", tour.name) : tour.name} (${isFrench ? frenchTourValue(tour.duration) : tour.duration})`,
               )
               .join("\n");
 
@@ -794,7 +794,7 @@ export default function AITripBookingPage() {
 
       const message = `🌴 ${isGerman ? "NEUE KI-REISEPAKETBUCHUNG" : isFrench ? "NOUVELLE RÉSERVATION DE VOYAGE IA" : "NEW AI TRIP PACKAGE BOOKING"}
 
-🤖 ${isGerman ? "Buchungsquelle" : isFrench ? "Source de réservation" : "Booking Source"}: AI Trip Planner
+🤖 ${isGerman ? "Buchungsquelle" : isFrench ? "Source de réservation" : "Booking Source"}: ${isGerman ? "KI-Reiseplaner" : isFrench ? "Planificateur de voyage IA" : "AI Trip Planner"}
 
 📦 ${isGerman ? "Paket" : isFrench ? "Forfait" : "Package"}: ${isFrench ? frenchHomeText(selectedPackage.title) : selectedPackage.title}
 
