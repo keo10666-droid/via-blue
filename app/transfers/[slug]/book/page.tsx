@@ -578,15 +578,7 @@ function CustomDatePicker({
           <div className="my-4 h-px bg-slate-100" />
 
           <div className="grid grid-cols-7 gap-1.5">
-            {[
-              "Sun",
-              "Mon",
-              "Tue",
-              "Wed",
-              "Thu",
-              "Fri",
-              "Sat",
-            ].map((day) => (
+            {(isFrench ? ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"] : isGerman ? ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"] : ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]).map((day) => (
               <div
                 key={day}
                 className="py-2 text-center text-[9px] font-bold uppercase tracking-wider text-slate-400"
@@ -1302,6 +1294,8 @@ ${notes.trim() || "-"}
     alert(
       isGerman
         ? "Beim Absenden Ihrer Transferbuchung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
+        : isFrench
+        ? "Une erreur s’est produite lors de l’envoi de votre réservation de transfert. Veuillez réessayer."
         : "Something went wrong while submitting your transfer booking. Please try again"
     );
   }
@@ -1672,7 +1666,7 @@ ${notes.trim() || "-"}
               <div className="grid gap-4 md:grid-cols-2">
                 <div>
                   <label className={labelClass}>
-                    Full Name *
+                    <HomeText en="Full Name *" de="Vollständiger Name *" />
                   </label>
 
                   <div className="relative">
@@ -1868,7 +1862,7 @@ ${notes.trim() || "-"}
                 <div className="grid gap-4 md:grid-cols-2">
                   <div>
                     <label className={labelClass}>
-                      From Hotel *
+                      <HomeText en="From Hotel *" de="Abholhotel *" />
                     </label>
 
                     <div className="relative">
@@ -1895,7 +1889,7 @@ ${notes.trim() || "-"}
 
                   <div>
                     <label className={labelClass}>
-                      To Hotel *
+                      <HomeText en="To Hotel *" de="Zielhotel *" />
                     </label>
 
                     <div className="relative">
@@ -1923,7 +1917,7 @@ ${notes.trim() || "-"}
               ) : (
                 <div>
                   <label className={labelClass}>
-                    Hotel Name *
+                    <HomeText en="Hotel Name *" de="Hotelname *" />
                   </label>
 
                   <div className="relative">
