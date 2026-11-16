@@ -5,6 +5,8 @@ import HomeText from "@/app/components/HomeText";
 import TourText from "@/app/components/TourText";
 import { frenchTourCopy, frenchTourValue } from "@/lib/frenchTourCopy";
 import { frenchHomeText } from "@/lib/frenchHomeCopy";
+import { romanianHomeText } from "@/lib/romanianHomeCopy";
+import { romanianTourCopy, romanianTourValue } from "@/lib/romanianTourCopy";
 import { useCurrency, type CurrencyCode } from "@/app/components/CurrencyProvider";
 
 const areas = [
@@ -249,20 +251,20 @@ function ClockIcon({ className = "h-4 w-4" }: { className?: string }) {
 export default function AITripPlannerPage() {
   const { currency, setCurrency, rate, rates, convertFromEur } = useCurrency();
   const [step, setStep] = useState(1);
-  const [language, setLanguage] = useState<"en" | "de" | "fr">("en");
+  const [language, setLanguage] = useState<"en" | "de" | "fr" | "ro">("en");
   const processingSectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const syncLanguage = (event?: Event) => {
-      const requestedLanguage = (event as CustomEvent<"en" | "de" | "fr"> | undefined)?.detail;
-      if (requestedLanguage === "en" || requestedLanguage === "de" || requestedLanguage === "fr") {
+      const requestedLanguage = (event as CustomEvent<"en" | "de" | "fr" | "ro"> | undefined)?.detail;
+      if (requestedLanguage === "en" || requestedLanguage === "de" || requestedLanguage === "fr" || requestedLanguage === "ro") {
         setLanguage(requestedLanguage);
         return;
       }
 
       try {
         const savedLanguage = window.localStorage.getItem("via-blue-language");
-        setLanguage(savedLanguage === "de" || savedLanguage === "fr" ? savedLanguage : "en");
+        setLanguage(savedLanguage === "de" || savedLanguage === "fr" || savedLanguage === "ro" ? savedLanguage : "en");
       } catch {
         setLanguage("en");
       }
@@ -429,7 +431,7 @@ export default function AITripPlannerPage() {
       console.error("AI Trip Planner:", err);
 
       setError(
-        localStorage.getItem("via-blue-language") === "de" ? "Dein Reiseplan konnte nicht erstellt werden. Bitte versuche es erneut." : localStorage.getItem("via-blue-language") === "fr" ? "Impossible de créer votre itinéraire. Veuillez réessayer." : "Something went wrong while creating your trip. Please try again."
+        localStorage.getItem("via-blue-language") === "de" ? "Dein Reiseplan konnte nicht erstellt werden. Bitte versuche es erneut." : localStorage.getItem("via-blue-language") === "fr" ? "Impossible de créer votre itinéraire. Veuillez réessayer." : localStorage.getItem("via-blue-language") === "ro" ? "Planul de călătorie nu a putut fi creat. Încearcă din nou." : "Something went wrong while creating your trip. Please try again."
       );
 
       setStep(6);
@@ -554,7 +556,9 @@ export default function AITripPlannerPage() {
                     ? ["Reisende", "Reiseziel", "Dauer", "Budget", "Erlebnisse"]
                     : language === "fr"
                     ? ["Voyageurs", "Destination", "Durée", "Budget", "Expériences"]
-                    : ["Travelers", "Location", "Duration", "Budget", "Experiences"];
+                    : language === "ro"
+                      ? ["Călători", "Destinație", "Durată", "Buget", "Experiențe"]
+                      : ["Travelers", "Location", "Duration", "Budget", "Experiences"];
 
                   const active = step === item;
                   const completed = step > item;
@@ -876,7 +880,7 @@ export default function AITripPlannerPage() {
                         {pkg.itinerary[0]?.tours[0]?.image ? (
                           <img
                             src={pkg.itinerary[0].tours[0].image}
-                            alt={language === "fr" ? frenchHomeText(pkg.title) : pkg.title}
+                            alt={language === "fr" ? frenchHomeText(pkg.title) : language === "ro" ? romanianHomeText(pkg.title) : pkg.title}
                             className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
                           />
                         ) : (
@@ -963,7 +967,7 @@ export default function AITripPlannerPage() {
                                       <div className="mt-1 flex flex-wrap items-center gap-3 text-[11px] font-medium text-gray-400">
                                         <span className="flex items-center gap-1">
                                           <ClockIcon className="h-3.5 w-3.5" />
-                                          {language === "fr" ? frenchTourValue(tour.duration) : tour.duration}
+                                          {language === "fr" ? frenchTourValue(tour.duration) : language === "ro" ? romanianTourValue(tour.duration) : tour.duration}
                                         </span>
                                       </div>
 
@@ -974,7 +978,7 @@ export default function AITripPlannerPage() {
                                         <select
                                           key={`${pkg.id}-${tour.slug}`}
                                           defaultValue=""
-                                          aria-label={language === "de" ? `Erlebnis ersetzen: ${tour.name}` : language === "fr" ? `Remplacer l’expérience : ${frenchTourCopy(tour.slug, "name", tour.name)}` : `Replace experience: ${tour.name}`}
+                                          aria-label={language === "de" ? `Erlebnis ersetzen: ${tour.name}` : language === "fr" ? `Remplacer l’expérience : ${frenchTourCopy(tour.slug, "name", tour.name)}` : language === "ro" ? `Înlocuiește experiența: ${romanianTourCopy(tour.slug, "name", tour.name)}` : `Replace experience: ${tour.name}`}
                                           onChange={(event) => {
                                             if (event.target.value) {
                                               replacePackageTour(
@@ -1378,7 +1382,7 @@ export default function AITripPlannerPage() {
                         min="0"
                         value={budget}
                         onChange={(e) => setBudget(e.target.value)}
-                        placeholder={language === "de" ? "Betrag eingeben" : language === "fr" ? "Saisir le montant" : "Enter amount"}
+                        placeholder={language === "de" ? "Betrag eingeben" : language === "fr" ? "Saisir le montant" : language === "ro" ? "Introdu suma" : "Enter amount"}
                         className="h-16 w-full rounded-2xl border border-gray-200 bg-white pl-12 pr-5 text-xl font-bold text-blue-950 outline-none transition placeholder:text-base placeholder:font-normal placeholder:text-gray-300 focus:border-blue-950 focus:ring-4 focus:ring-blue-950/5"
                       />
                     </div>
