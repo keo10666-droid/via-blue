@@ -1,4 +1,5 @@
 const frenchCopy: Record<string, string> = {
+
   "Your full name": "Votre nom complet",
   "At least 6 characters": "Au moins 6 caractères",
   "Create a strong password": "Créer un mot de passe sécurisé",
