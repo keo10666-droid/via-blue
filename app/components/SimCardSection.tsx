@@ -91,7 +91,7 @@ export default function SimCardSection() {
         body: JSON.stringify({ ...form, whatsapp: whatsappCountryCode + form.whatsapp.replace(/^0+/, "").replace(/[\s()-]/g, ""), network: selectedNetwork.id, packageId: selectedPackage.id, delivery, currency }),
       });
       const result = await response.json();
-      if (!response.ok || !result.success) { setOrderError(result.error || (isGerman ? "Ihre Bestellung konnte nicht gesendet werden. Bitte versuchen Sie es erneut." : isFrench ? "Impossible d’envoyer votre commande. Veuillez réessayer." : "We couldn't submit your order. Please try again.")); return; }
+      if (!response.ok || !result.success) { setOrderError(result.error || (isGerman ? "Ihre Bestellung konnte nicht gesendet werden. Bitte versuchen Sie es erneut." : isFrench ? "Impossible d’envoyer votre commande. Veuillez réessayer." : isRomanian ? "Nu am putut trimite comanda. Te rugăm să încerci din nou." : "We couldn't submit your order. Please try again.")); return; }
       setOrderReference(result.referenceCode || (isGerman ? "Ihre Bestellung ist eingegangen" : isFrench ? "Votre commande a bien été reçue" : isRomanian ? "Comanda ta a fost primită" : "Your order has been received"));
       setForm({ fullName: "", whatsapp: "", arrivalDate: "", hotel: "", roomNumber: "" });
     } catch { setOrderError(isGerman ? "Verbindungsproblem. Bitte versuchen Sie es erneut." : isFrench ? "Problème de connexion. Veuillez réessayer." : isRomanian ? "Problemă de conexiune. Te rugăm să încerci din nou." : "Connection problem. Please try again."); }
