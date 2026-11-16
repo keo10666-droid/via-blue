@@ -1028,6 +1028,12 @@ const frenchCopy: Record<string, string> = {
   "Eden Island": "Île Eden",
   "Paradise": "Paradise",
   "What's Not Included": "Ce qui n’est pas inclus",
+  "The Smart Saver": "L’option économique",
+  "A budget-conscious selection of real Via Blue experiences, leaving room in your holiday budget.": "Une sélection d’expériences Via Blue à prix maîtrisé, pour préserver une partie de votre budget vacances.",
+  "The Balanced Escape": "L’escapade équilibrée",
+  "A thoughtful mix of highly rated experiences, variety and value for your stay.": "Un mélange harmonieux d’expériences très appréciées, de variété et de bon rapport qualité-prix pour votre séjour.",
+  "The Signature Experience": "L’expérience signature",
+  "A more premium selection of memorable experiences, while staying within your budget.": "Une sélection plus haut de gamme d’expériences mémorables, tout en respectant votre budget.",
 };
 
 export function frenchHomeText(value: string): string {
