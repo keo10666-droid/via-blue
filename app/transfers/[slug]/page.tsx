@@ -8,6 +8,7 @@ import { createSupabaseAdminClient } from "@/lib/supabaseAdmin";
 import HomeText from "@/app/components/HomeText";
 import { germanTransferLocation, germanTransferVehicle } from "@/lib/germanTransferCopy";
 import { frenchTransferLocation, frenchTransferVehicle } from "@/lib/frenchTransferCopy";
+import { romanianTransferLocation, romanianTransferVehicle } from "@/lib/romanianTransferCopy";
 
 type Props = {
   params: Promise<{
@@ -136,11 +137,11 @@ export default async function TransferPage({ params }: Props) {
           </div>
 
           <h1 className="mt-5 text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
-            <HomeText en={transfer.to} de={germanTransferLocation(transfer.to)} fr={frenchTransferLocation(transfer.to)} />
+            <HomeText en={transfer.to} de={germanTransferLocation(transfer.to)} fr={frenchTransferLocation(transfer.to)} ro={romanianTransferLocation(transfer.to)} />
           </h1>
 
           <p className="mt-5 max-w-2xl text-lg leading-8 text-blue-100">
-            <HomeText en={`Comfortable private transfer from ${transfer.from} to your destination`} de={`Komfortabler Privattransfer vom ${germanTransferLocation(transfer.from)} zu Ihrem Ziel`} />
+            <HomeText en={`Comfortable private transfer from ${transfer.from} to your destination`} de={`Komfortabler Privattransfer vom ${germanTransferLocation(transfer.from)} zu Ihrem Ziel`} ro={`Transfer privat confortabil de la ${romanianTransferLocation(transfer.from)} la destinația ta`} />
           </p>
 
           <div className="mt-7 flex flex-wrap gap-3">
@@ -235,7 +236,7 @@ export default async function TransferPage({ params }: Props) {
                       </p>
 
                       <p className="mt-1 text-lg font-bold text-white">
-                        <HomeText en={vehicle.type} de={germanTransferVehicle(vehicle.type)} fr={frenchTransferVehicle(vehicle.type)} />
+                        <HomeText en={vehicle.type} de={germanTransferVehicle(vehicle.type)} fr={frenchTransferVehicle(vehicle.type)} ro={romanianTransferVehicle(vehicle.type)} />
                       </p>
 
                     </div>
@@ -352,7 +353,7 @@ export default async function TransferPage({ params }: Props) {
                       className="group/button mt-6 flex items-center justify-center gap-2 rounded-2xl bg-blue-950 px-5 py-3.5 text-center text-sm font-bold text-white shadow-lg shadow-blue-950/10 transition-all duration-300 hover:-translate-y-0.5 hover:bg-orange-500 hover:shadow-orange-500/20"
                     >
 
-                      <HomeText en={`Book ${vehicle.type}`} de={`${germanTransferVehicle(vehicle.type)} buchen`} fr={`Réserver ${frenchTransferVehicle(vehicle.type)}`} />
+                      <HomeText en={`Book ${vehicle.type}`} de={`${germanTransferVehicle(vehicle.type)} buchen`} fr={`Réserver ${frenchTransferVehicle(vehicle.type)}`} ro={`Rezervă ${romanianTransferVehicle(vehicle.type)}`} />
 
                       <ArrowRightIcon className="h-4 w-4 transition-transform duration-300 group-hover/button:translate-x-1" />
 
@@ -415,7 +416,7 @@ export default async function TransferPage({ params }: Props) {
                     </p>
 
                     <p className="mt-1.5 text-sm font-bold text-blue-950">
-                      <HomeText en={transfer.from} de={germanTransferLocation(transfer.from)} fr={frenchTransferLocation(transfer.from)} />
+                      <HomeText en={transfer.from} de={germanTransferLocation(transfer.from)} fr={frenchTransferLocation(transfer.from)} ro={romanianTransferLocation(transfer.from)} />
                     </p>
 
                   </div>
