@@ -1,3 +1,4 @@
+import { germanHomeText } from "@/lib/germanHomeCopy";
 export type GermanTourCopy = { name: string; description: string };
 
 const copy: Record<string, GermanTourCopy> = {
