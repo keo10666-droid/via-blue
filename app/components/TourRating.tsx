@@ -25,18 +25,18 @@ function loadSummaries() {
 
 export default function TourRating({ tourSlug }: { tourSlug: string }) {
   const [summary, setSummary] = useState<RatingSummary | null>(null);
-  const [language, setLanguage] = useState<"en" | "de" | "fr">("en");
+  const [language, setLanguage] = useState<"en" | "de" | "fr" | "ro">("en");
 
   useEffect(() => {
     const syncLanguage = (event?: Event) => {
-      const requested = (event as CustomEvent<"en" | "de" | "fr"> | undefined)?.detail;
-      if (requested === "en" || requested === "de" || requested === "fr") {
+      const requested = (event as CustomEvent<"en" | "de" | "fr" | "ro"> | undefined)?.detail;
+      if (requested === "en" || requested === "de" || requested === "fr" || requested === "ro") {
         setLanguage(requested);
         return;
       }
       try {
         const saved = window.localStorage.getItem("via-blue-language");
-        setLanguage(saved === "de" || saved === "fr" ? saved : "en");
+        setLanguage(saved === "de" || saved === "fr" || saved === "ro" ? saved : "en");
       } catch {
         setLanguage("en");
       }
@@ -64,12 +64,12 @@ export default function TourRating({ tourSlug }: { tourSlug: string }) {
 
   if (!summary || summary.count === 0) return null;
 
-  const ariaLabel = language === "fr"
+  const ariaLabel = language === "ro" ? "Evaluare" : language === "fr"
     ? `${summary.average.toFixed(1)} sur 5 étoiles parmi ${summary.count} avis`
     : language === "de"
       ? `${summary.average.toFixed(1)} von 5 Sternen aus ${summary.count} Bewertungen`
       : `${summary.average.toFixed(1)} out of 5 stars from ${summary.count} reviews`;
-  const reviewLabel = language === "fr"
+  const reviewLabel = language === "ro" ? "recenzii" : language === "fr"
     ? "avis"
     : language === "de"
       ? "Bewertungen"
