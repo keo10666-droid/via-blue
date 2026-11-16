@@ -667,5 +667,9 @@ const germanCopy: Record<string, string> = {
 };
 
 export function germanHomeText(value: string): string {
+  if (value.startsWith("Tell other guests about your experience with ")) return value.replace("Tell other guests about your experience with ", "Teile deine Erfahrung mit ");
+  if (value.startsWith("Enter the 6-digit password reset code we sent to ")) return value.replace("Enter the 6-digit password reset code we sent to ", "Gib den 6-stelligen Passwort-Reset-Code ein, den wir an ");
+  if (value.startsWith("Select an age for Child ")) return value.replace("Select an age for Child ", "Wähle das Alter von Kind ");
+  if (value.startsWith("Select an age for Infant ")) return value.replace("Select an age for Infant ", "Wähle das Alter von Baby ");
   return germanCopy[value] ?? value;
 }
