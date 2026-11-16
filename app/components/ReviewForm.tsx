@@ -22,9 +22,10 @@ export default function ReviewForm({
   const [message, setMessage] = useState("");
   const [isGerman, setIsGerman] = useState(false);
   const [isFrench, setIsFrench] = useState(false);
+  const [isRomanian, setIsRomanian] = useState(false);
 
   useEffect(() => {
-    const syncLanguage = () => { const language = window.localStorage.getItem("via-blue-language"); setIsGerman(language === "de"); setIsFrench(language === "fr"); };
+    const syncLanguage = () => { const language = window.localStorage.getItem("via-blue-language"); setIsGerman(language === "de"); setIsFrench(language === "fr"); setIsRomanian(language === "ro"); };
     syncLanguage();
     window.addEventListener("via-blue-language-change", syncLanguage);
     return () => window.removeEventListener("via-blue-language-change", syncLanguage);
@@ -117,7 +118,7 @@ export default function ReviewForm({
               type="text"
               value={name}
               onChange={(event) => setName(event.target.value)}
-              placeholder={isGerman ? "Gib deinen Namen ein" : isFrench ? "Saisissez votre nom" : "Enter your name"}
+              placeholder={isGerman ? "Gib deinen Namen ein" : isFrench ? "Saisissez votre nom" : isRomanian ? "Introdu numele" : "Enter your name"}
               maxLength={80}
               required
               className="w-full rounded-2xl border border-slate-200 bg-slate-50/70 px-4 py-4 text-slate-900 shadow-sm outline-none transition duration-300 placeholder:text-slate-400 focus:border-orange-400 focus:bg-white focus:ring-4 focus:ring-orange-500/10"
@@ -129,14 +130,14 @@ export default function ReviewForm({
             <p className="mb-2 block text-sm font-extrabold text-blue-950">
               <HomeText en="Your Rating" de="Deine Bewertung" />
             </p>
-            <div className="flex items-center gap-1" role="radiogroup" aria-label={isGerman ? "Deine Bewertung" : isFrench ? "Votre note" : "Your rating"}>
+            <div className="flex items-center gap-1" role="radiogroup" aria-label={isGerman ? "Deine Bewertung" : isFrench ? "Votre note" : isRomanian ? "Evaluarea ta" : "Your rating"}>
               {[1, 2, 3, 4, 5].map((value) => (
                 <button
                   key={value}
                   type="button"
                   role="radio"
                   aria-checked={rating === value}
-                  aria-label={`${value} ${isGerman ? "von 5 Sternen" : isFrench ? "sur 5 étoiles" : "out of 5 stars"}`}
+                  aria-label={`${value} ${isGerman ? "von 5 Sternen" : isFrench ? "sur 5 étoiles" : isRomanian ? "din 5 stele" : "out of 5 stars"}`}
                   onClick={() => setRating(value)}
                   className={`rounded-lg px-1 text-3xl transition focus:outline-none focus:ring-2 focus:ring-orange-400 ${value <= rating ? "text-amber-400" : "text-slate-300"}`}
                 >
@@ -160,7 +161,7 @@ export default function ReviewForm({
               id="review-comment"
               value={comment}
               onChange={(event) => setComment(event.target.value)}
-              placeholder={isGerman ? "Beschreibe deine Erfahrung..." : isFrench ? "Décrivez votre expérience..." : "Describe your experience..."}
+              placeholder={isGerman ? "Beschreibe deine Erfahrung..." : isFrench ? "Décrivez votre expérience..." : isRomanian ? "Descrie experiența ta..." : "Describe your experience..."}
               maxLength={1000}
               rows={5}
               required
