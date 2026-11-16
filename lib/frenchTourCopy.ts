@@ -1674,5 +1674,6 @@ export function frenchTourValue(value: string): string {
     "Enjoy approximately 2–3 hours on the island.": "Profitez d’environ 2 à 3 heures sur l’île.",
     "Free drinks throughout the day on the boat": "Boissons offertes à bord tout au long de la journée",
   };
+  if (value === "Wi-Fi") return "Wi-Fi";
   return exact[value] ?? frenchHomeText(value);
 }
