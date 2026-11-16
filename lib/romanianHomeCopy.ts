@@ -943,6 +943,17 @@ const romanianCopy: Record<string, string> = {
   "One special character": "Un caracter special",
   "Password requirements": "Cerințe pentru parolă",
   "Passwords match": "Parolele coincid",
+  "Islands & Boat Trips": "Insule și excursii cu barca",
+  "Snorkeling & Diving": "Snorkeling și scufundări",
+  "Sea & Water Activities": "Activități pe mare și în apă",
+  "Dolphin Experiences": "Experiențe cu delfini",
+  "Desert Adventures": "Aventuri în deșert",
+  "Egypt Tours & Excursions": "Tururi și excursii în Egipt",
+  "Family & Attractions": "Activități și atracții pentru familii",
+  "Hurghada": "Hurghada",
+  "Luxor": "Luxor",
+  "Cairo": "Cairo",
+  "Sharm El Sheikh": "Sharm El Sheikh",
 };
 
 export function romanianHomeText(value: string): string {
