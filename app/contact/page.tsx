@@ -220,13 +220,14 @@ export default function ContactPage() {
   const [errorMessage, setErrorMessage] = useState("");
   const [isGerman, setIsGerman] = useState(false);
   const [isFrench, setIsFrench] = useState(false);
+  const [isRomanian, setIsRomanian] = useState(false);
 
   useEffect(() => {
     const syncLanguage = () => {
       try {
         const language = window.localStorage.getItem("via-blue-language");
         setIsGerman(language === "de");
-        setIsFrench(language === "fr");
+        setIsFrench(language === "fr"); setIsRomanian(language === "ro");
       } catch {
         setIsGerman(false);
         setIsFrench(false);
@@ -564,7 +565,7 @@ export default function ContactPage() {
                         name="name"
                         type="text"
                         required
-                        placeholder={isGerman ? "Ihr vollständiger Name" : isFrench ? "Votre nom complet" : "Your full name"}
+                        placeholder={isGerman ? "Ihr vollständiger Name" : isFrench ? "Votre nom complet" : isRomanian ? "Numele tău complet" : "Your full name"}
                         className="h-12 w-full rounded-xl border border-[#dfe3ea] bg-[#fbfcfd] px-4 text-sm text-[#172033] outline-none transition placeholder:text-[#98a2b3] focus:border-[#f59a23] focus:bg-white focus:ring-4 focus:ring-[#f59a23]/10"
                       />
                     </div>
@@ -582,7 +583,7 @@ export default function ContactPage() {
                         name="email"
                         type="email"
                         required
-                        placeholder={isGerman ? "ihre@email.de" : isFrench ? "vous@exemple.fr" : "you@example.com"}
+                        placeholder={isGerman ? "ihre@email.de" : isFrench ? "vous@exemple.fr" : isRomanian ? "nume@exemplu.ro" : "you@example.com"}
                         className="h-12 w-full rounded-xl border border-[#dfe3ea] bg-[#fbfcfd] px-4 text-sm text-[#172033] outline-none transition placeholder:text-[#98a2b3] focus:border-[#f59a23] focus:bg-white focus:ring-4 focus:ring-[#f59a23]/10"
                       />
                     </div>
@@ -618,7 +619,7 @@ export default function ContactPage() {
                         id="subject"
                         name="subject"
                         type="text"
-                        placeholder={isGerman ? "Betreff Ihrer Nachricht" : isFrench ? "Objet de votre message" : "Message subject"}
+                        placeholder={isGerman ? "Betreff Ihrer Nachricht" : isFrench ? "Objet de votre message" : isRomanian ? "Subiectul mesajului" : "Message subject"}
                         className="h-12 w-full rounded-xl border border-[#dfe3ea] bg-[#fbfcfd] px-4 text-sm text-[#172033] outline-none transition placeholder:text-[#98a2b3] focus:border-[#f59a23] focus:bg-white focus:ring-4 focus:ring-[#f59a23]/10"
                       />
                     </div>
@@ -637,7 +638,7 @@ export default function ContactPage() {
                       name="message"
                       required
                       rows={7}
-                      placeholder={isGerman ? "Wie können wir Ihnen helfen?" : isFrench ? "Comment pouvons-nous vous aider ?" : "How can we help you?"}
+                      placeholder={isGerman ? "Wie können wir Ihnen helfen?" : isFrench ? "Comment pouvons-nous vous aider ?" : isRomanian ? "Cum te putem ajuta?" : "How can we help you?"}
                       className="w-full resize-none rounded-xl border border-[#dfe3ea] bg-[#fbfcfd] px-4 py-3 text-sm leading-6 text-[#172033] outline-none transition placeholder:text-[#98a2b3] focus:border-[#f59a23] focus:bg-white focus:ring-4 focus:ring-[#f59a23]/10"
                     />
                   </div>
