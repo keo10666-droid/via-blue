@@ -915,7 +915,6 @@ const romanianCopy: Record<string, string> = {
   "Stay Connected": "Rămâi conectat",
   "Your Egypt SIM Card": "Cartela ta SIM pentru Egipt",
   "Explore SIM Card": "Descoperă cartela SIM",
-  if (value.startsWith("Enter the 6-digit password reset code we sent to ")) return value.replace("Enter the 6-digit password reset code we sent to ", "Introdu codul de resetare din 6 cifre trimis la ");
   "Tours & Transfers": "Excursii și transferuri",
   "Your Egyptian Journey": "Călătoria ta în Egipt",
   "Discover Egypt": "Descoperă Egiptul",
@@ -929,5 +928,6 @@ const romanianCopy: Record<string, string> = {
 };
 
 export function romanianHomeText(value: string): string {
+  if (value.startsWith("Enter the 6-digit password reset code we sent to ")) return value.replace("Enter the 6-digit password reset code we sent to ", "Introdu codul de resetare din 6 cifre trimis la ");
   return romanianCopy[value] ?? value;
 }
