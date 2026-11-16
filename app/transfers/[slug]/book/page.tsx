@@ -11,7 +11,6 @@ import HomeText from "@/app/components/HomeText";
 import { useCurrency } from "@/app/components/CurrencyProvider";
 import { frenchHomeText } from "@/lib/frenchHomeCopy";
 import { romanianHomeText } from "@/lib/romanianHomeCopy";
-import { romanianTransferLocation, romanianTransferVehicle } from "@/lib/romanianTransferCopy";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
