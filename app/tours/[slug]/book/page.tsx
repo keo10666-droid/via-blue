@@ -638,7 +638,7 @@ const selectedCairoVehicleOption =
 
   const errorText = (msg: string) => (
     <p className="mt-1.5 text-xs font-semibold text-red-600">
-      {msg}
+      {isFrench ? frenchHomeText(msg) : msg}
     </p>
   );
 
