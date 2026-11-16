@@ -32,7 +32,7 @@ export default function LoginPage() {
     }
     const handleLanguageChange = (event: Event) => {
       const next = (event as CustomEvent<"en" | "de" | "fr" | "ro">).detail;
-      if (next === "en" || next === "de" || next === "fr" || next === "ro") { setIsGerman(next === "de"); setIsFrench(next === "fr"); }
+      if (next === "en" || next === "de" || next === "fr" || next === "ro") { setIsGerman(next === "de"); setIsFrench(next === "fr"); setIsRomanian(next === "ro"); }
     };
     window.addEventListener("via-blue-language-change", handleLanguageChange);
     return () => window.removeEventListener("via-blue-language-change", handleLanguageChange);
