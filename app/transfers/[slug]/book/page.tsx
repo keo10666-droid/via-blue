@@ -1310,7 +1310,7 @@ ${notes.trim() || "-"}
         email={email.trim()}
         emailSent={confirmationEmailSent}
         backHref="/transfers"
-        backLabel="Back to Transfers"
+        backLabel={isGerman ? "Zurück zu den Transfers" : isFrench ? "Retour aux transferts" : "Back to Transfers"}
         onClose={() => setShowSuccess(false)}
       />
       {/* HEADER */}
