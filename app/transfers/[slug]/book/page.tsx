@@ -2373,7 +2373,7 @@ ${notes.trim() || "-"}
                                 time,
                                 isFrench
                               )
-                            : "Not selected"}
+                            : isGerman ? "Nicht ausgewählt" : isFrench ? "Non sélectionné" : isRomanian ? "Neselectat" : "Not selected"}
                         </p>
                       </div>
                     </div>
