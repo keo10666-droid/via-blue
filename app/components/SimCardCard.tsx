@@ -8,7 +8,18 @@ import HomeText from "@/app/components/HomeText";
 export default function SimCardCard() {
   const { currency } = useCurrency();
   const [startingPrice, setStartingPrice] = useState(10);
+  const [language, setLanguage] = useState<"en" | "de" | "fr">("en");
   const symbol = currency === "EUR" ? "€" : currency === "USD" ? "$" : "£";
+
+  useEffect(() => {
+    const syncLanguage = () => {
+      const saved = window.localStorage.getItem("via-blue-language");
+      setLanguage(saved === "de" || saved === "fr" ? saved : "en");
+    };
+    syncLanguage();
+    window.addEventListener("via-blue-language-change", syncLanguage);
+    return () => window.removeEventListener("via-blue-language-change", syncLanguage);
+  }, []);
 
   useEffect(() => {
     fetch("/api/sim-card-settings", { cache: "no-store" }).then((response) => response.json()).then((result) => {
@@ -22,7 +33,7 @@ export default function SimCardCard() {
   return (
     <section className="bg-[#f7f7f5] px-5 py-12 sm:px-6 sm:py-16">
       <div className="mx-auto max-w-7xl">
-        <Link href="/sim-card" aria-label="Explore Egypt SIM Card - Stay Connected" className="group relative isolate block min-h-[300px] overflow-hidden rounded-[28px] bg-[#03112a] shadow-[0_24px_70px_rgba(3,17,42,0.18)] transition duration-500 hover:-translate-y-1 hover:shadow-[0_32px_85px_rgba(3,17,42,0.25)] sm:min-h-[360px]">
+        <Link href="/sim-card" aria-label={language === "fr" ? "Découvrir la carte SIM pour l’Égypte – Restez connecté" : language === "de" ? "Ägyptische SIM-Karte entdecken – Bleiben Sie verbunden" : "Explore Egypt SIM Card - Stay Connected"} className="group relative isolate block min-h-[300px] overflow-hidden rounded-[28px] bg-[#03112a] shadow-[0_24px_70px_rgba(3,17,42,0.18)] transition duration-500 hover:-translate-y-1 hover:shadow-[0_32px_85px_rgba(3,17,42,0.25)] sm:min-h-[360px]">
           <div className="absolute inset-0 -z-20 bg-cover bg-center transition-transform duration-700 group-hover:scale-[1.04]" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=2000&q=85')" }} />
           <div className="absolute inset-0 -z-10 bg-gradient-to-r from-[#03112a]/95 via-[#03112a]/75 to-[#03112a]/25" />
           <div className="absolute inset-0 -z-10 bg-gradient-to-t from-[#03112a]/65 via-transparent to-transparent" />
