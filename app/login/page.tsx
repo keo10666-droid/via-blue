@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { frenchHomeText } from "@/lib/frenchHomeCopy";
+import { romanianHomeText } from "@/lib/romanianHomeCopy";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -19,24 +20,25 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [isGerman, setIsGerman] = useState(false);
   const [isFrench, setIsFrench] = useState(false);
+  const [isRomanian, setIsRomanian] = useState(false);
 
   useEffect(() => {
     try {
       const language = window.localStorage.getItem("via-blue-language");
       setIsGerman(language === "de");
-      setIsFrench(language === "fr");
+      setIsFrench(language === "fr"); setIsRomanian(language === "ro");
     } catch {
       // Keep English as the safe fallback.
     }
     const handleLanguageChange = (event: Event) => {
-      const next = (event as CustomEvent<"en" | "de" | "fr">).detail;
-      if (next === "en" || next === "de" || next === "fr") { setIsGerman(next === "de"); setIsFrench(next === "fr"); }
+      const next = (event as CustomEvent<"en" | "de" | "fr" | "ro">).detail;
+      if (next === "en" || next === "de" || next === "fr" || next === "ro") { setIsGerman(next === "de"); setIsFrench(next === "fr"); }
     };
     window.addEventListener("via-blue-language-change", handleLanguageChange);
     return () => window.removeEventListener("via-blue-language-change", handleLanguageChange);
   }, []);
 
-  const text = (en: string, de: string) => isGerman ? de : isFrench ? frenchHomeText(en) : en;
+  const text = (en: string, de: string) => isGerman ? de : isFrench ? frenchHomeText(en) : isRomanian ? romanianHomeText(en) : en;
   const translateMessage = (value: string) => {
     const messages: Record<string, string> = {
       "We couldn’t complete this request. Please check your details and try again.": "Die Anfrage konnte nicht abgeschlossen werden. Bitte überprüfe deine Angaben und versuche es erneut.",
@@ -45,7 +47,7 @@ export default function LoginPage() {
       "Please enter your email address first.": "Bitte gib zuerst deine E-Mail-Adresse ein.",
       "A new confirmation email has been sent.": "Eine neue Bestätigungs-E-Mail wurde gesendet."
     };
-    return isGerman ? (messages[value] || value) : isFrench ? frenchHomeText(value) : value;
+    return isGerman ? (messages[value] || value) : isFrench ? frenchHomeText(value) : isRomanian ? romanianHomeText(value) : value;
   };
 
   useEffect(() => {
