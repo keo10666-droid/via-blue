@@ -1605,14 +1605,14 @@ ${notes.trim() || "-"}
                             <p className="text-sm font-bold text-[#071a36]">{group.title}</p>
                             <p className="mt-1 text-[11px] text-slate-500">{group.subtitle}</p>
                             <div className="mt-4 flex items-center justify-between gap-3">
-                              <button type="button" aria-label={"Remove " + group.key} onClick={() => {
+                              <button type="button" aria-label={isGerman ? group.key + " entfernen" : isFrench ? "Supprimer " + group.key : isRomanian ? "Elimină " + group.key : "Remove " + group.key} onClick={() => {
                                 const next = Math.max(group.min, group.count - 1);
                                 group.set(next);
                                 if (group.key === "children") setChildAges((ages) => ages.slice(0, next));
                                 if (group.key === "infants") setInfantAges((ages) => ages.slice(0, next));
                               }} disabled={group.count <= group.min} className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 text-[#071a36] disabled:opacity-30"><MinusIcon /></button>
                               <span className="text-xl font-bold tabular-nums text-[#071a36]">{group.count}</span>
-                              <button type="button" aria-label={"Add " + group.key} onClick={() => {
+                              <button type="button" aria-label={isGerman ? group.key + " hinzufügen" : isFrench ? "Ajouter " + group.key : isRomanian ? "Adaugă " + group.key : "Add " + group.key} onClick={() => {
                                 if (totalGuests >= maxGuests) return;
                                 group.set(group.count + 1);
                                 if (group.key === "children") setChildAges((ages) => [...ages, ""]);
@@ -1646,7 +1646,7 @@ ${notes.trim() || "-"}
                               <label key={index} className="text-xs font-semibold text-slate-600">
                                 <HomeText en={"Infant " + (index + 1)} de={"Baby " + (index + 1)} />
                                 <select value={infantAges[index] ?? ""} onChange={(e) => setInfantAges((ages) => Array.from({ length: infants }, (_, i) => i === index ? e.target.value : (ages[i] ?? "")))} className="mt-2 h-11 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-800">
-                                  <option value="">Select age</option>
+                                  <option value="">{isGerman ? "Alter auswählen" : isFrench ? "Choisir l’âge" : isRomanian ? "Alege vârsta" : "Select age"}</option>
                                   {Array.from({ length: 24 }, (_, age) => <option key={age} value={String(age)}>{age} {isGerman ? (age === 1 ? "Monat" : "Monate") : isFrench ? "mois" : isRomanian ? "luni" : "months"}</option>)}
                                 </select>
                               </label>
@@ -1745,9 +1745,9 @@ ${notes.trim() || "-"}
                                   <span className="text-lg font-bold text-orange-600">{formatCurrency(option.id === "single" ? singleQuadUnitPrice : doubleQuadUnitPrice)}</span>
                                 </div>
                                 <div className="mt-4 flex items-center justify-between">
-                                  <button type="button" aria-label={"Remove " + option.id + " quad"} onClick={() => option.set((count) => Math.max(0, count - 1))} disabled={option.count === 0} className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 text-xl font-bold text-[#071a36] disabled:opacity-30">−</button>
+                                  <button type="button" aria-label={isGerman ? option.id + " Quad entfernen" : isFrench ? "Retirer le quad " + option.id : isRomanian ? "Elimină quad-ul " + option.id : "Remove " + option.id + " quad"} onClick={() => option.set((count) => Math.max(0, count - 1))} disabled={option.count === 0} className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 text-xl font-bold text-[#071a36] disabled:opacity-30">−</button>
                                   <span className="text-xl font-bold tabular-nums text-[#071a36]">{option.count}</span>
-                                  <button type="button" aria-label={"Add " + option.id + " quad"} onClick={() => option.set((count) => count + 1)} disabled={quadSeatsSelected + option.seats > 25} className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#071a36] text-xl font-bold text-white disabled:opacity-30">+</button>
+                                  <button type="button" aria-label={isGerman ? option.id + " Quad hinzufügen" : isFrench ? "Ajouter le quad " + option.id : isRomanian ? "Adaugă quad-ul " + option.id : "Add " + option.id + " quad"} onClick={() => option.set((count) => count + 1)} disabled={quadSeatsSelected + option.seats > 25} className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#071a36] text-xl font-bold text-white disabled:opacity-30">+</button>
                                 </div>
                                 <p className="mt-2 text-right text-xs font-semibold text-slate-500">Subtotal: {formatCurrency(option.count * (option.id === "single" ? singleQuadUnitPrice : doubleQuadUnitPrice))}</p>
                               </div>
@@ -1800,9 +1800,9 @@ ${notes.trim() || "-"}
                                 <span className="text-lg font-bold text-orange-600">{formatCurrency(option.price)}</span>
                               </div>
                               <div className="mt-4 flex items-center justify-between">
-                                <button type="button" aria-label={"Remove " + option.id + " buggy"} onClick={() => option.set((count) => Math.max(0, count - 1))} disabled={option.count === 0} className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 text-xl font-bold text-[#071a36] disabled:opacity-30">−</button>
+                                <button type="button" aria-label={isGerman ? option.id + " Buggy entfernen" : isFrench ? "Retirer le buggy " + option.id : isRomanian ? "Elimină buggy-ul " + option.id : "Remove " + option.id + " buggy"} onClick={() => option.set((count) => Math.max(0, count - 1))} disabled={option.count === 0} className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 text-xl font-bold text-[#071a36] disabled:opacity-30">−</button>
                                 <span className="text-xl font-bold tabular-nums text-[#071a36]">{option.count}</span>
-                                <button type="button" aria-label={"Add " + option.id + " buggy"} onClick={() => option.set((count) => count + 1)} disabled={buggySeatsSelected + option.seats > 25} className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#071a36] text-xl font-bold text-white disabled:opacity-30">+</button>
+                                <button type="button" aria-label={isGerman ? option.id + " Buggy hinzufügen" : isFrench ? "Ajouter le buggy " + option.id : isRomanian ? "Adaugă buggy-ul " + option.id : "Add " + option.id + " buggy"} onClick={() => option.set((count) => count + 1)} disabled={buggySeatsSelected + option.seats > 25} className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#071a36] text-xl font-bold text-white disabled:opacity-30">+</button>
                               </div>
                               <p className="mt-2 text-right text-xs font-semibold text-slate-500">Subtotal: {formatCurrency(option.count * option.price)}</p>
                             </div>
