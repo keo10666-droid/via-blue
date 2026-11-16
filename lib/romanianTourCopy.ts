@@ -51,6 +51,13 @@ const copy: Record<string, RomanianTourCopy> = {
   "mini-egypt-park": { name: "Mini Egypt Park", description: "Descoperă cele mai cunoscute atracții ale Egiptului în miniatură." },
   "hurghada-museum": { name: "Muzeul din Hurghada", description: "Descoperă istoria și cultura Egiptului printr-o vizită la muzeu." },
   "spa-massage": { name: "Pachet spa și masaj în Hurghada", description: "Relaxează-te cu tratamente spa plăcute și un masaj în Hurghada." },
+  "pirates": { name: "Excursie cu barca piraților", description: "Bucură-te de o excursie specială cu barca piraților, cu priveliști superbe asupra Mării Roșii și timp pentru relaxare" },
+  "snorkeling": { name: "Excursie de snorkeling", description: "Explorează recifele de corali și viața marină colorată din Marea Roșie în timpul unei excursii de snorkeling" },
+  "diving": { name: "Excursie de scufundări", description: "Descoperă lumea subacvatică a Mării Roșii printr-o experiență de scufundări, potrivită atât începătorilor, cât și celor cu experiență" },
+  "parasailing": { name: "Parasailing", description: "Admiră priveliștile spectaculoase asupra Hurghadei și Mării Roșii din aer, într-o experiență de parasailing" },
+  "twister": { name: "Barca rapidă Twister", description: "Bucură-te de o plimbare plină de adrenalină cu barca rapidă Twister de-a lungul coastei din Hurghada" },
+  "stargazing": { name: "Observarea stelelor în deșert", description: "Bucură-te de apus, descoperă viața în deșert și admiră cerul înstelat departe de luminile orașului" },
+  "aquarium": { name: "Hurghada Grand Aquarium", description: "Descoperă fascinanta lume marină și diferite specii acvatice la Grand Aquarium din Hurghada" },
 };
 
 export function romanianTourCopy(slug: string, field: "name" | "description", fallback: string): string {
