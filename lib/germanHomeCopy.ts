@@ -659,6 +659,11 @@ const germanCopy: Record<string, string> = {
   "Euro": "Euro",
   "Budget:": "Budget:",
   "Service": "Service",
+  "Museum": "Museum",
+  "Bus": "Bus",
+  "Minute": "Minute",
+  "Hotel → Hotel": "Hotel → Hotel",
+  "Optional": "Optional",
 };
 
 export function germanHomeText(value: string): string {
