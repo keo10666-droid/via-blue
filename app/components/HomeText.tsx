@@ -3,10 +3,11 @@
 import { useEffect, useState } from "react";
 import { frenchHomeText } from "@/lib/frenchHomeCopy";
 import { romanianHomeText } from "@/lib/romanianHomeCopy";
+import { germanHomeText } from "@/lib/germanHomeCopy";
 
 type HomeTextProps = {
   en: string;
-  de: string;
+  de?: string;
   fr?: string;
   ro?: string;
   className?: string;
@@ -32,5 +33,5 @@ export default function HomeText({ en, de, fr, ro, className }: HomeTextProps) {
     return () => window.removeEventListener("via-blue-language-change", handleLanguageChange);
   }, []);
 
-  return <span className={className}>{language === "de" ? de : language === "fr" ? (fr ?? frenchHomeText(en)) : language === "ro" ? (ro ?? romanianHomeText(en)) : en}</span>;
+  return <span className={className}>{language === "de" ? (de ?? germanHomeText(en)) : language === "fr" ? (fr ?? frenchHomeText(en)) : language === "ro" ? (ro ?? romanianHomeText(en)) : en}</span>;
 }
