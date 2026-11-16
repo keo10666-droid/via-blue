@@ -956,7 +956,11 @@ ${notes.trim() || "-"}
     alert(
       isGerman
         ? "Beim Senden Ihrer Buchung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
-        : "Something went wrong while submitting your booking. Please try again"
+        : isFrench
+          ? "Une erreur s’est produite lors de l’envoi de votre réservation. Veuillez réessayer."
+          : isRomanian
+            ? "A apărut o eroare la trimiterea rezervării. Te rugăm să încerci din nou."
+            : "Something went wrong while submitting your booking. Please try again"
     );
   }
 };
