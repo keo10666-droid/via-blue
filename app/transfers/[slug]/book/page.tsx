@@ -956,9 +956,7 @@ export default function TransferBookingPage() {
   const [isFrench, setIsFrench] = useState(false);
 
   useEffect(() => {
-    const syncLanguage = () => const language = window.localStorage.getItem("via-blue-language");
-      setIsGerman(language === "de");
-      setIsFrench(language === "fr");
+    const syncLanguage = () => { const language = window.localStorage.getItem("via-blue-language"); setIsGerman(language === "de"); setIsFrench(language === "fr"); };
     syncLanguage();
     window.addEventListener("via-blue-language-change", syncLanguage);
     return () => window.removeEventListener("via-blue-language-change", syncLanguage);
