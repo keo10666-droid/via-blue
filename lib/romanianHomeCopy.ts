@@ -1,4 +1,5 @@
 const romanianCopy: Record<string, string> = {
+
   "Your full name": "Numele tău complet",
   "At least 6 characters": "Cel puțin 6 caractere",
   "Create a strong password": "Creează o parolă puternică",
