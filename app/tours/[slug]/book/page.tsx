@@ -1922,20 +1922,20 @@ ${notes.trim() || "-"}
                         >
 
                           <option value="">
-                            {isGerman ? `Alter von Kind ${index + 1} auswählen` : isFrench ? `Choisir l’âge de l’enfant ${index + 1}` : `Select Child ${index + 1} Age`}
+                            {isGerman ? `Alter von Kind ${index + 1} auswählen` : isFrench ? `Choisir l’âge de l’enfant ${index + 1}` : isRomanian ? `Alege vârsta copilului ${index + 1}` : `Select Child ${index + 1} Age`}
                           </option>
 
-                          <option value="5">{isGerman ? "5 Jahre" : isFrench ? "5 ans" : "5 years"}</option>
+                          <option value="5">{isGerman ? "5 Jahre" : isFrench ? "5 ans" : isRomanian ? "5 ani" : "5 years"}</option>
 
-                          <option value="6">{isGerman ? "6 Jahre" : isFrench ? "6 ans" : "6 years"}</option>
+                          <option value="6">{isGerman ? "6 Jahre" : isFrench ? "6 ans" : isRomanian ? "6 ani" : "6 years"}</option>
 
-                          <option value="7">{isGerman ? "7 Jahre" : isFrench ? "7 ans" : "7 years"}</option>
+                          <option value="7">{isGerman ? "7 Jahre" : isFrench ? "7 ans" : isRomanian ? "7 ani" : "7 years"}</option>
 
-                          <option value="8">{isGerman ? "8 Jahre" : isFrench ? "8 ans" : "8 years"}</option>
+                          <option value="8">{isGerman ? "8 Jahre" : isFrench ? "8 ans" : isRomanian ? "8 ani" : "8 years"}</option>
 
-                          <option value="9">{isGerman ? "9 Jahre" : isFrench ? "9 ans" : "9 years"}</option>
+                          <option value="9">{isGerman ? "9 Jahre" : isFrench ? "9 ans" : isRomanian ? "9 ani" : "9 years"}</option>
 
-                          <option value="10">{isGerman ? "10 Jahre" : isFrench ? "10 ans" : "10 years"}</option>
+                          <option value="10">{isGerman ? "10 Jahre" : isFrench ? "10 ans" : isRomanian ? "10 ani" : "10 years"}</option>
 
                         </select>
 
@@ -1944,7 +1944,7 @@ ${notes.trim() || "-"}
                             index
                           ] &&
                           errorText(
-                            isGerman ? `Bitte wählen Sie das Alter für Kind ${index + 1}` : isFrench ? `Veuillez choisir l’âge de l’enfant ${index + 1}` : `Please select an age for Child ${index + 1}`
+                            isGerman ? `Bitte wählen Sie das Alter für Kind ${index + 1}` : isFrench ? `Veuillez choisir l’âge de l’enfant ${index + 1}` : isRomanian ? `Selectează vârsta copilului ${index + 1}` : `Please select an age for Child ${index + 1}`
                           )}
 
                       </div>
@@ -2004,16 +2004,16 @@ ${notes.trim() || "-"}
                         >
 
                           <option value="">
-                            {isGerman ? `Alter von Baby ${index + 1} auswählen` : isFrench ? `Choisir l’âge du bébé ${index + 1}` : `Select Infant ${index + 1} Age`}
+                            {isGerman ? `Alter von Baby ${index + 1} auswählen` : isFrench ? `Choisir l’âge du bébé ${index + 1}` : isRomanian ? `Alege vârsta bebelușului ${index + 1}` : `Select Infant ${index + 1} Age`}
                           </option>
 
-                          <option value="1">{isGerman ? "1 Jahr" : isFrench ? "1 an" : "1 year"}</option>
+                          <option value="1">{isGerman ? "1 Jahr" : isFrench ? "1 an" : isRomanian ? "1 an" : "1 year"}</option>
 
-                          <option value="2">{isGerman ? "2 Jahre" : isFrench ? "2 ans" : "2 years"}</option>
+                          <option value="2">{isGerman ? "2 Jahre" : isFrench ? "2 ans" : isRomanian ? "2 ani" : "2 years"}</option>
 
-                          <option value="3">{isGerman ? "3 Jahre" : isFrench ? "3 ans" : "3 years"}</option>
+                          <option value="3">{isGerman ? "3 Jahre" : isFrench ? "3 ans" : isRomanian ? "3 ani" : "3 years"}</option>
 
-                          <option value="4">{isGerman ? "4 Jahre" : isFrench ? "4 ans" : "4 years"}</option>
+                          <option value="4">{isGerman ? "4 Jahre" : isFrench ? "4 ans" : isRomanian ? "4 ani" : "4 years"}</option>
 
                         </select>
 
@@ -2022,7 +2022,7 @@ ${notes.trim() || "-"}
                             index
                           ] &&
                           errorText(
-                            isGerman ? `Bitte wählen Sie das Alter für Baby ${index + 1}` : isFrench ? `Veuillez choisir l’âge du bébé ${index + 1}` : `Please select an age for Infant ${index + 1}`
+                            isGerman ? `Bitte wählen Sie das Alter für Baby ${index + 1}` : isFrench ? `Veuillez choisir l’âge du bébé ${index + 1}` : isRomanian ? `Selectează vârsta bebelușului ${index + 1}` : `Please select an age for Infant ${index + 1}`
                           )}
 
                       </div>
