@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import HomeText from "@/app/components/HomeText";
 import TourText from "@/app/components/TourText";
-import { frenchTourValue } from "@/lib/frenchTourCopy";
+import { frenchTourCopy, frenchTourValue } from "@/lib/frenchTourCopy";
 import { useCurrency, type CurrencyCode } from "@/app/components/CurrencyProvider";
 
 const areas = [
@@ -973,7 +973,7 @@ export default function AITripPlannerPage() {
                                         <select
                                           key={`${pkg.id}-${tour.slug}`}
                                           defaultValue=""
-                                          aria-label={language === "de" ? `Erlebnis ersetzen: $<TourText slug={tour.slug} value={tour.name} field="name" />` : language === "fr" ? `Remplacer l’expérience : $<TourText slug={tour.slug} value={tour.name} field="name" />` : `Replace experience: $<TourText slug={tour.slug} value={tour.name} field="name" />`}
+                                          aria-label={language === "de" ? `Erlebnis ersetzen: ${tour.name}` : language === "fr" ? `Remplacer l’expérience : ${frenchTourCopy(tour.slug, "name", tour.name)}` : `Replace experience: ${tour.name}`}
                                           onChange={(event) => {
                                             if (event.target.value) {
                                               replacePackageTour(
