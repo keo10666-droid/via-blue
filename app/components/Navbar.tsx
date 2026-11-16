@@ -113,12 +113,6 @@ export default function Navbar() {
         "Light mode": "Enable light mode",
       };
 
-  Object.assign(labels, {
-    "Choose language": language === "de" ? "Sprache auswählen" : language === "fr" ? "Choisir la langue" : language === "ro" ? "Alege limba" : "Choose language",
-    "Select currency": language === "de" ? "Währung auswählen" : language === "fr" ? "Choisir la devise" : language === "ro" ? "Alege moneda" : "Select currency",
-    "Mobile quick navigation": language === "de" ? "Mobile Schnellnavigation" : language === "fr" ? "Navigation rapide mobile" : language === "ro" ? "Navigare rapidă pe mobil" : "Mobile quick navigation",
-  });
-
   // Keep the page behind the mobile menu fixed while the menu is open.
   // The menu itself remains independently scrollable on shorter screens.
   useEffect(() => {
@@ -357,7 +351,7 @@ export default function Navbar() {
         </nav>
 
         <select
-          aria-label={labels["Select currency"]}
+          aria-label={language === "de" ? "Währung auswählen" : language === "fr" ? "Choisir la devise" : language === "ro" ? "Alege moneda" : "Select currency"}
           value={currency}
           onChange={(event) => setCurrency(event.target.value as CurrencyCode)}
           className="ml-1.5 hidden h-9 shrink-0 rounded-lg border border-slate-200 bg-white px-1.5 text-[10px] font-bold text-blue-950 outline-none transition hover:border-orange-300 lg:inline-flex xl:ml-2 xl:px-2 xl:text-xs"
@@ -382,7 +376,7 @@ export default function Navbar() {
           <button
             type="button"
             onClick={() => setLanguageMenuOpen((open) => !open)}
-            aria-label={labels["Choose language"]}
+            aria-label={language === "de" ? "Sprache auswählen" : language === "fr" ? "Choisir la langue" : language === "ro" ? "Alege limba" : "Choose language"}
             aria-haspopup="menu"
             aria-expanded={languageMenuOpen}
             className={`group inline-flex h-10 items-center gap-2 rounded-full border px-3 text-[11px] font-bold transition-all duration-200 ${languageMenuOpen ? "border-blue-950 bg-blue-950 text-white shadow-lg shadow-blue-950/15" : "border-slate-200/90 bg-white/90 text-slate-700 hover:border-blue-200 hover:bg-blue-50/70"}`}
@@ -678,7 +672,7 @@ export default function Navbar() {
 
     {!pathname.startsWith("/admin") && (
       <nav
-        aria-label={labels["Mobile quick navigation"]}
+        aria-label={language === "de" ? "Mobile Schnellnavigation" : language === "fr" ? "Navigation rapide mobile" : language === "ro" ? "Navigare rapidă pe mobil" : "Mobile quick navigation"}
         className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 border-t border-slate-200/80 bg-white/95 px-1 pb-[max(env(safe-area-inset-bottom),0.35rem)] pt-2 shadow-[0_-8px_30px_rgba(3,17,42,0.10)] backdrop-blur-2xl lg:hidden"
       >
         {[
