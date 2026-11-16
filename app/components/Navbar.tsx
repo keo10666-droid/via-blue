@@ -388,8 +388,8 @@ export default function Navbar() {
           {languageMenuOpen && (
             <div role="menu" aria-label="Choose language" className="absolute right-0 top-full z-[100] mt-3 w-56 overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-2 shadow-[0_18px_55px_rgba(3,17,42,0.18)] ring-1 ring-black/[0.03]">
               <div className="px-3 pb-2 pt-1">
-                <p className="text-[9px] font-black uppercase tracking-[0.2em] text-slate-400">{language === "fr" ? "Langue du site" : "Website language"}</p>
-                <p className="mt-0.5 text-xs font-semibold text-slate-700">{language === "fr" ? "Choisissez votre langue préférée" : "Choose your preferred language"}</p>
+                <p className="text-[9px] font-black uppercase tracking-[0.2em] text-slate-400">{language === "ro" ? "Limba site-ului" : language === "fr" ? "Langue du site" : "Website language"}</p>
+                <p className="mt-0.5 text-xs font-semibold text-slate-700">{language === "ro" ? "Alege limba preferată" : language === "fr" ? "Choisissez votre langue préférée" : "Choose your preferred language"}</p>
               </div>
               <div className="h-px bg-slate-100" />
               <div className="mt-1 space-y-1">
@@ -539,7 +539,7 @@ export default function Navbar() {
               </button>
               {languageMenuOpen && (
                 <div role="menu" aria-label="Choose language" className="absolute left-0 top-full z-[100] mt-2 w-56 overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-2 shadow-[0_18px_45px_rgba(3,17,42,0.16)]">
-                  <p className="px-3 pb-2 pt-1 text-[9px] font-black uppercase tracking-[0.2em] text-slate-400">{language === "fr" ? "Choisir la langue" : "Select language"}</p>
+                  <p className="px-3 pb-2 pt-1 text-[9px] font-black uppercase tracking-[0.2em] text-slate-400">{language === "ro" ? "Selectează limba" : language === "fr" ? "Choisir la langue" : "Select language"}</p>
                   {languageOptions.map((option) => (
                     <button
                       key={option.value}
@@ -676,7 +676,7 @@ export default function Navbar() {
         className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 border-t border-slate-200/80 bg-white/95 px-1 pb-[max(env(safe-area-inset-bottom),0.35rem)] pt-2 shadow-[0_-8px_30px_rgba(3,17,42,0.10)] backdrop-blur-2xl lg:hidden"
       >
         {[
-          { href: "/", label: language === "fr" ? "Accueil" : language === "de" ? "Startseite" : "Home", Icon: Home },
+          { href: "/", label: language === "ro" ? "Acasă" : language === "fr" ? "Accueil" : language === "de" ? "Startseite" : "Home", Icon: Home },
           { href: "/tours", label: language === "ro" ? "Excursii" : language === "fr" ? "Excursions" : language === "de" ? "Ausflüge" : "Tours", Icon: Compass },
           { href: "/transfers", label: language === "ro" ? "Transferuri" : language === "fr" ? "Transferts" : language === "de" ? "Transfer" : "Transfer", Icon: CarFront },
           { href: "/contact", label: language === "ro" ? "Contact" : language === "fr" ? "Contact" : language === "de" ? "Kontakt" : "Contact", Icon: MessageCircle },
