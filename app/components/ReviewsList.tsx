@@ -152,7 +152,7 @@ export default function ReviewsList({ tourSlug }: ReviewsListProps) {
                           {reviews[currentIndex].guest_name}
                         </h3>
 
-                        <p className="mt-1 text-sm tracking-wide text-amber-400" aria-label={`${reviews[currentIndex].rating} out of 5 stars`}>
+                        <p className="mt-1 text-sm tracking-wide text-amber-400" aria-label={isFrench ? `${reviews[currentIndex].rating} étoiles sur 5` : isGerman ? `${reviews[currentIndex].rating} von 5 Sternen` : `${reviews[currentIndex].rating} out of 5 stars`}>
                           {"★".repeat(reviews[currentIndex].rating)}{"☆".repeat(5 - reviews[currentIndex].rating)}
                         </p>
                         <p className="mt-0.5 text-sm text-slate-400">
