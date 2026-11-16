@@ -14,7 +14,7 @@ import { germanTourCopy } from "@/lib/germanTourCopy";
 import { frenchTourCopy } from "@/lib/frenchTourCopy";
 import { frenchHomeText } from "@/lib/frenchHomeCopy";
 import { romanianHomeText } from "@/lib/romanianHomeCopy";
-import { romanianTourCopy, romanianTourValue } from "@/lib/romanianTourCopy";
+import { romanianTourCopy } from "@/lib/romanianTourCopy";
 
 const nationalities = [
   "Egyptian",
