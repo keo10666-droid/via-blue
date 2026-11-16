@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { Crown, Home, Compass, CarFront, MessageCircle, UserRound, Moon, Sun, Globe2, ChevronDown, Check } from "lucide-react";
+import { Crown, Home, Compass, CarFront, MessageCircle, UserRound, Moon, Sun, ChevronDown, Check } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { useCurrency, type CurrencyCode } from "@/app/components/CurrencyProvider";
 
@@ -51,10 +51,10 @@ export default function Navbar() {
   }
 
   const languageOptions = [
-    { value: "en" as const, label: "English" },
-    { value: "de" as const, label: "Deutsch" },
-    { value: "fr" as const, label: "Français" },
-    { value: "ro" as const, label: "Română" },
+    { value: "en" as const, label: "English", flag: "🇬🇧" },
+    { value: "de" as const, label: "Deutsch", flag: "🇩🇪" },
+    { value: "fr" as const, label: "Français", flag: "🇫🇷" },
+    { value: "ro" as const, label: "Română", flag: "🇷🇴" },
   ];
 
   const labels = language === "ro"
@@ -381,7 +381,7 @@ export default function Navbar() {
             aria-expanded={languageMenuOpen}
             className={`group inline-flex h-10 items-center gap-2 rounded-full border px-3 text-[11px] font-bold transition-all duration-200 ${languageMenuOpen ? "border-blue-950 bg-blue-950 text-white shadow-lg shadow-blue-950/15" : "border-slate-200/90 bg-white/90 text-slate-700 hover:border-blue-200 hover:bg-blue-50/70"}`}
           >
-            <Globe2 size={15} className={languageMenuOpen ? "text-orange-300" : "text-orange-500"} />
+            <span className="text-base leading-none" aria-hidden="true">{languageOptions.find((option) => option.value === language)?.flag}</span>
             <span>{language.toUpperCase()}</span>
             <ChevronDown size={13} className={`transition-transform duration-200 ${languageMenuOpen ? "rotate-180" : ""}`} />
           </button>
@@ -401,7 +401,7 @@ export default function Navbar() {
                     onClick={() => changeLanguage(option.value)}
                     className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-all duration-200 ${language === option.value ? "bg-blue-50 text-blue-950" : "text-slate-600 hover:bg-slate-50 hover:text-blue-950"}`}
                   >
-                    <span className={`flex h-8 w-8 items-center justify-center rounded-lg text-[10px] font-black tracking-wide ${language === option.value ? "bg-blue-950 text-white" : "bg-slate-100 text-slate-500"}`}>{option.value.toUpperCase()}</span>
+                    <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 text-lg leading-none" aria-hidden="true">{option.flag}</span>
                     <span className="flex-1 text-sm font-semibold">{option.label}</span>
                     {language === option.value && <Check size={16} className="text-orange-500" />}
                   </button>
@@ -533,7 +533,7 @@ export default function Navbar() {
                 aria-expanded={languageMenuOpen}
                 className={`flex items-center gap-3 rounded-2xl border px-4 py-3 text-sm font-bold transition-all ${languageMenuOpen ? "border-blue-950 bg-blue-950 text-white" : "border-slate-200 bg-white text-blue-950 hover:border-blue-200"}`}
               >
-                <Globe2 size={17} className={languageMenuOpen ? "text-orange-300" : "text-orange-500"} />
+                <span className="text-lg leading-none" aria-hidden="true">{languageOptions.find((option) => option.value === language)?.flag}</span>
                 <span>{languageOptions.find((option) => option.value === language)?.label}</span>
                 <ChevronDown size={15} className={`transition-transform duration-200 ${languageMenuOpen ? "rotate-180" : ""}`} />
               </button>
@@ -548,7 +548,7 @@ export default function Navbar() {
                       onClick={() => changeLanguage(option.value)}
                       className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-all ${language === option.value ? "bg-blue-50 text-blue-950" : "text-slate-600 hover:bg-slate-50 hover:text-blue-950"}`}
                     >
-                      <span className={`flex h-8 w-8 items-center justify-center rounded-lg text-[10px] font-black ${language === option.value ? "bg-blue-950 text-white" : "bg-slate-100 text-slate-500"}`}>{option.value.toUpperCase()}</span>
+                      <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 text-lg leading-none" aria-hidden="true">{option.flag}</span>
                       <span className="flex-1 text-sm font-semibold">{option.label}</span>
                       {language === option.value && <Check size={16} className="text-orange-500" />}
                     </button>
