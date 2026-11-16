@@ -31,7 +31,7 @@ export default function SimCardSection() {
   useEffect(() => {
     const sync = () => { try { const language = window.localStorage.getItem("via-blue-language"); setIsGerman(language === "de"); setIsFrench(language === "fr"); setIsRomanian(language === "ro"); } catch { setIsGerman(false); setIsFrench(false); setIsRomanian(false); } };
     sync();
-    const handle = (event: Event) => { const next = (event as CustomEvent<"en" | "de" | "fr" | "ro">).detail; if (next === "en" || next === "de" || next === "fr" || next === "ro") { setIsGerman(next === "de"); setIsFrench(next === "fr"); } };
+    const handle = (event: Event) => { const next = (event as CustomEvent<"en" | "de" | "fr" | "ro">).detail; if (next === "en" || next === "de" || next === "fr" || next === "ro") { setIsGerman(next === "de"); setIsFrench(next === "fr"); setIsRomanian(next === "ro"); } };
     window.addEventListener("via-blue-language-change", handle);
     return () => window.removeEventListener("via-blue-language-change", handle);
   }, []);
