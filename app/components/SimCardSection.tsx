@@ -4,7 +4,7 @@ import { useEffect, useState, type FormEvent } from "react";
 import { useCurrency } from "@/app/components/CurrencyProvider";
 import HomeText from "@/app/components/HomeText";
 import { frenchHomeText } from "@/lib/frenchHomeCopy";
-import { frenchHomeText } from "@/lib/frenchHomeCopy";
+
 
 type Currency = "EUR" | "USD" | "GBP";
 type PackageOption = { id: string; name: string; dataGb: number; description: string; prices: Record<Currency, number>; active: boolean };
