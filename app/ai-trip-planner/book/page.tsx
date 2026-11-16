@@ -4,6 +4,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 import { supabase } from "@/lib/supabase";
 import HomeText from "@/app/components/HomeText";
+import { frenchHomeText } from "@/lib/frenchHomeCopy";
+import { frenchTourCopy, frenchTourValue } from "@/lib/frenchTourCopy";
 
 type PackageTour = {
   slug: string;
@@ -502,6 +504,8 @@ export default function AITripBookingPage() {
           <p className="mt-3 text-gray-600">
             {isGerman
               ? "Das ausgewählte Reisepaket wurde nicht gefunden. Kehren Sie bitte zum KI-Reiseplaner zurück und erstellen Sie Ihr Paket erneut."
+              : isFrench
+              ? "Le forfait sélectionné est introuvable. Veuillez retourner au planificateur de voyage et créer à nouveau votre forfait."
               : "Your selected trip package could not be found. Please return to the AI Trip Planner and create your package again."}
           </p>
 
@@ -691,13 +695,13 @@ export default function AITripBookingPage() {
           itinerary,
           name: name.trim(),
           nationality:
-            nationality.trim() || isFrench ? "Non précisé" : "Not specified",
+            nationality.trim() || (isGerman ? "Nicht angegeben" : isFrench ? "Non précisé" : "Not specified"),
           email: email.trim(),
           phone: fullPhone,
           hotel:
-            hotel.trim() || isFrench ? "Non précisé" : "Not specified",
+            hotel.trim() || (isGerman ? "Nicht angegeben" : isFrench ? "Non précisé" : "Not specified"),
           room_number:
-            roomNumber.trim() || isFrench ? "Non précisé" : "Not specified",
+            roomNumber.trim() || (isGerman ? "Nicht angegeben" : isFrench ? "Non précisé" : "Not specified"),
           adults,
           children,
           children_ages:
@@ -784,7 +788,7 @@ export default function AITripBookingPage() {
               )
               .join("\n");
 
-            return `${isFrench ? "JOUR" : "DAY"} ${day.day}\n${tours}`;
+            return `${isGerman ? "TAG" : isFrench ? "JOUR" : "DAY"} ${day.day}\n${tours}`;
           })
           .join("\n\n");
 
@@ -792,11 +796,11 @@ export default function AITripBookingPage() {
 
 🤖 ${isGerman ? "Buchungsquelle" : isFrench ? "Source de réservation" : "Booking Source"}: AI Trip Planner
 
-📦 Package: ${selectedPackage.title}
+📦 ${isGerman ? "Paket" : isFrench ? "Forfait" : "Package"}: ${isFrench ? frenchHomeText(selectedPackage.title) : selectedPackage.title}
 
 📝 ${isGerman ? "Paketbeschreibung" : isFrench ? "Description du forfait" : "Package Summary"}:
 
-${selectedPackage.summary}
+${isFrench ? frenchHomeText(selectedPackage.summary) : selectedPackage.summary}
 
 📍 ${isGerman ? "Region" : isFrench ? "Région" : "Area"}: ${booking.area}
 
@@ -811,7 +815,7 @@ ${selectedPackage.summary}
 👥 ${isGerman ? "Gäste insgesamt" : isFrench ? "Nombre total de voyageurs" : "Total Guests"}: ${totalGuests}
 
 🌍 ${isGerman ? "Nationalität" : isFrench ? "Nationalité" : "Nationality"}: ${
-        nationality.trim() || isFrench ? "Non précisé" : "Not specified"
+        nationality.trim() || (isGerman ? "Nicht angegeben" : isFrench ? "Non précisé" : "Not specified")
       }
 
 👤 ${isGerman ? "Vollständiger Name" : isFrench ? "Nom complet" : "Full Name"}: ${name.trim()}
@@ -820,12 +824,12 @@ ${selectedPackage.summary}
 
 📱 WhatsApp: ${fullPhone}
 
-🏨 ${isGerman ? "Hotel" : "Hotel"}: ${
-        hotel.trim() || isFrench ? "Non précisé" : "Not specified"
+🏨 ${isGerman ? "Hotel" : isFrench ? "Hôtel" : "Hotel"}: ${
+        hotel.trim() || (isGerman ? "Nicht angegeben" : isFrench ? "Non précisé" : "Not specified")
       }
 
 🚪 ${isGerman ? "Zimmernummer" : isFrench ? "Numéro de chambre" : "Room Number"}: ${
-        roomNumber.trim() || isFrench ? "Non précisé" : "Not specified"
+        roomNumber.trim() || (isGerman ? "Nicht angegeben" : isFrench ? "Non précisé" : "Not specified")
       }
 
 💰 Budget: ${formatPrice(
@@ -860,7 +864,7 @@ ${itineraryMessage}
 
 ━━━━━━━━━━━━━━━━━━
 
-Via Blue AI Trip Planner
+${isGerman ? "Via Blue KI-Reiseplaner" : isFrench ? "Planificateur de voyage IA Via Blue" : "Via Blue AI Trip Planner"}
 
 ━━━━━━━━━━━━━━━━━━`;
 
