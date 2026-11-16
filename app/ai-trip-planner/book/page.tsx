@@ -811,7 +811,7 @@ ${isFrench ? frenchHomeText(selectedPackage.summary) : isRomanian ? romanianHome
 
 📅 ${isGerman ? "Reisebeginn" : isFrench ? "Date de début du voyage" : isRomanian ? "Data începerii călătoriei" : "Trip Start Date"}: ${date}
 
-🗓️ ${isGerman ? "Dauer" : isFrench ? "Durée" : "Duration"}: ${booking.days} ${isGerman ? "Tage" : isFrench ? "jours" : isRomanian ? "zile" : "Days"}
+🗓️ ${isGerman ? "Dauer" : isFrench ? "Durée" : isRomanian ? "Durată" : "Duration"}: ${booking.days} ${isGerman ? "Tage" : isFrench ? "jours" : isRomanian ? "zile" : "Days"}
 
 👨 ${isGerman ? "Erwachsene" : isFrench ? "Adultes" : isRomanian ? "Adulți" : "Adults"}: ${adults}
 
@@ -829,7 +829,7 @@ ${isFrench ? frenchHomeText(selectedPackage.summary) : isRomanian ? romanianHome
 
 📱 WhatsApp: ${fullPhone}
 
-🏨 ${isGerman ? "Hotel" : isFrench ? "Hôtel" : "Hotel"}: ${
+🏨 ${isGerman ? "Hotel" : isFrench ? "Hôtel" : isRomanian ? "Hotel" : "Hotel"}: ${
         hotel.trim() || (isGerman ? "Nicht angegeben" : isFrench ? "Non précisé" : isRomanian ? "Nespecificat" : "Not specified")
       }
 
@@ -1802,7 +1802,7 @@ ${isGerman ? "Via Blue KI-Reiseplaner" : isFrench ? "Planificateur de voyage IA 
                     <p className="mt-1 font-bold text-blue-900">
                       {adults} <HomeText en="Adults" de="Erwachsene" />
                       {children > 0
-                        ? ` · ${children} ${isGerman ? "Kinder" : isFrench ? "enfants" : "Children"}`
+                        ? ` · ${children} ${isGerman ? "Kinder" : isFrench ? "enfants" : isRomanian ? "copii" : "Children"}`
                         : ""}
                     </p>
                   </div>
