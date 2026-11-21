@@ -21,7 +21,9 @@ export function proxy(request: NextRequest) {
       target.pathname = `/${savedLocale}${pathname === "/" ? "" : pathname}`;
       return NextResponse.redirect(target);
     }
-    return NextResponse.next();
+    const requestHeaders = new Headers(request.headers);
+    requestHeaders.set("x-via-blue-original-path", pathname);
+    return NextResponse.next({ request: { headers: requestHeaders } });
   }
 
   const locale = candidate;
@@ -35,6 +37,7 @@ export function proxy(request: NextRequest) {
   target.pathname = internalPath === "/" ? "/" : internalPath;
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set("x-via-blue-locale", locale);
+  requestHeaders.set("x-via-blue-original-path", internalPath);
   const response = NextResponse.rewrite(target, { request: { headers: requestHeaders } });
   response.cookies.set("via-blue-language", locale, { path: "/", maxAge: 60 * 60 * 24 * 365, sameSite: "lax" });
   return response;
