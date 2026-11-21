@@ -1,4 +1,5 @@
 import CurrencyPrice from "@/app/components/CurrencyPrice";
+import type { Metadata } from "next";
 import Link from "next/link";
 import HomeText from "@/app/components/HomeText";
 import { getLuxuryPricing } from "@/lib/luxuryPricing";
@@ -1190,6 +1191,20 @@ type PageProps = {
   }>;
 };
 
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const tour = luxuryTours[slug as LuxuryTourSlug];
+  if (!tour) return { title: "Luxury Tour Not Found", robots: { index: false, follow: false } };
+  const canonical = `https://viabluetours.com/luxury-tours/${slug}`;
+  return {
+    title: `${tour.name} in Egypt`,
+    description: tour.description,
+    alternates: { canonical },
+    openGraph: { title: `${tour.name} | Via Blue`, description: tour.description, url: canonical, siteName: "Via Blue", type: "website", locale: "en_US" },
+    twitter: { card: "summary_large_image", title: `${tour.name} | Via Blue`, description: tour.description },
+  };
+}
+
 function cleanText(text: string) {
   return text.replace(/\.+$/, "");
 }
@@ -1300,9 +1315,27 @@ export default async function LuxuryTourPage({
     : slug === "quad-safari" ? pricing.quad_single_1h
     : slug === "buggy-safari" ? pricing.buggy_2_seat
     : tour.price;
+  const tourSchema = {
+    "@context": "https://schema.org",
+    "@type": "TouristTrip",
+    name: tour.name,
+    description: tour.description,
+    url: `https://viabluetours.com/luxury-tours/${slug}`,
+    touristType: "Tourists",
+    provider: { "@type": "Organization", name: "Via Blue", url: "https://viabluetours.com" },
+    offers: {
+      "@type": "Offer",
+      url: `https://viabluetours.com/luxury-tours/${slug}`,
+      priceCurrency: "EUR",
+      price: startingPrice,
+      availability: "https://schema.org/InStock",
+      seller: { "@type": "Organization", name: "Via Blue" },
+    },
+  };
 
   return (
     <main className="min-h-screen bg-slate-50">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(tourSchema).replace(/</g, "\\u003c") }} />
       {/* HERO */}
       <section className="relative overflow-hidden bg-blue-950 px-6 py-20 text-white md:px-8 md:py-28">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-950 via-blue-950/95 to-blue-900" />

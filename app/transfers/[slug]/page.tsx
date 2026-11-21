@@ -28,6 +28,7 @@ export async function generateMetadata({
     return {
       title: "Transfer Not Found",
       description: "The requested transfer could not be found.",
+      robots: { index: false, follow: false },
       metadataBase: new URL("https://viabluetours.com"),
     };
   }
@@ -110,9 +111,35 @@ export default async function TransferPage({ params }: Props) {
   const lowestPrice = Math.min(
     ...transfer.vehicles.map((vehicle) => vehicle.price)
   );
+  const highestPrice = Math.max(
+    ...transfer.vehicles.map((vehicle) => vehicle.price)
+  );
+  const transferSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: `Private transfer from ${transfer.from} to ${transfer.to}`,
+    description: `Private transportation from ${transfer.from} to ${transfer.to} with Via Blue.`,
+    serviceType: "Private airport and hotel transfer",
+    provider: { "@type": "Organization", name: "Via Blue", url: "https://viabluetours.com" },
+    areaServed: [
+      { "@type": "City", name: "Hurghada" },
+      { "@type": "AdministrativeArea", name: "Red Sea Governorate" },
+      { "@type": "Country", name: "Egypt" },
+    ],
+    offers: {
+      "@type": "AggregateOffer",
+      url: `https://viabluetours.com/transfers/${slug}`,
+      priceCurrency: "EUR",
+      lowPrice: lowestPrice,
+      highPrice: highestPrice,
+      offerCount: transfer.vehicles.length,
+      availability: "https://schema.org/InStock",
+    },
+  };
 
   return (
     <main className="min-h-screen bg-slate-50">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(transferSchema).replace(/</g, "\\u003c") }} />
 
       {/* =====================================================
           HERO

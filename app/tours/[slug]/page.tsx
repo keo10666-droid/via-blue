@@ -43,7 +43,7 @@ export async function generateMetadata({
       ? await adminClient.from("tour_catalog_overrides").select("slug,category,name,description,image,price,child_price,infant_price,available,pricing_options").eq("slug", slug).maybeSingle()
       : { data: null };
     if (!custom?.category) {
-      return { title: "Tour Not Found", description: "The requested tour could not be found." };
+      return { title: "Tour Not Found", description: "The requested tour could not be found.", robots: { index: false, follow: false } };
     }
     const customTitle = custom.name || slug;
     const customDescription = custom.description || `Book ${customTitle} in Hurghada, Egypt with Via Blue.`;
