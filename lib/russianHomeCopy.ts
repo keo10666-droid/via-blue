@@ -1331,6 +1331,51 @@ Object.assign(russianCopy, {
   "The program may change slightly depending on sea and weather conditions.": "Программа может немного меняться в зависимости от состояния моря и погодных условий."
 });
 
+
+Object.assign(russianCopy, {
+  "Stay connected in Egypt": "Оставайтесь на связи в Египте",
+  "Your Egypt SIM Card": "Ваша SIM-карта для Египта",
+  "Get online, stay in touch and enjoy your holiday without roaming worries": "Оставайтесь онлайн и на связи, наслаждайтесь отдыхом без забот о роуминге",
+  "Your trip. Your connection.": "Ваше путешествие. Ваша связь.",
+  "Reliable mobile connection while exploring Egypt": "Надёжная мобильная связь во время путешествия по Египту",
+  "Your selected package": "Выбранный пакет",
+  "Choose your network": "Выберите оператора связи",
+  "Choose your package": "Выберите пакет",
+  "Select your SIM provider": "Выберите оператора SIM-карты",
+  "networks": "операторов",
+  "Best seller": "Бестселлер",
+  "25 GB + Calls": "25 ГБ + звонки",
+  "25 GB mobile data with local calls": "25 ГБ мобильного интернета и местные звонки",
+  "Total price": "Итоговая стоимость",
+  "Airport pickup": "Получение в аэропорту",
+  "Hotel delivery": "Доставка в отель",
+  "Hide order details": "Скрыть данные заказа",
+  "Continue to order": "Продолжить оформление заказа",
+  "Your details": "Ваши данные",
+  "Choose delivery option": "Выберите способ получения",
+  "Confirm SIM order": "Подтвердить заказ SIM-карты",
+  "Submitting order...": "Отправка заказа...",
+  "Your order details will be sent securely to Via Blue for confirmation": "Данные вашего заказа будут безопасно отправлены в Via Blue для подтверждения",
+  "Network availability and package activation are subject to confirmation": "Доступность сети и активация пакета требуют подтверждения",
+  "Back to homepage": "Вернуться на главную страницу",
+  "EGYPT SIM CARD": "SIM-КАРТА ДЛЯ ЕГИПТА",
+  "Stay Connected": "Оставайтесь на связи",
+  "Explore SIM Card": "Подробнее о SIM-карте",
+  "SIM-KARTE": "SIM-КАРТА",
+  "Your order has been received!": "Ваш заказ получен!",
+  "Reference:": "Номер заказа:",
+  "Our team will contact you on WhatsApp to confirm the details": "Наша команда свяжется с вами в WhatsApp для подтверждения деталей",
+  "Your order has been received": "Ваш заказ получен",
+  "Connection problem. Please try again.": "Проблема с подключением. Попробуйте ещё раз.",
+  "We couldn't submit your order. Please try again.": "Не удалось отправить заказ. Попробуйте ещё раз.",
+  "Please complete your name, WhatsApp number, arrival date and hotel.": "Укажите имя, номер WhatsApp, дату прибытия и название отеля.",
+  "Please enter a valid WhatsApp number.": "Введите действительный номер WhatsApp.",
+  "Please select a valid arrival date.": "Выберите корректную дату прибытия.",
+  "Select language": "Выберите язык",
+  "Select currency": "Выберите валюту",
+  "Egypt": "Египет", "United Kingdom": "Великобритания", "Germany": "Германия", "Russia": "Россия", "Poland": "Польша", "Romania": "Румыния", "Czechia": "Чехия", "Hungary": "Венгрия", "Lithuania": "Литва", "Latvia": "Латвия", "Estonia": "Эстония", "Belarus": "Беларусь", "Ukraine": "Украина", "Netherlands": "Нидерланды", "France": "Франция", "Italy": "Италия", "Spain": "Испания", "United States": "США", "Ireland": "Ирландия", "Austria": "Австрия", "Switzerland": "Швейцария", "Belgium": "Бельгия", "Denmark": "Дания", "Sweden": "Швеция", "Norway": "Норвегия", "Finland": "Финляндия", "Turkey": "Турция", "Saudi Arabia": "Саудовская Аравия", "United Arab Emirates": "ОАЭ"
+});
+
 export function russianHomeText(value: string): string {
   return russianCopy[value] ?? value;
 }
