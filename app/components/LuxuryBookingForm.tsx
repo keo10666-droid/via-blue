@@ -2,6 +2,7 @@
 
 import { frenchHomeText } from "@/lib/frenchHomeCopy";
 import { romanianHomeText } from "@/lib/romanianHomeCopy";
+import { russianHomeText } from "@/lib/russianHomeCopy";
 import { supabase } from "@/lib/supabase";
 
 import {
@@ -580,17 +581,20 @@ export default function LuxuryBookingForm({
   const [isGerman, setIsGerman] = useState(false);
   const [isFrench, setIsFrench] = useState(false);
   const [isRomanian, setIsRomanian] = useState(false);
-  const displayTourName = isGerman ? (germanLuxuryTourNames[tourName] ?? tourName) : isFrench ? frenchHomeText(tourName) : isRomanian ? romanianHomeText(tourName) : tourName;
-  const displayTourType = isGerman ? (germanLuxuryTourTypes[tourType] ?? tourType) : isFrench ? frenchHomeText(tourType) : isRomanian ? romanianHomeText(tourType) : tourType;
+  const [isRussian, setIsRussian] = useState(false);
+  const displayTourName = isGerman ? (germanLuxuryTourNames[tourName] ?? tourName) : isFrench ? frenchHomeText(tourName) : isRomanian ? romanianHomeText(tourName) : isRussian ? russianHomeText(tourName) : tourName;
+  const displayTourType = isGerman ? (germanLuxuryTourTypes[tourType] ?? tourType) : isFrench ? frenchHomeText(tourType) : isRomanian ? romanianHomeText(tourType) : isRussian ? russianHomeText(tourType) : tourType;
   const displayIncluded = isGerman
     ? included.map((item) => germanLuxuryIncluded[item] ?? item)
     : isFrench
       ? included.map((item) => frenchHomeText(item))
       : isRomanian
         ? included.map((item) => romanianHomeText(item))
-        : included;
+        : isRussian
+          ? included.map((item) => russianHomeText(item))
+          : included;
   useEffect(() => {
-    const syncLanguage = () => { const language = localStorage.getItem("via-blue-language"); setIsGerman(language === "de"); setIsFrench(language === "fr"); setIsRomanian(language === "ro"); };
+    const syncLanguage = () => { const language = localStorage.getItem("via-blue-language"); setIsGerman(language === "de"); setIsFrench(language === "fr"); setIsRomanian(language === "ro"); setIsRussian(language === "ru"); };
     syncLanguage();
     window.addEventListener("via-blue-language-change", syncLanguage);
     return () => window.removeEventListener("via-blue-language-change", syncLanguage);
@@ -974,7 +978,7 @@ ${notes.trim() || "-"}
         email={email.trim()}
         emailSent={confirmationEmailSent}
         backHref="/luxury-tours"
-        backLabel={isGerman ? "Zurück zu den Luxus-Ausflügen" : isFrench ? "Retour aux excursions VIP" : isRomanian ? "Înapoi la excursiile VIP" : "Back to Luxury Tours"}
+        backLabel={isGerman ? "Zurück zu den Luxus-Ausflügen" : isFrench ? "Retour aux excursions VIP" : isRomanian ? "Înapoi la excursiile VIP" : isRussian ? "Назад к VIP-турам" : "Back to Luxury Tours"}
         onClose={() => setShowSuccess(false)}
       />
       <main className="min-h-screen bg-[#f5f7fa] px-4 py-8 sm:px-6 lg:py-12">
@@ -1079,7 +1083,7 @@ ${notes.trim() || "-"}
 
                         <input
                           type="text"
-                          placeholder={isGerman ? "Vollständigen Namen eingeben" : isFrench ? "Saisir le nom complet" : isRomanian ? "Introdu numele complet" : "Enter full name"}
+                          placeholder={isGerman ? "Vollständigen Namen eingeben" : isFrench ? "Saisir le nom complet" : isRomanian ? "Introdu numele complet" : isRussian ? "Введите полное имя" : "Enter full name"}
                           value={name}
                           onChange={(e) =>
                             setName(e.target.value)
@@ -1109,7 +1113,7 @@ ${notes.trim() || "-"}
 
                         <input
                           type="text"
-                          placeholder={isGerman ? "Nationalität auswählen" : isFrench ? "Choisir la nationalité" : isRomanian ? "Selectează naționalitatea" : "Select nationality"}
+                          placeholder={isGerman ? "Nationalität auswählen" : isFrench ? "Choisir la nationalité" : isRomanian ? "Selectează naționalitatea" : isRussian ? "Выберите гражданство" : "Select nationality"}
                           value={nationality}
                           onChange={(e) => {
                             setNationality(e.target.value);
@@ -1148,7 +1152,7 @@ ${notes.trim() || "-"}
                                 <GlobeIcon />
 
                                 <span className="ml-3">
-                                  {isFrench ? frenchHomeText(item) : isRomanian ? romanianHomeText(item) : item}
+                                  {isFrench ? frenchHomeText(item) : isRomanian ? romanianHomeText(item) : isRussian ? russianHomeText(item) : item}
                                 </span>
                               </button>
                             ))}
@@ -1168,7 +1172,7 @@ ${notes.trim() || "-"}
 
                         <input
                           type="email"
-                          placeholder={isGerman ? "du@beispiel.de" : isFrench ? "vous@exemple.com" : isRomanian ? "nume@exemplu.ro" : "you@example.com"}
+                          placeholder={isGerman ? "du@beispiel.de" : isFrench ? "vous@exemple.com" : isRomanian ? "nume@exemplu.ro" : isRussian ? "ваш@email.com" : "you@example.com"}
                           value={email}
                           onChange={(e) =>
                             setEmail(e.target.value)
@@ -1221,7 +1225,7 @@ ${notes.trim() || "-"}
                               <div className="border-b border-slate-100 p-3">
                                 <input
                                   type="text"
-                                  placeholder={isGerman ? "Land oder Vorwahl suchen..." : isFrench ? "Rechercher un pays ou un indicatif..." : isRomanian ? "Caută țara sau prefixul telefonic..." : "Search country or dial code..."}
+                                  placeholder={isGerman ? "Land oder Vorwahl suchen..." : isFrench ? "Rechercher un pays ou un indicatif..." : isRomanian ? "Caută țara sau prefixul telefonic..." : isRussian ? "Поиск страны или кода..." : "Search country or dial code..."}
                                   value={countrySearch}
                                   onChange={(e) =>
                                     setCountrySearch(
@@ -1278,7 +1282,7 @@ ${notes.trim() || "-"}
 
                           <input
                             type="tel"
-                            placeholder={isGerman ? "WhatsApp-Nummer" : isFrench ? "Numéro WhatsApp" : isRomanian ? "Număr WhatsApp" : "WhatsApp number"}
+                            placeholder={isGerman ? "WhatsApp-Nummer" : isFrench ? "Numéro WhatsApp" : isRomanian ? "Număr WhatsApp" : isRussian ? "Номер WhatsApp" : "WhatsApp number"}
                             value={phone}
                             onChange={(e) =>
                               setPhone(e.target.value)
@@ -1334,7 +1338,7 @@ ${notes.trim() || "-"}
 
                         <input
                           type="text"
-                          placeholder={isGerman ? "Name Ihres Hotels" : isFrench ? "Nom de l’hôtel" : isRomanian ? "Numele hotelului" : "Hotel name"}
+                          placeholder={isGerman ? "Name Ihres Hotels" : isFrench ? "Nom de l’hôtel" : isRomanian ? "Numele hotelului" : isRussian ? "Название отеля" : "Hotel name"}
                           value={hotel}
                           onChange={(e) =>
                             setHotel(e.target.value)
@@ -1356,7 +1360,7 @@ ${notes.trim() || "-"}
 
                         <input
                           type="text"
-                          placeholder={isGerman ? "Zimmernummer" : isFrench ? "Numéro de chambre" : isRomanian ? "Numărul camerei" : "Room number"}
+                          placeholder={isGerman ? "Zimmernummer" : isFrench ? "Numéro de chambre" : isRomanian ? "Numărul camerei" : isRussian ? "Номер комнаты" : "Room number"}
                           value={roomNumber}
                           onChange={(e) =>
                             setRoomNumber(e.target.value)
@@ -1630,8 +1634,8 @@ ${notes.trim() || "-"}
                               <label key={index} className="text-xs font-semibold text-slate-600">
                                 <HomeText en={"Child " + (index + 1)} de={"Kind " + (index + 1)} />
                                 <select value={childAges[index] ?? ""} onChange={(e) => setChildAges((ages) => Array.from({ length: children }, (_, i) => i === index ? e.target.value : (ages[i] ?? "")))} className="mt-2 h-11 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-800">
-                                  <option value="">{isGerman ? "Alter auswählen" : isFrench ? "Choisir l’âge" : isRomanian ? "Alege vârsta" : "Select age"}</option>
-                                  {Array.from({ length: 10 }, (_, age) => <option key={age + 2} value={String(age + 2)}>{age + 2} {isGerman ? "Jahre" : isFrench ? "ans" : isRomanian ? "ani" : "years"}</option>)}
+                                  <option value="">{isGerman ? "Alter auswählen" : isFrench ? "Choisir l’âge" : isRomanian ? "Alege vârsta" : isRussian ? "Выберите возраст" : "Select age"}</option>
+                                  {Array.from({ length: 10 }, (_, age) => <option key={age + 2} value={String(age + 2)}>{age + 2} {isGerman ? "Jahre" : isFrench ? "ans" : isRomanian ? "ani" : isRussian ? "лет" : "years"}</option>)}
                                 </select>
                               </label>
                             ))}
@@ -1646,8 +1650,8 @@ ${notes.trim() || "-"}
                               <label key={index} className="text-xs font-semibold text-slate-600">
                                 <HomeText en={"Infant " + (index + 1)} de={"Baby " + (index + 1)} />
                                 <select value={infantAges[index] ?? ""} onChange={(e) => setInfantAges((ages) => Array.from({ length: infants }, (_, i) => i === index ? e.target.value : (ages[i] ?? "")))} className="mt-2 h-11 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-800">
-                                  <option value="">{isGerman ? "Alter auswählen" : isFrench ? "Choisir l’âge" : isRomanian ? "Alege vârsta" : "Select age"}</option>
-                                  {Array.from({ length: 24 }, (_, age) => <option key={age} value={String(age)}>{age} {isGerman ? (age === 1 ? "Monat" : "Monate") : isFrench ? "mois" : isRomanian ? "luni" : "months"}</option>)}
+                                  <option value="">{isGerman ? "Alter auswählen" : isFrench ? "Choisir l’âge" : isRomanian ? "Alege vârsta" : isRussian ? "Выберите возраст" : "Select age"}</option>
+                                  {Array.from({ length: 24 }, (_, age) => <option key={age} value={String(age)}>{age} {isGerman ? (age === 1 ? "Monat" : "Monate") : isFrench ? "mois" : isRomanian ? "luni" : isRussian ? "мес." : "months"}</option>)}
                                 </select>
                               </label>
                             ))}
@@ -1888,9 +1892,9 @@ ${notes.trim() || "-"}
                                 aria-pressed={active}
                                 className={`relative min-h-[132px] overflow-hidden rounded-2xl border p-5 text-left transition-all duration-300 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-100 ${active ? "border-[#071a36] bg-slate-50 shadow-[0_12px_28px_rgba(7,26,54,0.10)] ring-1 ring-[#071a36]" : "border-slate-200 bg-white hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md"}`}
                               >
-                                <span className="text-[9px] font-bold tracking-[0.18em] text-orange-500">{isFrench ? frenchHomeText(museum.short) : isRomanian ? romanianHomeText(museum.short) : museum.short}</span>
-                                <span className="mt-2 block text-base font-bold text-[#071a36]">{isFrench ? frenchHomeText(museum.title) : isRomanian ? romanianHomeText(museum.title) : museum.title}</span>
-                                <span className="mt-1 block text-sm text-slate-500">{isFrench ? frenchHomeText(museum.subtitle) : isRomanian ? romanianHomeText(museum.subtitle) : museum.subtitle}</span>
+                                <span className="text-[9px] font-bold tracking-[0.18em] text-orange-500">{isFrench ? frenchHomeText(museum.short) : isRomanian ? romanianHomeText(museum.short) : isRussian ? russianHomeText(museum.short) : museum.short}</span>
+                                <span className="mt-2 block text-base font-bold text-[#071a36]">{isFrench ? frenchHomeText(museum.title) : isRomanian ? romanianHomeText(museum.title) : isRussian ? russianHomeText(museum.title) : museum.title}</span>
+                                <span className="mt-1 block text-sm text-slate-500">{isFrench ? frenchHomeText(museum.subtitle) : isRomanian ? romanianHomeText(museum.subtitle) : isRussian ? russianHomeText(museum.subtitle) : museum.subtitle}</span>
                                 <span className={`absolute right-4 top-4 flex h-5 w-5 items-center justify-center rounded-full border text-[10px] ${active ? "border-orange-500 bg-orange-500 text-white" : "border-slate-300 text-transparent"}`}>✓</span>
                               </button>
                             );
@@ -1948,8 +1952,8 @@ ${notes.trim() || "-"}
                                   <span className={`flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br ${island.tone} text-xs font-black text-[#071a36]`}>{island.name.slice(0, 1)}</span>
                                   <span className={`flex h-5 w-5 items-center justify-center rounded-full border text-[10px] font-bold ${active ? "border-orange-500 bg-orange-500 text-white" : "border-slate-300 bg-white text-transparent"}`}>✓</span>
                                 </span>
-                                <span className="mt-3 text-sm font-bold text-[#071a36]">{isFrench ? frenchHomeText(island.name) : isRomanian ? romanianHomeText(island.name) : island.name}</span>
-                                <span className="mt-0.5 text-[10px] font-medium text-slate-400">{isFrench ? frenchHomeText(island.category) : isRomanian ? romanianHomeText(island.category) : island.category}</span>
+                                <span className="mt-3 text-sm font-bold text-[#071a36]">{isFrench ? frenchHomeText(island.name) : isRomanian ? romanianHomeText(island.name) : isRussian ? russianHomeText(island.name) : island.name}</span>
+                                <span className="mt-0.5 text-[10px] font-medium text-slate-400">{isFrench ? frenchHomeText(island.category) : isRomanian ? romanianHomeText(island.category) : isRussian ? russianHomeText(island.category) : island.category}</span>
                                 <span className="mt-auto flex items-baseline gap-1 pt-3">
                                   <span className="text-lg font-bold tracking-tight text-[#071a36]">{formatCurrency(island.price)}</span>
                                   <span className="text-[10px] text-slate-400"><HomeText en="/ person" de="/ Person" /></span>
@@ -2043,7 +2047,7 @@ ${notes.trim() || "-"}
 
                   <textarea
                     rows={5}
-                    placeholder={isGerman ? "Teilen Sie uns besondere Wünsche, Vorlieben oder wichtige Details mit..." : isFrench ? "Indiquez vos demandes particulières, préférences ou toute information importante..." : isRomanian ? "Menționează solicitările speciale, preferințele sau orice detalii importante..." : "Tell us any special requests, preferences, or important details..."}
+                    placeholder={isGerman ? "Teilen Sie uns besondere Wünsche, Vorlieben oder wichtige Details mit..." : isFrench ? "Indiquez vos demandes particulières, préférences ou toute information importante..." : isRomanian ? "Menționează solicitările speciale, preferințele sau orice detalii importante..." : isRussian ? "Укажите особые пожелания, предпочтения или важные детали..." : "Tell us any special requests, preferences, or important details..."}
                     value={notes}
                     onChange={(e) =>
                       setNotes(e.target.value)
