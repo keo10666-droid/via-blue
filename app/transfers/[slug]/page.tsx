@@ -28,6 +28,7 @@ export async function generateMetadata({
     return {
       title: "Transfer Not Found",
       description: "The requested transfer could not be found.",
+      robots: { index: false, follow: false },
       metadataBase: new URL("https://viabluetours.com"),
     };
   }
