@@ -7,6 +7,8 @@ import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 import { createSupabaseAdminClient } from "@/lib/supabaseAdmin";
 import { mergeSiteSettings } from "@/lib/siteSettings";
+import { headers } from "next/headers";
+import { LocaleProvider, type SiteLocale } from "./components/LocaleProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -56,7 +58,7 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

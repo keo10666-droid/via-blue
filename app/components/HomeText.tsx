@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSiteLocale } from "./LocaleProvider";
 import { frenchHomeText } from "@/lib/frenchHomeCopy";
 import { romanianHomeText } from "@/lib/romanianHomeCopy";
 import { germanHomeText } from "@/lib/germanHomeCopy";
