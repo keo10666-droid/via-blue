@@ -7,6 +7,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { frenchHomeText } from "@/lib/frenchHomeCopy";
 import { romanianHomeText } from "@/lib/romanianHomeCopy";
+import { russianHomeText } from "@/lib/russianHomeCopy";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -21,24 +22,25 @@ export default function LoginPage() {
   const [isGerman, setIsGerman] = useState(false);
   const [isFrench, setIsFrench] = useState(false);
   const [isRomanian, setIsRomanian] = useState(false);
+  const [isRussian, setIsRussian] = useState(false);
 
   useEffect(() => {
     try {
       const language = window.localStorage.getItem("via-blue-language");
       setIsGerman(language === "de");
-      setIsFrench(language === "fr"); setIsRomanian(language === "ro");
+      setIsFrench(language === "fr"); setIsRomanian(language === "ro"); setIsRussian(language === "ru");
     } catch {
       // Keep English as the safe fallback.
     }
     const handleLanguageChange = (event: Event) => {
-      const next = (event as CustomEvent<"en" | "de" | "fr" | "ro">).detail;
-      if (next === "en" || next === "de" || next === "fr" || next === "ro") { setIsGerman(next === "de"); setIsFrench(next === "fr"); setIsRomanian(next === "ro"); }
+      const next = (event as CustomEvent<"en" | "de" | "fr" | "ro" | "ru">).detail;
+      if (next === "en" || next === "de" || next === "fr" || next === "ro" || next === "ru") { setIsGerman(next === "de"); setIsFrench(next === "fr"); setIsRomanian(next === "ro"); setIsRussian(next === "ru"); }
     };
     window.addEventListener("via-blue-language-change", handleLanguageChange);
     return () => window.removeEventListener("via-blue-language-change", handleLanguageChange);
   }, []);
 
-  const text = (en: string, de: string) => isGerman ? de : isFrench ? frenchHomeText(en) : isRomanian ? romanianHomeText(en) : en;
+  const text = (en: string, de: string) => isGerman ? de : isFrench ? frenchHomeText(en) : isRomanian ? romanianHomeText(en) : isRussian ? russianHomeText(en) : en;
   const translateMessage = (value: string) => {
     const messages: Record<string, string> = {
       "We couldn’t complete this request. Please check your details and try again.": "Die Anfrage konnte nicht abgeschlossen werden. Bitte überprüfe deine Angaben und versuche es erneut.",
@@ -47,7 +49,7 @@ export default function LoginPage() {
       "Please enter your email address first.": "Bitte gib zuerst deine E-Mail-Adresse ein.",
       "A new confirmation email has been sent.": "Eine neue Bestätigungs-E-Mail wurde gesendet."
     };
-    return isGerman ? (messages[value] || value) : isFrench ? frenchHomeText(value) : isRomanian ? romanianHomeText(value) : value;
+    return isGerman ? (messages[value] || value) : isFrench ? frenchHomeText(value) : isRomanian ? romanianHomeText(value) : isRussian ? russianHomeText(value) : value;
   };
 
   useEffect(() => {
