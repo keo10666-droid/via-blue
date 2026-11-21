@@ -14,13 +14,14 @@ import { supabase } from "@/lib/supabase";
 import HomeText from "@/app/components/HomeText";
 import { frenchHomeText } from "@/lib/frenchHomeCopy";
 import { romanianHomeText } from "@/lib/romanianHomeCopy";
+import { russianHomeText } from "@/lib/russianHomeCopy";
 
 function accountText(en: string, de: string) {
   try {
     const language = typeof window !== "undefined"
       ? window.localStorage.getItem("via-blue-language")
       : "en";
-    return language === "de" ? de : language === "fr" ? frenchHomeText(en) : language === "ro" ? romanianHomeText(en) : en;
+    return language === "de" ? de : language === "fr" ? frenchHomeText(en) : language === "ro" ? romanianHomeText(en) : language === "ru" ? russianHomeText(en) : en;
   } catch {
     return en;
   }
