@@ -14,10 +14,23 @@ export function proxy(request: NextRequest) {
     target.pathname = "/" + segments.slice(2).join("/");
     return NextResponse.redirect(target);
   }
-  if (!locales.includes(candidate as (typeof locales)[number])) return NextResponse.next();
+  if (!locales.includes(candidate as (typeof locales)[number])) {
+    const savedLocale = request.cookies.get("via-blue-language")?.value;
+    if (locales.includes(savedLocale as (typeof locales)[number])) {
+      const target = request.nextUrl.clone();
+      target.pathname = `/${savedLocale}${pathname === "/" ? "" : pathname}`;
+      return NextResponse.redirect(target);
+    }
+    return NextResponse.next();
+  }
 
   const locale = candidate;
   const internalPath = "/" + segments.slice(2).join("/");
+  if (excluded.some((path) => internalPath === path || internalPath.startsWith(path + "/"))) {
+    const target = request.nextUrl.clone();
+    target.pathname = internalPath;
+    return NextResponse.redirect(target);
+  }
   const target = request.nextUrl.clone();
   target.pathname = internalPath === "/" ? "/" : internalPath;
   const requestHeaders = new Headers(request.headers);
