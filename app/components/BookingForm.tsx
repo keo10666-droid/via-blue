@@ -932,7 +932,7 @@ ${notes.trim() || "-"}`;
                                 />
 
                                 <span className="flex-1">
-                                  {displayCountryName(c.name, isGerman, isFrench, isRomanian)}
+                                  {displayCountryName(c.name, isGerman, isFrench, isRomanian, isRussian)}
                                 </span>
 
                                 <span className="font-bold text-gray-500">
