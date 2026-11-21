@@ -1047,6 +1047,55 @@ Object.assign(russianCopy, {
   "One special character": "Один специальный символ"
 });
 
+
+Object.assign(russianCopy, {
+  "Sahl Hasheesh": "Сахл-Хашиш",
+  "Makadi Bay": "Макади-Бей",
+  "El Gouna": "Эль-Гуна",
+  "Soma Bay": "Сома-Бей",
+  "Safaga": "Сафага",
+  "Hurghada Marina": "Марина Хургады",
+  "El Dahar": "Эль-Дахар",
+  "Sekalla": "Саккала",
+  "Airport → Hotel": "Аэропорт → Отель",
+  "Hotel → Airport": "Отель → Аэропорт",
+  "Hotel → Hotel": "Отель → Отель",
+  "Airport to Hotel": "Из аэропорта в отель",
+  "Hotel to Airport": "Из отеля в аэропорт",
+  "Hotel to Hotel": "Из отеля в отель",
+  "Private Transfer": "Индивидуальный трансфер",
+  "Shared Transfer": "Групповой трансфер",
+  "Transfer Date": "Дата трансфера",
+  "Pickup Time": "Время подачи",
+  "Select Pickup Time": "Выберите время подачи",
+  "Choose your preferred pickup time": "Выберите удобное время подачи",
+  "Hour": "Час",
+  "Minute": "Минута",
+  "Period": "Время суток",
+  "Selected Time": "Выбранное время",
+  "Set Pickup Time": "Установить время подачи",
+  "Transfer Not Found": "Трансфер не найден",
+  "The transfer you are looking for is not available": "Запрошенный трансфер недоступен",
+  "Select a date from tomorrow onwards": "Выберите дату начиная с завтрашнего дня",
+  "Step 1": "Шаг 1",
+  "Choose Transfer Type": "Выберите тип трансфера",
+  "Select the type of transfer you need": "Выберите нужный тип трансфера",
+  "Instant WhatsApp Confirmation": "Мгновенное подтверждение в WhatsApp",
+  "Fixed Price": "Фиксированная цена",
+  "Professional Driver": "Профессиональный водитель",
+  "Secure Booking": "Безопасное бронирование",
+  "Book Your Transfer": "Забронировать трансфер",
+  "Choose your transfer type and complete your booking details": "Выберите тип трансфера и заполните данные бронирования",
+  "By sending your request, our team will contact you on WhatsApp to confirm your booking": "После отправки запроса наша команда свяжется с вами в WhatsApp для подтверждения бронирования",
+  "Airport pickup": "Встреча в аэропорту",
+  "Hotel delivery": "Доставка в отель",
+  "Sedan": "Седан",
+  "X-Pander": "X-Pander",
+  "Van": "Микроавтобус",
+  "Luxury": "Премиум-автомобиль",
+  "Coster": "Микроавтобус"
+});
+
 export function russianHomeText(value: string): string {
   return russianCopy[value] ?? value;
 }
