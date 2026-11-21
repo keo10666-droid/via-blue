@@ -77,7 +77,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const luxuryPages: MetadataRoute.Sitemap = luxurySlugs.map((slug) => ({
     url: `${baseUrl}/luxury-tours/${slug}`,
-    lastModified,
     changeFrequency: "monthly",
     priority: 0.7,
   }));
