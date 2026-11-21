@@ -138,7 +138,7 @@ export default async function TransferPage({ params }: Props) {
 
   return (
     <main className="min-h-screen bg-slate-50">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(transferSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(transferSchema).replace(/</g, "\\u003c") }} />
 
       {/* =====================================================
           HERO
