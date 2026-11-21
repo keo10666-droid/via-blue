@@ -916,6 +916,53 @@ Object.assign(russianCopy, {
   "Private experiences can be tailored around your preferences and schedule.": "Индивидуальные программы можно адаптировать под ваши предпочтения и расписание."
 });
 
+
+Object.assign(russianCopy, {
+  "Your Holiday": "Ваш отдых",
+  "Your Adventure": "Ваше приключение",
+  "Discover the Red Sea with unforgettable boat trips, island escapes, desert adventures and reliable private transfers — all from Hurghada": "Откройте Красное море: незабываемые морские прогулки, острова, приключения в пустыне и надёжные индивидуальные трансферы из Хургады",
+  "Explore Our Tours": "Посмотреть экскурсии",
+  "Book a Private Transfer": "Заказать индивидуальный трансфер",
+  "Local Experts": "Местные специалисты",
+  "Easy Booking": "Простое бронирование",
+  "Reliable Service": "Надёжный сервис",
+  "Hurghada · Red Sea · Egypt": "Хургада · Красное море · Египет",
+  "More Than Just a Tour": "Больше, чем экскурсия",
+  "From": "От",
+  "Book Now": "Забронировать",
+  "Explore Tours": "Посмотреть экскурсии",
+  "Start Your Journey": "Начните своё путешествие",
+  "We are here to help": "Мы готовы помочь",
+  "Coming soon": "Скоро",
+  "WhatsApp Number": "Номер WhatsApp",
+  "Message": "Сообщение",
+  "Send Message": "Отправить сообщение",
+  "Your Holiday.": "Ваш отдых.",
+  "Designed Around You.": "Созданный специально для вас.",
+  "Tell us what you’re looking for and let our planner build a personalized Red Sea experience around you.": "Расскажите, что вы ищете, и наш планировщик составит индивидуальную программу отдыха на Красном море.",
+  "Who are you travelling with?": "С кем вы путешествуете?",
+  "Where are you staying?": "Где вы остановились?",
+  "How long are you staying?": "Как долго вы остаётесь?",
+  "What’s your budget?": "Какой у вас бюджет?",
+  "What would you love to experience?": "Какие впечатления вы хотели бы получить?",
+  "Real Via Blue experiences": "Реальные предложения Via Blue",
+  "Real prices": "Реальные цены",
+  "3 personalized options": "3 индивидуальных варианта",
+  "Your Via Blue Trip Plan": "Ваш план путешествия Via Blue",
+  "Recommended": "Рекомендуем",
+  "Choose This Package": "Выбрать этот пакет",
+  "Book This Package": "Забронировать этот пакет",
+  "Adults": "Взрослые",
+  "Children": "Дети",
+  "Currency": "Валюта",
+  "Euro": "Евро",
+  "US Dollar": "Доллар США",
+  "British Pound": "Британский фунт",
+  "Back": "Назад",
+  "Next": "Далее",
+  "Back to homepage": "На главную"
+});
+
 export function russianHomeText(value: string): string {
   return russianCopy[value] ?? value;
 }
