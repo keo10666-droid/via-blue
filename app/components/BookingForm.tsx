@@ -8,6 +8,8 @@ import { frenchHomeText } from "@/lib/frenchHomeCopy";
 import { frenchTourValue } from "@/lib/frenchTourCopy";
 import { romanianHomeText } from "@/lib/romanianHomeCopy";
 import { romanianTourValue } from "@/lib/romanianTourCopy";
+import { russianHomeText } from "@/lib/russianHomeCopy";
+import { russianTourValue } from "@/lib/russianTourCopy";
 import { useCurrency } from "@/app/components/CurrencyProvider";
 
 type BookingFormProps = {
@@ -229,8 +231,8 @@ const germanCountryNames: Record<string, string> = {
   "Japan": "Japan",
   "South Korea": "Südkorea"
 };
-const displayNationality = (value: string, isGerman: boolean, isFrench: boolean, isRomanian: boolean) => isGerman ? (germanNationalityNames[value] || value) : isFrench ? frenchHomeText(value) : isRomanian ? romanianHomeText(value) : value;
-const displayCountryName = (value: string, isGerman: boolean, isFrench: boolean, isRomanian: boolean) => isGerman ? (germanCountryNames[value] || value) : isFrench ? frenchHomeText(value) : isRomanian ? romanianHomeText(value) : value;
+const displayNationality = (value: string, isGerman: boolean, isFrench: boolean, isRomanian: boolean, isRussian: boolean) => isGerman ? (germanNationalityNames[value] || value) : isFrench ? frenchHomeText(value) : isRomanian ? romanianHomeText(value) : isRussian ? russianHomeText(value) : value;
+const displayCountryName = (value: string, isGerman: boolean, isFrench: boolean, isRomanian: boolean, isRussian: boolean) => isGerman ? (germanCountryNames[value] || value) : isFrench ? frenchHomeText(value) : isRomanian ? romanianHomeText(value) : isRussian ? russianHomeText(value) : value;
 
 const FlagIcon = ({
   iso,
@@ -264,9 +266,10 @@ export default function BookingForm({
   const [isGerman, setIsGerman] = useState(false);
   const [isFrench, setIsFrench] = useState(false);
   const [isRomanian, setIsRomanian] = useState(false);
-  const displayTourName = isFrench ? frenchTourValue(tourName) : isRomanian ? romanianTourValue(tourName) : tourName;
+  const [isRussian, setIsRussian] = useState(false);
+  const displayTourName = isFrench ? frenchTourValue(tourName) : isRomanian ? romanianTourValue(tourName) : isRussian ? russianTourValue(tourName) : tourName;
   useEffect(() => {
-    const syncLanguage = () => { const language = localStorage.getItem("via-blue-language"); setIsGerman(language === "de"); setIsFrench(language === "fr"); setIsRomanian(language === "ro"); };
+    const syncLanguage = () => { const language = localStorage.getItem("via-blue-language"); setIsGerman(language === "de"); setIsFrench(language === "fr"); setIsRomanian(language === "ro"); setIsRussian(language === "ru"); };
     syncLanguage();
     window.addEventListener("via-blue-language-change", syncLanguage);
     return () => window.removeEventListener("via-blue-language-change", syncLanguage);
@@ -762,7 +765,7 @@ ${notes.trim() || "-"}`;
 
                 <input
                   type="text"
-                  placeholder={isGerman ? "Vollständigen Namen eingeben *" : isFrench ? "Saisir le nom complet *" : isRomanian ? "Introdu numele complet *" : "Enter full name *"}
+                  placeholder={isGerman ? "Vollständigen Namen eingeben *" : isFrench ? "Saisir le nom complet *" : isRomanian ? "Introdu numele complet *" : isRussian ? "Введите полное имя *" : "Enter full name *"}
                   value={name}
                   onChange={(e) =>
                     setName(e.target.value)
@@ -787,8 +790,8 @@ ${notes.trim() || "-"}`;
 
                 <input
                   type="text"
-                  placeholder={isGerman ? "Nationalität" : isFrench ? "Nationalité" : isRomanian ? "Naționalitate" : "Nationality"}
-                  value={displayNationality(nationality, isGerman, isFrench, isRomanian)}
+                  placeholder={isGerman ? "Nationalität" : isFrench ? "Nationalité" : isRomanian ? "Naționalitate" : isRussian ? "Гражданство" : "Nationality"}
+                  value={displayNationality(nationality, isGerman, isFrench, isRomanian, isRussian)}
                   onChange={(e) => {
                     setNationality(e.target.value);
                     setIsNationalityOpen(true);
@@ -823,7 +826,7 @@ ${notes.trim() || "-"}`;
                             }}
                             className="block w-full px-4 py-3 text-left text-gray-900 transition hover:bg-blue-50"
                           >
-                            {displayNationality(item, isGerman, isFrench, isRomanian)}
+                            {displayNationality(item, isGerman, isFrench, isRomanian, isRussian)}
                           </button>
                         )
                       )}
@@ -843,7 +846,7 @@ ${notes.trim() || "-"}`;
 
                 <input
                   type="email"
-                  placeholder={isGerman ? "E-Mail *" : isFrench ? "E-mail *" : isRomanian ? "E-mail *" : "Email *"}
+                  placeholder={isGerman ? "E-Mail *" : isFrench ? "E-mail *" : isRomanian ? "E-mail *" : isRussian ? "Электронная почта *" : "Email *"}
                   value={email}
                   onChange={(e) =>
                     setEmail(e.target.value)
@@ -880,7 +883,7 @@ ${notes.trim() || "-"}`;
                     >
                       <FlagIcon
                         iso={selectedCountry.iso}
-                        name={displayCountryName(selectedCountry.name, isGerman, isFrench, isRomanian)}
+                        name={displayCountryName(selectedCountry.name, isGerman, isFrench, isRomanian, isRussian)}
                       />
 
                       <span className="font-bold">
@@ -896,7 +899,7 @@ ${notes.trim() || "-"}`;
                       <div className="absolute z-30 mt-2 w-72 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-[0_20px_50px_rgba(7,26,54,0.14)]">
                         <input
                           type="text"
-                          placeholder={isGerman ? "Land suchen..." : isFrench ? "Rechercher un pays..." : isRomanian ? "Caută țara..." : "Search country..."}
+                          placeholder={isGerman ? "Land suchen..." : isFrench ? "Rechercher un pays..." : isRomanian ? "Caută țara..." : isRussian ? "Поиск страны..." : "Search country..."}
                           value={countrySearch}
                           onChange={(e) =>
                             setCountrySearch(
@@ -925,7 +928,7 @@ ${notes.trim() || "-"}`;
                               >
                                 <FlagIcon
                                   iso={c.iso}
-                                  name={displayCountryName(c.name, isGerman, isFrench, isRomanian)}
+                                  name={displayCountryName(c.name, isGerman, isFrench, isRomanian, isRussian)}
                                 />
 
                                 <span className="flex-1">
@@ -945,7 +948,7 @@ ${notes.trim() || "-"}`;
 
                   <input
                     type="tel"
-                    placeholder={isGerman ? "Nummer" : isFrench ? "Numéro" : isRomanian ? "Număr" : "Number"}
+                    placeholder={isGerman ? "Nummer" : isFrench ? "Numéro" : isRomanian ? "Număr" : isRussian ? "Номер" : "Number"}
                     value={phone}
                     onChange={(e) =>
                       setPhone(e.target.value)
@@ -986,7 +989,7 @@ ${notes.trim() || "-"}`;
 
                 <input
                   type="text"
-                  placeholder={isGerman ? "Hotelname" : isFrench ? "Nom de l’hôtel" : isRomanian ? "Numele hotelului" : "Hotel name"}
+                  placeholder={isGerman ? "Hotelname" : isFrench ? "Nom de l’hôtel" : isRomanian ? "Numele hotelului" : isRussian ? "Название отеля" : "Hotel name"}
                   value={hotel}
                   onChange={(e) =>
                     setHotel(e.target.value)
@@ -1002,7 +1005,7 @@ ${notes.trim() || "-"}`;
 
                 <input
                   type="text"
-                  placeholder={isGerman ? "Zimmernummer" : isFrench ? "Numéro de chambre" : isRomanian ? "Numărul camerei" : "Room number"}
+                  placeholder={isGerman ? "Zimmernummer" : isFrench ? "Numéro de chambre" : isRomanian ? "Numărul camerei" : isRussian ? "Номер комнаты" : "Room number"}
                   value={roomNumber}
                   onChange={(e) =>
                     setRoomNumber(e.target.value)
@@ -1192,31 +1195,31 @@ ${notes.trim() || "-"}`;
                         }}
                       >
                         <option value="">
-                          {isGerman ? `Alter für Kind ${index + 1} auswählen` : isFrench ? `Choisir l’âge de l’enfant ${index + 1}` : isRomanian ? `Alege vârsta copilului ${index + 1}` : `Select Child ${index + 1} Age`}
+                          {isGerman ? `Alter für Kind ${index + 1} auswählen` : isFrench ? `Choisir l’âge de l’enfant ${index + 1}` : isRomanian ? `Alege vârsta copilului ${index + 1}` : isRussian ? `Выберите возраст ребёнка ${index + 1}` : `Select Child ${index + 1} Age`}
                         </option>
 
                         <option value="5">
-                          {isGerman ? "5 Jahre" : isFrench ? "5 ans" : isRomanian ? "5 ani" : "5 years"}
+                          {isGerman ? "5 Jahre" : isFrench ? "5 ans" : isRomanian ? "5 ani" : isRussian ? "5 лет" : "5 years"}
                         </option>
 
                         <option value="6">
-                          {isGerman ? "6 Jahre" : isFrench ? "6 ans" : isRomanian ? "6 ani" : "6 years"}
+                          {isGerman ? "6 Jahre" : isFrench ? "6 ans" : isRomanian ? "6 ani" : isRussian ? "6 лет" : "6 years"}
                         </option>
 
                         <option value="7">
-                          {isGerman ? "7 Jahre" : isFrench ? "7 ans" : isRomanian ? "7 ani" : "7 years"}
+                          {isGerman ? "7 Jahre" : isFrench ? "7 ans" : isRomanian ? "7 ani" : isRussian ? "7 лет" : "7 years"}
                         </option>
 
                         <option value="8">
-                          {isGerman ? "8 Jahre" : isFrench ? "8 ans" : isRomanian ? "8 ani" : "8 years"}
+                          {isGerman ? "8 Jahre" : isFrench ? "8 ans" : isRomanian ? "8 ani" : isRussian ? "8 лет" : "8 years"}
                         </option>
 
                         <option value="9">
-                          {isGerman ? "9 Jahre" : isFrench ? "9 ans" : isRomanian ? "9 ani" : "9 years"}
+                          {isGerman ? "9 Jahre" : isFrench ? "9 ans" : isRomanian ? "9 ani" : isRussian ? "9 лет" : "9 years"}
                         </option>
 
                         <option value="10">
-                          {isGerman ? "10 Jahre" : isFrench ? "10 ans" : isRomanian ? "10 ani" : "10 years"}
+                          {isGerman ? "10 Jahre" : isFrench ? "10 ans" : isRomanian ? "10 ani" : isRussian ? "10 лет" : "10 years"}
                         </option>
                       </select>
 
@@ -1263,23 +1266,23 @@ ${notes.trim() || "-"}`;
                         }}
                       >
                         <option value="">
-                          {isGerman ? `Alter für Kleinkind ${index + 1} auswählen` : isFrench ? `Choisir l’âge du bébé ${index + 1}` : isRomanian ? `Alege vârsta bebelușului ${index + 1}` : `Select Infant ${index + 1} Age`}
+                          {isGerman ? `Alter für Kleinkind ${index + 1} auswählen` : isFrench ? `Choisir l’âge du bébé ${index + 1}` : isRomanian ? `Alege vârsta bebelușului ${index + 1}` : isRussian ? `Выберите возраст малыша ${index + 1}` : `Select Infant ${index + 1} Age`}
                         </option>
 
                         <option value="1">
-                          {isGerman ? "1 Jahr" : isFrench ? "1 an" : isRomanian ? "1 an" : "1 year"}
+                          {isGerman ? "1 Jahr" : isFrench ? "1 an" : isRomanian ? "1 an" : isRussian ? "1 год" : "1 year"}
                         </option>
 
                         <option value="2">
-                          {isGerman ? "2 Jahre" : isFrench ? "2 ans" : isRomanian ? "2 ani" : "2 years"}
+                          {isGerman ? "2 Jahre" : isFrench ? "2 ans" : isRomanian ? "2 ani" : isRussian ? "2 года" : "2 years"}
                         </option>
 
                         <option value="3">
-                          {isGerman ? "3 Jahre" : isFrench ? "3 ans" : isRomanian ? "3 ani" : "3 years"}
+                          {isGerman ? "3 Jahre" : isFrench ? "3 ans" : isRomanian ? "3 ani" : isRussian ? "3 года" : "3 years"}
                         </option>
 
                         <option value="4">
-                          {isGerman ? "4 Jahre" : isFrench ? "4 ans" : isRomanian ? "4 ani" : "4 years"}
+                          {isGerman ? "4 Jahre" : isFrench ? "4 ans" : isRomanian ? "4 ani" : isRussian ? "4 года" : "4 years"}
                         </option>
                       </select>
 
@@ -1358,7 +1361,7 @@ ${notes.trim() || "-"}`;
 
             <textarea
               rows={5}
-              placeholder={isGerman ? "Besondere Wünsche / Anmerkungen" : isFrench ? "Demandes particulières / remarques" : isRomanian ? "Solicitări speciale / note" : "Special requests / notes"}
+              placeholder={isGerman ? "Besondere Wünsche / Anmerkungen" : isFrench ? "Demandes particulières / remarques" : isRomanian ? "Solicitări speciale / note" : isRussian ? "Особые пожелания / примечания" : "Special requests / notes"}
               value={notes}
               onChange={(e) =>
                 setNotes(e.target.value)
@@ -1467,7 +1470,7 @@ ${notes.trim() || "-"}`;
                           </span>
 
                           <span>
-                            {isFrench ? frenchTourValue(item) : isRomanian ? romanianTourValue(item) : item}
+                            {isFrench ? frenchTourValue(item) : isRomanian ? romanianTourValue(item) : isRussian ? russianTourValue(item) : item}
                           </span>
                         </li>
                       )
