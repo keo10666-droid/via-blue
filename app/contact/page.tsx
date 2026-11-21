@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useState } from "react";
 import HomeText from "@/app/components/HomeText";
+import { russianHomeText } from "@/lib/russianHomeCopy";
 
 function WhatsAppIcon() {
   return (
@@ -221,16 +222,18 @@ export default function ContactPage() {
   const [isGerman, setIsGerman] = useState(false);
   const [isFrench, setIsFrench] = useState(false);
   const [isRomanian, setIsRomanian] = useState(false);
+  const [isRussian, setIsRussian] = useState(false);
 
   useEffect(() => {
     const syncLanguage = () => {
       try {
         const language = window.localStorage.getItem("via-blue-language");
         setIsGerman(language === "de");
-        setIsFrench(language === "fr"); setIsRomanian(language === "ro");
+        setIsFrench(language === "fr"); setIsRomanian(language === "ro"); setIsRussian(language === "ru");
       } catch {
         setIsGerman(false);
         setIsFrench(false);
+        setIsRussian(false);
       }
     };
 
@@ -268,6 +271,7 @@ export default function ContactPage() {
       setErrorMessage(
         isFrench
           ? "Votre message n’a pas pu être envoyé. Veuillez réessayer ou nous contacter sur WhatsApp."
+          : isRussian ? "Не удалось отправить сообщение. Попробуйте ещё раз или свяжитесь с нами через WhatsApp."
           : isGerman
             ? "Ihre Nachricht konnte nicht gesendet werden. Bitte versuchen Sie es erneut oder kontaktieren Sie uns über WhatsApp."
             : "We couldn't send your message. Please try again or contact us on WhatsApp.",
@@ -565,7 +569,7 @@ export default function ContactPage() {
                         name="name"
                         type="text"
                         required
-                        placeholder={isGerman ? "Ihr vollständiger Name" : isFrench ? "Votre nom complet" : isRomanian ? "Numele tău complet" : "Your full name"}
+                        placeholder={isGerman ? "Ihr vollständiger Name" : isFrench ? "Votre nom complet" : isRomanian ? "Numele tău complet" : isRussian ? "Ваше полное имя" : "Your full name"}
                         className="h-12 w-full rounded-xl border border-[#dfe3ea] bg-[#fbfcfd] px-4 text-sm text-[#172033] outline-none transition placeholder:text-[#98a2b3] focus:border-[#f59a23] focus:bg-white focus:ring-4 focus:ring-[#f59a23]/10"
                       />
                     </div>
@@ -583,7 +587,7 @@ export default function ContactPage() {
                         name="email"
                         type="email"
                         required
-                        placeholder={isGerman ? "ihre@email.de" : isFrench ? "vous@exemple.fr" : isRomanian ? "nume@exemplu.ro" : "you@example.com"}
+                        placeholder={isGerman ? "ihre@email.de" : isFrench ? "vous@exemple.fr" : isRomanian ? "nume@exemplu.ro" : isRussian ? "ваш@email.com" : "you@example.com"}
                         className="h-12 w-full rounded-xl border border-[#dfe3ea] bg-[#fbfcfd] px-4 text-sm text-[#172033] outline-none transition placeholder:text-[#98a2b3] focus:border-[#f59a23] focus:bg-white focus:ring-4 focus:ring-[#f59a23]/10"
                       />
                     </div>
@@ -619,7 +623,7 @@ export default function ContactPage() {
                         id="subject"
                         name="subject"
                         type="text"
-                        placeholder={isGerman ? "Betreff Ihrer Nachricht" : isFrench ? "Objet de votre message" : isRomanian ? "Subiectul mesajului" : "Message subject"}
+                        placeholder={isGerman ? "Betreff Ihrer Nachricht" : isFrench ? "Objet de votre message" : isRomanian ? "Subiectul mesajului" : isRussian ? "Тема сообщения" : "Message subject"}
                         className="h-12 w-full rounded-xl border border-[#dfe3ea] bg-[#fbfcfd] px-4 text-sm text-[#172033] outline-none transition placeholder:text-[#98a2b3] focus:border-[#f59a23] focus:bg-white focus:ring-4 focus:ring-[#f59a23]/10"
                       />
                     </div>
@@ -638,7 +642,7 @@ export default function ContactPage() {
                       name="message"
                       required
                       rows={7}
-                      placeholder={isGerman ? "Wie können wir Ihnen helfen?" : isFrench ? "Comment pouvons-nous vous aider ?" : isRomanian ? "Cum te putem ajuta?" : "How can we help you?"}
+                      placeholder={isGerman ? "Wie können wir Ihnen helfen?" : isFrench ? "Comment pouvons-nous vous aider ?" : isRomanian ? "Cum te putem ajuta?" : isRussian ? "Чем мы можем вам помочь?" : "How can we help you?"}
                       className="w-full resize-none rounded-xl border border-[#dfe3ea] bg-[#fbfcfd] px-4 py-3 text-sm leading-6 text-[#172033] outline-none transition placeholder:text-[#98a2b3] focus:border-[#f59a23] focus:bg-white focus:ring-4 focus:ring-[#f59a23]/10"
                     />
                   </div>
