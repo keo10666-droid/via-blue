@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
+import { getLocalizedAlternates } from "@/lib/localeMetadata";
 
-export const metadata: Metadata = {
+export async function generateMetadata(): Promise<Metadata> {
+  const alternates = await getLocalizedAlternates("/tours");
+  return {
   title: "Hurghada Tours & Excursions",
   description:
     "Discover the best tours and excursions in Hurghada, Egypt. Explore Red Sea boat trips, islands, snorkeling, diving, desert safaris, dolphin experiences and Egypt day tours with Via Blue.",
@@ -18,15 +21,12 @@ export const metadata: Metadata = {
     "Egypt excursions",
   ],
 
-  alternates: {
-    canonical: "https://viabluetours.com/tours",
-  },
-
+  alternates,
   openGraph: {
     title: "Hurghada Tours & Excursions | Via Blue",
     description:
       "Discover the best tours and excursions in Hurghada, Egypt. Explore Red Sea boat trips, islands, snorkeling, diving, desert safaris and unforgettable Egypt experiences with Via Blue.",
-    url: "https://viabluetours.com/tours",
+    url: alternates.canonical,
     siteName: "Via Blue",
     type: "website",
     locale: "en_US",
@@ -39,6 +39,7 @@ export const metadata: Metadata = {
       "Discover the best tours and excursions in Hurghada, Egypt with Via Blue.",
   },
 };
+}
 
 export default function ToursLayout({
   children,

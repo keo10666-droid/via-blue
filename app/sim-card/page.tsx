@@ -1,13 +1,16 @@
 import type { Metadata } from "next";
+import { getLocalizedAlternates } from "@/lib/localeMetadata";
 import Link from "next/link";
 import SimCardSection from "@/app/components/SimCardSection";
 import HomeText from "@/app/components/HomeText";
 
-export const metadata: Metadata = {
-  title: "Stay Connected | Egypt SIM Card | Via Blue",
-  description: "Get your Egypt SIM card with 25 GB data and calls. Choose your network and convenient airport pickup or hotel delivery.",
-  alternates: { canonical: "https://viabluetours.com/sim-card" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "Stay Connected | Egypt SIM Card | Via Blue",
+    description: "Get your Egypt SIM card with 25 GB data and calls. Choose your network and convenient airport pickup or hotel delivery.",
+    alternates: await getLocalizedAlternates("/sim-card"),
+  };
+}
 
 export default function SimCardPage() {
   return (

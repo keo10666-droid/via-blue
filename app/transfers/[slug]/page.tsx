@@ -1,5 +1,6 @@
 import CurrencyPrice from "@/app/components/CurrencyPrice";
 import type { Metadata } from "next";
+import { getLocalizedAlternates } from "@/lib/localeMetadata";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -20,6 +21,7 @@ export async function generateMetadata({
   params,
 }: Props): Promise<Metadata> {
   const { slug } = await params;
+  const alternates = await getLocalizedAlternates(`/transfers/${slug}`);
 
   const transfer =
     transfers[slug as keyof typeof transfers];
@@ -37,7 +39,7 @@ export async function generateMetadata({
 
   const description = `Book a private transfer from ${transfer.from} to ${transfer.to} with Via Blue. Comfortable vehicles, professional drivers and fixed prices.`;
 
-  const canonicalUrl = `https://viabluetours.com/transfers/${slug}`;
+  const canonicalUrl = alternates.canonical;
 
   return {
     metadataBase: new URL("https://viabluetours.com"),
@@ -61,9 +63,7 @@ export async function generateMetadata({
       follow: true,
     },
 
-    alternates: {
-      canonical: canonicalUrl,
-    },
+    alternates,
 
     openGraph: {
       title: `${title} | Via Blue`,

@@ -11,15 +11,12 @@ import { tourList } from "@/data/tours";
 import { supabase } from "@/lib/supabase";
 import { createSupabaseAdminClient } from "@/lib/supabaseAdmin";
 import { mergeHomepageContent } from "@/lib/websiteContent";
+import { getLocalizedAlternates } from "@/lib/localeMetadata";
 
-export const metadata: Metadata = {
-  alternates: {
-    canonical: "https://viabluetours.com",
-  },
-  openGraph: {
-    url: "https://viabluetours.com",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const alternates = await getLocalizedAlternates("/");
+  return { alternates, openGraph: { url: alternates.canonical } };
+}
 
 function ArrowRightIcon({ className = "h-5 w-5" }: { className?: string }) {
   return (

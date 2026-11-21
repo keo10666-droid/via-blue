@@ -1,5 +1,6 @@
 import CurrencyPrice from "@/app/components/CurrencyPrice";
 import type { Metadata } from "next";
+import { getLocalizedAlternates } from "@/lib/localeMetadata";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -32,6 +33,7 @@ export async function generateMetadata({
   params,
 }: Props): Promise<Metadata> {
   const { slug } = await params;
+  const alternates = await getLocalizedAlternates(`/tours/${slug}`);
 
   const tour = Object.values(tours).find(
     (item) => item.slug === slug
@@ -50,8 +52,8 @@ export async function generateMetadata({
     return {
       title: customTitle,
       description: customDescription,
-      alternates: { canonical: `https://viabluetours.com/tours/${slug}` },
-      openGraph: { title: `${customTitle} | Via Blue`, description: customDescription, url: `https://viabluetours.com/tours/${slug}`, siteName: "Via Blue", type: "website", images: [{ url: custom.image || "/images/via-blue-hero.webp", alt: customTitle }] },
+      alternates,
+      openGraph: { title: `${customTitle} | Via Blue`, description: customDescription, url: alternates.canonical, siteName: "Via Blue", type: "website", images: [{ url: custom.image || "/images/via-blue-hero.webp", alt: customTitle }] },
     };
   }
 
@@ -86,13 +88,13 @@ export async function generateMetadata({
     ],
 
     alternates: {
-      canonical: `https://viabluetours.com/tours/${tour.slug}`,
+      canonical: alternates.canonical,
     },
 
     openGraph: {
       title: `${title} | Via Blue`,
       description,
-      url: `https://viabluetours.com/tours/${tour.slug}`,
+      url: alternates.canonical,
       siteName: "Via Blue",
       type: "website",
       locale: "en_US",
@@ -847,7 +849,7 @@ export default async function TourDetailsPage({
 
     image: [tourImage],
 
-    url: `https://viabluetours.com/tours/${tour.slug}`,
+    url: alternates.canonical,
 
     provider: {
       "@type": "Organization",
@@ -861,7 +863,7 @@ export default async function TourDetailsPage({
       ? {
           offers: {
             "@type": "Offer",
-            url: `https://viabluetours.com/tours/${tour.slug}`,
+            url: alternates.canonical,
             priceCurrency: "EUR",
             price: tour.price,
             availability: tour.available

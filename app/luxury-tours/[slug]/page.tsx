@@ -1,5 +1,6 @@
 import CurrencyPrice from "@/app/components/CurrencyPrice";
 import type { Metadata } from "next";
+import { getLocalizedAlternates } from "@/lib/localeMetadata";
 import Link from "next/link";
 import HomeText from "@/app/components/HomeText";
 import { getLuxuryPricing } from "@/lib/luxuryPricing";
@@ -1193,13 +1194,14 @@ type PageProps = {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
+  const alternates = await getLocalizedAlternates(`/luxury-tours/${slug}`);
   const tour = luxuryTours[slug as LuxuryTourSlug];
   if (!tour) return { title: "Luxury Tour Not Found", robots: { index: false, follow: false } };
-  const canonical = `https://viabluetours.com/luxury-tours/${slug}`;
+  const canonical = alternates.canonical;
   return {
     title: `${tour.name} in Egypt`,
     description: tour.description,
-    alternates: { canonical },
+    alternates,
     openGraph: { title: `${tour.name} | Via Blue`, description: tour.description, url: canonical, siteName: "Via Blue", type: "website", locale: "en_US" },
     twitter: { card: "summary_large_image", title: `${tour.name} | Via Blue`, description: tour.description },
   };

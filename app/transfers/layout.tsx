@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
+import { getLocalizedAlternates } from "@/lib/localeMetadata";
 
-export const metadata: Metadata = {
+export async function generateMetadata(): Promise<Metadata> {
+  const alternates = await getLocalizedAlternates("/transfers");
+  return {
   title: "Hurghada Airport & Hotel Transfers | Via Blue",
   description:
     "Book premium private airport, hotel and inter-hotel transfers across Hurghada, Sahl Hasheesh, Makadi Bay, El Gouna, Soma Bay and Safaga with Via Blue",
@@ -18,15 +21,12 @@ export const metadata: Metadata = {
     "Safaga transfer",
   ],
 
-  alternates: {
-    canonical: "https://viabluetours.com/transfers",
-  },
-
+  alternates,
   openGraph: {
     title: "Hurghada Airport & Hotel Transfers | Via Blue",
     description:
       "Enjoy reliable private airport, hotel and inter-hotel transfers across Hurghada and the Red Sea with Via Blue",
-    url: "https://viabluetours.com/transfers",
+    url: alternates.canonical,
     siteName: "Via Blue",
     type: "website",
     locale: "en_US",
@@ -39,6 +39,7 @@ export const metadata: Metadata = {
       "Book reliable private transfers across Hurghada and the Red Sea with Via Blue",
   },
 };
+}
 
 export default function TransfersLayout({
   children,
