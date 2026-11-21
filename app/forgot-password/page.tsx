@@ -7,6 +7,7 @@ import { Eye, EyeOff, ArrowLeft } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { frenchHomeText } from "@/lib/frenchHomeCopy";
 import { romanianHomeText } from "@/lib/romanianHomeCopy";
+import { russianHomeText } from "@/lib/russianHomeCopy";
 
 type Step = "email" | "code" | "password" | "success";
 
@@ -24,20 +25,21 @@ export default function ForgotPasswordPage() {
   const [isGerman, setIsGerman] = useState(false);
   const [isFrench, setIsFrench] = useState(false);
   const [isRomanian, setIsRomanian] = useState(false);
+  const [isRussian, setIsRussian] = useState(false);
 
   useEffect(() => {
     try { const language = window.localStorage.getItem("via-blue-language");
       setIsGerman(language === "de");
-      setIsFrench(language === "fr"); setIsRomanian(language === "ro"); } catch { /* English fallback */ }
+      setIsFrench(language === "fr"); setIsRomanian(language === "ro"); setIsRussian(language === "ru"); } catch { /* English fallback */ }
     const handleLanguageChange = (event: Event) => {
-      const next = (event as CustomEvent<"en" | "de" | "fr" | "ro">).detail;
-      if (next === "en" || next === "de" || next === "fr" || next === "ro") { setIsGerman(next === "de"); setIsFrench(next === "fr"); setIsRomanian(next === "ro"); }
+      const next = (event as CustomEvent<"en" | "de" | "fr" | "ro" | "ru">).detail;
+      if (next === "en" || next === "de" || next === "fr" || next === "ro" || next === "ru") { setIsGerman(next === "de"); setIsFrench(next === "fr"); setIsRomanian(next === "ro"); setIsRussian(next === "ru"); }
     };
     window.addEventListener("via-blue-language-change", handleLanguageChange);
     return () => window.removeEventListener("via-blue-language-change", handleLanguageChange);
   }, []);
 
-  const text = (en: string, de: string) => isGerman ? de : isFrench ? frenchHomeText(en) : isRomanian ? romanianHomeText(en) : en;
+  const text = (en: string, de: string) => isGerman ? de : isFrench ? frenchHomeText(en) : isRomanian ? romanianHomeText(en) : isRussian ? russianHomeText(en) : en;
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [password, setPassword] = useState("");
@@ -63,7 +65,7 @@ export default function ForgotPasswordPage() {
     setMessage(
       isGerman
         ? (messages[value] || "Etwas ist schiefgelaufen. Bitte versuche es erneut.")
-        : isFrench ? (frenchHomeText(value) === value ? "Une erreur s’est produite. Veuillez réessayer." : frenchHomeText(value)) : isRomanian ? (romanianHomeText(value) === value ? "A apărut o eroare. Te rugăm să încerci din nou." : romanianHomeText(value))
+        : isFrench ? (frenchHomeText(value) === value ? "Une erreur s’est produite. Veuillez réessayer." : frenchHomeText(value)) : isRomanian ? (romanianHomeText(value) === value ? "A apărut o eroare. Te rugăm să încerci din nou." : romanianHomeText(value)) : isRussian ? (russianHomeText(value) === value ? "Произошла ошибка. Попробуйте ещё раз." : russianHomeText(value))
         : "Something went wrong. Please try again."
     );
   }
@@ -72,7 +74,7 @@ export default function ForgotPasswordPage() {
     const messages: Record<string, string> = {
       "A verification code has been sent to your email address.": "Ein Bestätigungscode wurde an deine E-Mail-Adresse gesendet."
     };
-    return isGerman ? (messages[value] || value) : isFrench ? frenchHomeText(value) : isRomanian ? romanianHomeText(value) : value;
+    return isGerman ? (messages[value] || value) : isFrench ? frenchHomeText(value) : isRomanian ? romanianHomeText(value) : isRussian ? russianHomeText(value) : value;
   }
 
   async function handleSendCode(event: FormEvent<HTMLFormElement>) {

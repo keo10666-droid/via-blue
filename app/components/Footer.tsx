@@ -224,26 +224,28 @@ function TripadvisorIcon() {
 }
 
 export default function Footer() {
-  const [language, setLanguage] = useState<"en" | "de" | "fr" | "ro">("en");
+  const [language, setLanguage] = useState<"en" | "de" | "fr" | "ro" | "ru">("en");
 
   useEffect(() => {
     try {
       const saved = window.localStorage.getItem("via-blue-language");
-      if (saved === "de" || saved === "en" || saved === "fr" || saved === "ro") setLanguage(saved);
+      if (saved === "de" || saved === "en" || saved === "fr" || saved === "ro" || saved === "ru") setLanguage(saved);
     } catch {
       // English remains the fallback if browser storage is unavailable.
     }
 
     const handleLanguageChange = (event: Event) => {
-      const nextLanguage = (event as CustomEvent<"en" | "de" | "fr" | "ro">).detail;
-      if (nextLanguage === "en" || nextLanguage === "de" || nextLanguage === "fr" || nextLanguage === "ro") setLanguage(nextLanguage);
+      const nextLanguage = (event as CustomEvent<"en" | "de" | "fr" | "ro" | "ru">).detail;
+      if (nextLanguage === "en" || nextLanguage === "de" || nextLanguage === "fr" || nextLanguage === "ro" || nextLanguage === "ru") setLanguage(nextLanguage);
     };
 
     window.addEventListener("via-blue-language-change", handleLanguageChange);
     return () => window.removeEventListener("via-blue-language-change", handleLanguageChange);
   }, []);
 
-  const text = language === "ro"
+  const text = language === "ru"
+    ? { intro: "Ваш отдых на Красном море", headline: "Откройте Хургаду по-новому", description: "Незабываемые экскурсии, морские прогулки, снорклинг и индивидуальные трансферы в Хургаде", exploreEgypt: "Откройте Египет", follow: "Подписывайтесь на Via Blue", reputation: "Отзывы путешественников", comingSoon: "Скоро", quickLinks: "Быстрые ссылки", home: "Главная", tours: "Экскурсии", airportTransfers: "Трансфер из аэропорта", contact: "Контакты", experiences: "Популярные впечатления", privateTransfer: "Индивидуальный трансфер", luxuryTours: "VIP-туры", contactUs: "Связаться с нами", location: "Местоположение", email: "Электронная почта", closing: "Ваше путешествие начинается на Красном море", privacy: "Политика конфиденциальности", terms: "Условия использования", rights: "Все права защищены" }
+    : language === "ro"
     ? { intro: "Experiența ta la Marea Roșie", headline: "Descoperă Hurghada într-un mod special", description: "Descoperă excursii de neuitat, plimbări cu barca, aventuri de snorkeling și transferuri private în Hurghada", exploreEgypt: "Descoperă Egiptul", follow: "Urmărește Via Blue", reputation: "Păreri ale călătorilor", comingSoon: "În curând", quickLinks: "Linkuri rapide", home: "Acasă", tours: "Excursii", airportTransfers: "Transferuri de la aeroport", contact: "Contact", experiences: "Experiențe populare", privateTransfer: "Transfer privat", luxuryTours: "Excursii VIP", contactUs: "Contactează-ne", location: "Locație", email: "E-mail", closing: "Călătoria ta începe la Marea Roșie", privacy: "Politica de confidențialitate", terms: "Termeni și condiții", rights: "Toate drepturile rezervate" }
     : language === "fr"
     ? {
@@ -380,7 +382,7 @@ export default function Footer() {
               </p>
 
               <p className="mt-2 text-sm font-medium text-slate-200">
-                {language === "ro" ? "Excursii • Mare • Deșert • Transferuri" : language === "fr" ? "Excursions • Mer • Désert • Transferts" : language === "de" ? "Ausflüge • Meer • Wüste • Transfers" : "Tours • Sea • Desert • Transfers"}
+                {language === "ru" ? "Экскурсии • Море • Пустыня • Трансферы" : language === "ro" ? "Excursii • Mare • Deșert • Transferuri" : language === "fr" ? "Excursions • Mer • Désert • Transferts" : language === "de" ? "Ausflüge • Meer • Wüste • Transfers" : "Tours • Sea • Desert • Transfers"}
               </p>
             </div>
           </div>
@@ -444,7 +446,7 @@ export default function Footer() {
                 {/* Gmail */}
                 <a
                   href="mailto:viabluetours@gmail.com"
-                  aria-label={language === "ro" ? "E-mail" : language === "fr" ? "E-mail" : language === "de" ? "E-Mail" : "Email"}
+                  aria-label={language === "ru" ? "Электронная почта" : language === "ro" ? "E-mail" : language === "fr" ? "E-mail" : language === "de" ? "E-Mail" : "Email"}
                   className="group flex h-11 w-11 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.045] text-slate-300 shadow-xl shadow-black/20 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-red-400/40 hover:bg-red-500 hover:text-white hover:shadow-red-500/20"
                 >
                   <GmailIcon />

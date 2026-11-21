@@ -15,6 +15,8 @@ import { frenchTourCopy } from "@/lib/frenchTourCopy";
 import { frenchHomeText } from "@/lib/frenchHomeCopy";
 import { romanianHomeText } from "@/lib/romanianHomeCopy";
 import { romanianTourCopy } from "@/lib/romanianTourCopy";
+import { russianHomeText } from "@/lib/russianHomeCopy";
+import { russianTourCopy } from "@/lib/russianTourCopy";
 
 const nationalities = [
   "Egyptian",
@@ -146,9 +148,10 @@ export default function BookingPage() {
   const [isGerman, setIsGerman] = useState(false);
   const [isFrench, setIsFrench] = useState(false);
   const [isRomanian, setIsRomanian] = useState(false);
+  const [isRussian, setIsRussian] = useState(false);
 
   useEffect(() => {
-    const syncLanguage = () => { const language = window.localStorage.getItem("via-blue-language"); setIsGerman(language === "de"); setIsFrench(language === "fr"); setIsRomanian(language === "ro"); };
+    const syncLanguage = () => { const language = window.localStorage.getItem("via-blue-language"); setIsGerman(language === "de"); setIsFrench(language === "fr"); setIsRomanian(language === "ro"); setIsRussian(language === "ru"); };
     syncLanguage();
     window.addEventListener("via-blue-language-change", syncLanguage);
     return () => window.removeEventListener("via-blue-language-change", syncLanguage);
@@ -500,7 +503,7 @@ const selectedCairoVehicleOption =
 
   const monthTitle =
     calendarMonth.toLocaleDateString(
-      isGerman ? "de-DE" : isFrench ? "fr-FR" : isRomanian ? "ro-RO" : "en-US",
+      isGerman ? "de-DE" : isFrench ? "fr-FR" : isRomanian ? "ro-RO" : isRussian ? "ru-RU" : "en-US",
       {
         month: "long",
         year: "numeric",
@@ -645,7 +648,7 @@ const selectedCairoVehicleOption =
 
   const errorText = (msg: string) => (
     <p className="mt-1.5 text-xs font-semibold text-red-600">
-      {isFrench ? frenchHomeText(msg) : isRomanian ? romanianHomeText(msg) : msg}
+      {isFrench ? frenchHomeText(msg) : isRomanian ? romanianHomeText(msg) : isRussian ? russianHomeText(msg) : msg}
     </p>
   );
 
@@ -660,7 +663,7 @@ const selectedCairoVehicleOption =
   const message = `
 NEW BOOKING REQUEST
 
-Tour: ${isFrench ? frenchTourCopy(tour.slug, "name", tour.name) : isRomanian ? romanianTourCopy(tour.slug, "name", tour.name) : tour.name}
+Tour: ${isFrench ? frenchTourCopy(tour.slug, "name", tour.name) : isRomanian ? romanianTourCopy(tour.slug, "name", tour.name) : isRussian ? russianTourCopy(tour.slug, "name", tour.name) : tour.name}
 
 Museum: ${
     (slug === "cairo-over-day" ||
@@ -803,7 +806,7 @@ ${notes.trim() || "-"}
 };
 
   if (!baseTour && !tourOverride.category && catalogLoaded) notFound();
-  if (!baseTour && !tourOverride.category) return <main className="min-h-screen p-8 text-center text-blue-950">{isGerman ? "Ausflugsdetails werden geladen…" : isFrench ? "Chargement des détails de l’excursion…" : isRomanian ? "Se încarcă detaliile excursiei…" : "Loading tour details…"}</main>;
+  if (!baseTour && !tourOverride.category) return <main className="min-h-screen p-8 text-center text-blue-950">{isGerman ? "Ausflugsdetails werden geladen…" : isFrench ? "Chargement des détails de l’excursion…" : isRomanian ? "Se încarcă detaliile excursiei…" : isRussian ? "Загрузка информации об экскурсии…" : "Loading tour details…"}</main>;
   if (tour.available === false) notFound();
 
   return (
@@ -811,11 +814,11 @@ ${notes.trim() || "-"}
       <BookingSuccessModal
         open={showSuccess}
         guestName={name.trim()}
-        bookingName={isGerman ? germanTourCopy(tour.slug, "name", tour.name) : isFrench ? frenchTourCopy(tour.slug, "name", tour.name) : isRomanian ? romanianTourCopy(tour.slug, "name", tour.name) : tour.name}
+        bookingName={isGerman ? germanTourCopy(tour.slug, "name", tour.name) : isFrench ? frenchTourCopy(tour.slug, "name", tour.name) : isRomanian ? romanianTourCopy(tour.slug, "name", tour.name) : isRussian ? russianTourCopy(tour.slug, "name", tour.name) : tour.name}
         email={email.trim()}
         emailSent={confirmationEmailSent}
         backHref="/tours"
-        backLabel={isGerman ? "Zurück zu den Ausflügen" : isFrench ? "Retour aux excursions" : isRomanian ? "Înapoi la excursii" : "Back to Tours"}
+        backLabel={isGerman ? "Zurück zu den Ausflügen" : isFrench ? "Retour aux excursions" : isRomanian ? "Înapoi la excursii" : isRussian ? "Назад к экскурсиям" : "Back to Tours"}
         onClose={() => setShowSuccess(false)}
       />
       <div className="mx-auto max-w-7xl">
@@ -919,7 +922,7 @@ ${notes.trim() || "-"}
 
                   <input
                     type="text"
-                    placeholder={isGerman ? "Vollständiger Name" : isFrench ? "Saisissez votre nom complet" : isRomanian ? "Introdu numele complet" : "Enter your full name"}
+                    placeholder={isGerman ? "Vollständiger Name" : isFrench ? "Saisissez votre nom complet" : isRomanian ? "Introdu numele complet" : isRussian ? "Введите полное имя" : "Enter your full name"}
                     value={name}
                     onChange={(e) =>
                       setName(e.target.value)
@@ -948,7 +951,7 @@ ${notes.trim() || "-"}
 
                   <input
                     type="text"
-                    placeholder={isGerman ? "Nationalität auswählen" : isFrench ? "Choisissez votre nationalité" : isRomanian ? "Selectează naționalitatea" : "Select your nationality"}
+                    placeholder={isGerman ? "Nationalität auswählen" : isFrench ? "Choisissez votre nationalité" : isRomanian ? "Selectează naționalitatea" : isRussian ? "Выберите гражданство" : "Select your nationality"}
                     value={nationality}
                     onChange={(e) => {
                       setNationality(
@@ -1040,7 +1043,7 @@ ${notes.trim() || "-"}
                     )}
                   />
 
-                  <p className="mt-1.5 text-xs text-slate-500">{isGerman ? "Verwenden Sie eine Gmail-Adresse mit der Endung @gmail.com" : isFrench ? "Utilisez une adresse Gmail se terminant par @gmail.com" : isRomanian ? "Folosește o adresă Gmail care se termină în @gmail.com" : "Use a Gmail address ending in @gmail.com"}</p>
+                  <p className="mt-1.5 text-xs text-slate-500">{isGerman ? "Verwenden Sie eine Gmail-Adresse mit der Endung @gmail.com" : isFrench ? "Utilisez une adresse Gmail se terminant par @gmail.com" : isRomanian ? "Folosește o adresă Gmail care se termină în @gmail.com" : isRussian ? "Используйте адрес Gmail, оканчивающийся на @gmail.com" : "Use a Gmail address ending in @gmail.com"}</p>
 
                   {(emailTouched || submitAttempted) &&
                     !isEmailValid &&
@@ -1103,7 +1106,7 @@ ${notes.trim() || "-"}
 
                             <input
                               type="text"
-                              placeholder={isGerman ? "Land suchen..." : isFrench ? "Rechercher un pays..." : isRomanian ? "Caută țara..." : "Search country..."}
+                              placeholder={isGerman ? "Land suchen..." : isFrench ? "Rechercher un pays..." : isRomanian ? "Caută țara..." : isRussian ? "Поиск страны..." : "Search country..."}
                               value={countrySearch}
                               onChange={(e) =>
                                 setCountrySearch(
@@ -1121,7 +1124,7 @@ ${notes.trim() || "-"}
                             {filteredCountryCodes.map(
                               (c) => (
                                 <button
-                                  key={isFrench ? frenchHomeText(c.name) : isRomanian ? romanianHomeText(c.name) : c.name}
+                                  key={isFrench ? frenchHomeText(c.name) : isRomanian ? romanianHomeText(c.name) : isRussian ? russianHomeText(c.name) : c.name}
                                   type="button"
                                   onMouseDown={(e) =>
                                     e.preventDefault()
@@ -1166,7 +1169,7 @@ ${notes.trim() || "-"}
 
                     <input
                       type="tel"
-                      placeholder={isGerman ? "Telefonnummer" : isFrench ? "Numéro de téléphone" : isRomanian ? "Număr de telefon" : "Phone number"}
+                      placeholder={isGerman ? "Telefonnummer" : isFrench ? "Numéro de téléphone" : isRomanian ? "Număr de telefon" : isRussian ? "Номер телефона" : "Phone number"}
                       value={phone}
                       onChange={(e) =>
                         setPhone(
@@ -1231,7 +1234,7 @@ ${notes.trim() || "-"}
                   </label>
                   <input
                     type="text"
-                    placeholder={isGerman ? "Name Ihres Hotels" : isFrench ? "Nom de votre hôtel" : isRomanian ? "Numele hotelului tău" : "Your hotel name"}
+                    placeholder={isGerman ? "Name Ihres Hotels" : isFrench ? "Nom de votre hôtel" : isRomanian ? "Numele hotelului tău" : isRussian ? "Название вашего отеля" : "Your hotel name"}
                     value={hotel}
                     onChange={(e) => setHotel(e.target.value)}
                     className={inputClass(false)}
@@ -1267,7 +1270,7 @@ ${notes.trim() || "-"}
                   </label>
                   <input
                     type="text"
-                    placeholder={isGerman ? "Zimmernummer" : isFrench ? "Numéro de chambre" : isRomanian ? "Numărul camerei" : "Room number"}
+                    placeholder={isGerman ? "Zimmernummer" : isFrench ? "Numéro de chambre" : isRomanian ? "Numărul camerei" : isRussian ? "Номер комнаты" : "Room number"}
                     value={roomNumber}
                     onChange={(e) => setRoomNumber(e.target.value)}
                     className={inputClass(false)}
