@@ -602,6 +602,39 @@ Object.assign(russianCopy, {
   "No reviews yet. Be the first to review this tour!": "Пока нет отзывов. Будьте первым, кто оценит эту экскурсию!"
 });
 
+
+Object.assign(russianCopy, {
+  "Luxor Private Tour": "Индивидуальная экскурсия в Луксор",
+  "Discover the ancient temples, monuments and history of Luxor on a premium private experience": "Откройте древние храмы, памятники и историю Луксора во время премиальной индивидуальной экскурсии",
+  "Cairo Private Tour": "Индивидуальная экскурсия в Каир",
+  "Explore the Pyramids, Sphinx and the highlights of Cairo with a completely private experience": "Посетите пирамиды, Сфинкса и главные достопримечательности Каира в рамках полностью индивидуальной экскурсии",
+  "Alexandria Private Tour": "Индивидуальная экскурсия в Александрию",
+  "Discover the historic city of Alexandria on a premium private experience, exploring its iconic landmarks, Mediterranean atmosphere and fascinating history": "Откройте историческую Александрию во время премиальной индивидуальной экскурсии, познакомьтесь с её знаковыми местами, атмосферой Средиземноморья и богатой историей",
+  "Aswan Private Tour": "Индивидуальная экскурсия в Асуан",
+  "Discover the beauty and history of Aswan with a premium private tour from Hurghada": "Откройте красоту и историю Асуана во время премиальной индивидуальной поездки из Хургады",
+  "Private Speed Boat": "Индивидуальный скоростной катер",
+  "Enjoy an exclusive private speed boat experience across the beautiful Red Sea": "Насладитесь эксклюзивной прогулкой на индивидуальном скоростном катере по прекрасному Красному морю",
+  "Private Quad Safari": "Индивидуальное сафари на квадроциклах",
+  "Private quad safari with 1-hour and 3-hour options. Choose Single and Double Quads to match your group.": "Индивидуальное сафари на квадроциклах на 1 или 3 часа. Выберите одноместные и двухместные квадроциклы для вашей группы.",
+  "Private Buggy Safari": "Индивидуальное сафари на багги",
+  "Private 3-hour buggy program with 2-person and 4-person buggy options.": "Индивидуальная программа на багги продолжительностью 3 часа с двухместными и четырёхместными вариантами.",
+  "Private Boat": "Индивидуальная лодка",
+  "Enjoy an exclusive private boat experience on the Red Sea with complete privacy, comfort and flexibility": "Насладитесь эксклюзивной прогулкой на индивидуальной лодке по Красному морю с полной приватностью, комфортом и гибкостью",
+  "Full Day": "Полный день",
+  "Half Day": "Полдня",
+  "1–3 Hours": "1–3 часа",
+  "3 Hours": "3 часа",
+  "Guests": "Гости",
+  "From 2 Guests": "От 2 гостей",
+  "Exclusive Experience": "Эксклюзивное впечатление",
+  "Private experience": "Индивидуальное впечатление",
+  "Starting From": "Стоимость от",
+  "Reserve Now": "Забронировать",
+  "Your Time in Egypt Deserves": "Ваше время в Египте заслуживает",
+  "Something Extraordinary": "чего-то необыкновенного",
+  "Request a Tailored Experience": "Заказать индивидуальную программу"
+});
+
 export function russianHomeText(value: string): string {
   return russianCopy[value] ?? value;
 }
