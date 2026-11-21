@@ -14,7 +14,7 @@ export default function Navbar() {
 
   const [isOpen, setIsOpen] = useState(false);
   const [userName, setUserName] = useState<string | null>(null);
-  const [language, setLanguage] = useState<"en" | "de" | "fr" | "ro">("en");
+  const [language, setLanguage] = useState<"en" | "de" | "fr" | "ro" | "ru">("en");
   const [languageMenuOpen, setLanguageMenuOpen] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">("light");
 
@@ -22,7 +22,7 @@ export default function Navbar() {
     setTheme(document.documentElement.classList.contains("dark") ? "dark" : "light");
     try {
       const savedLanguage = window.localStorage.getItem("via-blue-language");
-      if (savedLanguage === "de" || savedLanguage === "en" || savedLanguage === "fr" || savedLanguage === "ro") {
+      if (savedLanguage === "de" || savedLanguage === "en" || savedLanguage === "fr" || savedLanguage === "ro" || savedLanguage === "ru") {
         setLanguage(savedLanguage);
         document.documentElement.lang = savedLanguage;
       }
@@ -38,7 +38,7 @@ export default function Navbar() {
     try { window.localStorage.setItem("via-blue-theme", nextTheme); } catch { /* Current-page toggle remains available. */ }
   }
 
-  function changeLanguage(nextLanguage: "en" | "de" | "fr" | "ro") {
+  function changeLanguage(nextLanguage: "en" | "de" | "fr" | "ro" | "ru") {
     setLanguage(nextLanguage);
     setLanguageMenuOpen(false);
     document.documentElement.lang = nextLanguage;
@@ -55,9 +55,12 @@ export default function Navbar() {
     { value: "de" as const, label: "Deutsch", flag: "🇩🇪" },
     { value: "fr" as const, label: "Français", flag: "🇫🇷" },
     { value: "ro" as const, label: "Română", flag: "🇷🇴" },
+    { value: "ru" as const, label: "Русский", flag: "🇷🇺" },
   ];
 
-  const labels = language === "ro"
+  const labels = language === "ru"
+    ? { Home: "Главная", Tours: "Экскурсии", Transfers: "Трансферы", "Luxury Tours": "VIP-туры", "AI Trip Planner": "AI-планировщик", "About Us": "О нас", Contact: "Контакты", Register: "Регистрация", "Log In": "Войти", "Log Out": "Выйти", New: "Новинка", Greeting: "Здравствуйте,", "Toggle menu": "Открыть меню", "Dark mode": "Включить тёмную тему", "Light mode": "Включить светлую тему" }
+    : language === "ro"
     ? { Home: "Acasă", Tours: "Excursii", Transfers: "Transferuri", "Luxury Tours": "VIP", "AI Trip Planner": "Planificator AI", "About Us": "Despre noi", Contact: "Contact", Register: "Înregistrare", "Log In": "Autentificare", "Log Out": "Deconectare", New: "Nou", Greeting: "Salut,", "Toggle menu": "Deschide meniul", "Dark mode": "Activează modul întunecat", "Light mode": "Activează modul luminos" }
     : language === "fr"
     ? {
@@ -351,7 +354,7 @@ export default function Navbar() {
         </nav>
 
         <select
-          aria-label={language === "de" ? "Währung auswählen" : language === "fr" ? "Choisir la devise" : language === "ro" ? "Alege moneda" : "Select currency"}
+          aria-label={language === "de" ? "Währung auswählen" : language === "fr" ? "Choisir la devise" : language === "ro" ? "Alege moneda" : language === "ru" ? "Выберите валюту" : "Select currency"}
           value={currency}
           onChange={(event) => setCurrency(event.target.value as CurrencyCode)}
           className="ml-1.5 hidden h-9 shrink-0 rounded-lg border border-slate-200 bg-white px-1.5 text-[10px] font-bold text-blue-950 outline-none transition hover:border-orange-300 lg:inline-flex xl:ml-2 xl:px-2 xl:text-xs"
@@ -376,7 +379,7 @@ export default function Navbar() {
           <button
             type="button"
             onClick={() => setLanguageMenuOpen((open) => !open)}
-            aria-label={language === "de" ? "Sprache auswählen" : language === "fr" ? "Choisir la langue" : language === "ro" ? "Alege limba" : "Choose language"}
+            aria-label={language === "de" ? "Sprache auswählen" : language === "fr" ? "Choisir la langue" : language === "ro" ? "Alege limba" : language === "ru" ? "Выберите язык" : "Choose language"}
             aria-haspopup="menu"
             aria-expanded={languageMenuOpen}
             className={`group inline-flex h-10 items-center gap-2 rounded-full border px-3 text-[11px] font-bold transition-all duration-200 ${languageMenuOpen ? "border-blue-950 bg-blue-950 text-white shadow-lg shadow-blue-950/15" : "border-slate-200/90 bg-white/90 text-slate-700 hover:border-blue-200 hover:bg-blue-50/70"}`}
@@ -388,7 +391,7 @@ export default function Navbar() {
           {languageMenuOpen && (
             <div role="menu" aria-label="Choose language" className="absolute right-0 top-full z-[100] mt-3 w-56 overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-2 shadow-[0_18px_55px_rgba(3,17,42,0.18)] ring-1 ring-black/[0.03]">
               <div className="px-3 pb-2 pt-1">
-                <p className="text-[9px] font-black uppercase tracking-[0.2em] text-slate-400">{language === "ro" ? "Limba site-ului" : language === "fr" ? "Langue du site" : "Website language"}</p>
+                <p className="text-[9px] font-black uppercase tracking-[0.2em] text-slate-400">{language === "ro" ? "Limba site-ului" : language === "fr" ? "Langue du site" : language === "ru" ? "Язык сайта" : "Website language"}</p>
                 <p className="mt-0.5 text-xs font-semibold text-slate-700">{language === "ro" ? "Alege limba preferată" : language === "fr" ? "Choisissez votre langue préférée" : "Choose your preferred language"}</p>
               </div>
               <div className="h-px bg-slate-100" />
@@ -672,15 +675,15 @@ export default function Navbar() {
 
     {!pathname.startsWith("/admin") && (
       <nav
-        aria-label={language === "de" ? "Mobile Schnellnavigation" : language === "fr" ? "Navigation rapide mobile" : language === "ro" ? "Navigare rapidă pe mobil" : "Mobile quick navigation"}
+        aria-label={language === "de" ? "Mobile Schnellnavigation" : language === "fr" ? "Navigation rapide mobile" : language === "ro" ? "Navigare rapidă pe mobil" : language === "ru" ? "Быстрая навигация" : "Mobile quick navigation"}
         className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 border-t border-slate-200/80 bg-white/95 px-1 pb-[max(env(safe-area-inset-bottom),0.35rem)] pt-2 shadow-[0_-8px_30px_rgba(3,17,42,0.10)] backdrop-blur-2xl lg:hidden"
       >
         {[
-          { href: "/", label: language === "ro" ? "Acasă" : language === "fr" ? "Accueil" : language === "de" ? "Startseite" : "Home", Icon: Home },
-          { href: "/tours", label: language === "ro" ? "Excursii" : language === "fr" ? "Excursions" : language === "de" ? "Ausflüge" : "Tours", Icon: Compass },
-          { href: "/transfers", label: language === "ro" ? "Transferuri" : language === "fr" ? "Transferts" : language === "de" ? "Transfer" : "Transfer", Icon: CarFront },
-          { href: "/contact", label: language === "ro" ? "Contact" : language === "fr" ? "Contact" : language === "de" ? "Kontakt" : "Contact", Icon: MessageCircle },
-          { href: userName ? "/account" : "/login", label: userName ? (language === "ro" ? "Cont" : language === "fr" ? "Compte" : language === "de" ? "Konto" : "Account") : (language === "ro" ? "Autentificare" : language === "fr" ? "Connexion" : "Login"), Icon: UserRound },
+          { href: "/", label: language === "ro" ? "Acasă" : language === "fr" ? "Accueil" : language === "de" ? "Startseite" : language === "ru" ? "Главная" : "Home", Icon: Home },
+          { href: "/tours", label: language === "ro" ? "Excursii" : language === "fr" ? "Excursions" : language === "de" ? "Ausflüge" : language === "ru" ? "Экскурсии" : "Tours", Icon: Compass },
+          { href: "/transfers", label: language === "ro" ? "Transferuri" : language === "fr" ? "Transferts" : language === "de" ? "Transfer" : language === "ru" ? "Трансфер" : "Transfer", Icon: CarFront },
+          { href: "/contact", label: language === "ro" ? "Contact" : language === "fr" ? "Contact" : language === "de" ? "Kontakt" : language === "ru" ? "Контакты" : "Contact", Icon: MessageCircle },
+          { href: userName ? "/account" : "/login", label: userName ? (language === "ro" ? "Cont" : language === "fr" ? "Compte" : language === "de" ? "Konto" : language === "ru" ? "Аккаунт" : "Account") : (language === "ro" ? "Autentificare" : language === "fr" ? "Connexion" : language === "ru" ? "Войти" : "Login"), Icon: UserRound },
         ].map(({ href, label, Icon }) => {
           const active = href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
           return (
