@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useSiteLocale } from "./LocaleProvider";
 
 function WhatsAppIcon() {
   return (
@@ -224,24 +225,9 @@ function TripadvisorIcon() {
 }
 
 export default function Footer() {
-  const [language, setLanguage] = useState<"en" | "de" | "fr" | "ro" | "ru">("en");
+  const { locale: language } = useSiteLocale();
 
-  useEffect(() => {
-    try {
-      const saved = window.localStorage.getItem("via-blue-language");
-      if (saved === "de" || saved === "en" || saved === "fr" || saved === "ro" || saved === "ru") setLanguage(saved);
-    } catch {
-      // English remains the fallback if browser storage is unavailable.
-    }
 
-    const handleLanguageChange = (event: Event) => {
-      const nextLanguage = (event as CustomEvent<"en" | "de" | "fr" | "ro" | "ru">).detail;
-      if (nextLanguage === "en" || nextLanguage === "de" || nextLanguage === "fr" || nextLanguage === "ro" || nextLanguage === "ru") setLanguage(nextLanguage);
-    };
-
-    window.addEventListener("via-blue-language-change", handleLanguageChange);
-    return () => window.removeEventListener("via-blue-language-change", handleLanguageChange);
-  }, []);
 
   const text = language === "ru"
     ? { intro: "Ваш отдых на Красном море", headline: "Откройте Хургаду по-новому", description: "Незабываемые экскурсии, морские прогулки, снорклинг и индивидуальные трансферы в Хургаде", exploreEgypt: "Откройте Египет", follow: "Подписывайтесь на Via Blue", reputation: "Отзывы путешественников", comingSoon: "Скоро", quickLinks: "Быстрые ссылки", home: "Главная", tours: "Экскурсии", airportTransfers: "Трансфер из аэропорта", contact: "Контакты", experiences: "Популярные впечатления", privateTransfer: "Индивидуальный трансфер", luxuryTours: "VIP-туры", contactUs: "Связаться с нами", location: "Местоположение", email: "Электронная почта", closing: "Ваше путешествие начинается на Красном море", privacy: "Политика конфиденциальности", terms: "Условия использования", rights: "Все права защищены" }
