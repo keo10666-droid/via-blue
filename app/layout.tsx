@@ -77,12 +77,16 @@ export default async function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <head>
-        <link rel="alternate" hrefLang="en" href={alternateUrl("en")} />
-        <link rel="alternate" hrefLang="de" href={alternateUrl("de")} />
-        <link rel="alternate" hrefLang="fr" href={alternateUrl("fr")} />
-        <link rel="alternate" hrefLang="ro" href={alternateUrl("ro")} />
-        <link rel="alternate" hrefLang="ru" href={alternateUrl("ru")} />
-        <link rel="alternate" hrefLang="x-default" href={alternateUrl("en")} />
+        {!originalPath.endsWith("/book") && (
+          <>
+            <link rel="alternate" hrefLang="en" href={alternateUrl("en")} />
+            <link rel="alternate" hrefLang="de" href={alternateUrl("de")} />
+            <link rel="alternate" hrefLang="fr" href={alternateUrl("fr")} />
+            <link rel="alternate" hrefLang="ro" href={alternateUrl("ro")} />
+            <link rel="alternate" hrefLang="ru" href={alternateUrl("ru")} />
+            <link rel="alternate" hrefLang="x-default" href={alternateUrl("en")} />
+          </>
+        )}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
