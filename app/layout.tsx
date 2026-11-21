@@ -69,8 +69,27 @@ export default function RootLayout({
     >
       <head>
         <script
+          type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: `try { if (localStorage.getItem("via-blue-theme") === "dark") document.documentElement.classList.add("dark"); } catch {}`,
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "Via Blue",
+              url: "https://viabluetours.com",
+              logo: "https://viabluetours.com/logo/logo.svg",
+              description:
+                "Tourism and transportation company in Hurghada, Egypt, offering Red Sea experiences, excursions and private transfers.",
+              areaServed: [
+                { "@type": "City", name: "Hurghada" },
+                { "@type": "AdministrativeArea", name: "Red Sea Governorate" },
+                { "@type": "Country", name: "Egypt" },
+              ],
+            }).replace(/</g, "\\u003c"),
+          }}
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try { if (localStorage.getItem("via-blue-theme") === "dark") document.documentElement.classList.add("dark"); } catch {}` ,
           }}
         />
       </head>
