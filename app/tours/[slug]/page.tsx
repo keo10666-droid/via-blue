@@ -849,7 +849,7 @@ export default async function TourDetailsPage({
 
     image: [tourImage],
 
-    url: alternates.canonical,
+    url: `https://viabluetours.com/tours/${slug}`,
 
     provider: {
       "@type": "Organization",
@@ -863,7 +863,7 @@ export default async function TourDetailsPage({
       ? {
           offers: {
             "@type": "Offer",
-            url: alternates.canonical,
+            url: `https://viabluetours.com/tours/${slug}`,
             priceCurrency: "EUR",
             price: tour.price,
             availability: tour.available
