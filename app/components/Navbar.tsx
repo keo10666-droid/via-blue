@@ -22,16 +22,9 @@ export default function Navbar() {
 
   useEffect(() => {
     setTheme(document.documentElement.classList.contains("dark") ? "dark" : "light");
-    try {
-      const savedLanguage = window.localStorage.getItem("via-blue-language");
-      if (savedLanguage === "de" || savedLanguage === "en" || savedLanguage === "fr" || savedLanguage === "ro" || savedLanguage === "ru") {
-        setLanguage(savedLanguage);
-        document.documentElement.lang = savedLanguage;
-      }
-    } catch {
-      // Keep English as the safe default if browser storage is unavailable.
-    }
-  }, []);
+    setLanguage(siteLocale);
+    document.documentElement.lang = siteLocale;
+  }, [siteLocale]);
 
   function toggleTheme() {
     const nextTheme = theme === "dark" ? "light" : "dark";

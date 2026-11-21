@@ -63,9 +63,13 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const requestHeaders = await headers();
+  const requestedLocale = requestHeaders.get("x-via-blue-locale");
+  const locale: SiteLocale = requestedLocale === "de" || requestedLocale === "fr" || requestedLocale === "ro" || requestedLocale === "ru" ? requestedLocale : "en";
+
   return (
     <html
-      lang="en"
+      lang={locale}
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
@@ -95,12 +99,14 @@ export default async function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col">
+        <LocaleProvider initialLocale={locale}>
         <CurrencyProvider>
         <Navbar />
         <ScrollToTop />
         {children}
         <Footer />
         </CurrencyProvider>
+        </LocaleProvider>
       </body>
     </html>
   );
