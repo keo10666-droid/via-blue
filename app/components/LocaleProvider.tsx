@@ -12,7 +12,7 @@ export function LocaleProvider({ initialLocale, children }: { initialLocale: Sit
     locale,
     setLocale(next: SiteLocale) {
       setLocaleState(next);
-      try { window.localStorage.setItem("via-blue-language", next); } catch {}
+      try { window.localStorage.setItem("via-blue-language", next); document.cookie = `via-blue-language=${next}; Path=/; Max-Age=31536000; SameSite=Lax`; } catch {}
       window.dispatchEvent(new CustomEvent("via-blue-language-change", { detail: next }));
     },
   }), [locale]);

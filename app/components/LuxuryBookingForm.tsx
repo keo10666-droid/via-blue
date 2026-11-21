@@ -4,6 +4,7 @@ import { frenchHomeText } from "@/lib/frenchHomeCopy";
 import { romanianHomeText } from "@/lib/romanianHomeCopy";
 import { russianHomeText } from "@/lib/russianHomeCopy";
 import { supabase } from "@/lib/supabase";
+import { useSiteLocale } from "./LocaleProvider";
 
 import {
   Children,
@@ -578,10 +579,11 @@ export default function LuxuryBookingForm({
   pricing,
 }: LuxuryBookingFormProps) {
   const { currency, formatCurrency, rate } = useCurrency();
-  const [isGerman, setIsGerman] = useState(false);
-  const [isFrench, setIsFrench] = useState(false);
-  const [isRomanian, setIsRomanian] = useState(false);
-  const [isRussian, setIsRussian] = useState(false);
+  const { locale } = useSiteLocale();
+  const [isGerman, setIsGerman] = useState(locale === "de");
+  const [isFrench, setIsFrench] = useState(locale === "fr");
+  const [isRomanian, setIsRomanian] = useState(locale === "ro");
+  const [isRussian, setIsRussian] = useState(locale === "ru");
   const displayTourName = isGerman ? (germanLuxuryTourNames[tourName] ?? tourName) : isFrench ? frenchHomeText(tourName) : isRomanian ? romanianHomeText(tourName) : isRussian ? russianHomeText(tourName) : tourName;
   const displayTourType = isGerman ? (germanLuxuryTourTypes[tourType] ?? tourType) : isFrench ? frenchHomeText(tourType) : isRomanian ? romanianHomeText(tourType) : isRussian ? russianHomeText(tourType) : tourType;
   const displayIncluded = isGerman
@@ -593,12 +595,7 @@ export default function LuxuryBookingForm({
         : isRussian
           ? included.map((item) => russianHomeText(item))
           : included;
-  useEffect(() => {
-    const syncLanguage = () => { const language = localStorage.getItem("via-blue-language"); setIsGerman(language === "de"); setIsFrench(language === "fr"); setIsRomanian(language === "ro"); setIsRussian(language === "ru"); };
-    syncLanguage();
-    window.addEventListener("via-blue-language-change", syncLanguage);
-    return () => window.removeEventListener("via-blue-language-change", syncLanguage);
-  }, []);
+  useEffect(() => { setIsGerman(locale === "de"); setIsFrench(locale === "fr"); setIsRomanian(locale === "ro"); setIsRussian(locale === "ru"); }, [locale]);
 
   const [name, setName] = useState("");
   const [nationality, setNationality] = useState("");

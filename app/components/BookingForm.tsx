@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { useSiteLocale } from "./LocaleProvider";
 
 import { supabase } from "@/lib/supabase";
 import HomeText from "@/app/components/HomeText";
@@ -262,18 +263,14 @@ export default function BookingForm({
 }: BookingFormProps) {
   const childPrice = adultPrice / 2;
   const { currency, formatCurrency, rate } = useCurrency();
+  const { locale } = useSiteLocale();
 
-  const [isGerman, setIsGerman] = useState(false);
-  const [isFrench, setIsFrench] = useState(false);
-  const [isRomanian, setIsRomanian] = useState(false);
-  const [isRussian, setIsRussian] = useState(false);
+  const [isGerman, setIsGerman] = useState(locale === "de");
+  const [isFrench, setIsFrench] = useState(locale === "fr");
+  const [isRomanian, setIsRomanian] = useState(locale === "ro");
+  const [isRussian, setIsRussian] = useState(locale === "ru");
   const displayTourName = isFrench ? frenchTourValue(tourName) : isRomanian ? romanianTourValue(tourName) : isRussian ? russianTourValue(tourName) : tourName;
-  useEffect(() => {
-    const syncLanguage = () => { const language = localStorage.getItem("via-blue-language"); setIsGerman(language === "de"); setIsFrench(language === "fr"); setIsRomanian(language === "ro"); setIsRussian(language === "ru"); };
-    syncLanguage();
-    window.addEventListener("via-blue-language-change", syncLanguage);
-    return () => window.removeEventListener("via-blue-language-change", syncLanguage);
-  }, []);
+  useEffect(() => { setIsGerman(locale === "de"); setIsFrench(locale === "fr"); setIsRomanian(locale === "ro"); setIsRussian(locale === "ru"); }, [locale]);
 
   const [name, setName] = useState("");
   const [nationality, setNationality] = useState("");
