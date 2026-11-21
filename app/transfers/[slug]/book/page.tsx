@@ -396,8 +396,8 @@ function CustomDatePicker({
     }
 
     const handleLanguageChange = (event: Event) => {
-      const next = (event as CustomEvent<"en" | "de" | "fr" | "ro">).detail;
-      if (next === "en" || next === "de" || next === "fr" || next === "ro") { setIsGerman(next === "de"); setIsFrench(next === "fr"); setIsRomanian(next === "ro"); }
+      const next = (event as CustomEvent<"en" | "de" | "fr" | "ro" | "ru">).detail;
+      if (next === "en" || next === "de" || next === "fr" || next === "ro" || next === "ru") { setIsGerman(next === "de"); setIsFrench(next === "fr"); setIsRomanian(next === "ro"); setIsRussian(next === "ru"); }
     };
 
     window.addEventListener("via-blue-language-change", handleLanguageChange);
