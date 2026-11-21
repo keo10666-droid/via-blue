@@ -224,7 +224,8 @@ export default function Navbar() {
       return pathname === "/" || /^\/(de|fr|ro|ru)$/.test(pathname);
     }
 
-    const cleanPath = pathname.replace(/^\/(de|fr|ro|ru)(?=\/|$)/, "") || "/";\n    return cleanPath === href || cleanPath.startsWith(`${href}/`);
+    const cleanPath = pathname.replace(/^\/(de|fr|ro|ru)(?=\/|$)/, "") || "/";
+    return cleanPath === href || cleanPath.startsWith(`${href}/`);
   }
 
   return (
