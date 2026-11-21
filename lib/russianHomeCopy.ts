@@ -214,7 +214,6 @@ Object.assign(russianCopy, {
   "Experience": "Впечатление",
   "Guest details": "Данные гостя",
   "Personal information": "Личная информация",
-  "Tell us who will be joining the experience": "Укажите, кто присоединится к поездке",
   "Hotel information": "Информация об отеле",
   "Pickup details help us arrange your transfer": "Информация о месте проживания поможет нам организовать трансфер",
   "Choose your date": "Выберите дату",
