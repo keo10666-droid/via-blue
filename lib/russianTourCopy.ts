@@ -161,7 +161,6 @@ Object.assign(values, {
   "New": "Новинка",
   "Hotel Transfer": "Трансфер из отеля",
   "Hotel transfers": "Трансфер из отеля",
-  "Hotel Transfer": "Трансфер из отеля",
   "Hotel pickup": "Трансфер из отеля",
   "Boat Trip": "Морская прогулка",
   "Boat trip": "Морская прогулка",
@@ -198,7 +197,6 @@ Object.assign(values, {
   "From Hurghada": "Из Хургады",
   "Departure from the marina": "Отправление из марины",
   "Morning departure from the marina": "Утреннее отправление из марины",
-  "Hotel pickup and return transfer": "Трансфер из отеля и обратно"
 });
 
 
