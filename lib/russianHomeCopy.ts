@@ -1187,6 +1187,56 @@ Object.assign(russianCopy, {
   "Free": "Бесплатно"
 });
 
+
+Object.assign(russianCopy, {
+  "2–3 Hours": "2–3 часа",
+  "Discover the beauty and history of Aswan with a premium private tour from Hurghada, designed for guests who appreciate comfort, privacy and personalized service.": "Откройте красоту и историю Асуана во время премиальной индивидуальной экскурсии из Хургады, созданной для гостей, которые ценят комфорт, приватность и персональный сервис.",
+  "Professional private tour guide": "Профессиональный индивидуальный гид",
+  "Enjoy an exciting guided buggy adventure through the Egyptian desert, riding as part of a dedicated group with a professional guide leading the way throughout the experience.": "Отправьтесь в захватывающее путешествие на багги по египетской пустыне в отдельной группе под руководством профессионального гида.",
+  "Test drive": "Пробная поездка",
+  "Morning or sunset departure": "Утреннее отправление или отправление на закате",
+  "Personal expenses": "Личные расходы",
+  "Tips": "Чаевые",
+  "Enjoy a dedicated snorkeling stop at one of the beautiful Red Sea spots and discover the vibrant marine life beneath the crystal-clear waters. Snorkeling equipment is provided.": "Остановитесь для сноркелинга в одном из красивейших мест Красного моря и откройте яркий подводный мир в кристально чистой воде. Оборудование для сноркелинга предоставляется.",
+  "Lunch": "Обед",
+  "Drinks": "Напитки",
+  "Breakfast box from your hotel is recommended.": "Рекомендуется заказать в отеле завтрак с собой.",
+  "Comfortable walking shoes and suitable clothing are recommended.": "Рекомендуется удобная обувь для прогулок и подходящая одежда.",
+  "Private itinerary adjustments can be requested when possible.": "При возможности можно запросить изменения индивидуального маршрута.",
+  "Private round-trip transportation from your hotel": "Индивидуальный трансфер из отеля и обратно",
+  "Your selected private vehicle": "Выбранный вами индивидуальный автомобиль",
+  "Fully private experience with no shared transportation": "Полностью индивидуальная поездка без совместного транспорта",
+  "Pyramids of Giza visit": "Посещение пирамид Гизы",
+  "08:00 AM – 12:00 PM / 01:00 PM – 05:00 PM": "08:00–12:00 / 13:00–17:00",
+  "12:00 PM / 05:00 PM": "12:00 / 17:00",
+  "Protected Area": "Заповедная зона",
+  "Afternoon": "После полудня",
+  "Snorkeling Stop": "Остановка для сноркелинга",
+  "Relax during the journey and enjoy fresh seasonal fruit served onboard while taking in the beautiful views of the Red Sea.": "Отдыхайте во время поездки, наслаждайтесь свежими сезонными фруктами на борту и прекрасными видами Красного моря.",
+  "After your four-hour private experience, return comfortably to the marina before your private transfer back to your hotel.": "После четырёхчасовой индивидуальной прогулки с комфортом вернитесь в марину, откуда индивидуальный трансфер доставит вас обратно в отель.",
+  "Private hotel transportation": "Индивидуальный трансфер из отеля",
+  "Selected additional island visit": "Посещение выбранного дополнительного острова",
+  "Exclusive private experience": "Эксклюзивная индивидуальная поездка",
+  "Additional island option price": "Доплата за выбранный остров",
+  "Optional activities not mentioned": "Дополнительные развлечения, не указанные в программе",
+  "Drinks other than the included fresh fruit": "Напитки, кроме включённых свежих фруктов",
+  "The experience is available daily.": "Экскурсия проводится ежедневно.",
+  "Guests can choose between the morning or afternoon departure.": "Гости могут выбрать утреннее или дневное отправление.",
+  "Morning session: 08:00 AM – 12:00 PM.": "Утренний сеанс: 08:00–12:00.",
+  "Afternoon session: 01:00 PM – 05:00 PM.": "Дневной сеанс: 13:00–17:00.",
+  "White Island is included as a fixed part of the experience.": "Посещение Белого острова входит в программу.",
+  "Guests can choose one additional island from the available options.": "Гости могут выбрать один дополнительный остров из доступных вариантов.",
+  "Each additional island option will have its own price.": "Для каждого дополнительного острова действует отдельная стоимость.",
+  "Bring swimwear, sunglasses, a hat and sunscreen.": "Возьмите купальник, солнцезащитные очки, головной убор и крем от солнца.",
+  "Modern air-conditioned private vehicle": "Современный индивидуальный автомобиль с кондиционером",
+  "Early Morning": "Раннее утро",
+  "Professional Egyptologist guide": "Профессиональный гид-египтолог",
+  "Flexible — Usually 08:30 or 09:00 AM": "Гибкое время — обычно 08:30 или 09:00",
+  "Approximately 04:30 or 05:00 PM": "Примерно 16:30 или 17:00",
+  "Private boat charter": "Аренда индивидуальной лодки",
+  "Multiple Snorkeling Stops": "Несколько остановок для сноркелинга"
+});
+
 export function russianHomeText(value: string): string {
   return russianCopy[value] ?? value;
 }
