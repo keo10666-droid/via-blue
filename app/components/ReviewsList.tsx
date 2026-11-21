@@ -184,7 +184,7 @@ export default function ReviewsList({ tourSlug }: ReviewsListProps) {
               <button
                 type="button"
                 onClick={goToPrevious}
-                aria-label={isGerman ? "Vorherige Bewertung" : isFrench ? "Avis précédent" : isRomanian ? "Recenzia anterioară" : isRussian ? "Предыдущий отзыв" : "Previous review"} title={isGerman ? "Vorherige Bewertung" : isFrench ? "Avis précédent" : isRomanian ? "Recenzia anterioară" : "Previous review"}
+                aria-label={isGerman ? "Vorherige Bewertung" : isFrench ? "Avis précédent" : isRomanian ? "Recenzia anterioară" : isRussian ? "Предыдущий отзыв" : "Previous review"} title={isGerman ? "Vorherige Bewertung" : isFrench ? "Avis précédent" : isRomanian ? "Recenzia anterioară" : isRussian ? "Предыдущий отзыв" : "Previous review"}
                 className="absolute left-1 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white text-xl font-bold text-blue-950 shadow-[0_10px_30px_rgba(7,26,54,0.12)] transition duration-300 hover:-translate-x-0.5 hover:bg-blue-950 hover:text-white hover:shadow-[0_14px_35px_rgba(7,26,54,0.2)] sm:left-2"
               >
                 ←
@@ -193,7 +193,7 @@ export default function ReviewsList({ tourSlug }: ReviewsListProps) {
               <button
                 type="button"
                 onClick={goToNext}
-                aria-label={isGerman ? "Nächste Bewertung" : isFrench ? "Avis suivant" : isRomanian ? "Următoarea recenzie" : isRussian ? "Следующий отзыв" : "Next review"} title={isGerman ? "Nächste Bewertung" : isFrench ? "Avis suivant" : isRomanian ? "Următoarea recenzie" : "Next review"}
+                aria-label={isGerman ? "Nächste Bewertung" : isFrench ? "Avis suivant" : isRomanian ? "Următoarea recenzie" : isRussian ? "Следующий отзыв" : "Next review"} title={isGerman ? "Nächste Bewertung" : isFrench ? "Avis suivant" : isRomanian ? "Următoarea recenzie" : isRussian ? "Следующий отзыв" : "Next review"}
                 className="absolute right-1 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white text-xl font-bold text-blue-950 shadow-[0_10px_30px_rgba(7,26,54,0.12)] transition duration-300 hover:translate-x-0.5 hover:bg-blue-950 hover:text-white hover:shadow-[0_14px_35px_rgba(7,26,54,0.2)] sm:right-2"
               >
                 →
