@@ -4,50 +4,47 @@ import { transfers } from "@/data/transfers";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://viabluetours.com";
-  const lastModified = new Date();
 
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
-      lastModified,
       changeFrequency: "weekly",
       priority: 1,
     },
     {
       url: `${baseUrl}/tours`,
-      lastModified,
       changeFrequency: "weekly",
       priority: 0.9,
     },
     {
       url: `${baseUrl}/transfers`,
-      lastModified,
       changeFrequency: "weekly",
       priority: 0.9,
     },
     {
       url: `${baseUrl}/about`,
-      lastModified,
       changeFrequency: "monthly",
       priority: 0.6,
     },
     {
       url: `${baseUrl}/contact`,
-      lastModified,
       changeFrequency: "monthly",
       priority: 0.6,
     },
     {
       url: `${baseUrl}/luxury-tours`,
-      lastModified,
       changeFrequency: "weekly",
       priority: 0.7,
     },
     {
       url: `${baseUrl}/ai-trip-planner`,
-      lastModified,
       changeFrequency: "monthly",
       priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/sim-card`,
+      changeFrequency: "monthly",
+      priority: 0.5,
     },
   ];
 
@@ -55,7 +52,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     .filter((tour) => tour.available)
     .map((tour) => ({
       url: `${baseUrl}/tours/${tour.slug}`,
-      lastModified,
       changeFrequency: "weekly",
       priority: 0.8,
     }));
@@ -64,7 +60,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     .filter((transfer) => transfer.available)
     .map((transfer) => ({
       url: `${baseUrl}/transfers/${transfer.slug}`,
-      lastModified,
       changeFrequency: "monthly",
       priority: 0.7,
     }));
