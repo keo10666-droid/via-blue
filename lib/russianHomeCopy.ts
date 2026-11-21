@@ -1236,6 +1236,43 @@ Object.assign(russianCopy, {
   "Multiple Snorkeling Stops": "Несколько остановок для сноркелинга"
 });
 
+
+Object.assign(russianCopy, {
+  "What&apos;s Included": "Что включено",
+  "What&apos;s Not Included": "Что не включено",
+  "Highlights": "Главные моменты",
+  "On Request": "По запросу",
+  "/ private experience": "/ индивидуальное путешествие",
+  "My Account": "Мой аккаунт",
+  "Manage your profile, view your bookings and keep your favorite Hurghada memories in one place": "Управляйте профилем, просматривайте бронирования и храните любимые воспоминания о Хургаде в одном месте",
+  "Reward Points": "Бонусные баллы",
+  "Keep booking to unlock future gifts": "Бронируйте поездки и получайте будущие подарки",
+  "Completed Trips": "Завершённые поездки",
+  "Your completed adventures with us": "Ваши завершённые приключения с нами",
+  "Travel Memories": "Воспоминания о путешествиях",
+  "Save photos from your favorite trips": "Сохраняйте фотографии из любимых поездок",
+  "Personal Details": "Личные данные",
+  "Your Profile": "Ваш профиль",
+  "Not added yet": "Пока не добавлено",
+  "Email": "Электронная почта",
+  "Saving...": "Сохранение...",
+  "Save Changes": "Сохранить изменения",
+  "Cancel": "Отмена",
+  "My Trips": "Мои поездки",
+  "Booking History": "История бронирований",
+  "No bookings yet": "Пока нет бронирований",
+  "Your confirmed and upcoming trips will appear here": "Здесь будут отображаться подтверждённые и предстоящие поездки",
+  "My Travel Memories": "Мои воспоминания о путешествиях",
+  "Save Your Hurghada Moments": "Сохраните свои моменты в Хургаде",
+  "Add up to 25 photos from your trips. Only you can see them": "Добавьте до 25 фотографий из поездок. Их видите только вы",
+  "Choose a travel photo": "Выберите фотографию из путешествия",
+  "Uploading...": "Загрузка...",
+  "Add Photo": "Добавить фото",
+  "No memories yet": "Пока нет воспоминаний",
+  "Upload your first Hurghada memory above": "Загрузите своё первое воспоминание о Хургаде выше",
+  "Delete Photo": "Удалить фото"
+});
+
 export function russianHomeText(value: string): string {
   return russianCopy[value] ?? value;
 }
