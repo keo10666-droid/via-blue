@@ -11,15 +11,5 @@ export async function getLocalizedAlternates(pathname: string) {
   const canonicalPath = locale === "en" ? suffix || "/" : `/${locale}${suffix}`;
   const localizedUrl = (code: string) => code === "en" ? `${BASE_URL}${suffix}` : `${BASE_URL}/${code}${suffix}`;
 
-  return {
-    canonical: `${BASE_URL}${canonicalPath}`,
-    languages: {
-      en: localizedUrl("en"),
-      de: localizedUrl("de"),
-      fr: localizedUrl("fr"),
-      ro: localizedUrl("ro"),
-      ru: localizedUrl("ru"),
-      "x-default": localizedUrl("en"),
-    },
-  };
+  return { canonical: `${BASE_URL}${canonicalPath}` };
 }

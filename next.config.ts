@@ -37,6 +37,10 @@ const nextConfig: NextConfig = {
             { source: "/transfers/:slug/book", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }] },
             { source: "/luxury-tours/:slug/book", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }] },
             { source: "/ai-trip-planner/book", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }] },
+            { source: "/:locale/tours/:slug/book", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }] },
+            { source: "/:locale/transfers/:slug/book", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }] },
+            { source: "/:locale/luxury-tours/:slug/book", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }] },
+            { source: "/:locale/ai-trip-planner/book", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }] },
       {
         source: "/:path*",
         headers: [
