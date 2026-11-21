@@ -69,6 +69,7 @@ export default async function RootLayout({
   const originalPath = requestHeaders.get("x-via-blue-original-path") || "/";
   const suffix = originalPath === "/" ? "" : originalPath;
   const alternateUrl = (code: SiteLocale) => code === "en" ? `https://viabluetours.com${suffix}` : `https://viabluetours.com/${code}${suffix}`;
+  const showAlternates = !originalPath.endsWith("/book") && !["/account", "/login", "/forgot-password", "/admin", "/api"].some((path) => originalPath === path || originalPath.startsWith(path + "/"));
 
   return (
     <html
@@ -77,7 +78,7 @@ export default async function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <head>
-        {!originalPath.endsWith("/book") && (
+        {showAlternates && (
           <>
             <link rel="alternate" hrefLang="en" href={alternateUrl("en")} />
             <link rel="alternate" hrefLang="de" href={alternateUrl("de")} />

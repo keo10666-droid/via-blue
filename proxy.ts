@@ -5,7 +5,11 @@ const excluded = ["/api", "/admin", "/_next", "/account", "/login", "/forgot-pas
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  if (excluded.some((path) => pathname === path || pathname.startsWith(path + "/"))) return NextResponse.next();
+  if (excluded.some((path) => pathname === path || pathname.startsWith(path + "/"))) {
+    const requestHeaders = new Headers(request.headers);
+    requestHeaders.set("x-via-blue-original-path", pathname);
+    return NextResponse.next({ request: { headers: requestHeaders } });
+  }
 
   const segments = pathname.split("/");
   const candidate = segments[1];
