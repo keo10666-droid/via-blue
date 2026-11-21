@@ -1348,7 +1348,7 @@ export default async function LuxuryTourPage({
 
   return (
     <main className="min-h-screen bg-slate-50">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(tourSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(tourSchema).replace(/</g, "\\u003c") }} />
       {/* HERO */}
       <section className="relative overflow-hidden bg-blue-950 px-6 py-20 text-white md:px-8 md:py-28">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-950 via-blue-950/95 to-blue-900" />
