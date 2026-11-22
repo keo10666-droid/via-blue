@@ -1315,6 +1315,9 @@ export default async function LuxuryTourPage({
   params,
 }: PageProps) {
   const { slug } = await params;
+  const seo = await getLocalizedSeo(`/luxury-tours/${slug}`);
+  const localePrefix = seo.locale === "en" ? "" : `/${seo.locale}`;
+  const localizedHref = (path: string) => `${localePrefix}${path === "/" ? "" : path}` || "/";
 
   const tour = luxuryTours[slug as LuxuryTourSlug];
 
@@ -1339,7 +1342,7 @@ export default async function LuxuryTourPage({
           </p>
 
           <Link
-            href="/luxury-tours"
+            href={localizedHref("/luxury-tours")}
             className="mt-7 inline-flex items-center gap-2 rounded-2xl bg-blue-950 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-950/20 transition duration-300 hover:-translate-y-0.5 hover:bg-blue-900"
           >
             <HomeText en="Back to Luxury Tours" de="Zurück zu den Luxustouren" />
@@ -1707,7 +1710,7 @@ export default async function LuxuryTourPage({
 
                 {/* CTA */}
                 <Link
-                  href={`/luxury-tours/${slug}/book`}
+                  href={localizedHref(`/luxury-tours/${slug}/book`)}
                   className="mt-6 flex w-full items-center justify-center gap-2 rounded-2xl bg-orange-500 py-4 text-sm font-bold text-white shadow-lg shadow-orange-500/20 transition duration-300 hover:-translate-y-0.5 hover:bg-orange-600 hover:shadow-xl"
                 >
                   <HomeText en="Reserve Your Experience" de="Ihr Erlebnis reservieren" />
@@ -1715,7 +1718,7 @@ export default async function LuxuryTourPage({
                 </Link>
 
                 <Link
-                  href="/luxury-tours"
+                  href={localizedHref("/luxury-tours")}
                   className="mt-3 flex w-full items-center justify-center rounded-2xl border border-blue-950 py-3.5 text-sm font-bold text-blue-950 transition duration-300 hover:bg-blue-950 hover:text-white"
                 >
                   <HomeText en="Back to Luxury Tours" de="Zurück zu den Luxustouren" />
@@ -1766,7 +1769,7 @@ export default async function LuxuryTourPage({
 
             <div className="mt-7">
               <Link
-                href={`/luxury-tours/${slug}/book`}
+                href={localizedHref(`/luxury-tours/${slug}/book`)}
                 className="inline-flex items-center justify-center gap-2 rounded-2xl bg-orange-500 px-8 py-3.5 text-sm font-bold text-white shadow-lg shadow-orange-500/20 transition duration-300 hover:-translate-y-0.5 hover:bg-orange-600"
               >
                 <HomeText en="Reserve This Experience" de="Dieses Erlebnis reservieren" />

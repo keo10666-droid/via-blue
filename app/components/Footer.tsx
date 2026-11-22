@@ -224,6 +224,8 @@ function TripadvisorIcon() {
 }
 
 export default function Footer() {
+  const { locale } = useSiteLocale();
+  const localizedHref = (path: string) => locale === "en" ? path : `/${locale}${path === "/" ? "" : path}`;
   const { locale: language } = useSiteLocale();
 
 
@@ -335,7 +337,7 @@ export default function Footer() {
         <div className="mb-16 grid gap-10 border-b border-white/[0.08] pb-14 lg:grid-cols-[1.4fr_0.6fr] lg:items-end">
           <div>
             <Link
-              href="/"
+              href={localizedHref("/")}
               className="inline-flex items-center transition-all duration-300 hover:opacity-90"
             >
               <img
@@ -478,7 +480,7 @@ export default function Footer() {
             <ul className="mt-7 space-y-4">
               <li>
                 <Link
-                  href="/"
+                  href={localizedHref("/")}
                   className="group flex items-center gap-2 text-[15px] text-slate-300 transition-all duration-300 hover:translate-x-1 hover:text-orange-400"
                 >
                   <span>{text.home}</span>
@@ -488,7 +490,7 @@ export default function Footer() {
 
               <li>
                 <Link
-                  href="/tours"
+                  href={localizedHref("/tours")}
                   className="group flex items-center gap-2 text-[15px] text-slate-300 transition-all duration-300 hover:translate-x-1 hover:text-orange-400"
                 >
                   <span>{text.tours}</span>
@@ -498,7 +500,7 @@ export default function Footer() {
 
               <li>
                 <Link
-                  href="/transfers"
+                  href={localizedHref("/transfers")}
                   className="group flex items-center gap-2 text-[15px] text-slate-300 transition-all duration-300 hover:translate-x-1 hover:text-orange-400"
                 >
                   <span>{text.airportTransfers}</span>
@@ -508,7 +510,7 @@ export default function Footer() {
 
               <li>
                 <Link
-                  href="/contact"
+                  href={localizedHref("/contact")}
                   className="group flex items-center gap-2 text-[15px] text-slate-300 transition-all duration-300 hover:translate-x-1 hover:text-orange-400"
                 >
                   <span>{text.contactUs}</span>
@@ -527,7 +529,7 @@ export default function Footer() {
             <ul className="mt-7 space-y-4">
               <li>
                 <Link
-                  href="/transfers"
+                  href={localizedHref("/transfers")}
                   className="group flex items-center gap-2 text-[15px] text-slate-300 transition-all duration-300 hover:translate-x-1 hover:text-orange-400"
                 >
                   <span>{text.privateTransfer}</span>
@@ -537,7 +539,7 @@ export default function Footer() {
 
               <li>
                 <Link
-                  href="/luxury-tours"
+                  href={localizedHref("/luxury-tours")}
                   className="group flex items-center gap-2 text-[15px] text-slate-300 transition-all duration-300 hover:translate-x-1 hover:text-orange-400"
                 >
                   <span>{text.luxuryTours}</span>
@@ -641,14 +643,14 @@ export default function Footer() {
 
             <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-slate-500">
               <Link
-                href="/privacy"
+                href={localizedHref("/privacy")}
                 className="transition hover:text-white"
               >
                 {text.privacy}
               </Link>
 
               <Link
-                href="/terms"
+                href={localizedHref("/terms")}
                 className="transition hover:text-white"
               >
                 {text.terms}

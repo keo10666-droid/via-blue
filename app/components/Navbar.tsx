@@ -235,7 +235,7 @@ export default function Navbar() {
 
         {/* Logo */}
         <Link
-          href="/"
+          href={localizedHref("/")}
           onClick={() => setIsOpen(false)}
           className="group relative flex shrink-0 items-center"
         >
