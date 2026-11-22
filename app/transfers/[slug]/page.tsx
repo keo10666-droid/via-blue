@@ -1,6 +1,6 @@
 import CurrencyPrice from "@/app/components/CurrencyPrice";
 import type { Metadata } from "next";
-import { getLocalizedAlternates } from "@/lib/localeMetadata";
+import { getLocalizedSeo } from "@/lib/localeMetadata";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -21,7 +21,8 @@ export async function generateMetadata({
   params,
 }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const alternates = await getLocalizedAlternates(`/transfers/${slug}`);
+  const seo = await getLocalizedSeo(`/transfers/${slug}`);
+  const alternates = seo.alternates;
 
   const transfer =
     transfers[slug as keyof typeof transfers];
@@ -35,9 +36,11 @@ export async function generateMetadata({
     };
   }
 
-  const title = `${transfer.from} to ${transfer.to} Transfer`;
-
-  const description = `Book a private transfer from ${transfer.from} to ${transfer.to} with Via Blue. Comfortable vehicles, professional drivers and fixed prices.`;
+  const localizeLocation = (value: string) => seo.locale === "de" ? germanTransferLocation(value) : seo.locale === "fr" ? frenchTransferLocation(value) : seo.locale === "ro" ? romanianTransferLocation(value) : seo.locale === "ru" ? ({ "Hurghada International Airport": "Международный аэропорт Хургады", "Hurghada Airport": "Аэропорт Хургады", "Hurghada City": "Центр Хургады", "Sahl Hasheesh": "Сахл-Хашиш", "Makadi Bay": "Макади-Бей", "El Gouna": "Эль-Гуна", "Soma Bay": "Сома-Бей", "Safaga": "Сафага" }[value] ?? value) : value;
+  const from = localizeLocation(transfer.from);
+  const to = localizeLocation(transfer.to);
+  const title = seo.locale === "de" ? `Privater Transfer von ${from} nach ${to}` : seo.locale === "fr" ? `Transfert privé de ${from} à ${to}` : seo.locale === "ro" ? `Transfer privat de la ${from} la ${to}` : seo.locale === "ru" ? `Индивидуальный трансфер: ${from} — ${to}` : `${transfer.from} to ${transfer.to} Transfer`;
+  const description = seo.locale === "de" ? `Buchen Sie einen privaten Transfer von ${from} nach ${to} mit Via Blue. Komfortable Fahrzeuge und professionelle Fahrer.` : seo.locale === "fr" ? `Réservez un transfert privé de ${from} à ${to} avec Via Blue. Véhicules confortables et chauffeurs professionnels.` : seo.locale === "ro" ? `Rezervați un transfer privat de la ${from} la ${to} cu Via Blue. Vehicule confortabile și șoferi profesioniști.` : seo.locale === "ru" ? `Закажите индивидуальный трансфер из пункта ${from} в ${to} с Via Blue. Комфортабельные автомобили и профессиональные водители.` : `Book a private transfer from ${transfer.from} to ${transfer.to} with Via Blue. Comfortable vehicles, professional drivers and fixed prices.`;
 
   const canonicalUrl = alternates.canonical;
 

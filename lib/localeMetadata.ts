@@ -169,5 +169,5 @@ export async function getLocalizedSeo(pathname: string) {
  const h = await headers(); const requested = h.get("x-via-blue-locale");
  const locale: Locale = LOCALES.includes(requested as (typeof LOCALES)[number]) ? requested as (typeof LOCALES)[number] : "en";
  const copy = SEO_COPY[pathname]?.[locale] ?? SEO_COPY[pathname]?.en;
- return { ...(copy ? { title: copy[0], description: copy[1] } : {}), alternates: await getLocalizedAlternates(pathname) };
+ return { locale, ...(copy ? { title: copy[0], description: copy[1] } : {}), alternates: await getLocalizedAlternates(pathname) };
 }

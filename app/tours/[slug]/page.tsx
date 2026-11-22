@@ -1,6 +1,6 @@
 import CurrencyPrice from "@/app/components/CurrencyPrice";
 import type { Metadata } from "next";
-import { getLocalizedAlternates } from "@/lib/localeMetadata";
+import { getLocalizedSeo } from "@/lib/localeMetadata";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -14,7 +14,9 @@ import ReviewsList from "@/app/components/ReviewsList";
 import HomeText from "@/app/components/HomeText";
 import TourText from "@/app/components/TourText";
 import { germanTourCopy } from "@/lib/germanTourCopy";
+import { frenchTourCopy } from "@/lib/frenchTourCopy";
 import { romanianTourCopy } from "@/lib/romanianTourCopy";
+import { russianTourCopy } from "@/lib/russianTourCopy";
 
 type Props = {
   params: Promise<{
@@ -33,7 +35,9 @@ export async function generateMetadata({
   params,
 }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const alternates = await getLocalizedAlternates(`/tours/${slug}`);
+  const seo = await getLocalizedSeo(`/tours/${slug}`);
+  const alternates = seo.alternates;
+  const localizeTour = (field: "name" | "description", value: string) => seo.locale === "de" ? germanTourCopy(slug, field, value) : seo.locale === "fr" ? frenchTourCopy(slug, field, value) : seo.locale === "ro" ? romanianTourCopy(slug, field, value) : seo.locale === "ru" ? russianTourCopy(slug, field, value) : value;
 
   const tour = Object.values(tours).find(
     (item) => item.slug === slug
@@ -47,8 +51,10 @@ export async function generateMetadata({
     if (!custom?.category) {
       return { title: "Tour Not Found", description: "The requested tour could not be found.", robots: { index: false, follow: false } };
     }
-    const customTitle = custom.name || slug;
-    const customDescription = custom.description || `Book ${customTitle} in Hurghada, Egypt with Via Blue.`;
+    const rawTitle = custom.name || slug;
+    const rawDescription = custom.description || `Book ${rawTitle} in Hurghada, Egypt with Via Blue.`;
+    const customTitle = localizeTour("name", rawTitle);
+    const customDescription = localizeTour("description", rawDescription);
     return {
       title: customTitle,
       description: customDescription,
@@ -66,11 +72,10 @@ export async function generateMetadata({
         .maybeSingle()
     : { data: null };
 
-  const title = contentOverride?.name || tour.name;
-  const description =
-    contentOverride?.description ||
-    tour.description ||
-    `Book ${title} in Hurghada, Egypt with Via Blue.`;
+  const rawTitle = contentOverride?.name || tour.name;
+  const rawDescription = contentOverride?.description || tour.description || `Book ${rawTitle} in Hurghada, Egypt with Via Blue.`;
+  const title = localizeTour("name", rawTitle);
+  const description = localizeTour("description", rawDescription);
 
   return {
     title,
