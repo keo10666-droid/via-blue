@@ -1224,8 +1224,8 @@ const luxurySeoDescriptions: Record<string, string> = {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const seo = await getLocalizedSeo("/luxury-tours");
-  const alternates = (await getLocalizedSeo(`/luxury-tours/${slug}`)).alternates;
+  const seo = await getLocalizedSeo(`/luxury-tours/${slug}`);
+  const alternates = seo.alternates;
   const tour = luxuryTours[slug as LuxuryTourSlug];
   if (!tour) return { title: "Luxury Tour Not Found", robots: { index: false, follow: false } };
 
