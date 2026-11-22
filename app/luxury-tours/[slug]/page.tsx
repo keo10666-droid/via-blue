@@ -328,7 +328,7 @@ const luxuryGermanText: Record<string, string> = {
 };
 
 function luxuryText(value: string): string {
-  return luxuryGermanText[value] ?? value;
+  return luxuryGermanText[value] ?? luxuryGermanText[`${value}.`] ?? value;
 }
 
 const luxuryTours = {

@@ -20,6 +20,11 @@ type HomeTextProps = {
 
 export default function HomeText({ en, de, fr, ro, ru, className }: HomeTextProps) {
   const { locale: language } = useSiteLocale();
+  const translated = (value: string, translate: (source: string) => string) => {
+    const exact = translate(value);
+    if (exact !== value) return exact;
+    return translate(value.endsWith(".") ? value : `${value}.`);
+  };
 
-  return <span className={className}>{language === "de" ? (de ?? germanHomeText(en)) : language === "fr" ? (fr ?? frenchTourValue(en)) : language === "ro" ? (ro ?? romanianTourValue(en)) : language === "ru" ? (ru ?? russianTourValue(en)) : en}</span>;
+  return <span className={className}>{language === "de" ? (de ?? translated(en, germanHomeText)) : language === "fr" ? (fr ?? translated(en, frenchTourValue)) : language === "ro" ? (ro ?? translated(en, romanianTourValue)) : language === "ru" ? (ru ?? translated(en, russianTourValue)) : en}</span>;
 }
