@@ -1087,6 +1087,9 @@ const frenchCopy: Record<string, string> = {
   "Luxor": "Louxor",
   "Cairo": "Le Caire",
   "Sharm El Sheikh": "Charm el-Cheikh",
+};
+
+const luxuryFrenchCopy: Record<string, string> = {
   "Private Collection": "Collection privée",
   "Private Experience": "Expérience privée",
   "Premium Service": "Service premium",
@@ -1145,7 +1148,7 @@ const frenchCopy: Record<string, string> = {
 };
 
 export function frenchHomeText(value: string): string {
-  const exact = frenchCopy[value];
+  const exact = luxuryFrenchCopy[value] ?? frenchCopy[value];
   if (exact) return exact;
 
   // Preserve dynamic names, locations, and totals while translating the surrounding copy.

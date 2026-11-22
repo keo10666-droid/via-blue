@@ -948,6 +948,9 @@ const romanianCopy: Record<string, string> = {
   "What&apos;s Included": "Ce este inclus",
   "What&apos;s Not Included": "Ce nu este inclus",
   "Date": "Data",
+};
+
+const luxuryRomanianCopy: Record<string, string> = {
   "Private Collection": "Colecție privată",
   "Private Experience": "Experiență privată",
   "Premium Service": "Servicii premium",
@@ -1012,5 +1015,5 @@ export function romanianHomeText(value: string): string {
   if (value.startsWith("Select an age for Child ")) return value.replace("Select an age for Child ", "Selectează vârsta copilului ");
   if (value.startsWith("Select an age for Infant ")) return value.replace("Select an age for Infant ", "Selectează vârsta bebelușului ");
   if (value.startsWith("Enter the 6-digit password reset code we sent to ")) return value.replace("Enter the 6-digit password reset code we sent to ", "Introdu codul de resetare din 6 cifre trimis la ");
-  return romanianCopy[value] ?? value;
+  return luxuryRomanianCopy[value] ?? romanianCopy[value] ?? value;
 }
