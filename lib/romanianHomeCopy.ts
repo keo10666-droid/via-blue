@@ -1095,6 +1095,7 @@ const luxuryRomanianCopy: Record<string, string> = {
   "Breakfast box from your hotel is recommended.": "Se recomandă să soliciți un pachet de mic dejun de la hotel.",
   "Comfortable walking shoes and suitable clothing are recommended.": "Se recomandă încălțăminte comodă pentru mers și îmbrăcăminte adecvată.",
   "Private itinerary adjustments can be requested when possible.": "Se pot solicita modificări ale itinerarului privat, atunci când este posibil.",
+  "The Wonders of Cairo, Your Way": "Minunile orașului Cairo, în ritmul tău",
 };
 
 export function romanianHomeText(value: string): string {

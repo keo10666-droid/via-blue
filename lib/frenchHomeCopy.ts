@@ -1234,6 +1234,7 @@ const luxuryFrenchCopy: Record<string, string> = {
   "Breakfast box from your hotel is recommended.": "Il est conseillé de demander un panier petit-déjeuner à votre hôtel.",
   "Comfortable walking shoes and suitable clothing are recommended.": "Des chaussures de marche confortables et une tenue adaptée sont recommandées.",
   "Private itinerary adjustments can be requested when possible.": "Des ajustements à l’itinéraire privé peuvent être demandés, dans la mesure du possible.",
+  "The Wonders of Cairo, Your Way": "Les merveilles du Caire, à votre façon",
 };
 
 export function frenchHomeText(value: string): string {
