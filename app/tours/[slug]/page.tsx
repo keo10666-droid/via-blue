@@ -856,7 +856,7 @@ export default async function TourDetailsPage({
 
     image: [tourImage],
 
-    url: `https://viabluetours.com/tours/${slug}`,
+    url: `https://viabluetours.com${localizedHref(`/tours/${slug}`)}`,
 
     provider: {
       "@type": "Organization",
@@ -870,7 +870,7 @@ export default async function TourDetailsPage({
       ? {
           offers: {
             "@type": "Offer",
-            url: `https://viabluetours.com/tours/${slug}`,
+            url: `https://viabluetours.com${localizedHref(`/tours/${slug}`)}`,
             priceCurrency: "EUR",
             price: tour.price,
             availability: tour.available
@@ -1669,13 +1669,13 @@ export default async function TourDetailsPage({
           {tour.available ? (
 
             <Link
-              href={`/tours/${tour.slug}/book${
+              href={localizedHref(`/tours/${tour.slug}/book${
                 fromCategory
                   ? `?fromCategory=${encodeURIComponent(
                       fromCategory
                     )}`
                   : ""
-              }`}
+              }`)}
               className="group mt-8 inline-flex items-center justify-center gap-3 rounded-2xl bg-orange-500 px-8 py-4 font-bold text-white shadow-lg shadow-orange-950/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-orange-600 hover:shadow-xl"
             >
 
