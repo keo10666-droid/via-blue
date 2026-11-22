@@ -1,6 +1,7 @@
 import Image from "next/image";
 import HomeText from "@/app/components/HomeText";
 import Link from "next/link";
+import { getLocalizedSeo } from "@/lib/localeMetadata";
 import {
   CarFront,
   Ship,
@@ -10,7 +11,9 @@ import {
   BadgeCheck,
 } from "lucide-react";
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const seo = await getLocalizedSeo("/about");
+  const localizedHref = (path: string) => seo.locale === "en" ? path : `/${seo.locale}${path === "/" ? "" : path}`;
   return (
     <main className="min-h-screen bg-white">
 
@@ -62,7 +65,7 @@ export default function AboutPage() {
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
 
               <Link
-                href="/tours"
+                href={localizedHref("/tours")}
                 className="group rounded-xl border border-orange-300/20 bg-gradient-to-r from-orange-500 to-orange-400 px-7 py-4 text-center font-bold text-white shadow-xl shadow-orange-950/30 transition-all duration-300 hover:-translate-y-1 hover:from-orange-400 hover:to-amber-400 hover:shadow-orange-500/20"
               >
                 <span className="flex items-center justify-center gap-2">
@@ -74,7 +77,7 @@ export default function AboutPage() {
               </Link>
 
               <Link
-                href="/transfers"
+                href={localizedHref("/transfers")}
                 className="rounded-xl border border-white/20 bg-white/[0.08] px-7 py-4 text-center font-bold text-white shadow-xl shadow-black/10 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-white/40 hover:bg-white hover:text-blue-950"
               >
                 <HomeText en="Private Transfers" de="Private Transfers" />
@@ -316,7 +319,7 @@ export default function AboutPage() {
               </p>
 
               <Link
-                href="/transfers"
+                href={localizedHref("/transfers")}
                 className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-orange-500 transition-all duration-300 group-hover:translate-x-1 group-hover:text-orange-600"
               >
                 <HomeText en="Explore Transfers" de="Transfers entdecken" /> →
@@ -344,7 +347,7 @@ export default function AboutPage() {
               </p>
 
               <Link
-                href="/tours"
+                href={localizedHref("/tours")}
                 className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-orange-500 transition-all duration-300 group-hover:translate-x-1 group-hover:text-orange-600"
               >
                 <HomeText en="Explore Tours" de="Ausflüge entdecken" /> →
@@ -372,7 +375,7 @@ export default function AboutPage() {
               </p>
 
               <Link
-                href="/tours"
+                href={localizedHref("/tours")}
                 className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-orange-500 transition-all duration-300 group-hover:translate-x-1 group-hover:text-orange-600"
               >
                 <HomeText en="Discover More" de="Mehr entdecken" /> →
@@ -695,7 +698,7 @@ export default function AboutPage() {
           <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
 
             <Link
-              href="/tours"
+              href={localizedHref("/tours")}
               className="group rounded-xl border border-orange-300/20 bg-gradient-to-r from-orange-500 to-orange-400 px-8 py-4 text-center font-bold text-white shadow-xl shadow-orange-950/30 transition-all duration-300 hover:-translate-y-1 hover:from-orange-400 hover:to-amber-400 hover:shadow-orange-500/20"
             >
               <span className="flex items-center justify-center gap-2">
@@ -707,7 +710,7 @@ export default function AboutPage() {
             </Link>
 
             <Link
-              href="/transfers"
+              href={localizedHref("/transfers")}
               className="rounded-xl border border-white/20 bg-white/[0.06] px-8 py-4 text-center font-bold text-white shadow-xl shadow-black/10 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-white/40 hover:bg-white hover:text-blue-950"
             >
               <HomeText en="View Transfers" de="Transfers ansehen" />

@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 
 import { transfers } from "@/data/transfers";
 import HomeText from "@/app/components/HomeText";
+import { useSiteLocale } from "@/app/components/LocaleProvider";
 import { germanTransferLocation, germanTransferVehicle } from "@/lib/germanTransferCopy";
 import { frenchTransferLocation, frenchTransferVehicle } from "@/lib/frenchTransferCopy";
 import { romanianTransferLocation, romanianTransferVehicle } from "@/lib/romanianTransferCopy";
@@ -20,6 +21,8 @@ type TransferOverride = {
 
 export default function TransfersPage() {
   const router = useRouter();
+  const { locale } = useSiteLocale();
+  const localizedHref = (path: string) => locale === "en" ? path : `/${locale}${path === "/" ? "" : path}`;
   const [overrides, setOverrides] = useState<Record<string, TransferOverride>>({});
   useEffect(() => {
     let cancelled = false;
@@ -52,7 +55,7 @@ export default function TransfersPage() {
       return;
     }
 
-    router.push(`/transfers/${slug}`);
+    router.push(localizedHref(`/transfers/${slug}`));
   }
 
   return (
@@ -337,7 +340,7 @@ export default function TransfersPage() {
                   ) {
                     event.preventDefault();
                     router.push(
-                      `/transfers/${transfer.slug}`
+                      localizedHref(`/transfers/${transfer.slug}`)
                     );
                   }
                 }}
@@ -496,7 +499,7 @@ export default function TransfersPage() {
                   <div className="mt-6 grid grid-cols-2 gap-3">
 
                     <Link
-                      href={`/transfers/${transfer.slug}`}
+                      href={localizedHref(`/transfers/${transfer.slug}`)}
                       onClick={(event) =>
                         event.stopPropagation()
                       }
@@ -506,7 +509,7 @@ export default function TransfersPage() {
                     </Link>
 
                     <Link
-                      href={`/transfers/${transfer.slug}/book`}
+                      href={localizedHref(`/transfers/${transfer.slug}/book`)}
                       onClick={(event) =>
                         event.stopPropagation()
                       }

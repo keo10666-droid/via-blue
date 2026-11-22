@@ -8,6 +8,7 @@ import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 import HomeText from "@/app/components/HomeText";
+import { useSiteLocale } from "@/app/components/LocaleProvider";
 import TourText from "@/app/components/TourText";
 import TourRating from "@/app/components/TourRating";
 
@@ -438,6 +439,8 @@ function TourTypeIcon({
 ========================================================= */
 
 function ToursPageContent() {
+  const { locale } = useSiteLocale();
+  const localizedHref = (path: string) => locale === "en" ? path : `/${locale}${path === "/" ? "" : path}`;
   const categoryKeys = Object.keys(tourCategories) as Array<
     keyof typeof tourCategories
   >;
@@ -786,7 +789,7 @@ function ToursPageContent() {
               ================================================= */}
 
               <Link
-                href={`/tours/${tour.slug}?fromCategory=${activeCategory}`}
+                href={localizedHref(`/tours/${tour.slug}?fromCategory=${activeCategory}`)}
                 className="block"
               >
 
@@ -985,7 +988,7 @@ function ToursPageContent() {
               <div className="grid grid-cols-2 gap-3 px-6 pb-6">
 
                 <Link
-                  href={`/tours/${tour.slug}?fromCategory=${activeCategory}`}
+                  href={localizedHref(`/tours/${tour.slug}?fromCategory=${activeCategory}`)}
                   className="group/button flex items-center justify-center rounded-2xl border border-blue-950 bg-white px-3 py-3 text-center text-sm font-bold text-blue-950 transition-all duration-300 hover:-translate-y-0.5 hover:bg-blue-950 hover:text-white hover:shadow-lg active:scale-[0.98]"
                 >
                   <HomeText en="View Tour" de="Tour ansehen" />
@@ -995,7 +998,7 @@ function ToursPageContent() {
                 {tour.available ? (
 
                   <Link
-                    href={`/tours/${tour.slug}/book?fromCategory=${activeCategory}`}
+                    href={localizedHref(`/tours/${tour.slug}/book?fromCategory=${activeCategory}`)}
                     className="flex items-center justify-center rounded-2xl bg-gradient-to-r from-orange-500 to-orange-600 px-3 py-3 text-center text-sm font-bold text-white shadow-md shadow-orange-500/20 transition-all duration-300 hover:-translate-y-0.5 hover:from-orange-600 hover:to-orange-700 hover:shadow-xl hover:shadow-orange-500/25 active:scale-[0.98]"
                   >
                     <HomeText en="Book Now" de="Jetzt buchen" />
@@ -1080,7 +1083,7 @@ function ToursPageContent() {
             </div>
 
             <Link
-              href="/tours"
+              href={localizedHref("/tours")}
               className="group flex shrink-0 items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-orange-500 to-orange-600 px-7 py-4 font-bold text-white shadow-lg shadow-orange-950/20 transition-all duration-300 hover:-translate-y-0.5 hover:from-orange-600 hover:to-orange-700 hover:shadow-xl"
             >
               <HomeText en="Explore All Tours" de="Alle Ausflüge entdecken" />

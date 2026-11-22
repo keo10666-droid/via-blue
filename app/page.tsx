@@ -148,6 +148,8 @@ function BoatIcon({ className = "h-6 w-6" }: { className?: string }) {
 }
 
 export default async function Home() {
+  const seo = await getLocalizedSeo("/");
+  const localizedHref = (path: string) => seo.locale === "en" ? path : `/${seo.locale}${path === "/" ? "" : path}`;
   const contentClient = createSupabaseAdminClient();
   const { data: homepageOverride } = contentClient
     ? await contentClient.from("website_content_overrides").select("content").eq("section", "homepage").maybeSingle()
@@ -227,7 +229,7 @@ export default async function Home() {
             <div className="mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:gap-4">
 
               <Link
-                href="/tours"
+                href={localizedHref("/tours")}
                 className="group flex items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 px-8 py-4.5 text-center font-bold text-white shadow-2xl shadow-orange-950/40 transition duration-300 hover:-translate-y-1 hover:from-orange-400 hover:to-amber-400"
               >
                 <HomeText en="Explore Our Tours" de="Unsere Ausflüge entdecken" />
@@ -236,7 +238,7 @@ export default async function Home() {
               </Link>
 
               <Link
-                href="/transfers"
+                href={localizedHref("/transfers")}
                 className="flex items-center justify-center rounded-2xl border border-white/25 bg-white/10 px-8 py-4.5 text-center font-bold text-white backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:bg-white hover:text-blue-950"
               >
                 <HomeText en="Book a Private Transfer" de="Privaten Transfer buchen" />
@@ -372,7 +374,7 @@ export default async function Home() {
           </div>
 
           <Link
-            href="/luxury-tours"
+            href={localizedHref("/luxury-tours")}
             className="group relative isolate flex min-h-[540px] overflow-hidden rounded-[30px] bg-[#03112a] text-white shadow-[0_24px_65px_rgba(3,17,42,0.24)]"
           >
             <Image
@@ -559,7 +561,7 @@ export default async function Home() {
             </div>
 
             <Link
-              href="/tours"
+              href={localizedHref("/tours")}
               className="group hidden items-center gap-2 font-bold text-blue-950 transition hover:text-orange-500 md:flex"
             >
               <HomeText en="View All Tours" de="Alle Ausflüge ansehen" />
@@ -598,7 +600,7 @@ export default async function Home() {
                 </p>
 
                 <Link
-                  href="/tours"
+                  href={localizedHref("/tours")}
                   className="group mt-6 flex items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 px-6 py-4 text-sm font-bold text-white shadow-xl shadow-orange-950/30 transition duration-300 hover:-translate-y-1 hover:from-orange-400 hover:to-amber-400"
                 >
                   <HomeText en="Explore All Tours" de="Alle Ausflüge entdecken" />
@@ -624,7 +626,7 @@ export default async function Home() {
                 >
 
                   <Link
-                    href={`/tours/${tour.slug}`}
+                    href={localizedHref(`/tours/${tour.slug}`)}
                     className="flex flex-1 flex-col"
                   >
 
@@ -696,7 +698,7 @@ export default async function Home() {
                   <div className="grid grid-cols-2 gap-3 px-6 pb-6">
 
                     <Link
-                      href={`/tours/${tour.slug}`}
+                      href={localizedHref(`/tours/${tour.slug}`)}
                       className="rounded-xl border-2 border-blue-950 py-3 text-center text-sm font-bold text-blue-950 transition hover:bg-blue-950 hover:text-white"
                     >
                       <HomeText en="View Tour" de="Ausflug ansehen" />
@@ -704,7 +706,7 @@ export default async function Home() {
 
                     {tour.available ? (
                       <Link
-                        href={`/tours/${tour.slug}/book`}
+                        href={localizedHref(`/tours/${tour.slug}/book`)}
                         className="rounded-xl bg-orange-500 py-3 text-center text-sm font-bold text-white shadow-md transition hover:bg-orange-600"
                       >
                         <HomeText en="Book Now" de="Jetzt buchen" />
@@ -729,7 +731,7 @@ export default async function Home() {
             <article className="group flex h-full flex-col overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-md transition duration-500 hover:-translate-y-2 hover:border-orange-100 hover:shadow-2xl">
 
               <Link
-                href="/transfers"
+                href={localizedHref("/transfers")}
                 className="flex flex-1 flex-col"
               >
 
@@ -789,14 +791,14 @@ export default async function Home() {
               <div className="grid grid-cols-2 gap-3 px-6 pb-6">
 
                 <Link
-                  href="/transfers"
+                  href={localizedHref("/transfers")}
                   className="rounded-xl border-2 border-blue-950 py-3 text-center text-sm font-bold text-blue-950 transition hover:bg-blue-950 hover:text-white"
                 >
                   <HomeText en="View Transfers" de="Transfers ansehen" />
                 </Link>
 
                 <Link
-                  href="/transfers"
+                  href={localizedHref("/transfers")}
                   className="rounded-xl bg-orange-500 py-3 text-center text-sm font-bold text-white shadow-md transition hover:bg-orange-600"
                 >
                   <HomeText en="Book Now" de="Jetzt buchen" />
@@ -811,7 +813,7 @@ export default async function Home() {
           <div className="mt-12 hidden text-center md:block">
 
             <Link
-              href="/tours"
+              href={localizedHref("/tours")}
               className="group inline-flex items-center gap-3 rounded-2xl border-2 border-blue-950 px-7 py-3.5 font-bold text-blue-950 shadow-sm transition hover:-translate-y-1 hover:bg-blue-950 hover:text-white hover:shadow-xl"
             >
               <HomeText en="Discover All Experiences" de="Alle Erlebnisse entdecken" />
@@ -864,7 +866,7 @@ export default async function Home() {
             </p>
 
             <Link
-              href="/tours"
+              href={localizedHref("/tours")}
               className="group mt-8 inline-flex items-center gap-3 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 px-7 py-4 font-bold text-white shadow-xl shadow-orange-950/30 transition hover:-translate-y-1 hover:from-orange-400 hover:to-amber-400"
             >
               <HomeText en={homepageContent.experience_button} de="Erlebnis finden" />
@@ -1008,7 +1010,7 @@ export default async function Home() {
                   </div>
 
                   <Link
-                    href={`/tours/${review.tour_slug}`}
+                    href={localizedHref(`/tours/${review.tour_slug}`)}
                     className="mt-6 flex items-center gap-2 text-sm font-bold text-blue-950 transition group-hover:text-orange-500"
                   >
                     <HomeText en="View Experience" de="Erlebnis ansehen" />
@@ -1079,7 +1081,7 @@ export default async function Home() {
             </Link>
 
             <Link
-              href="/transfers"
+              href={localizedHref("/transfers")}
               className="flex items-center justify-center rounded-2xl border-2 border-blue-950 px-8 py-4 font-bold text-blue-950 transition hover:-translate-y-1 hover:bg-blue-950 hover:text-white hover:shadow-xl"
             >
               <HomeText en={homepageContent.cta_secondary_button} de="Transfers ansehen" />
