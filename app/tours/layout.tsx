@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
-import { getLocalizedAlternates } from "@/lib/localeMetadata";
+import { getLocalizedSeo } from "@/lib/localeMetadata";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const alternates = await getLocalizedAlternates("/tours");
+  const seo = await getLocalizedSeo("/tours");
   return {
-  title: "Hurghada Tours & Excursions",
-  description:
-    "Discover the best tours and excursions in Hurghada, Egypt. Explore Red Sea boat trips, islands, snorkeling, diving, desert safaris, dolphin experiences and Egypt day tours with Via Blue.",
+  title: seo.title,
+  description: seo.description,
 
   keywords: [
     "Hurghada tours",
@@ -21,12 +20,10 @@ export async function generateMetadata(): Promise<Metadata> {
     "Egypt excursions",
   ],
 
-  alternates,
-  openGraph: {
-    title: "Hurghada Tours & Excursions | Via Blue",
-    description:
-      "Discover the best tours and excursions in Hurghada, Egypt. Explore Red Sea boat trips, islands, snorkeling, diving, desert safaris and unforgettable Egypt experiences with Via Blue.",
-    url: alternates.canonical,
+  alternates: seo.alternates,
+  openGraph: { title: seo.title,
+    description: seo.description,
+    url: seo.alternates.canonical,
     siteName: "Via Blue",
     type: "website",
     locale: "en_US",
