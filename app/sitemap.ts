@@ -45,11 +45,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${baseUrl}/ai-trip-planner`,
+      ...localeAlternates("/ai-trip-planner"),
       changeFrequency: "monthly",
       priority: 0.7,
     },
     {
       url: `${baseUrl}/sim-card`,
+      ...localeAlternates("/sim-card"),
       changeFrequency: "monthly",
       priority: 0.5,
     },

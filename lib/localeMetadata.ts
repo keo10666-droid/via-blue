@@ -135,6 +135,13 @@ const SEO_COPY: Record<string, Record<Locale, [string, string]>> = {
       "Откройте частные поездки из Хургады: Луксор и Каир, прогулки на частной яхте по Красному морю и приключения в пустыне."
     ]
   },
+  "/ai-trip-planner": {
+    "en": ["AI Trip Planner for Hurghada | Via Blue", "Build a personalized Hurghada holiday plan with boat trips, islands, snorkeling, desert safaris and Egypt excursions matched to your budget."],
+    "de": ["KI-Reiseplaner für Hurghada", "Erstellen Sie einen individuellen Urlaubsplan für Hurghada mit Bootstouren, Inseln, Schnorcheln, Wüstensafaris und Ägypten-Ausflügen passend zu Ihrem Budget."],
+    "fr": ["Planificateur de voyage IA à Hurghada", "Créez un programme personnalisé à Hurghada avec sorties en bateau, îles, snorkeling, safaris dans le désert et excursions en Égypte selon votre budget."],
+    "ro": ["Planificator AI de călătorie în Hurghada", "Creați un itinerar personalizat în Hurghada cu excursii cu barca, insule, snorkeling, safari în deșert și tururi în Egipt, în funcție de buget."],
+    "ru": ["AI-планировщик путешествия по Хургаде", "Составьте индивидуальный план отдыха в Хургаде: морские прогулки, острова, снорклинг, сафари по пустыне и экскурсии по Египту с учётом бюджета."]
+  },
   "/sim-card": {
     "en": [
       "Egypt SIM Card & Mobile Data",
