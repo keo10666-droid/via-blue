@@ -21,21 +21,25 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${baseUrl}/transfers`,
+      ...localeAlternates("/transfers"),
       changeFrequency: "weekly",
       priority: 0.9,
     },
     {
       url: `${baseUrl}/about`,
+      ...localeAlternates("/about"),
       changeFrequency: "monthly",
       priority: 0.6,
     },
     {
       url: `${baseUrl}/contact`,
+      ...localeAlternates("/contact"),
       changeFrequency: "monthly",
       priority: 0.6,
     },
     {
       url: `${baseUrl}/luxury-tours`,
+      ...localeAlternates("/luxury-tours"),
       changeFrequency: "weekly",
       priority: 0.7,
     },
@@ -64,6 +68,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     .filter((transfer) => transfer.available)
     .map((transfer) => ({
       url: `${baseUrl}/transfers/${transfer.slug}`,
+      ...localeAlternates(`/transfers/${transfer.slug}`),
       changeFrequency: "monthly",
       priority: 0.7,
     }));
@@ -81,6 +86,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const luxuryPages: MetadataRoute.Sitemap = luxurySlugs.map((slug) => ({
     url: `${baseUrl}/luxury-tours/${slug}`,
+    ...localeAlternates(`/luxury-tours/${slug}`),
     changeFrequency: "monthly",
     priority: 0.7,
   }));
