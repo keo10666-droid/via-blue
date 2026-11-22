@@ -95,6 +95,8 @@ const vehicleImages: Record<string, string> = {
 
 export default async function TransferPage({ params }: Props) {
   const { slug } = await params;
+  const seo = await getLocalizedSeo(`/transfers/${slug}`);
+  const localizedHref = (path: string) => seo.locale === "en" ? path : `/${seo.locale}${path === "/" ? "" : path}`;
 
   const baseTransfer = transfers[slug as keyof typeof transfers];
   if (!baseTransfer) notFound();
@@ -131,7 +133,7 @@ export default async function TransferPage({ params }: Props) {
     ],
     offers: {
       "@type": "AggregateOffer",
-      url: `https://viabluetours.com/transfers/${slug}`,
+      url: `https://viabluetours.com${localizedHref(`/transfers/${slug}`)}`,
       priceCurrency: "EUR",
       lowPrice: lowestPrice,
       highPrice: highestPrice,
@@ -379,7 +381,7 @@ export default async function TransferPage({ params }: Props) {
                     {/* Book Button */}
 
                     <Link
-                      href={`/transfers/${transfer.slug}/book`}
+                      href={localizedHref(`/transfers/${transfer.slug}/book`)}
                       className="group/button mt-6 flex items-center justify-center gap-2 rounded-2xl bg-blue-950 px-5 py-3.5 text-center text-sm font-bold text-white shadow-lg shadow-blue-950/10 transition-all duration-300 hover:-translate-y-0.5 hover:bg-orange-500 hover:shadow-orange-500/20"
                     >
 
@@ -543,7 +545,7 @@ export default async function TransferPage({ params }: Props) {
 
 
                 <Link
-                  href="/transfers"
+                  href={localizedHref("/transfers")}
                   className="mt-5 flex items-center justify-center gap-2 rounded-2xl border-2 border-blue-950 px-5 py-3.5 text-center text-sm font-bold text-blue-950 transition-all duration-300 hover:bg-blue-950 hover:text-white"
                 >
                   ← <HomeText en="Back to Transfers" de="Zurück zu den Transfers" />

@@ -768,6 +768,8 @@ export default async function TourDetailsPage({
   searchParams,
 }: Props) {
   const { slug } = await params;
+  const seo = await getLocalizedSeo(`/tours/${slug}`);
+  const localizedHref = (path: string) => seo.locale === "en" ? path : `/${seo.locale}${path === "/" ? "" : path}`;
   const { fromCategory } = await searchParams;
 
   const baseTour = Object.values(tours).find((item) => item.slug === slug);
@@ -828,9 +830,9 @@ export default async function TourDetailsPage({
     notFound();
   }
 
-  const backToTours = fromCategory
+  const backToTours = localizedHref(fromCategory
     ? `/tours?category=${encodeURIComponent(fromCategory)}`
-    : "/tours";
+    : "/tours");
 
   /* =========================================================
      LIVE REVIEWS
@@ -1569,13 +1571,13 @@ export default async function TourDetailsPage({
                 {tour.available ? (
 
                   <Link
-                    href={`/tours/${tour.slug}/book${
+                    href={localizedHref(`/tours/${tour.slug}/book${
                       fromCategory
                         ? `?fromCategory=${encodeURIComponent(
                             fromCategory
                           )}`
                         : ""
-                    }`}
+                    }`)}
                     className="group mt-6 flex w-full items-center justify-center gap-3 rounded-2xl bg-orange-500 py-4 text-center text-lg font-bold text-white shadow-lg shadow-orange-200 transition-all duration-300 hover:-translate-y-0.5 hover:bg-orange-600 hover:shadow-xl hover:shadow-orange-200"
                   >
 
