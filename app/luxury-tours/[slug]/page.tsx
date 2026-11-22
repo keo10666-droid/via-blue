@@ -1,6 +1,6 @@
 import CurrencyPrice from "@/app/components/CurrencyPrice";
 import type { Metadata } from "next";
-import { getLocalizedAlternates } from "@/lib/localeMetadata";
+import { getLocalizedSeo } from "@/lib/localeMetadata";
 import Link from "next/link";
 import HomeText from "@/app/components/HomeText";
 import { getLuxuryPricing } from "@/lib/luxuryPricing";
@@ -1192,18 +1192,59 @@ type PageProps = {
   }>;
 };
 
+const luxurySeoNames: Record<string, Record<LuxuryTourSlug, string>> = {
+  de: {
+    luxor: "Private Luxor-Tagestour", cairo: "Private Kairo-Tour", "speed-boat": "Privates Schnellboot",
+    "quad-safari": "Quad-Safari", "buggy-safari": "Buggy-Safari", alexandria: "Private Alexandria-Tour",
+    aswan: "Private Assuan-Tour", "private-boat": "Privater Bootscharter",
+  },
+  fr: {
+    luxor: "Excursion privée à Louxor", cairo: "Circuit privé au Caire", "speed-boat": "Bateau rapide privé",
+    "quad-safari": "Safari en quad", "buggy-safari": "Safari en buggy", alexandria: "Excursion privée à Alexandrie",
+    aswan: "Excursion privée à Assouan", "private-boat": "Location de bateau privé",
+  },
+  ro: {
+    luxor: "Tur privat la Luxor", cairo: "Tur privat la Cairo", "speed-boat": "Barcă rapidă privată",
+    "quad-safari": "Safari cu ATV", "buggy-safari": "Safari cu buggy", alexandria: "Tur privat la Alexandria",
+    aswan: "Tur privat la Aswan", "private-boat": "Închiriere barcă privată",
+  },
+  ru: {
+    luxor: "Частная экскурсия в Луксор", cairo: "Частная экскурсия в Каир", "speed-boat": "Частный скоростной катер",
+    "quad-safari": "Сафари на квадроциклах", "buggy-safari": "Сафари на багги", alexandria: "Частная экскурсия в Александрию",
+    aswan: "Частная экскурсия в Асуан", "private-boat": "Аренда частной яхты",
+  },
+};
+
+const luxurySeoDescriptions: Record<string, string> = {
+  de: "Buchen Sie dieses private Erlebnis ab Hurghada mit Via Blue. Freuen Sie sich auf komfortable Organisation, persönliche Betreuung und einen sorgfältig geplanten Ausflug in Ägypten.",
+  fr: "Réservez cette expérience privée au départ de Hurghada avec Via Blue. Profitez d’une organisation confortable, d’un accompagnement personnalisé et d’une excursion soigneusement préparée en Égypte.",
+  ro: "Rezervați această experiență privată din Hurghada cu Via Blue. Bucurați-vă de organizare confortabilă, asistență personalizată și o excursie bine planificată în Egipt.",
+  ru: "Забронируйте индивидуальную поездку из Хургады с Via Blue. Вас ждут комфортная организация, персональное сопровождение и тщательно спланированная экскурсия по Египту.",
+};
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const alternates = await getLocalizedAlternates(`/luxury-tours/${slug}`);
+  const seo = await getLocalizedSeo("/luxury-tours");
+  const alternates = (await getLocalizedSeo(`/luxury-tours/${slug}`)).alternates;
   const tour = luxuryTours[slug as LuxuryTourSlug];
   if (!tour) return { title: "Luxury Tour Not Found", robots: { index: false, follow: false } };
+
+  const locale = seo.locale;
+  const localizedName = locale === "en" ? tour.name : luxurySeoNames[locale]?.[slug as LuxuryTourSlug] ?? tour.name;
+  const title = locale === "en" ? `${tour.name} in Egypt`
+    : locale === "de" ? `${localizedName} in Ägypten`
+    : locale === "fr" ? `${localizedName} en Égypte`
+    : locale === "ro" ? `${localizedName} în Egipt`
+    : `${localizedName} в Египте`;
+  const description = locale === "en" ? tour.description : luxurySeoDescriptions[locale] ?? tour.description;
   const canonical = alternates.canonical;
+  const ogLocale = locale === "de" ? "de_DE" : locale === "fr" ? "fr_FR" : locale === "ro" ? "ro_RO" : locale === "ru" ? "ru_RU" : "en_US";
   return {
-    title: `${tour.name} in Egypt`,
-    description: tour.description,
+    title,
+    description,
     alternates,
-    openGraph: { title: `${tour.name} | Via Blue`, description: tour.description, url: canonical, siteName: "Via Blue", type: "website", locale: "en_US" },
-    twitter: { card: "summary_large_image", title: `${tour.name} | Via Blue`, description: tour.description },
+    openGraph: { title, description, url: canonical, siteName: "Via Blue", type: "website", locale: ogLocale },
+    twitter: { card: "summary_large_image", title, description },
   };
 }
 
