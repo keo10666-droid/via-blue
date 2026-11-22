@@ -10,6 +10,7 @@ import { russianHomeText } from "@/lib/russianHomeCopy";
 import { russianTourCopy, russianTourValue } from "@/lib/russianTourCopy";
 import { romanianTourCopy, romanianTourValue } from "@/lib/romanianTourCopy";
 import { useCurrency, type CurrencyCode } from "@/app/components/CurrencyProvider";
+import { useSiteLocale } from "@/app/components/LocaleProvider";
 
 const areas = [
   "Hurghada",
@@ -251,6 +252,7 @@ function ClockIcon({ className = "h-4 w-4" }: { className?: string }) {
 }
 
 export default function AITripPlannerPage() {
+  const { locale } = useSiteLocale();
   const { currency, setCurrency, rate, rates, convertFromEur } = useCurrency();
   const [step, setStep] = useState(1);
   const [language, setLanguage] = useState<"en" | "de" | "fr" | "ro" | "ru">("en");
@@ -1086,7 +1088,7 @@ export default function AITripPlannerPage() {
     }),
   );
 
-  window.location.href = "/ai-trip-planner/book";
+  window.location.href = `${locale === "en" ? "" : `/${locale}`}/ai-trip-planner/book`;
 }}
                       className="flex shrink-0 items-center justify-center gap-3 rounded-xl bg-orange-500 px-7 py-4 font-bold text-white transition hover:bg-orange-600"
                     >
