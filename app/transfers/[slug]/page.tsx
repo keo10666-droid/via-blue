@@ -37,6 +37,7 @@ export async function generateMetadata({
   }
 
   const localizeLocation = (value: string) => seo.locale === "de" ? germanTransferLocation(value) : seo.locale === "fr" ? frenchTransferLocation(value) : seo.locale === "ro" ? romanianTransferLocation(value) : seo.locale === "ru" ? ({ "Hurghada International Airport": "Международный аэропорт Хургады", "Hurghada Airport": "Аэропорт Хургады", "Hurghada City": "Центр Хургады", "Sahl Hasheesh": "Сахл-Хашиш", "Makadi Bay": "Макади-Бей", "El Gouna": "Эль-Гуна", "Soma Bay": "Сома-Бей", "Safaga": "Сафага" }[value] ?? value) : value;
+  const localizeVehicle = (value: string) => ({ Sedan: "Седан", "X-Pander": "Минивэн X-Pander", Van: "Микроавтобус", Luxury: "Автомобиль премиум-класса", Coster: "Микроавтобус Coster" }[value] ?? value);
   const from = localizeLocation(transfer.from);
   const to = localizeLocation(transfer.to);
   const title = seo.locale === "de" ? `Privater Transfer von ${from} nach ${to}` : seo.locale === "fr" ? `Transfert privé de ${from} à ${to}` : seo.locale === "ro" ? `Transfer privat de la ${from} la ${to}` : seo.locale === "ru" ? `Индивидуальный трансфер: ${from} — ${to}` : `${transfer.from} to ${transfer.to} Transfer`;
@@ -166,17 +167,17 @@ export default async function TransferPage({ params }: Props) {
             <span className="h-px w-12 bg-orange-400" />
 
             <p className="text-xs font-bold uppercase tracking-[0.35em] text-orange-400 sm:text-sm">
-              <HomeText en="Private Airport Transfer" de="Privater Flughafentransfer" />
+              <HomeText en="Private Airport Transfer" de="Privater Flughafentransfer" fr="Transfert privé depuis l’aéroport" ro="Transfer privat de la aeroport" ru="Индивидуальный трансфер из аэропорта" />
             </p>
 
           </div>
 
           <h1 className="mt-5 text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
-            <HomeText en={transfer.to} de={germanTransferLocation(transfer.to)} fr={frenchTransferLocation(transfer.to)} ro={romanianTransferLocation(transfer.to)} />
+            <HomeText en={transfer.to} de={germanTransferLocation(transfer.to)} fr={frenchTransferLocation(transfer.to)} ro={romanianTransferLocation(transfer.to)} ru={to} />
           </h1>
 
           <p className="mt-5 max-w-2xl text-lg leading-8 text-blue-100">
-            <HomeText en={`Comfortable private transfer from ${transfer.from} to your destination`} de={`Komfortabler Privattransfer vom ${germanTransferLocation(transfer.from)} zu Ihrem Ziel`} ro={`Transfer privat confortabil de la ${romanianTransferLocation(transfer.from)} la destinația ta`} />
+            <HomeText en={`Comfortable private transfer from ${transfer.from} to your destination`} de={`Komfortabler Privattransfer vom ${germanTransferLocation(transfer.from)} zu Ihrem Ziel`} fr={`Transfert privé confortable depuis ${frenchTransferLocation(transfer.from)} vers votre destination`} ro={`Transfer privat confortabil de la ${romanianTransferLocation(transfer.from)} la destinația ta`} ru={`Комфортный индивидуальный трансфер из пункта ${from} до места назначения`} />
           </p>
 
           <div className="mt-7 flex flex-wrap gap-3">
@@ -271,7 +272,7 @@ export default async function TransferPage({ params }: Props) {
                       </p>
 
                       <p className="mt-1 text-lg font-bold text-white">
-                        <HomeText en={vehicle.type} de={germanTransferVehicle(vehicle.type)} fr={frenchTransferVehicle(vehicle.type)} ro={romanianTransferVehicle(vehicle.type)} />
+                        <HomeText en={vehicle.type} de={germanTransferVehicle(vehicle.type)} fr={frenchTransferVehicle(vehicle.type)} ro={romanianTransferVehicle(vehicle.type)} ru={localizeVehicle(vehicle.type)} />
                       </p>
 
                     </div>
@@ -288,7 +289,7 @@ export default async function TransferPage({ params }: Props) {
                       <div className="min-w-0">
 
                         <h3 className="text-2xl font-bold tracking-tight text-blue-950 transition-colors duration-300 group-hover:text-orange-500">
-                          <HomeText en={vehicle.type} de={germanTransferVehicle(vehicle.type)} fr={frenchTransferVehicle(vehicle.type)} />
+                          <HomeText en={vehicle.type} de={germanTransferVehicle(vehicle.type)} fr={frenchTransferVehicle(vehicle.type)} ro={romanianTransferVehicle(vehicle.type)} ru={localizeVehicle(vehicle.type)} />
                         </h3>
 
                         <p className="mt-1 text-xs font-medium text-slate-500">
@@ -388,7 +389,7 @@ export default async function TransferPage({ params }: Props) {
                       className="group/button mt-6 flex items-center justify-center gap-2 rounded-2xl bg-blue-950 px-5 py-3.5 text-center text-sm font-bold text-white shadow-lg shadow-blue-950/10 transition-all duration-300 hover:-translate-y-0.5 hover:bg-orange-500 hover:shadow-orange-500/20"
                     >
 
-                      <HomeText en={`Book ${vehicle.type}`} de={`${germanTransferVehicle(vehicle.type)} buchen`} fr={`Réserver ${frenchTransferVehicle(vehicle.type)}`} ro={`Rezervă ${romanianTransferVehicle(vehicle.type)}`} />
+                      <HomeText en={`Book ${vehicle.type}`} de={`${germanTransferVehicle(vehicle.type)} buchen`} fr={`Réserver ${frenchTransferVehicle(vehicle.type)}`} ro={`Rezervă ${romanianTransferVehicle(vehicle.type)}`} ru={`Забронировать: ${localizeVehicle(vehicle.type)}`} />
 
                       <ArrowRightIcon className="h-4 w-4 transition-transform duration-300 group-hover/button:translate-x-1" />
 
@@ -451,7 +452,7 @@ export default async function TransferPage({ params }: Props) {
                     </p>
 
                     <p className="mt-1.5 text-sm font-bold text-blue-950">
-                      <HomeText en={transfer.from} de={germanTransferLocation(transfer.from)} fr={frenchTransferLocation(transfer.from)} ro={romanianTransferLocation(transfer.from)} />
+                      <HomeText en={transfer.from} de={germanTransferLocation(transfer.from)} fr={frenchTransferLocation(transfer.from)} ro={romanianTransferLocation(transfer.from)} ru={from} />
                     </p>
 
                   </div>
@@ -466,7 +467,7 @@ export default async function TransferPage({ params }: Props) {
                     </p>
 
                     <p className="mt-1.5 text-sm font-bold text-orange-700">
-                      <HomeText en={transfer.to} de={germanTransferLocation(transfer.to)} fr={frenchTransferLocation(transfer.to)} />
+                      <HomeText en={transfer.to} de={germanTransferLocation(transfer.to)} fr={frenchTransferLocation(transfer.to)} ro={romanianTransferLocation(transfer.to)} ru={to} />
                     </p>
 
                   </div>
