@@ -2578,14 +2578,14 @@ export const tours = {
 
   "dolphin-session": baseTour("dolphin-session", {
 
-  name: "Swimming with Dolphins",
+  name: "Dolphin Interaction Session",
 
   destination: "hurghada",
 
   image: "/tours/dolphin-session-hero.webp",
 
   description:
-    "Enjoy an unforgettable swimming and interaction experience with dolphins at Dolphin World, accompanied by professional trainers.",
+    "Choose a supervised 5–15 minute dolphin interaction session at Dolphin World in Hurghada, guided by professional trainers.",
 
   overview:
     "Get close to dolphins in a safe and supervised environment. Enjoy touching, playing, dancing, kissing and the Dolphin Tow experience according to the selected session.",
