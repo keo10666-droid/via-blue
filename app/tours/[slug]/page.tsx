@@ -1409,7 +1409,7 @@ export default async function TourDetailsPage({
                   </p>
                 </div>
                 <h2 id="related-tours-heading" className="mt-4 text-3xl font-extrabold text-blue-950 md:text-4xl">
-                  <HomeText en="Related Tours in Hurghada" de="Ähnliche Ausflüge in Hurghada" fr="Excursions similaires à Hurghada" ro="Excursii similare în Hurghada" ru="Похожие экскурсии в Хургаде" />
+                  <HomeText en="Related Tours" de="Ähnliche Ausflüge" fr="Excursions similaires" ro="Excursii similare" ru="Похожие экскурсии" />
                 </h2>
                 <div className="mt-7 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                   {relatedTours.map((related) => (
