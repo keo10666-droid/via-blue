@@ -7,6 +7,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: seo.title,
     description: seo.description,
     alternates: seo.alternates,
+    keywords: seo.locale === "de" ? ["KI Reiseplaner Hurghada", "Urlaubsplanung Ägypten", "Hurghada Ausflüge planen"] : seo.locale === "fr" ? ["planificateur voyage IA Hurghada", "organiser séjour Égypte", "excursions Hurghada budget"] : seo.locale === "ro" ? ["planificator călătorie AI Hurghada", "planificare vacanță Egipt", "excursii Hurghada buget"] : seo.locale === "ru" ? ["AI планировщик Хургада", "планирование отдыха Египет", "экскурсии Хургада бюджет"] : ["Hurghada trip planner", "Egypt holiday planner", "Hurghada tours by budget"],
     openGraph: {
       title: seo.title,
       description: seo.description,
