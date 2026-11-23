@@ -180,8 +180,17 @@ export async function getLocalizedAlternates(pathname: string) {
  const h = await headers(); const requested = h.get("x-via-blue-locale");
  const locale: Locale = LOCALES.includes(requested as (typeof LOCALES)[number]) ? requested as (typeof LOCALES)[number] : "en";
  const suffix = pathname === "/" ? "" : pathname;
- const canonicalPath = locale === "en" ? suffix || "/" : `/${locale}${suffix}`;
- return { canonical: `${BASE_URL}${canonicalPath}` };
+ const localizedPath = (code: Locale) => code === "en" ? (suffix || "/") : `/${code}${suffix}`;
+ const canonicalPath = localizedPath(locale);
+ const languages = {
+  en: `${BASE_URL}${localizedPath("en")}`,
+  de: `${BASE_URL}${localizedPath("de")}`,
+  fr: `${BASE_URL}${localizedPath("fr")}`,
+  ro: `${BASE_URL}${localizedPath("ro")}`,
+  ru: `${BASE_URL}${localizedPath("ru")}`,
+  "x-default": `${BASE_URL}${localizedPath("en")}`,
+ };
+ return { canonical: `${BASE_URL}${canonicalPath}`, languages };
 }
 export async function getLocalizedSeo(pathname: string) {
  const h = await headers(); const requested = h.get("x-via-blue-locale");
