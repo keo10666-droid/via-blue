@@ -31,7 +31,7 @@ const copy: Record<string, GermanTourCopy> = {
   "sofa-boat": { name: "Sofa-Boot / Crazy Sofa", description: "Genießen Sie eine rasante und unterhaltsame Fahrt auf dem Roten Meer." },
   twister: { name: "Twister-Schnellboot", description: "Erleben Sie eine aufregende Schnellbootfahrt entlang der Küste von Hurghada." },
   "dolphin-show": { name: "Dolphin-World-Show", description: "Erleben Sie eine unterhaltsame Delfinshow für Familien und Besucher jeden Alters." },
-  "dolphin-session": { name: "Schwimmen mit Delfinen", description: "Erleben Sie eine besondere Begegnung mit Delfinen im Rahmen einer organisierten Session." },
+  "dolphin-session": { name: "Delfin-Interaktionssession", description: "Erleben Sie eine betreute Delfin-Interaktionssession von 5–15 Minuten im Dolphin World in Hurghada, begleitet von professionellen Trainern." },
   "swimming-with-dolphin": { name: "Schwimmen mit Delfinen", description: "Erleben Sie eine besondere Begegnung mit Delfinen im Rahmen einer organisierten Session." },
   "desert-safari": { name: "Wüstensafari am Morgen", description: "Erkunden Sie die Wüste rund um Hurghada bei einem aufregenden Safari-Abenteuer." },
   "quad-bike": { name: "Quad-Safari", description: "Fahren Sie mit dem Quad durch die Wüstenlandschaft und genießen Sie ein Abenteuer ab Hurghada." },
