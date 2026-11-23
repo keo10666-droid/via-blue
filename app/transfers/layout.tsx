@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getLocalizedSeo } from "@/lib/localeMetadata";
+import { getLocalizedSeo, getOpenGraphLocale } from "@/lib/localeMetadata";
 
 export async function generateMetadata(): Promise<Metadata> {
   const seo = await getLocalizedSeo("/transfers");
@@ -26,14 +26,13 @@ export async function generateMetadata(): Promise<Metadata> {
     url: seo.alternates.canonical,
     siteName: "Via Blue",
     type: "website",
-    locale: "en_US",
+    locale: getOpenGraphLocale(seo.locale),
   },
 
   twitter: {
     card: "summary_large_image",
-    title: "Hurghada Airport & Hotel Transfers | Via Blue",
-    description:
-      "Book reliable private transfers across Hurghada and the Red Sea with Via Blue",
+    title: seo.title,
+    description: seo.description,
   },
 };
 }
