@@ -1,4 +1,4 @@
-"import type { Metadata } from "next";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { tourList } from "@/data/tours";
 import { getLocalizedSeo } from "@/lib/localeMetadata";
