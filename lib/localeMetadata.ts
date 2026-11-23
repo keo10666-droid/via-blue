@@ -1,5 +1,5 @@
 import { headers } from "next/headers";
-const BASE_URL = "https://viabluetours.com";
+const BASE_URL = "https://www.viabluetours.com";
 const LOCALES = ["de", "fr", "ro", "ru"] as const;
 type Locale = "en" | (typeof LOCALES)[number];
 const SEO_COPY: Record<string, Record<Locale, [string, string]>> = {
