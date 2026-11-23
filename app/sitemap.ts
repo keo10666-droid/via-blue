@@ -3,7 +3,7 @@ import { tourList } from "@/data/tours";
 import { transfers } from "@/data/transfers";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://viabluetours.com";
+  const baseUrl = "https://www.viabluetours.com";
   const localeAlternates = (path: string) => ({ alternates: { languages: { en: `${baseUrl}${path}`, de: `${baseUrl}/de${path}`, fr: `${baseUrl}/fr${path}`, ro: `${baseUrl}/ro${path}`, ru: `${baseUrl}/ru${path}`, "x-default": `${baseUrl}${path}` } } });
 
   const staticPages: MetadataRoute.Sitemap = [

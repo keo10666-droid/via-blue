@@ -41,7 +41,7 @@ export async function generateMetadata(): Promise<Metadata> {
           : settings.seo_keywords.split(",").map((keyword) => keyword.trim()).filter(Boolean);
 
   return {
-    metadataBase: new URL("https://viabluetours.com"),
+    metadataBase: new URL("https://www.viabluetours.com"),
     title: {
       default: localizedSeo.title ?? settings.seo_title,
       template: "%s | Via Blue",
@@ -93,8 +93,8 @@ export default async function RootLayout({
               "@context": "https://schema.org",
               "@type": "Organization",
               name: "Via Blue",
-              url: "https://viabluetours.com",
-              logo: "https://viabluetours.com/logo/logo.svg",
+              url: "https://www.viabluetours.com",
+              logo: "https://www.viabluetours.com/logo/logo.svg",
               description: "Tourism and transportation company in Hurghada, Egypt, offering Red Sea experiences, excursions and private transfers.",
               areaServed: [
                 { "@type": "City", name: "Hurghada" },
