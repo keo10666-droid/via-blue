@@ -32,6 +32,8 @@ export default function TransfersPage() {
       .catch(() => undefined);
     return () => { cancelled = true; };
   }, []);
+  const russianTransferLocation = (value: string) => ({ "Hurghada International Airport": "Международный аэропорт Хургады", "Hurghada Airport": "Аэропорт Хургады", "Hurghada City": "Центр Хургады", "Sahl Hasheesh": "Сахл-Хашиш", "Makadi Bay": "Макади-Бей", "El Gouna": "Эль-Гуна", "Soma Bay": "Сома-Бей", "Safaga": "Сафага" }[value] ?? value);
+  const russianTransferVehicle = (value: string) => ({ Sedan: "Седан", "X-Pander": "Минивэн X-Pander", Van: "Микроавтобус", Luxury: "Автомобиль премиум-класса", Coster: "Микроавтобус Coster" }[value] ?? value);
   const items = Object.values(transfers)
     .map((transfer) => ({ ...transfer, ...(overrides[transfer.slug] ?? {}) }))
     .filter((transfer) => transfer.available !== false);
@@ -377,13 +379,13 @@ export default function TransfersPage() {
                   <div className="absolute bottom-5 left-5 right-5">
 
                     <p className="mb-1.5 text-xs font-bold uppercase tracking-[0.14em] text-orange-300">
-                      <HomeText en={transfer.from} de={germanTransferLocation(transfer.from)} fr={frenchTransferLocation(transfer.from)} ro={romanianTransferLocation(transfer.from)} />
+                      <HomeText en={transfer.from} de={germanTransferLocation(transfer.from)} fr={frenchTransferLocation(transfer.from)} ro={romanianTransferLocation(transfer.from)} ru={russianTransferLocation(transfer.from)} />
                     </p>
 
                     <div className="flex items-center gap-2">
 
                       <h3 className="text-2xl font-black tracking-[-0.025em] text-white">
-                        <HomeText en={transfer.to} de={germanTransferLocation(transfer.to)} fr={frenchTransferLocation(transfer.to)} ro={romanianTransferLocation(transfer.to)} />
+                        <HomeText en={transfer.to} de={germanTransferLocation(transfer.to)} fr={frenchTransferLocation(transfer.to)} ro={romanianTransferLocation(transfer.to)} ru={russianTransferLocation(transfer.to)} />
                       </h3>
 
                       <span className="text-lg text-white/70 transition-transform duration-300 group-hover:translate-x-1">
@@ -415,7 +417,7 @@ export default function TransfersPage() {
                       <div className="mt-1 flex items-center gap-2 text-sm font-bold text-slate-800">
 
                         <span className="truncate">
-                          <HomeText en={transfer.from} de={germanTransferLocation(transfer.from)} fr={frenchTransferLocation(transfer.from)} />
+                          <HomeText en={transfer.from} de={germanTransferLocation(transfer.from)} fr={frenchTransferLocation(transfer.from)} ro={romanianTransferLocation(transfer.from)} ru={russianTransferLocation(transfer.from)} />
                         </span>
 
                         <span className="shrink-0 text-base font-bold text-orange-500">
@@ -423,7 +425,7 @@ export default function TransfersPage() {
                         </span>
 
                         <span className="truncate">
-                          <HomeText en={transfer.to} de={germanTransferLocation(transfer.to)} fr={frenchTransferLocation(transfer.to)} />
+                          <HomeText en={transfer.to} de={germanTransferLocation(transfer.to)} fr={frenchTransferLocation(transfer.to)} ro={romanianTransferLocation(transfer.to)} ru={russianTransferLocation(transfer.to)} />
                         </span>
 
                       </div>
@@ -485,7 +487,7 @@ export default function TransfersPage() {
                             key={vehicle.type}
                             className="rounded-full border border-slate-200 bg-slate-100 px-3 py-1.5 text-xs font-bold text-slate-700 transition-all duration-300 group-hover:border-orange-100 group-hover:bg-orange-50 group-hover:text-orange-700"
                           >
-                            <HomeText en={vehicle.type} de={germanTransferVehicle(vehicle.type)} fr={frenchTransferVehicle(vehicle.type)} ro={romanianTransferVehicle(vehicle.type)} />
+                            <HomeText en={vehicle.type} de={germanTransferVehicle(vehicle.type)} fr={frenchTransferVehicle(vehicle.type)} ro={romanianTransferVehicle(vehicle.type)} ru={russianTransferVehicle(vehicle.type)} />
                           </span>
 
                         )
