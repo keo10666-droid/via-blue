@@ -52,13 +52,6 @@ const copy: Record<string, FrenchTourCopy> = {
   "mini-egypt-park": { name: "Mini Egypt Park", description: "Découvrez les monuments célèbres d’Égypte reproduits en miniature." },
   "hurghada-museum": { name: "Musée d’Hurghada", description: "Découvrez l’histoire et la culture de l’Égypte lors d’une visite du musée." },
   "spa-massage": { name: "Forfait spa et massage à Hurghada", description: "Détendez-vous avec des soins spa apaisants et un massage à Hurghada." },
-  "pirates": { name: "Voilier Pirates", description: "Profitez d’une croisière luxueuse à bord du voilier Pirates en mer Rouge, avec deux arrêts snorkeling accompagnés d’un guide, un déjeuner buffet et une atmosphère de navigation unique sur un yacht en bois joliment décoré." },
-  "snorkeling": { name: "Excursion snorkeling", description: "Profitez d’une excursion d’une journée en mer Rouge avec deux arrêts snorkeling, des récifs coralliens colorés, des poissons tropicaux, un déjeuner buffet et des boissons chaudes et froides offertes à bord." },
-  "diving": { name: "Sortie plongée en mer", description: "Découvrez la plongée en mer Rouge lors d’une excursion d’une journée comprenant deux plongées sur différents sites, des instructeurs professionnels, l’équipement complet, le déjeuner et des boissons offertes à bord." },
-  "parasailing": { name: "Parachute ascensionnel", description: "Vivez une expérience de parachute ascensionnel au-dessus de la mer Rouge, à environ 40–50 mètres au-dessus de l’eau, et admirez la côte d’Hurghada ainsi que ses eaux turquoise depuis le ciel." },
-  "twister": { name: "Bateau rapide Twister", description: "Vivez une aventure riche en sensations à bord du bateau rapide Twister en mer Rouge, avec des virages serrés, des manœuvres rapides et une bonne dose d’adrénaline." },
-  "stargazing": { name: "Observation des étoiles", description: "Passez une soirée paisible dans le désert égyptien à la découverte de la culture bédouine, autour d’un dîner traditionnel et d’une séance d’observation des étoiles avec un spécialiste." },
-  "aquarium": { name: "Grand Aquarium d’Hurghada", description: "Découvrez le monde sous-marin fascinant de la mer Rouge au Grand Aquarium d’Hurghada, avec ses espèces marines, son tunnel sous-marin vitré, ses espaces de forêt tropicale et ses attractions familiales." },
 };
 
 export function frenchTourCopy(slug: string, field: "name" | "description", fallback: string): string {
