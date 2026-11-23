@@ -53,7 +53,8 @@ export async function generateMetadata({
     }
     const rawTitle = custom.name || slug;
     const rawDescription = custom.description || `Book ${rawTitle} in Hurghada, Egypt with Via Blue.`;
-    const customTitle = localizeTour("name", rawTitle);
+    const localizedCustomName = localizeTour("name", rawTitle);
+    const customTitle = seo.locale === "de" ? `${localizedCustomName} in Hurghada, Ägypten | Via Blue` : seo.locale === "fr" ? `${localizedCustomName} à Hurghada, Égypte | Via Blue` : seo.locale === "ro" ? `${localizedCustomName} în Hurghada, Egipt | Via Blue` : seo.locale === "ru" ? `${localizedCustomName} в Хургаде, Египет | Via Blue` : `${localizedCustomName} in Hurghada, Egypt | Via Blue`;
     const customDescription = localizeTour("description", rawDescription);
     return {
       title: customTitle,
@@ -74,7 +75,8 @@ export async function generateMetadata({
 
   const rawTitle = contentOverride?.name || tour.name;
   const rawDescription = contentOverride?.description || tour.description || `Book ${rawTitle} in Hurghada, Egypt with Via Blue.`;
-  const title = localizeTour("name", rawTitle);
+  const localizedName = localizeTour("name", rawTitle);
+  const title = seo.locale === "de" ? `${localizedName} in Hurghada, Ägypten | Via Blue` : seo.locale === "fr" ? `${localizedName} à Hurghada, Égypte | Via Blue` : seo.locale === "ro" ? `${localizedName} în Hurghada, Egipt | Via Blue` : seo.locale === "ru" ? `${localizedName} в Хургаде, Египет | Via Blue` : `${localizedName} in Hurghada, Egypt | Via Blue`;
   const description = localizeTour("description", rawDescription);
 
   return {
