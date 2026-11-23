@@ -142,6 +142,13 @@ const SEO_COPY: Record<string, Record<Locale, [string, string]>> = {
     "ro": ["Planificator AI de călătorie în Hurghada", "Creați un itinerar personalizat în Hurghada cu excursii cu barca, insule, snorkeling, safari în deșert și tururi în Egipt, în funcție de buget."],
     "ru": ["AI-планировщик путешествия по Хургаде", "Составьте индивидуальный план отдыха в Хургаде: морские прогулки, острова, снорклинг, сафари по пустыне и экскурсии по Египту с учётом бюджета."]
   },
+  "/things-to-do-in-hurghada": {
+    "en": ["Things to Do in Hurghada | Red Sea Activities Guide", "Explore things to do in Hurghada, from Red Sea island boat trips and snorkeling to desert safaris, horse riding and Egypt day trips with Via Blue."],
+    "de": ["Aktivitäten in Hurghada | Reiseführer am Roten Meer", "Entdecken Sie Aktivitäten in Hurghada: Insel- und Bootsausflüge, Schnorcheln, Wüstensafaris, Reiten und Tagesausflüge in Ägypten mit Via Blue."],
+    "fr": ["Que faire à Hurghada | Guide des activités en mer Rouge", "Découvrez les activités à Hurghada : îles et sorties en bateau, snorkeling, safaris dans le désert, équitation et excursions en Égypte avec Via Blue."],
+    "ro": ["Ce poți face în Hurghada | Ghid de activități", "Descoperă activități în Hurghada: excursii cu barca și pe insule, snorkeling, safari în deșert, călărie și excursii în Egipt cu Via Blue."],
+    "ru": ["Чем заняться в Хургаде | Путеводитель по Красному морю", "Откройте развлечения Хургады: морские прогулки и острова, снорклинг, сафари по пустыне, верховая езда и поездки по Египту с Via Blue."]
+  },
   "/sim-card": {
     "en": [
       "Egypt SIM Card & Mobile Data",
