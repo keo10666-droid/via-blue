@@ -165,6 +165,17 @@ const SEO_COPY: Record<string, Record<Locale, [string, string]>> = {
     ]
   }
 };
+export function getOpenGraphLocale(locale: string): string {
+  const locales: Record<string, string> = {
+    en: "en_US",
+    de: "de_DE",
+    fr: "fr_FR",
+    ro: "ro_RO",
+    ru: "ru_RU",
+  };
+  return locales[locale] ?? "en_US";
+}
+
 export async function getLocalizedAlternates(pathname: string) {
  const h = await headers(); const requested = h.get("x-via-blue-locale");
  const locale: Locale = LOCALES.includes(requested as (typeof LOCALES)[number]) ? requested as (typeof LOCALES)[number] : "en";
