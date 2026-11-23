@@ -52,6 +52,9 @@ const copy: Record<string, FrenchTourCopy> = {
   "mini-egypt-park": { name: "Mini Egypt Park", description: "Découvrez les monuments célèbres d’Égypte reproduits en miniature." },
   "hurghada-museum": { name: "Musée d’Hurghada", description: "Découvrez l’histoire et la culture de l’Égypte lors d’une visite du musée." },
   "spa-massage": { name: "Forfait spa et massage à Hurghada", description: "Détendez-vous avec des soins spa apaisants et un massage à Hurghada." },
+  "pirates": { name: "Voilier Pirates", description: "Profitez d’une sortie en mer Rouge à bord du voilier Pirates, avec du temps pour vous détendre et vous baigner." },
+  "twister": { name: "Bateau rapide Twister", description: "Vivez une excursion palpitante à bord du bateau rapide Twister en mer Rouge, au large d’Hurghada." },
+  "aquarium": { name: "Grand aquarium d’Hurghada", description: "Découvrez la vie marine de la mer Rouge et d’autres espèces aquatiques au Grand aquarium d’Hurghada." },
 };
 
 export function frenchTourCopy(slug: string, field: "name" | "description", fallback: string): string {
