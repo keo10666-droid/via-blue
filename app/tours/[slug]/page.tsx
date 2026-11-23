@@ -84,11 +84,15 @@ export async function generateMetadata({
     keywords: [
       title,
       `${title} Hurghada`,
-      "Hurghada tours",
-      "Hurghada excursions",
-      "Hurghada activities",
-      "Red Sea tours",
-      "Egypt tours",
+      ...(seo.locale === "de"
+        ? ["Ausflüge in Hurghada", "Touren in Hurghada", "Rotes Meer Ausflüge", "Ägypten Touren"]
+        : seo.locale === "fr"
+          ? ["excursions à Hurghada", "activités à Hurghada", "sorties en mer Rouge", "circuits en Égypte"]
+          : seo.locale === "ro"
+            ? ["excursii în Hurghada", "tururi în Hurghada", "Marea Roșie", "excursii în Egipt"]
+            : seo.locale === "ru"
+              ? ["экскурсии в Хургаде", "туры в Хургаде", "Красное море", "экскурсии по Египту"]
+              : ["Hurghada tours", "Hurghada excursions", "Hurghada activities", "Red Sea tours", "Egypt tours"]),
       "Via Blue",
     ],
 
