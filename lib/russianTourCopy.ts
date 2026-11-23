@@ -1563,9 +1563,13 @@ Object.assign(values, {
   "Bring swimwear and comfortable flip-flops.": "Возьмите купальник и удобные шлёпанцы."
 });
 
+const tourDescriptionsBySlug: Record<string, string> = {
+  "dolphin-session": "Выберите индивидуальную 5–15-минутную сессию общения с дельфинами в Dolphin World в Хургаде под наблюдением профессиональных тренеров.",
+};
+
 export function russianTourCopy(slug: string, field: "name" | "description", fallback: string): string {
   if (field === "name") return tourNames[slug] ?? fallback;
-  return tourDescriptions[fallback] ?? russianHomeText(fallback);
+  return tourDescriptionsBySlug[slug] ?? tourDescriptions[fallback] ?? russianHomeText(fallback);
 }
 export function russianTourValue(value: string): string {
   return values[value] ?? russianHomeText(value);
