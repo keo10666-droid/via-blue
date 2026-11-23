@@ -11,11 +11,11 @@ import { tourList } from "@/data/tours";
 import { supabase } from "@/lib/supabase";
 import { createSupabaseAdminClient } from "@/lib/supabaseAdmin";
 import { mergeHomepageContent } from "@/lib/websiteContent";
-import { getLocalizedSeo } from "@/lib/localeMetadata";
+import { getLocalizedSeo, getOpenGraphLocale } from "@/lib/localeMetadata";
 
 export async function generateMetadata(): Promise<Metadata> {
   const seo = await getLocalizedSeo("/");
-  return { title: seo.title, description: seo.description, alternates: seo.alternates, openGraph: { title: seo.title, description: seo.description, url: seo.alternates.canonical } };
+  return { title: seo.title, description: seo.description, alternates: seo.alternates, openGraph: { title: seo.title, description: seo.description, url: seo.alternates.canonical, locale: getOpenGraphLocale(seo.locale) } };
 }
 
 function ArrowRightIcon({ className = "h-5 w-5" }: { className?: string }) {
