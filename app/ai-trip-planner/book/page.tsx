@@ -1452,7 +1452,7 @@ ${isGerman ? "Via Blue KI-Reiseplaner" : isFrench ? "Planificateur de voyage IA 
                               key={day}
                               className="py-2 text-center text-[11px] font-bold uppercase tracking-wide text-gray-400"
                             >
-                              {isGerman ? GERMAN_WEEK_DAYS[index] : isFrench ? FRENCH_WEEK_DAYS[index] : isRomanian ? ROMANIAN_WEEK_DAYS[index] : day}
+                              {isGerman ? GERMAN_WEEK_DAYS[index] : isFrench ? FRENCH_WEEK_DAYS[index] : isRomanian ? ROMANIAN_WEEK_DAYS[index] : isRussian ? RUSSIAN_WEEK_DAYS[index] : day}
                             </div>
                           ),
                         )}
