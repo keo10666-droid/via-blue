@@ -84,8 +84,24 @@ export async function generateMetadata({
   const rawTitle = contentOverride?.name || tour.name;
   const rawDescription = contentOverride?.description || tour.description || `Book ${rawTitle} in Hurghada, Egypt with Via Blue.`;
   const localizedName = localizeTour("name", rawTitle);
-  const title = seo.locale === "de" ? `${localizedName} in Hurghada, Ägypten | Via Blue` : seo.locale === "fr" ? `${localizedName} à Hurghada, Égypte | Via Blue` : seo.locale === "ro" ? `${localizedName} în Hurghada, Egipt | Via Blue` : seo.locale === "ru" ? `${localizedName} в Хургаде, Египет | Via Blue` : `${localizedName} in Hurghada, Egypt | Via Blue`;
-  const description = toMetaDescription(localizeTour("description", rawDescription));
+  const isLuxorExperience = tour.destination === "luxor";
+  const title =
+    seo.locale === "de"
+      ? `${localizedName} in ${isLuxorExperience ? "Luxor" : "Hurghada"}, Ägypten | Via Blue`
+      : seo.locale === "fr"
+        ? `${localizedName} à ${isLuxorExperience ? "Louxor" : "Hurghada"}, Égypte | Via Blue`
+        : seo.locale === "ro"
+          ? `${localizedName} în ${isLuxorExperience ? "Luxor" : "Hurghada"}, Egipt | Via Blue`
+          : seo.locale === "ru"
+            ? `${localizedName} в ${isLuxorExperience ? "Луксоре" : "Хургаде"}, Египет | Via Blue`
+            : isLuxorExperience
+              ? `${localizedName} in Luxor, Egypt | Via Blue`
+              : `${tour.seo.title || `${localizedName} in Hurghada, Egypt`}${tour.seo.title?.includes("Via Blue") ? "" : " | Via Blue"}`;
+  const sourceDescription =
+    seo.locale === "en" && !contentOverride?.description
+      ? tour.seo.description || rawDescription
+      : rawDescription;
+  const description = toMetaDescription(localizeTour("description", sourceDescription));
 
   return {
     title,
@@ -93,6 +109,7 @@ export async function generateMetadata({
 
     keywords: [
       title,
+      ...(seo.locale === "en" ? tour.seo.keywords : []),
       `${title} Hurghada`,
       ...(seo.locale === "de"
         ? ["Ausflüge in Hurghada", "Touren in Hurghada", "Rotes Meer Ausflüge", "Ägypten Touren"]
