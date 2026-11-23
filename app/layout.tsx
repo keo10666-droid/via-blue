@@ -34,6 +34,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     metadataBase: new URL("https://viabluetours.com"),
+    alternates: localizedSeo.alternates,
     title: {
       default: localizedSeo.title ?? settings.seo_title,
       template: "%s | Via Blue",
@@ -52,7 +53,7 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: "Via Blue",
       title: localizedSeo.title ?? settings.seo_title,
       description: localizedSeo.description ?? settings.seo_description,
-      locale: getOpenGraphLocale(seoLocale)
+      locale: getOpenGraphLocale(seoLocale),
     },
     twitter: {
       card: "summary_large_image",
