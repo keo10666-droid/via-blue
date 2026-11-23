@@ -641,7 +641,6 @@ export default function Footer() {
 
             <div className="h-px flex-1 bg-gradient-to-r from-white/[0.08] via-white/[0.04] to-transparent md:mx-8" />
 
-            <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-slate-500" aria-label="Footer links" />
           </div>
         </div>
 
