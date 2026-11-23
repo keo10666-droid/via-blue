@@ -331,6 +331,10 @@ export function germanTourValue(value: string): string {
     "Yacht trip": "Yachtfahrt",
     "Tender Boat transfer": "Transfer mit dem Beiboot",
     "Mask and fins": "Maske und Flossen",
+    "Quattro": "Quattro",
+    "Snorkeling": "Schnorcheln",
+    "Enjoy fresh fruit during the trip.": "Genießen Sie während der Fahrt frisches Obst.",
+    "Enjoy lunch on board the boat.": "Genießen Sie das Mittagessen an Bord des Bootes.",
   };
   if (exact[value]) return exact[value];
   return germanHomeText(value);
