@@ -10,6 +10,7 @@ import { russianHomeText } from "@/lib/russianHomeCopy";
 import { romanianTourCopy, romanianTourValue } from "@/lib/romanianTourCopy";
 import { frenchTourCopy, frenchTourValue } from "@/lib/frenchTourCopy";
 import { russianTourCopy, russianTourValue } from "@/lib/russianTourCopy";
+import { useSiteLocale } from "@/app/components/LocaleProvider";
 
 type PackageTour = {
   slug: string;
@@ -231,11 +232,13 @@ const formatDateLabel = (value: string, isGerman = false, isFrench = false, isRo
 };
 
 export default function AITripBookingPage() {
+  const { locale } = useSiteLocale();
+  const localizedHref = (path: string) => locale === "en" ? path : `/${locale}${path === "/" ? "" : path}`;
+  const isGerman = locale === "de";
+  const isFrench = locale === "fr";
+  const isRomanian = locale === "ro";
+  const isRussian = locale === "ru";
   const [booking, setBooking] = useState<BookingData | null>(null);
-  const [isGerman, setIsGerman] = useState(false);
-  const [isFrench, setIsFrench] = useState(false);
-  const [isRomanian, setIsRomanian] = useState(false);
-  const [isRussian, setIsRussian] = useState(false);
   const [loading, setLoading] = useState(true);
   const [name, setName] = useState("");
   const [nationality, setNationality] = useState("");
@@ -267,13 +270,6 @@ export default function AITripBookingPage() {
       1,
     );
   });
-
-  useEffect(() => {
-    const syncLanguage = () => { const language = localStorage.getItem("via-blue-language"); setIsGerman(language === "de"); setIsFrench(language === "fr"); setIsRomanian(language === "ro"); setIsRussian(language === "ru"); };
-    syncLanguage();
-    window.addEventListener("via-blue-language-change", syncLanguage);
-    return () => window.removeEventListener("via-blue-language-change", syncLanguage);
-  }, []);
 
   useEffect(() => {
     try {
@@ -518,7 +514,7 @@ export default function AITripBookingPage() {
           </p>
 
           <a
-            href="/ai-trip-planner"
+            href={localizedHref("/ai-trip-planner")}
             className="mt-7 inline-flex rounded-xl bg-blue-950 px-6 py-3 font-semibold text-white transition hover:bg-blue-900"
           >
             {isGerman ? "Zurück zum KI-Reiseplaner" : isFrench ? "Retour au planificateur de voyage" : isRomanian ? "Înapoi la planificatorul de călătorie AI" : isRussian ? "Назад к планировщику поездки" : "Back to AI Trip Planner"}
@@ -932,7 +928,7 @@ ${isGerman ? "Via Blue KI-Reiseplaner" : isFrench ? "Planificateur de voyage IA 
         <div className="mb-8 overflow-hidden rounded-3xl bg-gradient-to-r from-blue-950 to-blue-800 text-white shadow-xl">
           <div className="p-8 md:p-12">
             <a
-              href="/ai-trip-planner"
+              href={localizedHref("/ai-trip-planner")}
               className="mb-6 inline-flex items-center gap-2 text-sm font-semibold text-white/70 transition hover:text-white"
             >
               <HomeText en="← Back to AI Trip Planner" de="← Zurück zum KI-Reiseplaner" />
