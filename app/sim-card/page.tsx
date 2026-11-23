@@ -10,7 +10,9 @@ export async function generateMetadata(): Promise<Metadata> {
     title: seo.title,
     description: seo.description,
     alternates: seo.alternates,
+    keywords: seo.locale === "de" ? ["SIM-Karte Ägypten", "mobile Daten Ägypten", "25 GB SIM Hurghada"] : seo.locale === "fr" ? ["carte SIM Égypte", "internet mobile Égypte", "SIM 25 Go Hurghada"] : seo.locale === "ro" ? ["cartelă SIM Egipt", "internet mobil Egipt", "SIM 25 GB Hurghada"] : seo.locale === "ru" ? ["SIM-карта Египет", "мобильный интернет Египет", "SIM 25 ГБ Хургада"] : ["Egypt SIM card", "mobile data Egypt", "Hurghada SIM 25 GB"],
     openGraph: { title: seo.title, description: seo.description, url: seo.alternates.canonical, siteName: "Via Blue", type: "website", locale: getOpenGraphLocale(seo.locale) },
+    twitter: { card: "summary_large_image", title: seo.title, description: seo.description },
   };
 }
 
