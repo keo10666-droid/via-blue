@@ -151,7 +151,7 @@ export default async function TransferPage({ params }: Props) {
   };
 
 
-  const routeDescription = {
+  const routeDescriptions: Record<string, { en: string; de: string; fr: string; ro: string; ru: string }> = {
   "hurghada-city": {
     "en": "Hurghada city is the main arrival and holiday hub on Egypt’s Red Sea coast, with hotels and resorts spread across the waterfront and city districts. This private airport transfer takes you from Hurghada International Airport directly towards your hotel in Hurghada.",
     "de": "Hurghada ist das wichtigste Ankunfts- und Urlaubszentrum an der ägyptischen Küste des Roten Meeres. Dieser private Flughafentransfer bringt Sie vom internationalen Flughafen Hurghada direkt zu Ihrem Hotel in der Stadt.",
