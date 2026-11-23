@@ -51,6 +51,13 @@ const copy: Record<string, GermanTourCopy> = {
   "mini-egypt-park": { name: "Mini Egypt Park", description: "Entdecken Sie berühmte Sehenswürdigkeiten Ägyptens in Miniaturform." },
   "hurghada-museum": { name: "Museum von Hurghada", description: "Lernen Sie die Geschichte und Kultur Ägyptens bei einem Museumsbesuch kennen." },
   "spa-massage": { name: "Spa- und Massagepaket in Hurghada", description: "Entspannen Sie bei wohltuenden Spa-Anwendungen und einer Massage in Hurghada." },
+  "pirates": { name: "Pirates Segelboot", description: "Erleben Sie eine luxuriöse Fahrt mit dem Segelboot Pirates im Roten Meer, mit zwei geführten Schnorchelstopps, einem Mittagsbuffet und einer besonderen Segelatmosphäre an Bord einer kunstvoll dekorierten Holzjacht." },
+  "snorkeling": { name: "Schnorchelausflug", description: "Genießen Sie einen ganztägigen Schnorchelausflug im Roten Meer mit zwei Schnorchelstopps, farbenfrohen Korallenriffen, tropischen Fischen, Mittagsbuffet und kostenfreien heißen und kalten Getränken an Bord." },
+  "diving": { name: "Tauchausflug im Roten Meer", description: "Erleben Sie einen ganztägigen Tauchausflug im Roten Meer mit zwei Tauchgängen an verschiedenen Orten, professionellen Tauchlehrern, kompletter Tauchausrüstung, Mittagessen und kostenfreien Getränken an Bord." },
+  "parasailing": { name: "Parasailing", description: "Erleben Sie ein aufregendes Parasailing-Abenteuer über dem Roten Meer. Schweben Sie etwa 40–50 Meter über dem Wasser und genießen Sie den Panoramablick auf die Küste von Hurghada und das türkisfarbene Meer." },
+  "twister": { name: "Twister-Schnellboot", description: "Erleben Sie ein aufregendes Abenteuer mit dem Twister-Schnellboot im Roten Meer – mit scharfen Kurven, schnellen Manövern und jeder Menge Adrenalin." },
+  "stargazing": { name: "Sterne beobachten", description: "Verbringen Sie einen entspannten Abend in der ägyptischen Wüste mit Beduinenkultur, einem traditionellen Abendessen und professioneller Sternenbeobachtung unter einem klaren Wüstenhimmel." },
+  "aquarium": { name: "Grand Aquarium Hurghada", description: "Entdecken Sie die faszinierende Unterwasserwelt des Roten Meeres im Grand Aquarium Hurghada mit Meereslebewesen, einem Unterwassertunnel aus Glas, Regenwald-Ausstellungen und Attraktionen für Familien." },
 };
 
 export function germanTourCopy(slug: string, field: "name" | "description", fallback: string): string {
