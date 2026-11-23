@@ -54,13 +54,13 @@ export async function generateMetadata({
     const rawTitle = custom.name || slug;
     const rawDescription = custom.description || `Book ${rawTitle} in Hurghada, Egypt with Via Blue.`;
     const localizedCustomName = localizeTour("name", rawTitle);
-    const customTitle = seo.locale === "de" ? `${localizedCustomName} in Hurghada, Ägypten | Via Blue` : seo.locale === "fr" ? `${localizedCustomName} à Hurghada, Égypte | Via Blue` : seo.locale === "ro" ? `${localizedCustomName} în Hurghada, Egipt | Via Blue` : seo.locale === "ru" ? `${localizedCustomName} в Хургаде, Египет | Via Blue` : `${localizedCustomName} in Hurghada, Egypt | Via Blue`;
+    const customTitle = seo.locale === "de" ? `${localizedCustomName} in Hurghada, Ägypten` : seo.locale === "fr" ? `${localizedCustomName} à Hurghada, Égypte` : seo.locale === "ro" ? `${localizedCustomName} în Hurghada, Egipt` : seo.locale === "ru" ? `${localizedCustomName} в Хургаде, Египет` : `${localizedCustomName} in Hurghada, Egypt`;
     const customDescription = localizeTour("description", rawDescription);
     return {
       title: customTitle,
       description: customDescription,
       alternates,
-      openGraph: { title: `${customTitle} | Via Blue`, description: customDescription, url: alternates.canonical, siteName: "Via Blue", type: "website", locale: getOpenGraphLocale(seo.locale), images: [{ url: custom.image || "/images/via-blue-hero.webp", alt: customTitle }] },
+      openGraph: { title: `${customTitle}`, description: customDescription, url: alternates.canonical, siteName: "Via Blue", type: "website", locale: getOpenGraphLocale(seo.locale), images: [{ url: custom.image || "/images/via-blue-hero.webp", alt: customTitle }] },
     };
   }
 
@@ -76,7 +76,7 @@ export async function generateMetadata({
   const rawTitle = contentOverride?.name || tour.name;
   const rawDescription = contentOverride?.description || tour.description || `Book ${rawTitle} in Hurghada, Egypt with Via Blue.`;
   const localizedName = localizeTour("name", rawTitle);
-  const title = seo.locale === "de" ? `${localizedName} in Hurghada, Ägypten | Via Blue` : seo.locale === "fr" ? `${localizedName} à Hurghada, Égypte | Via Blue` : seo.locale === "ro" ? `${localizedName} în Hurghada, Egipt | Via Blue` : seo.locale === "ru" ? `${localizedName} в Хургаде, Египет | Via Blue` : `${localizedName} in Hurghada, Egypt | Via Blue`;
+  const title = seo.locale === "de" ? `${localizedName} in Hurghada, Ägypten` : seo.locale === "fr" ? `${localizedName} à Hurghada, Égypte` : seo.locale === "ro" ? `${localizedName} în Hurghada, Egipt` : seo.locale === "ru" ? `${localizedName} в Хургаде, Египет` : `${localizedName} in Hurghada, Egypt`;
   const description = localizeTour("description", rawDescription);
 
   return {
@@ -101,7 +101,7 @@ export async function generateMetadata({
     alternates,
 
     openGraph: {
-      title: `${title} | Via Blue`,
+      title: `${title}`,
       description,
       url: alternates.canonical,
       siteName: "Via Blue",
@@ -117,7 +117,7 @@ export async function generateMetadata({
 
     twitter: {
       card: "summary_large_image",
-      title: `${title} | Via Blue`,
+      title: `${title}`,
       description,
       images: [contentOverride?.image || tour.image],
     },
