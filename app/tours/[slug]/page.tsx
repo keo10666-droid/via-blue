@@ -862,6 +862,9 @@ export default async function TourDetailsPage({
   const backToTours = localizedHref(fromCategory
     ? `/tours?category=${encodeURIComponent(fromCategory)}`
     : "/tours");
+  const relatedTours = Object.values(tours)
+    .filter((item) => item.slug !== tour.slug && item.category === tour.category && item.available)
+    .slice(0, 3);
 
   /* =========================================================
      LIVE REVIEWS
@@ -1396,6 +1399,62 @@ export default async function TourDetailsPage({
               </div>
 
             </section>
+
+            {relatedTours.length > 0 && (
+              <section className="mt-16" aria-labelledby="related-tours-heading">
+                <div className="flex items-center gap-3">
+                  <span className="h-px w-10 bg-orange-500" />
+                  <p className="text-xs font-bold uppercase tracking-[0.25em] text-orange-500">
+                    <HomeText en="Explore More" de="Mehr entdecken" fr="À découvrir" ro="Descoperă mai mult" ru="Узнайте больше" />
+                  </p>
+                </div>
+                <h2 id="related-tours-heading" className="mt-4 text-3xl font-extrabold text-blue-950 md:text-4xl">
+                  <HomeText en="Related Tours in Hurghada" de="Ähnliche Ausflüge in Hurghada" fr="Excursions similaires à Hurghada" ro="Excursii similare în Hurghada" ru="Похожие экскурсии в Хургаде" />
+                </h2>
+                <div className="mt-7 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                  {relatedTours.map((related) => (
+                    <Link
+                      key={related.slug}
+                      href={localizedHref(`/tours/${related.slug}`)}
+                      className="group overflow-hidden rounded-[24px] border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-orange-200 hover:shadow-lg"
+                    >
+                      <div className="relative aspect-[16/10] overflow-hidden bg-slate-100">
+                        <Image
+                          src={related.image}
+                          alt={related.name}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 33vw"
+                          className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                      </div>
+                      <div className="p-5">
+                        <h3 className="font-bold text-blue-950 transition-colors group-hover:text-orange-600">
+                          <TourText slug={related.slug} value={related.name} />
+                        </h3>
+                        <span className="mt-3 inline-flex items-center gap-2 text-sm font-bold text-orange-600">
+                          <HomeText en="View Tour" de="Tour ansehen" fr="Voir l’excursion" ro="Vezi excursia" ru="Смотреть экскурсию" />
+                          <ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                        </span>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+                {tour.destination === "hurghada" && (
+                  <p className="mt-6 text-sm leading-7 text-gray-600">
+                    <HomeText
+                      en="Planning your stay? Explore our Hurghada visitor guide for more ideas and activities."
+                      de="Planen Sie Ihren Aufenthalt? Entdecken Sie unseren Hurghada-Reiseführer mit weiteren Ideen und Aktivitäten."
+                      fr="Vous préparez votre séjour ? Consultez notre guide de Hurghada pour découvrir d’autres idées et activités."
+                      ro="Îți planifici sejurul? Descoperă ghidul nostru pentru Hurghada cu mai multe idei și activități."
+                      ru="Планируете отдых? Загляните в наш путеводитель по Хургаде, чтобы найти больше идей и развлечений."
+                    />{" "}
+                    <Link href={localizedHref("/things-to-do-in-hurghada")} className="font-bold text-orange-600 underline underline-offset-4 hover:text-orange-700">
+                      <HomeText en="Things to Do in Hurghada" de="Aktivitäten in Hurghada" fr="Que faire à Hurghada" ro="Ce poți face în Hurghada" ru="Чем заняться в Хургаде" />
+                    </Link>
+                  </p>
+                )}
+              </section>
+            )}
 
             {/* REVIEWS */}
 
