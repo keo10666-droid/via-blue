@@ -34,7 +34,6 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     metadataBase: new URL("https://viabluetours.com"),
-    alternates: localizedSeo.alternates,
     title: {
       default: localizedSeo.title ?? settings.seo_title,
       template: "%s | Via Blue",
@@ -72,9 +71,6 @@ export default async function RootLayout({
   const requestedLocale = requestHeaders.get("x-via-blue-locale");
   const locale: SiteLocale = requestedLocale === "de" || requestedLocale === "fr" || requestedLocale === "ro" || requestedLocale === "ru" ? requestedLocale : "en";
   const originalPath = requestHeaders.get("x-via-blue-original-path") || "/";
-  const suffix = originalPath === "/" ? "" : originalPath;
-  const alternateUrl = (code: SiteLocale) => code === "en" ? `https://viabluetours.com${suffix}` : `https://viabluetours.com/${code}${suffix}`;
-  const showAlternates = !originalPath.endsWith("/book") && !["/account", "/login", "/forgot-password", "/admin", "/api"].some((path) => originalPath === path || originalPath.startsWith(path + "/"));
 
   return (
     <html
@@ -83,16 +79,6 @@ export default async function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <head>
-        {showAlternates && (
-          <>
-            <link rel="alternate" hrefLang="en" href={alternateUrl("en")} />
-            <link rel="alternate" hrefLang="de" href={alternateUrl("de")} />
-            <link rel="alternate" hrefLang="fr" href={alternateUrl("fr")} />
-            <link rel="alternate" hrefLang="ro" href={alternateUrl("ro")} />
-            <link rel="alternate" hrefLang="ru" href={alternateUrl("ru")} />
-            <link rel="alternate" hrefLang="x-default" href={alternateUrl("en")} />
-          </>
-        )}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
