@@ -51,6 +51,13 @@ const copy: Record<string, RomanianTourCopy> = {
   "mini-egypt-park": { name: "Mini Egypt Park", description: "Descoperă cele mai cunoscute atracții ale Egiptului în miniatură." },
   "hurghada-museum": { name: "Muzeul din Hurghada", description: "Descoperă istoria și cultura Egiptului printr-o vizită la muzeu." },
   "spa-massage": { name: "Pachet spa și masaj în Hurghada", description: "Relaxează-te cu tratamente spa plăcute și un masaj în Hurghada." },
+  "pirates": { name: "Velierul Pirates", description: "Bucură-te de o experiență luxoasă la bordul velierului Pirates în Marea Roșie, cu două opriri pentru snorkeling alături de ghid, prânz tip bufet și o atmosferă specială pe un iaht din lemn decorat." },
+  "snorkeling": { name: "Excursie de snorkeling", description: "Bucură-te de o excursie de o zi întreagă pentru snorkeling în Marea Roșie, cu două opriri, recife de corali colorate, pești tropicali, prânz tip bufet și băuturi calde și reci gratuite la bord." },
+  "diving": { name: "Excursie de scufundări", description: "Descoperă scufundările în Marea Roșie într-o excursie de o zi cu două scufundări în locuri diferite, instructori profesioniști, echipament complet, prânz și băuturi gratuite la bord." },
+  "parasailing": { name: "Parasailing", description: "Trăiește aventura parasailingului deasupra Mării Roșii, la aproximativ 40–50 de metri deasupra apei, și admiră de sus coasta orașului Hurghada și apele turcoaz." },
+  "twister": { name: "Barcă rapidă Twister", description: "Bucură-te de o aventură plină de adrenalină cu barca rapidă Twister în Marea Roșie, cu viraje strânse și manevre rapide." },
+  "stargazing": { name: "Observarea stelelor", description: "Petrece o seară liniștită în deșertul egiptean, descoperind cultura beduină, savurând o cină tradițională și admirând cerul înstelat alături de un specialist." },
+  "aquarium": { name: "Grand Aquarium Hurghada", description: "Descoperă fascinanta lume subacvatică a Mării Roșii la Grand Aquarium Hurghada, cu viețuitoare marine, un tunel subacvatic din sticlă, expoziții despre pădurea tropicală și atracții pentru întreaga familie." },
 };
 
 export function romanianTourCopy(slug: string, field: "name" | "description", fallback: string): string {
