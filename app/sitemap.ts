@@ -4,76 +4,54 @@ import { transfers } from "@/data/transfers";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://www.viabluetours.com";
-  const localeAlternates = (path: string) => ({ alternates: { languages: { en: `${baseUrl}${path}`, de: `${baseUrl}/de${path}`, fr: `${baseUrl}/fr${path}`, ro: `${baseUrl}/ro${path}`, ru: `${baseUrl}/ru${path}`, "x-default": `${baseUrl}${path}` } } });
+  const locales = ["en", "de", "fr", "ro", "ru"] as const;
+  type Locale = (typeof locales)[number];
+
+  // Publish every localized canonical URL as its own sitemap entry.
+  // Each entry carries the complete reciprocal hreflang set.
+  const localizedEntries = (
+    path: string,
+    changeFrequency: NonNullable<MetadataRoute.Sitemap[number]["changeFrequency"]>,
+    priority: number,
+  ): MetadataRoute.Sitemap => {
+    const localizedPath = (locale: Locale) =>
+      locale === "en" ? path : `/${locale}${path === "/" ? "" : path}`;
+
+    const languages = {
+      en: `${baseUrl}${localizedPath("en")}`,
+      de: `${baseUrl}${localizedPath("de")}`,
+      fr: `${baseUrl}${localizedPath("fr")}`,
+      ro: `${baseUrl}${localizedPath("ro")}`,
+      ru: `${baseUrl}${localizedPath("ru")}`,
+      "x-default": `${baseUrl}${localizedPath("en")}`,
+    };
+
+    return locales.map((locale) => ({
+      url: `${baseUrl}${localizedPath(locale)}`,
+      alternates: { languages },
+      changeFrequency,
+      priority,
+    }));
+  };
 
   const staticPages: MetadataRoute.Sitemap = [
-    {
-      url: baseUrl,
-      ...localeAlternates(""),
-      changeFrequency: "weekly",
-      priority: 1,
-    },
-    {
-      url: `${baseUrl}/tours`,
-      ...localeAlternates("/tours"),
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/transfers`,
-      ...localeAlternates("/transfers"),
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/about`,
-      ...localeAlternates("/about"),
-      changeFrequency: "monthly",
-      priority: 0.6,
-    },
-    {
-      url: `${baseUrl}/contact`,
-      ...localeAlternates("/contact"),
-      changeFrequency: "monthly",
-      priority: 0.6,
-    },
-    {
-      url: `${baseUrl}/luxury-tours`,
-      ...localeAlternates("/luxury-tours"),
-      changeFrequency: "weekly",
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/ai-trip-planner`,
-      ...localeAlternates("/ai-trip-planner"),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/sim-card`,
-      ...localeAlternates("/sim-card"),
-      changeFrequency: "monthly",
-      priority: 0.5,
-    },
+    ...localizedEntries("/", "weekly", 1),
+    ...localizedEntries("/tours", "weekly", 0.9),
+    ...localizedEntries("/transfers", "weekly", 0.9),
+    ...localizedEntries("/about", "monthly", 0.6),
+    ...localizedEntries("/contact", "monthly", 0.6),
+    ...localizedEntries("/luxury-tours", "weekly", 0.7),
+    ...localizedEntries("/ai-trip-planner", "monthly", 0.7),
+    ...localizedEntries("/sim-card", "monthly", 0.5),
   ];
 
   const tourPages: MetadataRoute.Sitemap = tourList
     .filter((tour) => tour.available)
-    .map((tour) => ({
-      url: `${baseUrl}/tours/${tour.slug}`,
-      ...localeAlternates(`/tours/${tour.slug}`),
-      changeFrequency: "weekly",
-      priority: 0.8,
-    }));
+    .flatMap((tour) => localizedEntries(`/tours/${tour.slug}`, "weekly", 0.8));
 
   const transferPages: MetadataRoute.Sitemap = Object.values(transfers)
     .filter((transfer) => transfer.available)
-    .map((transfer) => ({
-      url: `${baseUrl}/transfers/${transfer.slug}`,
-      ...localeAlternates(`/transfers/${transfer.slug}`),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    }));
+    .flatMap((transfer) => localizedEntries(`/transfers/${transfer.slug}`, "monthly", 0.7));
 
   const luxurySlugs = [
     "luxor",
@@ -86,17 +64,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "private-boat",
   ];
 
-  const luxuryPages: MetadataRoute.Sitemap = luxurySlugs.map((slug) => ({
-    url: `${baseUrl}/luxury-tours/${slug}`,
-    ...localeAlternates(`/luxury-tours/${slug}`),
-    changeFrequency: "monthly",
-    priority: 0.7,
-  }));
+  const luxuryPages: MetadataRoute.Sitemap = luxurySlugs.flatMap((slug) =>
+    localizedEntries(`/luxury-tours/${slug}`, "monthly", 0.7),
+  );
 
-  return [
-    ...staticPages,
-    ...tourPages,
-    ...transferPages,
-    ...luxuryPages,
-  ];
+  return [...staticPages, ...tourPages, ...transferPages, ...luxuryPages];
 }
