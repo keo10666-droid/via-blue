@@ -1,5 +1,6 @@
 import CurrencyPrice from "@/app/components/CurrencyPrice";
 import type { Metadata } from "next";
+import { getLocalizedSeo, getOpenGraphLocale } from "@/lib/localeMetadata";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -20,6 +21,8 @@ export async function generateMetadata({
   params,
 }: Props): Promise<Metadata> {
   const { slug } = await params;
+  const seo = await getLocalizedSeo(`/transfers/${slug}`);
+  const alternates = seo.alternates;
 
   const transfer =
     transfers[slug as keyof typeof transfers];
@@ -33,11 +36,14 @@ export async function generateMetadata({
     };
   }
 
-  const title = `${transfer.from} to ${transfer.to} Transfer`;
+  const localizeLocation = (value: string) => seo.locale === "de" ? germanTransferLocation(value) : seo.locale === "fr" ? frenchTransferLocation(value) : seo.locale === "ro" ? romanianTransferLocation(value) : seo.locale === "ru" ? ({ "Hurghada International Airport": "Международный аэропорт Хургады", "Hurghada Airport": "Аэропорт Хургады", "Hurghada City": "Центр Хургады", "Sahl Hasheesh": "Сахл-Хашиш", "Makadi Bay": "Макади-Бей", "El Gouna": "Эль-Гуна", "Soma Bay": "Сома-Бей", "Safaga": "Сафага" }[value] ?? value) : value;
+  const localizeVehicle = (value: string) => ({ Sedan: "Седан", "X-Pander": "Минивэн X-Pander", Van: "Микроавтобус", Luxury: "Автомобиль премиум-класса", Coster: "Микроавтобус Coster" }[value] ?? value);
+  const from = localizeLocation(transfer.from);
+  const to = localizeLocation(transfer.to);
+  const title = seo.locale === "de" ? `Privater Transfer von ${from} nach ${to}` : seo.locale === "fr" ? `Transfert privé de ${from} à ${to}` : seo.locale === "ro" ? `Transfer privat de la ${from} la ${to}` : seo.locale === "ru" ? `Индивидуальный трансфер: ${from} — ${to}` : `${transfer.from} to ${transfer.to} Transfer`;
+  const description = seo.locale === "de" ? `Buchen Sie einen privaten Transfer von ${from} nach ${to} mit Via Blue. Komfortable Fahrzeuge und professionelle Fahrer.` : seo.locale === "fr" ? `Réservez un transfert privé de ${from} à ${to} avec Via Blue. Véhicules confortables et chauffeurs professionnels.` : seo.locale === "ro" ? `Rezervați un transfer privat de la ${from} la ${to} cu Via Blue. Vehicule confortabile și șoferi profesioniști.` : seo.locale === "ru" ? `Закажите индивидуальный трансфер из пункта ${from} в ${to} с Via Blue. Комфортабельные автомобили и профессиональные водители.` : `Book a private transfer from ${transfer.from} to ${transfer.to} with Via Blue. Comfortable vehicles, professional drivers and fixed prices.`;
 
-  const description = `Book a private transfer from ${transfer.from} to ${transfer.to} with Via Blue. Comfortable vehicles, professional drivers and fixed prices.`;
-
-  const canonicalUrl = `https://viabluetours.com/transfers/${slug}`;
+  const canonicalUrl = alternates.canonical;
 
   return {
     metadataBase: new URL("https://viabluetours.com"),
@@ -46,13 +52,16 @@ export async function generateMetadata({
     description,
 
     keywords: [
-      `${transfer.from} to ${transfer.to} transfer`,
-      `${transfer.to} transfer`,
-      "Hurghada airport transfer",
-      "Hurghada private transfer",
-      "Hurghada airport taxi",
-      "Hurghada transfers",
-      "Egypt airport transfer",
+      `${from} – ${to}`,
+      ...(seo.locale === "de"
+        ? ["Flughafentransfer Hurghada", "Privater Transfer Hurghada", "Hoteltransfer Hurghada", "Transfer in Ägypten"]
+        : seo.locale === "fr"
+          ? ["transfert aéroport Hurghada", "transfert privé Hurghada", "transfert hôtel Hurghada", "transfert en Égypte"]
+          : seo.locale === "ro"
+            ? ["transfer aeroport Hurghada", "transfer privat Hurghada", "transfer hotel Hurghada", "transfer în Egipt"]
+            : seo.locale === "ru"
+              ? ["трансфер из аэропорта Хургады", "индивидуальный трансфер Хургада", "трансфер до отеля Хургада", "трансфер в Египте"]
+              : [`${transfer.from} to ${transfer.to} transfer`, `${transfer.to} transfer`, "Hurghada airport transfer", "Hurghada private transfer", "Hurghada airport taxi", "Hurghada transfers", "Egypt airport transfer"]),
       "Via Blue",
     ],
 
@@ -61,9 +70,7 @@ export async function generateMetadata({
       follow: true,
     },
 
-    alternates: {
-      canonical: canonicalUrl,
-    },
+    alternates,
 
     openGraph: {
       title: `${title} | Via Blue`,
@@ -71,7 +78,7 @@ export async function generateMetadata({
       url: canonicalUrl,
       siteName: "Via Blue",
       type: "website",
-      locale: "en_US",
+      locale: getOpenGraphLocale(seo.locale)
     },
 
     twitter: {
@@ -92,6 +99,8 @@ const vehicleImages: Record<string, string> = {
 
 export default async function TransferPage({ params }: Props) {
   const { slug } = await params;
+  const seo = await getLocalizedSeo(`/transfers/${slug}`);
+  const localizedHref = (path: string) => seo.locale === "en" ? path : `/${seo.locale}${path === "/" ? "" : path}`;
 
   const baseTransfer = transfers[slug as keyof typeof transfers];
   if (!baseTransfer) notFound();
@@ -108,6 +117,10 @@ export default async function TransferPage({ params }: Props) {
     vehicles: transferOverride.vehicles as typeof baseTransfer.vehicles,
   } : baseTransfer;
   if (!transfer.available) notFound();
+  const localizePageLocation = (value: string) => seo.locale === "de" ? germanTransferLocation(value) : seo.locale === "fr" ? frenchTransferLocation(value) : seo.locale === "ro" ? romanianTransferLocation(value) : seo.locale === "ru" ? ({ "Hurghada International Airport": "Международный аэропорт Хургады", "Hurghada Airport": "Аэропорт Хургады", "Hurghada City": "Центр Хургады", "Sahl Hasheesh": "Сахл-Хашиш", "Makadi Bay": "Макади-Бей", "El Gouna": "Эль-Гуна", "Soma Bay": "Сома-Бей", "Safaga": "Сафага" }[value] ?? value) : value;
+  const from = localizePageLocation(transfer.from);
+  const to = localizePageLocation(transfer.to);
+  const localizeVehicle = (value: string) => ({ Sedan: "Седан", "X-Pander": "Минивэн X-Pander", Van: "Микроавтобус", Luxury: "Автомобиль премиум-класса", Coster: "Микроавтобус Coster" }[value] ?? value);
   const lowestPrice = Math.min(
     ...transfer.vehicles.map((vehicle) => vehicle.price)
   );
@@ -117,8 +130,8 @@ export default async function TransferPage({ params }: Props) {
   const transferSchema = {
     "@context": "https://schema.org",
     "@type": "Service",
-    name: `Private transfer from ${transfer.from} to ${transfer.to}`,
-    description: `Private transportation from ${transfer.from} to ${transfer.to} with Via Blue.`,
+    name: seo.locale === "de" ? `Privater Transfer von ${from} nach ${to}` : seo.locale === "fr" ? `Transfert privé de ${from} à ${to}` : seo.locale === "ro" ? `Transfer privat de la ${from} la ${to}` : seo.locale === "ru" ? `Индивидуальный трансфер: ${from} — ${to}` : `Private transfer from ${transfer.from} to ${transfer.to}`,
+    description: seo.locale === "de" ? `Privater Flughafentransfer von ${from} nach ${to} mit Via Blue.` : seo.locale === "fr" ? `Transfert privé de ${from} à ${to} avec Via Blue.` : seo.locale === "ro" ? `Transfer privat de la ${from} la ${to} cu Via Blue.` : seo.locale === "ru" ? `Индивидуальный трансфер из пункта ${from} в ${to} с Via Blue.` : `Private transportation from ${transfer.from} to ${transfer.to} with Via Blue.`,
     serviceType: "Private airport and hotel transfer",
     provider: { "@type": "Organization", name: "Via Blue", url: "https://viabluetours.com" },
     areaServed: [
@@ -128,7 +141,7 @@ export default async function TransferPage({ params }: Props) {
     ],
     offers: {
       "@type": "AggregateOffer",
-      url: `https://viabluetours.com/transfers/${slug}`,
+      url: `https://viabluetours.com${localizedHref(`/transfers/${slug}`)}`,
       priceCurrency: "EUR",
       lowPrice: lowestPrice,
       highPrice: highestPrice,
@@ -158,17 +171,17 @@ export default async function TransferPage({ params }: Props) {
             <span className="h-px w-12 bg-orange-400" />
 
             <p className="text-xs font-bold uppercase tracking-[0.35em] text-orange-400 sm:text-sm">
-              <HomeText en="Private Airport Transfer" de="Privater Flughafentransfer" />
+              <HomeText en="Private Airport Transfer" de="Privater Flughafentransfer" fr="Transfert privé depuis l’aéroport" ro="Transfer privat de la aeroport" ru="Индивидуальный трансфер из аэропорта" />
             </p>
 
           </div>
 
           <h1 className="mt-5 text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
-            <HomeText en={transfer.to} de={germanTransferLocation(transfer.to)} fr={frenchTransferLocation(transfer.to)} ro={romanianTransferLocation(transfer.to)} />
+            <HomeText en={transfer.to} de={germanTransferLocation(transfer.to)} fr={frenchTransferLocation(transfer.to)} ro={romanianTransferLocation(transfer.to)} ru={to} />
           </h1>
 
           <p className="mt-5 max-w-2xl text-lg leading-8 text-blue-100">
-            <HomeText en={`Comfortable private transfer from ${transfer.from} to your destination`} de={`Komfortabler Privattransfer vom ${germanTransferLocation(transfer.from)} zu Ihrem Ziel`} ro={`Transfer privat confortabil de la ${romanianTransferLocation(transfer.from)} la destinația ta`} />
+            <HomeText en={`Comfortable private transfer from ${transfer.from} to your destination`} de={`Komfortabler Privattransfer vom ${germanTransferLocation(transfer.from)} zu Ihrem Ziel`} fr={`Transfert privé confortable depuis ${frenchTransferLocation(transfer.from)} vers votre destination`} ro={`Transfer privat confortabil de la ${romanianTransferLocation(transfer.from)} la destinația ta`} ru={`Комфортный индивидуальный трансфер из пункта ${from} до места назначения`} />
           </p>
 
           <div className="mt-7 flex flex-wrap gap-3">
@@ -263,7 +276,7 @@ export default async function TransferPage({ params }: Props) {
                       </p>
 
                       <p className="mt-1 text-lg font-bold text-white">
-                        <HomeText en={vehicle.type} de={germanTransferVehicle(vehicle.type)} fr={frenchTransferVehicle(vehicle.type)} ro={romanianTransferVehicle(vehicle.type)} />
+                        <HomeText en={vehicle.type} de={germanTransferVehicle(vehicle.type)} fr={frenchTransferVehicle(vehicle.type)} ro={romanianTransferVehicle(vehicle.type)} ru={localizeVehicle(vehicle.type)} />
                       </p>
 
                     </div>
@@ -280,7 +293,7 @@ export default async function TransferPage({ params }: Props) {
                       <div className="min-w-0">
 
                         <h3 className="text-2xl font-bold tracking-tight text-blue-950 transition-colors duration-300 group-hover:text-orange-500">
-                          <HomeText en={vehicle.type} de={germanTransferVehicle(vehicle.type)} fr={frenchTransferVehicle(vehicle.type)} />
+                          <HomeText en={vehicle.type} de={germanTransferVehicle(vehicle.type)} fr={frenchTransferVehicle(vehicle.type)} ro={romanianTransferVehicle(vehicle.type)} ru={localizeVehicle(vehicle.type)} />
                         </h3>
 
                         <p className="mt-1 text-xs font-medium text-slate-500">
@@ -376,11 +389,11 @@ export default async function TransferPage({ params }: Props) {
                     {/* Book Button */}
 
                     <Link
-                      href={`/transfers/${transfer.slug}/book`}
+                      href={localizedHref(`/transfers/${transfer.slug}/book`)}
                       className="group/button mt-6 flex items-center justify-center gap-2 rounded-2xl bg-blue-950 px-5 py-3.5 text-center text-sm font-bold text-white shadow-lg shadow-blue-950/10 transition-all duration-300 hover:-translate-y-0.5 hover:bg-orange-500 hover:shadow-orange-500/20"
                     >
 
-                      <HomeText en={`Book ${vehicle.type}`} de={`${germanTransferVehicle(vehicle.type)} buchen`} fr={`Réserver ${frenchTransferVehicle(vehicle.type)}`} ro={`Rezervă ${romanianTransferVehicle(vehicle.type)}`} />
+                      <HomeText en={`Book ${vehicle.type}`} de={`${germanTransferVehicle(vehicle.type)} buchen`} fr={`Réserver ${frenchTransferVehicle(vehicle.type)}`} ro={`Rezervă ${romanianTransferVehicle(vehicle.type)}`} ru={`Забронировать: ${localizeVehicle(vehicle.type)}`} />
 
                       <ArrowRightIcon className="h-4 w-4 transition-transform duration-300 group-hover/button:translate-x-1" />
 
@@ -443,7 +456,7 @@ export default async function TransferPage({ params }: Props) {
                     </p>
 
                     <p className="mt-1.5 text-sm font-bold text-blue-950">
-                      <HomeText en={transfer.from} de={germanTransferLocation(transfer.from)} fr={frenchTransferLocation(transfer.from)} ro={romanianTransferLocation(transfer.from)} />
+                      <HomeText en={transfer.from} de={germanTransferLocation(transfer.from)} fr={frenchTransferLocation(transfer.from)} ro={romanianTransferLocation(transfer.from)} ru={from} />
                     </p>
 
                   </div>
@@ -458,7 +471,7 @@ export default async function TransferPage({ params }: Props) {
                     </p>
 
                     <p className="mt-1.5 text-sm font-bold text-orange-700">
-                      <HomeText en={transfer.to} de={germanTransferLocation(transfer.to)} fr={frenchTransferLocation(transfer.to)} />
+                      <HomeText en={transfer.to} de={germanTransferLocation(transfer.to)} fr={frenchTransferLocation(transfer.to)} ro={romanianTransferLocation(transfer.to)} ru={to} />
                     </p>
 
                   </div>
@@ -540,7 +553,7 @@ export default async function TransferPage({ params }: Props) {
 
 
                 <Link
-                  href="/transfers"
+                  href={localizedHref("/transfers")}
                   className="mt-5 flex items-center justify-center gap-2 rounded-2xl border-2 border-blue-950 px-5 py-3.5 text-center text-sm font-bold text-blue-950 transition-all duration-300 hover:bg-blue-950 hover:text-white"
                 >
                   ← <HomeText en="Back to Transfers" de="Zurück zu den Transfers" />

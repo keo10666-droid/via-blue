@@ -4,6 +4,7 @@ import Image from "next/image";
 import HomeText from "@/app/components/HomeText";
 import Link from "next/link";
 import { getLuxuryPricing } from "@/lib/luxuryPricing";
+import { getLocalizedSeo } from "@/lib/localeMetadata";
 
 export const dynamic = "force-dynamic";
 
@@ -93,6 +94,39 @@ const germanTourContent: Record<string, { name: string; description: string }> =
   "private-boat": { name: "Privates Boot", description: "Genießen Sie eine exklusive private Bootstour am Roten Meer mit maximaler Privatsphäre, Komfort und Flexibilität." },
 };
 
+const localizedLuxuryTourContent: Record<"fr" | "ro" | "ru", Record<string, { name: string; description: string }>> = {
+  fr: {
+    luxor: { name: "Excursion privée à Louxor", description: "Découvrez les temples antiques, les monuments et l’histoire de Louxor lors d’une expérience privée haut de gamme." },
+    cairo: { name: "Excursion privée au Caire", description: "Explorez les pyramides, le Sphinx et les sites incontournables du Caire lors d’une excursion entièrement privée." },
+    alexandria: { name: "Excursion privée à Alexandrie", description: "Découvrez la ville historique d’Alexandrie, ses monuments emblématiques, son atmosphère méditerranéenne et son histoire fascinante." },
+    aswan: { name: "Excursion privée à Assouan", description: "Découvrez la beauté et l’histoire d’Assouan lors d’une excursion privée haut de gamme au départ d’Hurghada." },
+    "speed-boat": { name: "Bateau rapide privé", description: "Profitez d’une expérience exclusive en bateau rapide privé sur les eaux magnifiques de la mer Rouge." },
+    "quad-safari": { name: "Safari privé en quad", description: "Safari privé en quad avec options d’une ou trois heures. Choisissez un quad simple ou double selon votre groupe." },
+    "buggy-safari": { name: "Safari privé en buggy", description: "Programme privé de buggy de trois heures, avec des véhicules pour deux ou quatre personnes." },
+    "private-boat": { name: "Bateau privé", description: "Profitez d’une sortie privée en bateau sur la mer Rouge, dans un cadre confortable, flexible et totalement exclusif." },
+  },
+  ro: {
+    luxor: { name: "Tur privat la Luxor", description: "Descoperă templele antice, monumentele și istoria orașului Luxor într-o experiență privată premium." },
+    cairo: { name: "Tur privat la Cairo", description: "Explorează Piramidele, Sfinxul și principalele atracții din Cairo într-o excursie complet privată." },
+    alexandria: { name: "Tur privat la Alexandria", description: "Descoperă orașul istoric Alexandria, obiectivele sale emblematice, atmosfera mediteraneană și istoria fascinantă." },
+    aswan: { name: "Tur privat la Aswan", description: "Descoperă frumusețea și istoria orașului Aswan într-un tur privat premium din Hurghada." },
+    "speed-boat": { name: "Barcă rapidă privată", description: "Bucură-te de o experiență exclusivă cu barca rapidă privată pe apele frumoase ale Mării Roșii." },
+    "quad-safari": { name: "Safari privat cu quadul", description: "Safari privat cu quadul, cu opțiuni de 1 sau 3 ore. Alege un quad single sau double în funcție de grup." },
+    "buggy-safari": { name: "Safari privat cu buggy", description: "Program privat de buggy de 3 ore, cu vehicule pentru 2 sau 4 persoane." },
+    "private-boat": { name: "Barcă privată", description: "Bucură-te de o excursie privată cu barca pe Marea Roșie, cu intimitate, confort și flexibilitate." },
+  },
+  ru: {
+    luxor: { name: "Индивидуальная экскурсия в Луксор", description: "Откройте древние храмы, памятники и историю Луксора во время премиальной индивидуальной экскурсии." },
+    cairo: { name: "Индивидуальная экскурсия в Каир", description: "Посетите пирамиды, Сфинкса и главные достопримечательности Каира в полностью индивидуальной поездке." },
+    alexandria: { name: "Индивидуальная экскурсия в Александрию", description: "Откройте историческую Александрию, её знаковые достопримечательности, средиземноморскую атмосферу и богатую историю." },
+    aswan: { name: "Индивидуальная экскурсия в Асуан", description: "Откройте красоту и историю Асуана во время индивидуальной экскурсии премиум-класса из Хургады." },
+    "speed-boat": { name: "Частный скоростной катер", description: "Насладитесь эксклюзивной прогулкой на частном скоростном катере по прекрасным водам Красного моря." },
+    "quad-safari": { name: "Индивидуальное сафари на квадроциклах", description: "Индивидуальное сафари на квадроциклах на 1 или 3 часа. Выберите одноместный или двухместный квадроцикл для вашей группы." },
+    "buggy-safari": { name: "Индивидуальное сафари на багги", description: "Индивидуальная трёхчасовая программа на багги с вариантами для 2 или 4 человек." },
+    "private-boat": { name: "Частная лодка", description: "Насладитесь индивидуальной прогулкой на лодке по Красному морю с комфортом, приватностью и гибкостью." },
+  },
+};
+
 function UsersIcon() {
   return (
     <svg
@@ -155,6 +189,8 @@ function CrownIcon() {
 }
 
 export default async function LuxuryToursPage() {
+  const seo = await getLocalizedSeo("/luxury-tours");
+  const localizedHref = (path: string) => seo.locale === "en" ? path : `/${seo.locale}${path === "/" ? "" : path}`;
   const pricing = await getLuxuryPricing();
   const displayTours = luxuryTours.map((tour) => ({
     ...tour,
@@ -278,7 +314,7 @@ export default async function LuxuryToursPage() {
             >
               {/* IMAGE */}
               <Link
-                href={`/luxury-tours/${tour.slug}`}
+                href={localizedHref(`/luxury-tours/${tour.slug}`)}
                 className="block"
               >
                 <div className="relative h-64 overflow-hidden bg-slate-100 md:h-68">
@@ -316,7 +352,7 @@ export default async function LuxuryToursPage() {
                       </p>
 
                       <p className="mt-1 text-lg font-bold leading-tight text-white">
-                        <HomeText en={tour.name} de={germanTourContent[tour.slug]?.name ?? tour.name} />
+                        <HomeText en={tour.name} de={germanTourContent[tour.slug]?.name ?? tour.name} fr={localizedLuxuryTourContent.fr[tour.slug]?.name ?? tour.name} ro={localizedLuxuryTourContent.ro[tour.slug]?.name ?? tour.name} ru={localizedLuxuryTourContent.ru[tour.slug]?.name ?? tour.name} />
                       </p>
                     </div>
 
@@ -329,14 +365,14 @@ export default async function LuxuryToursPage() {
 
               {/* CONTENT */}
               <div className="flex flex-1 flex-col p-6">
-                  <Link href={`/luxury-tours/${tour.slug}`}>
+                  <Link href={localizedHref(`/luxury-tours/${tour.slug}`)}>
                   <h3 className="mt-3 text-2xl font-semibold tracking-tight text-blue-950 transition duration-300 group-hover:text-orange-500">
-                    <HomeText en={tour.name} de={germanTourContent[tour.slug]?.name ?? tour.name} />
+                    <HomeText en={tour.name} de={germanTourContent[tour.slug]?.name ?? tour.name} fr={localizedLuxuryTourContent.fr[tour.slug]?.name ?? tour.name} ro={localizedLuxuryTourContent.ro[tour.slug]?.name ?? tour.name} ru={localizedLuxuryTourContent.ru[tour.slug]?.name ?? tour.name} />
                   </h3>
                 </Link>
 
                 <p className="mt-3 text-sm leading-6 text-gray-600">
-                  <HomeText en={tour.description} de={germanTourContent[tour.slug]?.description ?? tour.description} />
+                  <HomeText en={tour.description} de={germanTourContent[tour.slug]?.description ?? tour.description} fr={localizedLuxuryTourContent.fr[tour.slug]?.description ?? tour.description} ro={localizedLuxuryTourContent.ro[tour.slug]?.description ?? tour.description} ru={localizedLuxuryTourContent.ru[tour.slug]?.description ?? tour.description} />
                 </p>
 
                 {/* FEATURES */}
@@ -410,14 +446,14 @@ export default async function LuxuryToursPage() {
               {/* ACTIONS */}
               <div className="grid grid-cols-2 gap-3 px-6 pb-6">
                 <Link
-                  href={`/luxury-tours/${tour.slug}`}
+                  href={localizedHref(`/luxury-tours/${tour.slug}`)}
                   className="rounded-xl border border-blue-950 py-3.5 text-center text-sm font-bold text-blue-950 transition duration-300 hover:bg-blue-950 hover:text-white"
                 >
                   <HomeText en="Explore" de="Entdecken" />
                 </Link>
 
                 <Link
-                  href={`/luxury-tours/${tour.slug}/book`}
+                  href={localizedHref(`/luxury-tours/${tour.slug}/book`)}
                   className="rounded-xl bg-orange-500 py-3.5 text-center text-sm font-bold text-white shadow-md shadow-orange-500/20 transition duration-300 hover:-translate-y-0.5 hover:bg-orange-600 hover:shadow-lg"
                 >
                   <HomeText en="Reserve Now" de="Jetzt reservieren" />
@@ -462,14 +498,14 @@ export default async function LuxuryToursPage() {
 
             <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
               <Link
-                href="/luxury-tours/luxor"
+                href={localizedHref("/luxury-tours/luxor")}
                 className="rounded-xl bg-orange-500 px-7 py-3.5 text-sm font-bold text-white shadow-lg shadow-orange-500/20 transition duration-300 hover:-translate-y-0.5 hover:bg-orange-600 hover:shadow-xl"
               >
                 <HomeText en="Explore Private Experiences" de="Private Erlebnisse entdecken" />
               </Link>
 
               <Link
-                href="/contact"
+                href={localizedHref("/contact")}
                 className="rounded-xl border border-white/20 bg-white/10 px-7 py-3.5 text-sm font-bold text-white backdrop-blur-sm transition hover:bg-white hover:text-blue-950"
               >
                 <HomeText en="Request a Tailored Experience" de="Individuelles Erlebnis anfragen" />

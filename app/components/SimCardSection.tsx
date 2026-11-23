@@ -6,6 +6,7 @@ import HomeText from "@/app/components/HomeText";
 import { frenchHomeText } from "@/lib/frenchHomeCopy";
 import { romanianHomeText } from "@/lib/romanianHomeCopy";
 import { russianHomeText } from "@/lib/russianHomeCopy";
+import { useSiteLocale } from "./LocaleProvider";
 
 
 type Currency = "EUR" | "USD" | "GBP";
@@ -26,17 +27,13 @@ const defaults: SimSettings = {
 
 export default function SimCardSection() {
   const { currency } = useCurrency();
-  const [isGerman, setIsGerman] = useState(false);
-  const [isFrench, setIsFrench] = useState(false);
-  const [isRomanian, setIsRomanian] = useState(false);
-  const [isRussian, setIsRussian] = useState(false);
-  useEffect(() => {
-    const sync = () => { try { const language = window.localStorage.getItem("via-blue-language"); setIsGerman(language === "de"); setIsFrench(language === "fr"); setIsRomanian(language === "ro"); setIsRussian(language === "ru"); } catch { setIsGerman(false); setIsFrench(false); setIsRomanian(false); } };
-    sync();
-    const handle = (event: Event) => { const next = (event as CustomEvent<"en" | "de" | "fr" | "ro" | "ru">).detail; if (next === "en" || next === "de" || next === "fr" || next === "ro" || next === "ru") { setIsGerman(next === "de"); setIsFrench(next === "fr"); setIsRomanian(next === "ro"); setIsRussian(next === "ru"); } };
-    window.addEventListener("via-blue-language-change", handle);
-    return () => window.removeEventListener("via-blue-language-change", handle);
-  }, []);
+  const { locale } = useSiteLocale();
+  const [isGerman, setIsGerman] = useState(locale === "de");
+  const [isFrench, setIsFrench] = useState(locale === "fr");
+  const [isRomanian, setIsRomanian] = useState(locale === "ro");
+  const [isRussian, setIsRussian] = useState(locale === "ru");
+  useEffect(() => { setIsGerman(locale === "de"); setIsFrench(locale === "fr"); setIsRomanian(locale === "ro"); setIsRussian(locale === "ru"); }, [locale]);
+
   const currentCurrency = currency as Currency;
   const symbol = currency === "EUR" ? "€" : currency === "USD" ? "$" : "£";
   const [settings, setSettings] = useState<SimSettings>(defaults);

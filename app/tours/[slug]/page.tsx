@@ -1,5 +1,6 @@
 import CurrencyPrice from "@/app/components/CurrencyPrice";
 import type { Metadata } from "next";
+import { getLocalizedSeo, getOpenGraphLocale } from "@/lib/localeMetadata";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -13,7 +14,9 @@ import ReviewsList from "@/app/components/ReviewsList";
 import HomeText from "@/app/components/HomeText";
 import TourText from "@/app/components/TourText";
 import { germanTourCopy } from "@/lib/germanTourCopy";
+import { frenchTourCopy } from "@/lib/frenchTourCopy";
 import { romanianTourCopy } from "@/lib/romanianTourCopy";
+import { russianTourCopy } from "@/lib/russianTourCopy";
 
 type Props = {
   params: Promise<{
@@ -32,6 +35,9 @@ export async function generateMetadata({
   params,
 }: Props): Promise<Metadata> {
   const { slug } = await params;
+  const seo = await getLocalizedSeo(`/tours/${slug}`);
+  const alternates = seo.alternates;
+  const localizeTour = (field: "name" | "description", value: string) => seo.locale === "de" ? germanTourCopy(slug, field, value) : seo.locale === "fr" ? frenchTourCopy(slug, field, value) : seo.locale === "ro" ? romanianTourCopy(slug, field, value) : seo.locale === "ru" ? russianTourCopy(slug, field, value) : value;
 
   const tour = Object.values(tours).find(
     (item) => item.slug === slug
@@ -45,13 +51,16 @@ export async function generateMetadata({
     if (!custom?.category) {
       return { title: "Tour Not Found", description: "The requested tour could not be found.", robots: { index: false, follow: false } };
     }
-    const customTitle = custom.name || slug;
-    const customDescription = custom.description || `Book ${customTitle} in Hurghada, Egypt with Via Blue.`;
+    const rawTitle = custom.name || slug;
+    const rawDescription = custom.description || `Book ${rawTitle} in Hurghada, Egypt with Via Blue.`;
+    const localizedCustomName = localizeTour("name", rawTitle);
+    const customTitle = seo.locale === "de" ? `${localizedCustomName} in Hurghada, Ägypten` : seo.locale === "fr" ? `${localizedCustomName} à Hurghada, Égypte` : seo.locale === "ro" ? `${localizedCustomName} în Hurghada, Egipt` : seo.locale === "ru" ? `${localizedCustomName} в Хургаде, Египет` : `${localizedCustomName} in Hurghada, Egypt`;
+    const customDescription = localizeTour("description", rawDescription);
     return {
       title: customTitle,
       description: customDescription,
-      alternates: { canonical: `https://viabluetours.com/tours/${slug}` },
-      openGraph: { title: `${customTitle} | Via Blue`, description: customDescription, url: `https://viabluetours.com/tours/${slug}`, siteName: "Via Blue", type: "website", images: [{ url: custom.image || "/images/via-blue-hero.webp", alt: customTitle }] },
+      alternates,
+      openGraph: { title: `${customTitle}`, description: customDescription, url: alternates.canonical, siteName: "Via Blue", type: "website", locale: getOpenGraphLocale(seo.locale), images: [{ url: custom.image || "/images/via-blue-hero.webp", alt: customTitle }] },
     };
   }
 
@@ -64,11 +73,11 @@ export async function generateMetadata({
         .maybeSingle()
     : { data: null };
 
-  const title = contentOverride?.name || tour.name;
-  const description =
-    contentOverride?.description ||
-    tour.description ||
-    `Book ${title} in Hurghada, Egypt with Via Blue.`;
+  const rawTitle = contentOverride?.name || tour.name;
+  const rawDescription = contentOverride?.description || tour.description || `Book ${rawTitle} in Hurghada, Egypt with Via Blue.`;
+  const localizedName = localizeTour("name", rawTitle);
+  const title = seo.locale === "de" ? `${localizedName} in Hurghada, Ägypten` : seo.locale === "fr" ? `${localizedName} à Hurghada, Égypte` : seo.locale === "ro" ? `${localizedName} în Hurghada, Egipt` : seo.locale === "ru" ? `${localizedName} в Хургаде, Египет` : `${localizedName} in Hurghada, Egypt`;
+  const description = localizeTour("description", rawDescription);
 
   return {
     title,
@@ -77,25 +86,27 @@ export async function generateMetadata({
     keywords: [
       title,
       `${title} Hurghada`,
-      "Hurghada tours",
-      "Hurghada excursions",
-      "Hurghada activities",
-      "Red Sea tours",
-      "Egypt tours",
+      ...(seo.locale === "de"
+        ? ["Ausflüge in Hurghada", "Touren in Hurghada", "Rotes Meer Ausflüge", "Ägypten Touren"]
+        : seo.locale === "fr"
+          ? ["excursions à Hurghada", "activités à Hurghada", "sorties en mer Rouge", "circuits en Égypte"]
+          : seo.locale === "ro"
+            ? ["excursii în Hurghada", "tururi în Hurghada", "Marea Roșie", "excursii în Egipt"]
+            : seo.locale === "ru"
+              ? ["экскурсии в Хургаде", "туры в Хургаде", "Красное море", "экскурсии по Египту"]
+              : ["Hurghada tours", "Hurghada excursions", "Hurghada activities", "Red Sea tours", "Egypt tours"]),
       "Via Blue",
     ],
 
-    alternates: {
-      canonical: `https://viabluetours.com/tours/${tour.slug}`,
-    },
+    alternates,
 
     openGraph: {
-      title: `${title} | Via Blue`,
+      title: `${title}`,
       description,
-      url: `https://viabluetours.com/tours/${tour.slug}`,
+      url: alternates.canonical,
       siteName: "Via Blue",
       type: "website",
-      locale: "en_US",
+      locale: getOpenGraphLocale(seo.locale),
       images: [
         {
           url: contentOverride?.image || tour.image,
@@ -106,7 +117,7 @@ export async function generateMetadata({
 
     twitter: {
       card: "summary_large_image",
-      title: `${title} | Via Blue`,
+      title: `${title}`,
       description,
       images: [contentOverride?.image || tour.image],
     },
@@ -761,6 +772,8 @@ export default async function TourDetailsPage({
   searchParams,
 }: Props) {
   const { slug } = await params;
+  const seo = await getLocalizedSeo(`/tours/${slug}`);
+  const localizedHref = (path: string) => seo.locale === "en" ? path : `/${seo.locale}${path === "/" ? "" : path}`;
   const { fromCategory } = await searchParams;
 
   const baseTour = Object.values(tours).find((item) => item.slug === slug);
@@ -821,9 +834,9 @@ export default async function TourDetailsPage({
     notFound();
   }
 
-  const backToTours = fromCategory
+  const backToTours = localizedHref(fromCategory
     ? `/tours?category=${encodeURIComponent(fromCategory)}`
-    : "/tours";
+    : "/tours");
 
   /* =========================================================
      LIVE REVIEWS
@@ -837,17 +850,20 @@ export default async function TourDetailsPage({
     ? tour.image
     : `https://viabluetours.com${tour.image}`;
 
+  const localizedTourName = seo.locale === "de" ? germanTourCopy(tour.slug, "name", tour.name) : seo.locale === "fr" ? frenchTourCopy(tour.slug, "name", tour.name) : seo.locale === "ro" ? romanianTourCopy(tour.slug, "name", tour.name) : seo.locale === "ru" ? russianTourCopy(tour.slug, "name", tour.name) : tour.name;
+  const localizedTourDescription = seo.locale === "de" ? germanTourCopy(tour.slug, "description", tour.description) : seo.locale === "fr" ? frenchTourCopy(tour.slug, "description", tour.description) : seo.locale === "ro" ? romanianTourCopy(tour.slug, "description", tour.description) : seo.locale === "ru" ? russianTourCopy(tour.slug, "description", tour.description) : tour.description;
+
   const tourSchema = {
     "@context": "https://schema.org",
     "@type": "TouristTrip",
 
-    name: tour.name,
+    name: localizedTourName,
 
-    description: tour.description,
+    description: localizedTourDescription,
 
     image: [tourImage],
 
-    url: `https://viabluetours.com/tours/${tour.slug}`,
+    url: `https://viabluetours.com${localizedHref(`/tours/${slug}`)}`,
 
     provider: {
       "@type": "Organization",
@@ -861,7 +877,7 @@ export default async function TourDetailsPage({
       ? {
           offers: {
             "@type": "Offer",
-            url: `https://viabluetours.com/tours/${tour.slug}`,
+            url: `https://viabluetours.com${localizedHref(`/tours/${slug}`)}`,
             priceCurrency: "EUR",
             price: tour.price,
             availability: tour.available
@@ -887,7 +903,7 @@ export default async function TourDetailsPage({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(tourSchema),
+          __html: JSON.stringify(tourSchema).replace(/</g, "\\u003c"),
         }}
       />
 
@@ -1562,13 +1578,13 @@ export default async function TourDetailsPage({
                 {tour.available ? (
 
                   <Link
-                    href={`/tours/${tour.slug}/book${
+                    href={localizedHref(`/tours/${tour.slug}/book${
                       fromCategory
                         ? `?fromCategory=${encodeURIComponent(
                             fromCategory
                           )}`
                         : ""
-                    }`}
+                    }`)}
                     className="group mt-6 flex w-full items-center justify-center gap-3 rounded-2xl bg-orange-500 py-4 text-center text-lg font-bold text-white shadow-lg shadow-orange-200 transition-all duration-300 hover:-translate-y-0.5 hover:bg-orange-600 hover:shadow-xl hover:shadow-orange-200"
                   >
 
@@ -1653,24 +1669,24 @@ export default async function TourDetailsPage({
 
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-blue-100">
 
-            <HomeText en={`Reserve your ${tour.name} experience and enjoy an unforgettable day in Hurghada with Via Blue`} de={`Buchen Sie Ihr Erlebnis „${germanTourCopy(tour.slug, "name", tour.name)}“ und genießen Sie einen unvergesslichen Tag in Hurghada mit Via Blue.`} ro={`Rezervă experiența ${romanianTourCopy(tour.slug, "name", tour.name)} și bucură-te de o zi de neuitat în Hurghada alături de Via Blue`} />
+            <HomeText en={`Reserve your ${tour.name} experience and enjoy an unforgettable day in Hurghada with Via Blue`} de={`Buchen Sie Ihr Erlebnis „${germanTourCopy(tour.slug, "name", tour.name)}“ und genießen Sie einen unvergesslichen Tag in Hurghada mit Via Blue.`} fr={`Réservez votre expérience ${frenchTourCopy(tour.slug, "name", tour.name)} et profitez d’une journée inoubliable à Hurghada avec Via Blue`} ro={`Rezervă experiența ${romanianTourCopy(tour.slug, "name", tour.name)} și bucură-te de o zi de neuitat în Hurghada alături de Via Blue`} ru={`Забронируйте экскурсию «${russianTourCopy(tour.slug, "name", tour.name)}» и проведите незабываемый день в Хургаде с Via Blue`} />
 
           </p>
 
           {tour.available ? (
 
             <Link
-              href={`/tours/${tour.slug}/book${
+              href={localizedHref(`/tours/${tour.slug}/book${
                 fromCategory
                   ? `?fromCategory=${encodeURIComponent(
                       fromCategory
                     )}`
                   : ""
-              }`}
+              }`)}
               className="group mt-8 inline-flex items-center justify-center gap-3 rounded-2xl bg-orange-500 px-8 py-4 font-bold text-white shadow-lg shadow-orange-950/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-orange-600 hover:shadow-xl"
             >
 
-              <HomeText en={`Book ${tour.name}`} de={`${germanTourCopy(tour.slug, "name", tour.name)} buchen`} ro={`Rezervă ${romanianTourCopy(tour.slug, "name", tour.name)}`} />
+              <HomeText en={`Book ${tour.name}`} de={`${germanTourCopy(tour.slug, "name", tour.name)} buchen`} fr={`Réserver ${frenchTourCopy(tour.slug, "name", tour.name)}`} ro={`Rezervă ${romanianTourCopy(tour.slug, "name", tour.name)}`} ru={`Забронировать: ${russianTourCopy(tour.slug, "name", tour.name)}`} />
 
               <ArrowRightIcon className="h-5 w-5 transition-transform group-hover:translate-x-1" />
 

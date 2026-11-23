@@ -6,30 +6,25 @@ import { usePathname, useRouter } from "next/navigation";
 import { Crown, Home, Compass, CarFront, MessageCircle, UserRound, Moon, Sun, ChevronDown, Check } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { useCurrency, type CurrencyCode } from "@/app/components/CurrencyProvider";
+import { useSiteLocale } from "./LocaleProvider";
 
 export default function Navbar() {
   const router = useRouter();
   const pathname = usePathname();
   const { currency, setCurrency, rates } = useCurrency();
+  const { locale: siteLocale, setLocale } = useSiteLocale();
 
   const [isOpen, setIsOpen] = useState(false);
   const [userName, setUserName] = useState<string | null>(null);
-  const [language, setLanguage] = useState<"en" | "de" | "fr" | "ro" | "ru">("en");
+  const [language, setLanguage] = useState<"en" | "de" | "fr" | "ro" | "ru">(siteLocale);
   const [languageMenuOpen, setLanguageMenuOpen] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">("light");
 
   useEffect(() => {
     setTheme(document.documentElement.classList.contains("dark") ? "dark" : "light");
-    try {
-      const savedLanguage = window.localStorage.getItem("via-blue-language");
-      if (savedLanguage === "de" || savedLanguage === "en" || savedLanguage === "fr" || savedLanguage === "ro" || savedLanguage === "ru") {
-        setLanguage(savedLanguage);
-        document.documentElement.lang = savedLanguage;
-      }
-    } catch {
-      // Keep English as the safe default if browser storage is unavailable.
-    }
-  }, []);
+    setLanguage(siteLocale);
+    document.documentElement.lang = siteLocale;
+  }, [siteLocale]);
 
   function toggleTheme() {
     const nextTheme = theme === "dark" ? "light" : "dark";
@@ -39,15 +34,16 @@ export default function Navbar() {
   }
 
   function changeLanguage(nextLanguage: "en" | "de" | "fr" | "ro" | "ru") {
+    setLocale(nextLanguage);
     setLanguage(nextLanguage);
     setLanguageMenuOpen(false);
-    document.documentElement.lang = nextLanguage;
-    try {
-      window.localStorage.setItem("via-blue-language", nextLanguage);
-    } catch {
-      // The language switch still works for the current page if storage is unavailable.
-    }
-    window.dispatchEvent(new CustomEvent("via-blue-language-change", { detail: nextLanguage }));
+    const cleanPath = pathname.replace(/^\/(de|fr|ro|ru)(?=\/|$)/, "") || "/";
+    const nextPath = nextLanguage === "en" ? cleanPath : `/${nextLanguage}${cleanPath === "/" ? "" : cleanPath}`;
+    router.push(nextPath);
+  }
+
+  function localizedHref(href: string) {
+    return language === "en" ? href : `/${language}${href === "/" ? "" : href}`;
   }
 
   const languageOptions = [
@@ -193,42 +189,40 @@ export default function Navbar() {
   const navItems = [
     {
       name: labels.Home,
-      href: "/",
+      href: localizedHref("/"),
     },
     {
       name: labels.Tours,
-      href: "/tours",
+      href: localizedHref("/tours"),
     },
     {
       name: labels.Transfers,
-      href: "/transfers",
+      href: localizedHref("/transfers"),
     },
     {
       name: labels["Luxury Tours"],
-      href: "/luxury-tours",
+      href: localizedHref("/luxury-tours"),
       premium: true,
     },
     {
       name: labels["AI Trip Planner"],
-      href: "/ai-trip-planner",
+      href: localizedHref("/ai-trip-planner"),
       special: true,
     },
     {
       name: labels["About Us"],
-      href: "/about",
+      href: localizedHref("/about"),
     },
     {
       name: labels.Contact,
-      href: "/contact",
+      href: localizedHref("/contact"),
     },
   ];
 
   function isActive(href: string) {
-    if (href === "/") {
-      return pathname === "/";
-    }
-
-    return pathname === href || pathname.startsWith(`${href}/`);
+    const cleanPath = pathname.replace(/^\/(de|fr|ro|ru)(?=\/|$)/, "") || "/";
+    const cleanHref = href.replace(/^\/(de|fr|ro|ru)(?=\/|$)/, "") || "/";
+    return cleanPath === cleanHref || cleanPath.startsWith(`${cleanHref}/`);
   }
 
   return (
@@ -241,7 +235,7 @@ export default function Navbar() {
 
         {/* Logo */}
         <Link
-          href="/"
+          href={localizedHref("/")}
           onClick={() => setIsOpen(false)}
           className="group relative flex shrink-0 items-center"
         >
@@ -689,7 +683,7 @@ export default function Navbar() {
           return (
             <Link
               key={href}
-              href={href}
+              href={href === "/account" || href === "/login" ? href : localizedHref(href)}
               aria-current={active ? "page" : undefined}
               className={`flex min-h-12 flex-col items-center justify-center gap-1 rounded-xl px-1 text-[10px] font-bold transition-colors ${active ? "text-orange-600" : "text-slate-500 hover:text-blue-950"}`}
             >

@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useSiteLocale } from "./LocaleProvider";
 
 function WhatsAppIcon() {
   return (
@@ -224,24 +224,11 @@ function TripadvisorIcon() {
 }
 
 export default function Footer() {
-  const [language, setLanguage] = useState<"en" | "de" | "fr" | "ro" | "ru">("en");
+  const { locale } = useSiteLocale();
+  const localizedHref = (path: string) => locale === "en" ? path : `/${locale}${path === "/" ? "" : path}`;
+  const { locale: language } = useSiteLocale();
 
-  useEffect(() => {
-    try {
-      const saved = window.localStorage.getItem("via-blue-language");
-      if (saved === "de" || saved === "en" || saved === "fr" || saved === "ro" || saved === "ru") setLanguage(saved);
-    } catch {
-      // English remains the fallback if browser storage is unavailable.
-    }
 
-    const handleLanguageChange = (event: Event) => {
-      const nextLanguage = (event as CustomEvent<"en" | "de" | "fr" | "ro" | "ru">).detail;
-      if (nextLanguage === "en" || nextLanguage === "de" || nextLanguage === "fr" || nextLanguage === "ro" || nextLanguage === "ru") setLanguage(nextLanguage);
-    };
-
-    window.addEventListener("via-blue-language-change", handleLanguageChange);
-    return () => window.removeEventListener("via-blue-language-change", handleLanguageChange);
-  }, []);
 
   const text = language === "ru"
     ? { intro: "Ваш отдых на Красном море", headline: "Откройте Хургаду по-новому", description: "Незабываемые экскурсии, морские прогулки, снорклинг и индивидуальные трансферы в Хургаде", exploreEgypt: "Откройте Египет", follow: "Подписывайтесь на Via Blue", reputation: "Отзывы путешественников", comingSoon: "Скоро", quickLinks: "Быстрые ссылки", home: "Главная", tours: "Экскурсии", airportTransfers: "Трансфер из аэропорта", contact: "Контакты", experiences: "Популярные впечатления", privateTransfer: "Индивидуальный трансфер", luxuryTours: "VIP-туры", contactUs: "Связаться с нами", location: "Местоположение", email: "Электронная почта", closing: "Ваше путешествие начинается на Красном море", privacy: "Политика конфиденциальности", terms: "Условия использования", rights: "Все права защищены" }
@@ -350,7 +337,7 @@ export default function Footer() {
         <div className="mb-16 grid gap-10 border-b border-white/[0.08] pb-14 lg:grid-cols-[1.4fr_0.6fr] lg:items-end">
           <div>
             <Link
-              href="/"
+              href={localizedHref("/")}
               className="inline-flex items-center transition-all duration-300 hover:opacity-90"
             >
               <img
@@ -493,7 +480,7 @@ export default function Footer() {
             <ul className="mt-7 space-y-4">
               <li>
                 <Link
-                  href="/"
+                  href={localizedHref("/")}
                   className="group flex items-center gap-2 text-[15px] text-slate-300 transition-all duration-300 hover:translate-x-1 hover:text-orange-400"
                 >
                   <span>{text.home}</span>
@@ -503,7 +490,7 @@ export default function Footer() {
 
               <li>
                 <Link
-                  href="/tours"
+                  href={localizedHref("/tours")}
                   className="group flex items-center gap-2 text-[15px] text-slate-300 transition-all duration-300 hover:translate-x-1 hover:text-orange-400"
                 >
                   <span>{text.tours}</span>
@@ -513,7 +500,7 @@ export default function Footer() {
 
               <li>
                 <Link
-                  href="/transfers"
+                  href={localizedHref("/transfers")}
                   className="group flex items-center gap-2 text-[15px] text-slate-300 transition-all duration-300 hover:translate-x-1 hover:text-orange-400"
                 >
                   <span>{text.airportTransfers}</span>
@@ -523,7 +510,7 @@ export default function Footer() {
 
               <li>
                 <Link
-                  href="/contact"
+                  href={localizedHref("/contact")}
                   className="group flex items-center gap-2 text-[15px] text-slate-300 transition-all duration-300 hover:translate-x-1 hover:text-orange-400"
                 >
                   <span>{text.contactUs}</span>
@@ -542,7 +529,7 @@ export default function Footer() {
             <ul className="mt-7 space-y-4">
               <li>
                 <Link
-                  href="/transfers"
+                  href={localizedHref("/transfers")}
                   className="group flex items-center gap-2 text-[15px] text-slate-300 transition-all duration-300 hover:translate-x-1 hover:text-orange-400"
                 >
                   <span>{text.privateTransfer}</span>
@@ -552,7 +539,7 @@ export default function Footer() {
 
               <li>
                 <Link
-                  href="/luxury-tours"
+                  href={localizedHref("/luxury-tours")}
                   className="group flex items-center gap-2 text-[15px] text-slate-300 transition-all duration-300 hover:translate-x-1 hover:text-orange-400"
                 >
                   <span>{text.luxuryTours}</span>
@@ -654,21 +641,6 @@ export default function Footer() {
 
             <div className="h-px flex-1 bg-gradient-to-r from-white/[0.08] via-white/[0.04] to-transparent md:mx-8" />
 
-            <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-slate-500">
-              <Link
-                href="/privacy"
-                className="transition hover:text-white"
-              >
-                {text.privacy}
-              </Link>
-
-              <Link
-                href="/terms"
-                className="transition hover:text-white"
-              >
-                {text.terms}
-              </Link>
-            </div>
           </div>
         </div>
 

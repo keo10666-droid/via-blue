@@ -1,5 +1,6 @@
 import CurrencyPrice from "@/app/components/CurrencyPrice";
 import type { Metadata } from "next";
+import { getLocalizedSeo } from "@/lib/localeMetadata";
 import Link from "next/link";
 import HomeText from "@/app/components/HomeText";
 import { getLuxuryPricing } from "@/lib/luxuryPricing";
@@ -327,7 +328,7 @@ const luxuryGermanText: Record<string, string> = {
 };
 
 function luxuryText(value: string): string {
-  return luxuryGermanText[value] ?? value;
+  return luxuryGermanText[value] ?? luxuryGermanText[`${value}.`] ?? value;
 }
 
 const luxuryTours = {
@@ -1191,17 +1192,96 @@ type PageProps = {
   }>;
 };
 
+const luxurySeoNames: Record<string, Record<LuxuryTourSlug, string>> = {
+  de: {
+    luxor: "Private Luxor-Tagestour", cairo: "Private Kairo-Tour", "speed-boat": "Privates Schnellboot",
+    "quad-safari": "Quad-Safari", "buggy-safari": "Buggy-Safari", alexandria: "Private Alexandria-Tour",
+    aswan: "Private Assuan-Tour", "private-boat": "Privater Bootscharter",
+  },
+  fr: {
+    luxor: "Excursion privée à Louxor", cairo: "Circuit privé au Caire", "speed-boat": "Bateau rapide privé",
+    "quad-safari": "Safari en quad", "buggy-safari": "Safari en buggy", alexandria: "Excursion privée à Alexandrie",
+    aswan: "Excursion privée à Assouan", "private-boat": "Location de bateau privé",
+  },
+  ro: {
+    luxor: "Tur privat la Luxor", cairo: "Tur privat la Cairo", "speed-boat": "Barcă rapidă privată",
+    "quad-safari": "Safari cu ATV", "buggy-safari": "Safari cu buggy", alexandria: "Tur privat la Alexandria",
+    aswan: "Tur privat la Aswan", "private-boat": "Închiriere barcă privată",
+  },
+  ru: {
+    luxor: "Частная экскурсия в Луксор", cairo: "Частная экскурсия в Каир", "speed-boat": "Частный скоростной катер",
+    "quad-safari": "Сафари на квадроциклах", "buggy-safari": "Сафари на багги", alexandria: "Частная экскурсия в Александрию",
+    aswan: "Частная экскурсия в Асуан", "private-boat": "Аренда частной яхты",
+  },
+};
+
+const luxurySeoDescriptions: Record<"de" | "fr" | "ro" | "ru", Record<LuxuryTourSlug, string>> = {
+  de: {
+    luxor: "Entdecken Sie die Tempel von Karnak, das Tal der Könige und die berühmten Sehenswürdigkeiten von Luxor auf einer privaten Tagestour ab Hurghada.",
+    cairo: "Besuchen Sie die Pyramiden von Gizeh, die Sphinx und die wichtigsten Sehenswürdigkeiten Kairos auf einer privaten Tour ab Hurghada.",
+    alexandria: "Erkunden Sie Alexandrias Mittelmeerküste, historische Sehenswürdigkeiten und berühmte Kulturstätten auf einer privaten Tour ab Hurghada.",
+    aswan: "Entdecken Sie Assuans Tempel, den Nil und die historischen Sehenswürdigkeiten Südägyptens auf einer privaten Tour ab Hurghada.",
+    "speed-boat": "Erleben Sie eine private Schnellbootfahrt auf dem Roten Meer ab Hurghada mit flexibler Route und Zeit zum Schwimmen und Schnorcheln.",
+    "quad-safari": "Erleben Sie eine private Quad-Safari in der Wüste von Hurghada mit wählbaren Touren von einer oder drei Stunden und Einzel- oder Doppelquads.",
+    "buggy-safari": "Entdecken Sie die Wüste von Hurghada bei einer privaten dreistündigen Buggy-Safari mit Fahrzeugen für zwei oder vier Personen.",
+    "private-boat": "Mieten Sie ein privates Boot in Hurghada für einen exklusiven Tag auf dem Roten Meer mit flexibler Route, Schnorchelstopps und persönlicher Betreuung.",
+  },
+  fr: {
+    luxor: "Découvrez les temples de Karnak, la Vallée des Rois et les monuments de Louxor lors d’une excursion privée à la journée depuis Hurghada.",
+    cairo: "Visitez les pyramides de Gizeh, le Sphinx et les sites incontournables du Caire lors d’une excursion privée depuis Hurghada.",
+    alexandria: "Explorez le front de mer méditerranéen d’Alexandrie, ses monuments historiques et ses sites culturels lors d’une excursion privée depuis Hurghada.",
+    aswan: "Découvrez les temples d’Assouan, le Nil et les sites historiques du sud de l’Égypte lors d’une excursion privée depuis Hurghada.",
+    "speed-boat": "Profitez d’une sortie privée en bateau rapide sur la mer Rouge au départ d’Hurghada, avec un itinéraire flexible et des pauses baignade et snorkeling.",
+    "quad-safari": "Partez en safari privé en quad dans le désert d’Hurghada, avec des formules d’une ou trois heures et des quads simples ou doubles.",
+    "buggy-safari": "Explorez le désert d’Hurghada lors d’un safari privé de trois heures en buggy, avec des véhicules pour deux ou quatre personnes.",
+    "private-boat": "Louez un bateau privé à Hurghada pour une journée exclusive en mer Rouge, avec itinéraire flexible, arrêts snorkeling et équipage dédié.",
+  },
+  ro: {
+    luxor: "Descoperă templele din Karnak, Valea Regilor și cele mai importante monumente din Luxor într-o excursie privată de o zi din Hurghada.",
+    cairo: "Vizitează Piramidele din Giza, Sfinxul și principalele atracții din Cairo într-o excursie privată din Hurghada.",
+    alexandria: "Explorează litoralul mediteranean al Alexandriei, monumentele istorice și obiectivele culturale într-un tur privat din Hurghada.",
+    aswan: "Descoperă templele din Aswan, Nilul și obiectivele istorice din sudul Egiptului într-un tur privat din Hurghada.",
+    "speed-boat": "Bucură-te de o plimbare privată cu barca rapidă pe Marea Roșie din Hurghada, cu traseu flexibil și opriri pentru înot și snorkeling.",
+    "quad-safari": "Pornește într-un safari privat cu quadul în deșertul din Hurghada, cu opțiuni de una sau trei ore și quaduri single sau double.",
+    "buggy-safari": "Explorează deșertul din Hurghada într-un safari privat de trei ore cu buggy, cu vehicule pentru două sau patru persoane.",
+    "private-boat": "Închiriază o barcă privată în Hurghada pentru o zi exclusivă pe Marea Roșie, cu traseu flexibil, opriri pentru snorkeling și echipaj dedicat.",
+  },
+  ru: {
+    luxor: "Посетите храм Карнака, Долину царей и главные памятники Луксора во время индивидуальной однодневной экскурсии из Хургады.",
+    cairo: "Увидьте пирамиды Гизы, Сфинкса и главные достопримечательности Каира во время индивидуальной экскурсии из Хургады.",
+    alexandria: "Познакомьтесь со средиземноморским побережьем Александрии, историческими памятниками и культурными достопримечательностями в индивидуальной поездке из Хургады.",
+    aswan: "Откройте храмы Асуана, Нил и исторические места южного Египта во время индивидуальной экскурсии из Хургады.",
+    "speed-boat": "Отправьтесь на частную прогулку на скоростном катере по Красному морю из Хургады с гибким маршрутом, купанием и сноркелингом.",
+    "quad-safari": "Отправьтесь на индивидуальное сафари на квадроциклах по пустыне Хургады на один или три часа, выбрав одноместный или двухместный квадроцикл.",
+    "buggy-safari": "Исследуйте пустыню Хургады во время индивидуального трёхчасового сафари на багги для двух или четырёх человек.",
+    "private-boat": "Арендуйте частную лодку в Хургаде для эксклюзивного дня на Красном море с гибким маршрутом, остановками для сноркелинга и личным экипажем.",
+  },
+};
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
+  const seo = await getLocalizedSeo(`/luxury-tours/${slug}`);
+  const alternates = seo.alternates;
   const tour = luxuryTours[slug as LuxuryTourSlug];
   if (!tour) return { title: "Luxury Tour Not Found", robots: { index: false, follow: false } };
-  const canonical = `https://viabluetours.com/luxury-tours/${slug}`;
+
+  const locale = seo.locale;
+  const localizedName = locale === "en" ? tour.name : luxurySeoNames[locale]?.[slug as LuxuryTourSlug] ?? tour.name;
+  const title = locale === "en" ? `${tour.name} in Egypt`
+    : locale === "de" ? `${localizedName} in Ägypten`
+    : locale === "fr" ? `${localizedName} en Égypte`
+    : locale === "ro" ? `${localizedName} în Egipt`
+    : `${localizedName} в Египте`;
+  const description = locale === "en" ? tour.description : luxurySeoDescriptions[locale]?.[slug as LuxuryTourSlug] ?? tour.description;
+  const canonical = alternates.canonical;
+  const ogLocale = locale === "de" ? "de_DE" : locale === "fr" ? "fr_FR" : locale === "ro" ? "ro_RO" : locale === "ru" ? "ru_RU" : "en_US";
   return {
-    title: `${tour.name} in Egypt`,
-    description: tour.description,
-    alternates: { canonical },
-    openGraph: { title: `${tour.name} | Via Blue`, description: tour.description, url: canonical, siteName: "Via Blue", type: "website", locale: "en_US" },
-    twitter: { card: "summary_large_image", title: `${tour.name} | Via Blue`, description: tour.description },
+    title,
+    description,
+    keywords: [localizedName, ...(locale === "de" ? ["Privattour Ägypten", "Hurghada Privatausflug", "Luxusausflug Ägypten"] : locale === "fr" ? ["excursion privée Égypte", "excursion privée Hurghada", "circuit de luxe Égypte"] : locale === "ro" ? ["tur privat Egipt", "excursie privată Hurghada", "tur de lux Egipt"] : locale === "ru" ? ["индивидуальные экскурсии Египет", "частная экскурсия Хургада", "VIP тур Египет"] : ["private tours Egypt", "private Hurghada tours", "luxury Egypt excursions"]), "Via Blue"],
+    alternates,
+    openGraph: { title, description, url: canonical, siteName: "Via Blue", type: "website", locale: ogLocale },
+    twitter: { card: "summary_large_image", title, description },
   };
 }
 
@@ -1272,6 +1352,9 @@ export default async function LuxuryTourPage({
   params,
 }: PageProps) {
   const { slug } = await params;
+  const seo = await getLocalizedSeo(`/luxury-tours/${slug}`);
+  const localePrefix = seo.locale === "en" ? "" : `/${seo.locale}`;
+  const localizedHref = (path: string) => `${localePrefix}${path === "/" ? "" : path}` || "/";
 
   const tour = luxuryTours[slug as LuxuryTourSlug];
 
@@ -1296,7 +1379,7 @@ export default async function LuxuryTourPage({
           </p>
 
           <Link
-            href="/luxury-tours"
+            href={localizedHref("/luxury-tours")}
             className="mt-7 inline-flex items-center gap-2 rounded-2xl bg-blue-950 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-950/20 transition duration-300 hover:-translate-y-0.5 hover:bg-blue-900"
           >
             <HomeText en="Back to Luxury Tours" de="Zurück zu den Luxustouren" />
@@ -1315,17 +1398,20 @@ export default async function LuxuryTourPage({
     : slug === "quad-safari" ? pricing.quad_single_1h
     : slug === "buggy-safari" ? pricing.buggy_2_seat
     : tour.price;
+  const localizedTourName = seo.locale === "en" ? tour.name : luxurySeoNames[seo.locale]?.[slug as LuxuryTourSlug] ?? tour.name;
+  const localizedTourDescription = seo.locale === "en" ? tour.description : luxurySeoDescriptions[seo.locale]?.[slug as LuxuryTourSlug] ?? tour.description;
+  const localizedTourUrl = `https://viabluetours.com${localizedHref(`/luxury-tours/${slug}`)}`;
   const tourSchema = {
     "@context": "https://schema.org",
     "@type": "TouristTrip",
-    name: tour.name,
-    description: tour.description,
-    url: `https://viabluetours.com/luxury-tours/${slug}`,
+    name: localizedTourName,
+    description: localizedTourDescription,
+    url: localizedTourUrl,
     touristType: "Tourists",
     provider: { "@type": "Organization", name: "Via Blue", url: "https://viabluetours.com" },
     offers: {
       "@type": "Offer",
-      url: `https://viabluetours.com/luxury-tours/${slug}`,
+      url: localizedTourUrl,
       priceCurrency: "EUR",
       price: startingPrice,
       availability: "https://schema.org/InStock",
@@ -1664,7 +1750,7 @@ export default async function LuxuryTourPage({
 
                 {/* CTA */}
                 <Link
-                  href={`/luxury-tours/${slug}/book`}
+                  href={localizedHref(`/luxury-tours/${slug}/book`)}
                   className="mt-6 flex w-full items-center justify-center gap-2 rounded-2xl bg-orange-500 py-4 text-sm font-bold text-white shadow-lg shadow-orange-500/20 transition duration-300 hover:-translate-y-0.5 hover:bg-orange-600 hover:shadow-xl"
                 >
                   <HomeText en="Reserve Your Experience" de="Ihr Erlebnis reservieren" />
@@ -1672,7 +1758,7 @@ export default async function LuxuryTourPage({
                 </Link>
 
                 <Link
-                  href="/luxury-tours"
+                  href={localizedHref("/luxury-tours")}
                   className="mt-3 flex w-full items-center justify-center rounded-2xl border border-blue-950 py-3.5 text-sm font-bold text-blue-950 transition duration-300 hover:bg-blue-950 hover:text-white"
                 >
                   <HomeText en="Back to Luxury Tours" de="Zurück zu den Luxustouren" />
@@ -1723,7 +1809,7 @@ export default async function LuxuryTourPage({
 
             <div className="mt-7">
               <Link
-                href={`/luxury-tours/${slug}/book`}
+                href={localizedHref(`/luxury-tours/${slug}/book`)}
                 className="inline-flex items-center justify-center gap-2 rounded-2xl bg-orange-500 px-8 py-3.5 text-sm font-bold text-white shadow-lg shadow-orange-500/20 transition duration-300 hover:-translate-y-0.5 hover:bg-orange-600"
               >
                 <HomeText en="Reserve This Experience" de="Dieses Erlebnis reservieren" />

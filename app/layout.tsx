@@ -7,6 +7,9 @@ import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 import { createSupabaseAdminClient } from "@/lib/supabaseAdmin";
 import { mergeSiteSettings } from "@/lib/siteSettings";
+import { headers } from "next/headers";
+import { LocaleProvider, type SiteLocale } from "./components/LocaleProvider";
+import { getLocalizedSeo, getOpenGraphLocale } from "@/lib/localeMetadata";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,15 +27,26 @@ export async function generateMetadata(): Promise<Metadata> {
     ? await supabase.from("website_content_overrides").select("content").eq("section", "site-settings").maybeSingle()
     : { data: null };
   const settings = mergeSiteSettings(data?.content);
-  const keywords = settings.seo_keywords.split(",").map((keyword) => keyword.trim()).filter(Boolean);
+  const requestHeaders = await headers();
+  const seoLocale = requestHeaders.get("x-via-blue-locale") ?? "en";
+  const localizedSeo = await getLocalizedSeo("/");
+  const keywords = seoLocale === "de"
+    ? ["Hurghada Ausflüge", "Rotes Meer Bootstouren", "Schnorcheln Hurghada", "Wüstensafari Ägypten", "private Transfers Hurghada"]
+    : seoLocale === "fr"
+      ? ["excursions Hurghada", "sorties en bateau mer Rouge", "snorkeling Hurghada", "safari désert Égypte", "transferts privés Hurghada"]
+      : seoLocale === "ro"
+        ? ["excursii Hurghada", "plimbări cu barca Marea Roșie", "snorkeling Hurghada", "safari în deșert Egipt", "transferuri private Hurghada"]
+        : seoLocale === "ru"
+          ? ["экскурсии Хургада", "морские прогулки Красное море", "снорклинг Хургада", "сафари Египет", "частные трансферы Хургада"]
+          : settings.seo_keywords.split(",").map((keyword) => keyword.trim()).filter(Boolean);
 
   return {
     metadataBase: new URL("https://viabluetours.com"),
     title: {
-      default: settings.seo_title,
+      default: localizedSeo.title ?? settings.seo_title,
       template: "%s | Via Blue",
     },
-    description: settings.seo_description,
+    description: localizedSeo.description ?? settings.seo_description,
     keywords,
     authors: [{ name: "Via Blue" }],
     creator: "Via Blue",
@@ -44,26 +58,30 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       type: "website",
       siteName: "Via Blue",
-      title: settings.seo_title,
-      description: settings.seo_description,
-      locale: "en_US",
+      title: localizedSeo.title ?? settings.seo_title,
+      description: localizedSeo.description ?? settings.seo_description,
+      locale: getOpenGraphLocale(seoLocale),
     },
     twitter: {
       card: "summary_large_image",
-      title: settings.seo_title,
-      description: settings.seo_description,
+      title: localizedSeo.title ?? settings.seo_title,
+      description: localizedSeo.description ?? settings.seo_description,
     },
   };
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const requestHeaders = await headers();
+  const requestedLocale = requestHeaders.get("x-via-blue-locale");
+  const locale: SiteLocale = requestedLocale === "de" || requestedLocale === "fr" || requestedLocale === "ro" || requestedLocale === "ru" ? requestedLocale : "en";
+
   return (
     <html
-      lang="en"
+      lang={locale}
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
@@ -93,12 +111,14 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col">
+        <LocaleProvider initialLocale={locale}>
         <CurrencyProvider>
         <Navbar />
         <ScrollToTop />
         {children}
         <Footer />
         </CurrencyProvider>
+        </LocaleProvider>
       </body>
     </html>
   );

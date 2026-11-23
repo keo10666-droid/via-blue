@@ -296,7 +296,7 @@ export default function ContactPage() {
             </div>
 
             <h1 className="text-4xl font-semibold tracking-[-0.03em] text-white sm:text-5xl lg:text-6xl">
-              <HomeText en="Let&apos;s talk about" de="Sprechen wir über" />
+              <HomeText en="Let&apos;s talk about" de="Sprechen wir über" ru="Давайте обсудим" />
               <span className="block text-orange-400"><HomeText en="your next journey" de="Ihre nächste Reise" /></span>
             </h1>
 
@@ -318,7 +318,7 @@ export default function ContactPage() {
               </p>
 
               <h2 className="mt-3 text-3xl font-semibold tracking-[-0.025em] text-[#071d49] sm:text-4xl">
-                <HomeText en="We&apos;re just a message away" de="Wir sind nur eine Nachricht entfernt" />
+                <HomeText en="We&apos;re just a message away" de="Wir sind nur eine Nachricht entfernt" ru="Мы всегда на связи" />
               </h2>
 
               <p className="mt-4 max-w-lg text-[15px] leading-7 text-[#667085]">
@@ -666,7 +666,7 @@ export default function ContactPage() {
                   </button>
 
                   <p className="text-center text-xs leading-5 text-[#98a2b3]">
-                    <HomeText en="We&apos;ll use your details only to respond to your enquiry" de="Wir verwenden Ihre Angaben ausschließlich zur Beantwortung Ihrer Anfrage." />
+                    <HomeText en="We&apos;ll use your details only to respond to your enquiry" de="Wir verwenden Ihre Angaben ausschließlich zur Beantwortung Ihrer Anfrage." ru="Ваши данные будут использованы только для ответа на ваш запрос." />
                   </p>
                 </form>
               </>

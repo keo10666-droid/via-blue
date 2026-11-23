@@ -1,6 +1,7 @@
 export function frenchTransferLocation(value: string): string {
   const locations: Record<string, string> = {
     "Hurghada International Airport": "Aéroport international d’Hurghada",
+    "Hurghada Airport": "Aéroport d’Hurghada",
     "Hurghada City": "Centre-ville d’Hurghada",
     "Sahl Hasheesh": "Sahl Hasheesh",
     "Makadi Bay": "Baie de Makadi",

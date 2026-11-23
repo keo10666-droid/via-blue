@@ -1,19 +1,28 @@
 import type { Metadata } from "next";
+import { getLocalizedSeo, getOpenGraphLocale } from "@/lib/localeMetadata";
 import Link from "next/link";
 import SimCardSection from "@/app/components/SimCardSection";
 import HomeText from "@/app/components/HomeText";
 
-export const metadata: Metadata = {
-  title: "Stay Connected | Egypt SIM Card | Via Blue",
-  description: "Get your Egypt SIM card with 25 GB data and calls. Choose your network and convenient airport pickup or hotel delivery.",
-  alternates: { canonical: "https://viabluetours.com/sim-card" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getLocalizedSeo("/sim-card");
+  return {
+    title: seo.title,
+    description: seo.description,
+    alternates: seo.alternates,
+    keywords: seo.locale === "de" ? ["SIM-Karte Ägypten", "mobile Daten Ägypten", "25 GB SIM Hurghada"] : seo.locale === "fr" ? ["carte SIM Égypte", "internet mobile Égypte", "SIM 25 Go Hurghada"] : seo.locale === "ro" ? ["cartelă SIM Egipt", "internet mobil Egipt", "SIM 25 GB Hurghada"] : seo.locale === "ru" ? ["SIM-карта Египет", "мобильный интернет Египет", "SIM 25 ГБ Хургада"] : ["Egypt SIM card", "mobile data Egypt", "Hurghada SIM 25 GB"],
+    openGraph: { title: seo.title, description: seo.description, url: seo.alternates.canonical, siteName: "Via Blue", type: "website", locale: getOpenGraphLocale(seo.locale) },
+    twitter: { card: "summary_large_image", title: seo.title, description: seo.description },
+  };
+}
 
-export default function SimCardPage() {
+export default async function SimCardPage() {
+  const seo = await getLocalizedSeo("/sim-card");
+  const homeHref = seo.locale === "en" ? "/" : `/${seo.locale}`;
   return (
     <main className="min-h-screen bg-[#f7f7f5] pt-24">
       <div className="mx-auto max-w-7xl px-5 pt-5 sm:px-6">
-        <Link href="/" className="text-sm font-semibold text-slate-500 transition hover:text-orange-600">
+        <Link href={homeHref} className="text-sm font-semibold text-slate-500 transition hover:text-orange-600">
           ← <HomeText en="Back to homepage" de="Zurück zur Startseite" />
         </Link>
       </div>

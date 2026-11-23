@@ -10,6 +10,7 @@ import { russianHomeText } from "@/lib/russianHomeCopy";
 import { russianTourCopy, russianTourValue } from "@/lib/russianTourCopy";
 import { romanianTourCopy, romanianTourValue } from "@/lib/romanianTourCopy";
 import { useCurrency, type CurrencyCode } from "@/app/components/CurrencyProvider";
+import { useSiteLocale } from "@/app/components/LocaleProvider";
 
 const areas = [
   "Hurghada",
@@ -251,31 +252,15 @@ function ClockIcon({ className = "h-4 w-4" }: { className?: string }) {
 }
 
 export default function AITripPlannerPage() {
+  const { locale } = useSiteLocale();
   const { currency, setCurrency, rate, rates, convertFromEur } = useCurrency();
   const [step, setStep] = useState(1);
-  const [language, setLanguage] = useState<"en" | "de" | "fr" | "ro" | "ru">("en");
+  const [language, setLanguage] = useState<"en" | "de" | "fr" | "ro" | "ru">(locale);
   const processingSectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const syncLanguage = (event?: Event) => {
-      const requestedLanguage = (event as CustomEvent<"en" | "de" | "fr" | "ro" | "ru"> | undefined)?.detail;
-      if (requestedLanguage === "en" || requestedLanguage === "de" || requestedLanguage === "fr" || requestedLanguage === "ro" || requestedLanguage === "ru") {
-        setLanguage(requestedLanguage);
-        return;
-      }
-
-      try {
-        const savedLanguage = window.localStorage.getItem("via-blue-language");
-        setLanguage(savedLanguage === "de" || savedLanguage === "fr" || savedLanguage === "ro" || savedLanguage === "ru" ? savedLanguage : "en");
-      } catch {
-        setLanguage("en");
-      }
-    };
-
-    syncLanguage();
-    window.addEventListener("via-blue-language-change", syncLanguage);
-    return () => window.removeEventListener("via-blue-language-change", syncLanguage);
-  }, []);
+    setLanguage(locale);
+  }, [locale]);
 
   const [adults, setAdults] = useState(2);
   const [children, setChildren] = useState(0);
@@ -853,15 +838,15 @@ export default function AITripPlannerPage() {
                   </span>
 
                   <span className="rounded-full bg-white px-4 py-2 text-xs font-bold text-blue-950 shadow-sm ring-1 ring-gray-100">
-                    {days} days
+                    {days} {language === "de" ? "Tage" : language === "fr" ? "jours" : language === "ro" ? "zile" : language === "ru" ? "дней" : "days"}
                   </span>
 
                   <span className="rounded-full bg-white px-4 py-2 text-xs font-bold text-blue-950 shadow-sm ring-1 ring-gray-100">
-                    {totalTravelers} travelers
+                    {totalTravelers} {language === "de" ? "Reisende" : language === "fr" ? "voyageurs" : language === "ro" ? "călători" : language === "ru" ? "путешественников" : "travelers"}
                   </span>
 
                   <span className="rounded-full bg-white px-4 py-2 text-xs font-bold text-blue-950 shadow-sm ring-1 ring-gray-100">
-                    Budget {currencySymbol}
+                    {language === "fr" ? "Budget" : language === "ro" ? "Buget" : language === "ru" ? "Бюджет" : "Budget"} {currencySymbol}
                     {budget}
                   </span>
                 </div>
@@ -1086,7 +1071,7 @@ export default function AITripPlannerPage() {
     }),
   );
 
-  window.location.href = "/ai-trip-planner/book";
+  window.location.href = `${locale === "en" ? "" : `/${locale}`}/ai-trip-planner/book`;
 }}
                       className="flex shrink-0 items-center justify-center gap-3 rounded-xl bg-orange-500 px-7 py-4 font-bold text-white transition hover:bg-orange-600"
                     >

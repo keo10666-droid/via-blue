@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 
 import { transfers } from "@/data/transfers";
 import HomeText from "@/app/components/HomeText";
+import { useSiteLocale } from "@/app/components/LocaleProvider";
 import { germanTransferLocation, germanTransferVehicle } from "@/lib/germanTransferCopy";
 import { frenchTransferLocation, frenchTransferVehicle } from "@/lib/frenchTransferCopy";
 import { romanianTransferLocation, romanianTransferVehicle } from "@/lib/romanianTransferCopy";
@@ -20,6 +21,8 @@ type TransferOverride = {
 
 export default function TransfersPage() {
   const router = useRouter();
+  const { locale } = useSiteLocale();
+  const localizedHref = (path: string) => locale === "en" ? path : `/${locale}${path === "/" ? "" : path}`;
   const [overrides, setOverrides] = useState<Record<string, TransferOverride>>({});
   useEffect(() => {
     let cancelled = false;
@@ -29,6 +32,8 @@ export default function TransfersPage() {
       .catch(() => undefined);
     return () => { cancelled = true; };
   }, []);
+  const russianTransferLocation = (value: string) => ({ "Hurghada International Airport": "Международный аэропорт Хургады", "Hurghada Airport": "Аэропорт Хургады", "Hurghada City": "Центр Хургады", "Sahl Hasheesh": "Сахл-Хашиш", "Makadi Bay": "Макади-Бей", "El Gouna": "Эль-Гуна", "Soma Bay": "Сома-Бей", "Safaga": "Сафага" }[value] ?? value);
+  const russianTransferVehicle = (value: string) => ({ Sedan: "Седан", "X-Pander": "Минивэн X-Pander", Van: "Микроавтобус", Luxury: "Автомобиль премиум-класса", Coster: "Микроавтобус Coster" }[value] ?? value);
   const items = Object.values(transfers)
     .map((transfer) => ({ ...transfer, ...(overrides[transfer.slug] ?? {}) }))
     .filter((transfer) => transfer.available !== false);
@@ -52,7 +57,7 @@ export default function TransfersPage() {
       return;
     }
 
-    router.push(`/transfers/${slug}`);
+    router.push(localizedHref(`/transfers/${slug}`));
   }
 
   return (
@@ -337,7 +342,7 @@ export default function TransfersPage() {
                   ) {
                     event.preventDefault();
                     router.push(
-                      `/transfers/${transfer.slug}`
+                      localizedHref(`/transfers/${transfer.slug}`)
                     );
                   }
                 }}
@@ -374,13 +379,13 @@ export default function TransfersPage() {
                   <div className="absolute bottom-5 left-5 right-5">
 
                     <p className="mb-1.5 text-xs font-bold uppercase tracking-[0.14em] text-orange-300">
-                      <HomeText en={transfer.from} de={germanTransferLocation(transfer.from)} fr={frenchTransferLocation(transfer.from)} ro={romanianTransferLocation(transfer.from)} />
+                      <HomeText en={transfer.from} de={germanTransferLocation(transfer.from)} fr={frenchTransferLocation(transfer.from)} ro={romanianTransferLocation(transfer.from)} ru={russianTransferLocation(transfer.from)} />
                     </p>
 
                     <div className="flex items-center gap-2">
 
                       <h3 className="text-2xl font-black tracking-[-0.025em] text-white">
-                        <HomeText en={transfer.to} de={germanTransferLocation(transfer.to)} fr={frenchTransferLocation(transfer.to)} ro={romanianTransferLocation(transfer.to)} />
+                        <HomeText en={transfer.to} de={germanTransferLocation(transfer.to)} fr={frenchTransferLocation(transfer.to)} ro={romanianTransferLocation(transfer.to)} ru={russianTransferLocation(transfer.to)} />
                       </h3>
 
                       <span className="text-lg text-white/70 transition-transform duration-300 group-hover:translate-x-1">
@@ -412,7 +417,7 @@ export default function TransfersPage() {
                       <div className="mt-1 flex items-center gap-2 text-sm font-bold text-slate-800">
 
                         <span className="truncate">
-                          <HomeText en={transfer.from} de={germanTransferLocation(transfer.from)} fr={frenchTransferLocation(transfer.from)} />
+                          <HomeText en={transfer.from} de={germanTransferLocation(transfer.from)} fr={frenchTransferLocation(transfer.from)} ro={romanianTransferLocation(transfer.from)} ru={russianTransferLocation(transfer.from)} />
                         </span>
 
                         <span className="shrink-0 text-base font-bold text-orange-500">
@@ -420,7 +425,7 @@ export default function TransfersPage() {
                         </span>
 
                         <span className="truncate">
-                          <HomeText en={transfer.to} de={germanTransferLocation(transfer.to)} fr={frenchTransferLocation(transfer.to)} />
+                          <HomeText en={transfer.to} de={germanTransferLocation(transfer.to)} fr={frenchTransferLocation(transfer.to)} ro={romanianTransferLocation(transfer.to)} ru={russianTransferLocation(transfer.to)} />
                         </span>
 
                       </div>
@@ -482,7 +487,7 @@ export default function TransfersPage() {
                             key={vehicle.type}
                             className="rounded-full border border-slate-200 bg-slate-100 px-3 py-1.5 text-xs font-bold text-slate-700 transition-all duration-300 group-hover:border-orange-100 group-hover:bg-orange-50 group-hover:text-orange-700"
                           >
-                            <HomeText en={vehicle.type} de={germanTransferVehicle(vehicle.type)} fr={frenchTransferVehicle(vehicle.type)} ro={romanianTransferVehicle(vehicle.type)} />
+                            <HomeText en={vehicle.type} de={germanTransferVehicle(vehicle.type)} fr={frenchTransferVehicle(vehicle.type)} ro={romanianTransferVehicle(vehicle.type)} ru={russianTransferVehicle(vehicle.type)} />
                           </span>
 
                         )
@@ -496,7 +501,7 @@ export default function TransfersPage() {
                   <div className="mt-6 grid grid-cols-2 gap-3">
 
                     <Link
-                      href={`/transfers/${transfer.slug}`}
+                      href={localizedHref(`/transfers/${transfer.slug}`)}
                       onClick={(event) =>
                         event.stopPropagation()
                       }
@@ -506,7 +511,7 @@ export default function TransfersPage() {
                     </Link>
 
                     <Link
-                      href={`/transfers/${transfer.slug}/book`}
+                      href={localizedHref(`/transfers/${transfer.slug}/book`)}
                       onClick={(event) =>
                         event.stopPropagation()
                       }

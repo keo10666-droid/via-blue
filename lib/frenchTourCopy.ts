@@ -32,7 +32,7 @@ const copy: Record<string, FrenchTourCopy> = {
   "sofa-boat": { name: "Sofa Boat / Crazy Sofa", description: "Profitez d’une sortie rapide et amusante sur les eaux de la mer Rouge." },
   twister: { name: "Hors-bord Twister", description: "Vivez une excursion palpitante en hors-bord le long de la côte d’Hurghada." },
   "dolphin-show": { name: "Spectacle Dolphin World", description: "Assistez à un spectacle de dauphins divertissant pour toute la famille." },
-  "dolphin-session": { name: "Nager avec les dauphins", description: "Vivez une rencontre unique avec les dauphins lors d’une séance encadrée." },
+  "dolphin-session": { name: "Séance d’interaction avec les dauphins", description: "Profitez d’une séance encadrée de 5 à 15 minutes avec les dauphins au Dolphin World à Hurghada, accompagnée par des entraîneurs professionnels." },
   "swimming-with-dolphin": { name: "Nager avec les dauphins", description: "Vivez une rencontre unique avec les dauphins lors d’une séance encadrée." },
   "desert-safari": { name: "Safari dans le désert le matin", description: "Explorez le désert autour d’Hurghada lors d’une aventure safari passionnante." },
   "quad-bike": { name: "Safari en quad", description: "Traversez les paysages désertiques en quad et profitez d’une aventure au départ d’Hurghada." },
