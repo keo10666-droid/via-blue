@@ -1,6 +1,6 @@
 import CurrencyPrice from "@/app/components/CurrencyPrice";
 import type { Metadata } from "next";
-import { getLocalizedSeo } from "@/lib/localeMetadata";
+import { getLocalizedSeo, getOpenGraphLocale } from "@/lib/localeMetadata";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -59,7 +59,7 @@ export async function generateMetadata({
       title: customTitle,
       description: customDescription,
       alternates,
-      openGraph: { title: `${customTitle} | Via Blue`, description: customDescription, url: alternates.canonical, siteName: "Via Blue", type: "website", images: [{ url: custom.image || "/images/via-blue-hero.webp", alt: customTitle }] },
+      openGraph: { title: `${customTitle} | Via Blue`, description: customDescription, url: alternates.canonical, siteName: "Via Blue", type: "website", locale: getOpenGraphLocale(seo.locale), images: [{ url: custom.image || "/images/via-blue-hero.webp", alt: customTitle }] },
     };
   }
 
@@ -102,7 +102,7 @@ export async function generateMetadata({
       url: alternates.canonical,
       siteName: "Via Blue",
       type: "website",
-      locale: "en_US",
+      locale: getOpenGraphLocale(seo.locale)
       images: [
         {
           url: contentOverride?.image || tour.image,
