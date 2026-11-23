@@ -150,6 +150,54 @@ export default async function TransferPage({ params }: Props) {
     },
   };
 
+
+  const routeDescriptions: Record<string, { en: string; de: string; fr: string; ro: string; ru: string }> = {
+  "hurghada-city": {
+    "en": "Hurghada city is the main arrival and holiday hub on Egypt’s Red Sea coast, with hotels and resorts spread across the waterfront and city districts. This private airport transfer takes you from Hurghada International Airport directly towards your hotel in Hurghada.",
+    "de": "Hurghada ist das wichtigste Ankunfts- und Urlaubszentrum an der ägyptischen Küste des Roten Meeres. Dieser private Flughafentransfer bringt Sie vom internationalen Flughafen Hurghada direkt zu Ihrem Hotel in der Stadt.",
+    "fr": "Hurghada est le principal centre d’arrivée et de vacances sur la côte égyptienne de la mer Rouge. Ce transfert privé vous conduit de l’aéroport international de Hurghada directement à votre hôtel en ville.",
+    "ro": "Hurghada este principalul centru de sosire și vacanță de pe coasta egipteană a Mării Roșii. Acest transfer privat vă duce de la Aeroportul Internațional Hurghada direct la hotelul din oraș.",
+    "ru": "Хургада — главный туристический и транспортный центр египетского побережья Красного моря. Индивидуальный трансфер доставит вас из международного аэропорта Хургады прямо к вашему отелю в городе."
+  },
+  "sahl-hasheesh": {
+    "en": "Sahl Hasheesh is a resort area south of Hurghada, known for its beachfront hotels and Red Sea setting. Arrange a private transfer from Hurghada Airport to Sahl Hasheesh and choose a vehicle that matches your group size and luggage.",
+    "de": "Sahl Hasheesh ist ein Feriengebiet südlich von Hurghada mit Strandhotels und einer Lage am Roten Meer. Buchen Sie einen privaten Transfer vom Flughafen Hurghada nach Sahl Hasheesh und wählen Sie ein passendes Fahrzeug für Ihre Gruppe und Ihr Gepäck.",
+    "fr": "Sahl Hasheesh est une station balnéaire au sud de Hurghada, connue pour ses hôtels en bord de mer Rouge. Réservez un transfert privé depuis l’aéroport de Hurghada et choisissez un véhicule adapté à votre groupe et à vos bagages.",
+    "ro": "Sahl Hasheesh este o zonă de stațiuni la sud de Hurghada, cunoscută pentru hotelurile de pe plajă și peisajul Mării Roșii. Rezervați un transfer privat de la aeroportul Hurghada și alegeți un vehicul potrivit grupului și bagajelor.",
+    "ru": "Сахл-Хашиш — курортная зона к югу от Хургады с отелями у моря. Закажите индивидуальный трансфер из аэропорта Хургады в Сахл-Хашиш и выберите автомобиль с учетом размера группы и багажа."
+  },
+  "makadi-bay": {
+    "en": "Makadi Bay is a resort destination south of Hurghada, with beachfront hotels along the Red Sea. A private Hurghada Airport transfer gives your party a direct ride to the Makadi Bay hotel area in a vehicle selected for your passenger and luggage needs.",
+    "de": "Makadi Bay ist ein Urlaubsziel südlich von Hurghada mit Strandhotels am Roten Meer. Ein privater Transfer vom Flughafen Hurghada bringt Ihre Gruppe direkt zu den Hotels in Makadi Bay. Wählen Sie das Fahrzeug passend zu Personen und Gepäck.",
+    "fr": "Makadi Bay est une destination balnéaire au sud de Hurghada, avec des hôtels en bord de mer Rouge. Un transfert privé depuis l’aéroport de Hurghada conduit votre groupe directement vers les hôtels de Makadi Bay, avec un véhicule adapté aux passagers et aux bagages.",
+    "ro": "Makadi Bay este o destinație de vacanță la sud de Hurghada, cu hoteluri pe malul Mării Roșii. Un transfer privat de la aeroportul Hurghada vă duce direct la hotelurile din Makadi Bay, într-un vehicul potrivit pasagerilor și bagajelor.",
+    "ru": "Макади-Бей — курортный район к югу от Хургады с отелями на побережье Красного моря. Индивидуальный трансфер из аэропорта Хургады доставит вашу группу прямо к отелю в Макади-Бей на подходящем автомобиле."
+  },
+  "el-gouna": {
+    "en": "El Gouna is a resort town north of Hurghada, known for its lagoons, marinas and hotels. Book a private transfer from Hurghada International Airport to El Gouna and compare sedan, X-Pander, van, luxury and Coster options by passenger and luggage capacity.",
+    "de": "El Gouna ist ein Ferienort nördlich von Hurghada, bekannt für Lagunen, Marinas und Hotels. Buchen Sie einen privaten Transfer vom internationalen Flughafen Hurghada nach El Gouna und vergleichen Sie Sedan, X-Pander, Van, Luxusfahrzeug und Coster nach Passagier- und Gepäckkapazität.",
+    "fr": "El Gouna est une station balnéaire au nord de Hurghada, connue pour ses lagunes, ses marinas et ses hôtels. Réservez un transfert privé depuis l’aéroport international de Hurghada et comparez les berlines, X-Pander, vans, véhicules de luxe et Coster selon le nombre de passagers et de bagages.",
+    "ro": "El Gouna este un oraș-stațiune la nord de Hurghada, cunoscut pentru lagune, marine și hoteluri. Rezervați un transfer privat de la Aeroportul Internațional Hurghada și comparați sedanul, X-Pander, vanul, mașina de lux și Coster în funcție de pasageri și bagaje.",
+    "ru": "Эль-Гуна — курортный город к северу от Хургады, известный лагунами, маринами и отелями. Закажите индивидуальный трансфер из международного аэропорта Хургады и сравните седан, X-Pander, минивэн, автомобиль премиум-класса и Coster по вместимости."
+  },
+  "soma-bay": {
+    "en": "Soma Bay is a Red Sea resort area south of Hurghada. This private airport transfer connects Hurghada International Airport with hotels in Soma Bay, with several vehicle sizes available for couples, families and larger groups.",
+    "de": "Soma Bay ist ein Feriengebiet am Roten Meer südlich von Hurghada. Dieser private Flughafentransfer verbindet den internationalen Flughafen Hurghada mit den Hotels in Soma Bay. Verschiedene Fahrzeuggrößen stehen für Paare, Familien und Gruppen zur Auswahl.",
+    "fr": "Soma Bay est une station balnéaire de la mer Rouge au sud de Hurghada. Ce transfert privé relie l’aéroport international de Hurghada aux hôtels de Soma Bay, avec plusieurs tailles de véhicules pour les couples, les familles et les groupes.",
+    "ro": "Soma Bay este o zonă de stațiuni la Marea Roșie, la sud de Hurghada. Acest transfer privat leagă Aeroportul Internațional Hurghada de hotelurile din Soma Bay, cu mai multe dimensiuni de vehicule pentru cupluri, familii și grupuri.",
+    "ru": "Сома-Бей — курортная зона на Красном море к югу от Хургады. Индивидуальный трансфер соединяет международный аэропорт Хургады с отелями Сома-Бей; доступны автомобили разных размеров для пар, семей и групп."
+  },
+  "safaga": {
+    "en": "Safaga is a coastal town south of Hurghada on the Red Sea. Arrange a private transfer from Hurghada Airport to Safaga and select the vehicle according to the number of travellers and bags in your party.",
+    "de": "Safaga ist eine Küstenstadt südlich von Hurghada am Roten Meer. Buchen Sie einen privaten Transfer vom Flughafen Hurghada nach Safaga und wählen Sie das Fahrzeug passend zur Anzahl der Reisenden und Gepäckstücke.",
+    "fr": "Safaga est une ville côtière au sud de Hurghada, sur la mer Rouge. Organisez un transfert privé depuis l’aéroport de Hurghada vers Safaga et choisissez le véhicule selon le nombre de voyageurs et de bagages.",
+    "ro": "Safaga este un oraș de coastă la sud de Hurghada, la Marea Roșie. Rezervați un transfer privat de la aeroportul Hurghada la Safaga și alegeți vehiculul în funcție de numărul de călători și bagaje.",
+    "ru": "Сафага — прибрежный город на Красном море к югу от Хургады. Закажите индивидуальный трансфер из аэропорта Хургады в Сафагу и выберите автомобиль с учетом количества пассажиров и багажа."
+  }
+};
+  const routeDescription = routeDescriptions[slug];
+  if (!routeDescription) notFound();
+
   return (
     <main className="min-h-screen bg-slate-50">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(transferSchema).replace(/</g, "\\u003c") }} />
@@ -567,6 +615,42 @@ export default async function TransferPage({ params }: Props) {
 
         </div>
 
+      </section>
+
+
+      <section className="border-t border-slate-200 bg-white px-6 py-14 md:py-18">
+        <div className="mx-auto max-w-4xl">
+          <p className="text-xs font-bold uppercase tracking-[0.25em] text-orange-500">
+            <HomeText en="Route information" de="Informationen zur Strecke" fr="Informations sur le trajet" ro="Informații despre traseu" ru="Информация о маршруте" />
+          </p>
+          <h2 className="mt-3 text-2xl font-bold tracking-tight text-blue-950 sm:text-3xl">
+            <HomeText
+              en={`Private airport transfer from Hurghada to ${transfer.to}`}
+              de={`Privater Flughafentransfer von Hurghada nach ${germanTransferLocation(transfer.to)}`}
+              fr={`Transfert privé depuis l’aéroport de Hurghada vers ${frenchTransferLocation(transfer.to)}`}
+              ro={`Transfer privat de la aeroportul Hurghada la ${romanianTransferLocation(transfer.to)}`}
+              ru={`Индивидуальный трансфер из аэропорта Хургады в ${to}`}
+            />
+          </h2>
+          <p className="mt-5 text-base leading-8 text-slate-600">
+            <HomeText
+              en={routeDescription.en}
+              de={routeDescription.de}
+              fr={routeDescription.fr}
+              ro={routeDescription.ro}
+              ru={routeDescription.ru}
+            />
+          </p>
+          <p className="mt-4 text-base leading-8 text-slate-600">
+            <HomeText
+              en="Before booking, check the passenger and luggage capacity shown for each vehicle. Prices are displayed per vehicle, so you can compare the available options for your group before sending your booking request."
+              de="Prüfen Sie vor der Buchung die angegebene Passagier- und Gepäckkapazität jedes Fahrzeugs. Die Preise gelten pro Fahrzeug. So können Sie die verfügbaren Optionen für Ihre Gruppe vergleichen, bevor Sie Ihre Buchungsanfrage senden."
+              fr="Avant de réserver, vérifiez la capacité en passagers et en bagages de chaque véhicule. Les prix sont indiqués par véhicule afin de comparer les options disponibles pour votre groupe avant d’envoyer votre demande."
+              ro="Înainte de rezervare, verificați capacitatea fiecărui vehicul pentru pasageri și bagaje. Prețurile sunt afișate per vehicul, astfel încât să puteți compara opțiunile disponibile pentru grupul dumneavoastră înainte de a trimite solicitarea."
+              ru="Перед бронированием проверьте вместимость каждого автомобиля по пассажирам и багажу. Цены указаны за автомобиль, поэтому вы можете сравнить доступные варианты для вашей группы перед отправкой заявки."
+            />
+          </p>
+        </div>
       </section>
 
     </main>
