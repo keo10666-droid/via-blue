@@ -14,39 +14,6 @@ const tourNames: Record<string, string> = {
   "twister": "Скоростной катер Twister",
   "photo-session-desert": "Фотосессия в пустыне", "orange-bay": "Остров Оранж-Бей", "mahmya-island": "Остров Махмья", "eden-island": "Остров Эден", "hula-hula": "Остров Хула-Хула", "magawish-island": "Остров Магавиш", "amwaj-island": "Остров Амвадж", "bianca-island": "Остров Бианка", "utopia-island": "Остров Утопия", "speed-boat": "Прогулка на скоростном катере", "adventure-boat": "Морское приключение на лодке", "nefertari-cruise": "Круиз Нефертари", "elite-vip-cruise": "VIP-круиз Elite", "elgouna-plus": "Эль-Гуна Плюс", "snorkeling": "Снорклинг в Красном море", "dolphin-house": "Дом дельфинов", "diving": "Дайвинг в Хургаде", "sharm-elnaqa": "Шарм-эль-Нага", "dolphin-show": "Шоу дельфинов", "dolphin-session": "Встреча с дельфинами", "swimming-with-dolphin": "Плавание с дельфинами", "desert-safari": "Сафари по пустыне", "quad-bike": "Сафари на квадроциклах", "super-safari": "Суперсафари", "horse-riding": "Верховая езда", "stargazing": "Наблюдение за звёздами в пустыне", "hurghada-city-tour": "Обзорная экскурсия по Хургаде", "cairo-over-day": "Экскурсия в Каир на один день", "luxor-over-day": "Экскурсия в Луксор на один день", "cairo-over-night": "Экскурсия в Каир с ночёвкой", "luxor-over-night": "Экскурсия в Луксор с ночёвкой", "hot-air-balloon": "Полёт на воздушном шаре", "aqua-park": "Аквапарк", "aquarium": "Аквариум", "sand-city": "Песочный город", "mini-egypt-park": "Парк Мини-Египет", "hurghada-museum": "Музей Хургады", "spa-massage": "Спа и массаж"
 
-  "orange-bay": "Остров Оранж-Бей",
-  "mahmya-island": "Остров Махмья",
-  "eden-island": "Остров Эден",
-  "hula-hula": "Пляж Хола-Хола",
-  "magawish-island": "Остров Магавиш",
-  "amwaj-island": "Остров Амвадж",
-  "bianca-island": "Остров Бианка",
-  "utopia-island": "Остров Утопия",
-  "speed-boat": "Прогулка на скоростном катере",
-  "adventure-boat": "Морская прогулка Adventure",
-  "nefertari-cruise": "Круиз Нефертари",
-  "elite-vip-cruise": "VIP-круиз Elite",
-  "elgouna-plus": "Экскурсия Эль-Гуна Плюс",
-  "dolphin-house": "Дом дельфинов",
-  "sharm-elnaqa": "Шарм-эль-Нага",
-  "dolphin-show": "Шоу дельфинов",
-  "dolphin-session": "Встреча с дельфинами",
-  "swimming-with-dolphin": "Плавание с дельфинами",
-  "desert-safari": "Утреннее сафари по пустыне",
-  "quad-bike": "Сафари на квадроциклах",
-  "super-safari": "Суперсафари",
-  "horse-riding": "Прогулка верхом на лошадях",
-  "hurghada-city-tour": "Обзорная экскурсия по Хургаде",
-  "cairo-over-day": "Однодневная экскурсия в Каир",
-  "luxor-over-day": "Однодневная экскурсия в Луксор",
-  "cairo-over-night": "Экскурсия в Каир с ночёвкой",
-  "luxor-over-night": "Экскурсия в Луксор с ночёвкой",
-  "hot-air-balloon": "Полёт на воздушном шаре",
-  "aqua-park": "Аквапарк",
-  "aquarium": "Большой океанариум Хургады",
-  "sand-city": "Парк песчаных скульптур Sand City",
-  "mini-egypt-park": "Парк Мини-Египет"
-
 };
 const values: Record<string, string> = {
   "Full Day Boat Trip": "Морская прогулка на целый день", "Full Day Island Trip": "Поездка на остров на целый день", "Island Boat Trip": "Морская прогулка на остров", "Approximately 8 hours": "Примерно 8 часов", "Approximately 7 hours": "Примерно 7 часов", "7–8 Hours": "7–8 часов", "8–9 Hours": "8–9 часов", "Hotel Pickup": "Трансфер из отеля", "Morning hotel pickup": "Утренний трансфер из отеля", "Daily": "Ежедневно", "Morning": "Утро", "Evening": "Вечер", "Full Day": "Полный день", "Half Day": "Полдня", "2 Hours": "2 часа", "3 Hours": "3 часа", "4 Hours": "4 часа", "6 Hours": "6 часов", "8 Hours": "8 часов", "10 Hours": "10 часов", "From Hurghada": "Из Хургады", "Hotel pickup and drop-off": "Трансфер из отеля и обратно", "Pickup from hotel": "Трансфер из отеля", "Drop-off at hotel": "Возвращение в отель", "Meals": "Питание", "Lunch": "Обед", "Drinks": "Напитки", "Water": "Вода", "Transfers": "Трансферы", "Life jackets": "Спасательные жилеты", "Safety equipment": "Защитное оборудование", "English-speaking guide": "Англоговорящий гид", "Beach time": "Время на пляже", "Free time": "Свободное время", "Island visit": "Посещение острова", "Coral reefs": "Коралловые рифы", "Dolphin watching": "Наблюдение за дельфинами", "Not included": "Не включено", "Round-trip transfer": "Трансфер туда и обратно", "Air-conditioned bus": "Автобус с кондиционером", "Private transfer": "Индивидуальный трансфер", "Shared transfer": "Групповой трансфер", "Pickup time": "Время трансфера", "Departure time": "Время отправления", "Return time": "Время возвращения", "New Experience": "Новинка", "Tour": "Экскурсия", "VIP": "VIP", "Family": "Для всей семьи", "Romantic": "Романтический", "Private": "Индивидуальный", "Excursion": "Экскурсия", "Experience": "Впечатление", "Culture": "Культура", "Relaxation": "Отдых", "Popular": "Популярное", "Wi-Fi": "Wi-Fi", "Adult": "Взрослый", "Child": "Ребёнок", "Infant": "Младенец", "Included": "Включено", "Excluded": "Не включено", "Snorkeling equipment": "Оборудование для снорклинга", "Open-buffet lunch": "Обед по системе шведский стол", "Boat trip": "Морская прогулка", "Hotel transfer": "Трансфер из отеля"
