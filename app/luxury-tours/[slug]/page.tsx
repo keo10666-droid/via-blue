@@ -1215,11 +1215,47 @@ const luxurySeoNames: Record<string, Record<LuxuryTourSlug, string>> = {
   },
 };
 
-const luxurySeoDescriptions: Record<string, string> = {
-  de: "Buchen Sie dieses private Erlebnis ab Hurghada mit Via Blue. Freuen Sie sich auf komfortable Organisation, persönliche Betreuung und einen sorgfältig geplanten Ausflug in Ägypten.",
-  fr: "Réservez cette expérience privée au départ de Hurghada avec Via Blue. Profitez d’une organisation confortable, d’un accompagnement personnalisé et d’une excursion soigneusement préparée en Égypte.",
-  ro: "Rezervați această experiență privată din Hurghada cu Via Blue. Bucurați-vă de organizare confortabilă, asistență personalizată și o excursie bine planificată în Egipt.",
-  ru: "Забронируйте индивидуальную поездку из Хургады с Via Blue. Вас ждут комфортная организация, персональное сопровождение и тщательно спланированная экскурсия по Египту.",
+const luxurySeoDescriptions: Record<"de" | "fr" | "ro" | "ru", Record<LuxuryTourSlug, string>> = {
+  de: {
+    luxor: "Entdecken Sie die Tempel von Karnak, das Tal der Könige und die berühmten Sehenswürdigkeiten von Luxor auf einer privaten Tagestour ab Hurghada.",
+    cairo: "Besuchen Sie die Pyramiden von Gizeh, die Sphinx und die wichtigsten Sehenswürdigkeiten Kairos auf einer privaten Tour ab Hurghada.",
+    alexandria: "Erkunden Sie Alexandrias Mittelmeerküste, historische Sehenswürdigkeiten und berühmte Kulturstätten auf einer privaten Tour ab Hurghada.",
+    aswan: "Entdecken Sie Assuans Tempel, den Nil und die historischen Sehenswürdigkeiten Südägyptens auf einer privaten Tour ab Hurghada.",
+    "speed-boat": "Erleben Sie eine private Schnellbootfahrt auf dem Roten Meer ab Hurghada mit flexibler Route und Zeit zum Schwimmen und Schnorcheln.",
+    "quad-safari": "Erleben Sie eine private Quad-Safari in der Wüste von Hurghada mit wählbaren Touren von einer oder drei Stunden und Einzel- oder Doppelquads.",
+    "buggy-safari": "Entdecken Sie die Wüste von Hurghada bei einer privaten dreistündigen Buggy-Safari mit Fahrzeugen für zwei oder vier Personen.",
+    "private-boat": "Mieten Sie ein privates Boot in Hurghada für einen exklusiven Tag auf dem Roten Meer mit flexibler Route, Schnorchelstopps und persönlicher Betreuung.",
+  },
+  fr: {
+    luxor: "Découvrez les temples de Karnak, la Vallée des Rois et les monuments de Louxor lors d’une excursion privée à la journée depuis Hurghada.",
+    cairo: "Visitez les pyramides de Gizeh, le Sphinx et les sites incontournables du Caire lors d’une excursion privée depuis Hurghada.",
+    alexandria: "Explorez le front de mer méditerranéen d’Alexandrie, ses monuments historiques et ses sites culturels lors d’une excursion privée depuis Hurghada.",
+    aswan: "Découvrez les temples d’Assouan, le Nil et les sites historiques du sud de l’Égypte lors d’une excursion privée depuis Hurghada.",
+    "speed-boat": "Profitez d’une sortie privée en bateau rapide sur la mer Rouge au départ d’Hurghada, avec un itinéraire flexible et des pauses baignade et snorkeling.",
+    "quad-safari": "Partez en safari privé en quad dans le désert d’Hurghada, avec des formules d’une ou trois heures et des quads simples ou doubles.",
+    "buggy-safari": "Explorez le désert d’Hurghada lors d’un safari privé de trois heures en buggy, avec des véhicules pour deux ou quatre personnes.",
+    "private-boat": "Louez un bateau privé à Hurghada pour une journée exclusive en mer Rouge, avec itinéraire flexible, arrêts snorkeling et équipage dédié.",
+  },
+  ro: {
+    luxor: "Descoperă templele din Karnak, Valea Regilor și cele mai importante monumente din Luxor într-o excursie privată de o zi din Hurghada.",
+    cairo: "Vizitează Piramidele din Giza, Sfinxul și principalele atracții din Cairo într-o excursie privată din Hurghada.",
+    alexandria: "Explorează litoralul mediteranean al Alexandriei, monumentele istorice și obiectivele culturale într-un tur privat din Hurghada.",
+    aswan: "Descoperă templele din Aswan, Nilul și obiectivele istorice din sudul Egiptului într-un tur privat din Hurghada.",
+    "speed-boat": "Bucură-te de o plimbare privată cu barca rapidă pe Marea Roșie din Hurghada, cu traseu flexibil și opriri pentru înot și snorkeling.",
+    "quad-safari": "Pornește într-un safari privat cu quadul în deșertul din Hurghada, cu opțiuni de una sau trei ore și quaduri single sau double.",
+    "buggy-safari": "Explorează deșertul din Hurghada într-un safari privat de trei ore cu buggy, cu vehicule pentru două sau patru persoane.",
+    "private-boat": "Închiriază o barcă privată în Hurghada pentru o zi exclusivă pe Marea Roșie, cu traseu flexibil, opriri pentru snorkeling și echipaj dedicat.",
+  },
+  ru: {
+    luxor: "Посетите храм Карнака, Долину царей и главные памятники Луксора во время индивидуальной однодневной экскурсии из Хургады.",
+    cairo: "Увидьте пирамиды Гизы, Сфинкса и главные достопримечательности Каира во время индивидуальной экскурсии из Хургады.",
+    alexandria: "Познакомьтесь со средиземноморским побережьем Александрии, историческими памятниками и культурными достопримечательностями в индивидуальной поездке из Хургады.",
+    aswan: "Откройте храмы Асуана, Нил и исторические места южного Египта во время индивидуальной экскурсии из Хургады.",
+    "speed-boat": "Отправьтесь на частную прогулку на скоростном катере по Красному морю из Хургады с гибким маршрутом, купанием и сноркелингом.",
+    "quad-safari": "Отправьтесь на индивидуальное сафари на квадроциклах по пустыне Хургады на один или три часа, выбрав одноместный или двухместный квадроцикл.",
+    "buggy-safari": "Исследуйте пустыню Хургады во время индивидуального трёхчасового сафари на багги для двух или четырёх человек.",
+    "private-boat": "Арендуйте частную лодку в Хургаде для эксклюзивного дня на Красном море с гибким маршрутом, остановками для сноркелинга и личным экипажем.",
+  },
 };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -1236,12 +1272,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     : locale === "fr" ? `${localizedName} en Égypte`
     : locale === "ro" ? `${localizedName} în Egipt`
     : `${localizedName} в Египте`;
-  const description = locale === "en" ? tour.description : luxurySeoDescriptions[locale] ?? tour.description;
+  const description = locale === "en" ? tour.description : luxurySeoDescriptions[locale]?.[slug as LuxuryTourSlug] ?? tour.description;
   const canonical = alternates.canonical;
   const ogLocale = locale === "de" ? "de_DE" : locale === "fr" ? "fr_FR" : locale === "ro" ? "ro_RO" : locale === "ru" ? "ru_RU" : "en_US";
   return {
     title,
     description,
+    keywords: [localizedName, ...(locale === "de" ? ["Privattour Ägypten", "Hurghada Privatausflug", "Luxusausflug Ägypten"] : locale === "fr" ? ["excursion privée Égypte", "excursion privée Hurghada", "circuit de luxe Égypte"] : locale === "ro" ? ["tur privat Egipt", "excursie privată Hurghada", "tur de lux Egipt"] : locale === "ru" ? ["индивидуальные экскурсии Египет", "частная экскурсия Хургада", "VIP тур Египет"] : ["private tours Egypt", "private Hurghada tours", "luxury Egypt excursions"]), "Via Blue"],
     alternates,
     openGraph: { title, description, url: canonical, siteName: "Via Blue", type: "website", locale: ogLocale },
     twitter: { card: "summary_large_image", title, description },
