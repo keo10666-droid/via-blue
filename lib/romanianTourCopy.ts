@@ -31,7 +31,7 @@ const copy: Record<string, RomanianTourCopy> = {
   "sofa-boat": { name: "Sofa Boat / Crazy Sofa", description: "Bucură-te de o plimbare rapidă și distractivă pe Marea Roșie." },
   twister: { name: "Barca rapidă Twister", description: "Trăiește o plimbare palpitantă cu barca rapidă de-a lungul coastei din Hurghada." },
   "dolphin-show": { name: "Spectacol cu delfini", description: "Urmărește un spectacol distractiv cu delfini, potrivit familiilor și vizitatorilor de toate vârstele." },
-  "dolphin-session": { name: "Înot cu delfinii", description: "Bucură-te de o întâlnire specială cu delfinii în cadrul unei sesiuni organizate." },
+  "dolphin-session": { name: "Sesiune de interacțiune cu delfinii", description: "Alege o sesiune supravegheată de 5–15 minute cu delfinii la Dolphin World din Hurghada, alături de instructori profesioniști." },
   "swimming-with-dolphin": { name: "Înot cu delfinii", description: "Bucură-te de o întâlnire specială cu delfinii în cadrul unei sesiuni organizate." },
   "desert-safari": { name: "Safari de dimineață în deșert", description: "Explorează deșertul din jurul Hurghadei într-o aventură palpitantă de safari." },
   "quad-bike": { name: "Safari cu ATV-ul", description: "Condu un ATV prin peisajul deșertic și bucură-te de o aventură pornind din Hurghada." },
