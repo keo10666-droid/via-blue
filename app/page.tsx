@@ -1038,17 +1038,17 @@ export default async function Home() {
         <div className="mx-auto grid max-w-7xl gap-8 rounded-[32px] border border-slate-200 bg-slate-50 p-7 sm:p-10 md:grid-cols-[1fr_auto] md:items-center">
           <div className="max-w-3xl">
             <p className="text-xs font-bold uppercase tracking-[0.24em] text-orange-500">
-              <HomeText en="Plan your days in Hurghada" de="Planen Sie Ihre Tage in Hurghada" />
+              {seo.locale === "de" ? "Planen Sie Ihre Tage in Hurghada" : seo.locale === "fr" ? "Préparez vos journées à Hurghada" : seo.locale === "ro" ? "Planifică-ți zilele în Hurghada" : seo.locale === "ru" ? "Планируйте дни в Хургаде" : "Plan your days in Hurghada"}
             </p>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-blue-950 sm:text-4xl">
-              <HomeText en="A guide to the best things to do in Hurghada" de="Ein Reiseführer zu den schönsten Aktivitäten in Hurghada" />
+              {seo.locale === "de" ? "Ein Reiseführer zu den schönsten Aktivitäten in Hurghada" : seo.locale === "fr" ? "Guide des meilleures activités à Hurghada" : seo.locale === "ro" ? "Ghid cu cele mai frumoase activități din Hurghada" : seo.locale === "ru" ? "Путеводитель по лучшим развлечениям Хургады" : "A guide to the best things to do in Hurghada"}
             </h2>
             <p className="mt-4 max-w-2xl leading-7 text-slate-600">
-              <HomeText en="Not sure which experience to choose? Explore our local guide to Red Sea boat trips, island visits, snorkeling, diving, desert safaris and day trips from Hurghada." de="Sie wissen noch nicht, welchen Ausflug Sie wählen sollen? Entdecken Sie unseren Reiseführer zu Bootstouren am Roten Meer, Inselbesuchen, Schnorcheln, Tauchen, Wüstensafaris und Tagesausflügen ab Hurghada." />
+              {seo.locale === "de" ? "Sie wissen noch nicht, welchen Ausflug Sie wählen sollen? Entdecken Sie unseren Reiseführer zu Bootstouren am Roten Meer, Inselbesuchen, Schnorcheln, Tauchen, Wüstensafaris und Tagesausflügen ab Hurghada." : seo.locale === "fr" ? "Vous hésitez sur l’excursion à choisir ? Consultez notre guide local des sorties en bateau sur la mer Rouge, des îles, du snorkeling, de la plongée, des safaris dans le désert et des excursions au départ de Hurghada." : seo.locale === "ro" ? "Nu știi ce experiență să alegi? Descoperă ghidul nostru local despre excursii cu barca pe Marea Roșie, insule, snorkeling, scufundări, safari în deșert și excursii de o zi din Hurghada." : seo.locale === "ru" ? "Не знаете, какую экскурсию выбрать? Изучите наш путеводитель по морским прогулкам, островам, снорклингу, дайвингу, сафари по пустыне и поездкам из Хургады." : "Not sure which experience to choose? Explore our local guide to Red Sea boat trips, island visits, snorkeling, diving, desert safaris and day trips from Hurghada."}
             </p>
           </div>
           <Link href={localizedHref("/things-to-do-in-hurghada")} className="inline-flex items-center justify-center gap-3 rounded-2xl bg-blue-950 px-7 py-4 font-bold text-white transition hover:-translate-y-0.5 hover:bg-orange-500">
-            <HomeText en="Read the Hurghada Guide" de="Hurghada-Reiseführer lesen" />
+            {seo.locale === "de" ? "Hurghada-Reiseführer lesen" : seo.locale === "fr" ? "Lire le guide de Hurghada" : seo.locale === "ro" ? "Citește ghidul Hurghada" : seo.locale === "ru" ? "Читать путеводитель по Хургаде" : "Read the Hurghada Guide"}
             <ArrowRightIcon className="h-5 w-5" />
           </Link>
         </div>
