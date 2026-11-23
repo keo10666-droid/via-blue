@@ -102,7 +102,7 @@ export async function generateMetadata({
       url: alternates.canonical,
       siteName: "Via Blue",
       type: "website",
-      locale: getOpenGraphLocale(seo.locale)
+      locale: getOpenGraphLocale(seo.locale),
       images: [
         {
           url: contentOverride?.image || tour.image,
