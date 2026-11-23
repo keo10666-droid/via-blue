@@ -1,6 +1,6 @@
 import CurrencyPrice from "@/app/components/CurrencyPrice";
 import type { Metadata } from "next";
-import { getLocalizedSeo } from "@/lib/localeMetadata";
+import { getLocalizedSeo, getOpenGraphLocale } from "@/lib/localeMetadata";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -74,7 +74,7 @@ export async function generateMetadata({
       url: canonicalUrl,
       siteName: "Via Blue",
       type: "website",
-      locale: "en_US",
+      locale: getOpenGraphLocale(seo.locale)
     },
 
     twitter: {
