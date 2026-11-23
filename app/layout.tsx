@@ -79,6 +79,30 @@ export default async function RootLayout({
   const requestedLocale = requestHeaders.get("x-via-blue-locale");
   const locale: SiteLocale = requestedLocale === "de" || requestedLocale === "fr" || requestedLocale === "ro" || requestedLocale === "ru" ? requestedLocale : "en";
 
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": "https://www.viabluetours.com/#organization",
+    name: "Via Blue",
+    url: "https://www.viabluetours.com",
+    logo: "https://www.viabluetours.com/logo/logo.svg",
+    description: "Hurghada-based tourism company and tour operator offering Red Sea excursions, boat trips, snorkeling, diving, desert safaris, Egypt day trips and private transfers.",
+    areaServed: [
+      { "@type": "City", name: "Hurghada" },
+      { "@type": "AdministrativeArea", name: "Red Sea Governorate" },
+      { "@type": "Country", name: "Egypt" },
+    ],
+    knowsAbout: [
+      "Hurghada tours and excursions",
+      "Red Sea boat trips and island excursions",
+      "Snorkeling and scuba diving in Hurghada",
+      "Desert safaris and quad bike tours in Hurghada",
+      "Egypt day trips from Hurghada",
+      "Airport and private transfers in Hurghada",
+      "Tours in Sahl Hasheesh, Makadi Bay, El Gouna, Soma Bay and Safaga",
+    ],
+  };
+
   return (
     <html
       lang={locale}
@@ -89,19 +113,7 @@ export default async function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              name: "Via Blue",
-              url: "https://www.viabluetours.com",
-              logo: "https://www.viabluetours.com/logo/logo.svg",
-              description: "Tourism and transportation company in Hurghada, Egypt, offering Red Sea experiences, excursions and private transfers.",
-              areaServed: [
-                { "@type": "City", name: "Hurghada" },
-                { "@type": "AdministrativeArea", name: "Red Sea Governorate" },
-                { "@type": "Country", name: "Egypt" },
-              ],
-            }).replace(/</g, "\\u003c"),
+            __html: JSON.stringify(organizationSchema).replace(/</g, "\\u003c"),
           }}
         />
         <script
