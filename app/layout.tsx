@@ -9,6 +9,7 @@ import { createSupabaseAdminClient } from "@/lib/supabaseAdmin";
 import { mergeSiteSettings } from "@/lib/siteSettings";
 import { headers } from "next/headers";
 import { LocaleProvider, type SiteLocale } from "./components/LocaleProvider";
+import { getOpenGraphLocale } from "@/lib/localeMetadata";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,6 +27,8 @@ export async function generateMetadata(): Promise<Metadata> {
     ? await supabase.from("website_content_overrides").select("content").eq("section", "site-settings").maybeSingle()
     : { data: null };
   const settings = mergeSiteSettings(data?.content);
+  const requestHeaders = await headers();
+  const seoLocale = requestHeaders.get("x-via-blue-locale") ?? "en";
   const keywords = settings.seo_keywords.split(",").map((keyword) => keyword.trim()).filter(Boolean);
 
   return {
@@ -48,7 +51,7 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: "Via Blue",
       title: settings.seo_title,
       description: settings.seo_description,
-      locale: "en_US",
+      locale: getOpenGraphLocale(seoLocale)
     },
     twitter: {
       card: "summary_large_image",
