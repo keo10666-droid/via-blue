@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getLocalizedSeo } from "@/lib/localeMetadata";
+import { getLocalizedSeo, getOpenGraphLocale } from "@/lib/localeMetadata";
 import Link from "next/link";
 import SimCardSection from "@/app/components/SimCardSection";
 import HomeText from "@/app/components/HomeText";
@@ -10,6 +10,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: seo.title,
     description: seo.description,
     alternates: seo.alternates,
+    openGraph: { title: seo.title, description: seo.description, url: seo.alternates.canonical, siteName: "Via Blue", type: "website", locale: getOpenGraphLocale(seo.locale) },
   };
 }
 
