@@ -848,13 +848,16 @@ export default async function TourDetailsPage({
     ? tour.image
     : `https://viabluetours.com${tour.image}`;
 
+  const localizedTourName = seo.locale === "de" ? germanTourCopy(tour.slug, "name", tour.name) : seo.locale === "fr" ? frenchTourCopy(tour.slug, "name", tour.name) : seo.locale === "ro" ? romanianTourCopy(tour.slug, "name", tour.name) : seo.locale === "ru" ? russianTourCopy(tour.slug, "name", tour.name) : tour.name;
+  const localizedTourDescription = seo.locale === "de" ? germanTourCopy(tour.slug, "description", tour.description) : seo.locale === "fr" ? frenchTourCopy(tour.slug, "description", tour.description) : seo.locale === "ro" ? romanianTourCopy(tour.slug, "description", tour.description) : seo.locale === "ru" ? russianTourCopy(tour.slug, "description", tour.description) : tour.description;
+
   const tourSchema = {
     "@context": "https://schema.org",
     "@type": "TouristTrip",
 
-    name: tour.name,
+    name: localizedTourName,
 
-    description: tour.description,
+    description: localizedTourDescription,
 
     image: [tourImage],
 
@@ -898,7 +901,7 @@ export default async function TourDetailsPage({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(tourSchema),
+          __html: JSON.stringify(tourSchema).replace(/</g, "\\u003c"),
         }}
       />
 
@@ -1664,7 +1667,7 @@ export default async function TourDetailsPage({
 
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-blue-100">
 
-            <HomeText en={`Reserve your ${tour.name} experience and enjoy an unforgettable day in Hurghada with Via Blue`} de={`Buchen Sie Ihr Erlebnis „${germanTourCopy(tour.slug, "name", tour.name)}“ und genießen Sie einen unvergesslichen Tag in Hurghada mit Via Blue.`} ro={`Rezervă experiența ${romanianTourCopy(tour.slug, "name", tour.name)} și bucură-te de o zi de neuitat în Hurghada alături de Via Blue`} />
+            <HomeText en={`Reserve your ${tour.name} experience and enjoy an unforgettable day in Hurghada with Via Blue`} de={`Buchen Sie Ihr Erlebnis „${germanTourCopy(tour.slug, "name", tour.name)}“ und genießen Sie einen unvergesslichen Tag in Hurghada mit Via Blue.`} fr={`Réservez votre expérience ${frenchTourCopy(tour.slug, "name", tour.name)} et profitez d’une journée inoubliable à Hurghada avec Via Blue`} ro={`Rezervă experiența ${romanianTourCopy(tour.slug, "name", tour.name)} și bucură-te de o zi de neuitat în Hurghada alături de Via Blue`} ru={`Забронируйте экскурсию «${russianTourCopy(tour.slug, "name", tour.name)}» и проведите незабываемый день в Хургаде с Via Blue`} />
 
           </p>
 
@@ -1681,7 +1684,7 @@ export default async function TourDetailsPage({
               className="group mt-8 inline-flex items-center justify-center gap-3 rounded-2xl bg-orange-500 px-8 py-4 font-bold text-white shadow-lg shadow-orange-950/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-orange-600 hover:shadow-xl"
             >
 
-              <HomeText en={`Book ${tour.name}`} de={`${germanTourCopy(tour.slug, "name", tour.name)} buchen`} ro={`Rezervă ${romanianTourCopy(tour.slug, "name", tour.name)}`} />
+              <HomeText en={`Book ${tour.name}`} de={`${germanTourCopy(tour.slug, "name", tour.name)} buchen`} fr={`Réserver ${frenchTourCopy(tour.slug, "name", tour.name)}`} ro={`Rezervă ${romanianTourCopy(tour.slug, "name", tour.name)}`} ru={`Забронировать: ${russianTourCopy(tour.slug, "name", tour.name)}`} />
 
               <ArrowRightIcon className="h-5 w-5 transition-transform group-hover:translate-x-1" />
 
