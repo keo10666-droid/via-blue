@@ -199,6 +199,8 @@ const FRENCH_MONTH_NAMES = ["janvier", "février", "mars", "avril", "mai", "juin
 const FRENCH_WEEK_DAYS = ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"];
 const ROMANIAN_MONTH_NAMES = ["ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie", "august", "septembrie", "octombrie", "noiembrie", "decembrie"];
 const ROMANIAN_WEEK_DAYS = ["Du", "Lu", "Ma", "Mi", "Jo", "Vi", "Sâ"];
+const RUSSIAN_MONTH_NAMES = ["январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"];
+const RUSSIAN_WEEK_DAYS = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
 
 const parseDateInput = (value: string) => {
   if (!value) return null;
@@ -221,7 +223,7 @@ const formatDateLabel = (value: string, isGerman = false, isFrench = false, isRo
 
   const parsedDate = parseDateInput(value);
 
-  if (!parsedDate) return isGerman ? "Wählen Sie Ihr Reisedatum" : isFrench ? "Choisissez la date de début de votre voyage" : isRomanian ? "Selectează data de început a călătoriei" : "Select your trip start date";
+  if (!parsedDate) return isGerman ? "Wählen Sie Ihr Reisedatum" : isFrench ? "Choisissez la date de début de votre voyage" : isRomanian ? "Selectează data de început a călătoriei" : isRussian ? "Выберите дату начала поездки" : "Select your trip start date";
 
   return new Intl.DateTimeFormat(isGerman ? "de-DE" : isFrench ? "fr-FR" : isRomanian ? "ro-RO" : isRussian ? "ru-RU" : "en-US", {
     weekday: "short",
@@ -510,7 +512,7 @@ export default function AITripBookingPage() {
               ? "Das ausgewählte Reisepaket wurde nicht gefunden. Kehren Sie bitte zum KI-Reiseplaner zurück und erstellen Sie Ihr Paket erneut."
               : isFrench
               ? "Le forfait sélectionné est introuvable. Veuillez retourner au planificateur de voyage et créer à nouveau votre forfait."
-              : "Your selected trip package could not be found. Please return to the AI Trip Planner and create your package again."}
+              : isRussian ? "Выбранный пакет поездки не найден. Вернитесь к AI-планировщику и создайте пакет заново." : "Your selected trip package could not be found. Please return to the AI Trip Planner and create your package again."}
           </p>
 
           <a
@@ -613,7 +615,7 @@ export default function AITripBookingPage() {
         );
 
         alert(
-          (isGerman ? "Dein Konto konnte nicht überprüft werden. Bitte versuche es erneut." : isFrench ? "Impossible de vérifier votre compte. Veuillez réessayer." : isRomanian ? "Contul nu a putut fi verificat. Încearcă din nou." : "Unable to verify your account. Please try again."),
+          (isGerman ? "Dein Konto konnte nicht überprüft werden. Bitte versuche es erneut." : isFrench ? "Impossible de vérifier votre compte. Veuillez réessayer." : isRomanian ? "Contul nu a putut fi verificat. Încearcă din nou." : isRussian ? "Не удалось проверить аккаунт. Попробуйте ещё раз." : "Unable to verify your account. Please try again."),
         );
 
         return;
@@ -646,7 +648,7 @@ export default function AITripBookingPage() {
           );
 
           alert(
-            (isGerman ? "Deine Buchungssitzung konnte nicht gestartet werden. Bitte versuche es erneut." : isFrench ? "Impossible de démarrer votre session de réservation. Veuillez réessayer." : isRomanian ? "Sesiunea de rezervare nu a putut fi pornită. Încearcă din nou." : "Unable to start your booking session. Please try again."),
+            (isGerman ? "Deine Buchungssitzung konnte nicht gestartet werden. Bitte versuche es erneut." : isFrench ? "Impossible de démarrer votre session de réservation. Veuillez réessayer." : isRomanian ? "Sesiunea de rezervare nu a putut fi pornită. Încearcă din nou." : isRussian ? "Не удалось начать сеанс бронирования. Попробуйте ещё раз." : "Unable to start your booking session. Please try again."),
           );
 
           return;
@@ -703,9 +705,9 @@ export default function AITripBookingPage() {
           email: email.trim(),
           phone: fullPhone,
           hotel:
-            hotel.trim() || (isGerman ? "Nicht angegeben" : isFrench ? "Non précisé" : isRomanian ? "Nespecificat" : "Not specified"),
+            hotel.trim() || (isGerman ? "Nicht angegeben" : isFrench ? "Non précisé" : isRomanian ? "Nespecificat" : isRussian ? "Не указано" : "Not specified"),
           room_number:
-            roomNumber.trim() || (isGerman ? "Nicht angegeben" : isFrench ? "Non précisé" : isRomanian ? "Nespecificat" : "Not specified"),
+            roomNumber.trim() || (isGerman ? "Nicht angegeben" : isFrench ? "Non précisé" : isRomanian ? "Nespecificat" : isRussian ? "Не указано" : "Not specified"),
           adults,
           children,
           children_ages:
@@ -764,7 +766,7 @@ export default function AITripBookingPage() {
         );
 
         alert(
-          (isGerman ? "Deine Buchung konnte nicht gespeichert werden. Bitte versuche es erneut." : isFrench ? "Votre réservation n’a pas pu être enregistrée. Veuillez réessayer." : isRomanian ? "Rezervarea nu a putut fi salvată. Încearcă din nou." : "Your booking could not be saved. Please try again."),
+          (isGerman ? "Deine Buchung konnte nicht gespeichert werden. Bitte versuche es erneut." : isFrench ? "Votre réservation n’a pas pu être enregistrée. Veuillez réessayer." : isRomanian ? "Rezervarea nu a putut fi salvată. Încearcă din nou." : isRussian ? "Не удалось сохранить бронирование. Попробуйте ещё раз." : "Your booking could not be saved. Please try again."),
         );
 
         return;
@@ -819,7 +821,7 @@ ${isFrench ? frenchHomeText(selectedPackage.summary) : isRomanian ? romanianHome
 👥 ${isGerman ? "Gäste insgesamt" : isFrench ? "Nombre total de voyageurs" : isRomanian ? "Număr total de persoane" : isRussian ? "Всего гостей" : "Total Guests"}: ${totalGuests}
 
 🌍 ${isGerman ? "Nationalität" : isFrench ? "Nationalité" : isRomanian ? "Naționalitate" : isRussian ? "Гражданство" : "Nationality"}: ${
-        nationality.trim() || (isGerman ? "Nicht angegeben" : isFrench ? "Non précisé" : isRomanian ? "Nespecificat" : "Not specified")
+        nationality.trim() || (isGerman ? "Nicht angegeben" : isFrench ? "Non précisé" : isRomanian ? "Nespecificat" : isRussian ? "Не указано" : "Not specified")
       }
 
 👤 ${isGerman ? "Vollständiger Name" : isFrench ? "Nom complet" : isRomanian ? "Nume complet" : isRussian ? "Полное имя" : "Full Name"}: ${name.trim()}
@@ -829,11 +831,11 @@ ${isFrench ? frenchHomeText(selectedPackage.summary) : isRomanian ? romanianHome
 📱 WhatsApp: ${fullPhone}
 
 🏨 ${isGerman ? "Hotel" : isFrench ? "Hôtel" : isRomanian ? "Hotel" : isRussian ? "Отель" : "Hotel"}: ${
-        hotel.trim() || (isGerman ? "Nicht angegeben" : isFrench ? "Non précisé" : isRomanian ? "Nespecificat" : "Not specified")
+        hotel.trim() || (isGerman ? "Nicht angegeben" : isFrench ? "Non précisé" : isRomanian ? "Nespecificat" : isRussian ? "Не указано" : "Not specified")
       }
 
 🚪 ${isGerman ? "Zimmernummer" : isFrench ? "Numéro de chambre" : isRomanian ? "Numărul camerei" : isRussian ? "Номер комнаты" : "Room Number"}: ${
-        roomNumber.trim() || (isGerman ? "Nicht angegeben" : isFrench ? "Non précisé" : isRomanian ? "Nespecificat" : "Not specified")
+        roomNumber.trim() || (isGerman ? "Nicht angegeben" : isFrench ? "Non précisé" : isRomanian ? "Nespecificat" : isRussian ? "Не указано" : "Not specified")
       }
 
 💰 Budget: ${formatPrice(
@@ -996,7 +998,7 @@ ${isGerman ? "Via Blue KI-Reiseplaner" : isFrench ? "Planificateur de voyage IA 
 
                 <input
                   type="text"
-                  placeholder={isGerman ? "Nationalität" : isFrench ? "Nationalité" : isRomanian ? "Naționalitate" : "Nationality"}
+                  placeholder={isGerman ? "Nationalität" : isFrench ? "Nationalité" : isRomanian ? "Naționalitate" : isRussian ? "Гражданство" : "Nationality"}
                   value={nationality}
                   onChange={(event) => {
                     setNationality(
@@ -1379,7 +1381,7 @@ ${isGerman ? "Via Blue KI-Reiseplaner" : isFrench ? "Planificateur de voyage IA 
 
                           <p className="mt-1 text-xl font-bold text-white">
                             {
-                              (isGerman ? GERMAN_MONTH_NAMES : isFrench ? FRENCH_MONTH_NAMES : isRomanian ? ROMANIAN_MONTH_NAMES : MONTH_NAMES)[
+                              (isGerman ? GERMAN_MONTH_NAMES : isFrench ? FRENCH_MONTH_NAMES : isRomanian ? ROMANIAN_MONTH_NAMES : isRussian ? RUSSIAN_MONTH_NAMES : MONTH_NAMES)[
                                 calendarMonth.getMonth()
                               ]
                             }{" "}
@@ -1417,7 +1419,7 @@ ${isGerman ? "Via Blue KI-Reiseplaner" : isFrench ? "Planificateur de voyage IA 
                             onClick={
                               goToNextMonth
                             }
-                            aria-label={isGerman ? "Nächster Monat" : isFrench ? "Mois suivant" : isRomanian ? "Luna următoare" : "Next month"}
+                            aria-label={isGerman ? "Nächster Monat" : isFrench ? "Mois suivant" : isRomanian ? "Luna următoare" : isRussian ? "Следующий месяц" : "Next month"}
                             className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white transition-all duration-200 hover:border-orange-400/50 hover:bg-orange-500"
                           >
                             <svg
@@ -1617,31 +1619,31 @@ ${isGerman ? "Via Blue KI-Reiseplaner" : isFrench ? "Planificateur de voyage IA 
                           }}
                         >
                           <option value="">
-                            {isGerman ? `Alter für Kind ${index + 1} auswählen` : isFrench ? `Choisir l’âge de l’enfant ${index + 1}` : isRomanian ? `Alege vârsta copilului ${index + 1}` : `Select Child ${index + 1} Age`}
+                            {isGerman ? `Alter für Kind ${index + 1} auswählen` : isFrench ? `Choisir l’âge de l’enfant ${index + 1}` : isRomanian ? `Alege vârsta copilului ${index + 1}` : isRussian ? `Выберите возраст ребёнка ${index + 1}` : `Select Child ${index + 1} Age`}
                           </option>
 
                           <option value="5">
-                            {isGerman ? "5 Jahre" : isFrench ? "5 ans" : isRomanian ? "5 ani" : "5 years"}
+                            {isGerman ? "5 Jahre" : isFrench ? "5 ans" : isRomanian ? "5 ani" : isRussian ? "5 лет" : "5 years"}
                           </option>
 
                           <option value="6">
-                            {isGerman ? "6 Jahre" : isFrench ? "6 ans" : isRomanian ? "6 ani" : "6 years"}
+                            {isGerman ? "6 Jahre" : isFrench ? "6 ans" : isRomanian ? "6 ani" : isRussian ? "6 лет" : "6 years"}
                           </option>
 
                           <option value="7">
-                            {isGerman ? "7 Jahre" : isFrench ? "7 ans" : isRomanian ? "7 ani" : "7 years"}
+                            {isGerman ? "7 Jahre" : isFrench ? "7 ans" : isRomanian ? "7 ani" : isRussian ? "7 лет" : "7 years"}
                           </option>
 
                           <option value="8">
-                            {isGerman ? "8 Jahre" : isFrench ? "8 ans" : isRomanian ? "8 ani" : "8 years"}
+                            {isGerman ? "8 Jahre" : isFrench ? "8 ans" : isRomanian ? "8 ani" : isRussian ? "8 лет" : "8 years"}
                           </option>
 
                           <option value="9">
-                            {isGerman ? "9 Jahre" : isFrench ? "9 ans" : isRomanian ? "9 ani" : "9 years"}
+                            {isGerman ? "9 Jahre" : isFrench ? "9 ans" : isRomanian ? "9 ani" : isRussian ? "9 лет" : "9 years"}
                           </option>
 
                           <option value="10">
-                            {isGerman ? "10 Jahre" : isFrench ? "10 ans" : isRomanian ? "10 ani" : "10 years"}
+                            {isGerman ? "10 Jahre" : isFrench ? "10 ans" : isRomanian ? "10 ani" : isRussian ? "10 лет" : "10 years"}
                           </option>
                         </select>
 
@@ -1722,7 +1724,7 @@ ${isGerman ? "Via Blue KI-Reiseplaner" : isFrench ? "Planificateur de voyage IA 
 
             <textarea
               rows={3}
-              placeholder={isGerman ? "Besondere Wünsche / Hinweise" : isFrench ? "Demandes particulières / remarques" : isRomanian ? "Solicitări speciale / note" : "Special Requests / Notes"}
+              placeholder={isGerman ? "Besondere Wünsche / Hinweise" : isFrench ? "Demandes particulières / remarques" : isRomanian ? "Solicitări speciale / note" : isRussian ? "Особые пожелания / примечания" : "Special Requests / Notes"}
               className={inputClass(false)}
             />
 
@@ -1801,7 +1803,7 @@ ${isGerman ? "Via Blue KI-Reiseplaner" : isFrench ? "Planificateur de voyage IA 
                     <p className="mt-1 font-bold text-blue-900">
                       {adults} <HomeText en="Adults" de="Erwachsene" />
                       {children > 0
-                        ? ` · ${children} ${isGerman ? "Kinder" : isFrench ? "enfants" : isRomanian ? "copii" : "Children"}`
+                        ? ` · ${children} ${isGerman ? "Kinder" : isFrench ? "enfants" : isRomanian ? "copii" : isRussian ? "детей" : "Children"}`
                         : ""}
                     </p>
                   </div>
@@ -1845,7 +1847,7 @@ ${isGerman ? "Via Blue KI-Reiseplaner" : isFrench ? "Planificateur de voyage IA 
                                 className="rounded-2xl border border-gray-100 bg-slate-50 p-4"
                               >
                                 <p className="font-bold text-gray-900">
-                                  {isFrench ? frenchTourCopy(tour.slug, "name", tour.name) : isRomanian ? romanianTourCopy(tour.slug, "name", tour.name) : tour.name}
+                                  {isFrench ? frenchTourCopy(tour.slug, "name", tour.name) : isRomanian ? romanianTourCopy(tour.slug, "name", tour.name) : isRussian ? russianTourCopy(tour.slug, "name", tour.name) : tour.name}
                                 </p>
 
                                 <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-gray-500">
