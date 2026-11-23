@@ -104,7 +104,7 @@ export default function SimCardSection() {
       <div className="relative mx-auto max-w-7xl">
         <div className="mx-auto mb-10 max-w-2xl text-center">
           <div className="mb-4 flex items-center justify-center gap-3"><span className="h-px w-9 bg-orange-500" /><span className="text-[10px] font-extrabold uppercase tracking-[0.28em] text-orange-600"><HomeText en="Stay connected in Egypt" de="Bleiben Sie in Ägypten verbunden" /></span><span className="h-px w-9 bg-orange-500" /></div>
-          <h2 className="text-3xl font-extrabold tracking-tight text-[#03112a] sm:text-5xl"><HomeText en="Your Egypt SIM Card" de="Ihre SIM-Karte für Ägypten" /></h2>
+          <h1 className="text-3xl font-extrabold tracking-tight text-[#03112a] sm:text-5xl"><HomeText en="Your Egypt SIM Card" de="Ihre SIM-Karte für Ägypten" /></h1>
           <p className="mt-4 text-sm leading-7 text-slate-600 sm:text-base"><HomeText en="Get online, stay in touch and enjoy your holiday without roaming worries" de="Bleiben Sie online und in Kontakt – ganz ohne Roaming-Sorgen im Urlaub" /></p>
         </div>
         <div className="mx-auto grid max-w-5xl overflow-hidden rounded-[28px] border border-slate-200/80 bg-white shadow-[0_28px_80px_rgba(3,17,42,0.12)] lg:grid-cols-[0.88fr_1.12fr]">
