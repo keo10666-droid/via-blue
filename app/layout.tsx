@@ -9,7 +9,7 @@ import { createSupabaseAdminClient } from "@/lib/supabaseAdmin";
 import { mergeSiteSettings } from "@/lib/siteSettings";
 import { headers } from "next/headers";
 import { LocaleProvider, type SiteLocale } from "./components/LocaleProvider";
-import { getOpenGraphLocale } from "@/lib/localeMetadata";
+import { getLocalizedSeo, getOpenGraphLocale } from "@/lib/localeMetadata";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,15 +29,16 @@ export async function generateMetadata(): Promise<Metadata> {
   const settings = mergeSiteSettings(data?.content);
   const requestHeaders = await headers();
   const seoLocale = requestHeaders.get("x-via-blue-locale") ?? "en";
+  const localizedSeo = await getLocalizedSeo("/");
   const keywords = settings.seo_keywords.split(",").map((keyword) => keyword.trim()).filter(Boolean);
 
   return {
     metadataBase: new URL("https://viabluetours.com"),
     title: {
-      default: settings.seo_title,
+      default: localizedSeo.title ?? settings.seo_title,
       template: "%s | Via Blue",
     },
-    description: settings.seo_description,
+    description: localizedSeo.description ?? settings.seo_description,
     keywords,
     authors: [{ name: "Via Blue" }],
     creator: "Via Blue",
@@ -49,14 +50,14 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       type: "website",
       siteName: "Via Blue",
-      title: settings.seo_title,
-      description: settings.seo_description,
+      title: localizedSeo.title ?? settings.seo_title,
+      description: localizedSeo.description ?? settings.seo_description,
       locale: getOpenGraphLocale(seoLocale)
     },
     twitter: {
       card: "summary_large_image",
-      title: settings.seo_title,
-      description: settings.seo_description,
+      title: localizedSeo.title ?? settings.seo_title,
+      description: localizedSeo.description ?? settings.seo_description,
     },
   };
 }
