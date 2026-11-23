@@ -130,8 +130,8 @@ export default async function TransferPage({ params }: Props) {
   const transferSchema = {
     "@context": "https://schema.org",
     "@type": "Service",
-    name: `Private transfer from ${transfer.from} to ${transfer.to}`,
-    description: `Private transportation from ${transfer.from} to ${transfer.to} with Via Blue.`,
+    name: seo.locale === "de" ? `Privater Transfer von ${from} nach ${to}` : seo.locale === "fr" ? `Transfert privé de ${from} à ${to}` : seo.locale === "ro" ? `Transfer privat de la ${from} la ${to}` : seo.locale === "ru" ? `Индивидуальный трансфер: ${from} — ${to}` : `Private transfer from ${transfer.from} to ${transfer.to}`,
+    description: seo.locale === "de" ? `Privater Flughafentransfer von ${from} nach ${to} mit Via Blue.` : seo.locale === "fr" ? `Transfert privé de ${from} à ${to} avec Via Blue.` : seo.locale === "ro" ? `Transfer privat de la ${from} la ${to} cu Via Blue.` : seo.locale === "ru" ? `Индивидуальный трансфер из пункта ${from} в ${to} с Via Blue.` : `Private transportation from ${transfer.from} to ${transfer.to} with Via Blue.`,
     serviceType: "Private airport and hotel transfer",
     provider: { "@type": "Organization", name: "Via Blue", url: "https://viabluetours.com" },
     areaServed: [
