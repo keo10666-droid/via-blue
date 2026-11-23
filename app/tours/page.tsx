@@ -1095,6 +1095,24 @@ function ToursPageContent() {
 
         </div>
 
+        <div className="mt-8 rounded-3xl border border-slate-200 bg-slate-50 p-6 sm:p-8">
+          <div className="max-w-3xl">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-orange-500">
+              {locale === "ru" ? "Планирование отдыха" : locale === "ro" ? "Planifică-ți vacanța" : locale === "fr" ? "Préparez votre séjour" : locale === "de" ? "Urlaub planen" : "Plan your holiday"}
+            </p>
+            <h2 className="mt-3 text-2xl font-bold text-blue-950 sm:text-3xl">
+              {locale === "ru" ? "Путеводитель по Хургаде: чем заняться" : locale === "ro" ? "Ghid Hurghada: ce poți face" : locale === "fr" ? "Guide de Hurghada : que faire ?" : locale === "de" ? "Hurghada-Reiseführer: Was kann man unternehmen?" : "Things to Do in Hurghada: Local Guide"}
+            </h2>
+            <p className="mt-3 leading-7 text-slate-600">
+              {locale === "ru" ? "Сравните морские прогулки, острова, снорклинг, дайвинг, сафари и поездки по Египту, чтобы выбрать подходящий отдых." : locale === "ro" ? "Compară excursiile pe mare și pe insule, snorkelingul, scufundările, safariurile și excursiile prin Egipt pentru a alege experiența potrivită." : locale === "fr" ? "Comparez les sorties en mer et sur les îles, le snorkeling, la plongée, les safaris et les excursions en Égypte pour choisir l’expérience qui vous convient." : locale === "de" ? "Vergleichen Sie Bootsausflüge, Inselbesuche, Schnorcheln, Tauchen, Safaris und Ägypten-Tagesausflüge." : "Compare boat and island trips, snorkeling, diving, desert safaris and Egypt day tours to find the right experience for your holiday."}
+            </p>
+            <Link href={localizedHref("/things-to-do-in-hurghada")} className="mt-5 inline-flex items-center gap-2 font-bold text-orange-600 transition hover:text-blue-950">
+              {locale === "ru" ? "Открыть путеводитель" : locale === "ro" ? "Citește ghidul" : locale === "fr" ? "Lire le guide" : locale === "de" ? "Reiseführer lesen" : "Read the local guide"}
+              <ArrowRightIcon className="h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+
       </section>
 
     </main>

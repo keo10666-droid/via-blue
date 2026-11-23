@@ -500,6 +500,16 @@ export default function Footer() {
 
               <li>
                 <Link
+                  href={localizedHref("/things-to-do-in-hurghada")}
+                  className="group flex items-center gap-2 text-[15px] text-slate-300 transition-all duration-300 hover:translate-x-1 hover:text-orange-400"
+                >
+                  <span>{language === "ru" ? "Путеводитель по Хургаде" : language === "ro" ? "Ghid Hurghada" : language === "fr" ? "Guide de Hurghada" : language === "de" ? "Hurghada-Reiseführer" : "Things to Do in Hurghada"}</span>
+                  <ArrowIcon />
+                </Link>
+              </li>
+
+              <li>
+                <Link
                   href={localizedHref("/transfers")}
                   className="group flex items-center gap-2 text-[15px] text-slate-300 transition-all duration-300 hover:translate-x-1 hover:text-orange-400"
                 >
