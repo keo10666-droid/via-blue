@@ -51,13 +51,16 @@ export async function generateMetadata({
     description,
 
     keywords: [
-      `${transfer.from} to ${transfer.to} transfer`,
-      `${transfer.to} transfer`,
-      "Hurghada airport transfer",
-      "Hurghada private transfer",
-      "Hurghada airport taxi",
-      "Hurghada transfers",
-      "Egypt airport transfer",
+      `${from} – ${to}`,
+      ...(seo.locale === "de"
+        ? ["Flughafentransfer Hurghada", "Privater Transfer Hurghada", "Hoteltransfer Hurghada", "Transfer in Ägypten"]
+        : seo.locale === "fr"
+          ? ["transfert aéroport Hurghada", "transfert privé Hurghada", "transfert hôtel Hurghada", "transfert en Égypte"]
+          : seo.locale === "ro"
+            ? ["transfer aeroport Hurghada", "transfer privat Hurghada", "transfer hotel Hurghada", "transfer în Egipt"]
+            : seo.locale === "ru"
+              ? ["трансфер из аэропорта Хургады", "индивидуальный трансфер Хургада", "трансфер до отеля Хургада", "трансфер в Египте"]
+              : [`${transfer.from} to ${transfer.to} transfer`, `${transfer.to} transfer`, "Hurghada airport transfer", "Hurghada private transfer", "Hurghada airport taxi", "Hurghada transfers", "Egypt airport transfer"]),
       "Via Blue",
     ],
 
