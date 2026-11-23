@@ -20,6 +20,7 @@ const values: Record<string, string> = {
 };
 
 const tourDescriptions: Record<string, string> = {
+  "Choose a supervised 5–15 minute dolphin interaction session at Dolphin World in Hurghada, guided by professional trainers.": "Выберите индивидуальную 5–15-минутную сессию общения с дельфинами в Dolphin World в Хургаде под наблюдением профессиональных тренеров.",
   "Enjoy a full-day trip to Paradise Island from Hurghada, with a snorkeling stop, 2–3 hours on the island, an open-buffet lunch and free drinks throughout the day on the boat.": "Отправьтесь из Хургады на целый день на остров Парадайз: сноркелинг, 2–3 часа отдыха на острове, обед «шведский стол» и бесплатные напитки на борту в течение дня.",
   "Paradise Island is a full-day Red Sea boat trip from Hurghada. The experience combines a snorkeling stop with relaxing on the island for approximately 2–3 hours, followed by an open-buffet lunch. Drinks are available free of charge throughout the day on the boat.": "Полнодневная морская экскурсия из Хургады на остров Парадайз. Вас ждут сноркелинг, около 2–3 часов отдыха на острове, обед «шведский стол» и бесплатные напитки на борту.",
   "Enjoy an unforgettable day at Orange Bay Island with snorkeling, relaxing island time, an open-buffet lunch on the boat and free drinks throughout the day.": "Проведите незабываемый день на острове Оранж-Бей: сноркелинг, отдых на острове, обед «шведский стол» на лодке и бесплатные напитки в течение дня.",
