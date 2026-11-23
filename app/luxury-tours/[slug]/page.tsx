@@ -1398,17 +1398,20 @@ export default async function LuxuryTourPage({
     : slug === "quad-safari" ? pricing.quad_single_1h
     : slug === "buggy-safari" ? pricing.buggy_2_seat
     : tour.price;
+  const localizedTourName = seo.locale === "en" ? tour.name : luxurySeoNames[seo.locale]?.[slug as LuxuryTourSlug] ?? tour.name;
+  const localizedTourDescription = seo.locale === "en" ? tour.description : luxurySeoDescriptions[seo.locale]?.[slug as LuxuryTourSlug] ?? tour.description;
+  const localizedTourUrl = `https://viabluetours.com${localizedHref(`/luxury-tours/${slug}`)}`;
   const tourSchema = {
     "@context": "https://schema.org",
     "@type": "TouristTrip",
-    name: tour.name,
-    description: tour.description,
-    url: `https://viabluetours.com/luxury-tours/${slug}`,
+    name: localizedTourName,
+    description: localizedTourDescription,
+    url: localizedTourUrl,
     touristType: "Tourists",
     provider: { "@type": "Organization", name: "Via Blue", url: "https://viabluetours.com" },
     offers: {
       "@type": "Offer",
-      url: `https://viabluetours.com/luxury-tours/${slug}`,
+      url: localizedTourUrl,
       priceCurrency: "EUR",
       price: startingPrice,
       availability: "https://schema.org/InStock",
