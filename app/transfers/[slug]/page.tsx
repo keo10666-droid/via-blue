@@ -117,6 +117,10 @@ export default async function TransferPage({ params }: Props) {
     vehicles: transferOverride.vehicles as typeof baseTransfer.vehicles,
   } : baseTransfer;
   if (!transfer.available) notFound();
+  const localizePageLocation = (value: string) => seo.locale === "de" ? germanTransferLocation(value) : seo.locale === "fr" ? frenchTransferLocation(value) : seo.locale === "ro" ? romanianTransferLocation(value) : seo.locale === "ru" ? ({ "Hurghada International Airport": "Международный аэропорт Хургады", "Hurghada Airport": "Аэропорт Хургады", "Hurghada City": "Центр Хургады", "Sahl Hasheesh": "Сахл-Хашиш", "Makadi Bay": "Макади-Бей", "El Gouna": "Эль-Гуна", "Soma Bay": "Сома-Бей", "Safaga": "Сафага" }[value] ?? value) : value;
+  const from = localizePageLocation(transfer.from);
+  const to = localizePageLocation(transfer.to);
+  const localizeVehicle = (value: string) => ({ Sedan: "Седан", "X-Pander": "Минивэн X-Pander", Van: "Микроавтобус", Luxury: "Автомобиль премиум-класса", Coster: "Микроавтобус Coster" }[value] ?? value);
   const lowestPrice = Math.min(
     ...transfer.vehicles.map((vehicle) => vehicle.price)
   );
