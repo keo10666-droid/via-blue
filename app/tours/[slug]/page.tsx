@@ -18,6 +18,14 @@ import { frenchTourCopy } from "@/lib/frenchTourCopy";
 import { romanianTourCopy } from "@/lib/romanianTourCopy";
 import { russianTourCopy } from "@/lib/russianTourCopy";
 
+const toMetaDescription = (value: string) => {
+  const normalized = value.replace(/\\s+/g, " ").trim();
+  if (normalized.length <= 160) return normalized;
+  const shortened = normalized.slice(0, 157);
+  const lastSpace = shortened.lastIndexOf(" ");
+  return `${shortened.slice(0, lastSpace > 120 ? lastSpace : 157).trimEnd()}…`;
+};
+
 type Props = {
   params: Promise<{
     slug: string;
@@ -55,7 +63,7 @@ export async function generateMetadata({
     const rawDescription = custom.description || `Book ${rawTitle} in Hurghada, Egypt with Via Blue.`;
     const localizedCustomName = localizeTour("name", rawTitle);
     const customTitle = seo.locale === "de" ? `${localizedCustomName} in Hurghada, Ägypten` : seo.locale === "fr" ? `${localizedCustomName} à Hurghada, Égypte` : seo.locale === "ro" ? `${localizedCustomName} în Hurghada, Egipt` : seo.locale === "ru" ? `${localizedCustomName} в Хургаде, Египет` : `${localizedCustomName} in Hurghada, Egypt`;
-    const customDescription = localizeTour("description", rawDescription);
+    const customDescription = toMetaDescription(localizeTour("description", rawDescription));
     return {
       title: customTitle,
       description: customDescription,
@@ -77,7 +85,7 @@ export async function generateMetadata({
   const rawDescription = contentOverride?.description || tour.description || `Book ${rawTitle} in Hurghada, Egypt with Via Blue.`;
   const localizedName = localizeTour("name", rawTitle);
   const title = seo.locale === "de" ? `${localizedName} in Hurghada, Ägypten` : seo.locale === "fr" ? `${localizedName} à Hurghada, Égypte` : seo.locale === "ro" ? `${localizedName} în Hurghada, Egipt` : seo.locale === "ru" ? `${localizedName} в Хургаде, Египет` : `${localizedName} in Hurghada, Egypt`;
-  const description = localizeTour("description", rawDescription);
+  const description = toMetaDescription(localizeTour("description", rawDescription));
 
   return {
     title,
