@@ -54,7 +54,7 @@ export default async function AboutPage() {
             <h1 className="text-5xl font-bold leading-[1.02] tracking-[-0.035em] md:text-7xl lg:text-[5.25rem]">
               <HomeText en="More Than A Trip" de="Mehr als nur eine Reise" />
               <span className="block bg-gradient-to-r from-orange-300 via-orange-400 to-amber-300 bg-clip-text text-transparent">
-                <HomeText en="It&apos;s The Experience" de="Es ist das Erlebnis" />
+                <HomeText en="It&apos;s The Experience" de="Es ist das Erlebnis" ru="Всё дело во впечатлениях" />
               </span>
             </h1>
 
