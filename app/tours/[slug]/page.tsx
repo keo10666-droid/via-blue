@@ -92,9 +92,7 @@ export async function generateMetadata({
       "Via Blue",
     ],
 
-    alternates: {
-      canonical: alternates.canonical,
-    },
+    alternates,
 
     openGraph: {
       title: `${title} | Via Blue`,
