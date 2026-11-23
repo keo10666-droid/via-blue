@@ -30,7 +30,15 @@ export async function generateMetadata(): Promise<Metadata> {
   const requestHeaders = await headers();
   const seoLocale = requestHeaders.get("x-via-blue-locale") ?? "en";
   const localizedSeo = await getLocalizedSeo("/");
-  const keywords = settings.seo_keywords.split(",").map((keyword) => keyword.trim()).filter(Boolean);
+  const keywords = seoLocale === "de"
+    ? ["Hurghada Ausflüge", "Rotes Meer Bootstouren", "Schnorcheln Hurghada", "Wüstensafari Ägypten", "private Transfers Hurghada"]
+    : seoLocale === "fr"
+      ? ["excursions Hurghada", "sorties en bateau mer Rouge", "snorkeling Hurghada", "safari désert Égypte", "transferts privés Hurghada"]
+      : seoLocale === "ro"
+        ? ["excursii Hurghada", "plimbări cu barca Marea Roșie", "snorkeling Hurghada", "safari în deșert Egipt", "transferuri private Hurghada"]
+        : seoLocale === "ru"
+          ? ["экскурсии Хургада", "морские прогулки Красное море", "снорклинг Хургада", "сафари Египет", "частные трансферы Хургада"]
+          : settings.seo_keywords.split(",").map((keyword) => keyword.trim()).filter(Boolean);
 
   return {
     metadataBase: new URL("https://viabluetours.com"),
