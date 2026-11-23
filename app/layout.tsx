@@ -70,7 +70,6 @@ export default async function RootLayout({
   const requestHeaders = await headers();
   const requestedLocale = requestHeaders.get("x-via-blue-locale");
   const locale: SiteLocale = requestedLocale === "de" || requestedLocale === "fr" || requestedLocale === "ro" || requestedLocale === "ru" ? requestedLocale : "en";
-  const originalPath = requestHeaders.get("x-via-blue-original-path") || "/";
 
   return (
     <html
