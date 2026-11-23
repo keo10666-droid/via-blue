@@ -43,6 +43,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...localizedEntries("/luxury-tours", "weekly", 0.7),
     ...localizedEntries("/ai-trip-planner", "monthly", 0.7),
     ...localizedEntries("/sim-card", "monthly", 0.5),
+    ...localizedEntries("/things-to-do-in-hurghada", "monthly", 0.85),
   ];
 
   const tourPages: MetadataRoute.Sitemap = tourList
