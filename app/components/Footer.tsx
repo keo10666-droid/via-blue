@@ -343,6 +343,8 @@ export default function Footer() {
               <img
                 src="/logo/logo.svg"
                 alt="Via Blue"
+                width={48}
+                height={48}
                 className="h-12 w-auto"
               />
             </Link>
