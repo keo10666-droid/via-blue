@@ -372,6 +372,18 @@ export const tours = {
   available: true,
 
   type: "Full Day Boat Trip",
+
+  seo: {
+    title: "Orange Bay Island Trip from Hurghada | Via Blue",
+    description: "Enjoy a full-day Orange Bay boat trip from Hurghada with Red Sea snorkeling, 2–3 hours on the island, buffet lunch, boat drinks and hotel transfers.",
+    keywords: [
+          "Orange Bay Hurghada",
+          "Orange Bay boat trip",
+          "Hurghada island excursions",
+          "Orange Bay snorkeling",
+          "Red Sea boat trips"
+    ],
+  },
 }),
 
   "mahmya-island": baseTour("mahmya-island", {
@@ -1619,6 +1631,18 @@ export const tours = {
 
   type: "Dolphin & Snorkeling Trip",
 
+  seo: {
+    title: "Dolphin House Snorkeling Trip from Hurghada | Via Blue",
+    description: "Take a full-day boat trip from Hurghada to the Dolphin House area for swimming and snorkeling, with buffet lunch, free drinks and hotel transfers. Dolphin sightings are not guaranteed.",
+    keywords: [
+          "Dolphin House Hurghada",
+          "Dolphin House snorkeling trip",
+          "Hurghada dolphin boat trip",
+          "Red Sea snorkeling",
+          "Hurghada boat excursions"
+    ],
+  },
+
 }),
 
   diving: baseTour("diving", {
@@ -2859,6 +2883,18 @@ export const tours = {
 
   type: "Morning Desert Safari",
 
+  seo: {
+    title: "Morning Desert Safari in Hurghada | Via Blue",
+    description: "Start a Hurghada morning desert safari with quad biking, a Spider Buggy option, a Bedouin village visit, camel riding and traditional tea.",
+    keywords: [
+          "Morning desert safari Hurghada",
+          "Hurghada morning safari",
+          "quad bike Hurghada",
+          "Bedouin village Hurghada",
+          "desert safari Egypt"
+    ],
+  },
+
 }),
 
   "quad-bike": baseTour("quad-bike", {
@@ -2941,6 +2977,18 @@ export const tours = {
   available: true,
 
   type: "Quad Bike Safari",
+
+  seo: {
+    title: "Quad Bike Safari in Hurghada Desert | Via Blue",
+    description: "Ride 20–25 km through desert trails and hills near Hurghada with a safety briefing, test drive, guided quad route and a mountain photo stop.",
+    keywords: [
+          "Quad bike Hurghada",
+          "Hurghada quad safari",
+          "quad biking in Hurghada desert",
+          "desert adventure Egypt",
+          "Hurghada safari"
+    ],
+  },
 
 }),
 
@@ -3046,6 +3094,18 @@ export const tours = {
 
   type: "Desert Safari",
 
+  seo: {
+    title: "Super Safari in Hurghada | Quad, Buggy & Jeep 4x4 | Via Blue",
+    description: "Explore the Hurghada desert by quad bike, Spider Buggy and Jeep 4x4, visit a Bedouin village, ride a camel and enjoy dinner and an evening show.",
+    keywords: [
+          "Super Safari Hurghada",
+          "Hurghada desert safari",
+          "quad bike and buggy Hurghada",
+          "Jeep 4x4 safari Egypt",
+          "Bedouin village safari"
+    ],
+  },
+
 }),
 
   "horse-riding": baseTour("horse-riding", {
@@ -3136,6 +3196,18 @@ export const tours = {
   available: true,
 
   type: "Horse Riding",
+
+  seo: {
+    title: "Horse Riding in Hurghada | Desert & Red Sea Beach | Via Blue",
+    description: "Ride through desert and mountain scenery near Hurghada, then along the Red Sea beach on a guided horse-riding experience with hotel transfers.",
+    keywords: [
+          "Horse riding Hurghada",
+          "Hurghada horse riding tour",
+          "horse riding on the beach Hurghada",
+          "desert horse riding Egypt",
+          "Red Sea horse riding"
+    ],
+  },
 
 }),
 
@@ -3487,6 +3559,18 @@ infantPrice: 20,
 badge: "Excursion",
 available: true,
 type: "Cairo Overday Tour",
+
+  seo: {
+    title: "Cairo Day Trip from Hurghada | Pyramids & Sphinx | Via Blue",
+    description: "Visit the Giza Pyramids, Great Sphinx and an Egyptian museum on a full-day Cairo trip from Hurghada, with round-trip transport and lunch.",
+    keywords: [
+          "Cairo day trip from Hurghada",
+          "Hurghada to Cairo tour",
+          "Giza Pyramids excursion",
+          "Cairo excursions from Hurghada",
+          "Great Sphinx tour"
+    ],
+  },
 
 cairoOptions: {
   oldMuseum: {
