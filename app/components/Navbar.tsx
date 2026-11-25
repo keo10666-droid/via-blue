@@ -670,7 +670,7 @@ export default function Navbar() {
     {!pathname.startsWith("/admin") && (
       <nav
         aria-label={language === "de" ? "Mobile Schnellnavigation" : language === "fr" ? "Navigation rapide mobile" : language === "ro" ? "Navigare rapidă pe mobil" : language === "ru" ? "Быстрая навигация" : "Mobile quick navigation"}
-        className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 border-t border-slate-200/80 bg-white/95 px-1 pb-[max(env(safe-area-inset-bottom),0.35rem)] pt-2 shadow-[0_-8px_30px_rgba(3,17,42,0.10)] backdrop-blur-2xl lg:hidden"
+        className="fixed inset-x-3 bottom-2 z-40 grid grid-cols-5 overflow-hidden rounded-2xl border border-white/15 bg-gradient-to-b from-[#102b50] to-[#06172f] px-1 pb-[max(env(safe-area-inset-bottom),0.45rem)] pt-2 shadow-[0_12px_38px_rgba(3,17,42,0.32)] ring-1 ring-black/5 backdrop-blur-2xl lg:hidden"
       >
         {[
           { href: "/", label: language === "ro" ? "Acasă" : language === "fr" ? "Accueil" : language === "de" ? "Startseite" : language === "ru" ? "Главная" : "Home", Icon: Home },
@@ -686,10 +686,10 @@ export default function Navbar() {
               href={href === "/account" || href === "/login" ? href : localizedHref(href)}
               prefetch={true}
               aria-current={active ? "page" : undefined}
-              className={`flex min-h-12 flex-col items-center justify-center gap-1 rounded-xl px-1 text-[10px] font-bold transition-colors ${active ? "text-orange-700" : "text-slate-600 hover:text-blue-950"}`}
+              className={`relative flex min-h-[3.35rem] flex-col items-center justify-center gap-1 rounded-xl px-1 text-[9px] font-semibold tracking-[0.01em] transition-all duration-200 ${active ? "bg-white/[0.10] text-[#f4c77a]" : "text-slate-300/80 hover:bg-white/[0.06] hover:text-white"}`}
             >
-              <Icon size={19} strokeWidth={active ? 2.5 : 2} />
-              <span>{label}</span>
+              <span className={`flex h-7 w-9 items-center justify-center rounded-xl transition-all duration-200 ${active ? "bg-gradient-to-br from-[#f5d69a] to-[#c58a3d] text-[#10213b] shadow-[0_3px_12px_rgba(224,174,99,0.22)]" : "text-slate-300/90"}`}><Icon size={18} strokeWidth={active ? 2.4 : 1.8} /></span>
+              <span className="leading-none">{label}</span>
             </Link>
           );
         })}
