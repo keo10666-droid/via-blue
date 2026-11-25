@@ -32,7 +32,7 @@ export async function generateMetadata({
       title: "Transfer Not Found",
       description: "The requested transfer could not be found.",
       robots: { index: false, follow: false },
-      metadataBase: new URL("https://viabluetours.com"),
+      metadataBase: new URL("https://www.viabluetours.com"),
     };
   }
 
@@ -225,7 +225,13 @@ export default async function TransferPage({ params }: Props) {
           </div>
 
           <h1 className="mt-5 text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
-            <HomeText en={transfer.to} de={germanTransferLocation(transfer.to)} fr={frenchTransferLocation(transfer.to)} ro={romanianTransferLocation(transfer.to)} ru={to} />
+            <HomeText
+              en={`${transfer.from} to ${transfer.to} Private Transfer`}
+              de={`Privater Flughafentransfer von ${germanTransferLocation(transfer.from)} nach ${germanTransferLocation(transfer.to)}`}
+              fr={`Transfert privé depuis ${frenchTransferLocation(transfer.from)} vers ${frenchTransferLocation(transfer.to)}`}
+              ro={`Transfer privat de la Aeroportul ${romanianTransferLocation(transfer.from)} la ${romanianTransferLocation(transfer.to)}`}
+              ru={`Индивидуальный трансфер из ${from} в ${to}`}
+            />
           </h1>
 
           <p className="mt-5 max-w-2xl text-lg leading-8 text-blue-100">
