@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { Crown, Home, Compass, CarFront, MessageCircle, UserRound, Moon, Sun, ChevronDown, Check } from "lucide-react";
+import { Crown, Home, Compass, CarFront, UserRound, Moon, Sun, ChevronDown, Check } from "lucide-react";
 import { useCurrency, type CurrencyCode } from "@/app/components/CurrencyProvider";
 import { useSiteLocale } from "./LocaleProvider";
 
@@ -36,7 +36,7 @@ export default function Navbar() {
     setLocale(nextLanguage);
     setLanguage(nextLanguage);
     setLanguageMenuOpen(false);
-    const cleanPath = pathname.replace(/^\/(de|fr|ro|ru)(?=\/|$)/, "") || "/";
+    const cleanPath = pathname.replace(/^\\/(de|fr|ro|ru)(?=\\/|$)/, "") || "/";
     const nextPath = nextLanguage === "en" ? cleanPath : `/${nextLanguage}${cleanPath === "/" ? "" : cleanPath}`;
     router.push(nextPath);
   }
@@ -224,8 +224,8 @@ export default function Navbar() {
   ];
 
   function isActive(href: string) {
-    const cleanPath = pathname.replace(/^\/(de|fr|ro|ru)(?=\/|$)/, "") || "/";
-    const cleanHref = href.replace(/^\/(de|fr|ro|ru)(?=\/|$)/, "") || "/";
+    const cleanPath = pathname.replace(/^\\/(de|fr|ro|ru)(?=\\/|$)/, "") || "/";
+    const cleanHref = href.replace(/^\\/(de|fr|ro|ru)(?=\\/|$)/, "") || "/";
     return cleanPath === cleanHref || cleanPath.startsWith(`${cleanHref}/`);
   }
 
@@ -269,6 +269,7 @@ export default function Navbar() {
                     Tours
                   </p>
                 </div>
+
               </div>
 
             </div>
@@ -682,7 +683,7 @@ export default function Navbar() {
           { href: "/", label: language === "ro" ? "Acasă" : language === "fr" ? "Accueil" : language === "de" ? "Startseite" : language === "ru" ? "Главная" : "Home", Icon: Home },
           { href: "/tours", label: language === "ro" ? "Excursii" : language === "fr" ? "Excursions" : language === "de" ? "Ausflüge" : language === "ru" ? "Экскурсии" : "Tours", Icon: Compass },
           { href: "/transfers", label: language === "ro" ? "Transferuri" : language === "fr" ? "Transferts" : language === "de" ? "Transfer" : language === "ru" ? "Трансфер" : "Transfer", Icon: CarFront },
-          { href: "/contact", label: language === "ro" ? "Contact" : language === "fr" ? "Contact" : language === "de" ? "Kontakt" : language === "ru" ? "Контакты" : "Contact", Icon: MessageCircle },
+          { href: "/luxury-tours", label: labels["Luxury Tours"], Icon: Crown },
           { href: userName ? "/account" : "/login", label: userName ? (language === "ro" ? "Cont" : language === "fr" ? "Compte" : language === "de" ? "Konto" : language === "ru" ? "Аккаунт" : "Account") : (language === "ro" ? "Autentificare" : language === "fr" ? "Connexion" : language === "ru" ? "Войти" : "Login"), Icon: UserRound },
         ].map(({ href, label, Icon }) => {
           const active = href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
