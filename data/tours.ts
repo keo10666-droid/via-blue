@@ -308,6 +308,12 @@ export const tours = {
   description:
     "Enjoy an unforgettable day at Orange Bay Island with snorkeling, relaxing island time, an open-buffet lunch on the boat and free drinks throughout the day.",
 
+  seo: {
+    title: "Orange Bay Island Trip in Hurghada | Via Blue",
+    description: "Book an Orange Bay Island trip from Hurghada with Red Sea snorkeling, island time, buffet lunch and boat drinks with Via Blue.",
+    keywords: ["Orange Bay Island trip","Orange Bay Hurghada","Orange Bay boat trip","Hurghada island excursions","Hurghada snorkeling trips"],
+  },
+
   overview:
     "Orange Bay is a full-day boat excursion from Hurghada combining Red Sea snorkeling, relaxing on the island for 2–3 hours, lunch on board and complimentary drinks throughout the boat trip.",
 
@@ -1552,6 +1558,12 @@ export const tours = {
 
   description:
     "Enjoy a full-day Red Sea adventure at Dolphin House, with snorkeling and swimming near dolphins, an open-buffet lunch and free drinks throughout the boat trip.",
+
+  seo: {
+    title: "Dolphin House Snorkeling Trip Hurghada | Via Blue",
+    description: "Join a Dolphin House boat trip from Hurghada for snorkeling, swimming near dolphins, buffet lunch and drinks on board with Via Blue.",
+    keywords: ["Dolphin House Hurghada","Dolphin House snorkeling trip","Hurghada dolphin boat trip","Hurghada snorkeling excursions"],
+  },
 
   overview:
     "Dolphin House is a full-day Red Sea boat excursion from Hurghada heading north toward the Dolphin House area beyond El Gouna. Enjoy swimming and snorkeling in the area, followed by an open-buffet lunch and complimentary drinks on board.",
@@ -2955,6 +2967,12 @@ export const tours = {
   description:
     "Enjoy a complete desert safari combining Jeep 4x4 adventure, quad biking, Spider Buggy, Bedouin culture, camel riding, sunset views, dinner and evening entertainment.",
 
+  seo: {
+    title: "Super Safari in Hurghada | Jeep, Quad & Buggy | Via Blue",
+    description: "Book a Hurghada Super Safari with 4x4 jeep, quad biking, Spider Buggy, camel ride, Bedouin culture, dinner and evening entertainment.",
+    keywords: ["Super Safari Hurghada","Hurghada jeep safari","Hurghada quad and buggy safari","Hurghada desert safari","Egypt desert excursions"],
+  },
+
   overview:
     "Experience a full desert adventure from Hurghada combining exciting quad biking and Spider Buggy rides with a Jeep 4x4 journey into the desert, a visit to a traditional Bedouin village, camel riding, sunset views, an open buffet dinner and an oriental evening show with a Fire Show.",
 
@@ -3058,6 +3076,12 @@ export const tours = {
 
   description:
     "Enjoy a memorable horse riding adventure through the Egyptian desert, mountains and Red Sea beach with professional supervision.",
+
+  seo: {
+    title: "Horse Riding in Hurghada | Desert & Beach Ride | Via Blue",
+    description: "Enjoy guided horse riding in Hurghada through desert and mountain scenery, with a Red Sea beach ride and optional swimming by programme.",
+    keywords: ["Horse riding Hurghada","Hurghada horse riding tour","Horse riding on the beach Hurghada","Hurghada desert horse riding"],
+  },
 
   overview:
     "Experience Hurghada on horseback with a guided ride through the desert and mountain scenery, followed by a beach experience and optional horseback swimming depending on the selected program.",
@@ -3329,6 +3353,12 @@ export const tours = {
   description:
     "Discover the culture, history and local life of Hurghada on a guided city tour covering the Grand El Mina Mosque, Coptic Church, marina, fish market and traditional bazaars.",
 
+  seo: {
+    title: "Hurghada City Tour | Mosque, Marina & Old Town | Via Blue",
+    description: "Explore Hurghada on a guided city tour with El Mina Mosque, Coptic Church, marina, fish market and traditional El Dahar markets.",
+    keywords: ["Hurghada city tour","Hurghada sightseeing tour","Hurghada mosque tour","El Dahar market tour","Hurghada local city excursion"],
+  },
+
   overview:
     "Explore Hurghada's most important cultural and local attractions, from the Grand El Mina Mosque and St. Shenouda Church to the marina, fish market, shopping center and traditional El Dahar markets.",
 
@@ -3414,6 +3444,12 @@ export const tours = {
 
   description:
     "Discover the legendary pyramids, Sphinx and fascinating history of Cairo on a full-day trip from Hurghada.",
+
+  seo: {
+    title: "Cairo Day Trip from Hurghada | Pyramids & Sphinx | Via Blue",
+    description: "Discover Cairo from Hurghada with the Giza Pyramids, Great Sphinx, Valley Temple, museum visit and lunch on a full-day excursion.",
+    keywords: ["Cairo day trip from Hurghada","Hurghada to Cairo tour","Giza Pyramids excursion Hurghada","Cairo sightseeing from Hurghada"],
+  },
 
   overview:
     "Travel from Hurghada to Cairo in a private car or modern air-conditioned tourist bus and explore the Giza Pyramids, Sphinx, Valley Temple and a major Egyptian museum, followed by lunch and optional shopping.",
