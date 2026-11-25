@@ -385,7 +385,6 @@ export default function Navbar() {
             aria-expanded={languageMenuOpen}
             className={`group inline-flex h-10 items-center gap-2 rounded-full border px-3 text-[11px] font-bold transition-all duration-200 ${languageMenuOpen ? "border-blue-950 bg-blue-950 text-white shadow-lg shadow-blue-950/15" : "border-slate-200/90 bg-white/90 text-slate-700 hover:border-blue-200 hover:bg-blue-50/70"}`}
           >
-            <span className="text-base leading-none" aria-hidden="true">{languageOptions.find((option) => option.value === language)?.flag}</span>
             <span>{language.toUpperCase()}</span>
             <ChevronDown size={13} className={`transition-transform duration-200 ${languageMenuOpen ? "rotate-180" : ""}`} />
           </button>
@@ -405,8 +404,7 @@ export default function Navbar() {
                     onClick={() => changeLanguage(option.value)}
                     className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-all duration-200 ${language === option.value ? "bg-blue-50 text-blue-950" : "text-slate-600 hover:bg-slate-50 hover:text-blue-950"}`}
                   >
-                    <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 text-lg leading-none" aria-hidden="true">{option.flag}</span>
-                    <span className="flex-1 text-sm font-semibold">{option.label}</span>
+                    <span className="flex-1 text-sm font-bold">{option.value.toUpperCase()}</span>
                     {language === option.value && <Check size={16} className="text-orange-500" />}
                   </button>
                 ))}
@@ -474,6 +472,36 @@ export default function Navbar() {
           {theme === "dark" ? <Sun size={19} /> : <Moon size={19} />}
         </button>
 
+        <div className="relative mr-2 lg:hidden" onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setLanguageMenuOpen(false); }}>
+          <button
+            type="button"
+            onClick={() => setLanguageMenuOpen((open) => !open)}
+            aria-label="Choose language"
+            aria-haspopup="menu"
+            aria-expanded={languageMenuOpen}
+            className={`flex h-11 min-w-11 items-center justify-center rounded-xl border px-2.5 text-xs font-black transition-all ${languageMenuOpen ? "border-blue-950 bg-blue-950 text-white" : "border-slate-200 bg-white text-blue-950 hover:border-orange-300"}`}
+          >
+            {language.toUpperCase()}
+            <ChevronDown size={13} className={`ml-1 transition-transform duration-200 ${languageMenuOpen ? "rotate-180" : ""}`} />
+          </button>
+          {languageMenuOpen && (
+            <div role="menu" aria-label="Choose language" className="absolute right-0 top-full z-[100] mt-2 w-20 overflow-hidden rounded-xl border border-slate-200 bg-white p-1.5 shadow-[0_18px_45px_rgba(3,17,42,0.16)]">
+              {languageOptions.map((option) => (
+                <button
+                  key={option.value}
+                  type="button"
+                  role="menuitem"
+                  onClick={() => changeLanguage(option.value)}
+                  className={`flex w-full items-center justify-center rounded-lg px-3 py-2.5 text-xs font-black transition-all ${language === option.value ? "bg-blue-50 text-blue-950" : "text-slate-600 hover:bg-slate-50 hover:text-blue-950"}`}
+                >
+                  {option.value.toUpperCase()}
+                  {language === option.value && <Check size={14} className="ml-1 text-orange-500" />}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
         {/* Mobile Button */}
         <button
           type="button"
@@ -527,39 +555,6 @@ export default function Navbar() {
               {theme === "dark" ? <Sun size={17} /> : <Moon size={17} />}
               {theme === "dark" ? labels["Light mode"] : labels["Dark mode"]}
             </button>
-
-            <div className="relative mb-2 self-start" onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setLanguageMenuOpen(false); }}>
-              <button
-                type="button"
-                onClick={() => setLanguageMenuOpen((open) => !open)}
-                aria-label="Choose language"
-                aria-haspopup="menu"
-                aria-expanded={languageMenuOpen}
-                className={`flex items-center gap-3 rounded-2xl border px-4 py-3 text-sm font-bold transition-all ${languageMenuOpen ? "border-blue-950 bg-blue-950 text-white" : "border-slate-200 bg-white text-blue-950 hover:border-blue-200"}`}
-              >
-                <span className="text-lg leading-none" aria-hidden="true">{languageOptions.find((option) => option.value === language)?.flag}</span>
-                <span>{languageOptions.find((option) => option.value === language)?.label}</span>
-                <ChevronDown size={15} className={`transition-transform duration-200 ${languageMenuOpen ? "rotate-180" : ""}`} />
-              </button>
-              {languageMenuOpen && (
-                <div role="menu" aria-label="Choose language" className="absolute left-0 top-full z-[100] mt-2 w-56 overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-2 shadow-[0_18px_45px_rgba(3,17,42,0.16)]">
-                  <p className="px-3 pb-2 pt-1 text-[9px] font-black uppercase tracking-[0.2em] text-slate-400">{language === "ro" ? "Selectează limba" : language === "fr" ? "Choisir la langue" : "Select language"}</p>
-                  {languageOptions.map((option) => (
-                    <button
-                      key={option.value}
-                      type="button"
-                      role="menuitem"
-                      onClick={() => changeLanguage(option.value)}
-                      className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-all ${language === option.value ? "bg-blue-50 text-blue-950" : "text-slate-600 hover:bg-slate-50 hover:text-blue-950"}`}
-                    >
-                      <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 text-lg leading-none" aria-hidden="true">{option.flag}</span>
-                      <span className="flex-1 text-sm font-semibold">{option.label}</span>
-                      {language === option.value && <Check size={16} className="text-orange-500" />}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
 
             {navItems.filter((item) => ![
               localizedHref("/"),
