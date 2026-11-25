@@ -549,16 +549,6 @@ export default function Navbar() {
                 );
               })}
             </div>
-            <button
-              type="button"
-              onClick={toggleTheme}
-              aria-pressed={theme === "dark"}
-              className="mb-2 flex w-full items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-extrabold text-blue-950 transition hover:border-orange-300 hover:bg-orange-50"
-            >
-              {theme === "dark" ? <Sun size={17} /> : <Moon size={17} />}
-              {theme === "dark" ? labels["Light mode"] : labels["Dark mode"]}
-            </button>
-
             {navItems.filter((item) => ![
               localizedHref("/"),
               localizedHref("/tours"),
