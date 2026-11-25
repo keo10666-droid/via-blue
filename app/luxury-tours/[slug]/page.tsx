@@ -1400,7 +1400,7 @@ export default async function LuxuryTourPage({
     : tour.price;
   const localizedTourName = seo.locale === "en" ? tour.name : luxurySeoNames[seo.locale]?.[slug as LuxuryTourSlug] ?? tour.name;
   const localizedTourDescription = seo.locale === "en" ? tour.description : luxurySeoDescriptions[seo.locale]?.[slug as LuxuryTourSlug] ?? tour.description;
-  const localizedTourUrl = `https://viabluetours.com${localizedHref(`/luxury-tours/${slug}`)}`;
+  const localizedTourUrl = `https://www.viabluetours.com${localizedHref(`/luxury-tours/${slug}`)}`;
   const tourSchema = {
     "@context": "https://schema.org",
     "@type": "TouristTrip",
@@ -1408,7 +1408,7 @@ export default async function LuxuryTourPage({
     description: localizedTourDescription,
     url: localizedTourUrl,
     touristType: "Tourists",
-    provider: { "@type": "Organization", name: "Via Blue", url: "https://viabluetours.com" },
+    provider: { "@type": "Organization", name: "Via Blue", url: "https://www.viabluetours.com" },
     offers: {
       "@type": "Offer",
       url: localizedTourUrl,
