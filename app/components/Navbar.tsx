@@ -385,6 +385,7 @@ export default function Navbar() {
             aria-expanded={languageMenuOpen}
             className={`group inline-flex h-10 items-center gap-2 rounded-full border px-3 text-[11px] font-bold transition-all duration-200 ${languageMenuOpen ? "border-blue-950 bg-blue-950 text-white shadow-lg shadow-blue-950/15" : "border-slate-200/90 bg-white/90 text-slate-700 hover:border-blue-200 hover:bg-blue-50/70"}`}
           >
+            <span className="text-base leading-none" aria-hidden="true">{languageOptions.find((option) => option.value === language)?.flag}</span>
             <span>{language.toUpperCase()}</span>
             <ChevronDown size={13} className={`transition-transform duration-200 ${languageMenuOpen ? "rotate-180" : ""}`} />
           </button>
@@ -404,6 +405,7 @@ export default function Navbar() {
                     onClick={() => changeLanguage(option.value)}
                     className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-all duration-200 ${language === option.value ? "bg-blue-50 text-blue-950" : "text-slate-600 hover:bg-slate-50 hover:text-blue-950"}`}
                   >
+                    <span className="text-lg leading-none" aria-hidden="true">{option.flag}</span>
                     <span className="flex-1 text-sm font-bold">{option.value.toUpperCase()}</span>
                     {language === option.value && <Check size={16} className="text-orange-500" />}
                   </button>
@@ -462,47 +464,63 @@ export default function Navbar() {
 
         </div>
 
-        <button
-          type="button"
-          onClick={toggleTheme}
-          aria-label={theme === "dark" ? labels["Light mode"] : labels["Dark mode"]}
-          aria-pressed={theme === "dark"}
-          className="mr-2 flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-slate-200 bg-white text-blue-950 shadow-sm transition hover:border-orange-200 hover:bg-orange-50 lg:hidden"
-        >
-          {theme === "dark" ? <Sun size={19} /> : <Moon size={19} />}
-        </button>
-
-        <div className="relative mr-2 lg:hidden" onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setLanguageMenuOpen(false); }}>
+        <div className="ml-auto flex shrink-0 items-center gap-2 lg:hidden">
+          <div className="relative" onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setLanguageMenuOpen(false); }}>
+            <button
+              type="button"
+              onClick={() => setLanguageMenuOpen((open) => !open)}
+              aria-label="Choose language"
+              aria-haspopup="menu"
+              aria-expanded={languageMenuOpen}
+              className={`flex h-10 items-center justify-center gap-1.5 rounded-xl border px-2.5 text-xs font-black transition-all ${languageMenuOpen ? "border-blue-950 bg-blue-950 text-white" : "border-slate-200 bg-white text-blue-950 hover:border-orange-300"}`}
+            >
+              <span className="text-base leading-none" aria-hidden="true">{languageOptions.find((option) => option.value === language)?.flag}</span>
+              {language.toUpperCase()}
+              <ChevronDown size={12} className={`transition-transform duration-200 ${languageMenuOpen ? "rotate-180" : ""}`} />
+            </button>
+            {languageMenuOpen && (
+              <div role="menu" aria-label="Choose language" className="absolute right-0 top-full z-[100] mt-2 w-28 overflow-hidden rounded-xl border border-slate-200 bg-white p-1.5 shadow-[0_18px_45px_rgba(3,17,42,0.16)]">
+                {languageOptions.map((option) => (
+                  <button
+                    key={option.value}
+                    type="button"
+                    role="menuitem"
+                    onClick={() => changeLanguage(option.value)}
+                    className={`flex w-full items-center gap-2 rounded-lg px-2.5 py-2.5 text-xs font-black transition-all ${language === option.value ? "bg-blue-50 text-blue-950" : "text-slate-600 hover:bg-slate-50 hover:text-blue-950"}`}
+                  >
+                    <span className="text-base leading-none" aria-hidden="true">{option.flag}</span>
+                    <span className="flex-1 text-left">{option.value.toUpperCase()}</span>
+                    {language === option.value && <Check size={14} className="text-orange-500" />}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
           <button
             type="button"
-            onClick={() => setLanguageMenuOpen((open) => !open)}
-            aria-label="Choose language"
-            aria-haspopup="menu"
-            aria-expanded={languageMenuOpen}
-            className={`flex h-11 min-w-11 items-center justify-center rounded-xl border px-2.5 text-xs font-black transition-all ${languageMenuOpen ? "border-blue-950 bg-blue-950 text-white" : "border-slate-200 bg-white text-blue-950 hover:border-orange-300"}`}
+            onClick={toggleTheme}
+            aria-label={theme === "dark" ? labels["Light mode"] : labels["Dark mode"]}
+            aria-pressed={theme === "dark"}
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white text-blue-950 shadow-sm transition hover:border-orange-200 hover:bg-orange-50"
           >
-            {language.toUpperCase()}
-            <ChevronDown size={13} className={`ml-1 transition-transform duration-200 ${languageMenuOpen ? "rotate-180" : ""}`} />
+            {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
           </button>
-          {languageMenuOpen && (
-            <div role="menu" aria-label="Choose language" className="absolute right-0 top-full z-[100] mt-2 w-20 overflow-hidden rounded-xl border border-slate-200 bg-white p-1.5 shadow-[0_18px_45px_rgba(3,17,42,0.16)]">
-              {languageOptions.map((option) => (
-                <button
-                  key={option.value}
-                  type="button"
-                  role="menuitem"
-                  onClick={() => changeLanguage(option.value)}
-                  className={`flex w-full items-center justify-center rounded-lg px-3 py-2.5 text-xs font-black transition-all ${language === option.value ? "bg-blue-50 text-blue-950" : "text-slate-600 hover:bg-slate-50 hover:text-blue-950"}`}
-                >
-                  {option.value.toUpperCase()}
-                  {language === option.value && <Check size={14} className="ml-1 text-orange-500" />}
-                </button>
-              ))}
-            </div>
-          )}
+          <button
+            type="button"
+            onClick={() => setIsOpen((value) => !value)}
+            className={`flex h-10 w-10 items-center justify-center rounded-xl border text-lg font-bold shadow-sm transition-all duration-300 ${
+              isOpen
+                ? "border-blue-950 bg-blue-950 text-white shadow-blue-950/20"
+                : "border-slate-200 bg-white text-blue-950 hover:border-orange-200 hover:bg-orange-50"
+            }`}
+            aria-label={labels["Toggle menu"]}
+            aria-expanded={isOpen}
+          >
+            {isOpen ? "✕" : "☰"}
+          </button>
         </div>
 
-        {/* Mobile Button */}
+                {/* Mobile Button */}
         <button
           type="button"
           onClick={() => setIsOpen((value) => !value)}
