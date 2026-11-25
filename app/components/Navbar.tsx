@@ -250,6 +250,8 @@ export default function Navbar() {
             <img
               src="/logo/logo.svg"
               alt="Via Blue"
+              width={58}
+              height={58}
               className="relative h-[46px] w-auto object-contain transition-all duration-500 group-hover:scale-[1.035] sm:h-[58px]"
             />
 
