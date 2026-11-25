@@ -876,7 +876,7 @@ export default async function TourDetailsPage({
 
   const tourImage = tour.image.startsWith("http")
     ? tour.image
-    : `https://viabluetours.com${tour.image}`;
+    : `https://www.viabluetours.com${tour.image}`;
 
   const localizedTourName = seo.locale === "de" ? germanTourCopy(tour.slug, "name", tour.name) : seo.locale === "fr" ? frenchTourCopy(tour.slug, "name", tour.name) : seo.locale === "ro" ? romanianTourCopy(tour.slug, "name", tour.name) : seo.locale === "ru" ? russianTourCopy(tour.slug, "name", tour.name) : tour.name;
   const localizedTourDescription = seo.locale === "de" ? germanTourCopy(tour.slug, "description", tour.description) : seo.locale === "fr" ? frenchTourCopy(tour.slug, "description", tour.description) : seo.locale === "ro" ? romanianTourCopy(tour.slug, "description", tour.description) : seo.locale === "ru" ? russianTourCopy(tour.slug, "description", tour.description) : tour.description;
@@ -891,12 +891,12 @@ export default async function TourDetailsPage({
 
     image: [tourImage],
 
-    url: `https://viabluetours.com${localizedHref(`/tours/${slug}`)}`,
+    url: `https://www.viabluetours.com${localizedHref(`/tours/${slug}`)}`,
 
     provider: {
       "@type": "Organization",
       name: "Via Blue",
-      url: "https://viabluetours.com",
+      url: "https://www.viabluetours.com",
     },
 
     touristType: "Tourists",
@@ -905,7 +905,7 @@ export default async function TourDetailsPage({
       ? {
           offers: {
             "@type": "Offer",
-            url: `https://viabluetours.com${localizedHref(`/tours/${slug}`)}`,
+            url: `https://www.viabluetours.com${localizedHref(`/tours/${slug}`)}`,
             priceCurrency: "EUR",
             price: tour.price,
             availability: tour.available
