@@ -36,7 +36,7 @@ export default function Navbar() {
     setLocale(nextLanguage);
     setLanguage(nextLanguage);
     setLanguageMenuOpen(false);
-    const cleanPath = pathname.replace(/^\\/(de|fr|ro|ru)(?=\\/|$)/, "") || "/";
+    const cleanPath = pathname.replace(/^\/(de|fr|ro|ru)(?=\/|$)/, "") || "/";
     const nextPath = nextLanguage === "en" ? cleanPath : `/${nextLanguage}${cleanPath === "/" ? "" : cleanPath}`;
     router.push(nextPath);
   }
@@ -224,8 +224,8 @@ export default function Navbar() {
   ];
 
   function isActive(href: string) {
-    const cleanPath = pathname.replace(/^\\/(de|fr|ro|ru)(?=\\/|$)/, "") || "/";
-    const cleanHref = href.replace(/^\\/(de|fr|ro|ru)(?=\\/|$)/, "") || "/";
+    const cleanPath = pathname.replace(/^\/(de|fr|ro|ru)(?=\/|$)/, "") || "/";
+    const cleanHref = href.replace(/^\/(de|fr|ro|ru)(?=\/|$)/, "") || "/";
     return cleanPath === cleanHref || cleanPath.startsWith(`${cleanHref}/`);
   }
 
