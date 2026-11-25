@@ -520,21 +520,6 @@ export default function Navbar() {
           </button>
         </div>
 
-                {/* Mobile Button */}
-        <button
-          type="button"
-          onClick={() => setIsOpen((value) => !value)}
-          className={`flex h-11 w-11 items-center justify-center rounded-2xl border text-lg font-bold shadow-sm transition-all duration-300 lg:hidden ${
-            isOpen
-              ? "border-blue-950 bg-blue-950 text-white shadow-blue-950/20"
-              : "border-slate-200 bg-white text-blue-950 hover:border-orange-200 hover:bg-orange-50"
-          }`}
-          aria-label={labels["Toggle menu"]}
-          aria-expanded={isOpen}
-        >
-          {isOpen ? "✕" : "☰"}
-        </button>
-
       </div>
 
       {/* Mobile Navigation */}
