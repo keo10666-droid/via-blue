@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { Crown, Home, Compass, CarFront, MessageCircle, UserRound, Moon, Sun, ChevronDown, Check } from "lucide-react";
-import { supabase } from "@/lib/supabase";
 import { useCurrency, type CurrencyCode } from "@/app/components/CurrencyProvider";
 import { useSiteLocale } from "./LocaleProvider";
 
@@ -147,36 +146,41 @@ export default function Navbar() {
   }, [isOpen]);
 
   useEffect(() => {
-    async function loadUser() {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
+    const syncUserFromStorage = () => {
+      try {
+        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+        if (!supabaseUrl) {
+          setUserName(null);
+          return;
+        }
 
-      setUserName(
-        user?.user_metadata?.full_name ||
-          user?.email ||
-          null
-      );
-    }
+        const projectRef = new URL(supabaseUrl).hostname.split(".")[0];
+        const storedSession = window.localStorage.getItem(`sb-${projectRef}-auth-token`);
+        const session = storedSession ? JSON.parse(storedSession) : null;
+        const user = session?.user;
 
-    loadUser();
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
         setUserName(
-          session?.user.user_metadata?.full_name ||
-            session?.user.email ||
+          user?.user_metadata?.full_name ||
+            user?.email ||
             null
         );
+      } catch {
+        setUserName(null);
       }
-    );
+    };
 
-    return () => subscription.unsubscribe();
-  }, []);
+    syncUserFromStorage();
+    window.addEventListener("storage", syncUserFromStorage);
+    window.addEventListener("focus", syncUserFromStorage);
+
+    return () => {
+      window.removeEventListener("storage", syncUserFromStorage);
+      window.removeEventListener("focus", syncUserFromStorage);
+    };
+  }, [pathname]);
 
   async function handleLogout() {
+    const { supabase } = await import("@/lib/supabase");
     await supabase.auth.signOut();
 
     setUserName(null);
