@@ -684,6 +684,7 @@ export default function Navbar() {
             <Link
               key={href}
               href={href === "/account" || href === "/login" ? href : localizedHref(href)}
+              prefetch={true}
               aria-current={active ? "page" : undefined}
               className={`flex min-h-12 flex-col items-center justify-center gap-1 rounded-xl px-1 text-[10px] font-bold transition-colors ${active ? "text-orange-700" : "text-slate-600 hover:text-blue-950"}`}
             >
