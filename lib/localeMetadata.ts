@@ -35,11 +35,11 @@ const SEO_COPY: Record<string, Record<Locale, [string, string]>> = {
       "Lernen Sie Via Blue kennen – Ihr lokaler Anbieter für Ausflüge am Roten Meer, private Transfers und Reisebetreuung in Hurghada, Ägypten."
     ],
     "fr": [
-      "À propos de Via Blue | Excursions et transferts à Hurghada",
+      "Via Blue | Excursions à Hurghada",
       "Découvrez Via Blue, votre spécialiste local des excursions en mer Rouge, des transferts privés et des services touristiques à Hurghada, en Égypte."
     ],
     "ro": [
-      "Despre Via Blue | Turism și transferuri în Hurghada",
+      "Despre Via Blue | Excursii în Hurghada",
       "Descoperiți Via Blue, compania locală din Hurghada pentru excursii la Marea Roșie, transferuri private și servicii turistice în Egipt."
     ],
     "ru": [
@@ -53,19 +53,19 @@ const SEO_COPY: Record<string, Record<Locale, [string, string]>> = {
       "Contact Via Blue to plan Hurghada excursions, Red Sea experiences and private airport or hotel transfers in Egypt."
     ],
     "de": [
-      "Kontakt Via Blue | Ausflüge & Transfers in Hurghada",
+      "Kontakt Via Blue | Hurghada Ausflüge & Transfers",
       "Kontaktieren Sie Via Blue und planen Sie Ausflüge in Hurghada, Erlebnisse am Roten Meer sowie private Flughafen- und Hoteltransfers in Ägypten."
     ],
     "fr": [
-      "Contacter Via Blue | Excursions et transferts à Hurghada",
+      "Contact Via Blue | Excursions à Hurghada",
       "Contactez Via Blue pour organiser vos excursions à Hurghada, vos activités en mer Rouge et vos transferts privés depuis l'aéroport ou votre hôtel."
     ],
     "ro": [
-      "Contact Via Blue | Excursii și transferuri în Hurghada",
+      "Contact Via Blue | Excursii în Hurghada",
       "Contactați Via Blue pentru excursii în Hurghada, experiențe la Marea Roșie și transferuri private de la aeroport sau hotel în Egipt."
     ],
     "ru": [
-      "Связаться с Via Blue | Экскурсии и трансферы в Хургаде",
+      "Контакты Via Blue | Экскурсии в Хургаде",
       "Свяжитесь с Via Blue, чтобы спланировать экскурсии в Хургаде, отдых на Красном море и частные трансферы из аэропорта или отеля."
     ]
   },
@@ -143,11 +143,11 @@ const SEO_COPY: Record<string, Record<Locale, [string, string]>> = {
     "ru": ["AI-планировщик путешествия по Хургаде", "Составьте индивидуальный план отдыха в Хургаде: морские прогулки, острова, снорклинг, сафари по пустыне и экскурсии по Египту с учётом бюджета."]
   },
   "/things-to-do-in-hurghada": {
-    "en": ["Things to Do in Hurghada | Red Sea Activities Guide", "Explore things to do in Hurghada, from Red Sea island boat trips and snorkeling to desert safaris, horse riding and Egypt day trips with Via Blue."],
-    "de": ["Aktivitäten in Hurghada | Reiseführer am Roten Meer", "Entdecken Sie Aktivitäten in Hurghada: Insel- und Bootsausflüge, Schnorcheln, Wüstensafaris, Reiten und Tagesausflüge in Ägypten mit Via Blue."],
-    "fr": ["Que faire à Hurghada | Guide des activités en mer Rouge", "Découvrez les activités à Hurghada : îles et sorties en bateau, snorkeling, safaris dans le désert, équitation et excursions en Égypte avec Via Blue."],
+    "en": ["Things to Do in Hurghada | Local Guide", "Explore things to do in Hurghada, from Red Sea island boat trips and snorkeling to desert safaris, horse riding and Egypt day trips with Via Blue."],
+    "de": ["Aktivitäten in Hurghada | Reiseführer", "Entdecken Sie Aktivitäten in Hurghada: Insel- und Bootsausflüge, Schnorcheln, Wüstensafaris, Reiten und Tagesausflüge in Ägypten mit Via Blue."],
+    "fr": ["Que faire à Hurghada | Guide local", "Découvrez les activités à Hurghada : îles et sorties en bateau, snorkeling, safaris dans le désert, équitation et excursions en Égypte avec Via Blue."],
     "ro": ["Ce poți face în Hurghada | Ghid de activități", "Descoperă activități în Hurghada: excursii cu barca și pe insule, snorkeling, safari în deșert, călărie și excursii în Egipt cu Via Blue."],
-    "ru": ["Чем заняться в Хургаде | Путеводитель по Красному морю", "Откройте развлечения Хургады: морские прогулки и острова, снорклинг, сафари по пустыне, верховая езда и поездки по Египту с Via Blue."]
+    "ru": ["Чем заняться в Хургаде | Путеводитель", "Откройте развлечения Хургады: морские прогулки и острова, снорклинг, сафари по пустыне, верховая езда и поездки по Египту с Via Blue."]
   },
   "/sim-card": {
     "en": [
