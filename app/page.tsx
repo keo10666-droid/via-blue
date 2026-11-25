@@ -214,10 +214,10 @@ export default async function Home() {
 
             <h1 className="max-w-4xl text-[2.65rem] font-bold leading-[0.98] tracking-[-0.045em] sm:text-6xl md:text-7xl lg:text-8xl">
 
-              <HomeText en="Your Holiday" de="Dein Urlaub" />
+              <HomeText en="Hurghada Tours" />
 
               <span className="block bg-gradient-to-r from-orange-300 via-orange-400 to-amber-300 bg-clip-text text-transparent">
-                <HomeText en="Your Adventure" de="Dein Abenteuer" />
+                <HomeText en="Red Sea Adventures" />
               </span>
 
             </h1>
