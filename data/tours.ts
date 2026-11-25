@@ -283,6 +283,19 @@ export const tours = {
 
   type: "Full Day Boat Trip",
 
+  seo: {
+    title: "Paradise Island Trip from Hurghada | Via Blue",
+    description: "Enjoy a full-day Paradise Island boat trip from Hurghada with Red Sea snorkeling, 2–3 hours on the island, buffet lunch, boat drinks and hotel transfers.",
+    keywords: [
+      "Paradise Island Hurghada",
+      "Paradise Island boat trip",
+      "Hurghada island excursions",
+      "Paradise Island snorkeling",
+      "Red Sea boat trips",
+      "Hurghada excursions",
+    ],
+  },
+
 }),
 
   "orange-bay": baseTour("orange-bay", {
@@ -1007,6 +1020,18 @@ export const tours = {
   badge: "Adventure",
   available: true,
   type: "Speedboat Tour",
+  seo: {
+    title: "Speedboat Tour in Hurghada | Via Blue",
+    description: "Book a 4-hour speedboat trip in Hurghada with a Red Sea snorkeling stop, a visit to White Island, fresh fruit and hotel transfers. Choose a morning or afternoon departure.",
+    keywords: [
+      "Hurghada speedboat tour",
+      "speedboat trip Hurghada",
+      "White Island boat trip",
+      "Hurghada boat trips",
+      "Red Sea snorkeling trip",
+      "speed boat Hurghada",
+    ],
+  },
 }),
 
   "adventure-boat": baseTour("adventure-boat", {
@@ -3497,7 +3522,7 @@ cairoOptions: {
 
   name: "Luxor Overday Tour",
 
-  destination: "hurghada",
+  destination: "luxor",
 
   image: "/tours/luxor-over-day-hero.webp",
 
@@ -3598,6 +3623,19 @@ cairoOptions: {
   available: true,
 
   type: "Luxor Overday Tour",
+
+  seo: {
+    title: "Luxor Day Trip from Hurghada, Egypt | Via Blue",
+    description: "Discover Luxor on a full-day trip from Hurghada, visiting Karnak Temple, the Valley of the Kings, Hatshepsut Temple and the Colossi of Memnon.",
+    keywords: [
+      "Luxor day trip from Hurghada",
+      "Hurghada to Luxor tour",
+      "Luxor excursions from Hurghada",
+      "Karnak Temple tour",
+      "Valley of the Kings day trip",
+      "Luxor Egypt tour",
+    ],
+  },
 
 }),
 
