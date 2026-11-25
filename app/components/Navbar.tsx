@@ -561,7 +561,12 @@ export default function Navbar() {
               )}
             </div>
 
-            {navItems.map((item) => {
+            {navItems.filter((item) => ![
+              localizedHref("/"),
+              localizedHref("/tours"),
+              localizedHref("/transfers"),
+              localizedHref("/luxury-tours"),
+            ].includes(item.href)).map((item) => {
               const active = isActive(item.href);
 
               return (
