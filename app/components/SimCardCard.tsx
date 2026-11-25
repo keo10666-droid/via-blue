@@ -11,18 +11,7 @@ export default function SimCardCard() {
   const { locale } = useSiteLocale();
   const localizedHref = (path: string) => locale === "en" ? path : `/${locale}${path === "/" ? "" : path}`;
   const [startingPrice, setStartingPrice] = useState(10);
-  const [language, setLanguage] = useState<"en" | "de" | "fr" | "ro" | "ru">("en");
   const symbol = currency === "EUR" ? "€" : currency === "USD" ? "$" : "£";
-
-  useEffect(() => {
-    const syncLanguage = () => {
-      const saved = window.localStorage.getItem("via-blue-language");
-      setLanguage(saved === "de" || saved === "fr" || saved === "ro" || saved === "ru" ? saved : "en");
-    };
-    syncLanguage();
-    window.addEventListener("via-blue-language-change", syncLanguage);
-    return () => window.removeEventListener("via-blue-language-change", syncLanguage);
-  }, []);
 
   useEffect(() => {
     fetch("/api/sim-card-settings", { cache: "no-store" }).then((response) => response.json()).then((result) => {
@@ -36,10 +25,10 @@ export default function SimCardCard() {
   return (
     <section className="bg-[#f7f7f5] px-5 py-12 sm:px-6 sm:py-16">
       <div className="mx-auto max-w-7xl">
-        <Link href={localizedHref("/sim-card")} aria-label={language === "fr" ? "Découvrir la carte SIM pour l’Égypte – Restez connecté" : language === "de" ? "Ägyptische SIM-Karte entdecken – Bleiben Sie verbunden" : language === "ro" ? "Descoperă cartela SIM pentru Egipt – Rămâi conectat" : language === "ru" ? "Откройте SIM-карту для Египта — оставайтесь на связи" : "Explore Egypt SIM Card - Stay Connected"} className="group relative isolate block min-h-[300px] overflow-hidden rounded-[28px] bg-[#03112a] shadow-[0_24px_70px_rgba(3,17,42,0.18)] transition duration-500 hover:-translate-y-1 hover:shadow-[0_32px_85px_rgba(3,17,42,0.25)] sm:min-h-[360px]">
-          <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=1000&q=50" alt="Smartphone ready for an Egypt trip" width={1600} height={900} loading="lazy" decoding="async" className="absolute inset-0 -z-20 h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-[1.04]" />
-          <div className="absolute inset-0 -z-10 bg-gradient-to-r from-[#03112a]/95 via-[#03112a]/75 to-[#03112a]/25" />
-          <div className="absolute inset-0 -z-10 bg-gradient-to-t from-[#03112a]/65 via-transparent to-transparent" />
+        <Link href={localizedHref("/sim-card")} className="group relative isolate block min-h-[300px] overflow-hidden rounded-[28px] bg-[#03112a] shadow-[0_24px_70px_rgba(3,17,42,0.18)] transition duration-500 hover:-translate-y-1 hover:shadow-[0_32px_85px_rgba(3,17,42,0.25)] sm:min-h-[360px]">
+          <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_78%_22%,rgba(34,211,238,0.24),transparent_34%),radial-gradient(ellipse_at_14%_88%,rgba(14,165,233,0.2),transparent_42%)]" />
+          <div aria-hidden="true" className="absolute right-[-4rem] top-[-5rem] -z-10 h-72 w-72 rounded-full border border-white/10 sm:right-[-2rem] sm:top-[-7rem] sm:h-[26rem] sm:w-[26rem]" />
+          <div aria-hidden="true" className="absolute right-8 top-10 -z-10 h-28 w-28 rounded-full border border-cyan-200/10 sm:right-20 sm:top-16 sm:h-44 sm:w-44" />
           <div className="relative flex min-h-[300px] flex-col justify-between p-7 text-white sm:min-h-[360px] sm:p-11">
             <div className="flex items-center justify-between gap-3"><span className="inline-flex items-center rounded-full border border-white/25 bg-white/10 px-3.5 py-2 text-[9px] font-extrabold uppercase tracking-[0.22em] text-white/90 backdrop-blur-md"><HomeText en="EGYPT SIM CARD" de="SIM-KARTE FÜR ÄGYPTEN" ru="SIM-КАРТА ДЛЯ ЕГИПТА" /></span></div>
             <div className="max-w-xl">
