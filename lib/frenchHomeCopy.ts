@@ -1235,6 +1235,8 @@ const luxuryFrenchCopy: Record<string, string> = {
   "Comfortable walking shoes and suitable clothing are recommended.": "Des chaussures de marche confortables et une tenue adaptée sont recommandées.",
   "Private itinerary adjustments can be requested when possible.": "Des ajustements à l’itinéraire privé peuvent être demandés, dans la mesure du possible.",
   "The Wonders of Cairo, Your Way": "Les merveilles du Caire, à votre façon",
+  "Hurghada Tours": "Excursions à Hurghada",
+  "Red Sea Adventures": "Aventures en mer Rouge",
 };
 
 export function frenchHomeText(value: string): string {

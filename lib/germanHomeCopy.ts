@@ -680,6 +680,8 @@ const germanCopy: Record<string, string> = {
   "Luxor": "Luxor",
   "Cairo": "Kairo",
   "Sharm El Sheikh": "Sharm El Sheikh",
+  "Hurghada Tours": "Ausflüge in Hurghada",
+  "Red Sea Adventures": "Abenteuer am Roten Meer",
 };
 
 export function germanHomeText(value: string): string {

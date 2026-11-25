@@ -1096,6 +1096,8 @@ const luxuryRomanianCopy: Record<string, string> = {
   "Comfortable walking shoes and suitable clothing are recommended.": "Se recomandă încălțăminte comodă pentru mers și îmbrăcăminte adecvată.",
   "Private itinerary adjustments can be requested when possible.": "Se pot solicita modificări ale itinerarului privat, atunci când este posibil.",
   "The Wonders of Cairo, Your Way": "Minunile orașului Cairo, în ritmul tău",
+  "Hurghada Tours": "Excursii în Hurghada",
+  "Red Sea Adventures": "Aventuri la Marea Roșie",
 };
 
 export function romanianHomeText(value: string): string {
