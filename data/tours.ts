@@ -379,17 +379,6 @@ export const tours = {
 
   type: "Full Day Boat Trip",
 
-  seo: {
-    title: "Orange Bay Island Trip from Hurghada | Via Blue",
-    description: "Enjoy a full-day Orange Bay boat trip from Hurghada with Red Sea snorkeling, 2–3 hours on the island, buffet lunch, boat drinks and hotel transfers.",
-    keywords: [
-          "Orange Bay Hurghada",
-          "Orange Bay boat trip",
-          "Hurghada island excursions",
-          "Orange Bay snorkeling",
-          "Red Sea boat trips"
-    ],
-  },
 }),
 
   "mahmya-island": baseTour("mahmya-island", {
@@ -1643,17 +1632,6 @@ export const tours = {
 
   type: "Dolphin & Snorkeling Trip",
 
-  seo: {
-    title: "Dolphin House Snorkeling Trip from Hurghada | Via Blue",
-    description: "Take a full-day boat trip from Hurghada to the Dolphin House area for swimming and snorkeling, with buffet lunch, free drinks and hotel transfers. Dolphin sightings are not guaranteed.",
-    keywords: [
-          "Dolphin House Hurghada",
-          "Dolphin House snorkeling trip",
-          "Hurghada dolphin boat trip",
-          "Red Sea snorkeling",
-          "Hurghada boat excursions"
-    ],
-  },
 
 }),
 
@@ -3112,17 +3090,6 @@ export const tours = {
 
   type: "Desert Safari",
 
-  seo: {
-    title: "Super Safari in Hurghada | Quad, Buggy & Jeep 4x4 | Via Blue",
-    description: "Explore the Hurghada desert by quad bike, Spider Buggy and Jeep 4x4, visit a Bedouin village, ride a camel and enjoy dinner and an evening show.",
-    keywords: [
-          "Super Safari Hurghada",
-          "Hurghada desert safari",
-          "quad bike and buggy Hurghada",
-          "Jeep 4x4 safari Egypt",
-          "Bedouin village safari"
-    ],
-  },
 
 }),
 
@@ -3221,17 +3188,6 @@ export const tours = {
 
   type: "Horse Riding",
 
-  seo: {
-    title: "Horse Riding in Hurghada | Desert & Red Sea Beach | Via Blue",
-    description: "Ride through desert and mountain scenery near Hurghada, then along the Red Sea beach on a guided horse-riding experience with hotel transfers.",
-    keywords: [
-          "Horse riding Hurghada",
-          "Hurghada horse riding tour",
-          "horse riding on the beach Hurghada",
-          "desert horse riding Egypt",
-          "Red Sea horse riding"
-    ],
-  },
 
 }),
 
@@ -3517,11 +3473,6 @@ export const tours = {
   description:
     "Discover the legendary pyramids, Sphinx and fascinating history of Cairo on a full-day trip from Hurghada.",
 
-  seo: {
-    title: "Cairo Day Trip from Hurghada | Pyramids & Sphinx | Via Blue",
-    description: "Discover Cairo from Hurghada with the Giza Pyramids, Great Sphinx, Valley Temple, museum visit and lunch on a full-day excursion.",
-    keywords: ["Cairo day trip from Hurghada","Hurghada to Cairo tour","Giza Pyramids excursion Hurghada","Cairo sightseeing from Hurghada"],
-  },
 
   overview:
     "Travel from Hurghada to Cairo in a private car or modern air-conditioned tourist bus and explore the Giza Pyramids, Sphinx, Valley Temple and a major Egyptian museum, followed by lunch and optional shopping.",
