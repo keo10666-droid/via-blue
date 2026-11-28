@@ -82,7 +82,7 @@ export default function ReviewForm({
   }
 
   return (
-    <div className="relative mt-12 overflow-hidden rounded-[28px] border border-slate-200/80 bg-white p-6 shadow-[0_20px_60px_rgba(7,26,54,0.08)] md:p-8">
+    <div id="write-review" tabIndex={-1} className="relative mt-12 scroll-mt-28 overflow-hidden rounded-[28px] border border-slate-200/80 bg-white p-6 shadow-[0_20px_60px_rgba(7,26,54,0.08)] md:p-8">
       {/* Premium Background */}
       <div className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-orange-500/10 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-32 -left-24 h-64 w-64 rounded-full bg-blue-900/10 blur-3xl" />
