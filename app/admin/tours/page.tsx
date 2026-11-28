@@ -6,6 +6,7 @@ import { createSupabaseAdminClient } from "@/lib/supabaseAdmin";
 import { tours, tourCategories } from "@/data/tours";
 import { createCustomTour, updateTourPricing } from "./actions";
 import GalleryImageEditor from "./GalleryImageEditor";
+import CopyReviewLink from "./CopyReviewLink";
 
 type SearchParams = Promise<{ saved?: string; error?: string; q?: string }>;
 
@@ -99,7 +100,7 @@ export default async function AdminToursPage({ searchParams }: { searchParams: S
               <form key={tour.slug} action={updateTourPricing} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
                 <input type="hidden" name="slug" value={tour.slug} />
                 <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-                  <div className="min-w-0 lg:max-w-[280px]"><p className="text-xs font-bold uppercase tracking-wider text-slate-400">{tourCategories[tour.category]}</p><h2 className="mt-1 text-lg font-extrabold text-blue-950">{name}</h2><p className="mt-1 text-xs text-slate-400">/{tour.slug}</p></div>
+                  <div className="min-w-0 lg:max-w-[280px]"><p className="text-xs font-bold uppercase tracking-wider text-slate-400">{tourCategories[tour.category]}</p><h2 className="mt-1 text-lg font-extrabold text-blue-950">{name}</h2><div className="mt-2 flex flex-wrap items-center gap-2"><p className="text-xs text-slate-400">/{tour.slug}</p><CopyReviewLink slug={tour.slug} /></div></div>
                   <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:min-w-[610px]">
                     <label className="text-xs font-bold text-slate-500">Tour name<input name="name" type="text" maxLength={120} required defaultValue={tour.name} className="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm font-semibold text-slate-900 outline-none focus:border-orange-400" /></label>
                     <label className="text-xs font-bold text-slate-500">Image path or URL<input name="image" type="text" maxLength={500} required defaultValue={image} className="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm font-semibold text-slate-900 outline-none focus:border-orange-400" /></label>
@@ -120,7 +121,7 @@ export default async function AdminToursPage({ searchParams }: { searchParams: S
           {customTourList.map((tour) => (
             <form key={tour.slug} action={updateTourPricing} className="rounded-2xl border border-orange-200 bg-white p-5 shadow-sm sm:p-6">
               <input type="hidden" name="slug" value={tour.slug} />
-              <p className="mb-3 text-xs font-bold uppercase tracking-wider text-orange-600">Custom tour · {tourCategories[tour.category as keyof typeof tourCategories] ?? tour.category} · /{tour.slug}</p>
+              <div className="mb-3 flex flex-wrap items-center gap-2"><p className="text-xs font-bold uppercase tracking-wider text-orange-600">Custom tour · {tourCategories[tour.category as keyof typeof tourCategories] ?? tour.category} · /{tour.slug}</p><CopyReviewLink slug={tour.slug} /></div>
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
                 <label className="text-xs font-bold text-slate-500">Tour name<input name="name" required maxLength={120} defaultValue={tour.name ?? ""} className="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm text-slate-900" /></label>
                 <label className="text-xs font-bold text-slate-500">Image path or HTTPS URL<input name="image" required maxLength={500} defaultValue={tour.image ?? ""} className="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm text-slate-900" /></label>
